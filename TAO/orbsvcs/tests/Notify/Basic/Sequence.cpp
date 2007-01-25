@@ -18,7 +18,6 @@ SequencePushConsumer::SequencePushConsumer (Sequence *test_client)
 void
 SequencePushConsumer::push_structured_events (
     const CosNotification::EventBatch &batch
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
@@ -62,8 +61,7 @@ Sequence::~Sequence (void)
 
 int
 Sequence::init (int argc,
-                   char* argv []
-                   ACE_ENV_ARG_DECL)
+                   char* argv [])
 {
   if (TAO_debug_level)
     {
@@ -82,8 +80,7 @@ Sequence::init (int argc,
 
   // Initialize the base class.
   Notify_Test_Client::init (argc,
-                            argv
-                            ACE_ENV_ARG_PARAMETER);
+                            argv);
 
   // Create all participents.
   this->create_EC ();
@@ -92,25 +89,21 @@ Sequence::init (int argc,
 
   this->supplier_admin_ =
     this->ec_->new_for_suppliers (this->ifgop_,
-                                  adminid
-                                  ACE_ENV_ARG_PARAMETER);
+                                  adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ =
     this->ec_->new_for_consumers (this->ifgop_,
-                                  adminid
-                                  ACE_ENV_ARG_PARAMETER);
+                                  adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   ACE_NEW_RETURN (this->consumer_,
                   SequencePushConsumer (this),
                   -1);
-  this->consumer_->init (root_poa_.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  this->consumer_->connect (this->consumer_admin_.in ()
-                            ACE_ENV_ARG_PARAMETER);
+  this->consumer_->init (root_poa_.in ());
+  this->consumer_->connect (this->consumer_admin_.in ());
 
   CosNotification::QoSProperties properties (3);
   properties.length (3);
@@ -127,11 +120,9 @@ Sequence::init (int argc,
   ACE_NEW_RETURN (this->supplier_,
                   SequencePushSupplier (this),
                   -1);
-  this->supplier_->init (root_poa_.in ()
-                         ACE_ENV_ARG_PARAMETER);
+  this->supplier_->init (root_poa_.in ());
 
-  this->supplier_->connect (this->supplier_admin_.in ()
-                            ACE_ENV_ARG_PARAMETER);
+  this->supplier_->connect (this->supplier_admin_.in ());
 
   consumer_start( 0 );
 
@@ -210,8 +201,7 @@ Sequence::create_EC (void)
 
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
+                                               id);
   ACE_ASSERT (!CORBA::is_nil (this->ec_.in ()));
 }
 
@@ -225,7 +215,6 @@ Sequence::on_event_received (void)
 
   if (this->events_received_.value () == this->event_count_)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
       this->end_test ();
     }
 }
@@ -291,8 +280,7 @@ Sequence::run_test (void)
           if (TAO_debug_level)
             ACE_DEBUG ((LM_DEBUG, "Sending batch with %d events\n", batch.length ()));
 
-          this->supplier_->send_events (batch
-                                        ACE_ENV_ARG_PARAMETER);
+          this->supplier_->send_events (batch);
 
           // reset
           batch.length (this->supplier_batch_size_);
@@ -305,8 +293,7 @@ Sequence::run_test (void)
     {
       batch.length (batch_index); // set the correct length
 
-      this->supplier_->send_events (batch
-                                    ACE_ENV_ARG_PARAMETER);
+      this->supplier_->send_events (batch);
     }
 
 }
@@ -321,7 +308,6 @@ int
 Sequence::check_results (void)
 {
   // Destroy the channel.
-  ACE_DECLARE_NEW_CORBA_ENV;
   this->ec_->destroy ();
 
   if (this->events_received_.value () == this->event_count_)
@@ -350,22 +336,20 @@ main (int argc, char* argv[])
       return 1;
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       events.init (argc,
-                   argv
-                   ACE_ENV_ARG_PARAMETER);
+                   argv);
 
       events.run_test ();
 
-      events.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+      events.ORB_run( );
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return events.check_results ();
 }

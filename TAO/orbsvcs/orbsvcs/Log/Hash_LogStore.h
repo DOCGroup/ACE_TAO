@@ -67,33 +67,30 @@ public:
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL)
+    find_log (DsLogAdmin::LogId id)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Returns true if log exists, otherwise false
-  virtual bool exists (DsLogAdmin::LogId id ACE_ENV_ARG_DECL);
+  virtual bool exists (DsLogAdmin::LogId id);
 
   /// Remove the given entry from the hash table.
-  virtual int remove (DsLogAdmin::LogId id ACE_ENV_ARG_DECL);
+  virtual int remove (DsLogAdmin::LogId id);
 
   /// @brief Create log
   virtual void
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
             const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-            DsLogAdmin::LogId_out id_out
-            ACE_ENV_ARG_DECL);
+            DsLogAdmin::LogId_out id_out);
 
   /// @brief Create log
   virtual void
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
                     CORBA::ULongLong max_size,
-                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-                    ACE_ENV_ARG_DECL);
+                    const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
 
   /// @brief Get log record store
   ///
@@ -102,8 +99,7 @@ public:
   /// @param id log id
   ///
   virtual TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id
-                          ACE_ENV_ARG_DECL);
+    get_log_record_store (DsLogAdmin::LogId id);
 
 private:
   ACE_SYNCH_RW_MUTEX	lock_;

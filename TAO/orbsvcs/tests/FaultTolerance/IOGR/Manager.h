@@ -36,8 +36,7 @@ public:
   // Ctor
 
   void init (int argc,
-             char *argv[]
-             ACE_ENV_ARG_DECL);
+             char *argv[]);
 
   // Initialize the ORB, POA etc.
 

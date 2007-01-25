@@ -19,37 +19,37 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ());
-    
+
       PortableServer::POAManager_var poa_manager =
       root_poa->the_POAManager ();
       poa_manager->activate ();
-    
+
       const char* uipmc_ior = "corbaloc:miop:1.0@1.0-domain-1/127.0.0.1:23232";
       CORBA::Object_var obj =orb->string_to_object (uipmc_ior);
-    
+
       CORBA::Object_var tmp = orb->string_to_object (ior_server);
       server_var server = server::_narrow (tmp.in ());
-      
+
       try
         {
           server->method (obj.in());
-          
+
           ACE_DEBUG ((LM_DEBUG, "Test passed !!\n"));
         }
       catch (const CORBA::SystemException& marshal)
         {
           ACE_DEBUG ((LM_ERROR, "Test Failed - Regression. "
                       "Sending UIPMC object ref to server failed with:\n"));
-          ACE_PRINT_EXCEPTION (marshal, "Exception : \n");
+          marshal._tao_print_exception ("Exception : \n");
           result = 1;
         }
-        
-      server->shutdown ();          
+
+      server->shutdown ();
     }
   catch(const CORBA::SystemException& e)
     {
-        ACE_PRINT_EXCEPTION (e, "Unexpected exception - not a regression.\n");
+        e._tao_print_exception ("Unexpected exception - not a regression.\n");
         result = 1;
-    }    
+    }
     return result;
 }

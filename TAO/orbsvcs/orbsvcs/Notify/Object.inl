@@ -11,12 +11,12 @@ TAO_Notify_Object::id (void) const
 }
 
 ACE_INLINE void
-TAO_Notify_Object::execute_task (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL)
+TAO_Notify_Object::execute_task (TAO_Notify_Method_Request& method_request)
 {
   TAO_Notify_Worker_Task::Ptr task( this->worker_task_ );
   if ( task.isSet() )
   {
-    task->execute( method_request ACE_ENV_ARG_PARAMETER );
+    task->execute( method_request );
   }
 }
 

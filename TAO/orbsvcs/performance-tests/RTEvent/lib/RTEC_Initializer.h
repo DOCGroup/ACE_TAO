@@ -37,8 +37,7 @@ public:
   /// Return a new event channel
   static TAO_EC_Event_Channel *create (PortableServer::POA_ptr consumer_poa,
                                        PortableServer::POA_ptr supplier_poa,
-                                       RTCORBA_Setup *rtcorba_setup
-                                       ACE_ENV_ARG_DECL);
+                                       RTCORBA_Setup *rtcorba_setup);
 };
 
 #endif /* TAO_PERF_RTEC_RTEC_INITIALIZER_H */

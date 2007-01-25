@@ -18,19 +18,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<class T>
 typename T::_ptr_type
 resolve_init (CORBA::ORB_ptr orb,
-              const char *id ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+              const char *id)
 {
     typename T::_var_type ref;
     CORBA::Object_var     obj;
-    ACE_TRY
+    try
     {
       CORBA::Object_var obj;
-      obj = orb->resolve_initial_references(id ACE_ENV_ARG_PARAMETER);
+      obj = orb->resolve_initial_references(id);
 
-      ref = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      ref = T::_narrow(obj.in());
     }
 
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
       ACE_ERROR((
                   LM_ERROR,
@@ -42,10 +42,9 @@ resolve_init (CORBA::ORB_ptr orb,
                     LM_ERROR,
                     "    due to narrowing problem\n"
               ));
-      ACE_RE_THROW;
+      throw;
     }
 
-    ACE_ENDTRY;
     return ref._retn();
 }
 
@@ -53,15 +52,14 @@ resolve_init (CORBA::ORB_ptr orb,
 template<class T>
 typename T::_ptr_type
 resolve (CosNaming::NamingContext_ptr context,
-         const CosNaming::Name &id
-           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+         const CosNaming::Name &id)
 {
     CORBA::Object_var obj;
-    obj = context->resolve(id ACE_ENV_ARG_PARAMETER);
+    obj = context->resolve(id);
 
     ACE_ASSERT(!CORBA::is_nil(obj.in()));
 
-    typename T::_var_type ref = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+    typename T::_var_type ref = T::_narrow(obj.in());
     return ref._retn();
 }
 #endif

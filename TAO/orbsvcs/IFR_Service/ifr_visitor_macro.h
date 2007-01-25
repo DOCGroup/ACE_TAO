@@ -18,7 +18,6 @@
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
-  ACE_TRY_CHECK
 
 #include /**/ "ace/post.h"
 

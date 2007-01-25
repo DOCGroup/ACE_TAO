@@ -54,8 +54,7 @@ public:
   ~TAO_UTO (void);
 
   /// For the readonly attribute <time>.
-  virtual TimeBase::TimeT time (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual TimeBase::TimeT time ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <inaccuracy>.
@@ -82,8 +81,7 @@ public:
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
   CosTime::TimeComparison compare_time (CosTime::ComparisonType comparison_type,
-                                        CosTime::UTO_ptr uto
-                                        ACE_ENV_ARG_DECL)
+                                        CosTime::UTO_ptr uto)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -93,8 +91,7 @@ public:
    * two UTOs. Inaccuracies are ignored.  Note the result of this
    * operation is meaningless if the base times of UTOs are different.
    */
-  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr
-                                     ACE_ENV_ARG_DECL)
+  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns a TIO object representing the error interval around the

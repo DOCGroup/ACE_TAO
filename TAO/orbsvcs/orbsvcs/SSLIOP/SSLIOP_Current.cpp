@@ -24,8 +24,7 @@ TAO::SSLIOP::Current::~Current (void)
 }
 
 ::SSLIOP::ASN_1_Cert *
-TAO::SSLIOP::Current::get_peer_certificate (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::Current::get_peer_certificate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    SSLIOP::Current::NoContext))
 {
@@ -57,8 +56,7 @@ TAO::SSLIOP::Current::get_peer_certificate (
 }
 
 SSLIOP::SSL_Cert *
-TAO::SSLIOP::Current::get_peer_certificate_chain (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::Current::get_peer_certificate_chain ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    SSLIOP::Current::NoContext))
 {
@@ -125,8 +123,7 @@ TAO::SSLIOP::Current::teardown (TAO::SSLIOP::Current_Impl *prev_impl,
 
 TAO::SSLIOP::Current_ptr
 TAO::SSLIOP::Current::_narrow (
-  CORBA::Object_ptr obj
-  ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Object_ptr obj)
 {
   return  TAO::SSLIOP::Current::_duplicate (
               dynamic_cast<TAO::SSLIOP::Current *> (obj));
@@ -176,10 +173,9 @@ tao_TAO_SSLIOP_Current_nil (
 TAO::SSLIOP::Current_ptr
 tao_TAO_SSLIOP_Current_narrow (
     CORBA::Object *p
-    ACE_ENV_ARG_DECL
   )
 {
-  return TAO::SSLIOP::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
+  return TAO::SSLIOP::Current::_narrow (p);
 }
 
 CORBA::Object *

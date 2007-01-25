@@ -45,8 +45,7 @@ public:
   ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void push (const RtecEventComm::EventSet& events)
       ACE_THROW_SPEC (( CORBA::SystemException));
 
   /// Forwards to target_.

@@ -1341,8 +1341,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -1359,7 +1358,6 @@ void POA_CORBA::ComponentIR::EventDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1396,7 +1394,7 @@ void POA_CORBA::ComponentIR::EventDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -1428,8 +1426,7 @@ void POA_CORBA::ComponentIR::EventDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -1446,7 +1443,6 @@ void POA_CORBA::ComponentIR::EventDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1481,7 +1477,7 @@ void POA_CORBA::ComponentIR::EventDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -1513,8 +1509,7 @@ void POA_CORBA::ComponentIR::EventDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -1531,7 +1526,6 @@ void POA_CORBA::ComponentIR::EventDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1566,7 +1560,7 @@ void POA_CORBA::ComponentIR::EventDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -1576,7 +1570,6 @@ void POA_CORBA::ComponentIR::EventDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -1586,8 +1579,9 @@ void POA_CORBA::ComponentIR::EventDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::EventDef * const impl =
@@ -1608,7 +1602,7 @@ void POA_CORBA::ComponentIR::EventDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -1641,8 +1635,7 @@ void POA_CORBA::ComponentIR::EventDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -1659,7 +1652,6 @@ void POA_CORBA::ComponentIR::EventDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1694,12 +1686,11 @@ void POA_CORBA::ComponentIR::EventDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -1750,13 +1741,11 @@ const char* POA_CORBA::ComponentIR::EventDef::_interface_repository_id (void) co
 void POA_CORBA::ComponentIR::EventDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -2055,8 +2044,7 @@ POA_CORBA::ComponentIR::Container::~Container (void)
             , arg_2
             , arg_3
             , arg_4
-            , arg_5
-            ACE_ENV_ARG_PARAMETER);
+            , arg_5);
       }
 
     private:
@@ -2076,7 +2064,6 @@ void POA_CORBA::ComponentIR::Container::create_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2121,7 +2108,7 @@ void POA_CORBA::ComponentIR::Container::create_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -2202,8 +2189,7 @@ void POA_CORBA::ComponentIR::Container::create_component_skel (
             , arg_4
             , arg_5
             , arg_6
-            , arg_7
-            ACE_ENV_ARG_PARAMETER);
+            , arg_7);
       }
 
     private:
@@ -2223,7 +2209,6 @@ void POA_CORBA::ComponentIR::Container::create_home_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2272,7 +2257,7 @@ void POA_CORBA::ComponentIR::Container::create_home_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -2374,8 +2359,7 @@ void POA_CORBA::ComponentIR::Container::create_home_skel (
             , arg_7
             , arg_8
             , arg_9
-            , arg_10
-            ACE_ENV_ARG_PARAMETER);
+            , arg_10);
       }
 
     private:
@@ -2395,7 +2379,6 @@ void POA_CORBA::ComponentIR::Container::create_event_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2450,7 +2433,7 @@ void POA_CORBA::ComponentIR::Container::create_event_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -2494,8 +2477,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -2512,7 +2494,6 @@ void POA_CORBA::ComponentIR::Container::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2549,7 +2530,7 @@ void POA_CORBA::ComponentIR::Container::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -2581,8 +2562,7 @@ void POA_CORBA::ComponentIR::Container::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -2599,7 +2579,6 @@ void POA_CORBA::ComponentIR::Container::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2634,7 +2613,7 @@ void POA_CORBA::ComponentIR::Container::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -2666,8 +2645,7 @@ void POA_CORBA::ComponentIR::Container::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -2684,7 +2662,6 @@ void POA_CORBA::ComponentIR::Container::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2719,7 +2696,7 @@ void POA_CORBA::ComponentIR::Container::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -2729,7 +2706,6 @@ void POA_CORBA::ComponentIR::Container::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -2739,8 +2715,9 @@ void POA_CORBA::ComponentIR::Container::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::Container * const impl =
@@ -2761,7 +2738,7 @@ void POA_CORBA::ComponentIR::Container::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -2794,8 +2771,7 @@ void POA_CORBA::ComponentIR::Container::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -2812,7 +2788,6 @@ void POA_CORBA::ComponentIR::Container::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2847,12 +2822,11 @@ void POA_CORBA::ComponentIR::Container::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::Container::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -2887,13 +2861,11 @@ const char* POA_CORBA::ComponentIR::Container::_interface_repository_id (void) c
 void POA_CORBA::ComponentIR::Container::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -3184,8 +3156,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -3202,7 +3173,6 @@ void POA_CORBA::ComponentIR::ModuleDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -3239,7 +3209,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -3271,8 +3241,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -3289,7 +3258,6 @@ void POA_CORBA::ComponentIR::ModuleDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -3324,7 +3292,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -3356,8 +3324,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -3374,7 +3341,6 @@ void POA_CORBA::ComponentIR::ModuleDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -3409,7 +3375,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -3419,7 +3385,6 @@ void POA_CORBA::ComponentIR::ModuleDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -3429,8 +3394,9 @@ void POA_CORBA::ComponentIR::ModuleDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::ModuleDef * const impl =
@@ -3451,7 +3417,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -3484,8 +3450,7 @@ void POA_CORBA::ComponentIR::ModuleDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -3502,7 +3467,6 @@ void POA_CORBA::ComponentIR::ModuleDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -3537,12 +3501,11 @@ void POA_CORBA::ComponentIR::ModuleDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::ModuleDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -3589,13 +3552,11 @@ const char* POA_CORBA::ComponentIR::ModuleDef::_interface_repository_id (void) c
 void POA_CORBA::ComponentIR::ModuleDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -3884,8 +3845,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -3902,7 +3862,6 @@ void POA_CORBA::ComponentIR::Repository::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -3939,7 +3898,7 @@ void POA_CORBA::ComponentIR::Repository::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -3971,8 +3930,7 @@ void POA_CORBA::ComponentIR::Repository::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -3989,7 +3947,6 @@ void POA_CORBA::ComponentIR::Repository::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4024,7 +3981,7 @@ void POA_CORBA::ComponentIR::Repository::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -4056,8 +4013,7 @@ void POA_CORBA::ComponentIR::Repository::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -4074,7 +4030,6 @@ void POA_CORBA::ComponentIR::Repository::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4109,7 +4064,7 @@ void POA_CORBA::ComponentIR::Repository::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -4119,7 +4074,6 @@ void POA_CORBA::ComponentIR::Repository::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -4129,8 +4083,9 @@ void POA_CORBA::ComponentIR::Repository::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::Repository * const impl =
@@ -4151,7 +4106,7 @@ void POA_CORBA::ComponentIR::Repository::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -4184,8 +4139,7 @@ void POA_CORBA::ComponentIR::Repository::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -4202,7 +4156,6 @@ void POA_CORBA::ComponentIR::Repository::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4237,12 +4190,11 @@ void POA_CORBA::ComponentIR::Repository::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::Repository::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -4285,13 +4237,11 @@ const char* POA_CORBA::ComponentIR::Repository::_interface_repository_id (void) 
 void POA_CORBA::ComponentIR::Repository::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -4546,8 +4496,7 @@ POA_CORBA::ComponentIR::ProvidesDef::~ProvidesDef (void)
             this->args_);
 
         retval =
-          this->servant_->interface_type (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->interface_type ();
       }
 
     private:
@@ -4567,7 +4516,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_get_interface_type_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4602,7 +4550,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_get_interface_type_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -4635,8 +4583,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_get_interface_type_skel (
             1);
 
         this->servant_->interface_type (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -4656,7 +4603,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_set_interface_type_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4693,7 +4639,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_set_interface_type_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -4737,8 +4683,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -4755,7 +4700,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4792,7 +4736,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -4824,8 +4768,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -4842,7 +4785,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4877,7 +4819,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -4909,8 +4851,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -4927,7 +4868,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -4962,7 +4902,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -4972,7 +4912,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -4982,8 +4921,9 @@ void POA_CORBA::ComponentIR::ProvidesDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::ProvidesDef * const impl =
@@ -5004,7 +4944,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -5037,8 +4977,7 @@ void POA_CORBA::ComponentIR::ProvidesDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -5055,7 +4994,6 @@ void POA_CORBA::ComponentIR::ProvidesDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5090,12 +5028,11 @@ void POA_CORBA::ComponentIR::ProvidesDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::ProvidesDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -5130,13 +5067,11 @@ const char* POA_CORBA::ComponentIR::ProvidesDef::_interface_repository_id (void)
 void POA_CORBA::ComponentIR::ProvidesDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -5393,8 +5328,7 @@ POA_CORBA::ComponentIR::UsesDef::~UsesDef (void)
             this->args_);
 
         retval =
-          this->servant_->interface_type (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->interface_type ();
       }
 
     private:
@@ -5414,7 +5348,6 @@ void POA_CORBA::ComponentIR::UsesDef::_get_interface_type_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5449,7 +5382,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_interface_type_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -5482,8 +5415,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_interface_type_skel (
             1);
 
         this->servant_->interface_type (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -5503,7 +5435,6 @@ void POA_CORBA::ComponentIR::UsesDef::_set_interface_type_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5540,7 +5471,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_interface_type_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -5572,8 +5503,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_interface_type_skel (
             this->args_);
 
         retval =
-          this->servant_->is_multiple (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->is_multiple ();
       }
 
     private:
@@ -5593,7 +5523,6 @@ void POA_CORBA::ComponentIR::UsesDef::_get_is_multiple_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5628,7 +5557,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_is_multiple_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -5661,8 +5590,7 @@ void POA_CORBA::ComponentIR::UsesDef::_get_is_multiple_skel (
             1);
 
         this->servant_->is_multiple (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -5682,7 +5610,6 @@ void POA_CORBA::ComponentIR::UsesDef::_set_is_multiple_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5719,7 +5646,7 @@ void POA_CORBA::ComponentIR::UsesDef::_set_is_multiple_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -5763,8 +5690,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -5781,7 +5707,6 @@ void POA_CORBA::ComponentIR::UsesDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5818,7 +5743,7 @@ void POA_CORBA::ComponentIR::UsesDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -5850,8 +5775,7 @@ void POA_CORBA::ComponentIR::UsesDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -5868,7 +5792,6 @@ void POA_CORBA::ComponentIR::UsesDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5903,7 +5826,7 @@ void POA_CORBA::ComponentIR::UsesDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -5935,8 +5858,7 @@ void POA_CORBA::ComponentIR::UsesDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -5953,7 +5875,6 @@ void POA_CORBA::ComponentIR::UsesDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -5988,7 +5909,7 @@ void POA_CORBA::ComponentIR::UsesDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -5998,7 +5919,6 @@ void POA_CORBA::ComponentIR::UsesDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -6008,8 +5928,9 @@ void POA_CORBA::ComponentIR::UsesDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::UsesDef * const impl =
@@ -6030,7 +5951,7 @@ void POA_CORBA::ComponentIR::UsesDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -6063,8 +5984,7 @@ void POA_CORBA::ComponentIR::UsesDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -6081,7 +6001,6 @@ void POA_CORBA::ComponentIR::UsesDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6116,12 +6035,11 @@ void POA_CORBA::ComponentIR::UsesDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::UsesDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -6156,13 +6074,11 @@ const char* POA_CORBA::ComponentIR::UsesDef::_interface_repository_id (void) con
 void POA_CORBA::ComponentIR::UsesDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -6418,8 +6334,7 @@ POA_CORBA::ComponentIR::EventPortDef::~EventPortDef (void)
             this->args_);
 
         retval =
-          this->servant_->event (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->event ();
       }
 
     private:
@@ -6439,7 +6354,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6474,7 +6388,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -6507,8 +6421,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_get_event_skel (
             1);
 
         this->servant_->event (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -6528,7 +6441,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6565,7 +6477,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -6604,8 +6516,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_set_event_skel (
 
         retval =
           this->servant_->is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -6625,7 +6536,6 @@ void POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6662,7 +6572,7 @@ void POA_CORBA::ComponentIR::EventPortDef::is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -6706,8 +6616,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -6724,7 +6633,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6761,7 +6669,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -6793,8 +6701,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -6811,7 +6718,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6846,7 +6752,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -6878,8 +6784,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -6896,7 +6801,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6931,7 +6835,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -6941,7 +6845,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -6951,8 +6854,9 @@ void POA_CORBA::ComponentIR::EventPortDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::EventPortDef * const impl =
@@ -6973,7 +6877,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -7006,8 +6910,7 @@ void POA_CORBA::ComponentIR::EventPortDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -7024,7 +6927,6 @@ void POA_CORBA::ComponentIR::EventPortDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -7059,12 +6961,11 @@ void POA_CORBA::ComponentIR::EventPortDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventPortDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -7099,13 +7000,11 @@ const char* POA_CORBA::ComponentIR::EventPortDef::_interface_repository_id (void
 void POA_CORBA::ComponentIR::EventPortDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -7374,8 +7273,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -7392,7 +7290,6 @@ void POA_CORBA::ComponentIR::EmitsDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -7429,7 +7326,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -7461,8 +7358,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -7479,7 +7375,6 @@ void POA_CORBA::ComponentIR::EmitsDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -7514,7 +7409,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -7546,8 +7441,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -7564,7 +7458,6 @@ void POA_CORBA::ComponentIR::EmitsDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -7599,7 +7492,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -7609,7 +7502,6 @@ void POA_CORBA::ComponentIR::EmitsDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -7619,8 +7511,9 @@ void POA_CORBA::ComponentIR::EmitsDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::EmitsDef * const impl =
@@ -7641,7 +7534,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -7674,8 +7567,7 @@ void POA_CORBA::ComponentIR::EmitsDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -7692,7 +7584,6 @@ void POA_CORBA::ComponentIR::EmitsDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -7727,12 +7618,11 @@ void POA_CORBA::ComponentIR::EmitsDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::EmitsDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -7771,13 +7661,11 @@ const char* POA_CORBA::ComponentIR::EmitsDef::_interface_repository_id (void) co
 void POA_CORBA::ComponentIR::EmitsDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -8046,8 +7934,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -8064,7 +7951,6 @@ void POA_CORBA::ComponentIR::PublishesDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8101,7 +7987,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -8133,8 +8019,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -8151,7 +8036,6 @@ void POA_CORBA::ComponentIR::PublishesDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8186,7 +8070,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -8218,8 +8102,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -8236,7 +8119,6 @@ void POA_CORBA::ComponentIR::PublishesDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8271,7 +8153,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -8281,7 +8163,6 @@ void POA_CORBA::ComponentIR::PublishesDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -8291,8 +8172,9 @@ void POA_CORBA::ComponentIR::PublishesDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::PublishesDef * const impl =
@@ -8313,7 +8195,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -8346,8 +8228,7 @@ void POA_CORBA::ComponentIR::PublishesDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -8364,7 +8245,6 @@ void POA_CORBA::ComponentIR::PublishesDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8399,12 +8279,11 @@ void POA_CORBA::ComponentIR::PublishesDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::PublishesDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -8443,13 +8322,11 @@ const char* POA_CORBA::ComponentIR::PublishesDef::_interface_repository_id (void
 void POA_CORBA::ComponentIR::PublishesDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -8718,8 +8595,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -8736,7 +8612,6 @@ void POA_CORBA::ComponentIR::ConsumesDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8773,7 +8648,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -8805,8 +8680,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -8823,7 +8697,6 @@ void POA_CORBA::ComponentIR::ConsumesDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8858,7 +8731,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -8890,8 +8763,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -8908,7 +8780,6 @@ void POA_CORBA::ComponentIR::ConsumesDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -8943,7 +8814,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -8953,7 +8824,6 @@ void POA_CORBA::ComponentIR::ConsumesDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -8963,8 +8833,9 @@ void POA_CORBA::ComponentIR::ConsumesDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::ConsumesDef * const impl =
@@ -8985,7 +8856,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -9018,8 +8889,7 @@ void POA_CORBA::ComponentIR::ConsumesDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -9036,7 +8906,6 @@ void POA_CORBA::ComponentIR::ConsumesDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9071,12 +8940,11 @@ void POA_CORBA::ComponentIR::ConsumesDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::ConsumesDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -9115,13 +8983,11 @@ const char* POA_CORBA::ComponentIR::ConsumesDef::_interface_repository_id (void)
 void POA_CORBA::ComponentIR::ConsumesDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -9419,8 +9285,7 @@ POA_CORBA::ComponentIR::ComponentDef::~ComponentDef (void)
             this->args_);
 
         retval =
-          this->servant_->base_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->base_component ();
       }
 
     private:
@@ -9440,7 +9305,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_base_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9475,7 +9339,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_base_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -9508,8 +9372,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_base_component_skel (
             1);
 
         this->servant_->base_component (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -9529,7 +9392,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_base_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9566,7 +9428,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_base_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -9598,8 +9460,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_base_component_skel (
             this->args_);
 
         retval =
-          this->servant_->supported_interfaces (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->supported_interfaces ();
       }
 
     private:
@@ -9619,7 +9480,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9654,7 +9514,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_supported_interfaces_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -9687,8 +9547,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_get_supported_interfaces_skel (
             1);
 
         this->servant_->supported_interfaces (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -9708,7 +9567,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9745,7 +9603,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_supported_interfaces_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -9805,8 +9663,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_set_supported_interfaces_skel (
             arg_1
             , arg_2
             , arg_3
-            , arg_4
-            ACE_ENV_ARG_PARAMETER);
+            , arg_4);
       }
 
     private:
@@ -9826,7 +9683,6 @@ void POA_CORBA::ComponentIR::ComponentDef::create_provides_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -9869,7 +9725,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_provides_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -9936,8 +9792,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_provides_skel (
             , arg_2
             , arg_3
             , arg_4
-            , arg_5
-            ACE_ENV_ARG_PARAMETER);
+            , arg_5);
       }
 
     private:
@@ -9957,7 +9812,6 @@ void POA_CORBA::ComponentIR::ComponentDef::create_uses_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10002,7 +9856,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_uses_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -10062,8 +9916,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_uses_skel (
             arg_1
             , arg_2
             , arg_3
-            , arg_4
-            ACE_ENV_ARG_PARAMETER);
+            , arg_4);
       }
 
     private:
@@ -10083,7 +9936,6 @@ void POA_CORBA::ComponentIR::ComponentDef::create_emits_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10126,7 +9978,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_emits_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -10186,8 +10038,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_emits_skel (
             arg_1
             , arg_2
             , arg_3
-            , arg_4
-            ACE_ENV_ARG_PARAMETER);
+            , arg_4);
       }
 
     private:
@@ -10207,7 +10058,6 @@ void POA_CORBA::ComponentIR::ComponentDef::create_publishes_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10250,7 +10100,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_publishes_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -10310,8 +10160,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_publishes_skel (
             arg_1
             , arg_2
             , arg_3
-            , arg_4
-            ACE_ENV_ARG_PARAMETER);
+            , arg_4);
       }
 
     private:
@@ -10331,7 +10180,6 @@ void POA_CORBA::ComponentIR::ComponentDef::create_consumes_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10374,7 +10222,7 @@ void POA_CORBA::ComponentIR::ComponentDef::create_consumes_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -10418,8 +10266,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -10436,7 +10283,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10473,7 +10319,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -10505,8 +10351,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -10523,7 +10368,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10558,7 +10402,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -10590,8 +10434,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -10608,7 +10451,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10643,7 +10485,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -10653,7 +10495,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -10663,8 +10504,9 @@ void POA_CORBA::ComponentIR::ComponentDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::ComponentDef * const impl =
@@ -10685,7 +10527,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -10718,8 +10560,7 @@ void POA_CORBA::ComponentIR::ComponentDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -10736,7 +10577,6 @@ void POA_CORBA::ComponentIR::ComponentDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10771,12 +10611,11 @@ void POA_CORBA::ComponentIR::ComponentDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::ComponentDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -10831,13 +10670,11 @@ const char* POA_CORBA::ComponentIR::ComponentDef::_interface_repository_id (void
 void POA_CORBA::ComponentIR::ComponentDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -11169,8 +11006,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -11187,7 +11023,6 @@ void POA_CORBA::ComponentIR::FactoryDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -11224,7 +11059,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -11256,8 +11091,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -11274,7 +11108,6 @@ void POA_CORBA::ComponentIR::FactoryDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -11309,7 +11142,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -11341,8 +11174,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -11359,7 +11191,6 @@ void POA_CORBA::ComponentIR::FactoryDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -11394,7 +11225,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -11404,7 +11235,6 @@ void POA_CORBA::ComponentIR::FactoryDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -11414,8 +11244,9 @@ void POA_CORBA::ComponentIR::FactoryDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::FactoryDef * const impl =
@@ -11436,7 +11267,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -11469,8 +11300,7 @@ void POA_CORBA::ComponentIR::FactoryDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -11487,7 +11317,6 @@ void POA_CORBA::ComponentIR::FactoryDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -11522,12 +11351,11 @@ void POA_CORBA::ComponentIR::FactoryDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::FactoryDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -11566,13 +11394,11 @@ const char* POA_CORBA::ComponentIR::FactoryDef::_interface_repository_id (void) 
 void POA_CORBA::ComponentIR::FactoryDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -11904,8 +11730,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -11922,7 +11747,6 @@ void POA_CORBA::ComponentIR::FinderDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -11959,7 +11783,7 @@ void POA_CORBA::ComponentIR::FinderDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -11991,8 +11815,7 @@ void POA_CORBA::ComponentIR::FinderDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -12009,7 +11832,6 @@ void POA_CORBA::ComponentIR::FinderDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12044,7 +11866,7 @@ void POA_CORBA::ComponentIR::FinderDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -12076,8 +11898,7 @@ void POA_CORBA::ComponentIR::FinderDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -12094,7 +11915,6 @@ void POA_CORBA::ComponentIR::FinderDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12129,7 +11949,7 @@ void POA_CORBA::ComponentIR::FinderDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -12139,7 +11959,6 @@ void POA_CORBA::ComponentIR::FinderDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -12149,8 +11968,9 @@ void POA_CORBA::ComponentIR::FinderDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::FinderDef * const impl =
@@ -12171,7 +11991,7 @@ void POA_CORBA::ComponentIR::FinderDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -12204,8 +12024,7 @@ void POA_CORBA::ComponentIR::FinderDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -12222,7 +12041,6 @@ void POA_CORBA::ComponentIR::FinderDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12257,12 +12075,11 @@ void POA_CORBA::ComponentIR::FinderDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::FinderDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -12301,13 +12118,11 @@ const char* POA_CORBA::ComponentIR::FinderDef::_interface_repository_id (void) c
 void POA_CORBA::ComponentIR::FinderDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from
@@ -12607,8 +12422,7 @@ POA_CORBA::ComponentIR::HomeDef::~HomeDef (void)
             this->args_);
 
         retval =
-          this->servant_->base_home (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->base_home ();
       }
 
     private:
@@ -12628,7 +12442,6 @@ void POA_CORBA::ComponentIR::HomeDef::_get_base_home_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12663,7 +12476,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_base_home_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -12696,8 +12509,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_base_home_skel (
             1);
 
         this->servant_->base_home (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -12717,7 +12529,6 @@ void POA_CORBA::ComponentIR::HomeDef::_set_base_home_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12754,7 +12565,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_base_home_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -12786,8 +12597,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_base_home_skel (
             this->args_);
 
         retval =
-          this->servant_->supported_interfaces (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->supported_interfaces ();
       }
 
     private:
@@ -12807,7 +12617,6 @@ void POA_CORBA::ComponentIR::HomeDef::_get_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12842,7 +12651,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_supported_interfaces_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -12875,8 +12684,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_supported_interfaces_skel (
             1);
 
         this->servant_->supported_interfaces (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -12896,7 +12704,6 @@ void POA_CORBA::ComponentIR::HomeDef::_set_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -12933,7 +12740,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_supported_interfaces_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -12965,8 +12772,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_supported_interfaces_skel (
             this->args_);
 
         retval =
-          this->servant_->managed_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->managed_component ();
       }
 
     private:
@@ -12986,7 +12792,6 @@ void POA_CORBA::ComponentIR::HomeDef::_get_managed_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13021,7 +12826,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_managed_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13054,8 +12859,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_managed_component_skel (
             1);
 
         this->servant_->managed_component (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -13075,7 +12879,6 @@ void POA_CORBA::ComponentIR::HomeDef::_set_managed_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13112,7 +12915,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_managed_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13144,8 +12947,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_managed_component_skel (
             this->args_);
 
         retval =
-          this->servant_->primary_key (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_->primary_key ();
       }
 
     private:
@@ -13165,7 +12967,6 @@ void POA_CORBA::ComponentIR::HomeDef::_get_primary_key_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13200,7 +13001,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_primary_key_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13233,8 +13034,7 @@ void POA_CORBA::ComponentIR::HomeDef::_get_primary_key_skel (
             1);
 
         this->servant_->primary_key (
-          arg_1
-          ACE_ENV_ARG_PARAMETER);
+          arg_1);
       }
 
     private:
@@ -13254,7 +13054,6 @@ void POA_CORBA::ComponentIR::HomeDef::_set_primary_key_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13291,7 +13090,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_primary_key_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13358,8 +13157,7 @@ void POA_CORBA::ComponentIR::HomeDef::_set_primary_key_skel (
             , arg_2
             , arg_3
             , arg_4
-            , arg_5
-            ACE_ENV_ARG_PARAMETER);
+            , arg_5);
       }
 
     private:
@@ -13379,7 +13177,6 @@ void POA_CORBA::ComponentIR::HomeDef::create_factory_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13424,7 +13221,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_factory_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13491,8 +13288,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_factory_skel (
             , arg_2
             , arg_3
             , arg_4
-            , arg_5
-            ACE_ENV_ARG_PARAMETER);
+            , arg_5);
       }
 
     private:
@@ -13512,7 +13308,6 @@ void POA_CORBA::ComponentIR::HomeDef::create_finder_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13557,7 +13352,7 @@ void POA_CORBA::ComponentIR::HomeDef::create_finder_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -13601,8 +13396,7 @@ namespace POA_CORBA
 
         retval =
           this->servant_-> _is_a (
-            arg_1
-            ACE_ENV_ARG_PARAMETER);
+            arg_1);
       }
 
     private:
@@ -13619,7 +13413,6 @@ void POA_CORBA::ComponentIR::HomeDef::_is_a_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13656,7 +13449,7 @@ void POA_CORBA::ComponentIR::HomeDef::_is_a_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13688,8 +13481,7 @@ void POA_CORBA::ComponentIR::HomeDef::_is_a_skel (
             this->args_);
 
         retval =
-          this->servant_-> _non_existent (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _non_existent ();
       }
 
     private:
@@ -13706,7 +13498,6 @@ void POA_CORBA::ComponentIR::HomeDef::_non_existent_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13741,7 +13532,7 @@ void POA_CORBA::ComponentIR::HomeDef::_non_existent_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }namespace POA_CORBA
 {
   namespace ComponentIR
@@ -13773,8 +13564,7 @@ void POA_CORBA::ComponentIR::HomeDef::_non_existent_skel (
             this->args_);
 
         retval =
-          this->servant_-> _repository_id (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _repository_id ();
       }
 
     private:
@@ -13791,7 +13581,6 @@ void POA_CORBA::ComponentIR::HomeDef::_repository_id_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13826,7 +13615,7 @@ void POA_CORBA::ComponentIR::HomeDef::_repository_id_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 // TAO_IDL - Generated from
@@ -13836,7 +13625,6 @@ void POA_CORBA::ComponentIR::HomeDef::_interface_skel (
     TAO_ServerRequest & server_request,
     void * /* servant_upcall */,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -13846,8 +13634,9 @@ void POA_CORBA::ComponentIR::HomeDef::_interface_skel (
 
   if (_tao_adapter == 0)
     {
-      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
-                                        ::CORBA::COMPLETED_NO));
+      throw ::CORBA::INTF_REPOS (
+        ::CORBA::OMGVMCID | 1,
+        ::CORBA::COMPLETED_NO);
     }
 
   POA_CORBA::ComponentIR::HomeDef * const impl =
@@ -13868,7 +13657,7 @@ void POA_CORBA::ComponentIR::HomeDef::_interface_skel (
 
   if (_tao_result == false)
     {
-      ACE_THROW ( ::CORBA::MARSHAL ());
+      throw ::CORBA::MARSHAL ();
     }
 }namespace POA_CORBA
 {
@@ -13901,8 +13690,7 @@ void POA_CORBA::ComponentIR::HomeDef::_interface_skel (
             this->args_);
 
         retval =
-          this->servant_-> _get_component (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->servant_-> _get_component ();
       }
 
     private:
@@ -13919,7 +13707,6 @@ void POA_CORBA::ComponentIR::HomeDef::_component_skel (
     TAO_ServerRequest & server_request,
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -13954,12 +13741,11 @@ void POA_CORBA::ComponentIR::HomeDef::_component_skel (
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 }
 
 ::CORBA::Boolean POA_CORBA::ComponentIR::HomeDef::_is_a (
     const char* value
-    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   return
@@ -14014,13 +13800,11 @@ const char* POA_CORBA::ComponentIR::HomeDef::_interface_repository_id (void) con
 void POA_CORBA::ComponentIR::HomeDef::_dispatch (
     TAO_ServerRequest & req,
     void * servant_upcall
-    ACE_ENV_ARG_DECL
   )
 {
   this->synchronous_upcall_dispatch (req,
                                      servant_upcall,
-                                     this
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this);
 }
 
 // TAO_IDL - Generated from

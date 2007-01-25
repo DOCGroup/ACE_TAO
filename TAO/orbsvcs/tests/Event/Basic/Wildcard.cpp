@@ -16,17 +16,16 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -62,70 +61,60 @@ main (int argc, char* argv[])
       EC_Counting_Supplier supplier;
 
       supplier.activate (consumer_admin.in (),
-                         milliseconds
-                         ACE_ENV_ARG_PARAMETER);
+                         milliseconds);
       supplier.connect (supplier_admin.in (),
                         event_source,
                         event_type,
                         event_source,
-                        event_type
-                        ACE_ENV_ARG_PARAMETER);
+                        event_type);
 
       // ****************************************************************
 
       EC_Counting_Supplier other_supplier;
 
       other_supplier.activate (consumer_admin.in (),
-                               milliseconds
-                               ACE_ENV_ARG_PARAMETER);
+                               milliseconds);
       other_supplier.connect (supplier_admin.in (),
                               event_source + 1,
                               event_type + 1,
                               event_source + 1,
-                              event_type + 1
-                              ACE_ENV_ARG_PARAMETER);
+                              event_type + 1);
 
       // ****************************************************************
 
       EC_Counting_Supplier any_source_supplier;
 
       any_source_supplier.activate (consumer_admin.in (),
-                                    milliseconds
-                                    ACE_ENV_ARG_PARAMETER);
+                                    milliseconds);
       any_source_supplier.connect (supplier_admin.in (),
                                    0,
                                    event_type,
                                    event_source,
-                                   event_type
-                                   ACE_ENV_ARG_PARAMETER);
+                                   event_type);
 
       // ****************************************************************
 
       EC_Counting_Supplier any_type_supplier;
 
       any_type_supplier.activate (consumer_admin.in (),
-                                  milliseconds
-                                  ACE_ENV_ARG_PARAMETER);
+                                  milliseconds);
       any_type_supplier.connect (supplier_admin.in (),
                                  event_source,
                                  0,
                                  event_source,
-                                 event_type
-                                 ACE_ENV_ARG_PARAMETER);
+                                 event_type);
 
       // ****************************************************************
 
       EC_Counting_Supplier wildcard_supplier;
 
       wildcard_supplier.activate (consumer_admin.in (),
-                                  milliseconds
-                                  ACE_ENV_ARG_PARAMETER);
+                                  milliseconds);
       wildcard_supplier.connect (supplier_admin.in (),
                                  0,
                                  0,
                                  event_source,
-                                 event_type
-                                 ACE_ENV_ARG_PARAMETER);
+                                 event_type);
 
       // ****************************************************************
 
@@ -140,8 +129,7 @@ main (int argc, char* argv[])
         consumer_qos.insert (event_source, event_type, 0);
 
         regular_consumer.connect (consumer_admin.in (),
-                                  consumer_qos.get_ConsumerQOS ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -157,8 +145,7 @@ main (int argc, char* argv[])
         consumer_qos.insert (event_source, 0, 0);
 
         any_type_consumer.connect (consumer_admin.in (),
-                                   consumer_qos.get_ConsumerQOS ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -174,8 +161,7 @@ main (int argc, char* argv[])
         consumer_qos.insert (0, event_type, 0);
 
         any_source_consumer.connect (consumer_admin.in (),
-                                     consumer_qos.get_ConsumerQOS ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                     consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -191,8 +177,7 @@ main (int argc, char* argv[])
         consumer_qos.insert (0, 0, 0);
 
         wildcard_consumer.connect (consumer_admin.in (),
-                                   consumer_qos.get_ConsumerQOS ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -232,7 +217,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       orb->destroy ();
 
@@ -270,11 +255,10 @@ main (int argc, char* argv[])
         + supplier.event_count;
       regular_consumer.dump_results (expected, 5);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -69,21 +69,18 @@ TAO_EventDef_i::describe_i (void)
 }
 
 CORBA::Boolean
-TAO_EventDef_i::is_a (const char *event_id
-                      ACE_ENV_ARG_DECL)
+TAO_EventDef_i::is_a (const char *event_id)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
   this->update_key ();
 
-  return this->is_a_i (event_id
-                       ACE_ENV_ARG_PARAMETER);
+  return this->is_a_i (event_id);
 }
 
 CORBA::Boolean
-TAO_EventDef_i::is_a_i (const char *event_id
-                        ACE_ENV_ARG_DECL)
+TAO_EventDef_i::is_a_i (const char *event_id)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (event_id, "IDL:omg.org/CORBA/EventBase:1.0") == 0)
@@ -91,8 +88,7 @@ TAO_EventDef_i::is_a_i (const char *event_id
       return 1;
     }
 
-  return this->TAO_ValueDef_i::is_a_i (event_id
-                                       ACE_ENV_ARG_PARAMETER);
+  return this->TAO_ValueDef_i::is_a_i (event_id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -60,8 +60,7 @@ public:
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CosLoadBalancing::Location * the_location ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the average CPU load at the location which this
@@ -71,8 +70,7 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CosLoadBalancing::LoadList * loads ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}

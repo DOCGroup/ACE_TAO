@@ -27,15 +27,13 @@ TAO_ECG_ConsumerEC_Control::shutdown (void)
 }
 
 void
-TAO_ECG_ConsumerEC_Control::event_channel_not_exist (TAO_EC_Gateway_IIOP *
-                                                     ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ECG_ConsumerEC_Control::event_channel_not_exist (TAO_EC_Gateway_IIOP *)
 {
 }
 
 void
 TAO_ECG_ConsumerEC_Control::system_exception (TAO_EC_Gateway_IIOP *,
-                                              CORBA::SystemException &
-                                              ACE_ENV_ARG_DECL_NOT_USED)
+                                              CORBA::SystemException &)
 {
 }
 

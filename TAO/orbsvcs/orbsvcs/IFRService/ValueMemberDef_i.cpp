@@ -55,7 +55,6 @@ TAO_ValueMemberDef_i::describe_i (void)
                                                 vm,
                                                 this->repo_,
                                                 this->section_key_
-                                                ACE_ENV_ARG_PARAMETER
                                               );
 
   vm.type = this->type_i ();
@@ -66,11 +65,9 @@ TAO_ValueMemberDef_i::describe_i (void)
                                             holder);
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  vm.type_def = CORBA::IDLType::_narrow (obj.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+  vm.type_def = CORBA::IDLType::_narrow (obj.in ());
 
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value  (this->section_key_,
@@ -134,29 +131,24 @@ TAO_ValueMemberDef_i::type_def_i (void)
                                             holder);
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::IDLType::_narrow (obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+  return CORBA::IDLType::_narrow (obj.in ());
 }
 
 void
-TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def
-                                ACE_ENV_ARG_DECL)
+TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->type_def_i (type_def
-                    ACE_ENV_ARG_PARAMETER);
+  this->type_def_i (type_def);
 }
 
 void
-TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
@@ -188,21 +180,18 @@ TAO_ValueMemberDef_i::access_i (void)
 }
 
 void
-TAO_ValueMemberDef_i::access (CORBA::Visibility access
-                              ACE_ENV_ARG_DECL)
+TAO_ValueMemberDef_i::access (CORBA::Visibility access)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->access_i (access
-                  ACE_ENV_ARG_PARAMETER);
+  this->access_i (access);
 }
 
 void
-TAO_ValueMemberDef_i::access_i (CORBA::Visibility access
-                                ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ValueMemberDef_i::access_i (CORBA::Visibility access)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,

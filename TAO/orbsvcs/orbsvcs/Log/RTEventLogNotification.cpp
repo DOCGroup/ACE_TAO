@@ -29,7 +29,6 @@ TAO_RTEventLogNotification::TAO_RTEventLogNotification (
   : TAO_LogNotification (),
     event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   obtainProxyConsumer ();
 }

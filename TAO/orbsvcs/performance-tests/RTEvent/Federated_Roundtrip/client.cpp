@@ -44,10 +44,8 @@ class Roundtrip_Peer : public Peer_Base
 public:
   Roundtrip_Peer (CORBA::ORB_ptr orb,
                   RTServer_Setup &rtserver_setup,
-                  RT_Class &rt_class
-                  ACE_ENV_ARG_DECL)
-    : Peer_Base (orb, rtserver_setup
-                 ACE_ENV_ARG_PARAMETER)
+                  RT_Class &rt_class)
+    : Peer_Base (orb, rtserver_setup)
     , rt_class_ (&rt_class)
   {
   }
@@ -57,8 +55,7 @@ public:
    */
   virtual Federated_Test::Experiment_Results *
       run_experiment (CORBA::Long experiment_id,
-                      CORBA::Long iterations
-                      ACE_ENV_ARG_DECL)
+                      CORBA::Long iterations)
         ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -133,10 +130,9 @@ int main (int argc, char *argv[])
   TAO_EC_Default_Factory::init_svcs();
   RT_Class rt_class;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ORB_Holder orb (argc, argv, ""
-                      ACE_ENV_ARG_PARAMETER);
+      ORB_Holder orb (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -144,13 +140,11 @@ int main (int argc, char *argv[])
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
                                      rt_class,
-                                     nthreads
-                                     ACE_ENV_ARG_PARAMETER);
+                                     nthreads);
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
-                                                  "RootPOA"
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  "RootPOA");
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -162,8 +156,7 @@ int main (int argc, char *argv[])
       Servant_var<Roundtrip_Peer> peer_impl (
           new Roundtrip_Peer (orb,
                               rtserver_setup,
-                              rt_class
-                              ACE_ENV_ARG_PARAMETER)
+                              rt_class)
           );
 
       Federated_Test::Peer_var peer =
@@ -172,32 +165,27 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n"));
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Federated_Test::Control_var control =
-        Federated_Test::Control::_narrow (object.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+        Federated_Test::Control::_narrow (object.in ());
 
-      control->join (peer.in ()
-                     ACE_ENV_ARG_PARAMETER);
+      control->join (peer.in ());
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 Federated_Test::Experiment_Results *
 Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
-                                CORBA::Long iterations
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Long iterations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int thread_count = 1;
@@ -230,8 +218,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
           this->poa_.in (),
           this->poa_.in (),
           this->event_channel_.in (),
-          &the_barrier
-          ACE_ENV_ARG_PARAMETER);
+          &the_barrier);
 #endif
 
   Client_Pair high_priority_group;
@@ -242,8 +229,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
                             gsf,
                             this->poa_.in (),
                             this->poa_.in ());
-  high_priority_group.connect (this->event_channel_.in ()
-                               ACE_ENV_ARG_PARAMETER);
+  high_priority_group.connect (this->event_channel_.in ());
   Auto_Disconnect<Client_Pair> high_priority_disconnect (&high_priority_group);
 
   Send_Task high_priority_task;

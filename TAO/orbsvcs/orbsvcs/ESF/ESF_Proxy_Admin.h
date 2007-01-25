@@ -72,8 +72,7 @@ public:
   virtual ~TAO_ESF_Proxy_Admin (void);
 
   /// Iterate over its internal collection.
-  void for_each (TAO_ESF_Worker<PROXY> *worker
-                 ACE_ENV_ARG_DECL)
+  void for_each (TAO_ESF_Worker<PROXY> *worker)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
@@ -99,8 +98,7 @@ public:
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL)
+  virtual void connected (PROXY *proxy)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -109,8 +107,7 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL)
+  virtual void reconnected (PROXY *proxy)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -118,8 +115,7 @@ public:
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL)
+  virtual void disconnected (PROXY *proxy)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

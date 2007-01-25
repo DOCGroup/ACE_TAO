@@ -119,8 +119,7 @@ TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
 }
 
 CORBA::Any *
-TAO::SSLIOP::CredentialsAcquirer::get_continuation_data (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
@@ -129,8 +128,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_continuation_data (
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
-    const CORBA::Any & /* acquisition_arguments */
-    ACE_ENV_ARG_DECL)
+    const CORBA::Any & /* acquisition_arguments */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
@@ -139,8 +137,7 @@ TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
 }
 
 SecurityLevel3::OwnCredentials_ptr
-TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
-                                                   ACE_ENV_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
@@ -184,8 +181,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
 
   if (on_list)
     {
-      this->curator_->_tao_add_own_credentials (creds
-                                                ACE_ENV_ARG_PARAMETER);
+      this->curator_->_tao_add_own_credentials (creds);
     }
 
   this->destroy ();
@@ -220,7 +216,7 @@ TAO::SSLIOP::CredentialsAcquirer::check_validity (void)
              this->lock_);
 
   if (this->destroyed_)
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 }
 
 ::X509 *

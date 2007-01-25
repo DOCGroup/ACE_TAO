@@ -59,8 +59,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Sets the administrative state of the log
   virtual void
-    set_administrative_state (DsLogAdmin::AdministrativeState state
-			      ACE_ENV_ARG_DECL)			= 0;
+    set_administrative_state (DsLogAdmin::AdministrativeState state)			= 0;
 
   /// Get the capacity alarm thresholds
   virtual DsLogAdmin::CapacityAlarmThresholdList*
@@ -68,8 +67,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the capacity alarm thresholds
   virtual void
-    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds
-				   ACE_ENV_ARG_DECL)		= 0;
+    set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds)		= 0;
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
@@ -77,8 +75,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Sets the forwarding state
   virtual void
-    set_forwarding_state (DsLogAdmin::ForwardingState state
-			  ACE_ENV_ARG_DECL)			= 0;
+    set_forwarding_state (DsLogAdmin::ForwardingState state)			= 0;
 
   /// Get the log duration
   virtual DsLogAdmin::TimeInterval
@@ -86,8 +83,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the log duration.
   virtual void
-    set_interval (const DsLogAdmin::TimeInterval& interval
-		  ACE_ENV_ARG_DECL)				= 0;
+    set_interval (const DsLogAdmin::TimeInterval& interval)				= 0;
 
   /// Get the log full action
   virtual DsLogAdmin::LogFullActionType
@@ -95,8 +91,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the log full action
   virtual void
-    set_log_full_action(DsLogAdmin::LogFullActionType action
-			ACE_ENV_ARG_DECL)			= 0;
+    set_log_full_action(DsLogAdmin::LogFullActionType action)			= 0;
 
   /// Get the list of the QoS properties supported by the log.
   virtual DsLogAdmin::QoSList*
@@ -104,8 +99,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the list of the QoS properties supported by the log.
   virtual void
-    set_log_qos (const DsLogAdmin::QoSList& qos
-		 ACE_ENV_ARG_DECL)				= 0;
+    set_log_qos (const DsLogAdmin::QoSList& qos)				= 0;
 
   /// Gets the max record life
   virtual CORBA::ULong
@@ -113,8 +107,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Sets the max record life
   virtual void
-    set_max_record_life (CORBA::ULong life
-			 ACE_ENV_ARG_DECL)			= 0;
+    set_max_record_life (CORBA::ULong life)			= 0;
 
   /// Get the current set value of the max size of the log data.
   virtual CORBA::ULongLong
@@ -122,8 +115,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the max size of log data. size == 0, => infinite.
   virtual void
-    set_max_size (CORBA::ULongLong size
-		  ACE_ENV_ARG_DECL)				= 0;
+    set_max_size (CORBA::ULongLong size)				= 0;
 
   /// Get the weekly scheduling parameters
   virtual DsLogAdmin::WeekMask*
@@ -131,8 +123,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
 
   /// Set the weekly scheduling parameters.
   virtual void
-    set_week_mask (const DsLogAdmin::WeekMask& masks
-		  ACE_ENV_ARG_DECL)				= 0;
+    set_week_mask (const DsLogAdmin::WeekMask& masks)				= 0;
 
 
   // = LogRecordStore status methods
@@ -163,7 +154,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Insert rec into storage.
   /// Returns 0 on success -1 on failure and 1 if the log is full.
   virtual int
-    log (const DsLogAdmin::LogRecord &rec ACE_ENV_ARG_DECL)	= 0;
+    log (const DsLogAdmin::LogRecord &rec)	= 0;
 
   /// Deletes "old" records from the store.
   virtual int
@@ -172,8 +163,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Set single record attributes.
   virtual void
     set_record_attribute (DsLogAdmin::RecordId id,
-                          const DsLogAdmin::NVList & attr_list
-                          ACE_ENV_ARG_DECL)
+                          const DsLogAdmin::NVList & attr_list)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidRecordId,
                      DsLogAdmin::InvalidAttribute))		= 0;
@@ -183,8 +173,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual CORBA::ULong
     set_records_attribute (const char * grammar,
                            const char * c,
-                           const DsLogAdmin::NVList & attr_list
-                           ACE_ENV_ARG_DECL)
+                           const DsLogAdmin::NVList & attr_list)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint,
@@ -193,8 +182,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
   virtual DsLogAdmin::NVList*
-    get_record_attribute (DsLogAdmin::RecordId id
-                          ACE_ENV_ARG_DECL)
+    get_record_attribute (DsLogAdmin::RecordId id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidRecordId))		= 0;
 
@@ -209,8 +197,7 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual DsLogAdmin::RecordList*
     query (const char * grammar,
 	   const char * c,
-	   DsLogAdmin::Iterator_out i
-	   ACE_ENV_ARG_DECL)
+	   DsLogAdmin::Iterator_out i)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))		= 0;
@@ -220,15 +207,13 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual DsLogAdmin::RecordList*
     retrieve (DsLogAdmin::TimeT from_time,
 	      CORBA::Long how_many,
-	      DsLogAdmin::Iterator_out i
-	      ACE_ENV_ARG_DECL)
+	      DsLogAdmin::Iterator_out i)
     ACE_THROW_SPEC ((CORBA::SystemException))			= 0;
 
   /// Returns the number of records matching constraint <c>.
   virtual CORBA::ULong
     match (const char * grammar,
-	   const char * c
-	   ACE_ENV_ARG_DECL)
+	   const char * c)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))		= 0;
@@ -236,16 +221,14 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Delete records matching constraint <c>.
   virtual CORBA::ULong
     delete_records (const char * grammar,
-		    const char * c
-		    ACE_ENV_ARG_DECL)
+		    const char * c)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint)) 		= 0;
 
   /// Delete records matching ids in <ids>
   virtual CORBA::ULong
-    delete_records_by_id (const DsLogAdmin::RecordIdList & ids
-			  ACE_ENV_ARG_DECL)
+    delete_records_by_id (const DsLogAdmin::RecordIdList & ids)
     ACE_THROW_SPEC ((CORBA::SystemException))			= 0;
 
 

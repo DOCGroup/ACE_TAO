@@ -50,8 +50,7 @@ public:
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
-                                 RtecEventComm::EventSet& event
-                                 ACE_ENV_ARG_DECL) = 0;
+                                 RtecEventComm::EventSet& event) = 0;
 };
 
 class TAO_RTEvent_Serv_Export TAO_EC_Simple_Queue_Full_Action :
@@ -71,8 +70,7 @@ public:
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
-                                 RtecEventComm::EventSet& event
-                                 ACE_ENV_ARG_DECL);
+                                 RtecEventComm::EventSet& event);
 
 protected:
   int queue_full_action_return_value_;
@@ -109,8 +107,7 @@ public:
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     RtecEventComm::EventSet& event
-                     ACE_ENV_ARG_DECL);
+                     RtecEventComm::EventSet& event);
 
 private:
   /// An per-task allocator

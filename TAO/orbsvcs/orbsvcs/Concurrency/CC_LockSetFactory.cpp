@@ -42,8 +42,7 @@ CC_LockSetFactory::create (void)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which
-                                   ACE_ENV_ARG_DECL)
+CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockSet *ls = 0;

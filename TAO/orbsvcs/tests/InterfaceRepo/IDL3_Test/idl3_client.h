@@ -38,8 +38,7 @@ public:
   // Destructor
 
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
   // Initialize the ORB and get the IFR object reference.
 
   int run (void);
@@ -55,69 +54,54 @@ private:
 
   // Also tests eventtype.
   int valuetype_test (const char *repo_id,
-                      const char *prefix
-                      ACE_ENV_ARG_DECL);
+                      const char *prefix);
 
   int component_attribute_test (
       CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &
-      ACE_ENV_ARG_DECL
     );
 
-  int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var &
-                                  ACE_ENV_ARG_DECL);
+  int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var &);
 
-  int component_port_test (CORBA::ComponentIR::ComponentDef_var &
-                           ACE_ENV_ARG_DECL);
+  int component_port_test (CORBA::ComponentIR::ComponentDef_var &);
 
-  int provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &
-                     ACE_ENV_ARG_DECL);
+  int provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &);
 
-  int uses_test (CORBA::ComponentIR::UsesDescriptionSeq &
-                 ACE_ENV_ARG_DECL);
+  int uses_test (CORBA::ComponentIR::UsesDescriptionSeq &);
 
   int event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &,
                        CORBA::ULong seq_length,
                        const char *port_type,
                        const char **names,
-                       const char **ids
-                       ACE_ENV_ARG_DECL);
+                       const char **ids);
 
   int valuetype_inheritance_test (CORBA::ExtValueDef_var &,
-                                  const char *prefix
-                                  ACE_ENV_ARG_DECL);
+                                  const char *prefix);
 
   int valuetype_attribute_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
       const char *prefix
-      ACE_ENV_ARG_DECL
     );
 
   int valuetype_operation_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
       const char *prefix
-      ACE_ENV_ARG_DECL
     );
 
   int valuetype_member_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
       const char *prefix
-      ACE_ENV_ARG_DECL
     );
 
   int valuetype_factory_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
       const char *prefix
-      ACE_ENV_ARG_DECL
     );
 
-  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &
-                             ACE_ENV_ARG_DECL);
+  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &);
 
-  int home_factory_test (CORBA::ComponentIR::HomeDescription *
-                         ACE_ENV_ARG_DECL);
+  int home_factory_test (CORBA::ComponentIR::HomeDescription *);
 
-  int home_finder_test (CORBA::ComponentIR::HomeDescription *
-                        ACE_ENV_ARG_DECL);
+  int home_finder_test (CORBA::ComponentIR::HomeDescription *);
 
 private:
   bool debug_;

@@ -11,12 +11,9 @@
 ACE_INLINE void
 ORB_Shutdown::operator () (CORBA::ORB_ptr orb)
 {
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
-      orb->shutdown (0
-                     ACE_ENV_ARG_PARAMETER);
+      orb->shutdown (0);
     }
-  ACE_CATCHANY { };
-  ACE_ENDTRY;
+  catch (const CORBA::Exception& ex){ };
 }

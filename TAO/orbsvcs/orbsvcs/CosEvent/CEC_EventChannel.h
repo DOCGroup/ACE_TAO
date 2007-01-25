@@ -198,33 +198,21 @@ public:
 
   /// Used to inform the EC that a Consumer has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void connected (TAO_CEC_ProxyPullConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPullConsumer*);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void connected (TAO_CEC_ProxyPullSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPullSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPullSupplier*);
 
   // Simple flags to control the EC behavior, set by the application
   // at construction time.

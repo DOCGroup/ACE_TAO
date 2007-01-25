@@ -44,11 +44,11 @@ public:
   TAO_Notify_Seq_Worker_T (void);
 
   /// create a SEQ
-  SEQ* create (CONTAINER& container ACE_ENV_ARG_DECL);
+  SEQ* create (CONTAINER& container);
 
 protected:
   ///= TAO_ESF_Worker method
-  void work (TYPE* object ACE_ENV_ARG_DECL);
+  void work (TYPE* object);
 
   /// The result
   SEQ_VAR seq_;

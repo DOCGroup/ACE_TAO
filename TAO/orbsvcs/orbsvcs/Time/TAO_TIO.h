@@ -46,8 +46,7 @@ public:
   ~TAO_TIO (void);
 
   /// This is the get method for the attribute time interval.
-  virtual TimeBase::IntervalT  time_interval (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual TimeBase::IntervalT  time_interval ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -59,8 +58,7 @@ public:
    * intervals.
    */
   virtual CosTime::OverlapType spans (CosTime::UTO_ptr time,
-                                      CosTime::TIO_out overlap
-                                      ACE_ENV_ARG_DECL)
+                                      CosTime::TIO_out overlap)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -71,8 +69,7 @@ public:
    * out parameter contains the gap between the two intervals.
    */
   virtual CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
-                                         CosTime::TIO_out overlap
-                                         ACE_ENV_ARG_DECL)
+                                         CosTime::TIO_out overlap)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

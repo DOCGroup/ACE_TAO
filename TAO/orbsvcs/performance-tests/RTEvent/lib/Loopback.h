@@ -30,8 +30,7 @@ public:
             CORBA::Long base_event_type,
             PortableServer::POA_ptr supplier_poa,
             PortableServer::POA_ptr consumer_poa,
-            RtecEventChannelAdmin::EventChannel_ptr ec
-            ACE_ENV_ARG_DECL);
+            RtecEventChannelAdmin::EventChannel_ptr ec);
 
   //@{
   /** @name The Federated_Test::Loopback methods

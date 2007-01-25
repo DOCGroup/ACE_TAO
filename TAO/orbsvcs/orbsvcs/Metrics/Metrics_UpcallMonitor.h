@@ -70,7 +70,6 @@ public:
 
   virtual void
   report_made_deadline (RtecScheduler::handle_t handle
-                        ACE_ENV_ARG_DECL
                           )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_0));
@@ -78,7 +77,6 @@ public:
 
   virtual void
   report_missed_deadline (RtecScheduler::handle_t handle
-                          ACE_ENV_ARG_DECL
                           )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_1));
@@ -87,7 +85,6 @@ public:
   virtual void
   get_aggregate_QoS (RtecScheduler::handle_t handle,
                      Metrics::QoSParameter_t_out qos
-                     ACE_ENV_ARG_DECL
                      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_2,
@@ -96,8 +93,7 @@ public:
 
   virtual void get_aggregate_QoS_set (
       const Metrics::Handle_Set_t & handle_set,
-      Metrics::QoSParameter_Set_out qos_set
-      ACE_ENV_ARG_DECL)
+      Metrics::QoSParameter_Set_out qos_set)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_4,
                      Metrics::INTERNAL_5));
@@ -105,8 +101,7 @@ public:
   // passed set.
 
   virtual void
-  reset_statistics (RtecScheduler::handle_t handle
-                    ACE_ENV_ARG_DECL)
+  reset_statistics (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_7,
                      Metrics::INTERNAL_8));
@@ -171,23 +166,20 @@ public:
   // Destructor.
 
   virtual void
-  report_made_deadline (RtecScheduler::handle_t handle
-                        ACE_ENV_ARG_DECL)
+  report_made_deadline (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_0));
   // Reports a successful upcall.
 
   virtual void
-  report_missed_deadline (RtecScheduler::handle_t handle
-                          ACE_ENV_ARG_DECL)
+  report_missed_deadline (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_1));
   // Reports an unsuccessful upcall.
 
   virtual void
   get_aggregate_QoS (RtecScheduler::handle_t handle,
-                     Metrics::QoSParameter_t_out qos
-                     ACE_ENV_ARG_DECL)
+                     Metrics::QoSParameter_t_out qos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_2,
                      Metrics::INTERNAL_3));
@@ -195,8 +187,7 @@ public:
 
   virtual void get_aggregate_QoS_set (
       const Metrics::Handle_Set_t & handle_set,
-      Metrics::QoSParameter_Set_out qos_set
-      ACE_ENV_ARG_DECL)
+      Metrics::QoSParameter_Set_out qos_set)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_4,
                      Metrics::INTERNAL_5));
@@ -205,16 +196,14 @@ public:
 
   virtual void report_aggregate_QoS (
       Metrics::QoSLogger_ptr logger,
-      Metrics::Time interval
-      ACE_ENV_ARG_DECL)
+      Metrics::Time interval)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::NIL_LOGGER,
                      Metrics::INTERNAL_6));
   // Report the aggregate QoS statistics to the logger.
 
   virtual void
-  reset_statistics (RtecScheduler::handle_t handle
-                    ACE_ENV_ARG_DECL)
+  reset_statistics (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_7,
                      Metrics::INTERNAL_8));

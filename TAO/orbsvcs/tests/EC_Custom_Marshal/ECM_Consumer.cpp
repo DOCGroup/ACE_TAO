@@ -46,14 +46,13 @@ Driver::Driver (void)
 int
 Driver::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,7 +60,7 @@ Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -119,8 +118,7 @@ Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,25 +126,24 @@ Driver::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
+        naming_context->resolve (name);
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
-                                                                ACE_ENV_ARG_PARAMETER);
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
       poa_manager->activate ();
 
-      this->connect_consumers (channel.in () ACE_ENV_ARG_PARAMETER);
+      this->connect_consumers (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
@@ -159,23 +156,21 @@ Driver::run (int argc, char* argv[])
 
       channel->destroy ();
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX in Consumer");
+      sys_ex._tao_print_exception ("SYS_EX in Consumer");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX in Consumer");
+      ex._tao_print_exception ("NON SYS EX in Consumer");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
 Driver::push_consumer (void* /* consumer_cookie */,
                        ACE_hrtime_t /* arrival */,
-                       const RtecEventComm::EventSet& events
-                       ACE_ENV_ARG_DECL_NOT_USED)
+                       const RtecEventComm::EventSet& events)
 {
   // int ID =
   //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
@@ -267,8 +262,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
 }
 
 void
-Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel
-                           ACE_ENV_ARG_DECL)
+Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -280,8 +274,7 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel
 
       this->consumers_[i]->connect (this->event_a_,
                                     this->event_b_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
+                                    channel);
     }
 }
 
@@ -373,8 +366,7 @@ Test_Consumer::Test_Consumer (Driver *driver, void *cookie)
 void
 Test_Consumer::connect (int event_a,
                         int event_b,
-                        RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -392,8 +384,7 @@ Test_Consumer::connect (int event_a,
   RtecEventComm::PushConsumer_var objref = this->_this ();
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
-                                                qos.get_ConsumerQOS ()
-                                                ACE_ENV_ARG_PARAMETER);
+                                                qos.get_ConsumerQOS ());
 
 }
 
@@ -410,12 +401,11 @@ Test_Consumer::disconnect (void)
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+Test_Consumer::push (const RtecEventComm::EventSet& events)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->driver_->push_consumer (this->cookie_, arrival, events ACE_ENV_ARG_PARAMETER);
+  this->driver_->push_consumer (this->cookie_, arrival, events);
 }
 
 void

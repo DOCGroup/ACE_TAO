@@ -15,8 +15,7 @@ template<typename T>
 void
 TAO_IFR_Generic_Utils<T>::destroy_special (const char *section_name,
                                            TAO_Repository_i *repo,
-                                           ACE_Configuration_Section_Key &key
-                                           ACE_ENV_ARG_DECL)
+                                           ACE_Configuration_Section_Key &key)
 {
   ACE_Configuration_Section_Key sub_key;
   int status =
@@ -137,7 +136,6 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
     T_desc &desc,
     TAO_Repository_i *repo,
     ACE_Configuration_Section_Key &key
-    ACE_ENV_ARG_DECL
   )
 {
   T_impl impl (repo);
@@ -300,8 +298,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                  CORBA::Boolean is_multiple,
                                  TAO_Repository_i *repo,
                                  CORBA::DefinitionKind port_kind,
-                                 ACE_Configuration_Section_Key &key
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_Configuration_Section_Key &key)
 {
   TAO_Container_i::tmp_name_holder (name);
   ACE_Configuration_Section_Key new_key;
@@ -315,8 +312,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          sub_section
-                                          ACE_ENV_ARG_PARAMETER);
+                                          sub_section);
 
   const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (port_base_type);
@@ -344,11 +340,9 @@ TAO_Port_Utils<T>::create_entry (const char *id,
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (path,
-                                              repo
-                                              ACE_ENV_ARG_PARAMETER);
+                                              repo);
 
-  return T::_narrow (obj.in ()
-                     ACE_ENV_ARG_PARAMETER);
+  return T::_narrow (obj.in ());
 }
 
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)

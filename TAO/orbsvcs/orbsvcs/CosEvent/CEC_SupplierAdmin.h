@@ -62,26 +62,18 @@ public:
   virtual ~TAO_CEC_SupplierAdmin (void);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer> *worker);
 
   /// Keep track of connected consumers.
-  virtual void connected (TAO_CEC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void connected (TAO_CEC_ProxyPullConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPullConsumer*);
 
   /// The event channel is shutting down, inform all the consumers of
   /// this

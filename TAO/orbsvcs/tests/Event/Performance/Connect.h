@@ -58,12 +58,10 @@ public:
 
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
   virtual void disconnect_consumers (void);
   virtual void disconnect_suppliers (void);
 
@@ -94,12 +92,10 @@ public:
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
   virtual void dump_results (const char* name,
                              ACE_UINT32 global_scale_factor);
 
@@ -117,12 +113,10 @@ public:
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
         const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type
-        ACE_ENV_ARG_DECL);
+        int shutdown_event_type);
   virtual void connect (
       const RtecEventChannelAdmin::SupplierQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
   virtual void dump_results (const char* name,
                              ACE_UINT32 global_scale_factor);
 

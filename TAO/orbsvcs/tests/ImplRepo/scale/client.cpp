@@ -9,13 +9,13 @@ using namespace CORBA;
 
 int main(int argc, char* argv[]) {
 
-  ACE_TRY_NEW_ENV
+  try
   {
 
-    ORB_var orb = ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+    ORB_var orb = ORB_init(argc, argv, 0);
 
-    Object_var obj = orb->resolve_initial_references("Test" ACE_ENV_ARG_PARAMETER);
-    test_var test = test::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+    Object_var obj = orb->resolve_initial_references("Test");
+    test_var test = test::_narrow(obj.in());
     ACE_ASSERT(! is_nil(test.in()));
 
     Long n = test->get();
@@ -27,10 +27,9 @@ int main(int argc, char* argv[]) {
 
     return 0;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client:");
+    ex._tao_print_exception ("client:");
   }
-  ACE_ENDTRY;
   return -1;
 }

@@ -46,8 +46,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 void
 ServerRequest_Interceptor2::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -55,8 +54,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 ServerRequest_Interceptor2::receive_request (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -69,40 +67,36 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     return;
   }
 
-  ACE_TRY
+  try
     {
       IOP::ServiceContext_var sc =
-        ri->get_request_service_context (IOP::FT_REQUEST
-                                         ACE_ENV_ARG_PARAMETER);
+        ri->get_request_service_context (IOP::FT_REQUEST);
 
       // No exception therefore there was a context
       has_ft_request_sc_ = true;
     }
-  ACE_CATCH (CORBA::BAD_PARAM, ex)
+  catch (const CORBA::BAD_PARAM& ex)
     {
       ACE_UNUSED_ARG (ex);
       // No group version context
       has_ft_request_sc_ = false;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
 ServerRequest_Interceptor2::send_reply (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerRequest_Interceptor2::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -110,8 +104,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 ServerRequest_Interceptor2::send_other (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {

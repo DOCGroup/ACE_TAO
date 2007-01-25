@@ -53,19 +53,14 @@ public:
   // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
-                             ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier);
   virtual void shutdown (void);
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL_NOT_USED);
+                     TAO_EC_ProxyPushConsumer *consumer);
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info
-                                     ACE_ENV_ARG_DECL);
+                                     const TAO_EC_QOS_Info &event_info);
   virtual CORBA::ULong _decr_refcnt (void);
   virtual CORBA::ULong _incr_refcnt (void);
 

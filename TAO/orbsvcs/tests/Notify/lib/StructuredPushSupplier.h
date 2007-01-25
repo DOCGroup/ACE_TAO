@@ -73,12 +73,11 @@ public:
   virtual ~TAO_Notify_Tests_StructuredPushSupplier ();
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
   virtual void disconnect_from_proxy (void);

@@ -53,8 +53,7 @@ public:
   static TAO_Notify_Method_Request_Lookup_Queueable * unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
-    TAO_InputCDR & cdr
-    ACE_ENV_ARG_DECL);
+    TAO_InputCDR & cdr);
 
 protected:
   /// Constuctor
@@ -64,7 +63,7 @@ protected:
   int execute_i (void);
 
   ///= TAO_ESF_Worker method
-  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
+  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier);
 
 protected:
 

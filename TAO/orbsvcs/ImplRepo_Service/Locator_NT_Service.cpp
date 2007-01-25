@@ -68,10 +68,9 @@ Locator_NT_Service::svc (void)
       return -1;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
+      int status = server.init (opts);
 
       if (status == -1)
         {
@@ -91,19 +90,18 @@ Locator_NT_Service::svc (void)
         if (status != -1)
             return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, IMR_LOCATOR_DISPLAY_NAME);
+      sysex._tao_print_exception (IMR_LOCATOR_DISPLAY_NAME);
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, IMR_LOCATOR_DISPLAY_NAME);
+      userex._tao_print_exception (IMR_LOCATOR_DISPLAY_NAME);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, IMR_LOCATOR_DISPLAY_NAME);
+      ex._tao_print_exception (IMR_LOCATOR_DISPLAY_NAME);
     }
-  ACE_ENDTRY;
 
   report_status (SERVICE_STOPPED);
 

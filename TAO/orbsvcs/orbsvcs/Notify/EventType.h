@@ -79,7 +79,7 @@ public:
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
 
 protected:
   /// Init this object.

@@ -44,15 +44,13 @@ public:
   virtual ~TAO_EC_Default_ProxyPushSupplier (void);
 
   void activate (
-     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy
-     ACE_ENV_ARG_DECL)
+     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// IDL methods.
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL)
+                const RtecEventChannelAdmin::ConsumerQOS &qos)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError));

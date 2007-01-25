@@ -19,59 +19,59 @@ TAO_Notify_RT_StructuredProxyPushSupplier::~TAO_Notify_RT_StructuredProxyPushSup
 }
 
 CORBA::Object_ptr
-TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant servant)
 {
-  CORBA::Object_var object = TAO_Notify_Proxy::activate (servant ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var object = TAO_Notify_Proxy::activate (servant);
 
   // Obtain our ref.
   CORBA::Object_var obj = this->ref ();
 
-  this->event_forwarder_ = Event_Forwarder::StructuredProxyPushSupplier::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+  this->event_forwarder_ = Event_Forwarder::StructuredProxyPushSupplier::_narrow (obj.in ());
 
   return object._retn ();
 }
 
 CORBA::Object_ptr
 TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ,
-                                                     CORBA::Long ACE_ENV_ARG_DECL_NOT_USED)
+                                                     CORBA::Long)
 {
    return CORBA::Object::_nil ();
 }
 
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request)
 {
-  ACE_TRY
+  try
     {
-      request.event()->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
+      request.event()->push (this->event_forwarder_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t) TAO_Notify_RT_StructuredProxyPushSupplier::push failed\n");
+          ex._tao_print_exception (
+            "(%P|%t) TAO_Notify_RT_StructuredProxyPushSupplier::push failed\n");
         }
 
     }
-  ACE_ENDTRY;
 }
 
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_Event* event)
 {
-  ACE_TRY
+  try
     {
-      event->push_no_filtering (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
+      event->push_no_filtering (this->event_forwarder_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t) TAO_Notify_RT_StructuredProxyPushSupplier::push failed\n");
+          ex._tao_print_exception (
+            "(%P|%t) TAO_Notify_RT_StructuredProxyPushSupplier::push failed\n");
         }
 
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -24,8 +24,7 @@ TAO_EC_Null_Filter_Builder::~TAO_EC_Null_Filter_Builder (void)
 TAO_EC_Filter*
 TAO_EC_Null_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *,
-    RtecEventChannelAdmin::ConsumerQOS&
-    ACE_ENV_ARG_DECL_NOT_USED) const
+    RtecEventChannelAdmin::ConsumerQOS&) const
 {
   return new TAO_EC_Null_Filter;
 }

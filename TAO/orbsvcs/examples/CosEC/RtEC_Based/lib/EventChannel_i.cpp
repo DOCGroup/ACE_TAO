@@ -19,8 +19,7 @@ TAO_CosEC_EventChannel_i::~TAO_CosEC_EventChannel_i (void)
 int
 TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
                                 const RtecEventChannelAdmin::SupplierQOS &supplierqos,
-                                RtecEventChannelAdmin::EventChannel_ptr rtec
-                                ACE_ENV_ARG_DECL)
+                                RtecEventChannelAdmin::EventChannel_ptr rtec)
 {
   // Allocate the admins..
   TAO_CosEC_ConsumerAdmin_i *consumer_;
@@ -97,11 +96,9 @@ TAO_CosEC_EventChannel_i::destroy (void)
   PortableServer::POA_var poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id = poa->servant_to_id (this
-                                                        ACE_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var id = poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 
   this->supplieradmin_ =  CosEventChannelAdmin::SupplierAdmin::_nil ();
   this->consumeradmin_ =  CosEventChannelAdmin::ConsumerAdmin::_nil ();

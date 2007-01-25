@@ -29,8 +29,7 @@ TAO_FT_Request_Duration_Policy::policy_type (void)
 }
 
 CORBA::Policy_ptr
-TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val
-                                        ACE_ENV_ARG_DECL)
+TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val)
 {
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
@@ -108,8 +107,7 @@ TAO_FT_Heart_Beat_Policy::heartbeat_policy_value (void)
 
 
 CORBA::Policy_ptr
-TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val
-                                  ACE_ENV_ARG_DECL)
+TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
 {
   FT::HeartbeatPolicyValue *value = 0;
   if ((val >>= value) == 0)

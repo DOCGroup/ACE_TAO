@@ -56,14 +56,12 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer
-                     ACE_ENV_ARG_DECL)
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle
-                                ACE_ENV_ARG_DECL)
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,

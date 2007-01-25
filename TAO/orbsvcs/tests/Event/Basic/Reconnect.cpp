@@ -112,7 +112,7 @@ EC_Reconnect::execute_consumer_test (void)
 {
   RtecEventChannelAdmin::ConsumerQOS qos;
   int shutdown_event_type;
-  this->build_consumer_qos (0, qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
+  this->build_consumer_qos (0, qos, shutdown_event_type);
 
   if (this->allow_consumer_reconnect_)
     {
@@ -121,8 +121,7 @@ EC_Reconnect::execute_consumer_test (void)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
           this->consumers_[0]->connect (qos,
-                                        shutdown_event_type
-                                        ACE_ENV_ARG_PARAMETER);
+                                        shutdown_event_type);
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->consumer_reconnect_.sample (stop - start_time,
                                             stop - start);
@@ -130,24 +129,21 @@ EC_Reconnect::execute_consumer_test (void)
     }
   else
     {
-      ACE_TRY
+      try
         {
           this->consumers_[0]->connect (qos,
-                                        shutdown_event_type
-                                        ACE_ENV_ARG_PARAMETER);
+                                        shutdown_event_type);
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      ACE_CATCH (RtecEventChannelAdmin::AlreadyConnected, ex)
+      catch (const RtecEventChannelAdmin::AlreadyConnected& ex)
         {
           /* do nothing */
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Expected AlreadyConnected exception");
+          ex._tao_print_exception ("Expected AlreadyConnected exception");
         }
-      ACE_ENDTRY;
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         this->event_channel_->for_consumers ();
@@ -159,8 +155,7 @@ EC_Reconnect::execute_consumer_test (void)
           this->consumers_[0]->disconnect ();
           this->consumers_[0]->connect (consumer_admin.in (),
                                         qos,
-                                        shutdown_event_type
-                                        ACE_ENV_ARG_PARAMETER);
+                                        shutdown_event_type);
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->consumer_reconnect_.sample (stop - start_time,
                                             stop - start);
@@ -173,7 +168,7 @@ EC_Reconnect::execute_supplier_test (void)
 {
   RtecEventChannelAdmin::SupplierQOS qos;
   int shutdown_event_type;
-  this->build_supplier_qos (0, qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
+  this->build_supplier_qos (0, qos, shutdown_event_type);
 
   if (this->allow_supplier_reconnect_)
     {
@@ -181,8 +176,7 @@ EC_Reconnect::execute_supplier_test (void)
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
-          this->suppliers_[0]->connect (qos, shutdown_event_type
-                                        ACE_ENV_ARG_PARAMETER);
+          this->suppliers_[0]->connect (qos, shutdown_event_type);
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->supplier_reconnect_.sample (stop - start_time,
                                             stop - start);
@@ -190,23 +184,20 @@ EC_Reconnect::execute_supplier_test (void)
     }
   else
     {
-      ACE_TRY
+      try
         {
-          this->suppliers_[0]->connect (qos, shutdown_event_type
-                                        ACE_ENV_ARG_PARAMETER);
+          this->suppliers_[0]->connect (qos, shutdown_event_type);
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      ACE_CATCH (RtecEventChannelAdmin::AlreadyConnected, ex)
+      catch (const RtecEventChannelAdmin::AlreadyConnected& ex)
         {
           /* do nothing */
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Expected AlreadyConnected exception");
+          ex._tao_print_exception ("Expected AlreadyConnected exception");
         }
-      ACE_ENDTRY;
 
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
         this->event_channel_->for_suppliers ();
@@ -218,8 +209,7 @@ EC_Reconnect::execute_supplier_test (void)
           this->suppliers_[0]->disconnect ();
           this->suppliers_[0]->connect (supplier_admin.in (),
                                         qos,
-                                        shutdown_event_type
-                                        ACE_ENV_ARG_PARAMETER);
+                                        shutdown_event_type);
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
           this->supplier_reconnect_.sample (stop - start_time,
                                             stop - start);

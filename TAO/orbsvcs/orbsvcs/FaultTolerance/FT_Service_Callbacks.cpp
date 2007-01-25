@@ -37,10 +37,10 @@ TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
   delete this->profile_lock_;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_FT_Service_Callbacks::select_profile (const TAO_MProfile &mprofile,
     TAO_Profile *&pfile)
-{  
+{
   CORBA::ULong sz =
     mprofile.size ();
 
@@ -270,8 +270,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &context_list,
-    TAO_Profile *profile
-    ACE_ENV_ARG_DECL)
+    TAO_Profile *profile)
 {
   if (this->restart_policy_check (context_list,
                                   profile))
@@ -290,8 +289,7 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_transient_failure (
     IOP::ServiceContextList &service,
-    TAO_Profile *profile
-    ACE_ENV_ARG_DECL_NOT_USED)
+    TAO_Profile *profile)
 {
   if (this->restart_policy_check (service,
                                   profile))

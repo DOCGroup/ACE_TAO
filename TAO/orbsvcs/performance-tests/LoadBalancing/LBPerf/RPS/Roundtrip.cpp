@@ -17,8 +17,7 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 
 Test::Timestamp
 Roundtrip::test_method (Test::Timestamp send_time,
-                        Test::number  cl_number
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        Test::number  cl_number)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -37,5 +36,5 @@ void
 Roundtrip::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

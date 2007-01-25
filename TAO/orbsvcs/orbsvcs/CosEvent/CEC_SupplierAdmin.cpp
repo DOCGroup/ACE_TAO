@@ -37,45 +37,39 @@ TAO_CEC_SupplierAdmin::_default_POA (void)
 }
 
 void
-TAO_CEC_SupplierAdmin::connected (TAO_CEC_ProxyPushConsumer *consumer
-                                  ACE_ENV_ARG_DECL)
+TAO_CEC_SupplierAdmin::connected (TAO_CEC_ProxyPushConsumer *consumer)
 {
-  this->push_admin_.connected (consumer ACE_ENV_ARG_PARAMETER);
+  this->push_admin_.connected (consumer);
 }
 
 void
-TAO_CEC_SupplierAdmin::reconnected (TAO_CEC_ProxyPushConsumer *consumer
-                                    ACE_ENV_ARG_DECL)
+TAO_CEC_SupplierAdmin::reconnected (TAO_CEC_ProxyPushConsumer *consumer)
 {
-  this->push_admin_.reconnected (consumer ACE_ENV_ARG_PARAMETER);
+  this->push_admin_.reconnected (consumer);
 }
 
 void
-TAO_CEC_SupplierAdmin::disconnected (TAO_CEC_ProxyPushConsumer *consumer
-                                     ACE_ENV_ARG_DECL)
+TAO_CEC_SupplierAdmin::disconnected (TAO_CEC_ProxyPushConsumer *consumer)
 {
-  this->push_admin_.disconnected (consumer ACE_ENV_ARG_PARAMETER);
+  this->push_admin_.disconnected (consumer);
 }
 
 void
-TAO_CEC_SupplierAdmin::connected (TAO_CEC_ProxyPullConsumer *consumer
-                                  ACE_ENV_ARG_DECL)
+TAO_CEC_SupplierAdmin::connected (TAO_CEC_ProxyPullConsumer *consumer)
 {
-  this->pull_admin_.connected (consumer ACE_ENV_ARG_PARAMETER);
+  this->pull_admin_.connected (consumer);
 }
 
 void
-TAO_CEC_SupplierAdmin::reconnected (TAO_CEC_ProxyPullConsumer *consumer
-                                    ACE_ENV_ARG_DECL)
+TAO_CEC_SupplierAdmin::reconnected (TAO_CEC_ProxyPullConsumer *consumer)
 {
-  this->pull_admin_.reconnected (consumer ACE_ENV_ARG_PARAMETER);
+  this->pull_admin_.reconnected (consumer);
 }
 
 void
-TAO_CEC_SupplierAdmin::disconnected (TAO_CEC_ProxyPullConsumer *consumer
-                                     ACE_ENV_ARG_DECL)
+TAO_CEC_SupplierAdmin::disconnected (TAO_CEC_ProxyPullConsumer *consumer)
 {
-  this->pull_admin_.disconnected (consumer ACE_ENV_ARG_PARAMETER);
+  this->pull_admin_.disconnected (consumer);
 }
 
 void

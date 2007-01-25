@@ -74,7 +74,7 @@ public:
    * @param orb our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb);
 
   /**
    * Prepare to exit.
@@ -82,7 +82,7 @@ public:
    */
   int fini (void);
 
-  int idle(int & result ACE_ENV_ARG_DECL);
+  int idle(int & result);
 
 
   /**
@@ -99,7 +99,7 @@ public:
    * @param id the numerical id assigned to this replica.
    * @param replica a pointer to the Replica object (redundant for safety.)
    */
-  void remove_replica (CORBA::ULong id, FT_TestReplica_i * replica ACE_ENV_ARG_DECL);
+  void remove_replica (CORBA::ULong id, FT_TestReplica_i * replica);
 
   //////////////////
   // CORBA interface
@@ -116,7 +116,6 @@ public:
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -129,7 +128,6 @@ public:
 
   virtual void delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -149,7 +147,7 @@ private:
    * Actual replica creation happens in this method.
    * @param name becomes part of the objects identity.
    */
-  FT_TestReplica_i * create_replica(const char * name ACE_ENV_ARG_DECL);
+  FT_TestReplica_i * create_replica(const char * name);
 
   /**
    * Find or allocate an ID for a new replica

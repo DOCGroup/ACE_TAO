@@ -107,8 +107,7 @@ public:
             ACE_Scheduler_Factory::POD_RT_Info rt_info[],
             int dependency_count,
             ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
-            u_long stability_flags
-            ACE_ENV_ARG_DECL)
+            u_long stability_flags)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME,
                      RtecScheduler::UNKNOWN_TASK,
@@ -123,8 +122,7 @@ public:
                      RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Closes the scheduler, releasing all current resources.
 
-  virtual RtecScheduler::handle_t create (const char * entry_point
-                                          ACE_ENV_ARG_DECL)
+  virtual RtecScheduler::handle_t create (const char * entry_point)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME,
                      RtecScheduler::INTERNAL,
@@ -134,16 +132,14 @@ public:
   // RT_Info is returned.  If the RT_Info already exists, an exception
   // is thrown.
 
-  virtual RtecScheduler::handle_t lookup (const char * entry_point
-                                          ACE_ENV_ARG_DECL)
+  virtual RtecScheduler::handle_t lookup (const char * entry_point)
     ACE_THROW_SPEC((CORBA::SystemException,
                     RtecScheduler::UNKNOWN_TASK,
                     RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Lookup a handle for an RT_Info, and return its handle, or an error
   // value if it's not present.
 
-  virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle
-                                       ACE_ENV_ARG_DECL)
+  virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::SYNCHRONIZATION_FAILURE));
@@ -158,8 +154,7 @@ public:
                     ::RtecScheduler::Importance_t importance,
                     ::RtecScheduler::Quantum_t quantum,
                     ::RtecScheduler::Threads_t threads,
-                    ::RtecScheduler::Info_Type_t info_type
-                    ACE_ENV_ARG_DECL)
+                    ::RtecScheduler::Info_Type_t info_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::INTERNAL,
@@ -175,16 +170,14 @@ public:
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
                       CORBA::Long threads,
-                      RtecScheduler::Info_Type_t info_type
-                      ACE_ENV_ARG_DECL)
+                      RtecScheduler::Info_Type_t info_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::INTERNAL,
                      RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Reset characteristics of the RT_Info corresponding to the passed handle.
 
-  virtual void set_seq (const RtecScheduler::RT_Info_Set& infos
-                        ACE_ENV_ARG_DECL)
+  virtual void set_seq (const RtecScheduler::RT_Info_Set& infos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::INTERNAL,
@@ -192,8 +185,7 @@ public:
   // Set characteristics of the RT_Infos corresponding to the passed handles.
   // Tuples are added in the case of existing and/or multiple definitions.
 
-  virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos
-                          ACE_ENV_ARG_DECL)
+  virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::INTERNAL,
@@ -201,8 +193,7 @@ public:
   // Reset characteristics of the RT_Infos corresponding to the passed handles.
   // Tuples are replaced in the case of existing and/or multiple definitions.
 
-  virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos
-                            ACE_ENV_ARG_DECL)
+  virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::INTERNAL,
@@ -215,8 +206,7 @@ public:
   virtual void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& o_priority,
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                         RtecScheduler::Preemption_Priority_t& p_priority
-                         ACE_ENV_ARG_DECL)
+                         RtecScheduler::Preemption_Priority_t& p_priority)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -227,8 +217,7 @@ public:
   virtual void entry_point_priority (const char * entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                                     RtecScheduler::Preemption_Priority_t& p_priority
-                                     ACE_ENV_ARG_DECL)
+                                     RtecScheduler::Preemption_Priority_t& p_priority)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -239,8 +228,7 @@ public:
   virtual void add_dependency (RtecScheduler::handle_t handle,
                                RtecScheduler::handle_t dependency,
                                CORBA::Long number_of_calls,
-                               RtecScheduler::Dependency_Type_t dependency_type
-                               ACE_ENV_ARG_DECL)
+                               RtecScheduler::Dependency_Type_t dependency_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::UNKNOWN_TASK));
@@ -249,8 +237,7 @@ public:
   virtual void remove_dependency (RtecScheduler::handle_t handle,
                                   RtecScheduler::handle_t dependency,
                                   CORBA::Long number_of_calls,
-                                  RtecScheduler::Dependency_Type_t dependency_type
-                                  ACE_ENV_ARG_DECL)
+                                  RtecScheduler::Dependency_Type_t dependency_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::UNKNOWN_TASK));
@@ -260,31 +247,27 @@ public:
                                             RtecScheduler::handle_t dependency,
                                             CORBA::Long number_of_calls,
                                             RtecScheduler::Dependency_Type_t dependency_type,
-                                            RtecScheduler::Dependency_Enabled_Type_t enabled
-                                            ACE_ENV_ARG_DECL)
+                                            RtecScheduler::Dependency_Enabled_Type_t enabled)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::UNKNOWN_TASK));
   // This method sets the enable state of a dependency between two RT_Infos.
 
-  virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies
-                                                ACE_ENV_ARG_DECL)
+  virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::UNKNOWN_TASK));
   // This method sets the enable state of a sequence of dependencies.
 
   virtual void set_rt_info_enable_state (RtecScheduler::handle_t handle,
-                                         RtecScheduler::RT_Info_Enabled_Type_t enabled
-                                         ACE_ENV_ARG_DECL)
+                                         RtecScheduler::RT_Info_Enabled_Type_t enabled)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
   // This method enables or disables an RT_Info.
 
-  virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set
-                                             ACE_ENV_ARG_DECL)
+  virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::INTERNAL,
@@ -296,8 +279,7 @@ public:
                                    RtecScheduler::RT_Info_Set_out infos,
                                    RtecScheduler::Dependency_Set_out dependencies,
                                    RtecScheduler::Config_Info_Set_out configs,
-                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                                   ACE_ENV_ARG_DECL)
+                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -312,8 +294,7 @@ public:
 
   virtual void recompute_scheduling (CORBA::Long minimum_priority,
                                      CORBA::Long maximum_priority,
-                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                                     ACE_ENV_ARG_DECL)
+                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -323,24 +304,21 @@ public:
                      RtecScheduler::DUPLICATE_NAME));
   // Recomputes the scheduling priorities, etc.
 
-  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
-                                ACE_ENV_ARG_DECL)
+  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::INTERNAL));
   // Returns the set of rt_infos, with their assigned priorities (as
   // of the last schedule re-computation).
 
-  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
-                                   ACE_ENV_ARG_DECL)
+  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::INTERNAL));
   // Returns the set of rt_infos, with their assigned priorities (as
   // of the last schedule re-computation).
 
-  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs
-                                    ACE_ENV_ARG_DECL)
+  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::INTERNAL));
@@ -350,8 +328,7 @@ public:
 
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& o_priority,
-                                       RtecScheduler::Dispatching_Type_t & d_type
-                                       ACE_ENV_ARG_DECL)
+                                       RtecScheduler::Dispatching_Type_t & d_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::NOT_SCHEDULED,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -367,8 +344,7 @@ public:
   // of scheduled priorities.  All scheduled priorities range from 0
   // to the number returned, inclusive.
 
-  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs
-				 ACE_ENV_ARG_DECL)
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     RtecScheduler::SYNCHRONIZATION_FAILURE,
 		     RtecScheduler::NOT_SCHEDULED));
@@ -465,8 +441,7 @@ protected:
 
   TAO_RT_Info_Ex * create_i (const char * entry_point,
                              RtecScheduler::handle_t handle,
-                             int ignore_duplicates
-                             ACE_ENV_ARG_DECL)
+                             int ignore_duplicates)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME,
                      RtecScheduler::INTERNAL));
@@ -485,14 +460,12 @@ protected:
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
                       CORBA::Long threads,
-              RtecScheduler::Info_Type_t info_type
-              ACE_ENV_ARG_DECL)
+              RtecScheduler::Info_Type_t info_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL));
   // Internal method to set characteristics of the passed RT_Info.
 
-  virtual RtecScheduler::handle_t lookup_i (const char * entry_point
-                                            ACE_ENV_ARG_DECL)
+  virtual RtecScheduler::handle_t lookup_i (const char * entry_point)
     ACE_THROW_SPEC((CORBA::SystemException,
                     RtecScheduler::UNKNOWN_TASK));
   // Internal method to look up a handle for an RT_Info, and return
@@ -501,8 +474,7 @@ protected:
   virtual void priority_i (RtecScheduler::handle_t handle,
                            RtecScheduler::OS_Priority& o_priority,
                            RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                           RtecScheduler::Preemption_Priority_t& p_priority
-                           ACE_ENV_ARG_DECL)
+                           RtecScheduler::Preemption_Priority_t& p_priority)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::NOT_SCHEDULED));
@@ -513,8 +485,7 @@ protected:
                                  RtecScheduler::handle_t dependency,
                                  CORBA::Long number_of_calls,
                          RtecScheduler::Dependency_Type_t dependency_type,
-                         RtecScheduler::Dependency_Enabled_Type_t enabled
-                         ACE_ENV_ARG_DECL)
+                         RtecScheduler::Dependency_Enabled_Type_t enabled)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
@@ -525,8 +496,7 @@ protected:
   virtual void remove_dependency_i (RtecScheduler::handle_t handle,
                                     RtecScheduler::handle_t dependency,
                                     CORBA::Long number_of_calls,
-                                    RtecScheduler::Dependency_Type_t dependency_type
-                                    ACE_ENV_ARG_DECL)
+                                    RtecScheduler::Dependency_Type_t dependency_type)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::INTERNAL,
@@ -539,8 +509,7 @@ protected:
                                               RtecScheduler::handle_t dependency,
                                               CORBA::Long number_of_calls,
                                               RtecScheduler::Dependency_Type_t dependency_type,
-                                              RtecScheduler::Dependency_Enabled_Type_t enabled
-                                              ACE_ENV_ARG_DECL)
+                                              RtecScheduler::Dependency_Enabled_Type_t enabled)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::INTERNAL,
@@ -556,8 +525,7 @@ protected:
                          typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                   CORBA::Long number_of_calls,
                          RtecScheduler::Dependency_Type_t dependency_type,
-                         RtecScheduler::Dependency_Enabled_Type_t enabled
-                         ACE_ENV_ARG_DECL)
+                         RtecScheduler::Dependency_Enabled_Type_t enabled)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::INTERNAL,
                       RtecScheduler::UNKNOWN_TASK));
@@ -567,8 +535,7 @@ protected:
                            RtecScheduler::handle_t handle,
                            typename TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                            CORBA::Long number_of_calls,
-                           RtecScheduler::Dependency_Type_t dependency_type
-                           ACE_ENV_ARG_DECL)
+                           RtecScheduler::Dependency_Type_t dependency_type)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::INTERNAL,
                       RtecScheduler::UNKNOWN_TASK));
@@ -580,8 +547,7 @@ protected:
                                         TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &dependency_map,
                                       CORBA::Long number_of_calls,
                                       RtecScheduler::Dependency_Type_t dependency_type,
-                                      RtecScheduler::Dependency_Enabled_Type_t enabled
-                                      ACE_ENV_ARG_DECL)
+                                      RtecScheduler::Dependency_Enabled_Type_t enabled)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
@@ -755,8 +721,7 @@ protected:
 template <class ARRAY_ELEMENT_TYPE> void
 maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
                            long & current_ptr_array_size,
-                           RtecScheduler::handle_t handle
-                           ACE_ENV_ARG_DECL)
+                           RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException));
 // Helper function: makes sure there is room in the scheduling pointer
 // arrays.  This function expands the array eagerly, to minimize time

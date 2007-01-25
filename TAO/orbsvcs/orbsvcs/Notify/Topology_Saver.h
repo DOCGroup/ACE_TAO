@@ -64,8 +64,7 @@ namespace TAO_Notify
     virtual bool begin_object (CORBA::Long id,
       const ACE_CString &type,
       const NVPList& attrs,
-      bool changed
-      ACE_ENV_ARG_DECL) = 0;
+      bool changed) = 0;
 
     /** \brief Report deleted children to the saver.
     *
@@ -78,8 +77,7 @@ namespace TAO_Notify
     */
     virtual void delete_child (
       CORBA::Long id,
-      const ACE_CString & type
-      ACE_ENV_ARG_DECL_NOT_USED)
+      const ACE_CString & type)
     {
       ACE_UNUSED_ARG (id);
       ACE_UNUSED_ARG (type);
@@ -91,8 +89,7 @@ namespace TAO_Notify
     * and commit it to the persistent store.
     */
     virtual void end_object (CORBA::Long id,
-      const ACE_CString &type
-      ACE_ENV_ARG_DECL) = 0;
+      const ACE_CString &type) = 0;
 
     /**
      * \brief Close the saver.

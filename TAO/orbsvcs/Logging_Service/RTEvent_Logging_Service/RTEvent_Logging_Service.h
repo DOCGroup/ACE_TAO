@@ -50,8 +50,7 @@ public:
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, char *argv []
-		 ACE_ENV_ARG_DECL);
+  void init_ORB (int& argc, char *argv []);
   // initializes the ORB.
 
   int parse_args (int argc, char* argv[]);

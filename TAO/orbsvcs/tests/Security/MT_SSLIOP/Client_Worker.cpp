@@ -21,35 +21,33 @@ Client_Worker::validate_connection (void)
 
   for (int j = 0; j != 100; ++j)
    {
-      ACE_TRY
+      try
         {
-          this->server_->test_method (j ACE_ENV_ARG_PARAMETER);
-          this->another_->test_method (j ACE_ENV_ARG_PARAMETER);
+          this->server_->test_method (j);
+          this->another_->test_method (j);
           if(TAO_debug_level > 0)
             ACE_DEBUG (( LM_DEBUG,
                          "******** VALIDATED ******* \n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
         }
-      ACE_ENDTRY;
    }
 }
 
 int
 Client_Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Validate connections befire doing any actual work..
       this->validate_connection ();
 
        for (int i = 0; i < this->niterations_; ++i)
          {
-           this->server_->test_method (i ACE_ENV_ARG_PARAMETER);
-           this->another_->test_method (i ACE_ENV_ARG_PARAMETER);
+           this->server_->test_method (i);
+           this->another_->test_method (i);
 
            if (TAO_debug_level > 0)
              ACE_DEBUG ((LM_DEBUG,
@@ -57,11 +55,9 @@ Client_Worker::svc (void)
                          i));
          }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client_Worker : Exception Raised");
+      ex._tao_print_exception ("Client_Worker : Exception Raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -22,7 +22,6 @@
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
-  ACE_CHECK
 
 #define TAO_IFR_WRITE_GUARD_RETURN(RETURN) \
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, \
@@ -33,7 +32,6 @@
                                 TAO_GUARD_FAILURE, \
                                 0), \
                               CORBA::COMPLETED_NO)); \
-  ACE_CHECK_RETURN (RETURN)
 
 #define TAO_IFR_READ_GUARD_RETURN(RETURN) \
   ACE_READ_GUARD_THROW_EX (ACE_Lock, \
@@ -44,7 +42,6 @@
                                TAO_GUARD_FAILURE, \
                                0), \
                              CORBA::COMPLETED_NO)); \
-  ACE_CHECK_RETURN (RETURN)
 
 #include /**/ "ace/post.h"
 

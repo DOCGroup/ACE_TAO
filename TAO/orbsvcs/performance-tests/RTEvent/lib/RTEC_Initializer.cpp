@@ -15,15 +15,14 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           RTEC_Initializer, 
+ACE_RCSID (TAO_PERF_RTEC,
+           RTEC_Initializer,
            "$Id$")
 
 TAO_EC_Event_Channel *
 RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
                           PortableServer::POA_ptr supplier_poa,
-                          RTCORBA_Setup * rtcorba_setup
-                          ACE_ENV_ARG_DECL_NOT_USED)
+                          RTCORBA_Setup * rtcorba_setup)
 {
   TAO_EC_Event_Channel_Attributes attr (consumer_poa,
                                         supplier_poa);

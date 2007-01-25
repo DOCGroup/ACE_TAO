@@ -42,7 +42,7 @@ EC_Master::~EC_Master (void)
 int
 EC_Master::run (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Calibrate the high resolution timer *before* starting the
       // test.
@@ -50,7 +50,7 @@ EC_Master::run (int argc, char* argv[])
 
       this->seed_ = ACE_OS::time (0);
 
-      this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
+      this->initialize_orb_and_poa (argc, argv);
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -85,7 +85,7 @@ EC_Master::run (int argc, char* argv[])
             int targc = argc;
             for (int j = 0; j < targc; ++j)
               targv[j] = argv[j];
-            this->channels_[i]->run_init (targc, targv ACE_ENV_ARG_PARAMETER);
+            this->channels_[i]->run_init (targc, targv);
           }
         delete[] targv;
       }
@@ -133,32 +133,29 @@ EC_Master::run (int argc, char* argv[])
       }
 
       this->root_poa_->destroy (1,
-                                1
-                                ACE_ENV_ARG_PARAMETER);
+                                1);
 
       this->orb_->destroy ();
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "EC_Driver::run");
+      ex._tao_print_exception ("EC_Driver::run");
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR ((LM_ERROR, "EC_Driver (%P|%t) non-corba exception raised\n"));
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-EC_Master::initialize_orb_and_poa (int &argc, char* argv[]
-                                   ACE_ENV_ARG_DECL)
+EC_Master::initialize_orb_and_poa (int &argc, char* argv[])
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (argc, argv, "");
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
     {
@@ -168,7 +165,7 @@ EC_Master::initialize_orb_and_poa (int &argc, char* argv[]
     }
 
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
     this->root_poa_->the_POAManager ();
@@ -236,8 +233,7 @@ EC_Observer::~EC_Observer (void)
 }
 
 void
-EC_Observer::initialize_orb_and_poa (int&, char*[]
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+EC_Observer::initialize_orb_and_poa (int&, char*[])
 {
 }
 
@@ -274,14 +270,13 @@ EC_Observer::execute_test (void)
         this->master_->channel (i)->event_channel_.in ();
 
       this->gwys_[i].init (rmt_ec,
-                           this->event_channel_.in ()
-                           ACE_ENV_ARG_PARAMETER);
+                           this->event_channel_.in ());
 
       RtecEventChannelAdmin::Observer_var obs =
         this->gwys_[i]._this ();
 
       RtecEventChannelAdmin::Observer_Handle h =
-        rmt_ec->append_observer (obs.in () ACE_ENV_ARG_PARAMETER);
+        rmt_ec->append_observer (obs.in ());
 
       this->gwys_[i].observer_handle (h);
 
@@ -307,8 +302,7 @@ EC_Observer::run_cleanup (void)
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (j)->event_channel_.in ();
-      rmt_ec->remove_observer (this->gwys_[j].observer_handle ()
-                               ACE_ENV_ARG_PARAMETER);
+      rmt_ec->remove_observer (this->gwys_[j].observer_handle ());
 
       this->gwys_[j].shutdown ();
     }
@@ -343,25 +337,21 @@ EC_Observer::dump_results (void)
 void
 EC_Observer::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   if (i == 0)
     {
-      this->EC_Driver::connect_consumer (consumer_admin, i
-                                         ACE_ENV_ARG_PARAMETER);
+      this->EC_Driver::connect_consumer (consumer_admin, i);
       return;
     }
   unsigned int x = ACE_OS::rand_r (this->seed_);
   if (x < RAND_MAX / 8)
-    this->EC_Driver::connect_consumer (consumer_admin, i
-                                       ACE_ENV_ARG_PARAMETER);
+    this->EC_Driver::connect_consumer (consumer_admin, i);
 }
 
 void
 EC_Observer::consumer_push (void*,
-                            const RtecEventComm::EventSet&
-                            ACE_ENV_ARG_DECL)
+                            const RtecEventComm::EventSet&)
 {
   unsigned int x = ACE_OS::rand_r (this->seed_);
   if (x < (RAND_MAX / 64))
@@ -384,7 +374,7 @@ EC_Observer::consumer_push (void*,
           else
             {
               this->EC_Driver::connect_consumer (consumer_admin.in (),
-                                                 i ACE_ENV_ARG_PARAMETER);
+                                                 i);
             }
         }
     }

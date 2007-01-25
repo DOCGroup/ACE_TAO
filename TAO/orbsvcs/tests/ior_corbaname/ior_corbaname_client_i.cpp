@@ -38,7 +38,7 @@ int
 IOR_corbaname_Client_i::run (void)
 {
 
-  ACE_TRY
+  try
     {
       CosNaming::Name name (1);
 
@@ -63,12 +63,11 @@ IOR_corbaname_Client_i::run (void)
 
       // Resolve the stringified name.
       CORBA::Object_var factory_object =
-        this->orb_->string_to_object (corbaname_url.c_str ()
-                                      ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (corbaname_url.c_str ());
 
       // Narrow
       corbaname::Status_var factory =
-        corbaname::Status::_narrow (factory_object.in () ACE_ENV_ARG_PARAMETER);
+        corbaname::Status::_narrow (factory_object.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -89,21 +88,20 @@ IOR_corbaname_Client_i::run (void)
                       0));
         }
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
+  catch (const CosNaming::NamingContext::NotFound& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "CosNaming::NamingContext::NotFound");
+      ex._tao_print_exception ("CosNaming::NamingContext::NotFound");
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception on client side");
+      ex._tao_print_exception ("A system exception on client side");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -114,8 +112,7 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       // First initialize the ORB, that will remove some arguments...
@@ -123,7 +120,7 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
         CORBA::ORB_init (this->argc_,
                          this->argv_,
                          "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 
       // There must be at least one argument, the file that has to be
       // retrieved
@@ -134,12 +131,11 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
                            -1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -99,11 +99,9 @@ public:
   // = Documented in TAO_EC_SupplierControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy);
   virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
 private:
   /// Check if the suppliers still exists.  It is a helper method for
@@ -148,8 +146,7 @@ class TAO_EC_Ping_Supplier : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 public:
   TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushConsumer *consumer);
 
 private:
   TAO_EC_SupplierControl *control_;

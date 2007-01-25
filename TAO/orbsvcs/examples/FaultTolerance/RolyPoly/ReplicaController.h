@@ -51,43 +51,37 @@ public:
   virtual void
   tao_ft_interception_point (
     PortableInterceptor::ServerRequestInfo_ptr ri,
-    CORBA::OctetSeq_out ocs
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    CORBA::OctetSeq_out ocs)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
   virtual void
   receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void
   receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void
   send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void
   send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void
   send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 

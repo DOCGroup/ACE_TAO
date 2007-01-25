@@ -45,8 +45,7 @@ public:
   // Constructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
+            char **argv);
   // Initialize the ORB etc, and bind the MMDevices.
 
   int run (void);
@@ -57,8 +56,7 @@ public:
 
 protected:
   int bind_to_remote_mmdevice (int argc,
-                               char *argv[]
-                               ACE_ENV_ARG_DECL);
+                               char *argv[]);
   // Bind to the remote MMDevice.
 
   // = Property Testing.
@@ -81,8 +79,7 @@ protected:
   int test_get_all_properties (void);
   // Testing get_all_properties.
 
-  int test_delete_property (const char *property_name
-                            ACE_ENV_ARG_DECL);
+  int test_delete_property (const char *property_name);
   // Testing delete_property.
 
   int test_delete_properties (void);

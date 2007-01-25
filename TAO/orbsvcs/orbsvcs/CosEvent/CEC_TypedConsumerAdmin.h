@@ -46,22 +46,17 @@ public:
   virtual ~TAO_CEC_TypedConsumerAdmin (void);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
 
   /// Invoke the typed event on all the consumers
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL)
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// The typed event channel is shutting down, inform all the consumers of
   /// this
@@ -69,11 +64,11 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_typed_push_supplier (const char * uses_interface ACE_ENV_ARG_DECL)
+    obtain_typed_push_supplier (const char * uses_interface)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::NoSuchImplementation));
   virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
-    obtain_typed_pull_supplier (const char * supported_interface ACE_ENV_ARG_DECL)
+    obtain_typed_pull_supplier (const char * supported_interface)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::InterfaceNotSupported));
 
@@ -108,8 +103,7 @@ public:
   TAO_CEC_Propagate_Typed_Event (const TAO_CEC_TypedEvent& typed_event,
                                  TAO_CEC_TypedEventChannel* typed_event_channel);
 
-  void work (TAO_CEC_ProxyPushSupplier *supplier
-             ACE_ENV_ARG_DECL);
+  void work (TAO_CEC_ProxyPushSupplier *supplier);
 
 private:
   /// The typed event

@@ -15,7 +15,6 @@ TAO_NotifyLogNotification::TAO_NotifyLogNotification (
   : TAO_LogNotification (),
     event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   CosNotifyComm::PushSupplier_var objref =
     this->_this ();
@@ -28,18 +27,17 @@ TAO_NotifyLogNotification::TAO_NotifyLogNotification (
   ACE_ASSERT (!CORBA::is_nil (supplier_admin.in ()));
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::ANY_EVENT, proxy_consumer_id_ ACE_ENV_ARG_PARAMETER);
+    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::ANY_EVENT, proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::ProxyPushConsumer::_narrow (proxyconsumer.in () ACE_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::ProxyPushConsumer::_narrow (proxyconsumer.in ());
 
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  proxy_consumer_->connect_any_push_supplier (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+  proxy_consumer_->connect_any_push_supplier (objref.in ());
 }
 
 TAO_NotifyLogNotification::~TAO_NotifyLogNotification (void)
@@ -59,8 +57,7 @@ TAO_NotifyLogNotification::send_notification (const CORBA::Any& any)
 void
 TAO_NotifyLogNotification::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const CosNotification::EventTypeSeq & /*removed */)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType

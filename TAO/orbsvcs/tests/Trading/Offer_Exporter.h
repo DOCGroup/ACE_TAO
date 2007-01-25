@@ -25,8 +25,7 @@ class TAO_TTest_Export TAO_Offer_Exporter
 public:
 
   TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
-                      CORBA::Boolean verbose
-                      ACE_ENV_ARG_DECL)
+                      CORBA::Boolean verbose)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ~TAO_Offer_Exporter (void);
@@ -104,8 +103,7 @@ private:
   void create_offers (void);
   // Fill in each of the offer structures.
 
-  void export_to (CosTrading::Register_ptr reg
-                  ACE_ENV_ARG_DECL)
+  void export_to (CosTrading::Register_ptr reg)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Register::InvalidObjectRef,
                      CosTrading::IllegalServiceType,

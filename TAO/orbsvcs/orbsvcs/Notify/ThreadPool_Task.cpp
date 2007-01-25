@@ -38,7 +38,7 @@ TAO_Notify_ThreadPool_Task::timer (void)
 
 void
 TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
-                                  const TAO_Notify_AdminProperties::Ptr& admin_properties  ACE_ENV_ARG_DECL)
+                                  const TAO_Notify_AdminProperties::Ptr& admin_properties)
 {
   ACE_ASSERT (this->timer_.get() == 0);
 
@@ -92,12 +92,12 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
         ACE_TEXT ("exiting!\n%a"),
         tp_params.default_priority));
     }
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
   }
 }
 
 void
-TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL)
+TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
 {
   if (!shutdown_)
   {
@@ -119,7 +119,7 @@ TAO_Notify_ThreadPool_Task::svc (void)
 
   while (!shutdown_)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
       ACE_Time_Value* dequeue_blocking_time = 0;
       ACE_Time_Value earliest_time;
@@ -149,12 +149,11 @@ TAO_Notify_ThreadPool_Task::svc (void)
           ACE_DEBUG ((LM_DEBUG, "ThreadPool_Task dequeue failed\n"));
       }
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ex._tao_print_exception (
         "ThreadPool_Task (%P|%t) exception in method request\n");
     }
-    ACE_ENDTRY;
   } /* while */
 
   return 0;

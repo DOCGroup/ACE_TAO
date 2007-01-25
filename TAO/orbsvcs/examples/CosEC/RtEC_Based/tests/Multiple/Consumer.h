@@ -40,8 +40,7 @@ public:
   int init_Consumer (void);
   // Initialize the Consumer.
 
-  void open (CosEventChannelAdmin::EventChannel_ptr event_channel
-             ACE_ENV_ARG_DECL);
+  void open (CosEventChannelAdmin::EventChannel_ptr event_channel);
   // This method connects the consumer to the EC.
 
   void close (void);
@@ -54,8 +53,7 @@ public:
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
-  virtual void push (const CORBA::Any &data
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const CORBA::Any &data)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected

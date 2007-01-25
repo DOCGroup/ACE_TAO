@@ -32,7 +32,6 @@ public:
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      ACE_ENV_ARG_DECL
                                       )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -107,13 +106,13 @@ public:
 private:
   void create_suppliers (void);
   void create_consumers (void);
-  void create_channel(bool reject ACE_ENV_ARG_DECL);
+  void create_channel(bool reject);
 
   /// Test MaxSuppliers and MaxConsumers
   void test_max_clients (void);
 
   /// Test MaxQueueLength properties
-  void test_max_queue_length (bool reject ACE_ENV_ARG_DECL);
+  void test_max_queue_length (bool reject);
 
   // Data Members
   CosNotifyChannelAdmin::EventChannel_var ec_;

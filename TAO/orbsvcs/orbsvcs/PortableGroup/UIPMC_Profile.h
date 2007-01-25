@@ -74,8 +74,7 @@ public:
 
   /// Create object using a string ior.
   TAO_UIPMC_Profile (const char *string,
-                     TAO_ORB_Core *orb_core
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_UIPMC_Profile (void);
@@ -86,22 +85,18 @@ public:
   /// in UIPMC there is no object key marshalled and we do not implement
   /// a useable ::decode_endpoints
   virtual int decode (TAO_InputCDR& cdr);
-  virtual void parse_string (const char *string
-                             ACE_ENV_ARG_DECL);
+  virtual void parse_string (const char *string);
   virtual char * to_string (void);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::ULong hash (CORBA::ULong max);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
   virtual void request_target_specifier (
                       TAO_Target_Specification &target_spec,
-                      TAO_Target_Specification::TAO_Target_Address r
-                      ACE_ENV_ARG_DECL);
+                      TAO_Target_Specification::TAO_Target_Address r);
   virtual int supports_multicast (void) const;
-  virtual void addressing_mode (CORBA::Short addr_mode
-                                ACE_ENV_ARG_DECL);
+  virtual void addressing_mode (CORBA::Short addr_mode);
   static int extract_group_component (const IOP::TaggedProfile &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);
 
@@ -115,8 +110,7 @@ protected:
   /// Template methods, please see documentation in tao/Profile.h
   virtual int decode_profile (TAO_InputCDR& cdr);
   virtual int decode_endpoints (void);
-  virtual void parse_string_i (const char *
-                               ACE_ENV_ARG_DECL);
+  virtual void parse_string_i (const char *);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
   virtual void update_cached_group_component (void);

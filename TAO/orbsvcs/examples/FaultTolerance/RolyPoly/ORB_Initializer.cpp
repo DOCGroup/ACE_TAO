@@ -11,15 +11,13 @@
 #include "ReplicaController.h"
 
 void
-ORB_Initializer::pre_init (PortableInterceptor::ORBInitInfo_ptr
-                           ACE_ENV_ARG_DECL_NOT_USED)
+ORB_Initializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
-                            ACE_ENV_ARG_DECL)
+ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Allocate slot id.
@@ -49,6 +47,5 @@ ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info
     interceptor = tmp_interceptor;
   }
 
-  info->add_server_request_interceptor (interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (interceptor.in ());
 }

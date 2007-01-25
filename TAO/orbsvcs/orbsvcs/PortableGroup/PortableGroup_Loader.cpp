@@ -24,7 +24,7 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
 {
   ACE_TRACE ("TAO_PortableGroup_Loader::init");
   // Register the ORB initializer.
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -40,16 +40,14 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
                           CORBA::COMPLETED_NO));
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Unexpected exception caught while initializing the PortableGroup:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

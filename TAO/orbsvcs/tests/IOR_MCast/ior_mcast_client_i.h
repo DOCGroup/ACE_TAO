@@ -24,7 +24,7 @@ class ior_mcast_Client_i
   int run (void);
   // Execute the client example code.
 
-  int init (int& argc, char *argv[] ACE_ENV_ARG_DECL);
+  int init (int& argc, char *argv[]);
   // Initialize the client communication endpoint with the server.
 
  private:

@@ -47,23 +47,20 @@ TAO_LB_IORInterceptor::destroy (void)
 
 void
 TAO_LB_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::IORInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::IORInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int argc = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         0,
-                                        this->orb_id_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        this->orb_id_.in ());
 
   // Save a copy of the current ObjectReferenceFactory.
   PortableInterceptor::ObjectReferenceFactory_var old_orf =
@@ -85,15 +82,13 @@ TAO_LB_IORInterceptor::components_established (
 
   PortableInterceptor::ObjectReferenceFactory_var orf = tmp;
 
-  info->current_factory (orf.in ()
-                         ACE_ENV_ARG_PARAMETER);
+  info->current_factory (orf.in ());
 }
 
 void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
     const char *,
-    PortableInterceptor::AdapterState state
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::AdapterState state)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (state == PortableInterceptor::ACTIVE)
@@ -105,8 +100,7 @@ TAO_LB_IORInterceptor::adapter_manager_state_changed (
 void
 TAO_LB_IORInterceptor::adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState state
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::AdapterState state)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (state == PortableInterceptor::ACTIVE)
@@ -125,13 +119,12 @@ TAO_LB_IORInterceptor::register_load_alert (void)
       return;
   }
 
-  ACE_TRY_EX (foo)
+  try
     {
       // By now, the RootPOA has been fully initialized, so it is safe
       // to activate the LoadAlert object.
       CosLoadBalancing::LoadAlert_var la =
         this->load_alert_._this ();
-      ACE_TRY_CHECK_EX (foo);
 
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
@@ -140,41 +133,35 @@ TAO_LB_IORInterceptor::register_load_alert (void)
       }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "LoadAlert::_this()");
+        ex._tao_print_exception ("LoadAlert::_this()");
     }
-  ACE_ENDTRY;
 
-  ACE_TRY
+  try
     {
       PortableGroup::Location location (1);
       location.length (1);
       location[0].id = CORBA::string_dup (this->location_.in ());
 
       this->lm_->register_load_alert (location,
-                                      this->la_ref_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      this->la_ref_.in ());
     }
-  ACE_CATCH (CosLoadBalancing::LoadAlertAlreadyPresent, ex)
+  catch (const CosLoadBalancing::LoadAlertAlreadyPresent& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "LoadManager::register_load_alert");
+        ex._tao_print_exception ("LoadManager::register_load_alert");
 
-      ACE_TRY_THROW (CORBA::BAD_INV_ORDER ());
+      throw CORBA::BAD_INV_ORDER ();
     }
-  ACE_CATCH (CosLoadBalancing::LoadAlertNotAdded, ex)
+  catch (const CosLoadBalancing::LoadAlertNotAdded& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "LoadManager::register_load_alert");
+        ex._tao_print_exception ("LoadManager::register_load_alert");
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -32,7 +32,6 @@ TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (void)
 
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list
-                                ACE_ENV_ARG_DECL
                                 )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -86,7 +85,6 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::Constra
 void
 TAO_Notify_Tests_RT_Test_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq & /*del_list*/,
                                    const CosNotifyFilter::ConstraintInfoSeq & /*modify_list*/
-                                   ACE_ENV_ARG_DECL_NOT_USED
                                    )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -99,7 +97,6 @@ TAO_Notify_Tests_RT_Test_Filter::modify_constraints (const CosNotifyFilter::Cons
 
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & /*id_list*/
-                                ACE_ENV_ARG_DECL_NOT_USED
                                 )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::ConstraintNotFound))
@@ -137,7 +134,7 @@ TAO_Notify_Tests_RT_Test_Filter::destroy (void)
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match (const CORBA::Any & /*filterable_data */
-                           ACE_ENV_ARG_DECL)
+                           )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
@@ -147,7 +144,6 @@ TAO_Notify_Tests_RT_Test_Filter::match (const CORBA::Any & /*filterable_data */
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::StructuredEvent & notification
-                                 ACE_ENV_ARG_DECL
                                  )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
@@ -165,12 +161,10 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
   CORBA::ORB_ptr orb = poa->orb_core ().orb ();
 
   CORBA::Object_var object =
-    orb->resolve_initial_references ("RTCurrent"
-                                            ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("RTCurrent");
 
   RTCORBA::Current_var current =
-    RTCORBA::Current::_narrow (object.in ()
-                               ACE_ENV_ARG_PARAMETER);
+    RTCORBA::Current::_narrow (object.in ());
 
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -247,7 +241,6 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match_typed (
                             const CosNotification::PropertySeq & /* filterable_data */
-                            ACE_ENV_ARG_DECL
                             )
   ACE_THROW_SPEC (( CORBA::SystemException,
                     CosNotifyFilter::UnsupportedFilterableData))
@@ -259,7 +252,6 @@ TAO_Notify_Tests_RT_Test_Filter::match_typed (
 CosNotifyFilter::CallbackID
 TAO_Notify_Tests_RT_Test_Filter::attach_callback (
                                 CosNotifyComm::NotifySubscribe_ptr /* callback */
-                                ACE_ENV_ARG_DECL
                                 )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -270,12 +262,11 @@ TAO_Notify_Tests_RT_Test_Filter::attach_callback (
 void
 TAO_Notify_Tests_RT_Test_Filter::detach_callback (
                                 CosNotifyFilter::CallbackID /* callback */
-                                ACE_ENV_ARG_DECL
                                 )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::CallbackNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyFilter::CallbackIDSeq *

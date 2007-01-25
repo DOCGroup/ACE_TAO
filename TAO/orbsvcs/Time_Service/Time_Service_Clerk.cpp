@@ -15,10 +15,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   ACE_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service clerk\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int r = clerk.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int r = clerk.init (argc, argv);
       if (r == -1)
         return 1;
       else
@@ -26,17 +25,16 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           clerk.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

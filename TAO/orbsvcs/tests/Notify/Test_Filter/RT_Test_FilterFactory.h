@@ -46,12 +46,11 @@ public:
 
   ///= TAO_Notify_Tests_FilterFactory methods.
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL);
+  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa);
 
   ///= CosNotifyFilter::FilterFactory methods
 
   virtual CosNotifyFilter::Filter_ptr create_filter (const char * constraint_grammar
-                                                     ACE_ENV_ARG_DECL
                                                      )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -60,7 +59,6 @@ public:
 
   virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (const char * constraint_grammar,
                                                                     const CORBA::Any & default_value
-                                                                    ACE_ENV_ARG_DECL
                                                                     )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,

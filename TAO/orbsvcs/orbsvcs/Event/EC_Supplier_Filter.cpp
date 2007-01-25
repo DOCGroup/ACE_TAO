@@ -19,11 +19,10 @@ TAO_EC_Supplier_Filter::~TAO_EC_Supplier_Filter (void)
 // ****************************************************************
 
 void
-TAO_EC_Filter_Worker::work (TAO_EC_ProxyPushSupplier *supplier
-                            ACE_ENV_ARG_DECL)
+TAO_EC_Filter_Worker::work (TAO_EC_ProxyPushSupplier *supplier)
 {
   TAO_EC_QOS_Info qos_info = this->event_info_;
-  supplier->filter (this->event_, qos_info ACE_ENV_ARG_PARAMETER);
+  supplier->filter (this->event_, qos_info);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

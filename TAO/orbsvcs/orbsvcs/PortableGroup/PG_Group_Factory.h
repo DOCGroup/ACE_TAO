@@ -80,15 +80,13 @@ namespace TAO
     void init (
       CORBA::ORB_ptr orb,
       PortableServer::POA_ptr poa,
-      PortableGroup::FactoryRegistry_ptr factory_registry
-      ACE_ENV_ARG_DECL);
+      PortableGroup::FactoryRegistry_ptr factory_registry);
 
 
     TAO::PG_Object_Group * create_group (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
-        TAO::PG_Property_Set * typeid_properties
-        ACE_ENV_ARG_DECL)
+        TAO::PG_Property_Set * typeid_properties)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::NoFactory,
                        PortableGroup::ObjectNotCreated,
@@ -97,21 +95,18 @@ namespace TAO
                        PortableGroup::CannotMeetCriteria));
 
 
-    void delete_group (PortableGroup::ObjectGroup_ptr object_group
-        ACE_ENV_ARG_DECL)
+    void delete_group (PortableGroup::ObjectGroup_ptr object_group)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::ObjectNotFound));
 
 
-    void delete_group (PortableGroup::ObjectGroupId group_id
-        ACE_ENV_ARG_DECL)
+    void delete_group (PortableGroup::ObjectGroupId group_id)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::ObjectNotFound));
 
     PortableGroup::ObjectGroups *
     groups_at_location (
-        const PortableGroup::Location & the_location
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Location & the_location)
       ACE_THROW_SPEC ( (CORBA::SystemException));
 
 

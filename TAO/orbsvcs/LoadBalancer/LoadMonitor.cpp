@@ -48,8 +48,7 @@ usage (const ACE_TCHAR * cmd)
 
 void
 parse_args (int argc,
-            ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL)
+            ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
@@ -89,7 +88,7 @@ parse_args (int argc,
                            ACE_TEXT ("ERROR: Invalid push interval: %s\n"),
                            s));
 
-              ACE_THROW (CORBA::BAD_PARAM ());
+              throw CORBA::BAD_PARAM ();
             }
           break;
 
@@ -100,7 +99,7 @@ parse_args (int argc,
 
         default:
           ::usage (argv[0]);
-          ACE_THROW (CORBA::BAD_PARAM ());
+          throw CORBA::BAD_PARAM ();
         }
     }
 }
@@ -120,19 +119,17 @@ TAO_LB_run_load_monitor (void * orb_arg)
   //    delivered to this thread on Linux.
   ACE_Sig_Guard signal_guard;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "TAO Load Monitor");
 
       return reinterpret_cast<void *> (-1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -141,17 +138,14 @@ TAO_LB_run_load_monitor (void * orb_arg)
 
 CosLoadBalancing::LoadMonitor_ptr
 get_load_monitor (CORBA::ORB_ptr orb,
-                  PortableServer::POA_ptr root_poa
-                  ACE_ENV_ARG_DECL)
+                  PortableServer::POA_ptr root_poa)
 {
   if (::custom_monitor_ior != 0)
     {
       CORBA::Object_var obj =
-        orb->string_to_object (::custom_monitor_ior
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (::custom_monitor_ior);
 
-      return CosLoadBalancing::LoadMonitor::_narrow (obj.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      return CosLoadBalancing::LoadMonitor::_narrow (obj.in ());
     }
   else
     {
@@ -205,8 +199,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                        CosLoadBalancing::LoadMonitor_ptr monitor,
                        TAO_LB_Push_Handler * handler,
                        ACE_Reactor * reactor,
-                       long & timer_id
-                       ACE_ENV_ARG_DECL)
+                       long & timer_id)
 {
   if (ACE_OS::strcasecmp (::mstyle, "PULL") == 0)
     {
@@ -214,8 +207,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
         monitor->the_location ();
 
       manager->register_load_monitor (location.in (),
-                                      monitor
-                                      ACE_ENV_ARG_PARAMETER);
+                                      monitor);
     }
   else if (ACE_OS::strcasecmp (::mstyle, "PUSH") == 0)
     {
@@ -232,7 +224,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                       ACE_TEXT ("ERROR: Unable to schedule timer for ")
                       ACE_TEXT ("\"PUSH\" style load monitoring.\n")));
 
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
     }
   else
@@ -242,52 +234,44 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                   ACE_TEXT ("style: <%s>.\n"),
                   ::mstyle));
 
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw CORBA::BAD_PARAM ();
     }
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // The usual server side boilerplate code.
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       // Check the non-ORB arguments.
       ::parse_args (argc,
-                    argv
-                    ACE_ENV_ARG_PARAMETER);
+                    argv);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       CosLoadBalancing::LoadMonitor_var load_monitor =
         ::get_load_monitor (orb.in (),
-                            root_poa.in ()
-                            ACE_ENV_ARG_PARAMETER);
+                            root_poa.in ());
 
       PortableGroup::Location_var location =
         load_monitor->the_location ();
 
       // The "LoadManager" reference should have already been
       // registered with the ORB by its ORBInitializer.
-      obj = orb->resolve_initial_references ("LoadManager"
-                                             ACE_ENV_ARG_PARAMETER);
+      obj = orb->resolve_initial_references ("LoadManager");
 
       CosLoadBalancing::LoadManager_var load_manager =
-        CosLoadBalancing::LoadManager::_narrow (obj.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+        CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       // This "push" handler will only be used if the load monitor
       // style is "PUSH".
@@ -303,8 +287,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                load_monitor.in (),
                                &push_handler,
                                reactor,
-                               timer_id
-                               ACE_ENV_ARG_PARAMETER);
+                               timer_id);
 
       CosLoadBalancing::LoadManager_ptr tmp;;
 
@@ -345,8 +328,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // load monitoring case.
       if (timer_id == -1)
         {
-          load_manager->remove_load_monitor (location.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+          load_manager->remove_load_monitor (location.in ());
         }
 #else
       // Activate/register the signal handler that (attempts) to
@@ -384,14 +366,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "TAO Load Monitor");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

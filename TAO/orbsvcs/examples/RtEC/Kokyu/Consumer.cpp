@@ -9,8 +9,7 @@ Consumer::Consumer (void)
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
+Consumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)

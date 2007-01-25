@@ -23,27 +23,24 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::get_proxy_supplier (void)
 }
 
 template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Traits_PTR admin_ptr)
 {
   Consumer_Traits traits;
 
   CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
     admin_ptr->obtain_notification_push_supplier (traits.type_
                                                   , this->proxy_id_
-                                                  ACE_ENV_ARG_PARAMETER
                                                   );
 
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier.in ()));
 
-  return Proxy_Traits_INTERFACE::_narrow (proxy_supplier.in ()
-  ACE_ENV_ARG_PARAMETER);
+  return Proxy_Traits_INTERFACE::_narrow (proxy_supplier.in ());
 }
 
 template <class Consumer_Traits> ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Proxy_Traits_PTR
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Consumer_T<Consumer_Traits>::Admin_Ext_Traits_PTR admin_ptr
-                                             , CosNotification::QoSProperties& qos
-                                             ACE_ENV_ARG_DECL)
+                                             , CosNotification::QoSProperties& qos)
 {
   Consumer_Traits traits;
 
@@ -51,17 +48,15 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
   CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
     admin_ptr->obtain_notification_push_supplier_with_qos (traits.type_
                                                            , this->proxy_id_
-                                                           , qos
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                           , qos);
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier.in ()));
 
-  return Proxy_Traits_INTERFACE::_narrow (proxy_supplier.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+  return Proxy_Traits_INTERFACE::_narrow (proxy_supplier.in ());
 }
 
 template <class Consumer_Traits> void
-TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed)
 {
   // Let the user see what we're subscribed for,
   ACE_DEBUG ((LM_DEBUG, "Calling Consumer subscription change: "));
@@ -84,7 +79,7 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotificati
 
   if (proxy_supplier != 0)
     {
-      proxy_supplier->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
+      proxy_supplier->subscription_change (added, removed);
     }
   else
     ACE_DEBUG ((LM_DEBUG, "Proxy Supplier not available, subscription change not made."));
@@ -94,7 +89,7 @@ template <class Consumer_Traits> void
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
-    ACE_ENV_ARG_DECL_NOT_USED)
+    )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNotifyComm::InvalidEventType))
 {

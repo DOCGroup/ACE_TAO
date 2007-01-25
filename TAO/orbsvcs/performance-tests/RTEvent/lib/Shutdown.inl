@@ -9,11 +9,9 @@
 template<class Client> ACE_INLINE void
 Shutdown<Client>::operator () (Client *client)
 {
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
       client->shutdown ();
     }
-  ACE_CATCHANY { };
-  ACE_ENDTRY;
+  catch (const CORBA::Exception& ex){ };
 }

@@ -42,7 +42,7 @@ TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DECL)
+TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // create a record list...
@@ -51,7 +51,7 @@ TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DE
 
   recList [0].info <<= events;
 
-  this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
+  this->log_->write_recordlist (recList);
 
 
 }
@@ -60,8 +60,7 @@ void
 TAO_Rtec_LogConsumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->supplier_proxy_->disconnect_push_supplier (
-    ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

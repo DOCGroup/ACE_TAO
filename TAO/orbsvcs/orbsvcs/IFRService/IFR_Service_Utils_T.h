@@ -41,8 +41,7 @@ class TAO_IFR_Generic_Utils
 public:
   static void destroy_special (const char *section_name,
                                TAO_Repository_i *repo,
-                               ACE_Configuration_Section_Key &key
-                               ACE_ENV_ARG_DECL);
+                               ACE_Configuration_Section_Key &key);
 
   static void set_initializers (const T &initializers,
                                 ACE_Configuration *config,
@@ -57,8 +56,7 @@ class TAO_IFR_Desc_Utils
 public:
   static void fill_desc_begin (T_desc &desc,
                                TAO_Repository_i *repo,
-                               ACE_Configuration_Section_Key &key
-                               ACE_ENV_ARG_DECL);
+                               ACE_Configuration_Section_Key &key);
 };
 
 template<typename T_strseq>
@@ -102,8 +100,7 @@ public:
                           CORBA::Boolean is_multiple,
                           TAO_Repository_i *repo,
                           CORBA::DefinitionKind port_kind,
-                          ACE_Configuration_Section_Key &key
-                          ACE_ENV_ARG_DECL);
+                          ACE_Configuration_Section_Key &key);
 
   static void set_is_multiple (CORBA::Boolean is_multiple,
                                ACE_Configuration *config,

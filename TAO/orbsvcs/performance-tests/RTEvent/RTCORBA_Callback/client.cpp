@@ -45,15 +45,13 @@ public:
   virtual int svc (void)
   {
     this->the_barrier_->wait ();
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         this->run_test ();
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
       }
-    ACE_ENDTRY;
 
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) done...\n"));
     return 0;
@@ -88,8 +86,7 @@ public:
     Implicit_Deactivator deactivator (callback);
 
     Test::Session_var session =
-      this->session_factory_->create_new_session (cb.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+      this->session_factory_->create_new_session (cb.in ());
 
     ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
@@ -105,12 +102,11 @@ public:
         ACE_Time_Value period (0, this->period_in_usecs_);
         ACE_OS::sleep (period);
 
-        ACE_TRY {
+        try{
           ACE_hrtime_t start = ACE_OS::gethrtime ();
-          (void) session->sample (start
-                                  ACE_ENV_ARG_PARAMETER);
-        } ACE_CATCHANY {
-        } ACE_ENDTRY;
+          (void) session->sample (start);
+        } catch (const CORBA::Exception&) {
+        }
       }
   }
 
@@ -150,8 +146,7 @@ public:
     Implicit_Deactivator deactivator (callback);
 
     Test::Session_var session =
-      this->session_factory_->create_new_session (cb.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+      this->session_factory_->create_new_session (cb.in ());
 
     ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
@@ -166,13 +161,12 @@ public:
             return;
         }
 
-        ACE_TRY {
+        try{
           CORBA::ULongLong dummy = 0;
-          (void) session->sample (dummy
-                                  ACE_ENV_ARG_PARAMETER);
+          (void) session->sample (dummy);
 
-        } ACE_CATCHANY {
-        } ACE_ENDTRY;
+        } catch (const CORBA::Exception&) {
+        }
       }
   }
 
@@ -191,10 +185,9 @@ int main (int argc, char *argv[])
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ORB_Holder orb (argc, argv, ""
-                      ACE_ENV_ARG_PARAMETER);
+      ORB_Holder orb (argc, argv, "");
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -218,13 +211,11 @@ int main (int argc, char *argv[])
       RTServer_Setup rtserver_setup (options.use_rt_corba,
                                      orb,
                                      rt_class,
-                                     options.nthreads
-                                     ACE_ENV_ARG_PARAMETER);
+                                     options.nthreads);
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
-                                                  "RootPOA"
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  "RootPOA");
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -242,15 +233,13 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
       CORBA::Object_var object =
-        orb->string_to_object (options.ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (options.ior);
 
       Test::Session_Factory_var session_factory =
-        Test::Session_Factory::_narrow (object.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+        Test::Session_Factory::_narrow (object.in ());
 
       CORBA::PolicyList_var inconsistent_policies;
-      (void) session_factory->_validate_connection (inconsistent_policies
-                                                    ACE_ENV_ARG_PARAMETER);
+      (void) session_factory->_validate_connection (inconsistent_policies);
 
       int thread_count = 1 + options.nthreads;
       ACE_Barrier the_barrier (thread_count);
@@ -307,13 +296,11 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

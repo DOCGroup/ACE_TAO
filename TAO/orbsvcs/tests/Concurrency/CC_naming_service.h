@@ -38,24 +38,22 @@ public:
   CC_naming_service ();
   // Default constructor
 
-  CC_naming_service (CORBA::ORB_var orb_ ACE_ENV_ARG_DECL);
+  CC_naming_service (CORBA::ORB_var orb_);
   // Constructor
 
   ~CC_naming_service (void);
   // Default destructor.
 
-  void Init (CORBA::ORB_var orb_ ACE_ENV_ARG_DECL);
+  void Init (CORBA::ORB_var orb_);
   // Initialization method must be called after first call of Instance()
   // in order to initialize the object correctly
 
   CORBA::Object_var get_obj_from_name (const char *c_name,
-                                       const char *name
-                                       ACE_ENV_ARG_DECL);
+                                       const char *name);
   // Lookup a name in the naming service (context, name)
 
   void bind_name (const char *n,
-                  CORBA::Object_ptr obj
-                  ACE_ENV_ARG_DECL);
+                  CORBA::Object_ptr obj);
   // Bind a name in the concurrency context.
 
   CosConcurrencyControl::LockSetFactory_var get_lock_set_factory (void);

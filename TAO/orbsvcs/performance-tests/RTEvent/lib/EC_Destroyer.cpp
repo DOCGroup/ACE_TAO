@@ -23,11 +23,10 @@ EC_Destroyer::EC_Destroyer (RtecEventChannelAdmin::EventChannel_ptr ec)
 
 EC_Destroyer::~EC_Destroyer (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
+  try{
     this->ec_->destroy ();
-  } ACE_CATCH (CORBA::Exception, ex) {
+  } catch (const CORBA::Exception&) {
     // @@ TODO Log this event, check the Servant_var.cpp comments for
     // details.
-  } ACE_ENDTRY;
+  }
 }

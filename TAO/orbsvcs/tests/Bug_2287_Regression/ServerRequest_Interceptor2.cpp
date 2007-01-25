@@ -47,8 +47,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -56,8 +55,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -72,8 +70,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (IOP::FT_REQUEST
-                                   ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (IOP::FT_REQUEST);
 
   TAO_InputCDR cdr (reinterpret_cast <const char*>
                                      (sc->context_data.get_buffer ()
@@ -84,8 +81,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                           CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
 
   cdr.reset_byte_order (static_cast <int>(byte_order));
@@ -93,8 +89,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   FT::FTRequestServiceContext ftrsc;
 
   if ((cdr >> ftrsc) == 0)
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                             CORBA::COMPLETED_NO));
+    throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
   TimeBase::TimeT now = get_now ();
 
@@ -126,7 +121,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   // Let's forward the client back to us again. I would like to be able to make this a PERM
   // but there's no such animal in the PortableInterceptor module. Plus as we (currently) transform
   // and marshal *all* forward requests as vanilla LOCATION_FORWARD it doesn't really matter.
-  ACE_THROW (PortableInterceptor::ForwardRequest (server_iogr_.in ()));
+  throw PortableInterceptor::ForwardRequest (server_iogr_.in ());
 }
 
 TimeBase::TimeT
@@ -147,16 +142,14 @@ TAO249_ServerRequest_Interceptor2::get_now (void)
 
 void
 TAO249_ServerRequest_Interceptor2::send_reply (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -164,8 +157,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 TAO249_ServerRequest_Interceptor2::send_other (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {

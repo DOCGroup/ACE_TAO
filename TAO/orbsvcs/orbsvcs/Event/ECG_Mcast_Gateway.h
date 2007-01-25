@@ -220,8 +220,7 @@ public:
   /// The main method - create, configure and run federation
   /// components according to the specified configuration.
   void run (CORBA::ORB_ptr orb,
-            RtecEventChannelAdmin::EventChannel_ptr ec
-            ACE_ENV_ARG_DECL);
+            RtecEventChannelAdmin::EventChannel_ptr ec);
 
 private:
 
@@ -229,8 +228,7 @@ private:
   //@{
   /// Check that arguments to run() are not nil.
   void verify_args (CORBA::ORB_ptr orb,
-                    RtecEventChannelAdmin::EventChannel_ptr ec
-                    ACE_ENV_ARG_DECL);
+                    RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Verifies configuration values specified through init() make sense.
   int validate_configuration (void);
@@ -244,22 +242,19 @@ private:
   TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
         init_sender (RtecEventChannelAdmin::EventChannel_ptr ec,
                      RtecUDPAdmin::AddrServer_ptr address_server,
-                     TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                     ACE_ENV_ARG_DECL);
+                     TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
         init_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                        RtecUDPAdmin::AddrServer_ptr address_server,
-                       TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                       ACE_ENV_ARG_DECL);
+                       TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   TAO_ECG_Refcounted_Endpoint init_endpoint (void);
 
   TAO_ECG_Refcounted_Handler
         init_handler (TAO_ECG_Dgram_Handler *recv,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
-                      ACE_Reactor * reactor
-                      ACE_ENV_ARG_DECL);
+                      ACE_Reactor * reactor);
   //@}
 
   /// Flags controlling configuration.

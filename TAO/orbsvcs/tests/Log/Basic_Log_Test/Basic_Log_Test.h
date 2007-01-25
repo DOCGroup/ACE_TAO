@@ -117,7 +117,7 @@ private:
     parse_args(int argc, char *argv[]);
   // command line argument parser
 
-  int write_records(CORBA::ULongLong numberOfRecordsToWrite ACE_ENV_ARG_DECL_NOT_USED);
+  int write_records(CORBA::ULongLong numberOfRecordsToWrite);
   // writes enough records to fill the log. Default write enough to fill log. Hopefully, not infinite.
 
   void

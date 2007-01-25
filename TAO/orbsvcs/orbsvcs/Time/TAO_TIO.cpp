@@ -34,13 +34,12 @@ TAO_TIO::time_interval (void)
 
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
-                CosTime::TIO_out overlap
-                ACE_ENV_ARG_DECL)
+                CosTime::TIO_out overlap)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
-  ACE_TRY
+  try
     {
       TimeBase::TimeT lb1 =
         this->time_interval ().lower_bound;
@@ -132,11 +131,10 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           overlap = tio->_this ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
-  ACE_ENDTRY;
 
   return CosTime::OTNoOverlap;
 }
@@ -149,8 +147,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
-                   CosTime::TIO_out overlap
-                   ACE_ENV_ARG_DECL)
+                   CosTime::TIO_out overlap)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio_i = 0;

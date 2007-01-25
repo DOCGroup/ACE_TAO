@@ -91,8 +91,7 @@ EC_Schedule::execute_test (void)
                                         infos.out (),
                                         deps.out (),
                                         configs.out (),
-                                        anomalies.out ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        anomalies.out ());
 
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
@@ -113,14 +112,13 @@ void
 EC_Schedule::build_consumer_qos (
   int i,
   RtecEventChannelAdmin::ConsumerQOS& qos,
-  int& shutdown_event_type
-  ACE_ENV_ARG_DECL)
+  int& shutdown_event_type)
 {
   char name[128];
   ACE_OS::sprintf (name, "EC_Schedule::Consumer::%04x", i);
 
   RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
+    this->scheduler_->create (name);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -134,8 +132,7 @@ EC_Schedule::build_consumer_qos (
                          RtecScheduler::VERY_LOW_IMPORTANCE,
                          time,
                          0,
-                         RtecScheduler::OPERATION
-                         ACE_ENV_ARG_PARAMETER);
+                         RtecScheduler::OPERATION);
 
   int type_start =
     this->consumer_type_start_
@@ -157,14 +154,13 @@ void
 EC_Schedule::build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL)
+      int& shutdown_event_type)
 {
   char name[128];
   ACE_OS::sprintf (name, "EC_Schedule::Supplier::%04x", i);
 
   RtecScheduler::handle_t rt_info =
-    this->scheduler_->create (name ACE_ENV_ARG_PARAMETER);
+    this->scheduler_->create (name);
 
   ACE_Time_Value tv (0, this->burst_pause_);
   RtecScheduler::Period_t rate = tv.usec () * 10;
@@ -183,8 +179,7 @@ EC_Schedule::build_supplier_qos (
                          RtecScheduler::VERY_LOW_IMPORTANCE,
                          time,
                          1,
-                         RtecScheduler::OPERATION
-                         ACE_ENV_ARG_PARAMETER);
+                         RtecScheduler::OPERATION);
 
   int type_start = this->supplier_type_start_ + i*this->supplier_type_shift_;
   int supplier_id = i + 1;

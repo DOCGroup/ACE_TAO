@@ -24,10 +24,10 @@ public:
   char* remote_call (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char* shutdown (const char* key ACE_ENV_ARG_DECL_NOT_USED)
+  char* shutdown (const char* key)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char* abort (const char* key ACE_ENV_ARG_DECL_NOT_USED)
+  char* abort (const char* key)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

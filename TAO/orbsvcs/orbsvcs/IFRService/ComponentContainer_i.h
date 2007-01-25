@@ -59,7 +59,6 @@ public:
       const char *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
       const CORBA::InterfaceDefSeq &supports_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -69,7 +68,6 @@ public:
       const char *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
       const CORBA::InterfaceDefSeq &supports_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -81,7 +79,6 @@ public:
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
       const CORBA::InterfaceDefSeq &supports_interfaces,
       CORBA::ValueDef_ptr primary_key
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -93,7 +90,6 @@ public:
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
       const CORBA::InterfaceDefSeq &supports_interfaces,
       CORBA::ValueDef_ptr primary_key
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -108,7 +104,6 @@ public:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -123,7 +118,6 @@ public:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

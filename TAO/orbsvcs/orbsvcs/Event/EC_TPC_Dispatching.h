@@ -52,16 +52,14 @@ public:
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
+                            TAO_EC_QOS_Info& qos_info);
 
-  int add_consumer (RtecEventComm::PushConsumer_ptr consumer ACE_ENV_ARG_DECL);
-  int remove_consumer (RtecEventComm::PushConsumer_ptr consumer ACE_ENV_ARG_DECL);
+  int add_consumer (RtecEventComm::PushConsumer_ptr consumer);
+  int remove_consumer (RtecEventComm::PushConsumer_ptr consumer);
 
 private:
   // Use our own thread manager

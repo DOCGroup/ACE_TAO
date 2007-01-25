@@ -57,13 +57,12 @@ TAO_Notify_EventChannel::~TAO_Notify_EventChannel ()
 void
 TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::QoSProperties & initial_qos
-                           , const CosNotification::AdminProperties & initial_admin
-                           ACE_ENV_ARG_DECL)
+                           , const CosNotification::AdminProperties & initial_admin)
 {
   ACE_ASSERT (this->ca_container_.get() == 0);
 
   // this-> on the following line confuses VC6
-  initialize (ecf ACE_ENV_ARG_PARAMETER);
+  initialize (ecf);
 
   this->ecf_.reset (ecf);
 
@@ -104,11 +103,11 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
   const CosNotification::QoSProperties &default_ec_qos =
     TAO_Notify_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
-  this->set_qos (default_ec_qos ACE_ENV_ARG_PARAMETER);
+  this->set_qos (default_ec_qos);
 
-  this->set_qos (initial_qos ACE_ENV_ARG_PARAMETER);
+  this->set_qos (initial_qos);
 
-  this->set_admin (initial_admin ACE_ENV_ARG_PARAMETER);
+  this->set_admin (initial_admin);
 
   // Note originally default admins were allocated here, bt this caused problems
   // attempting to save the topology changes before the Event Channel was completely
@@ -118,11 +117,11 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
 
 void
-TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 {
   ACE_ASSERT (this->ecf_.get() == 0);
   // this-> on the following line confuses VC6
-  initialize (parent ACE_ENV_ARG_PARAMETER);
+  initialize (parent);
 
   this->ecf_.reset (dynamic_cast <TAO_Notify_EventChannelFactory*>(parent));
   ACE_ASSERT (this->ecf_.get() !=0);
@@ -164,7 +163,7 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent ACE_ENV_ARG_D
   const CosNotification::QoSProperties &default_ec_qos =
     TAO_Notify_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
-  this->set_qos (default_ec_qos ACE_ENV_ARG_PARAMETER);
+  this->set_qos (default_ec_qos);
 
 }
 
@@ -217,32 +216,32 @@ TAO_Notify_EventChannel::destroy (void)
   if ( result == 1)
     return;
 
-  this->ecf_->remove (this ACE_ENV_ARG_PARAMETER);
+  this->ecf_->remove (this);
 
   this->sa_container_.reset( 0 );
   this->ca_container_.reset( 0 );
 }
 
 void
-TAO_Notify_EventChannel::remove (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::remove (TAO_Notify_ConsumerAdmin* consumer_admin)
 {
-  this->ca_container().remove (consumer_admin ACE_ENV_ARG_PARAMETER);
+  this->ca_container().remove (consumer_admin);
 }
 
 void
-TAO_Notify_EventChannel::remove (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::remove (TAO_Notify_SupplierAdmin* supplier_admin)
 {
-  this->sa_container().remove (supplier_admin ACE_ENV_ARG_PARAMETER);
+  this->sa_container().remove (supplier_admin);
 }
 
 void
-TAO_Notify_EventChannel::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::set_qos (const CosNotification::QoSProperties & qos)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotification::UnsupportedQoS
                    ))
 {
-  this->TAO_Notify_Object::set_qos (qos ACE_ENV_ARG_PARAMETER);
+  this->TAO_Notify_Object::set_qos (qos);
 }
 
 CosNotification::QoSProperties*
@@ -275,12 +274,11 @@ TAO_Notify_EventChannel::default_consumer_admin (void)
       if (CORBA::is_nil (default_consumer_admin_.in ()))
         {
           CosNotifyChannelAdmin::AdminID id;
-          this->default_consumer_admin_ = this->new_for_consumers (CosNotifyChannelAdmin::OR_OP, id ACE_ENV_ARG_PARAMETER);
+          this->default_consumer_admin_ = this->new_for_consumers (CosNotifyChannelAdmin::OR_OP, id);
           // Wish there was a better way to do this!
           PortableServer::ServantBase * admin_servant =
             this->poa()->reference_to_servant (
-              this->default_consumer_admin_.in ()
-              ACE_ENV_ARG_PARAMETER);
+              this->default_consumer_admin_.in ());
           TAO_Notify_Admin * pAdmin = dynamic_cast <TAO_Notify_Admin *> (admin_servant);
           ACE_ASSERT (pAdmin != 0); // if this assert triggers, we have mixed implementations?
           if (pAdmin != 0)
@@ -304,11 +302,10 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
       if (CORBA::is_nil (default_supplier_admin_.in ()))
         {
           CosNotifyChannelAdmin::AdminID id;
-          this->default_supplier_admin_ = this->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, id ACE_ENV_ARG_PARAMETER);
+          this->default_supplier_admin_ = this->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, id);
           PortableServer::ServantBase * admin_servant =
             this->poa()->poa()->reference_to_servant (
-              this->default_supplier_admin_.in ()
-              ACE_ENV_ARG_PARAMETER);
+              this->default_supplier_admin_.in ());
           TAO_Notify_Admin * pAdmin = dynamic_cast <TAO_Notify_Admin *> (admin_servant);
           ACE_ASSERT (pAdmin != 0); // if this assert triggers, we have mixed implementations?
           if (pAdmin != 0)
@@ -330,7 +327,7 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
 
 ::CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                        CosNotifyChannelAdmin::AdminID_out id ACE_ENV_ARG_DECL
+                                        CosNotifyChannelAdmin::AdminID_out id
                                         )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -338,7 +335,7 @@ TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGr
 
 {
   ::CosNotifyChannelAdmin::ConsumerAdmin_var ca =
-    TAO_Notify_PROPERTIES::instance()->builder()->build_consumer_admin (this, op, id ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_PROPERTIES::instance()->builder()->build_consumer_admin (this, op, id);
   this->self_change ();
   return ca._retn ();
 }
@@ -346,20 +343,19 @@ TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGr
 ::CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                         CosNotifyChannelAdmin::AdminID_out id
-                                        ACE_ENV_ARG_DECL
                                         )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   ::CosNotifyChannelAdmin::SupplierAdmin_var sa =
-    TAO_Notify_PROPERTIES::instance()->builder()->build_supplier_admin (this, op, id ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_PROPERTIES::instance()->builder()->build_supplier_admin (this, op, id);
   this->self_change ();
   return sa._retn ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotifyChannelAdmin::AdminNotFound
@@ -367,11 +363,11 @@ TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id AC
 {
   TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
 
-  return find_worker.resolve (id, this->ca_container() ACE_ENV_ARG_PARAMETER);
+  return find_worker.resolve (id, this->ca_container());
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotifyChannelAdmin::AdminNotFound
@@ -379,7 +375,7 @@ TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id AC
 {
   TAO_Notify_SupplierAdmin_Find_Worker find_worker;
 
-  return find_worker.resolve (id, this->sa_container() ACE_ENV_ARG_PARAMETER);
+  return find_worker.resolve (id, this->sa_container());
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
@@ -390,7 +386,7 @@ TAO_Notify_EventChannel::get_all_consumeradmins (void)
 {
   TAO_Notify_ConsumerAdmin_Seq_Worker seq_worker;
 
-  return seq_worker.create (this->ca_container() ACE_ENV_ARG_PARAMETER);
+  return seq_worker.create (this->ca_container());
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
@@ -401,11 +397,11 @@ TAO_Notify_EventChannel::get_all_supplieradmins (void)
 {
   TAO_Notify_SupplierAdmin_Seq_Worker seq_worker;
 
-  return seq_worker.create (this->sa_container() ACE_ENV_ARG_PARAMETER);
+  return seq_worker.create (this->sa_container());
 }
 
 void
-TAO_Notify_EventChannel::set_admin (const CosNotification::AdminProperties & admin ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_EventChannel::set_admin (const CosNotification::AdminProperties & admin)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotification::UnsupportedAdmin
@@ -452,18 +448,17 @@ TAO_Notify_EventChannel::for_suppliers (void)
 void
 TAO_Notify_EventChannel::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
                                    CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
-                                   ACE_ENV_ARG_DECL
                                    )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotification::UnsupportedQoS
                    ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
@@ -475,16 +470,16 @@ TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver ACE_
     this->save_attrs(attrs);
 
     bool want_all_children = saver.begin_object(
-      this->id(), "channel", attrs, changed ACE_ENV_ARG_PARAMETER);
+      this->id(), "channel", attrs, changed);
 
     TAO_Notify::Save_Persist_Worker<TAO_Notify_ConsumerAdmin> ca_wrk(saver, want_all_children);
 
-    this->ca_container().collection()->for_each(&ca_wrk ACE_ENV_ARG_PARAMETER);
+    this->ca_container().collection()->for_each(&ca_wrk);
 
     TAO_Notify::Save_Persist_Worker<TAO_Notify_SupplierAdmin> sa_wrk(saver, want_all_children);
-    this->sa_container().collection()->for_each(&sa_wrk ACE_ENV_ARG_PARAMETER);
+    this->sa_container().collection()->for_each(&sa_wrk);
 
-    saver.end_object(this->id(), "channel" ACE_ENV_ARG_PARAMETER);
+    saver.end_object(this->id(), "channel");
   }
 }
 
@@ -522,8 +517,7 @@ TAO_Notify_EventChannel::load_attrs(const TAO_Notify::NVPList& attrs)
 TAO_Notify::Topology_Object *
 TAO_Notify_EventChannel::load_child (const ACE_CString &type,
                                                   CORBA::Long id,
-                                                  const TAO_Notify::NVPList& attrs
-                                                  ACE_ENV_ARG_DECL)
+                                                  const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify::Topology_Object* result = this;
   if (type == "consumer_admin")
@@ -537,15 +531,14 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
     TAO_Notify_ConsumerAdmin * ca = bld->build_consumer_admin (
       this,
-      id
-      ACE_ENV_ARG_PARAMETER);
+      id);
     ca->load_attrs (attrs);
     if (ca->is_default ())
       {
-        CORBA::Object_var caob = this->poa()->servant_to_reference (ca ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var caob = this->poa()->servant_to_reference (ca);
         this->default_consumer_admin_ =
           CosNotifyChannelAdmin::ConsumerAdmin::_narrow (
-          caob.in () ACE_ENV_ARG_PARAMETER);
+          caob.in ());
       }
     result = ca;
   }
@@ -559,53 +552,50 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
 
     TAO_Notify_SupplierAdmin * sa = bld->build_supplier_admin (
       this,
-      id
-      ACE_ENV_ARG_PARAMETER);
+      id);
     sa->load_attrs (attrs);
     if (sa->is_default ())
       {
-        CORBA::Object_var saob = this->poa()->servant_to_reference (sa ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var saob = this->poa()->servant_to_reference (sa);
         this->default_supplier_admin_ =
           CosNotifyChannelAdmin::SupplierAdmin::_narrow (
-          saob.in () ACE_ENV_ARG_PARAMETER);
+          saob.in ());
       }
     result = sa;
   }
   return result;
 }
 TAO_Notify_ProxyConsumer *
-TAO_Notify_EventChannel::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxyConsumer * result = 0;
   size_t path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_SupplierAdmin_Find_Worker find_worker;
-    TAO_Notify_SupplierAdmin * admin = find_worker.find (id_path[position], this->sa_container() ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_SupplierAdmin * admin = find_worker.find (id_path[position], this->sa_container());
     ++position;
     if (admin != 0)
     {
-      result = admin->find_proxy_consumer (id_path, position
-        ACE_ENV_ARG_PARAMETER);
+      result = admin->find_proxy_consumer (id_path, position);
     }
   }
   return result;
 }
 
 TAO_Notify_ProxySupplier *
-TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxySupplier * result = 0;
   size_t path_size = id_path.size ();
   if (position < path_size)
   {
     TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
-    TAO_Notify_ConsumerAdmin * admin = find_worker.find (id_path[position], this->ca_container() ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_ConsumerAdmin * admin = find_worker.find (id_path[position], this->ca_container());
     ++position;
     if (admin != 0)
     {
-      result = admin->find_proxy_supplier (id_path, position
-        ACE_ENV_ARG_PARAMETER);
+      result = admin->find_proxy_supplier (id_path, position);
     }
   }
   return result;
@@ -616,10 +606,10 @@ void
 TAO_Notify_EventChannel::reconnect (void)
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_ConsumerAdmin> ca_wrk;
-  this->ca_container().collection()->for_each(&ca_wrk ACE_ENV_ARG_PARAMETER);
+  this->ca_container().collection()->for_each(&ca_wrk);
 
   TAO_Notify::Reconnect_Worker<TAO_Notify_SupplierAdmin> sa_wrk;
-  this->sa_container().collection()->for_each(&sa_wrk ACE_ENV_ARG_PARAMETER);
+  this->sa_container().collection()->for_each(&sa_wrk);
 }
 
 TAO_Notify_EventChannel::TAO_Notify_ConsumerAdmin_Container&

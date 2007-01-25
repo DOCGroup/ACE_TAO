@@ -25,37 +25,34 @@ TLS_Client::~TLS_Client ()
 }
 
 void
-TLS_Client::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
+TLS_Client::init (int argc, char *argv [])
 {
-  init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
+  init_ORB (argc, argv);
   resolve_naming_service ();
   resolve_TLS_Basic_factory ();
 }
 
 void
 TLS_Client::init_ORB (int argc,
-                      char *argv []
-                      ACE_ENV_ARG_DECL)
+                      char *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
+                                "");
 }
 
 void
 TLS_Client::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 
 void
@@ -66,12 +63,10 @@ TLS_Client::resolve_TLS_Basic_factory (void)
   name[0].id = CORBA::string_dup (BASIC_TLS_LOG_FACTORY_NAME);
 
   CORBA::Object_var obj =
-    this->naming_context_->resolve (name
-                                   ACE_ENV_ARG_PARAMETER);
+    this->naming_context_->resolve (name);
 
   this->basic_log_factory_ =
-    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+    DsLogAdmin::BasicLogFactory::_narrow (obj.in ());
 }
 
 void
@@ -92,8 +87,7 @@ TLS_Client::run_tests (void)
   DsLogAdmin::BasicLog_var basic_log =
     this->basic_log_factory_->create (logfullaction,
                                       max_size,
-                                      logid
-                                      ACE_ENV_ARG_PARAMETER);
+                                      logid);
 
   ACE_DEBUG ((LM_DEBUG,
               "Create returned logid = %d\n",logid));
@@ -109,7 +103,7 @@ TLS_Client::run_tests (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Writing %d records...\n", LOG_EVENT_COUNT));
-  basic_log->write_records (any_seq ACE_ENV_ARG_PARAMETER);
+  basic_log->write_records (any_seq);
 
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_n_records...\n"));
@@ -152,7 +146,7 @@ TLS_Client::run_tests (void)
   ACE_DEBUG ((LM_DEBUG,
               "Deleting records... \n"));
 
-  retval = basic_log->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
+  retval = basic_log->delete_records (QUERY_LANG, QUERY_2);
 
   ACE_DEBUG ((LM_DEBUG,
               "Calling BasicLog::get_n_records...\n"));

@@ -41,10 +41,9 @@ int main (int argc, char *argv[])
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ORB_Holder orb (argc, argv, ""
-                      ACE_ENV_ARG_PARAMETER);
+      ORB_Holder orb (argc, argv, "");
 
       Client_Options options (argc, argv);
       if (argc != 1)
@@ -69,12 +68,11 @@ int main (int argc, char *argv[])
                                      orb,
                                      rt_class,
                                      1 // options.nthreads
-                                     ACE_ENV_ARG_PARAMETER);
+                                     );
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
-                                                  "RootPOA"
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  "RootPOA");
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -97,22 +95,18 @@ int main (int argc, char *argv[])
       Servant_var<TAO_EC_Event_Channel> ec_impl (
               RTEC_Initializer::create (ec_poa.in (),
                                         ec_poa.in (),
-                                        rtserver_setup.rtcorba_setup ()
-                                        ACE_ENV_ARG_PARAMETER)
+                                        rtserver_setup.rtcorba_setup ())
               );
 
       ec_impl->activate ();
 
       PortableServer::ObjectId_var ec_id =
-        ec_poa->activate_object (ec_impl.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        ec_poa->activate_object (ec_impl.in ());
       CORBA::Object_var ec_object =
-        ec_poa->id_to_reference (ec_id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        ec_poa->id_to_reference (ec_id.in ());
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ());
 
       EC_Destroyer ec_destroyer (ec.in ());
 
@@ -151,8 +145,7 @@ int main (int argc, char *argv[])
 
       if (!options.high_priority_is_last)
         {
-          high_priority_group.connect (ec.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+          high_priority_group.connect (ec.in ());
           high_priority_disconnect = &high_priority_group;
         }
 
@@ -175,13 +168,11 @@ int main (int argc, char *argv[])
           ec_poa.in (),
           ec_poa.in (),
           ec.in (),
-          &the_barrier
-          ACE_ENV_ARG_PARAMETER);
+          &the_barrier);
 
       if (options.high_priority_is_last)
         {
-          high_priority_group.connect (ec.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+          high_priority_group.connect (ec.in ());
           high_priority_disconnect = &high_priority_group;
         }
       Send_Task high_priority_task;
@@ -224,13 +215,11 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

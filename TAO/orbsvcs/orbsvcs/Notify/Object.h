@@ -60,13 +60,12 @@ public:
   ID id (void) const;
 
   /// Activate
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
 
   /// Activate with existing id
   virtual CORBA::Object_ptr activate (
       PortableServer::Servant servant,
-      CORBA::Long id
-      ACE_ENV_ARG_DECL);
+      CORBA::Long id);
 
   /// Deactivate
   void deactivate (void);
@@ -74,13 +73,13 @@ public:
   /// Have we been shutdown. returns 1 if shutdown.
   int has_shutdown (void);
 
-  void execute_task (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL);
+  void execute_task (TAO_Notify_Method_Request& method_request);
 
   /// Get CORBA Ref.
   CORBA::Object_ptr ref (void);
 
   /// Set the QoS Properties.
-  virtual void set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL);
+  virtual void set_qos (const CosNotification::QoSProperties & qos);
 
   /// Get the QoS Properties.
   CosNotification::QoSProperties* get_qos (void);

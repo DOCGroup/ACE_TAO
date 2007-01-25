@@ -8,8 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::TCKind
 TAO_Sequence_Extracter_Base::
-sequence_type (CORBA::TypeCode* type_code
-               ACE_ENV_ARG_DECL)
+sequence_type (CORBA::TypeCode* type_code)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Seth, why do you use a comma to separate the two statements?

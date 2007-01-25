@@ -42,8 +42,7 @@ TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
     const PortableServer::ObjectId &oid,
-    PortableServer::POA_ptr poa
-    ACE_ENV_ARG_DECL)
+    PortableServer::POA_ptr poa)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -109,8 +108,7 @@ TAO_Storable_Naming_Context_Activator::etherealize (
     PortableServer::POA_ptr /*adapter*/,
     PortableServer::Servant servant,
     CORBA::Boolean /*cleanup_in_progress*/,
-    CORBA::Boolean remaining_activations
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Boolean remaining_activations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!remaining_activations) {

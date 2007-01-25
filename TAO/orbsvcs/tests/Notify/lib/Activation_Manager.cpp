@@ -95,7 +95,7 @@ TAO_Notify_Tests_Activation_Manager::consumer_count (void)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -112,7 +112,7 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Suppli
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -129,7 +129,7 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consum
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -140,7 +140,7 @@ TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -236,7 +236,7 @@ TAO_Notify_Tests_Activation_Manager::write_ior (void)
 
   // Write IOR to a file, if asked.
   CORBA::String_var str =
-    orb->object_to_string (am_object.in () ACE_ENV_ARG_PARAMETER);
+    orb->object_to_string (am_object.in ());
 
   if (this->ior_output_file_)
     {
@@ -277,9 +277,9 @@ TAO_Notify_Tests_Activation_Manager::signal_peer (void)
   LOOKUP_MANAGER->resolve (orb);
 
   CORBA::Object_var object =
-    orb->string_to_object (this->ior_input_file_.c_str () ACE_ENV_ARG_PARAMETER);
+    orb->string_to_object (this->ior_input_file_.c_str ());
 
-  Notify_Test::Activation_Manager_var peer = Notify_Test::Activation_Manager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+  Notify_Test::Activation_Manager_var peer = Notify_Test::Activation_Manager::_narrow (object.in ());
 
   if (CORBA::is_nil (peer.in ()))
     {

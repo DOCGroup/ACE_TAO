@@ -18,15 +18,14 @@ Loopback::Loopback (CORBA::Long experiment_id,
                     CORBA::Long base_event_type,
                     PortableServer::POA_ptr supplier_poa,
                     PortableServer::POA_ptr consumer_poa,
-                    RtecEventChannelAdmin::EventChannel_ptr ec
-                    ACE_ENV_ARG_DECL)
+                    RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   this->loopback_pair_.init (experiment_id,
                              base_event_type,
                              supplier_poa,
                              consumer_poa);
 
-  this->loopback_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
+  this->loopback_pair_.connect (ec);
 }
 
 void
@@ -35,5 +34,5 @@ Loopback::disconnect (void)
 {
   Auto_Disconnect<Loopback_Pair> disconnect (&this->loopback_pair_);
 
-  Implicit_Deactivator deactivator (this ACE_ENV_ARG_PARAMETER);
+  Implicit_Deactivator deactivator (this);
 }

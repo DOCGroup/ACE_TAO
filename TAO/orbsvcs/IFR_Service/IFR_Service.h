@@ -42,8 +42,7 @@ public:
 
   /// Initialize the IFR service.
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+            char *argv[]);
 
   /// Shut down the IFR Service.
   int fini (void);

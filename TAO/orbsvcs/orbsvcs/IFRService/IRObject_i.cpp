@@ -29,7 +29,6 @@ TAO_IRObject_i::~TAO_IRObject_i (void)
 
 CORBA::DefinitionKind
 TAO_IRObject_i::def_kind (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -82,7 +81,7 @@ TAO_IRObject_i::update_key (void)
   if (status != 0)
     {
       // If we're here, destroy() has been called on us.
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw CORBA::OBJECT_NOT_EXIST ();
     }
 }
 

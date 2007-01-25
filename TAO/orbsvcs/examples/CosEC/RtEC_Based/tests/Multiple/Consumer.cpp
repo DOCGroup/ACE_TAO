@@ -44,8 +44,7 @@ Consumer::parse_args (int argc, char *argv [])
 }
 
 void
-Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel
-                     ACE_ENV_ARG_DECL)
+Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
   // = Connect as a consumer.
   this->consumer_admin_ =
@@ -73,8 +72,7 @@ Consumer::connect (void)
   this->supplier_proxy_ =
     this->consumer_admin_->obtain_push_supplier ();
 
-  this->supplier_proxy_->connect_push_consumer (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  this->supplier_proxy_->connect_push_consumer (objref.in ());
 }
 
 void
@@ -91,8 +89,7 @@ Consumer::disconnect (void)
 }
 
 void
-Consumer::push (const CORBA::Any &
-                     ACE_ENV_ARG_DECL)
+Consumer::push (const CORBA::Any &)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected
@@ -133,31 +130,25 @@ Consumer::disconnect_push_consumer (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 int
 Consumer::init_Consumer (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
    {
-      this->open (this->cos_ec_
-                  ACE_ENV_ARG_PARAMETER);
+      this->open (this->cos_ec_);
 
       this->connect ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Consumer::connect (void)\n");
+      ex._tao_print_exception ("Exception in Consumer::connect (void)\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

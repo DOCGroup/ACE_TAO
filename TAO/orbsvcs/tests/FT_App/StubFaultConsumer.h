@@ -51,8 +51,7 @@ public:
   /**
    * Publish this objects IOR.
    */
-  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier
-    ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -80,14 +79,12 @@ public:
     // CORBA methods
     virtual void push_structured_event(
       const CosNotification::StructuredEvent &notification
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
 

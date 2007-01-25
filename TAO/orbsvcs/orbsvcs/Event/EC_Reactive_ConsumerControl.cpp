@@ -42,12 +42,10 @@ TAO_EC_Reactive_ConsumerControl::~TAO_EC_Reactive_ConsumerControl (void)
 }
 
 void
-TAO_EC_Reactive_ConsumerControl::query_consumers (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Reactive_ConsumerControl::query_consumers ()
 {
   TAO_EC_Ping_Consumer worker (this);
-  this->event_channel_->for_each_consumer (&worker
-                                           ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->for_each_consumer (&worker);
 }
 
 void
@@ -63,52 +61,46 @@ TAO_EC_Reactive_ConsumerControl::handle_timeout (
   // RELATIVE_RT_TIMEOUT_POLICY set here in effect.
 
   // @@ TODO: should use Guard to set and reset policies.
-  ACE_TRY_NEW_ENV
+  try
     {
       // Query the state of the Current object *before* we initiate
       // the iteration...
       CORBA::PolicyTypeSeq types;
       CORBA::PolicyList_var policies =
-        this->policy_current_->get_policy_overrides (types
-                                                      ACE_ENV_ARG_PARAMETER);
+        this->policy_current_->get_policy_overrides (types);
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
-                                                   CORBA::ADD_OVERRIDE
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                   CORBA::ADD_OVERRIDE);
 
       // Query the state of the consumers...
       this->query_consumers ();
 
       this->policy_current_->set_policy_overrides (policies.in (),
-                                                   CORBA::SET_OVERRIDE
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                   CORBA::SET_OVERRIDE);
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore all exceptions
     }
-  ACE_ENDTRY;
 }
 
 int
 TAO_EC_Reactive_ConsumerControl::activate (void)
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  ACE_TRY_NEW_ENV
+  try
     {
       // Get the PolicyCurrent object
       CORBA::Object_var tmp =
-        this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                 ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
-        CORBA::PolicyCurrent::_narrow (tmp.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (tmp.in ());
 
       // Timeout for polling state (default = 10 msec)
       TimeBase::TimeT timeout = timeout_.usec() * 10;
@@ -119,8 +111,7 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
       this->policy_list_[0] =
         this->orb_->create_policy (
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-               any
-                ACE_ENV_ARG_PARAMETER);
+               any);
 
       // Only schedule the timer, when the rate is not zero
       if (this->rate_ != ACE_Time_Value::zero)
@@ -136,11 +127,10 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
           return -1;
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
   return 0;
@@ -160,32 +150,28 @@ TAO_EC_Reactive_ConsumerControl::shutdown (void)
 
 void
 TAO_EC_Reactive_ConsumerControl::consumer_not_exist (
-      TAO_EC_ProxyPushSupplier *proxy
-      ACE_ENV_ARG_DECL)
+      TAO_EC_ProxyPushSupplier *proxy)
 {
-  ACE_TRY
+  try
     {
       //ACE_DEBUG ((LM_DEBUG,
       //            "EC_Reactive_ConsumerControl(%P|%t) - "
       //            "Consumer %x does not exists\n", long(proxy)));
       proxy->disconnect_push_supplier ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Reactive_ConsumerControl::consumer_not_exist");
+      ex._tao_print_exception ("Reactive_ConsumerControl::consumer_not_exist");
       // Ignore all exceptions..
     }
-  ACE_ENDTRY;
 }
 
 void
 TAO_EC_Reactive_ConsumerControl::system_exception (
       TAO_EC_ProxyPushSupplier *proxy,
-      CORBA::SystemException & /* exception */
-      ACE_ENV_ARG_DECL)
+      CORBA::SystemException & /* exception */)
 {
-  ACE_TRY
+  try
     {
       // The current implementation is very strict, and kicks out a
       // client on the first system exception. We may
@@ -199,11 +185,10 @@ TAO_EC_Reactive_ConsumerControl::system_exception (
       // Anything else is serious, including timeouts...
       proxy->disconnect_push_supplier ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore all exceptions..
     }
-  ACE_ENDTRY;
 }
 
 // ****************************************************************
@@ -226,36 +211,33 @@ TAO_EC_ConsumerControl_Adapter::handle_timeout (
 // ****************************************************************
 
 void
-TAO_EC_Ping_Consumer::work (TAO_EC_ProxyPushSupplier *supplier
-                            ACE_ENV_ARG_DECL)
+TAO_EC_Ping_Consumer::work (TAO_EC_ProxyPushSupplier *supplier)
 {
-  ACE_TRY
+  try
     {
       CORBA::Boolean disconnected;
       CORBA::Boolean non_existent =
-        supplier->consumer_non_existent (disconnected
-                                          ACE_ENV_ARG_PARAMETER);
+        supplier->consumer_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
-          this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
+          this->control_->consumer_not_exist (supplier);
         }
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch (const CORBA::OBJECT_NOT_EXIST& ex)
     {
-      this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
+      this->control_->consumer_not_exist (supplier);
     }
-  ACE_CATCH (CORBA::TRANSIENT, transient)
+  catch (const CORBA::TRANSIENT& transient)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
-      this->control_->consumer_not_exist (supplier ACE_ENV_ARG_PARAMETER);
+      this->control_->consumer_not_exist (supplier);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore all exceptions
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

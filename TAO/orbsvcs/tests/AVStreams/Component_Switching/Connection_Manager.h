@@ -47,8 +47,7 @@ public:
   // Initialize this class.
 
   void bind_to_receivers (const ACE_CString &sender_name,
-                          AVStreams::MMDevice_ptr sender
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                          AVStreams::MMDevice_ptr sender);
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
@@ -57,20 +56,17 @@ public:
 
   void bind_to_sender (const ACE_CString &sender_name,
                        const ACE_CString &receiver_name,
-                       AVStreams::MMDevice_ptr receiver
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       AVStreams::MMDevice_ptr receiver);
   // Bind receiver to the sender.
 
   void connect_to_sender (void);
   // Connect to the sender that we found.
 
-  void destroy (const ACE_CString &flowname
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void destroy (const ACE_CString &flowname);
   // Destroy streams associated with <flowname>.
 
   void unbind_sender (const ACE_CString &sender_name,
-                      AVStreams::MMDevice_ptr sender_mmdevice
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS) ;
+                      AVStreams::MMDevice_ptr sender_mmdevice) ;
   // Unbind the sender from the Naming Service
 
   void unbind_receiver (const ACE_CString &sender_name,
@@ -79,8 +75,7 @@ public:
   // Unbind the Receiver from the Naming Service
 
   void add_streamctrl (const ACE_CString &flowname,
-                       TAO_StreamEndPoint *endpoint
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       TAO_StreamEndPoint *endpoint);
   // Add new streamctrl.
 
   // Map of receivers.
@@ -110,8 +105,7 @@ protected:
 
   void find_receivers (void);
 
-  void add_to_receivers (CosNaming::BindingList &binding_list
-                         ACE_ENV_ARG_DECL);
+  void add_to_receivers (CosNaming::BindingList &binding_list);
 
   TAO_Naming_Client naming_client_;
   // The Naming Service client.

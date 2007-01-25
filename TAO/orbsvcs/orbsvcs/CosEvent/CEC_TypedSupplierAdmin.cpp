@@ -31,24 +31,21 @@ TAO_CEC_TypedSupplierAdmin::_default_POA (void)
 }
 
 void
-TAO_CEC_TypedSupplierAdmin::connected (TAO_CEC_TypedProxyPushConsumer *consumer
-                                       ACE_ENV_ARG_DECL)
+TAO_CEC_TypedSupplierAdmin::connected (TAO_CEC_TypedProxyPushConsumer *consumer)
 {
-  this->typed_push_admin_.connected (consumer ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.connected (consumer);
 }
 
 void
-TAO_CEC_TypedSupplierAdmin::reconnected (TAO_CEC_TypedProxyPushConsumer *consumer
-                                         ACE_ENV_ARG_DECL)
+TAO_CEC_TypedSupplierAdmin::reconnected (TAO_CEC_TypedProxyPushConsumer *consumer)
 {
-  this->typed_push_admin_.reconnected (consumer ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.reconnected (consumer);
 }
 
 void
-TAO_CEC_TypedSupplierAdmin::disconnected (TAO_CEC_TypedProxyPushConsumer *consumer
-                                          ACE_ENV_ARG_DECL)
+TAO_CEC_TypedSupplierAdmin::disconnected (TAO_CEC_TypedProxyPushConsumer *consumer)
 {
-  this->typed_push_admin_.disconnected (consumer ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.disconnected (consumer);
 }
 
 void
@@ -60,7 +57,6 @@ TAO_CEC_TypedSupplierAdmin::shutdown (void)
 CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
     const char * supported_interface
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -68,7 +64,7 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
   ))
 
 {
-  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface ACE_ENV_ARG_PARAMETER);
+  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
 
   if (result == -1)
     {
@@ -81,7 +77,6 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
     const char * /* uses_interface */
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

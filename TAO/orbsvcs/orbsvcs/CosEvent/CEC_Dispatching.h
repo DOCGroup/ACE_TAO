@@ -61,18 +61,14 @@ public:
 
   /// The consumer represented by <proxy> should receive <event>.
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                     const CORBA::Any &event) = 0;
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                            CORBA::Any &event
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                            CORBA::Any &event) = 0;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent &typed_event
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                       const TAO_CEC_TypedEvent &typed_event) = 0;
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent &typed_event
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                              TAO_CEC_TypedEvent &typed_event) = 0;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
 
@@ -97,18 +93,14 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     const CORBA::Any &event);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                            CORBA::Any &event
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                            CORBA::Any &event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent &typed_event
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       const TAO_CEC_TypedEvent &typed_event);
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent &typed_event
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              TAO_CEC_TypedEvent &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 };
 

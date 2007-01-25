@@ -9,28 +9,24 @@ main (int argc, char *argv [])
 {
   Basic basic;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      basic.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      basic.init (argc, argv);
 
       basic.run ();
 
       basic.shutdown ();
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "CosEC_Basic user exception: ");
+      ue._tao_print_exception ("CosEC_Basic user exception: ");
       return 1;
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "CosEC_Basic system exception: ");
+      se._tao_print_exception ("CosEC_Basic system exception: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -46,34 +42,29 @@ Basic::~Basic (void)
 }
 
 void
-Basic::init (int argc, char *argv[]
-                   ACE_ENV_ARG_DECL)
+Basic::init (int argc, char *argv[])
 {
-  this->init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
+  this->init_ORB (argc, argv);
 
   this->init_CosEC ();
 }
 
 void
-Basic::init_ORB  (int argc, char *argv []
-                        ACE_ENV_ARG_DECL)
+Basic::init_ORB  (int argc, char *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
+                                "");
 
   CORBA::Object_var poa_object  =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to initialize the POA.\n"));
 
   root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa_->the_POAManager ();
@@ -94,21 +85,19 @@ Basic::init_CosEC (void)
 
   ec->init (this->root_poa_.in(),
             this->root_poa_.in(),
-            0,0,0
-            ACE_ENV_ARG_PARAMETER);
+            0,0,0);
 
   int retval = ec->activate ();
 
   if (retval == -1)
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
   // @@ look for more descriptive exception to throw here
 
   CORBA::Object_var obj =
-    this->root_poa_->servant_to_reference (ec ACE_ENV_ARG_PARAMETER);
+    this->root_poa_->servant_to_reference (ec);
 
   this->cos_ec_ =
-    CosEventChannelAdmin::EventChannel::_narrow (obj._retn ()
-                                                 ACE_ENV_ARG_PARAMETER);
+    CosEventChannelAdmin::EventChannel::_narrow (obj._retn ());
 }
 
 void
@@ -119,18 +108,15 @@ Basic::run (void)
   any <<= (CORBA::Long)50;
 
   this->consumer_.open (this->cos_ec_.in (),
-                        this->orb_.in ()
-                        ACE_ENV_ARG_PARAMETER);
+                        this->orb_.in ());
 
   this->consumer_.connect ();
 
-  this->supplier_.open (this->cos_ec_.in ()
-                        ACE_ENV_ARG_PARAMETER);
+  this->supplier_.open (this->cos_ec_.in ());
 
   this->supplier_.connect ();
 
-  this->supplier_.send_event (any
-                              ACE_ENV_ARG_PARAMETER);
+  this->supplier_.send_event (any);
 
   // this->orb_->run ();
   // @@ commenting out the run-shutdown mechanism for now because it gives

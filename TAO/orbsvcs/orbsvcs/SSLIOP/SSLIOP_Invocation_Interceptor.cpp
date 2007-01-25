@@ -31,16 +31,14 @@ TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor (
 }
 
 char *
-TAO::SSLIOP::Server_Invocation_Interceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::Server_Invocation_Interceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor");
 }
 
 void
-TAO::SSLIOP::Server_Invocation_Interceptor::destroy (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::Server_Invocation_Interceptor::destroy ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -48,8 +46,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::destroy (
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
-                                              PortableInterceptor::ServerRequestInfo_ptr /*ri*/
-    ACE_ENV_ARG_DECL)
+                                              PortableInterceptor::ServerRequestInfo_ptr /*ri*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -69,18 +66,17 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
     ACE_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
 
   if (no_ssl && this->qop_ != ::Security::SecQOPNoProtection)
-    ACE_THROW (CORBA::NO_PERMISSION ());
+    throw CORBA::NO_PERMISSION ();
 
 #if defined(DEBUG_PEER_CERTIFICATES)
-  ACE_TRY
+  try
     {
       // If the request was not made through an SSL connection, then
       // this method will throw the SSLIOP::Current::NoContext
       // exception.  Otherwise, it will return a DER encoded X509
       // certificate.
       ::SSLIOP::ASN_1_Cert_var cert =
-        this->ssliop_current_->get_peer_certificate (
-          ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->ssliop_current_->get_peer_certificate ();
 
       // @@ The following debugging code works but I don't think that
       //    we should include it since it dumps alot of information,
@@ -115,7 +111,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
             }
         }
     }
-  ACE_CATCH (::SSLIOP::Current::NoContext, exc)
+  catch (const ::SSLIOP::Current::NoContext& )
     {
       // The current upcall is not being performed through an SSL
       // connection.  If server is configured to disallow insecure
@@ -127,17 +123,15 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
       //          accept or reject requests on a per-object basis
       //          instead on a per-endpoint basis.
       if (this->qop_ != ::Security::SecQOPNoProtection)
-        ACE_THROW (CORBA::NO_PERMISSION ());
+        throw CORBA::NO_PERMISSION ();
     }
-  ACE_ENDTRY;
 #endif /* DEBUG_PEER_CERTIFICATES */
 }
 
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -145,16 +139,14 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -162,8 +154,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::send_exception (
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

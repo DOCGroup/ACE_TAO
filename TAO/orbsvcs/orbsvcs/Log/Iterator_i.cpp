@@ -39,12 +39,11 @@ TAO_Iterator_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
-    this->poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this);
 
   // Goodbye cruel world...
   // deactivate from the poa.
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (oid.in ());
   return;
 }
 
@@ -52,14 +51,13 @@ TAO_Iterator_i::destroy (void)
 int
 TAO_Iterator_i::handle_timeout(const ACE_Time_Value&, const void*)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }

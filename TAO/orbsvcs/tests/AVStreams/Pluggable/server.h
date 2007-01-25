@@ -77,8 +77,7 @@ public:
   // Deestructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Initialize data components.
 
 protected:

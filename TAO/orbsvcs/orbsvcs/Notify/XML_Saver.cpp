@@ -45,7 +45,7 @@ namespace TAO_Notify
   {
     if (this->close_out_ && this->output_ != 0)
     {
-      this->end_object(0, "notification_service" ACE_ENV_ARG_PARAMETER);
+      this->end_object(0, "notification_service");
 
       ACE_OS::fclose(this->output_);
       this->output_ = 0;
@@ -113,8 +113,7 @@ namespace TAO_Notify
 
       ACE_OS::fprintf (out, "<?xml version=\"1.0\"?>\n");
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
       {
         bool changed = true;
         NVPList attrs;
@@ -138,16 +137,16 @@ namespace TAO_Notify
         {
           attrs.push_back(NVP("timestamp", nowusstr));
         }
-        this->begin_object(0, "notification_service", attrs, changed ACE_ENV_ARG_PARAMETER);
+        this->begin_object(0, "notification_service", attrs, changed);
       }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-          ACE_TEXT ("(%P|%t) XML_Saver Unknown exception\n"));
+        ex._tao_print_exception (
+          ACE_TEXT (
+            "(%P|%t) XML_Saver Unknown exception\n"));
         delete this->output_;
         this->output_ = 0;
       }
-      ACE_ENDTRY;
     }
     return this->output_ != 0;
   }
@@ -155,8 +154,7 @@ namespace TAO_Notify
   bool XML_Saver::begin_object(CORBA::Long id,
     const ACE_CString& type,
     const NVPList& attrs,
-    bool /* changed */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    bool /* changed */)
   {
     ACE_ASSERT(this->output_ != 0);
 
@@ -184,8 +182,7 @@ namespace TAO_Notify
   }
 
   void XML_Saver::end_object (CORBA::Long /* id */,
-                              const ACE_CString& type
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              const ACE_CString& type)
   {
     ACE_ASSERT(this->output_ != 0);
     FILE *out = this->output_;

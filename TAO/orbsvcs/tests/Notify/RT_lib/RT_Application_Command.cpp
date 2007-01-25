@@ -27,7 +27,7 @@ TAO_Notify_Tests_RT_Application_Command::handle_init (void)
 
   TAO_Notify_Tests_RT_Priority_Mapping* mapping = new TAO_Notify_Tests_RT_Priority_Mapping ();
 
-  mapping->init (orb.in () ACE_ENV_ARG_PARAMETER);
+  mapping->init (orb.in ());
 
   LOOKUP_MANAGER->_register (mapping);
 }

@@ -62,29 +62,20 @@ public:
   virtual ~TAO_CEC_ConsumerAdmin (void);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker
-                 ACE_ENV_ARG_DECL);
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker);
 
   /// Push the event to all the consumers
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL);
+  void push (const CORBA::Any &event);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void connected (TAO_CEC_ProxyPullSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPullSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPullSupplier*);
 
   /// The event channel is shutting down, inform all the consumers of
   /// this
@@ -123,8 +114,7 @@ class TAO_CEC_Propagate_Event_Push : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupp
 public:
   TAO_CEC_Propagate_Event_Push (const CORBA::Any& event);
 
-  void work (TAO_CEC_ProxyPushSupplier *supplier
-             ACE_ENV_ARG_DECL);
+  void work (TAO_CEC_ProxyPushSupplier *supplier);
 
 private:
   /// The event
@@ -138,8 +128,7 @@ class TAO_CEC_Propagate_Event_Pull : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupp
 public:
   TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event);
 
-  void work (TAO_CEC_ProxyPullSupplier *supplier
-             ACE_ENV_ARG_DECL);
+  void work (TAO_CEC_ProxyPullSupplier *supplier);
 
 private:
   /// The event

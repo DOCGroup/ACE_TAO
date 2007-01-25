@@ -50,8 +50,7 @@ public:
   virtual void set_size(size_t size);
 
   /// Callback interface.
-  virtual void work (Object *object
-                     ACE_ENV_ARG_DECL) = 0;
+  virtual void work (Object *object) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

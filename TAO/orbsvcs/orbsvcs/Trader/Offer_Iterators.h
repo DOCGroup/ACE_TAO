@@ -94,8 +94,7 @@ public:
    * END SPEC
    */
   virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers
-                                 ACE_ENV_ARG_DECL)
+                                 CosTrading::OfferSeq_out offers)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
  protected:
 
@@ -133,8 +132,7 @@ public:
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
   virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers
-                                 ACE_ENV_ARG_DECL)
+                                 CosTrading::OfferSeq_out offers)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the number of items left in the iterator.
@@ -187,8 +185,7 @@ public:
 
   /// Retrieve n offers from the set of iterators.
   virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers
-                                 ACE_ENV_ARG_DECL)
+                                 CosTrading::OfferSeq_out offers)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy the collection of iterators.
@@ -273,8 +270,7 @@ class TAO_Offer_Id_Iterator :
    * further offer identifiers to be extracted.
    */
   virtual CORBA::Boolean next_n(CORBA::ULong _n,
-                                CosTrading::OfferIdSeq_out _ids
-                                ACE_ENV_ARG_DECL)
+                                CosTrading::OfferIdSeq_out _ids)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Insert a <new_id> into the contents of the iterator.

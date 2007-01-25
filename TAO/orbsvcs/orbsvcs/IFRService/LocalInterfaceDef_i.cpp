@@ -32,21 +32,18 @@ TAO_LocalInterfaceDef_i::def_kind (void)
 }
 
 CORBA::Boolean
-TAO_LocalInterfaceDef_i::is_a (const char *interface_id
-                               ACE_ENV_ARG_DECL)
+TAO_LocalInterfaceDef_i::is_a (const char *interface_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
   this->update_key ();
 
-  return this->is_a_i (interface_id
-                       ACE_ENV_ARG_PARAMETER);
+  return this->is_a_i (interface_id);
 }
 
 CORBA::Boolean
-TAO_LocalInterfaceDef_i::is_a_i (const char *interface_id
-                                 ACE_ENV_ARG_DECL)
+TAO_LocalInterfaceDef_i::is_a_i (const char *interface_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/LocalBase:1.0") == 0)
@@ -54,8 +51,7 @@ TAO_LocalInterfaceDef_i::is_a_i (const char *interface_id
       return 1;
     }
 
-  return this->TAO_InterfaceDef_i::is_a_i (interface_id
-                                           ACE_ENV_ARG_PARAMETER);
+  return this->TAO_InterfaceDef_i::is_a_i (interface_id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

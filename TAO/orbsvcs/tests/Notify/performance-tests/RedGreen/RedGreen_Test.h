@@ -75,8 +75,7 @@ class RedGreen_Test
   void dump_results (void);
 
   void init (int argc,
-             char *argv []
-             ACE_ENV_ARG_DECL);
+             char *argv []);
   // Initialize the Client.
 
   void run (void);
@@ -94,8 +93,7 @@ class RedGreen_Test
 
  protected:
   void init_ORB (int argc,
-                 char *argv []
-                 ACE_ENV_ARG_DECL);
+                 char *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);
@@ -175,8 +173,7 @@ class RedGreen_Test_StructuredPushConsumer
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
@@ -221,7 +218,6 @@ protected:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyComm::InvalidEventType));
@@ -229,13 +225,11 @@ protected:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
       const CosNotification::StructuredEvent & notification
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected));
 
   virtual void disconnect_structured_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
@@ -249,7 +243,6 @@ public:
 
   virtual void push_structured_event (
       const CosNotification::StructuredEvent & notification
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected));
@@ -271,16 +264,14 @@ class RedGreen_Test_StructuredPushSupplier
   RedGreen_Test_StructuredPushSupplier (void);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
   void disconnect (void);
   // Disconnect from the supplier.
 
-  virtual void send_event (CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (CosNotification::StructuredEvent& event);
   // Send one event.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -308,14 +299,12 @@ protected:
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyComm::InvalidEventType));
 
   // = StructuredPushSupplier method
   virtual void disconnect_structured_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

@@ -29,7 +29,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
 template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   delete hash_iter_;
 
   // Since we are going away, decrement the reference count on the
@@ -39,16 +38,14 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator (void)
 
 // Return the Default POA of this Servant
 template <class ITERATOR, class TABLE_ENTRY> PortableServer::POA_ptr
-TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::_default_POA (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
-    CosNaming::Binding_out b
-    ACE_ENV_ARG_DECL)
+    CosNaming::Binding_out b)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNaming::Binding *binding;
@@ -103,8 +100,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
 template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
     CORBA::ULong how_many,
-    CosNaming::BindingList_out bl
-    ACE_ENV_ARG_DECL)
+    CosNaming::BindingList_out bl)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We perform an allocation before obtaining the lock so that an out
@@ -177,17 +173,15 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (void)
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // Mark the object invalid.
   this->destroyed_ = 1;
 
   PortableServer::ObjectId_var id =
-    poa_->servant_to_id (this
-                         ACE_ENV_ARG_PARAMETER);
+    poa_->servant_to_id (this);
 
-  poa_->deactivate_object (id.in ()
-                           ACE_ENV_ARG_PARAMETER);
+  poa_->deactivate_object (id.in ());
 }
 
 template <class ITERATOR, class TABLE_ENTRY> int

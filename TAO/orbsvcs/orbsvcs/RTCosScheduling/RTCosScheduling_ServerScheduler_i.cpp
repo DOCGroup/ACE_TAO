@@ -61,7 +61,7 @@ RTCosScheduling_ServerScheduler_i::~RTCosScheduling_ServerScheduler_i (void)
 int
 RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
      // Get an object reference to orb from the orb core
@@ -103,15 +103,13 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
 
       if (unregistered)
         {
-          orb_core->add_interceptor(server_interceptor
-                                    ACE_ENV_ARG_PARAMETER);
+          orb_core->add_interceptor(server_interceptor);
         }
 #endif /*  TAO_HAS_INTERCEPTORS */
 
       /// Resolve a reference to the Linear Priority Mapping Manager
      CORBA::Object_var rt_obj =
-        orb->resolve_initial_references("PriorityMappingManager"
-                                        ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("PriorityMappingManager");
       if (CORBA::is_nil(rt_obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -120,8 +118,7 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
           return 0;
         }
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow(rt_obj.in()
-                                                 ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityMappingManager::_narrow(rt_obj.in());
 
       /// Create the Linear Priority Mapping Manager
       ACE_NEW_THROW_EX(this->pm_,
@@ -132,12 +129,11 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       mapping_manager->mapping(this->pm_);
 
    }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
         ACE_ERROR((LM_ERROR, "Could not configure the orb"));
         ACE_OS::exit(1);
     }
- ACE_ENDTRY;
  return 1;
 }
 
@@ -146,13 +142,12 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
     PortableServer::POA_ptr parent,
     const char * adapter_name,
     PortableServer::POAManager_ptr a_POAManager,
-    const CORBA::PolicyList & policies
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const CORBA::PolicyList & policies)
   ACE_THROW_SPEC (( CORBA::SystemException
     , PortableServer::POA::AdapterAlreadyExists
     , PortableServer::POA::InvalidPolicy))
 {
-  ACE_TRY_NEW_ENV
+  try
     {
         // We should hopefully be using more than one thread
 #if defined (ACE_HAS_THREADS)
@@ -174,8 +169,7 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
 
       /// Now resolve a reference to the Real Time ORB
       CORBA::Object_var rt_obj =
-        orb->resolve_initial_references("RTORB"
-                                        ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RTORB");
       if (CORBA::is_nil(rt_obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -186,8 +180,7 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
 
       /// Get the reference to the RT ORB
       RTCORBA::RTORB_var rt_orb =
-         RTCORBA::RTORB::_narrow (rt_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+         RTCORBA::RTORB::_narrow (rt_obj.in ());
 
       if (CORBA::is_nil(rt_orb.in ()))
         {
@@ -207,8 +200,7 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       poa_policy_list[policies.length()] =
         rt_orb->create_priority_model_policy (
           RTCORBA::SERVER_DECLARED,
-          RTCORBA::maxPriority
-          ACE_ENV_ARG_PARAMETER);
+          RTCORBA::maxPriority);
 
       // Set up the threadpool
 #if defined (ACE_HAS_THREADS)
@@ -241,12 +233,10 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
                                           default_thread_priority,
                                           allow_request_buffering,
                                           max_buffered_requests,
-                                          max_request_buffer_size
-                                          ACE_ENV_ARG_PARAMETER);
+                                          max_request_buffer_size);
 
       poa_policy_list[policies.length()+1] =
-        rt_orb->create_threadpool_policy (threadpool
-                                          ACE_ENV_ARG_PARAMETER);
+        rt_orb->create_threadpool_policy (threadpool);
 #endif /* ACE_HAS_THREADS */
 
 
@@ -254,31 +244,27 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
       PortableServer::POA_var poa =
         parent->create_POA (adapter_name,
                             a_POAManager,
-                            poa_policy_list
-                            ACE_ENV_ARG_PARAMETER);
+                            poa_policy_list);
 
       RTPortableServer::POA_var rt_poa =
-        RTPortableServer::POA::_narrow(poa.in()
-                                       ACE_ENV_ARG_PARAMETER);
+        RTPortableServer::POA::_narrow(poa.in());
 
       /// return the reference to the RT POA
       return rt_poa.in();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                 "ERROR: Could not create a Scheduling Service POA\n");
       return parent;
     }
-  ACE_ENDTRY;
   return parent;
 }
 
 void
 RTCosScheduling_ServerScheduler_i::schedule_object (
     CORBA::Object_ptr obj,
-    const char * name
-    ACE_ENV_ARG_DECL)
+    const char * name)
   ACE_THROW_SPEC ((CORBA::SystemException
     , RTCosScheduling::UnknownName))
 {
@@ -288,7 +274,7 @@ RTCosScheduling_ServerScheduler_i::schedule_object (
   /// is no valid ceiling for it, throw an UnknownName exception
   if (this->resource_map_.find(name) == -1)
     {
-      ACE_THROW (RTCosScheduling::UnknownName());
+      throw RTCosScheduling::UnknownName();
     }
   else
     {
@@ -309,7 +295,7 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
   object_name_map_(ObjectMap),
   resource_map_(resourceMap)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create a new Priority Ceiling protocol manager factory
       ACE_NEW_THROW_EX(this->PCP_factory_,
@@ -319,8 +305,7 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
 
       /// Now resolve a reference to the Real Time ORB
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references("RTORB"
-                                       ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RTORB");
       RTCORBA::RTORB_var rt_orb;
       if (CORBA::is_nil(obj.in ()))
         {
@@ -331,14 +316,12 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
         }
       else
         {
-          rt_orb =RTCORBA::RTORB::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+          rt_orb =RTCORBA::RTORB::_narrow (obj.in ());
         }
 
       // Now get a reference to the RTCurrent
       // for the PCP manager to control
-      obj = this->orb_->resolve_initial_references ("RTCurrent"
-                                                    ACE_ENV_ARG_PARAMETER);
+      obj = this->orb_->resolve_initial_references ("RTCurrent");
       if (CORBA::is_nil(obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -349,15 +332,13 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
       else
         {
           this->current_ =
-            RTCORBA::Current::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+            RTCORBA::Current::_narrow (obj.in ());
         }
 
       // Now get a reference to the codec factory to create a codec that will
       // decode the client priority sent in the service context
       obj =
-        this->orb_->resolve_initial_references ("CodecFactory"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("CodecFactory");
 
       if (CORBA::is_nil(obj.in()))
         {
@@ -380,12 +361,11 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
 
       this->codec_ = this->codec_factory_->create_codec(encoding);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                           "Error in installing the interceptor for the ServerScheduler\n");
     }
-  ACE_ENDTRY;
 }
 
 
@@ -399,13 +379,12 @@ RTCosScheduling_ServerScheduler_Interceptor::~RTCosScheduling_ServerScheduler_In
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::receive_request(
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 ACE_THROW_SPEC((
   CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       ACE_CString name = "";
@@ -419,8 +398,7 @@ ACE_THROW_SPEC((
         (*adapter_seq)[adapter_seq->length() - 1];
 
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
       if (CORBA::is_nil(obj.in()))
         {
           ACE_DEBUG((LM_DEBUG,
@@ -444,12 +422,11 @@ ACE_THROW_SPEC((
       // decode the Client priority sent in the service context
       IOP::ServiceId id = IOP::RTCorbaPriority;
       IOP::ServiceContext_var sc;
-      ACE_TRY_EX(svc_req)
+      try
         {
           sc = ri->get_request_service_context(id);
-          ACE_TRY_CHECK_EX(svc_req);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // The RTCorbaPriority was not sent, do not use real time
           // Here we cannot let the server continue to run at
@@ -458,7 +435,6 @@ ACE_THROW_SPEC((
           this->current_->the_priority(RTCORBA::minPriority);
           return;
         }
-      ACE_ENDTRY;
 
       CORBA::OctetSeq ocSeq = CORBA::OctetSeq(
         sc->context_data.length(),
@@ -540,19 +516,17 @@ ACE_THROW_SPEC((
         p->threadID(),
         p);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                           "Unknown exception in the receive request\n");
       ACE_OS::exit(1);
     }
-  ACE_ENDTRY;
 }
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::send_reply(
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC((
     CORBA::SystemException
   ))
@@ -590,8 +564,7 @@ RTCosScheduling_ServerScheduler_Interceptor::destroy(void)
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::receive_request_service_contexts(
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC((
     CORBA::SystemException,
     PortableInterceptor::ForwardRequest))
@@ -601,8 +574,7 @@ RTCosScheduling_ServerScheduler_Interceptor::receive_request_service_contexts(
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::send_exception(
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC((CORBA::SystemException,
     PortableInterceptor::ForwardRequest))
 {
@@ -612,8 +584,7 @@ RTCosScheduling_ServerScheduler_Interceptor::send_exception(
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::send_other(
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC((
     CORBA::SystemException,
     PortableInterceptor::ForwardRequest))

@@ -52,12 +52,10 @@ public:
 
   /// The types of the event is chosen by the driver, based on the
   /// cookie and the <event_number>
-  void send_event (int event_number
-                   ACE_ENV_ARG_DECL);
+  void send_event (int event_number);
 
   /// Send <event> to the EC.
-  void send_event (const RtecEventComm::EventSet& event
-                   ACE_ENV_ARG_DECL);
+  void send_event (const RtecEventComm::EventSet& event);
 
   /// Set the event type and source in <event>
   void send_event (int event_number,
@@ -71,14 +69,12 @@ public:
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
         const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type
-        ACE_ENV_ARG_DECL);
+        int shutdown_event_type);
 
   /// Connect using the current consumer_proxy (useful for reconnect test)
   virtual void connect (
         const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type
-        ACE_ENV_ARG_DECL);
+        int shutdown_event_type);
 
   /// Disconnect from the EC, also deactivates the object
   void disconnect (void);

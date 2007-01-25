@@ -52,65 +52,54 @@ public:
   virtual ~TAO_ExceptionDef_i (void);
   // Destructor
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::DefinitionKind def_kind ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Contained::Description *describe ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Contained::Description *describe_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::TypeCode_ptr type_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::StructMemberSeq *members (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::StructMemberSeq *members ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::StructMemberSeq *members_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::StructMemberSeq *members_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const CORBA::StructMemberSeq & members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const CORBA::StructMemberSeq & members)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const CORBA::StructMemberSeq & members
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const CORBA::StructMemberSeq & members)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

@@ -49,13 +49,11 @@ public:
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
   /// Called by the MMDevice, when it needs to create an B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 protected:
   /// The "A" stream endpoint
@@ -140,8 +138,7 @@ public:
 protected:
   /// Creates an "A" type stream endpoint, and a vdev
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
   /// Gets the "A" type stream endpoint from the child process
   virtual int get_stream_endpoint (void);
@@ -168,8 +165,7 @@ public:
 protected:
   /// Creates a "B" type stream endpoint, and a vdev
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 
   /// Gets the object reference of the "B" type streamendpoint.

@@ -54,13 +54,12 @@ Client_Group::init (CORBA::Long experiment_id,
 }
 
 void
-Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL)
+Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  this->client_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
+  this->client_pair_.connect (ec);
   Auto_Disconnect<Client_Pair> client_pair_disconnect (&this->client_pair_);
 
-  this->loopback_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
+  this->loopback_pair_.connect (ec);
   Auto_Disconnect<Loopback_Pair> loopback_pair_disconnect (&this->loopback_pair_);
 
   loopback_pair_disconnect.release ();

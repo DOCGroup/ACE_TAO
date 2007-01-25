@@ -13,8 +13,7 @@ CEC_Counting_Consumer::CEC_Counting_Consumer (const char* name)
 }
 
 void
-CEC_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                   ACE_ENV_ARG_DECL)
+CEC_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // The canonical protocol to connect to the EC
 
@@ -27,8 +26,7 @@ CEC_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer
         consumer_admin->obtain_push_supplier ();
     }
 
-  this->supplier_proxy_->connect_push_consumer (consumer.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  this->supplier_proxy_->connect_push_consumer (consumer.in ());
 }
 
 void
@@ -42,8 +40,8 @@ CEC_Counting_Consumer::disconnect (void)
   PortableServer::POA_var consumer_poa =
     this->_default_POA ();
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
+    consumer_poa->servant_to_id (this);
+  consumer_poa->deactivate_object (consumer_id.in ());
 
   this->supplier_proxy_ =
     CosEventChannelAdmin::ProxyPushSupplier::_nil ();
@@ -70,8 +68,7 @@ CEC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-CEC_Counting_Consumer::push (const CORBA::Any&
-                             ACE_ENV_ARG_DECL_NOT_USED)
+CEC_Counting_Consumer::push (const CORBA::Any&)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->event_count ++;
@@ -105,8 +102,7 @@ CEC_Pull_Counting_Consumer::CEC_Pull_Counting_Consumer (const char* name)
 }
 
 void
-CEC_Pull_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                                     ACE_ENV_ARG_DECL)
+CEC_Pull_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // The canonical protocol to connect to the EC
 
@@ -119,8 +115,7 @@ CEC_Pull_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr con
         consumer_admin->obtain_pull_supplier ();
     }
 
-  this->supplier_proxy_->connect_pull_consumer (consumer.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  this->supplier_proxy_->connect_pull_consumer (consumer.in ());
 }
 
 void
@@ -134,8 +129,8 @@ CEC_Pull_Counting_Consumer::disconnect (void)
   PortableServer::POA_var consumer_poa =
     this->_default_POA ();
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
+    consumer_poa->servant_to_id (this);
+  consumer_poa->deactivate_object (consumer_id.in ());
 
   this->supplier_proxy_ =
     CosEventChannelAdmin::ProxyPullSupplier::_nil ();
@@ -153,8 +148,7 @@ CEC_Pull_Counting_Consumer::pull (void)
 }
 
 CORBA::Any*
-CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event
-                                      ACE_ENV_ARG_DECL)
+CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
@@ -163,7 +157,7 @@ CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event
     }
 
   CORBA::Any_var event =
-    this->supplier_proxy_->try_pull (has_event ACE_ENV_ARG_PARAMETER);
+    this->supplier_proxy_->try_pull (has_event);
 
   if (has_event)
     this->event_count++;
@@ -215,15 +209,14 @@ CEC_Counting_Consumer_Task::
 int
 CEC_Counting_Consumer_Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -250,8 +243,7 @@ CEC_Counting_Consumer_Task::run (void)
   do {
     CORBA::Boolean has_event;
     CORBA::Any_var event =
-      this->consumer_->try_pull (has_event
-                                 ACE_ENV_ARG_PARAMETER);
+      this->consumer_->try_pull (has_event);
 
     if (this->milliseconds_ != 0)
       {

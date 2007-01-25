@@ -29,8 +29,7 @@ Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
 
 void
 Notify_Sequence_Push_Consumer::_connect (
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-  ACE_ENV_ARG_DECL)
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::SequencePushConsumer_var objref =
@@ -39,12 +38,11 @@ Notify_Sequence_Push_Consumer::_connect (
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
     CosNotifyChannelAdmin::SEQUENCE_EVENT,
-    proxy_id_
-    ACE_ENV_ARG_PARAMETER);
+    proxy_id_);
 
   this->proxy_ =
     CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow (
-    proxysupplier.in () ACE_ENV_ARG_PARAMETER);
+    proxysupplier.in ());
 
   CosNotification::QoSProperties properties (3);
   properties.length (3);
@@ -63,7 +61,7 @@ Notify_Sequence_Push_Consumer::_connect (
   }
 
   this->proxy_->set_qos (properties);
-  this->proxy_->connect_sequence_push_consumer (objref.in () ACE_ENV_ARG_PARAMETER);
+  this->proxy_->connect_sequence_push_consumer (objref.in ());
 
   // give ownership to POA
   this->_remove_ref ();
@@ -73,7 +71,7 @@ Notify_Sequence_Push_Consumer::_connect (
 void
 Notify_Sequence_Push_Consumer::push_structured_events (
   const CosNotification::EventBatch& events
-  ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+ /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (count_ == 0)

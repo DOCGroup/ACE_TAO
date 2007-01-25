@@ -169,8 +169,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT ("TimeoutTest: Caught CORBA::Exception:"));
+      ex._tao_print_exception (
+        ACE_TEXT (
+          "TimeoutTest: Caught CORBA::Exception:"));
     }
 
   return 1;

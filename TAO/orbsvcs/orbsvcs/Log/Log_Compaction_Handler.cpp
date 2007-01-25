@@ -50,14 +50,13 @@ int
 TAO_Log_Compaction_Handler::handle_timeout (const ACE_Time_Value&,
                                             const void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->log_->remove_old_records();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }

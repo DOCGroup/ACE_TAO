@@ -63,18 +63,17 @@ ECT_Throughput::~ECT_Throughput (void)
 int
 ECT_Throughput::run (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Calibrate the high resolution timer *before* starting the
       // test.
       ACE_High_Res_Timer::calibrate ();
 
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,7 +81,7 @@ ECT_Throughput::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -184,8 +183,7 @@ ECT_Throughput::run (int argc, char* argv[])
 
 #if 0
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -193,7 +191,7 @@ ECT_Throughput::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       // This is the name we (potentially) register the Scheduling
       // Service in the Naming Service.
@@ -202,12 +200,12 @@ ECT_Throughput::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       CORBA::String_var str =
-        this->orb_->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (scheduler.in ());
       ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
                   str.in ()));
 
       // Register the servant with the Naming Context....
-      naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
+      naming_context->rebind (schedule_name, scheduler.in ());
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
@@ -229,13 +227,12 @@ ECT_Throughput::run (int argc, char* argv[])
         ec_impl->_this ();
 
       this->connect_consumers (scheduler.in (),
-                               channel.in () ACE_ENV_ARG_PARAMETER);
+                               channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       this->connect_suppliers (scheduler.in (),
-                               channel.in ()
-                               ACE_ENV_ARG_PARAMETER);
+                               channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
@@ -271,8 +268,8 @@ ECT_Throughput::run (int argc, char* argv[])
         PortableServer::POA_var poa =
           ec_impl->_default_POA ();
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (ec_impl.get () ACE_ENV_ARG_PARAMETER);
-        poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+          poa->servant_to_id (ec_impl.get ());
+        poa->deactivate_object (id.in ());
 
         ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
       }
@@ -282,29 +279,26 @@ ECT_Throughput::run (int argc, char* argv[])
         PortableServer::POA_var poa =
           scheduler_impl._default_POA ();
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (&scheduler_impl ACE_ENV_ARG_PARAMETER);
-        poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+          poa->servant_to_id (&scheduler_impl);
+        poa->deactivate_object (id.in ());
 
         ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ECT_Throughput::run");
+      ex._tao_print_exception ("ECT_Throughput::run");
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR ((LM_ERROR, "non-corba exception raised\n"));
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-ECT_Throughput::shutdown_consumer (void*
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+ECT_Throughput::shutdown_consumer (void*)
 {
   // int ID =
   //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
@@ -318,15 +312,14 @@ ECT_Throughput::shutdown_consumer (void*
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) shutting down the ORB\n"));
-      // Not needed: this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      // Not needed: this->orb_->shutdown (0);
     }
 }
 
 void
 ECT_Throughput::connect_consumers
      (RtecScheduler::Scheduler_ptr scheduler,
-      RtecEventChannelAdmin::EventChannel_ptr channel
-      ACE_ENV_ARG_DECL)
+      RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -349,16 +342,14 @@ ECT_Throughput::connect_consumers
                                     buf,
                                     start,
                                     this->consumer_type_count_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
+                                    channel);
     }
 }
 
 void
 ECT_Throughput::connect_suppliers
      (RtecScheduler::Scheduler_ptr scheduler,
-      RtecEventChannelAdmin::EventChannel_ptr channel
-      ACE_ENV_ARG_DECL)
+      RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -376,8 +367,7 @@ ECT_Throughput::connect_suppliers
                                     this->burst_pause_,
                                     start,
                                     this->supplier_type_count_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
+                                    channel);
     }
 }
 

@@ -45,27 +45,25 @@ Basic_Replication_Strategy::check_validity(void)
       FTRT::OutOfSequence exception;
       exception.current = this->sequence_num_;
       TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence (old sequence_num_ = %d)\n", this->sequence_num_);
-      ACE_THROW(FTRT::OutOfSequence(exception));
+      throw FTRT::OutOfSequence(exception);
     }
     else
       this->sequence_num_++;
 }
 
 void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
-                       const FTRT::State& state
-                       ACE_ENV_ARG_DECL)
+                       const FTRT::State& state)
 {
   bool finished = true;
   do {
-    ACE_TRY {
-      successor->set_update(state ACE_ENV_ARG_PARAMETER);
+    try{
+      successor->set_update(state);
     }
-    ACE_CATCH(CORBA::COMM_FAILURE, ex) {
+    catch (const CORBA::COMM_FAILURE& ex){
       if (ex.minor() == 6)   finished = false;
       else
-        ACE_RE_THROW;
+        throw;
     }
-    ACE_ENDTRY;
   } while(!finished);
 }
 
@@ -73,8 +71,7 @@ void
 Basic_Replication_Strategy::replicate_request(
   const FTRT::State& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid
-  ACE_ENV_ARG_DECL)
+  const FtRtecEventChannelAdmin::ObjectId& oid)
 {
   ACE_UNUSED_ARG(rollback);
   ACE_UNUSED_ARG(oid);
@@ -89,46 +86,41 @@ Basic_Replication_Strategy::replicate_request(
       this->sequence_num_++;
 
     TAO_FTRTEC::Log(1, "replicate_request : sequence no = %d\n", sequence_num_);
-    Request_Context_Repository().set_sequence_number(sequence_num_
-      ACE_ENV_ARG_PARAMETER);
+    Request_Context_Repository().set_sequence_number(sequence_num_);
 
-    Request_Context_Repository().set_transaction_depth(transaction_depth-1 ACE_ENV_ARG_PARAMETER);
+    Request_Context_Repository().set_transaction_depth(transaction_depth-1);
 
     if (transaction_depth > 1) {
-      twoway_set_update(successor, state ACE_ENV_ARG_PARAMETER);
+      twoway_set_update(successor, state);
     }
     else {
-      ACE_TRY_EX(ONEWAY_SET_UPDATE) {
-        successor->oneway_set_update(state ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK_EX(ONEWAY_SET_UPDATE);
+      try{
+        successor->oneway_set_update(state);
       }
-      ACE_CATCHANY {
+      catch (const CORBA::Exception& ex){
       }
-      ACE_ENDTRY;
     }
   }
   else if (transaction_depth > 1) {
     TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
-    ACE_THROW(FTRT::TransactionDepthTooHigh());
+    throw FTRT::TransactionDepthTooHigh();
   }
 }
 
 void
 Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
-                                       CORBA::ULong object_group_ref_version
-                                       ACE_ENV_ARG_DECL)
+                                       CORBA::ULong object_group_ref_version)
 {
   FtRtecEventChannelAdmin::EventChannel_var successor = GroupInfoPublisher::instance()->successor();
   bool finished = true;
   do {
-    ACE_TRY {
-      successor->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
+    try{
+      successor->add_member(info, object_group_ref_version);
     }
-    ACE_CATCH(CORBA::COMM_FAILURE, ex) {
+    catch (const CORBA::COMM_FAILURE& ex){
       if (ex.minor() == 6) finished = false;
-      else ACE_RE_THROW;
+      else throw;
     }
-    ACE_ENDTRY;
   } while (!finished);
 }
 

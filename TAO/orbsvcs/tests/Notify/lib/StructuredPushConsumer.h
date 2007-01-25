@@ -74,7 +74,7 @@ public:
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL);
+  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
   virtual void disconnect_from_proxy (void);
@@ -88,7 +88,6 @@ protected:
  /// Default does nothing.
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,

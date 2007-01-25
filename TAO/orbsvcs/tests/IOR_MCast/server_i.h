@@ -20,7 +20,7 @@ public:
   Server_i (void);
   ~Server_i (void);
 
-  int init (int &argc, char **&argv ACE_ENV_ARG_DECL);
+  int init (int &argc, char **&argv);
   // Initialize the server multicast.
 
 private:

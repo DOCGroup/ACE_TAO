@@ -153,7 +153,7 @@ class HelloClientThread
     {
         while (m_count < NB_HELLO_CALLS)
         {
-            ACE_TRY_NEW_ENV
+            try
             {
                 int count;
                 {
@@ -175,12 +175,12 @@ class HelloClientThread
                 }
                 sleep(CLIENT_SLEEP_TIME);
             }
-            ACE_CATCHANY
+            catch (const CORBA::Exception& ex)
             {
-                ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                     ACE_TEXT ("Exception thrown during say_hello()\n"));
+                ex._tao_print_exception (
+                  ACE_TEXT (
+                    "Exception thrown during say_hello()\n"));
             }
-            ACE_ENDTRY;
         }
         return 1;
     }
@@ -203,7 +203,7 @@ main(int argc, char *argv[])
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("<<< %s Started - \"s\" = message sent \"R\" = message received >>>\n"), argv[0]));
 
-    ACE_TRY_NEW_ENV
+    try
     {
         /*** in svc.conf
 dynamic UIPMC_Factory Service_Object * TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""
@@ -292,13 +292,13 @@ static Client_Strategy_Factory "-ORBProfileLock thread -ORBClientConnectionHandl
         helloThread->wait();
         delete helloThread;
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             ACE_TEXT ("Exception thrown during main()\n"));
+        ex._tao_print_exception (
+          ACE_TEXT (
+            "Exception thrown during main()\n"));
         exit_code = 1;
     }
-    ACE_ENDTRY;
 
     ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("\n--------------------------------------------------\n")));
@@ -323,17 +323,17 @@ static Client_Strategy_Factory "-ORBProfileLock thread -ORBClientConnectionHandl
     }
     if (!CORBA::is_nil(orb.in()))
     {
-        ACE_TRY_NEW_ENV
+        try
         {
             orb->destroy();
         }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
         {
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         ACE_TEXT ("Exception thrown during orb check\n"));
+            ex._tao_print_exception (
+              ACE_TEXT (
+                "Exception thrown during orb check\n"));
             exit_code = 1;
         }
-        ACE_ENDTRY;
     }
     exit(exit_code);
     return 0;

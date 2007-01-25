@@ -29,25 +29,23 @@ Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
 
 Life_Cycle_Service_Server::~Life_Cycle_Service_Server (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Unbind the Factory Finder.
       CosNaming::Name generic_Factory_Name (2);
       generic_Factory_Name.length (2);
       generic_Factory_Name[0].id = CORBA::string_dup ("LifeCycle_Service");
-      this->namingContext_var_->unbind (generic_Factory_Name ACE_ENV_ARG_PARAMETER);
+      this->namingContext_var_->unbind (generic_Factory_Name);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "User Exception");
+      ex._tao_print_exception ("User Exception");
     }
-  ACE_ENDTRY;
 }
 
 int
 Life_Cycle_Service_Server::init (int argc,
-                                 ACE_TCHAR *argv[]
-                                  ACE_ENV_ARG_DECL)
+                                 ACE_TCHAR *argv[])
 {
   int retval = 0;
 
@@ -55,8 +53,7 @@ Life_Cycle_Service_Server::init (int argc,
   ACE_Argv_Type_Converter command(argc, argv);
 
   retval = this->orb_manager_.init (command.get_argc(),
-                                    command.get_ASCII_argv()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    command.get_ASCII_argv());
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,14 +76,13 @@ Life_Cycle_Service_Server::init (int argc,
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (this->life_Cycle_Service_i_ptr_
-                                 ACE_ENV_ARG_PARAMETER);
+    this->orb_manager_.activate (this->life_Cycle_Service_i_ptr_);
 
   if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
   // Register the LifeCycle Service with the Naming Service.
-  ACE_TRY
+  try
     {
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -94,15 +90,14 @@ Life_Cycle_Service_Server::init (int argc,
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        orb_manager_.orb()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
                    " LifeCycle_Service: Unable get the Naming Service.\n"));
 
       // Narrow the object reference to a Naming Context.
-      namingContext_var_ = CosNaming::NamingContext::_narrow (namingObj_var.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
+      namingContext_var_ = CosNaming::NamingContext::_narrow (namingObj_var.in ());
 
 
       if (CORBA::is_nil (namingContext_var_.in ()))
@@ -120,18 +115,17 @@ Life_Cycle_Service_Server::init (int argc,
       CORBA::Object_ptr tmp = this->life_Cycle_Service_i_ptr_->_this();
 
       namingContext_var_->bind (life_Cycle_Service_Name,
-                                tmp
-                                ACE_ENV_ARG_PARAMETER);
+                                tmp);
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Life_Cycle_Service_Server::init");
+      ex._tao_print_exception (
+        "Life_Cycle_Service_Server::init");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -191,25 +185,22 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 {
   Life_Cycle_Service_Server life_Cycle_Service_Server;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       int check = life_Cycle_Service_Server.init (argc,
-                                                  argv
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  argv);
 
       if (check)
         return 1;
       else
         {
           life_Cycle_Service_Server.run ();
-          ACE_TRY_CHECK
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "LifeCycleService::main");
+      ex._tao_print_exception ("LifeCycleService::main");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -58,18 +58,15 @@ public:
   // Destructor.
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Pure virtual.
 
   virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Pure virtual - the unlocked version called by the destroy() wrapper.

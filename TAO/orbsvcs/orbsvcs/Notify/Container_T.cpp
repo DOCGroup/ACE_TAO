@@ -35,19 +35,19 @@ TAO_Notify_Container_T<TYPE>::shutdown (void)
 {
   TAO_ESF_Shutdown_Proxy<TYPE> shutdown_worker;
 
-  this->collection_->for_each (&shutdown_worker ACE_ENV_ARG_PARAMETER);
+  this->collection_->for_each (&shutdown_worker);
 }
 
 template<class TYPE> void
-TAO_Notify_Container_T<TYPE>::insert (TYPE* type ACE_ENV_ARG_DECL)
+TAO_Notify_Container_T<TYPE>::insert (TYPE* type)
 {
-  this->collection_->connected (type ACE_ENV_ARG_PARAMETER);
+  this->collection_->connected (type);
 }
 
 template<class TYPE> void
-TAO_Notify_Container_T<TYPE>::remove (TYPE* type ACE_ENV_ARG_DECL)
+TAO_Notify_Container_T<TYPE>::remove (TYPE* type)
 {
-  this->collection_->disconnected (type ACE_ENV_ARG_PARAMETER);
+  this->collection_->disconnected (type);
 }
 
 template<class TYPE> void
@@ -57,7 +57,7 @@ TAO_Notify_Container_T<TYPE>::init (void)
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   // Init variables
-  factory->create (this->collection_ ACE_ENV_ARG_PARAMETER);
+  factory->create (this->collection_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

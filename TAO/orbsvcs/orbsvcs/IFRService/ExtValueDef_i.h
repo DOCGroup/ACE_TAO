@@ -52,34 +52,28 @@ public:
   // Destructor
 
   virtual CORBA::ExtInitializerSeq *ext_initializers (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtInitializerSeq *ext_initializers_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void ext_initializers (
       const CORBA::ExtInitializerSeq &ext_initializers
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void ext_initializers_i (
       const CORBA::ExtInitializerSeq &ext_initializers
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -91,7 +85,6 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -103,7 +96,6 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -118,8 +110,7 @@ private:
 
   void fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                         ACE_Configuration_Section_Key &key,
-                        const char *sub_section
-                        ACE_ENV_ARG_DECL);
+                        const char *sub_section);
 
   void exceptions (ACE_Configuration_Section_Key &key,
                    const char *sub_section,

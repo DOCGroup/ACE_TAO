@@ -58,8 +58,7 @@ public:
 
   /// Activate in the POA
   virtual void  activate (
-      CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy
-      ACE_ENV_ARG_DECL)
+      CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
@@ -74,8 +73,7 @@ public:
   CosEventComm::PullSupplier_ptr supplier (void) const;
 
   /// Pulls from the supplier, verifies that it is connected.
-  CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event
-                                      ACE_ENV_ARG_DECL);
+  CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event);
   CORBA::Any* pull_from_supplier (void);
 
   /**
@@ -83,8 +81,7 @@ public:
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
   virtual void shutdown (void);
@@ -95,8 +92,7 @@ public:
 
   // = The CosEventChannelAdmin::ProxyPullConsumer methods...
   virtual void connect_pull_supplier (
-                CosEventComm::PullSupplier_ptr pull_supplier
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CosEventComm::PullSupplier_ptr pull_supplier)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
   virtual void disconnect_pull_consumer (void)

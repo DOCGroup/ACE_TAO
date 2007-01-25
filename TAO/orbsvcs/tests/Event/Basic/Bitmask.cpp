@@ -17,17 +17,16 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -63,26 +62,22 @@ main (int argc, char* argv[])
       EC_Counting_Supplier first_supplier;
 
       first_supplier.activate (consumer_admin.in (),
-                               milliseconds
-                               ACE_ENV_ARG_PARAMETER);
+                               milliseconds);
       first_supplier.connect (supplier_admin.in (),
                               0x00001111UL,
                               0x11110000UL,
                               0x00001111UL,
-                              0x11110000UL
-                              ACE_ENV_ARG_PARAMETER);
+                              0x11110000UL);
 
       EC_Counting_Supplier second_supplier;
 
       second_supplier.activate (consumer_admin.in (),
-                                milliseconds
-                                ACE_ENV_ARG_PARAMETER);
+                                milliseconds);
       second_supplier.connect (supplier_admin.in (),
                                0x01100000UL,
                                0x00000110UL,
                                0x01100000UL,
-                               0x00000110UL
-                               ACE_ENV_ARG_PARAMETER);
+                               0x00000110UL);
 
       // ****************************************************************
 
@@ -97,8 +92,7 @@ main (int argc, char* argv[])
         consumer_qos.insert (0x01100000, 0x00000110, 0);
 
         consumer_bitmask_reject.connect (consumer_admin.in (),
-                                         consumer_qos.get_ConsumerQOS ()
-                                         ACE_ENV_ARG_PARAMETER);
+                                         consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -113,8 +107,7 @@ main (int argc, char* argv[])
         consumer_qos.insert_null_terminator ();
 
         consumer_bitmask_accept.connect (consumer_admin.in (),
-                                         consumer_qos.get_ConsumerQOS ()
-                                         ACE_ENV_ARG_PARAMETER);
+                                         consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -129,8 +122,7 @@ main (int argc, char* argv[])
         consumer_qos.insert_null_terminator ();
 
         consumer_bitmask_filter.connect (consumer_admin.in (),
-                                         consumer_qos.get_ConsumerQOS ()
-                                         ACE_ENV_ARG_PARAMETER);
+                                         consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -146,8 +138,7 @@ main (int argc, char* argv[])
                                              0x01100000, 0x00000110);
 
         consumer_bitmask_value.connect (consumer_admin.in (),
-                                        consumer_qos.get_ConsumerQOS ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -163,8 +154,7 @@ main (int argc, char* argv[])
                                              0x01100000, 0x00000110);
 
         consumer_bitmask_loose.connect (consumer_admin.in (),
-                                        consumer_qos.get_ConsumerQOS ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -195,7 +185,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       // ****************************************************************
 
@@ -214,11 +204,10 @@ main (int argc, char* argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

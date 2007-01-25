@@ -37,8 +37,7 @@ public:
   Consumer (bool valuetype);
   // Constructor
 
-  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect to the Event Channel
 
   void disconnect (void);
@@ -46,8 +45,7 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

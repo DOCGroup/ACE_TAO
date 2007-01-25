@@ -26,8 +26,7 @@ TAO::SSLIOP::Current_Impl::~Current_Impl (void)
 }
 
 SecurityLevel3::ClientCredentials_ptr
-TAO::SSLIOP::Current_Impl::client_credentials (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::Current_Impl::client_credentials ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);

@@ -123,13 +123,11 @@ public:
   virtual void shutdown (void);
 
   virtual void for_each_consumer (
-                    TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker
-                    ACE_ENV_ARG_DECL)
+                    TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void for_each_supplier (
-                    TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker
-                    ACE_ENV_ARG_DECL)
+                    TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Access the dispatching module....
@@ -193,21 +191,15 @@ public:
 
   /// Used to inform the EC that a Consumer has connected or
   /// disconnected from it.
-  virtual void connected (TAO_EC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_EC_ProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_EC_ProxyPushConsumer*);
+  virtual void reconnected (TAO_EC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer*);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_EC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_EC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier*);
 
   // Simple flags to control the EC behavior, set by the application
   // at construction time.
@@ -243,15 +235,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr
-                       ACE_ENV_ARG_DECL)
+      append_observer (RtecEventChannelAdmin::Observer_ptr)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
   virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle
-                       ACE_ENV_ARG_DECL)
+      remove_observer (RtecEventChannelAdmin::Observer_Handle)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,

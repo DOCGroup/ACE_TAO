@@ -78,8 +78,7 @@ namespace TAO
       virtual char * acquisition_method (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::AcquisitionStatus current_status (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::AcquisitionStatus current_status ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual CORBA::ULong nth_iteration (void)
@@ -89,13 +88,11 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::AcquisitionStatus continue_acquisition (
-          const CORBA::Any & acquisition_arguments
-          ACE_ENV_ARG_DECL)
+          const CORBA::Any & acquisition_arguments)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::OwnCredentials_ptr get_credentials (
-          CORBA::Boolean on_list
-          ACE_ENV_ARG_DECL)
+          CORBA::Boolean on_list)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual void destroy (void)

@@ -17,20 +17,17 @@ ACE_RCSID (TAO_PERF_RTEC,
            "$Id$")
 
 ORB_Holder::ORB_Holder (int &argc, char *argv[],
-                        const char *orb_id
-                        ACE_ENV_ARG_DECL)
-  :  orb_ (CORBA::ORB_init (argc, argv, orb_id
-                            ACE_ENV_ARG_PARAMETER))
+                        const char *orb_id)
+  :  orb_ (CORBA::ORB_init (argc, argv, orb_id))
 {
 }
 
 ORB_Holder::~ORB_Holder (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
+  try{
     this->orb_->destroy ();
-  } ACE_CATCH (CORBA::Exception, ex) {
+  } catch (const CORBA::Exception&) {
     // @@ TODO Log this event, check the Servant_var.cpp comments for
     // details.
-  } ACE_ENDTRY;
+  }
 }

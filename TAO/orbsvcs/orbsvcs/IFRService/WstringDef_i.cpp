@@ -73,8 +73,7 @@ TAO_WstringDef_i::type_i (void)
 {
   CORBA::ULong bound = this->bound_i ();
 
-  return this->repo_->tc_factory ()->create_wstring_tc (bound
-                                                        ACE_ENV_ARG_PARAMETER);
+  return this->repo_->tc_factory ()->create_wstring_tc (bound);
 }
 CORBA::ULong
 TAO_WstringDef_i::bound (void)
@@ -101,21 +100,18 @@ TAO_WstringDef_i::bound_i (void)
 }
 
 void
-TAO_WstringDef_i::bound (CORBA::ULong bound
-                         ACE_ENV_ARG_DECL)
+TAO_WstringDef_i::bound (CORBA::ULong bound)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->bound_i (bound
-                 ACE_ENV_ARG_PARAMETER);
+  this->bound_i (bound);
 }
 
 void
-TAO_WstringDef_i::bound_i (CORBA::ULong bound
-                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_WstringDef_i::bound_i (CORBA::ULong bound)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,

@@ -101,8 +101,7 @@ TAO_UTO::absolute_time (void)
 
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
-                       CosTime::UTO_ptr uto
-                       ACE_ENV_ARG_DECL)
+                       CosTime::UTO_ptr uto)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TimeBase::TimeT uto_time = uto->time ();
@@ -161,13 +160,12 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 // is meaningless if the base times of UTOs are different.
 
 CosTime::TIO_ptr
-TAO_UTO::time_to_interval (CosTime::UTO_ptr uto
-                           ACE_ENV_ARG_DECL)
+TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
-  ACE_TRY
+  try
     {
       TimeBase::TimeT uto_time = uto->time ();
 
@@ -188,12 +186,11 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto
 
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();
     }
-  ACE_ENDTRY;
 
   return tio->_this ();
 }
@@ -207,7 +204,7 @@ TAO_UTO::interval (void)
 {
   TAO_TIO *tio = 0;
 
-  ACE_TRY
+  try
     {
       TimeBase::TimeT this_inaccuracy =
           this->inaccuracy ();
@@ -223,12 +220,11 @@ TAO_UTO::interval (void)
                                  upper),
                         CORBA::NO_MEMORY ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
       return CosTime::TIO::_nil ();
     }
-  ACE_ENDTRY;
 
   return tio->_this ();
 }

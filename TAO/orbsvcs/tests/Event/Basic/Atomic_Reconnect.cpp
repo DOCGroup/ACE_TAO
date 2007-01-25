@@ -22,17 +22,16 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -70,15 +69,13 @@ main (int argc, char* argv[])
                          event_source,
                          event_type,
                          event_source,
-                         event_type
-                         ACE_ENV_ARG_PARAMETER);
+                         event_type);
 
       supplier1.connect (supplier_admin.in (),
                          event_source,
                          event_type + 1,
                          event_source,
-                         event_type + 1
-                         ACE_ENV_ARG_PARAMETER);
+                         event_type + 1);
 
       // ****************************************************************
 
@@ -100,24 +97,21 @@ main (int argc, char* argv[])
       consumer_qos01.insert (event_source, event_type + 1, 0);
 
       consumer01.connect (consumer_admin.in (),
-                          consumer_qos01.get_ConsumerQOS ()
-                          ACE_ENV_ARG_PARAMETER);
+                          consumer_qos01.get_ConsumerQOS ());
 
       Consumer consumer0 ("Consumer/0", event_type);
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
 
       consumer0.connect (consumer_admin.in (),
-                         consumer_qos0.get_ConsumerQOS ()
-                         ACE_ENV_ARG_PARAMETER);
+                         consumer_qos0.get_ConsumerQOS ());
 
       Consumer consumer1 ("Consumer/1", event_type);
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
 
       consumer1.connect (consumer_admin.in (),
-                         consumer_qos1.get_ConsumerQOS ()
-                         ACE_ENV_ARG_PARAMETER);
+                         consumer_qos1.get_ConsumerQOS ());
 
       // ****************************************************************
 
@@ -135,22 +129,18 @@ main (int argc, char* argv[])
         {
           ACE_Time_Value tv (0, 10000);
           consumer0.connect (consumer_admin.in (),
-                             consumer_qos0.get_ConsumerQOS ()
-                             ACE_ENV_ARG_PARAMETER);
+                             consumer_qos0.get_ConsumerQOS ());
           consumer1.connect (consumer_admin.in (),
-                             consumer_qos1.get_ConsumerQOS ()
-                             ACE_ENV_ARG_PARAMETER);
+                             consumer_qos1.get_ConsumerQOS ());
           if (i % 2 == 0)
             {
               consumer01.connect (consumer_admin.in (),
-                                  consumer_qos0.get_ConsumerQOS ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  consumer_qos0.get_ConsumerQOS ());
             }
           else
             {
               consumer01.connect (consumer_admin.in (),
-                                  consumer_qos01.get_ConsumerQOS ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  consumer_qos01.get_ConsumerQOS ());
             }
 
           ACE_OS::sleep (tv);
@@ -181,7 +171,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       // ****************************************************************
 
@@ -199,12 +189,11 @@ main (int argc, char* argv[])
                                task1.push_count (),
                                1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -269,8 +258,7 @@ Consumer::dump_results (int base_count,
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
+Consumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)

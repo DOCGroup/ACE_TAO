@@ -39,8 +39,7 @@ public:
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL_NOT_USED)
+                const RtecEventChannelAdmin::ConsumerQOS &qos)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError));

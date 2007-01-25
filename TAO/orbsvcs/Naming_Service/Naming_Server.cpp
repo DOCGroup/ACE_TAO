@@ -49,17 +49,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT("Failed to start the Naming Service.\n")),
                       1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       naming_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NamingService");
+      ex._tao_print_exception ("NamingService");
       return 1;
     }
-  ACE_ENDTRY;
 
   naming_service.fini ();
 

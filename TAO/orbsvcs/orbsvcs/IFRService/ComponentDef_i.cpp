@@ -111,35 +111,30 @@ TAO_ComponentDef_i::destroy_i (void)
       "provides",
       this->repo_,
       this->section_key_
-      ACE_ENV_ARG_PARAMETER
     );
 
   TAO_IFR_Generic_Utils<TAO_UsesDef_i>::destroy_special (
       "uses",
       this->repo_,
       this->section_key_
-      ACE_ENV_ARG_PARAMETER
     );
 
   TAO_IFR_Generic_Utils<TAO_EmitsDef_i>::destroy_special (
       "emits",
       this->repo_,
       this->section_key_
-      ACE_ENV_ARG_PARAMETER
     );
 
   TAO_IFR_Generic_Utils<TAO_PublishesDef_i>::destroy_special (
       "publishes",
       this->repo_,
       this->section_key_
-      ACE_ENV_ARG_PARAMETER
     );
 
   TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>::destroy_special (
       "consumes",
       this->repo_,
       this->section_key_
-      ACE_ENV_ARG_PARAMETER
     );
 
   this->TAO_ExtInterfaceDef_i::destroy_i ();
@@ -166,7 +161,6 @@ TAO_ComponentDef_i::describe_i (void)
                                               cd,
                                               this->repo_,
                                               this->section_key_
-                                              ACE_ENV_ARG_PARAMETER
                                             );
 
   ACE_TString holder;
@@ -265,8 +259,7 @@ TAO_ComponentDef_i::describe_i (void)
 
       TAO_ExtAttributeDef_i impl (this->repo_);
       impl.section_key (attr_key);
-      impl.fill_description (cd.attributes[i]
-                             ACE_ENV_ARG_PARAMETER);
+      impl.fill_description (cd.attributes[i]);
     }
 
   cd.type = this->type_i ();
@@ -311,7 +304,6 @@ TAO_ComponentDef_i::type_i (void)
   return this->repo_->tc_factory ()->create_component_tc (
                                          id.c_str (),
                                          name.c_str ()
-                                         ACE_ENV_ARG_PARAMETER
                                        );
 }
 
@@ -363,11 +355,9 @@ TAO_ComponentDef_i::supported_interfaces_i (void)
                                                     path);
           tmp =
             TAO_IFR_Service_Utils::path_to_ir_object (path,
-                                                      this->repo_
-                                                      ACE_ENV_ARG_PARAMETER);
+                                                      this->repo_);
 
-          retval[i] = CORBA::InterfaceDef::_narrow (tmp.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+          retval[i] = CORBA::InterfaceDef::_narrow (tmp.in ());
         }
     }
 
@@ -377,7 +367,6 @@ TAO_ComponentDef_i::supported_interfaces_i (void)
 void
 TAO_ComponentDef_i::supported_interfaces (
     const CORBA::InterfaceDefSeq &supported_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -385,14 +374,12 @@ TAO_ComponentDef_i::supported_interfaces (
 
   this->update_key ();
 
-  this->supported_interfaces_i (supported_interfaces
-                                ACE_ENV_ARG_PARAMETER);
+  this->supported_interfaces_i (supported_interfaces);
 }
 
 void
 TAO_ComponentDef_i::supported_interfaces_i (
     const CORBA::InterfaceDefSeq &supported_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -429,8 +416,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
       TAO_IFR_Service_Utils::name_exists (&TAO_InterfaceDef_i::name_clash,
                                           this->section_key_,
                                           this->repo_,
-                                          this->def_kind ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                          this->def_kind ());
 
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (supported_key,
@@ -465,17 +451,14 @@ TAO_ComponentDef_i::base_component_i (void)
       return CORBA::ComponentIR::ComponentDef::_nil ();
     }
 
-  CORBA::Contained_var obj = this->repo_->lookup_id (base_id.fast_rep ()
-                                                     ACE_ENV_ARG_PARAMETER);
+  CORBA::Contained_var obj = this->repo_->lookup_id (base_id.fast_rep ());
 
-  return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+  return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ());
 }
 
 void
 TAO_ComponentDef_i::base_component (
     CORBA::ComponentIR::ComponentDef_ptr base_component
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -483,14 +466,12 @@ TAO_ComponentDef_i::base_component (
 
   this->update_key ();
 
-  this->base_component_i (base_component
-                          ACE_ENV_ARG_PARAMETER);
+  this->base_component_i (base_component);
 }
 
 void
 TAO_ComponentDef_i::base_component_i (
     CORBA::ComponentIR::ComponentDef_ptr base_component
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -516,8 +497,7 @@ TAO_ComponentDef_i::base_component_i (
   TAO_IFR_Service_Utils::name_exists (&TAO_ComponentDef_i::name_clash,
                                       this->section_key_,
                                       this->repo_,
-                                      CORBA::dk_Component
-                                      ACE_ENV_ARG_PARAMETER);
+                                      CORBA::dk_Component);
 
   this->repo_->config ()->set_string_value (
                               this->section_key_,
@@ -532,7 +512,6 @@ TAO_ComponentDef_i::create_provides (
     const char *name,
     const char *version,
     CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -543,8 +522,7 @@ TAO_ComponentDef_i::create_provides (
   return this->create_provides_i (id,
                                   name,
                                   version,
-                                  interface_type
-                                  ACE_ENV_ARG_PARAMETER);
+                                  interface_type);
 }
 
 CORBA::ComponentIR::ProvidesDef_ptr
@@ -553,7 +531,6 @@ TAO_ComponentDef_i::create_provides_i (
     const char *name,
     const char *version,
     CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -568,8 +545,7 @@ TAO_ComponentDef_i::create_provides_i (
                        0,
                        this->repo_,
                        CORBA::dk_Provides,
-                       this->section_key_
-                       ACE_ENV_ARG_PARAMETER);
+                       this->section_key_);
 }
 
 CORBA::ComponentIR::UsesDef_ptr
@@ -577,8 +553,7 @@ TAO_ComponentDef_i::create_uses (const char *id,
                                  const char *name,
                                  const char *version,
                                  CORBA::InterfaceDef_ptr interface_type,
-                                 CORBA::Boolean is_multiple
-                                 ACE_ENV_ARG_DECL)
+                                 CORBA::Boolean is_multiple)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::UsesDef::_nil ());
@@ -589,8 +564,7 @@ TAO_ComponentDef_i::create_uses (const char *id,
                               name,
                               version,
                               interface_type,
-                              is_multiple
-                              ACE_ENV_ARG_PARAMETER);
+                              is_multiple);
 }
 
 CORBA::ComponentIR::UsesDef_ptr
@@ -598,8 +572,7 @@ TAO_ComponentDef_i::create_uses_i (const char *id,
                                    const char *name,
                                    const char *version,
                                    CORBA::InterfaceDef_ptr interface_type,
-                                   CORBA::Boolean is_multiple
-                                   ACE_ENV_ARG_DECL)
+                                   CORBA::Boolean is_multiple)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
@@ -613,16 +586,14 @@ TAO_ComponentDef_i::create_uses_i (const char *id,
                        is_multiple,
                        this->repo_,
                        CORBA::dk_Uses,
-                       this->section_key_
-                       ACE_ENV_ARG_PARAMETER);
+                       this->section_key_);
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
 TAO_ComponentDef_i::create_emits (const char *id,
                                   const char *name,
                                   const char *version,
-                                  CORBA::ValueDef_ptr value
-                                  ACE_ENV_ARG_DECL)
+                                  CORBA::ValueDef_ptr value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EmitsDef::_nil ());
@@ -632,16 +603,14 @@ TAO_ComponentDef_i::create_emits (const char *id,
   return this->create_emits_i (id,
                                name,
                                version,
-                               value
-                               ACE_ENV_ARG_PARAMETER);
+                               value);
 }
 
 CORBA::ComponentIR::EmitsDef_ptr
 TAO_ComponentDef_i::create_emits_i (const char *id,
                                     const char *name,
                                     const char *version,
-                                    CORBA::ValueDef_ptr value
-                                    ACE_ENV_ARG_DECL)
+                                    CORBA::ValueDef_ptr value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
@@ -655,16 +624,14 @@ TAO_ComponentDef_i::create_emits_i (const char *id,
                        0,
                        this->repo_,
                        CORBA::dk_Emits,
-                       this->section_key_
-                       ACE_ENV_ARG_PARAMETER);
+                       this->section_key_);
 }
 
 CORBA::ComponentIR::PublishesDef_ptr
 TAO_ComponentDef_i::create_publishes (const char *id,
                                       const char *name,
                                       const char *version,
-                                      CORBA::ValueDef_ptr value
-                                      ACE_ENV_ARG_DECL)
+                                      CORBA::ValueDef_ptr value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::PublishesDef::_nil ());
@@ -674,16 +641,14 @@ TAO_ComponentDef_i::create_publishes (const char *id,
   return this->create_publishes_i (id,
                                    name,
                                    version,
-                                   value
-                                   ACE_ENV_ARG_PARAMETER);
+                                   value);
 }
 
 CORBA::ComponentIR::PublishesDef_ptr
 TAO_ComponentDef_i::create_publishes_i (const char *id,
                                         const char *name,
                                         const char *version,
-                                        CORBA::ValueDef_ptr value
-                                        ACE_ENV_ARG_DECL)
+                                        CORBA::ValueDef_ptr value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
@@ -697,16 +662,14 @@ TAO_ComponentDef_i::create_publishes_i (const char *id,
                        0,
                        this->repo_,
                        CORBA::dk_Publishes,
-                       this->section_key_
-                       ACE_ENV_ARG_PARAMETER);
+                       this->section_key_);
 }
 
 CORBA::ComponentIR::ConsumesDef_ptr
 TAO_ComponentDef_i::create_consumes (const char *id,
                                      const char *name,
                                      const char *version,
-                                     CORBA::ValueDef_ptr value
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::ValueDef_ptr value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ConsumesDef::_nil ());
@@ -716,16 +679,14 @@ TAO_ComponentDef_i::create_consumes (const char *id,
   return this->create_consumes_i (id,
                                   name,
                                   version,
-                                  value
-                                  ACE_ENV_ARG_PARAMETER);
+                                  value);
 }
 
 CORBA::ComponentIR::ConsumesDef_ptr
 TAO_ComponentDef_i::create_consumes_i (const char *id,
                                        const char *name,
                                        const char *version,
-                                       CORBA::ValueDef_ptr value
-                                       ACE_ENV_ARG_DECL)
+                                       CORBA::ValueDef_ptr value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
@@ -739,27 +700,24 @@ TAO_ComponentDef_i::create_consumes_i (const char *id,
                        0,
                        this->repo_,
                        CORBA::dk_Consumes,
-                       this->section_key_
-                       ACE_ENV_ARG_PARAMETER);
+                       this->section_key_);
 }
 
 int
 TAO_ComponentDef_i::name_clash (const char *name)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_Container_i::tmp_name_holder_ = name;
       TAO_IFR_Service_Utils::name_exists (&TAO_Container_i::same_as_tmp_name,
                                           TAO_IFR_Service_Utils::tmp_key_,
                                           TAO_IFR_Service_Utils::repo_,
-                                          CORBA::dk_Component
-                                          ACE_ENV_ARG_PARAMETER);
+                                          CORBA::dk_Component);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

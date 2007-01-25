@@ -54,32 +54,27 @@ public:
   virtual ~TAO_ModuleDef_i (void);
   // Destructor
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::DefinitionKind def_kind ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Contained::Description *describe ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Contained::Description *describe_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.

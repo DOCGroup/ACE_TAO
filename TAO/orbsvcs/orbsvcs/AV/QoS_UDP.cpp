@@ -320,7 +320,6 @@ int
 TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "(%N,%l) TAO_AV_UDP_QoS_Flow_Handler::handle_qos\n"));
@@ -376,8 +375,7 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 
                   AVStreams::Negotiator_var remote_negotiator;
                   this->negotiator_->negotiate (remote_negotiator.in (),
-                                                new_qos
-                                                ACE_ENV_ARG_PARAMETER);
+                                                new_qos);
                 }
             }
     }
@@ -888,7 +886,6 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   int result = 0;
 
   //  TAO_AV_Callback *callback = 0;
@@ -1033,22 +1030,19 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 
   AVStreams::Negotiator_ptr negotiator;
 
-  ACE_TRY_EX (negotiator)
+  try
     {
       CORBA::Any_ptr negotiator_any =
-        this->endpoint_->get_property_value ("Negotiator"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (negotiator);
+        this->endpoint_->get_property_value ("Negotiator");
 
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%N,%l) Negotiator Not Found \n"));
     }
-  ACE_ENDTRY;
 
   this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);
   this->entry_->protocol_object (object);
@@ -1167,7 +1161,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 {
   ACE_UNUSED_ARG (flow_comp);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   int result = 0;
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
@@ -1323,23 +1316,20 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 
   AVStreams::Negotiator_ptr negotiator;
 
-  ACE_TRY_EX (negotiator)
+  try
     {
       CORBA::Any_ptr negotiator_any =
-        this->endpoint_->get_property_value ("Negotiator"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (negotiator);
+        this->endpoint_->get_property_value ("Negotiator");
 
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Negotiator not found for flow %s\n",
                   this->entry_->flowname ()));
     }
-  ACE_ENDTRY;
 
   flow_handler->protocol_object (object);
 

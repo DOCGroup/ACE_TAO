@@ -50,8 +50,7 @@ public:
   /// returned.
   virtual TAO_EC_Filter*
       build (TAO_EC_ProxyPushSupplier *supplier,
-             RtecEventChannelAdmin::ConsumerQOS& qos
-             ACE_ENV_ARG_DECL) const = 0;
+             RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
 
 };
 
@@ -75,8 +74,7 @@ public:
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos
-                        ACE_ENV_ARG_DECL) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

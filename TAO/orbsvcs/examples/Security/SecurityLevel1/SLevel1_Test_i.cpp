@@ -20,7 +20,7 @@ SLevel1_Server_i::authorize_level1 (void)
 
   /// Get a reference to the SecurityCurrent object.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("SecurityCurrent" ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("SecurityCurrent");
 
     /// Narrow it down correctly.
   SecurityLevel1::Current_var current =
