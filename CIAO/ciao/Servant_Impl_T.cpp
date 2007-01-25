@@ -32,12 +32,11 @@ namespace CIAO
   {
   // **********************************************************************
   /*
-            ACE_TRY_NEW_ENV
+            try
             {
               ::Components::SessionComponent_var scom =
                 ::Components::SessionComponent::_narrow (
                     this->executor_.in ()
-                    ACE_ENV_ARG_PARAMETER
                   );
 
               if (! ::CORBA::is_nil (scom.in ()))
@@ -45,10 +44,9 @@ namespace CIAO
                   scom->ccm_remove ();
                 }
             }
-            ACE_CATCHANY
+            catch (const CORBA::Exception& ex)
             {
             }
-            ACE_ENDTRY;
    */
    // *********************************************************************
 
@@ -63,7 +61,6 @@ namespace CIAO
   CORBA::Boolean
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::same_component (
       CORBA::Object_ptr object_ref
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -78,8 +75,7 @@ namespace CIAO
     ::CORBA::Object_var me =
       this->context_->get_CCM_object ();
 
-    return me->_is_equivalent (the_other.in ()
-                               ACE_ENV_ARG_PARAMETER);
+    return me->_is_equivalent (the_other.in ());
 
   }
 
@@ -88,7 +84,6 @@ namespace CIAO
             typename CONTEXT>
   ::Components::CCMHome_ptr
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -100,14 +95,12 @@ namespace CIAO
             typename CONTEXT>
   Components::SessionComponent_ptr
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
-          ACE_ENV_ARG_PARAMETER
         );
     return temp._retn ();
   }
@@ -117,14 +110,12 @@ namespace CIAO
             typename CONTEXT>
   CORBA::Object_ptr
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionContext_var sc =
       ::Components::SessionContext::_narrow (
           this->context_
-          ACE_ENV_ARG_PARAMETER
         );
 
     if (! ::CORBA::is_nil (sc.in ()))
@@ -135,7 +126,6 @@ namespace CIAO
     ::Components::EntityContext_var ec =
       ::Components::EntityContext::_narrow (
           this->context_
-          ACE_ENV_ARG_PARAMETER
         );
 
     if (! ::CORBA::is_nil (ec.in ()))
@@ -154,7 +144,6 @@ namespace CIAO
             typename CONTEXT>
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -173,14 +162,12 @@ namespace CIAO
             typename CONTEXT>
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_preactivate (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
-          ACE_ENV_ARG_PARAMETER
         );
 
     if (! ::CORBA::is_nil (temp.in ()))
@@ -197,14 +184,12 @@ namespace CIAO
             typename EXEC,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_activate (
-  ACE_ENV_SINGLE_ARG_DECL)
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
-          ACE_ENV_ARG_PARAMETER
         );
 
     if (! ::CORBA::is_nil (temp.in ()))
@@ -222,14 +207,12 @@ namespace CIAO
             typename CONTEXT>
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_postactivate (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
-          ACE_ENV_ARG_PARAMETER
         );
 
     if (! ::CORBA::is_nil (temp.in ()))
@@ -247,7 +230,6 @@ namespace CIAO
             typename CONTEXT>
   CORBA::Boolean
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::is_activated (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -259,7 +241,6 @@ namespace CIAO
             typename CONTEXT>
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_passivate (
-      ACE_ENV_SINGLE_ARG_DECL
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -267,7 +248,6 @@ namespace CIAO
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
           this->executor_.in ()
-          ACE_ENV_ARG_PARAMETER
         );
 
     if (! ::CORBA::is_nil (temp.in ()))

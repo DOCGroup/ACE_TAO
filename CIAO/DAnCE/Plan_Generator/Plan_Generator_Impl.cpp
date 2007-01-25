@@ -16,16 +16,13 @@ namespace CIAO
     // @todo make this a private method
     static CORBA::Object_ptr
     fetch_reference_naming (CORBA::ORB_ptr orb,
-                            const char *repoman_name = 0
-                            ACE_ENV_ARG_DECL)
+                            const char *repoman_name = 0)
     {
       CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var pns =
-        CosNaming::NamingContext::_narrow (tmp.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (tmp.in ());
 
       if (CORBA::is_nil (pns.in ()))
         {
@@ -37,8 +34,7 @@ namespace CIAO
 
       name[0].id = CORBA::string_dup (repoman_name);
 
-      return pns->resolve (name
-                           ACE_ENV_ARG_PARAMETER);
+      return pns->resolve (name);
     }
 
     Plan_Generator_i::Plan_Generator_i ()
@@ -55,14 +51,14 @@ namespace CIAO
 
       if (rm_use_naming)
         {
-          obj = fetch_reference_naming (orb, rm_name ACE_ENV_ARG_PARAMETER);
+          obj = fetch_reference_naming (orb, rm_name);
         }
       else
         {
-          obj = orb->string_to_object (rm_name ACE_ENV_ARG_PARAMETER);
+          obj = orb->string_to_object (rm_name);
         }
 
-      this->rm_ = Deployment::RepositoryManager::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      this->rm_ = Deployment::RepositoryManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->rm_.in ()))
         {

@@ -94,7 +94,6 @@ CORBA::ULong
 Impl::TSEC_Session_impl::hash
 (
   CORBA::ULong Maximum
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 {
   CORBA::ULong hash =
@@ -111,7 +110,6 @@ Impl::TSEC_Session_impl::hash
 CORBA::Long
 Impl::TSEC_Session_impl::getIdent
 (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   //ACE_GUARD_RETURN( TMutex, guard, _parent.getMutex(), -1 );
@@ -127,7 +125,6 @@ Impl::TSEC_Session_impl::getIdent
 CORBA::Boolean
 Impl::TSEC_Session_impl::isInUse
 (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   //ACE_GUARD_RETURN( TMutex, guard, _parent.getMutex(), FALSE );
@@ -186,10 +183,9 @@ CORBA::Object_ptr
 Impl::TSEC_CheckPoint_exec_i::getObjRef
 (
   PortableServer::Servant Servant
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( (CORBA::SystemException ) )
 {
-  return this->_p_sessionContainer->get_objref( Servant ACE_ENV_ARG_PARAMETER );
+  return this->_p_sessionContainer->get_objref( Servant );
 }
 
 
@@ -208,7 +204,7 @@ Impl::TSEC_CheckPoint_exec_i::init
 
   CORBA::ORB_var orb = CORBA::ORB_init( argc,
                                         const_cast<char **> (argv)
-                                        ACE_ENV_ARG_PARAMETER );
+ );
   _orb               = CORBA::ORB::_duplicate( orb.in () );
 
   return 0;
@@ -223,13 +219,12 @@ CORBA::Object_ptr
 Impl::TSEC_CheckPoint_exec_i::installServant
 (
   PortableServer::Servant Servant
-  ACE_ENV_ARG_DECL
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   assert( this->_p_sessionContainer );
 
   return this->_p_sessionContainer->install_servant( Servant,
-                             CIAO::Container::Component ACE_ENV_ARG_PARAMETER );
+                             CIAO::Container::Component );
 }
 
 
@@ -241,7 +236,6 @@ void
 Impl::TSEC_CheckPoint_exec_i::uninstallServant
 (
   CORBA::Object_ptr ObjRef
-  ACE_ENV_ARG_DECL
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   assert( this->_p_sessionContainer );
@@ -257,7 +251,6 @@ Impl::TSEC_CheckPoint_exec_i::uninstallServant
 ENW::TSession_ptr
 Impl::TSEC_CheckPoint_exec_i::createSession
 (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   static long cnt = 0L;
@@ -269,8 +262,8 @@ Impl::TSEC_CheckPoint_exec_i::createSession
   TSEC_Session_impl* p_sessionImpl = new TSEC_Session_impl( *this, ++cnt );
   PortableServer::ServantBase_var safe_servant( p_sessionImpl );
   CORBA::Object_var obj = this->installServant( p_sessionImpl
-                                                ACE_ENV_ARG_PARAMETER );
-  session = ENW::TSession::_narrow ( obj.in () ACE_ENV_ARG_PARAMETER );
+ );
+  session = ENW::TSession::_narrow ( obj.in () );
 
   ACE_DEBUG( ( LM_DEBUG, "(%P|%t@%T) TSEC_CheckPoint_exec_i::createSession...[DONE]\n" ) );
 
@@ -286,7 +279,6 @@ Impl::TSEC_CheckPoint_exec_i::createSession
 Impl::TSEC_CheckPoint_exec_i::destroySession
 (
   ENW::TSession_ptr Session
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   ACE_DEBUG( ( LM_DEBUG, "(%P|%t@%T) TSEC_CheckPoint_exec_i::destroySession...\n" ) );
@@ -311,7 +303,6 @@ ENW::TSession_ptr
 Impl::TSEC_CheckPoint_exec_i::acquireSession
 (
   CORBA::Long Ident
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     ENW::EUnknownIdent ) )
 {
@@ -329,7 +320,7 @@ Impl::TSEC_CheckPoint_exec_i::acquireSession
   ENW::TSession_var  session = ENW::TSession::_nil();
   TSEC_Session_impl* p_sessionImpl = 0;
 
-  ACE_TRY_NEW_ENV
+  try
   {
     {
       //ACE_GUARD_RETURN( TMutex, guard, _mutex, ENW::TSession::_nil() );
@@ -338,17 +329,16 @@ Impl::TSEC_CheckPoint_exec_i::acquireSession
 
     p_sessionImpl->isInUse( 1 );
     CORBA::Object_var obj = this->getObjRef( p_sessionImpl) ;
-    session = ENW::TSession::_narrow ( obj.in () ACE_ENV_ARG_PARAMETER );
+    session = ENW::TSession::_narrow ( obj.in () );
     //session = sessionVector[Ident-1]._session;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION( ACE_ANY_EXCEPTION, "Reason\n" );
+    ex._tao_print_exception ("Reason\n");
     ACE_DEBUG( ( LM_DEBUG, "(%P|%t@%T) TSEC_CheckPoint_exec_i::releaseSession...[ERROR]\n" ) );
 
     return session._retn();
   }
-  ACE_ENDTRY;
 
   ACE_DEBUG( ( LM_DEBUG, "(%P|%t@%T) TSEC_CheckPoint_exec_i::releaseSession...[DONE]\n" ) );
 
@@ -365,7 +355,6 @@ Impl::TSEC_CheckPoint_exec_i::releaseSession
 (
   CORBA::Long Ident,
   ENW::TSession_ptr Session
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     ENW::EUnknownSession ) )
 {
@@ -418,7 +407,6 @@ Impl::TSEC_CheckPoint_exec_i::releaseSession
 ENW::CCM_ISessionService_ptr
 Impl::TSEC_CheckPoint_exec_i::get_sessionService
 (
-  ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   return ENW::CCM_ISessionService::_duplicate( this );
@@ -433,7 +421,6 @@ void
 Impl::TSEC_CheckPoint_exec_i::set_session_context
 (
   Components::SessionContext_ptr Ctx
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {
@@ -442,11 +429,11 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
 
   this->_context =
     ENW::CCM_TSEC_CheckPoint_Context::_narrow( Ctx
-                                               ACE_ENV_ARG_PARAMETER );
+ );
 
   if( CORBA::is_nil( this->_context.in() ) )
   {
-    ACE_THROW( CORBA::INTERNAL() );
+    throw CORBA::INTERNAL();
   }
 
   CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
@@ -454,14 +441,14 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
 
   if( !p_checkPoint_Context )
   {
-    ACE_THROW( CORBA::INTERNAL() );
+    throw CORBA::INTERNAL();
   }
 
   this->_p_sessionContainer = p_checkPoint_Context->_ciao_the_Container();
 
   if( !_p_sessionContainer )
   {
-    ACE_THROW( CORBA::INTERNAL() );
+    throw CORBA::INTERNAL();
   }
 }
 
@@ -474,7 +461,6 @@ void
 Impl::TSEC_CheckPoint_exec_i::push_lifeTokenIn
 (
   ENW::ET_LifeToken* /* Event */
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
 ) ACE_THROW_SPEC( ( CORBA::SystemException ) )
 {
   _awaitingLifeToken = false;
@@ -488,7 +474,6 @@ Impl::TSEC_CheckPoint_exec_i::push_lifeTokenIn
 void
 Impl::TSEC_CheckPoint_exec_i::ciao_preactivate
 (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {
@@ -503,7 +488,6 @@ Impl::TSEC_CheckPoint_exec_i::ciao_preactivate
 void
 Impl::TSEC_CheckPoint_exec_i::ccm_activate
 (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {
@@ -516,9 +500,9 @@ Impl::TSEC_CheckPoint_exec_i::ccm_activate
     p_sessionImpl = new TSEC_Session_impl( *this, i + 1 );
     PortableServer::ServantBase_var safe_servant( p_sessionImpl );
     CORBA::Object_var obj = this->installServant( p_sessionImpl
-                                                  ACE_ENV_ARG_PARAMETER );
+ );
     ENW::TSession_var session =
-                     ENW::TSession::_narrow ( obj.in () ACE_ENV_ARG_PARAMETER );
+                     ENW::TSession::_narrow ( obj.in () );
     sessionVector[i] = TSEC_SessionEntry( p_sessionImpl, session.in () );
   }
 
@@ -533,7 +517,6 @@ Impl::TSEC_CheckPoint_exec_i::ccm_activate
 void
 Impl::TSEC_CheckPoint_exec_i::ciao_postactivate
 (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {
@@ -548,7 +531,6 @@ Impl::TSEC_CheckPoint_exec_i::ciao_postactivate
 void
 Impl::TSEC_CheckPoint_exec_i::ccm_passivate
 (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {
@@ -564,7 +546,6 @@ Impl::TSEC_CheckPoint_exec_i::ccm_passivate
 void
 Impl::TSEC_CheckPoint_exec_i::ccm_remove
 (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {
@@ -599,7 +580,6 @@ Impl::TSEC_CheckPointHome_exec_i::~TSEC_CheckPointHome_exec_i()
 Impl::TSEC_CheckPointHome_exec_i::new_TSEC_CheckPoint
 (
   const char* Version
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
   ) ACE_THROW_SPEC( ( CORBA::SystemException ))
 {
   return new Impl::TSEC_CheckPoint_exec_i( Version );
@@ -613,7 +593,6 @@ Impl::TSEC_CheckPointHome_exec_i::new_TSEC_CheckPoint
 ::Components::EnterpriseComponent_ptr
 Impl::TSEC_CheckPointHome_exec_i::create
 (
-  ACE_ENV_SINGLE_ARG_DECL
 ) ACE_THROW_SPEC( ( CORBA::SystemException,
                     Components::CCMException ) )
 {

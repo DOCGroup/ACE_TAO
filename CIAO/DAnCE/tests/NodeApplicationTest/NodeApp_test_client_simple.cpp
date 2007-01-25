@@ -37,10 +37,10 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -48,11 +48,10 @@ main (int argc, char *argv[])
       CIAO::Client_init (orb.in ());
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Deployment::NodeApplication_var node_app =
-        Deployment::NodeApplication::_narrow(tmp.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+        Deployment::NodeApplication::_narrow(tmp.in ());
 
       if (CORBA::is_nil (node_app.in ()))
         {
@@ -93,7 +92,7 @@ main (int argc, char *argv[])
 
       // Install test component and its home on NodeApplication
       Deployment::ComponentInfos_var comp_info =
-        node_app->install (node_info ACE_ENV_ARG_PARAMETER);
+        node_app->install (node_info);
 
       assert (comp_info->length () == 1); //return 1 component objeref
 
@@ -101,8 +100,7 @@ main (int argc, char *argv[])
       Components::CCMObject_var objref = (comp_info[i]).component_ref;
 
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
-        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ());
 
       if (CORBA::is_nil (roundtrip_var.in ()))
        {
@@ -115,7 +113,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
       CORBA::Long input = 1L;
       CORBA::Long output =
-        roundtrip_var->cube_long (input ACE_ENV_ARG_PARAMETER);
+        roundtrip_var->cube_long (input);
 
       if (input == output)
         ACE_DEBUG ((LM_DEBUG, "Retrun values matched!!\n"));
@@ -132,13 +130,11 @@ main (int argc, char *argv[])
       orb->destroy ();
       ACE_DEBUG ((LM_DEBUG, "Test success!!\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

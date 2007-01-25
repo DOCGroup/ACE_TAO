@@ -78,27 +78,26 @@ ACE_INLINE
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
 
 ACE_INLINE void
-[ciao module name]::[component name]_Context::connect_[emit name] ([eventtype]Consumer_ptr c
-                                                                   ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Context::connect_[emit name] ([eventtype]Consumer_ptr c)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::AlreadyConnected))
 {
   if (CORBA::is_nil (c))
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   if (! CORBA::is_nil (this->ciao_emits_[emit name]_consumer_.in ()))
-    ACE_THROW (::Components::AlreadyConnected ());
+    throw ::Components::AlreadyConnected ();
 
   this->ciao_emits_[emit name]_consumer_ = c;
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Context::disconnect_[emit name] (void)
+[ciao module name]::[component name]_Context::disconnect_[emit name] ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
   if (CORBA::is_nil (this->ciao_emits_[emit name]_consumer_.in ()))
-    ACE_THROW (::Components::NoConnection ());
+    throw ::Components::NoConnection ();
 
   return this->ciao_emits_[emit name]_consumer_._retn ();
 }
@@ -107,7 +106,7 @@ ACE_INLINE [eventtype]Consumer_ptr
 
 // Operations for ::Components::CCMContext
 ACE_INLINE ::Components::Principal_ptr
-[ciao module name]::[component name]_Context::get_caller_principal (void)
+[ciao module name]::[component name]_Context::get_caller_principal ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ We don't support Security in CIAO yet.
@@ -115,14 +114,14 @@ ACE_INLINE ::Components::Principal_ptr
 }
 
 ACE_INLINE ::Components::CCMHome_ptr
-[ciao module name]::[component name]_Context::get_CCM_home (void)
+[ciao module name]::[component name]_Context::get_CCM_home ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Components::CCMHome::_duplicate (this->home_.in ());
 }
 
 ACE_INLINE CORBA::Boolean
-[ciao module name]::[component name]_Context::get_rollback_only (void)
+[ciao module name]::[component name]_Context::get_rollback_only ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -131,7 +130,7 @@ ACE_INLINE CORBA::Boolean
 }
 
 ACE_INLINE ::Components::Transaction::UserTransaction_ptr
-[ciao module name]::[component name]_Context::get_user_transaction (void)
+[ciao module name]::[component name]_Context::get_user_transaction ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
@@ -140,8 +139,7 @@ ACE_INLINE ::Components::Transaction::UserTransaction_ptr
 }
 
 ACE_INLINE CORBA::Boolean
-[ciao module name]::[component name]_Context::is_caller_in_role (const char * role
-                                                                 ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Context::is_caller_in_role (const char * role)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (role);
@@ -151,12 +149,12 @@ ACE_INLINE CORBA::Boolean
 }
 
 ACE_INLINE void
-[ciao module name]::[component name]_Context::set_rollback_only (void)
+[ciao module name]::[component name]_Context::set_rollback_only ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::IllegalState))
 {
   // @@ We don't support Transaction in CIAO yet.
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 //////////////////////////////////////////////////////////////////
@@ -181,18 +179,16 @@ ACE_INLINE [operation return_type]
 ##  if [receptacle name] is a simplex receptacle ('uses')
 // Simplex [receptacle name] connection management operations
 ACE_INLINE void
-[ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c
-                                                                         ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::AlreadyConnected,
                    ::Components::InvalidConnection))
 {
-  this->context_->connect_[receptacle name] (c
-                                             ACE_ENV_ARG_PARAMETER);
+  this->context_->connect_[receptacle name] (c);
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (void)
+[ciao module name]::[component name]_Servant::disconnect_[receptacle name] ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
@@ -200,7 +196,7 @@ ACE_INLINE [uses type]_ptr
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Servant::get_connection_[receptacle name] (void)
+[ciao module name]::[component name]_Servant::get_connection_[receptacle name] ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->context_->get_connection_[receptacle name] ();
@@ -209,28 +205,24 @@ ACE_INLINE [uses type]_ptr
 
 // Multiplex [receptacle name] connection management operations
 ACE_INLINE ::Components::Cookie *
-[ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c
-                                                                         ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Servant::connect_[receptacle name] ([uses type]_ptr c)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::ExceedConnectionLimit,
                    ::Components::InvalidConnection))
 {
-  return this->context_->connect_[receptacle name] (c
-                                                    ACE_ENV_ARG_PARAMETER);
+  return this->context_->connect_[receptacle name] (c);
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (::Components::Cookie *ck
-                                                                            ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Servant::disconnect_[receptacle name] (::Components::Cookie *ck)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
 {
-  return this->context_->disconnect_[receptacle name] (ck
-                                                       ACE_ENV_ARG_PARAMETER);
+  return this->context_->disconnect_[receptacle name] (ck);
 }
 
 ACE_INLINE [receptacle name]Connections *
-[ciao module name]::[component name]_Servant::get_connections_[receptacle name] (void)
+[ciao module name]::[component name]_Servant::get_connections_[receptacle name] ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->context_->get_connections_[receptacle name] ();
@@ -267,7 +259,7 @@ ACE_INLINE
 }
 
 ACE_INLINE CORBA::Object_ptr
-[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::_get_component (void)
+[ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::_get_component ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ctx_->get_CCM_object ();
@@ -275,25 +267,22 @@ ACE_INLINE CORBA::Object_ptr
 
 ACE_INLINE void
 [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_[eventtype]
-  ([eventtype] *evt
-   ACE_ENV_ARG_DECL)
+  ([eventtype] *evt)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->executor_->push_[consumer name] (evt
-                                         ACE_ENV_ARG_PARAMETER);
+  this->executor_->push_[consumer name] (evt);
 }
 
 ##  foreach [type] in (all parents of eventtype, if any, not including EventConsumerBase)
 ACE_INLINE void
 [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_[type]
-  ([type] *evt
-   ACE_ENV_ARG_DECL)
+  ([type] *evt)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Problem, there's no way to handle this case.
 
   //  this->executor_->push_[consumer name] (evt ACE_ENV_ARG);
-  ACE_THROW (::CORBA::BAD_PARAM ());
+  throw ::CORBA::BAD_PARAM ();
 }
 ##  end [type]
 
@@ -302,17 +291,15 @@ ACE_INLINE void
 // Operations for emits interfaces.
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
 ACE_INLINE void
-[ciao module name]::[component name]_Servant::connect_[emit name] ([eventtype]Consumer_ptr c
-                                                                   ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Servant::connect_[emit name] ([eventtype]Consumer_ptr c)
   ACE_THROW_SPEC ((CORBA::SystemException
                    ::Components::AlreadyConnected))
 {
-  this->context_->connect_[emit name] (c
-                                       ACE_ENV_ARG_PARAMETER);
+  this->context_->connect_[emit name] (c);
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Servant::disconnect_[emit name] (void)
+[ciao module name]::[component name]_Servant::disconnect_[emit name] ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
@@ -323,23 +310,19 @@ ACE_INLINE [eventtype]Consumer_ptr
 // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
 ACE_INLINE ::Components::Cookie *
-[ciao module name]::[component name]_Servant::subscribe_[publish name] ([eventtype]Consumer_ptr c
-                                                                        ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Servant::subscribe_[publish name] ([eventtype]Consumer_ptr c)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::ExceededConnectionLimit))
 {
-  return this->context_->subscribe_[publish name] (c
-                                                   ACE_ENV_ARG_PARAMETER);
+  return this->context_->subscribe_[publish name] (c);
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Servant::unsubscribe_[publish name] (::Components::Cookie *ck
-                                                                          ACE_ENV_ARG_DECL)
+[ciao module name]::[component name]_Servant::unsubscribe_[publish name] (::Components::Cookie *ck)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
 {
-  return this->context_->unsubscribe_[publish name] (ck
-                                                     ACE_ENV_ARG_PARAMETER);
+  return this->context_->unsubscribe_[publish name] (ck);
 }
 ##end foreach [publish name] with [eventtype]
 
@@ -370,20 +353,18 @@ ACE_INLINE
 // for factory operations inherit from parent home(s), they should return
 // the corresponding component types their homes manage
 ACE_INLINE [component name]_ptr
-[ciao module name]::[home name]_Servant::[factory name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+[ciao module name]::[home name]_Servant::[factory name] (....)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::CreateFailure,
                    ....))
 {
   Components::EnterpriseComponent_var _ciao_ec =
-    this->executor_->[factory name] (.... ACE_ENV_ARG_PARAMETER);
+    this->executor_->[factory name] (....);
 
   CCM_[component name]_var _ciao_comp
-    = CCM_[component name]::_narrow (_ciao_ec.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+    = CCM_[component name]::_narrow (_ciao_ec.in ());
 
-  return this->_ciao_activate_component (_ciao_comp.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+  return this->_ciao_activate_component (_ciao_comp.in ());
 }
 ##end foreach [factory name]
 
@@ -391,18 +372,17 @@ ACE_INLINE [component name]_ptr
 // for finder operations inherit from parent home(s), they should return
 // the corresponding component types their homes manage
 ACE_INLINE [component name]_ptr
-[ciao module name]::[home name]_Servant::[finder name] (.... ACE_ENV_ARG_DECL)
+[ciao module name]::[home name]_Servant::[finder name] (....)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::FinderFailure,
                    ....))
 {
   Components::EnterpriseComponent_var com =
-    this->executor_->[finder name] (.... ACE_ENV_ARG_PARAMETER);
+    this->executor_->[finder name] (....);
 
   // Do we create a new object reference referring to the same object,
   // or do we try to create a different objref referring to the same object?
-  return this->_ciao_create_helper (com
-                                    ACE_ENV_ARG_PARAMETER);
+  return this->_ciao_create_helper (com);
 }
 ##end foreach [finder name]
 
@@ -410,7 +390,7 @@ ACE_INLINE [component name]_ptr
 
 // Operations for KeylessHome interface
 ACE_INLINE ::Components::CCMObject_ptr
-[ciao module name]::[home name]_Servant::create_component (void)
+[ciao module name]::[home name]_Servant::create_component ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
@@ -456,7 +436,7 @@ ACE_INLINE void
 {
   // @@ TO-DO when we suppor keyed home.
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE [key type] *
@@ -473,7 +453,7 @@ ACE_INLINE [key type] *
 
 // Operations for CCMHome interface
 ACE_INLINE ::CORBA::IRObject_ptr
-[ciao module name]::[home name]_Servant::get_component_def (void)
+[ciao module name]::[home name]_Servant::get_component_def ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ TO-DO.  Contact IfR?
@@ -482,7 +462,7 @@ ACE_INLINE ::CORBA::IRObject_ptr
 }
 
 ACE_INLINE CORBA::IRObject_ptr
-[ciao module name]::[home name]_Servant::get_home_def (void)
+[ciao module name]::[home name]_Servant::get_home_def ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ TO-DO.  Contact IfR?

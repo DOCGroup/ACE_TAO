@@ -21,8 +21,7 @@ namespace CIAO
 
   PortableServer::Servant
   Dynamic_Component_Activator::incarnate (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr
-                                ACE_ENV_ARG_DECL_NOT_USED)
+                                PortableServer::POA_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
@@ -43,8 +42,7 @@ namespace CIAO
     PortableServer::POA_ptr ,
     PortableServer::Servant ,
     CORBA::Boolean ,
-    CORBA::Boolean
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Boolean)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }

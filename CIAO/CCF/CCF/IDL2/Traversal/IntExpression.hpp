@@ -57,7 +57,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -74,7 +74,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -103,7 +103,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -120,7 +120,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -151,7 +151,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -168,7 +168,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -185,7 +185,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -216,7 +216,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -233,7 +233,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -250,7 +250,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -268,7 +268,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -285,7 +285,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -302,7 +302,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -333,7 +333,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -350,7 +350,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -367,7 +367,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -398,7 +398,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -415,7 +415,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -432,7 +432,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -463,7 +463,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -480,7 +480,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -497,7 +497,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -515,7 +515,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -532,7 +532,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -549,7 +549,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -580,7 +580,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -597,7 +597,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -614,7 +614,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -646,7 +646,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -663,7 +663,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -680,7 +680,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };
@@ -712,7 +712,7 @@ namespace CCF
         }
 
         virtual void
-        pre (Type& n)
+        pre (Type&)
         {
         }
 
@@ -729,7 +729,7 @@ namespace CCF
         }
 
         virtual void
-        sign (Type& n)
+        sign (Type&)
         {
         }
 
@@ -746,7 +746,7 @@ namespace CCF
         }
 
         virtual void
-        post (Type& n)
+        post (Type&)
         {
         }
       };

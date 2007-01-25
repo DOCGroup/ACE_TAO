@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fprintf (fp,
                            "\t\tconst char*\n");
           ACE_OS::fprintf (fp,
-                           "\t\tACE_ENV_ARG_DECL_WITH_DEFAULTS);\n");
+                           "\t\t);\n");
         }
     }
 

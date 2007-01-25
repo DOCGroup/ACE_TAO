@@ -62,12 +62,10 @@ namespace CIAO
 
     bool
     write_ior_file (CORBA::ORB_ptr orb,
-                    CIAO::ExecutionManagerDaemon_ptr obj
-                    ACE_ENV_ARG_DECL)
+                    CIAO::ExecutionManagerDaemon_ptr obj)
     {
       CORBA::String_var ior =
-        orb->object_to_string (obj
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj);
 
       FILE* ior_output_file_ =
         ACE_OS::fopen (ior_file_name_, "w");
@@ -104,13 +102,11 @@ namespace CIAO
 
     bool
     register_with_ns (CORBA::ORB_ptr orb,
-                      CIAO::ExecutionManagerDaemon_ptr obj
-                      ACE_ENV_ARG_DECL)
+                      CIAO::ExecutionManagerDaemon_ptr obj)
     {
       // Naming Service related operations
       CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -140,27 +136,23 @@ namespace CIAO
     int
     run_main (int argc, char *argv[])
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
-      ACE_TRY
+      try
         {
           CORBA::ORB_var orb =
             CORBA::ORB_init (argc,
                              argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
+                             "");
 
           if (!parse_args (argc, argv))
             return -1;
 
           // Get reference to Root POA.
           CORBA::Object_var obj
-            = orb->resolve_initial_references ("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+            = orb->resolve_initial_references ("RootPOA");
 
           PortableServer::POA_var poa =
-            PortableServer::POA::_narrow (obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+            PortableServer::POA::_narrow (obj.in ());
 
 
           if (CORBA::is_nil (poa.in ()))
@@ -190,16 +182,14 @@ namespace CIAO
             {
               retval =
                 register_with_ns (orb.in (),
-                                  daemon.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  daemon.in ());
             }
 
           if (write_to_ior_)
             {
               retval =
                 write_ior_file (orb.in (),
-                                daemon.in ()
-                                ACE_ENV_ARG_PARAMETER);
+                                daemon.in ());
             }
 
           if (!retval)
@@ -231,18 +221,15 @@ namespace CIAO
           (void) de.release ();
 
           poa->destroy (1,
-                        1
-                        ACE_ENV_ARG_PARAMETER);
+                        1);
 
           orb->destroy ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "CIAO_ExecutionManager::main\t\n");
+          ex._tao_print_exception ("CIAO_ExecutionManager::main\t\n");
           return -1;
         }
-      ACE_ENDTRY;
 
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO_ExecutionManager has closed\n"));

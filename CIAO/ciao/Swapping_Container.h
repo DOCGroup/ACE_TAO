@@ -48,25 +48,20 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      const CORBA::PolicyList *more_policies = 0)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container::OA_Type t
-                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                               Container::OA_Type t)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void add_servant_map (PortableServer::ObjectId &oid,
@@ -74,8 +69,7 @@ namespace CIAO
 
     virtual void delete_servant_map (PortableServer::ObjectId &oid);
 
-    virtual void deactivate_facet (const PortableServer::ObjectId &oid
-                                  ACE_ENV_ARG_DECL)
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     PortableServer::POA_ptr the_home_servant_POA (void) const;
@@ -85,16 +79,13 @@ namespace CIAO
     /// Create POA  for the component.
     void create_servant_POA (const char *name,
                              const CORBA::PolicyList *p,
-                             PortableServer::POA_ptr root
-                             ACE_ENV_ARG_DECL);
+                             PortableServer::POA_ptr root);
 
     void create_home_servant_POA (const char *name,
                            const CORBA::PolicyList *p,
-                           PortableServer::POA_ptr root
-                           ACE_ENV_ARG_DECL);
+                           PortableServer::POA_ptr root);
 
-    void create_connections_POA (PortableServer::POA_ptr root
-                                 ACE_ENV_ARG_DECL);
+    void create_connections_POA (PortableServer::POA_ptr root);
   protected:
     unsigned long number_;
 

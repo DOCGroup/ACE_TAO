@@ -27,27 +27,26 @@ const char *ior4 = "file://comp4.ior";
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       // Resolve HomeFinder interface
       CORBA::Object_var obj1
-        = orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object (ior1);
 
       CORBA::Object_var obj2
-        = orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object (ior2);
 
       CORBA::Object_var obj3
-        = orb->string_to_object (ior3 ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object (ior3);
 
       CORBA::Object_var obj4
-        = orb->string_to_object (ior4 ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object (ior4);
 
       if (CORBA::is_nil (obj1.in ()) ||
           CORBA::is_nil (obj2.in ()) ||
@@ -85,11 +84,10 @@ main (int argc, char *argv[])
 
       task1.thr_mgr()->wait();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception Caught:");
+      ex._tao_print_exception ("Exception Caught:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

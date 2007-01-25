@@ -4,8 +4,7 @@ extern "C" ::Components::HomeExecutorBase_ptr create_Null_Component_Home_Impl (v
 extern "C" ::PortableServer::Servant create_Null_Component_Home_Servant
 		(::Components::HomeExecutorBase_ptr p,
 		::CIAO::Session_Container *c,
-		const char*
-		ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+		const char*);
 
 struct HomeAttributes
 {

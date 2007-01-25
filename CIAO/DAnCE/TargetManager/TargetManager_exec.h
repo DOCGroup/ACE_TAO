@@ -43,13 +43,11 @@ namespace CIDL_TargetManager_i
     // Port operations.
 
     virtual ::Deployment::CCM_TargetManager_ptr
-    get_targetMgr (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_targetMgr ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::CIAO::CCM_TargetManagerExt_ptr
       get_target_manager_ext (
-                              ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
                               )
       ACE_THROW_SPEC ((::CORBA::SystemException));
 
@@ -57,43 +55,37 @@ namespace CIDL_TargetManager_i
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ::Components::SessionContext_ptr ctx)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ciao_preactivate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_preactivate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ciao_postactivate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_postactivate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
    ::Components::CCMException));
 
     virtual void
-    ccm_activate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ccm_activate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ccm_passivate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ccm_passivate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ccm_remove (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ccm_remove ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
@@ -120,23 +112,19 @@ namespace CIDL_TargetManager_i
 
       virtual ::CORBA::Long
         get_pid (
-      const char * component_uuid
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const char * component_uuid)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual ::CIAO::Host_Infos *
-        get_host_cpu (
-                      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        get_host_cpu ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual ::CIAO::Component_Infos *
-        get_component_cpu (
-                           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        get_component_cpu ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual ::CIAO::Host_NodeManager_seq *
-        get_all_node_managers (
-                           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        get_all_node_managers ()
         ACE_THROW_SPEC ((CORBA::SystemException));
     };
 
@@ -154,19 +142,16 @@ namespace CIDL_TargetManager_i
     // Operations from ::Deployment::TargetManager
 
     virtual ::Deployment::Domain *
-    getAllResources (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    getAllResources ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Deployment::Domain *
-    getAvailableResources (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    getAvailableResources ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
     commitResources (
-    const ::Deployment::DeploymentPlan & plan
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    const ::Deployment::DeploymentPlan & plan)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Deployment::ResourceNotAvailable,
@@ -174,16 +159,14 @@ namespace CIDL_TargetManager_i
 
     virtual void
     releaseResources (
-    const ::Deployment::DeploymentPlan & argname
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    const ::Deployment::DeploymentPlan & argname)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
     updateDomain (
     const ::CORBA::StringSeq & elements,
     const ::Deployment::Domain & domainSubset,
-    ::Deployment::DomainUpdateKind updateKind
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ::Deployment::DomainUpdateKind updateKind)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -220,8 +203,7 @@ namespace CIDL_TargetManager_i
     // Implicit operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));

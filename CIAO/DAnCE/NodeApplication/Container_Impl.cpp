@@ -26,8 +26,7 @@ CIAO::Container_Impl::_default_POA (void)
   ///////////////////////////////////////////////////////////////
 
 CORBA::Long
-CIAO::Container_Impl::init (const CORBA::PolicyList *policies
-                            ACE_ENV_ARG_DECL)
+CIAO::Container_Impl::init (const CORBA::PolicyList *policies)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::init");
@@ -56,15 +55,13 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies
     }
 
   return this->container_->init (0,
-                                 policies
-                                 ACE_ENV_ARG_PARAMETER);
+                                 policies);
 }
 
 
 Deployment::ComponentInfos *
 CIAO::Container_Impl::install (
     const ::Deployment::ContainerImplementationInfo & container_impl_info
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Deployment::UnknownImplId,
@@ -74,7 +71,7 @@ CIAO::Container_Impl::install (
 {
   CIAO_TRACE ("CIAO::Container_Impl::install");
   Deployment::ComponentInfos_var retv;
-  ACE_TRY
+  try
    {
      ACE_NEW_THROW_EX (retv,
                        Deployment::ComponentInfos,
@@ -93,22 +90,20 @@ CIAO::Container_Impl::install (
        {
          // Install home
          Components::CCMHome_var home =
-           this->install_home (impl_infos[i]
-                               ACE_ENV_ARG_PARAMETER);
+           this->install_home (impl_infos[i]);
 
          Components::KeylessCCMHome_var kh =
-           Components::KeylessCCMHome::_narrow (home.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+           Components::KeylessCCMHome::_narrow (home.in ());
 
          if (CORBA::is_nil (kh.in ()))
-           ACE_TRY_THROW (Deployment::InstallationFailure ());
+           throw Deployment::InstallationFailure ();
 
          // Create component from home
          Components::CCMObject_var comp =
            kh->create_component ();
 
          if (CORBA::is_nil (comp.in ()))
-           ACE_TRY_THROW (Deployment::InstallationFailure ());
+           throw Deployment::InstallationFailure ();
 
          if (this->component_map_.bind
                 (impl_infos[i].component_instance_name.in (),
@@ -120,7 +115,7 @@ CIAO::Container_Impl::install (
                          "error in binding component "
                          "instance name [%s] into the component map \n",
                          impl_infos[i].component_instance_name.in ()));
-             ACE_TRY_THROW (Deployment::InstallationFailure ());
+             throw Deployment::InstallationFailure ();
            }
 
          // Set the return value.
@@ -150,15 +145,14 @@ CIAO::Container_Impl::install (
                  impl_infos[i].component_config[prop_len].value >>= path;
 
                  CORBA::String_var ior =
-                   this->orb_->object_to_string (comp.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+                   this->orb_->object_to_string (comp.in ());
 
                  if (CIAO::Utility::write_IOR (path, ior.in ()) != 0)
                    {
                      if (CIAO::debug_level () > 1)
                        ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
 
-                     ACE_TRY_THROW (CORBA::INTERNAL ());
+                     throw CORBA::INTERNAL ();
                    }
                }
 
@@ -179,7 +173,6 @@ CIAO::Container_Impl::install (
                            naming_context,
                            this->orb_.in (),
                            Components::CCMObject::_duplicate (comp.in ())
-                           ACE_ENV_ARG_PARAMETER
                          );
 
                  if (!result)
@@ -199,7 +192,7 @@ CIAO::Container_Impl::install (
                                      "error in binding component "
                                      "instance name [%s] into the naming map \n",
                                      impl_infos[i].component_instance_name.in ()));
-                         ACE_TRY_THROW (Deployment::InstallationFailure ());
+                         throw Deployment::InstallationFailure ();
                        }
                    }
 
@@ -233,19 +226,17 @@ CIAO::Container_Impl::install (
          }
        }
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Container_Impl::install\t\n");
-     ACE_RE_THROW;
+     ex._tao_print_exception ("Container_Impl::install\t\n");
+     throw;
    }
-  ACE_ENDTRY;
 
   return retv._retn ();
 }
 
 ::Deployment::Properties *
-CIAO::Container_Impl::properties (void)
+CIAO::Container_Impl::properties ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::properties");
@@ -261,7 +252,7 @@ CIAO::Container_Impl::properties (void)
 }
 
 ::Deployment::NodeApplication_ptr
-CIAO::Container_Impl::get_node_application (void)
+CIAO::Container_Impl::get_node_application ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::get_node_application");
@@ -270,8 +261,7 @@ CIAO::Container_Impl::get_node_application (void)
 
 ::Components::CCMHome_ptr
 CIAO::Container_Impl::install_home (
-    const ::Deployment::ComponentImplementationInfo & impl_info
-    ACE_ENV_ARG_DECL)
+    const ::Deployment::ComponentImplementationInfo & impl_info)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::UnknownImplId,
                    Deployment::ImplEntryPointNotFound,
@@ -294,8 +284,7 @@ CIAO::Container_Impl::install_home (
                                          impl_info.executor_entrypt.in (),
                                          impl_info.servant_dll.in (),
                                          impl_info.servant_entrypt.in (),
-                                         impl_info.component_instance_name.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+                                         impl_info.component_instance_name.in ());
 
   if (CIAO::debug_level () > 9)
     {
@@ -330,8 +319,7 @@ CIAO::Container_Impl::install_home (
 
 
 void
-CIAO::Container_Impl::remove_home (const char * comp_ins_name
-                                   ACE_ENV_ARG_DECL)
+CIAO::Container_Impl::remove_home (const char * comp_ins_name)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -341,25 +329,24 @@ CIAO::Container_Impl::remove_home (const char * comp_ins_name
   ACE_CString str (comp_ins_name);
 
   if (this->home_map_.find (str, home) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   // @@TODO We should remove all components created by this home as well.
   // This is not implemented yet.
 
-  this->container_->ciao_uninstall_home (home
-                                         ACE_ENV_ARG_PARAMETER);
+  this->container_->ciao_uninstall_home (home);
 
   // If the previous calls failed, what should we do here??
   CORBA::release (home);
 
   // @@ Still need to remove the home if the previous operation fails?
   if (this->home_map_.unbind (str) == -1)
-    ACE_THROW (::Components::RemoveFailure ());
+    throw ::Components::RemoveFailure ();
 }
 
 // Remove all homes and components
 void
-CIAO::Container_Impl::remove (void)
+CIAO::Container_Impl::remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -374,8 +361,7 @@ CIAO::Container_Impl::remove (void)
        iter != end;
        ++iter)
     {
-      this->container_->ciao_uninstall_home ( (*iter).int_id_
-                                              ACE_ENV_ARG_PARAMETER);
+      this->container_->ciao_uninstall_home ( (*iter).int_id_);
 
       CORBA::release ( (*iter).int_id_);
     }
@@ -392,7 +378,7 @@ CIAO::Container_Impl::remove (void)
 ////////////////////////////////////////////////////////////////////////
 
 void
-CIAO::Container_Impl::remove_components (void)
+CIAO::Container_Impl::remove_components ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -409,7 +395,7 @@ CIAO::Container_Impl::remove_components (void)
     // on the home.
     Components::CCMHome_ptr home;
     if (this->home_map_.find ( (*iter).ext_id_, home) != 0)
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw CORBA::BAD_PARAM ();
 
     // This will call ccm_passivate on the component executor.
     home->remove_component (((*iter).int_id_).in ());
@@ -426,8 +412,7 @@ CIAO::Container_Impl::remove_components (void)
 
 // Below method is not used actually.
 void
-CIAO::Container_Impl::remove_component (const char * comp_ins_name
-                                        ACE_ENV_ARG_DECL)
+CIAO::Container_Impl::remove_component (const char * comp_ins_name)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
@@ -452,10 +437,10 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
    */
 
   if (this->component_map_.find (str, comp) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   if (this->home_map_.find (str, home) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   // This will call ccm_passivate on the component executor.
   home->remove_component (comp.in ());
@@ -464,7 +449,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
 
   // @@ Still need to remove the home if the previous operation fails?
   if (this->component_map_.unbind (str) == -1)
-    ACE_THROW (::Components::RemoveFailure ());
+    throw ::Components::RemoveFailure ();
 
   if (this->naming_map_.find (str, naming_context) == 0)
     {
@@ -473,7 +458,6 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
         unregister_with_ns (
                             naming_context.c_str (),
                             this->orb_.in ()
-                            ACE_ENV_ARG_PARAMETER
                             );
 
       if (!result)
@@ -484,7 +468,7 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
       else
         {
           if (this->naming_map_.unbind (str) == -1)
-            ACE_THROW (::Components::RemoveFailure ());
+            throw ::Components::RemoveFailure ();
         }
     }
 }
@@ -492,17 +476,15 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
 bool
 CIAO::Container_Impl::register_with_ns (const char * s,
                                         CORBA::ORB_ptr orb,
-                                        Components::CCMObject_ptr obj
-                                        ACE_ENV_ARG_DECL)
+                                        Components::CCMObject_ptr obj)
 {
   CIAO_TRACE ("CIAO::Container_Impl::register_with_ns");
 
-  ACE_TRY
+  try
     {
     // Obtain the naming service
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -510,8 +492,7 @@ CIAO::Container_Impl::register_with_ns (const char * s,
                            false);
 
       CosNaming::NamingContextExt_var root =
-        CosNaming::NamingContextExt::_narrow (naming_obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
       CosNaming::Name name (0);
       name.length (0);
@@ -552,32 +533,28 @@ CIAO::Container_Impl::register_with_ns (const char * s,
 
       return true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CIAO (%P|%t) Container_Impl.cpp -"
-                           "CIAO::Container_Impl::register_with_ns -"
-                           "NodeApplication: failed to register "
-                           "with naming service.");
+      ex._tao_print_exception ("CIAO (%P|%t) Container_Impl.cpp -"
+                               "CIAO::Container_Impl::register_with_ns -"
+                               "NodeApplication: failed to register "
+                               "with naming service.");
       return false;
     }
-  ACE_ENDTRY;
   return true;
 }
 
 bool
 CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
-                                          CORBA::ORB_ptr orb
-                                          ACE_ENV_ARG_DECL)
+                                          CORBA::ORB_ptr orb)
 {
   CIAO_TRACE ("CIAO::Container_Impl::unregister_with_ns");
 
-  ACE_TRY
+  try
     {
     // Obtain the naming service
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -585,8 +562,7 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
                           false);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name name (0);
       name.length (0);
@@ -617,19 +593,17 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       ACE_DEBUG ((LM_DEBUG,
                   "Unregister component with the name server : %s!\n",
                   obj_name));
-      naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
+      naming_context->unbind (name);
 
       return true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CIAO (%P|%t) Container_Impl.cpp -"
-                           "CIAO::Container_Impl::unregister_with_ns -"
-                           "NodeApplication: failed to unregister "
-                           "with naming service.");
+      ex._tao_print_exception ("CIAO (%P|%t) Container_Impl.cpp -"
+                               "CIAO::Container_Impl::unregister_with_ns -"
+                               "NodeApplication: failed to unregister "
+                               "with naming service.");
       return false;
     }
-  ACE_ENDTRY;
   return true;
 }

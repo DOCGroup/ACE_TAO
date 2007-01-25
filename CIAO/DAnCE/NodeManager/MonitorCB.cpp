@@ -49,7 +49,7 @@ int CIAO::MonitorCB::update_data (::Deployment::Domain& data)
   catch (CORBA::Exception& )
     {
       //ACE_DEBUG ((LM_DEBUG, "CIAO::NM::MonitorCB::Unknown Exception\n"));
-      //ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NM::MonitorCB::updateDomain");
+      //ex._tao_print_exception ("NM::MonitorCB::updateDomain");
     }
   catch (...)
     {

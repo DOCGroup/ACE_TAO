@@ -113,8 +113,7 @@ CIAO::Deployment_Configuration::get_default_node_manager_ior (void) const
 }
 
 ::Deployment::NodeManager_ptr
-CIAO::Deployment_Configuration::get_node_manager (const char *name
-                                                  ACE_ENV_ARG_DECL)
+CIAO::Deployment_Configuration::get_node_manager (const char *name)
 {
   if (name == 0)
     return get_default_node_manager ();
@@ -135,40 +134,35 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
 
   if (CORBA::is_nil (entry->int_id_.node_manager_.in ()))
     {
-      ACE_TRY
+      try
         {
           CORBA::Object_var temp = this->orb_->string_to_object
-                                   (entry->int_id_.IOR_.c_str ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                   (entry->int_id_.IOR_.c_str ());
 
           entry->int_id_.node_manager_ =
-            ::Deployment::NodeManager::_narrow (temp.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+            ::Deployment::NodeManager::_narrow (temp.in ());
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp: "
                       "Error while contacting NodeManager %s\n", name));
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
     }
   return ::Deployment::NodeManager::_duplicate
     (entry->int_id_.node_manager_.in ());
 }
 
 ::Deployment::NodeManager_ptr
-CIAO::Deployment_Configuration::get_default_node_manager (void)
+CIAO::Deployment_Configuration::get_default_node_manager ()
 {
   if (CORBA::is_nil (this->default_node_manager_.node_manager_.in ()))
     {
       CORBA::Object_var temp = this->orb_->string_to_object
-        (this->default_node_manager_.IOR_.c_str ()
-         ACE_ENV_ARG_PARAMETER);
+        (this->default_node_manager_.IOR_.c_str ());
 
       this->default_node_manager_.node_manager_ =
-        ::Deployment::NodeManager::_narrow (temp.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+        ::Deployment::NodeManager::_narrow (temp.in ());
     }
   return ::Deployment::NodeManager::_duplicate
     (this->default_node_manager_.node_manager_.in ());

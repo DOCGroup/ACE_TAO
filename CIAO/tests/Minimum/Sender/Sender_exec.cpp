@@ -38,8 +38,7 @@ namespace CIDL_Sender_Impl
   // Supported or inherited operations.
 
   void
-  Sender_exec_i::bar (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::bar ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
@@ -53,26 +52,23 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx
-  ACE_ENV_ARG_DECL)
+  ::Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
     this->context_ =
     Sender_Context::_narrow (
-    ctx
-    ACE_ENV_ARG_PARAMETER);
+    ctx);
 
     if (this->context_ == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   }
 
   void
-  Sender_exec_i::ciao_preactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -81,8 +77,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ciao_postactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -91,8 +86,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_activate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -101,8 +95,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_passivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -111,8 +104,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_i::ccm_remove (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Sender_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -143,8 +135,7 @@ namespace CIDL_Sender_Impl
   // Implicit operations.
 
   ::Components::EnterpriseComponent_ptr
-  SenderHome_exec_i::create (
-  ACE_ENV_SINGLE_ARG_DECL)
+  SenderHome_exec_i::create ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))

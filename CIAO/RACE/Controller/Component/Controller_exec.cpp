@@ -18,20 +18,19 @@ namespace CIAO
 
       // Supported operations.
       void
-      Controller_exec_i::start (void)
+      Controller_exec_i::start ()
         ACE_THROW_SPEC ((::CORBA::SystemException))
       {}
 
       void
-      Controller_exec_i::stop (void)
+      Controller_exec_i::stop ()
         ACE_THROW_SPEC ((::CORBA::SystemException))
       {}
 
       // Attribute operations.
 
       ::CORBA::Double
-      Controller_exec_i::sampling_period (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Controller_exec_i::sampling_period ()
       ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
@@ -44,26 +43,23 @@ namespace CIAO
 
       void
       Controller_exec_i::set_session_context (
-        ::Components::SessionContext_ptr ctx
-        ACE_ENV_ARG_DECL)
+        ::Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
       {
         this->context_ =
         Controller_Context::_narrow (
-          ctx
-          ACE_ENV_ARG_PARAMETER);
+          ctx);
 
         if (this->context_ == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
       }
 
       void
-      Controller_exec_i::ciao_preactivate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Controller_exec_i::ciao_preactivate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -72,8 +68,7 @@ namespace CIAO
       }
 
       void
-      Controller_exec_i::ciao_postactivate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Controller_exec_i::ciao_postactivate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -82,8 +77,7 @@ namespace CIAO
       }
 
       void
-      Controller_exec_i::ccm_activate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Controller_exec_i::ccm_activate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -92,8 +86,7 @@ namespace CIAO
       }
 
       void
-      Controller_exec_i::ccm_passivate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Controller_exec_i::ccm_passivate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -102,8 +95,7 @@ namespace CIAO
       }
 
       void
-      Controller_exec_i::ccm_remove (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Controller_exec_i::ccm_remove ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -134,8 +126,7 @@ namespace CIAO
       // Implicit operations.
 
       ::Components::EnterpriseComponent_ptr
-      Controller_Home_exec_i::create (
-        ACE_ENV_SINGLE_ARG_DECL)
+      Controller_Home_exec_i::create ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))

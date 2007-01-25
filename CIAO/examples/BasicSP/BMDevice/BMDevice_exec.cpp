@@ -18,15 +18,14 @@ MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 }
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMDevice_exec_i::get_data_read (void)
+MyImpl::BMDevice_exec_i::get_data_read ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
 }
 
 void
-MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
-                                       ACE_ENV_ARG_DECL)
+MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Nitify others
@@ -38,19 +37,18 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
                   "BMDevice, received a timeout from EC \n"));
     }
 
-  this->context_->push_data_available (event
-                                       ACE_ENV_ARG_PARAMETER);
+  this->context_->push_data_available (event);
 }
 
 char *
-MyImpl::BMDevice_exec_i::data_read (void)
+MyImpl::BMDevice_exec_i::data_read ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_);
 }
 
 char *
-MyImpl::BMDevice_exec_i::get_data (void)
+MyImpl::BMDevice_exec_i::get_data ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->data_read ();
@@ -60,7 +58,6 @@ MyImpl::BMDevice_exec_i::get_data (void)
 void
 MyImpl::BMDevice_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -72,25 +69,24 @@ MyImpl::BMDevice_exec_i::set_session_context (
     }
 
   this->context_ =
-    BasicSP::CCM_BMDevice_Context::_narrow (ctx
-                                            ACE_ENV_ARG_PARAMETER);
+    BasicSP::CCM_BMDevice_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::BMDevice_exec_i::ciao_preactivate (void)
+MyImpl::BMDevice_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_activate (void)
+MyImpl::BMDevice_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -103,14 +99,14 @@ MyImpl::BMDevice_exec_i::ccm_activate (void)
 }
 
 void
-MyImpl::BMDevice_exec_i::ciao_postactivate (void)
+MyImpl::BMDevice_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_passivate (void)
+MyImpl::BMDevice_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -122,7 +118,7 @@ MyImpl::BMDevice_exec_i::ccm_passivate (void)
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_remove (void)
+MyImpl::BMDevice_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -148,7 +144,7 @@ MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMDeviceHome_exec_i::create (void)
+MyImpl::BMDeviceHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

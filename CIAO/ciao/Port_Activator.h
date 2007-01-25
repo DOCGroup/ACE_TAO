@@ -67,12 +67,10 @@ namespace CIAO
      * specifications.
      */
     virtual PortableServer::Servant activate (
-        const PortableServer::ObjectId &oid
-        ACE_ENV_ARG_DECL) = 0;
+        const PortableServer::ObjectId &oid) = 0;
 
     virtual void deactivate (
-        const PortableServer::Servant servant
-        ACE_ENV_ARG_DECL) = 0;
+        const PortableServer::Servant servant) = 0;
 
   protected:
     /// The object ID that is used to activate the servant within the

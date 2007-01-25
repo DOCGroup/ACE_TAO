@@ -37,34 +37,32 @@ namespace CIDL_Receiver_Impl
 
     // Operation which will be called upon receiving the timeout event.
     virtual void
-    push_click_in (Hello::TimeOut *ev
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    push_click_in (Hello::TimeOut *ev)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    virtual void set_session_context (Components::SessionContext_ptr ctx
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void set_session_context (Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_preactivate (void)
+    virtual void ciao_preactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_activate (void)
+    virtual void ccm_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_postactivate (void)
+    virtual void ciao_postactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
 
-    virtual void ccm_passivate (void)
+    virtual void ccm_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_remove (void)
+    virtual void ccm_remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
@@ -94,7 +92,7 @@ namespace CIDL_Receiver_Impl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (void)
+    create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };

@@ -40,16 +40,14 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
 
-    ACE_TRY_NEW_ENV;
+    try
       {
-        this->container_->delete_servant_map (oid ACE_ENV_ARG_PARAMETER);
+        this->container_->delete_servant_map (oid);
       }
-      ACE_CATCHANY;
+      catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "~Swapping_Home_Servant_Impl\t\n");
+        ex._tao_print_exception ("~Swapping_Home_Servant_Impl\t\n");
       }
-    ACE_ENDTRY;
 
     for (DYNAMIC_SERVANT_MAP_ITERATOR iter =
            this->dynamic_servant_map_.begin ();
@@ -69,7 +67,6 @@ namespace CIAO
                              EXEC,
                              COMP_SVNT>::remove_component (
       ::Components::CCMObject_ptr
-      ACE_ENV_ARG_DECL_NOT_USED
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
@@ -94,7 +91,6 @@ namespace CIAO
   Swapping_Home_Servant_Impl<BASE_SKEL,
                              EXEC,
                              COMP_SVNT>::create_component (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
@@ -111,7 +107,6 @@ namespace CIAO
   Swapping_Home_Servant_Impl<BASE_SKEL,
                              EXEC,
                              COMP_SVNT>::create (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
@@ -126,8 +121,7 @@ namespace CIAO
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create ();
 
-    return this->_ciao_activate_component (_ciao_ec.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+    return this->_ciao_activate_component (_ciao_ec.in ());
   }
 
   // CIAO-specific operations.
@@ -140,17 +134,14 @@ namespace CIAO
                              EXEC,
                              COMP_SVNT>::_ciao_activate_component (
       ::Components::EnterpriseComponent_ptr ec
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::Object_var hobj =
-      this->container_->get_home_objref (this
-                                    ACE_ENV_ARG_PARAMETER);
+      this->container_->get_home_objref (this);
 
     Components::CCMHome_var home =
-      Components::CCMHome::_narrow (hobj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      Components::CCMHome::_narrow (hobj.in ());
 
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
@@ -159,8 +150,7 @@ namespace CIAO
       this->container_->generate_reference (
         this->obj_id_,
         this->repo_id_,
-        Container::Component
-        ACE_ENV_ARG_PARAMETER);
+        Container::Component);
 
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant<COMP_SVNT> (ec,
@@ -169,14 +159,13 @@ namespace CIAO
                                                 this,
                                                 this->container_);
 
-    this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
+    this->container_->add_servant_map (oid, svt);
 
     this->dynamic_servant_map_.bind (oid.in (), svt);
 
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho =
-      stub_type::_narrow (objref.in ()
-                          ACE_ENV_ARG_PARAMETER);
+      stub_type::_narrow (objref.in ());
 
     return ho._retn ();
   }
@@ -209,15 +198,13 @@ namespace CIAO
                              EXEC,
                              COMP_SVNT>::_ciao_passivate_component (
       typename COMP_SVNT::_stub_ptr_type comp
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid;
 
     this->container_->uninstall_component (comp,
-                                           oid.out ()
-                                           ACE_ENV_ARG_PARAMETER);
+                                           oid.out ());
 
     COMP_SVNT *servant = 0;
 
