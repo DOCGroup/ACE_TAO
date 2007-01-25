@@ -57,15 +57,13 @@ namespace CIAO
 
   //========================================================
   CORBA::ValueBase *
-  Map_Key_Cookie_init::create_for_unmarshal (void)
+  Map_Key_Cookie_init::create_for_unmarshal ()
   {
     CORBA::ValueBase *ret_val = 0;
 
     ACE_NEW_THROW_EX (ret_val,
                       CIAO::Map_Key_Cookie,
                       CORBA::NO_MEMORY ());
-
-    // @@ (OO) An "ACE_CHECK_RETURN (0) is missing here.
 
     return ret_val;
   }

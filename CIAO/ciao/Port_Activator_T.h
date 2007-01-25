@@ -53,12 +53,10 @@ namespace CIAO
     /// Template method from the base class, please see the base class
     /// documentation for details.
     PortableServer::Servant activate (
-        const PortableServer::ObjectId &oid
-        ACE_ENV_ARG_DECL);
+        const PortableServer::ObjectId &oid);
 
     void deactivate (
-        const PortableServer::Servant servant
-        ACE_ENV_ARG_DECL);
+        const PortableServer::Servant servant);
 
   private:
     /// The executor

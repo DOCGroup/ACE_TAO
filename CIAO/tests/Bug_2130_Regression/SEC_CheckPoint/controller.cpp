@@ -114,11 +114,11 @@ main
   char* argv[]
 )
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     // Initialize orb
     CORBA::ORB_var orb =
-                        CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER );
+                        CORBA::ORB_init( argc, argv, "" );
 
     if( parse_args( argc, argv ) != 0 )
     {
@@ -126,10 +126,10 @@ main
     }
 
     CORBA::Object_var obj = orb->string_to_object( _sessionService_ior
-                                                   ACE_ENV_ARG_PARAMETER );
+ );
 
     ENW::ISessionService_var sessionService =
-               ENW::ISessionService::_narrow (obj.in () ACE_ENV_ARG_PARAMETER );
+               ENW::ISessionService::_narrow (obj.in () );
 
     if( CORBA::is_nil( sessionService.in() ) )
     {
@@ -182,17 +182,15 @@ main
       }
     }
 
-    orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
+    orb->destroy( );
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION( ACE_ANY_EXCEPTION,
-                         "Who is the culprit \n" );
+    ex._tao_print_exception ("Who is the culprit \n");
     cerr << "Uncaught CORBA exception" << endl;
 
     return 1;
   }
-  ACE_ENDTRY;
 
   return 0;
 }

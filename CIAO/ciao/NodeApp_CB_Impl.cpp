@@ -11,8 +11,7 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
     poa_ (PortableServer::POA::_duplicate (p)),
     nam_ (Deployment::NodeApplicationManager::_duplicate (s))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     //@@ Note: this properties is useless unless
     //   we have some specific properties for the callback obj.
@@ -22,13 +21,11 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
                     CORBA::NO_MEMORY ());
     this->properties_ = tmp;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "NodeApp_CB_Impl::Constructor\t\n");
-    ACE_RE_THROW;
+    ex._tao_print_exception ("NodeApp_CB_Impl::Constructor\t\n");
+    throw;
   }
-  ACE_ENDTRY;
 }
 
 CIAO::NodeApplication_Callback_Impl::~NodeApplication_Callback_Impl ()
@@ -44,8 +41,7 @@ CIAO::NodeApplication_Callback_Impl::_default_POA (void)
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplication_Callback_Impl::register_node_application (
     Deployment::NodeApplication_ptr na,
-    Deployment::Properties_out properties
-    ACE_ENV_ARG_DECL_NOT_USED)
+    Deployment::Properties_out properties)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   properties = this->properties_._retn ();

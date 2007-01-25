@@ -18,7 +18,7 @@ debug_msg (const char *msg)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
       StringMsg_init *StringMsg_factory = new StringMsg_init;
@@ -73,13 +73,11 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "caught exception:");
+      ex._tao_print_exception ("caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

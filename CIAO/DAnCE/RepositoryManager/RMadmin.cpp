@@ -39,11 +39,11 @@ static const char *RMname_service;
 /// main function that provides a sample interface for RM clients
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
-                      ""ACE_ENV_ARG_PARAMETER);
+                      "");
 
 
       Options* options = TheOptions::instance ();
@@ -54,7 +54,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (options->write_to_ior_)
       {
-        obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        obj = orb->string_to_object (ior);
       }
 
       else if (options->register_with_ns_)
@@ -64,8 +64,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         // Naming Service related operations
         CORBA::Object_var naming_context_object =
-          orb->resolve_initial_references ("NameService"
-          ACE_ENV_ARG_PARAMETER);
+          orb->resolve_initial_references ("NameService");
 
         CosNaming::NamingContext_var naming_context =
           CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -83,8 +82,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
     CIAO::RepositoryManagerDaemon_var rm =
-      CIAO::RepositoryManagerDaemon::_narrow (obj.in ()
-                                ACE_ENV_ARG_PARAMETER);
+      CIAO::RepositoryManagerDaemon::_narrow (obj.in ());
 
       if (CORBA::is_nil (rm.in ()))
         {
@@ -187,19 +185,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Deployment::PackageConfiguration *pc = new Deployment::PackageConfiguration ();
 
         // Parse the PCD to make sure that there are no package errors.
-        ACE_TRY
+        try
         {
           CIAO::Config_Handlers::Packaging::PCD_Handler::package_config ("default.pcd", *pc);
         }
-        ACE_CATCHALL
+        catch (...)
         {
           ACE_ERROR ((
             LM_ERROR,
             "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
-          ACE_THROW (Deployment::PackageError ());
+          throw Deployment::PackageError ();
         }
-        ACE_ENDTRY;
 
         ACE_OS::chdir (cwd);
 
@@ -242,13 +239,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->shutdown (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unknown exception \n");
+      ex._tao_print_exception ("Unknown exception \n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

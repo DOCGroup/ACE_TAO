@@ -38,8 +38,7 @@ namespace CIDL_Null_Component_Impl
   // Operations from ::Null_Interface
 
   void
-  Null_Interface_exec_i::null_operation (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Interface_exec_i::null_operation ()
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     // Your code here.
@@ -64,8 +63,7 @@ namespace CIDL_Null_Component_Impl
   // Port operations.
 
   ::CCM_Null_Interface_ptr
-  Null_Component_exec_i::get_null_facet (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Component_exec_i::get_null_facet ()
   ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     // Your code here.
@@ -76,25 +74,22 @@ namespace CIDL_Null_Component_Impl
 
   void
   Null_Component_exec_i::set_session_context (
-    ::Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL)
+    ::Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {
     this->context_ =
       Null_Component_Context::_narrow (
-        ctx
-        ACE_ENV_ARG_PARAMETER);
+        ctx);
 
     if (this->context_ == 0)
     {
-      ACE_THROW ( ::CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
   }
 
   void
-  Null_Component_exec_i::ciao_preactivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Component_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {
@@ -102,8 +97,7 @@ namespace CIDL_Null_Component_Impl
   }
 
   void
-  Null_Component_exec_i::ciao_postactivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Component_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {
@@ -111,8 +105,7 @@ namespace CIDL_Null_Component_Impl
   }
 
   void
-  Null_Component_exec_i::ccm_activate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Component_exec_i::ccm_activate ()
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {
@@ -120,8 +113,7 @@ namespace CIDL_Null_Component_Impl
   }
 
   void
-  Null_Component_exec_i::ccm_passivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Component_exec_i::ccm_passivate ()
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {
@@ -129,8 +121,7 @@ namespace CIDL_Null_Component_Impl
   }
 
   void
-  Null_Component_exec_i::ccm_remove (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Null_Component_exec_i::ccm_remove ()
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {
@@ -160,8 +151,7 @@ namespace CIDL_Null_Component_Impl
   // Implicit operations.
 
   ::Components::EnterpriseComponent_ptr
-  Null_Component_Home_exec_i::create (
-    ACE_ENV_SINGLE_ARG_DECL)
+  Null_Component_Home_exec_i::create ()
   ACE_THROW_SPEC (( ::CORBA::SystemException,
                    ::Components::CCMException))
   {

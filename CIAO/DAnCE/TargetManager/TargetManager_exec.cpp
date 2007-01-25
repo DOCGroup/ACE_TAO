@@ -56,8 +56,7 @@ namespace CIDL_TargetManager_i
   // Operations from ::Deployment::TargetManager
 
   ::Deployment::Domain *
-  TargetManager_exec_i::getAllResources (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManager_exec_i::getAllResources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
@@ -65,8 +64,7 @@ namespace CIDL_TargetManager_i
   }
 
   ::Deployment::Domain *
-  TargetManager_exec_i::getAvailableResources (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManager_exec_i::getAvailableResources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
@@ -75,8 +73,7 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManager_exec_i::commitResources (
-  const ::Deployment::DeploymentPlan & plan
-  ACE_ENV_ARG_DECL_NOT_USED)
+  const ::Deployment::DeploymentPlan & plan)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Deployment::ResourceNotAvailable,
@@ -88,8 +85,7 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManager_exec_i::releaseResources (
-  const ::Deployment::DeploymentPlan &  plan
-  ACE_ENV_ARG_DECL_NOT_USED)
+  const ::Deployment::DeploymentPlan &  plan)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
@@ -100,8 +96,7 @@ namespace CIDL_TargetManager_i
   TargetManager_exec_i::updateDomain (
   const ::CORBA::StringSeq &  elements ,
   const ::Deployment::Domain &  domainSubset ,
-  ::Deployment::DomainUpdateKind  updateKind
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ::Deployment::DomainUpdateKind  updateKind)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
@@ -176,8 +171,7 @@ namespace CIDL_TargetManager_i
 
   ::CORBA::Long
   TargetManagerExt_exec_i::get_pid (
-                                    const char * component_uuid
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+                                    const char * component_uuid)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
@@ -187,8 +181,7 @@ namespace CIDL_TargetManager_i
   }
 
   ::CIAO::Host_Infos *
-  TargetManagerExt_exec_i::get_host_cpu (
-                                         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerExt_exec_i::get_host_cpu ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
@@ -198,8 +191,7 @@ namespace CIDL_TargetManager_i
   }
 
   ::CIAO::Component_Infos *
-  TargetManagerExt_exec_i::get_component_cpu (
-                                              ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerExt_exec_i::get_component_cpu ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
@@ -212,7 +204,7 @@ namespace CIDL_TargetManager_i
 
   ::CIAO::Host_NodeManager_seq *
   TargetManagerExt_exec_i::get_all_node_managers
-  (void)
+  ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
@@ -239,8 +231,7 @@ namespace CIDL_TargetManager_i
   // Port operations.
 
   ::Deployment::CCM_TargetManager_ptr
-  TargetManagerImpl_exec_i::get_targetMgr (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerImpl_exec_i::get_targetMgr ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
@@ -262,7 +253,6 @@ namespace CIDL_TargetManager_i
 
   ::CIAO::CCM_TargetManagerExt_ptr TargetManagerImpl_exec_i
   ::get_target_manager_ext (
-                            ACE_ENV_SINGLE_ARG_DECL_NOT_USED
                             ) ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (CORBA::is_nil (this->exec_ext_object_.in ()))
@@ -277,26 +267,23 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManagerImpl_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx
-  ACE_ENV_ARG_DECL)
+  ::Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
     this->context_ =
     TargetManagerImpl_Context::_narrow (
-    ctx
-    ACE_ENV_ARG_PARAMETER);
+    ctx);
 
     if (this->context_ == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   }
 
   void
-  TargetManagerImpl_exec_i::ciao_preactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerImpl_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -305,8 +292,7 @@ namespace CIDL_TargetManager_i
   }
 
   void
-  TargetManagerImpl_exec_i::ciao_postactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerImpl_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -316,8 +302,7 @@ namespace CIDL_TargetManager_i
 
 
   void
-  TargetManagerImpl_exec_i::ccm_activate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerImpl_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -331,8 +316,7 @@ namespace CIDL_TargetManager_i
   }
 
   void
-  TargetManagerImpl_exec_i::ccm_passivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerImpl_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -341,8 +325,7 @@ namespace CIDL_TargetManager_i
   }
 
   void
-  TargetManagerImpl_exec_i::ccm_remove (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  TargetManagerImpl_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -380,8 +363,7 @@ namespace CIDL_TargetManager_i
   // Implicit operations.
 
   ::Components::EnterpriseComponent_ptr
-  TargetManagerHome_exec_i::create (
-  ACE_ENV_SINGLE_ARG_DECL)
+  TargetManagerHome_exec_i::create ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))

@@ -42,40 +42,38 @@ namespace MyImpl
     // Operations from HUDisplay::NavDisplay
 
     virtual void
-    push_Refresh (HUDisplay::tick *ev
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    push_Refresh (HUDisplay::tick *ev)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (Components::SessionContext_ptr ctx
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    set_session_context (Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
     virtual void
-    ciao_preactivate (void)
+    ciao_preactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
     virtual void
-    ccm_activate (void)
+    ccm_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
     virtual void
-    ciao_postactivate (void)
+    ciao_postactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
     virtual void
-    ccm_passivate (void)
+    ccm_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
     virtual void
-    ccm_remove (void)
+    ccm_remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   protected:
@@ -108,7 +106,7 @@ namespace MyImpl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (void)
+    create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };

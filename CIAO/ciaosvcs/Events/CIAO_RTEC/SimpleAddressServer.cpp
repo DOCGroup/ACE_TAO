@@ -23,8 +23,7 @@ SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
 /*
 void
 SimpleAddressServer::get_ip_address (const RtecEventComm::EventHeader&,
-                                     RtecUDPAdmin::UDP_IP_Address_out address
-                                     ACE_ENV_ARG_DECL)
+                                     RtecUDPAdmin::UDP_IP_Address_out address)
     throw (CORBA::SystemException) {
   address = new RtecUDPAdmin::UDP_IP_Address;
 

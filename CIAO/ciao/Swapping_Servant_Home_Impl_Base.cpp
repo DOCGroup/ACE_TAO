@@ -18,7 +18,6 @@ namespace CIAO
 
   CORBA::IRObject_ptr
   Swapping_Home_Servant_Impl_Base::get_component_def (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -28,7 +27,6 @@ namespace CIAO
 
   CORBA::IRObject_ptr
   Swapping_Home_Servant_Impl_Base::get_home_def (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {

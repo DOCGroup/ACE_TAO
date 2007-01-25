@@ -20,18 +20,17 @@ const char *ior = "file://test.ior";
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       // Resolve HomeFinder interface
       CORBA::Object_var obj
-        = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object (ior);
       Benchmark::RoundTripClient_var test =
 	      Benchmark::RoundTripClient::_narrow(obj.in());
       //Get the RoundTrip reference
@@ -41,13 +40,12 @@ main (int argc, char *argv[])
       trigger->start();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception Handled:");
+      ex._tao_print_exception ("Exception Handled:");
       return 1;
     }
 
-  ACE_ENDTRY;
 
   return 0;
 }

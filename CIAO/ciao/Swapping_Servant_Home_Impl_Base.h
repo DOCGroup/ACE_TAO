@@ -47,11 +47,11 @@ namespace CIAO
 
     // Operations for CCMHome interface.
     virtual ::CORBA::IRObject_ptr
-    get_component_def (void)
+    get_component_def ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::CORBA::IRObject_ptr
-    get_home_def (void)
+    get_home_def ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:

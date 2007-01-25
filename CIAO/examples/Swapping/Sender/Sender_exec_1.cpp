@@ -7,7 +7,7 @@
 namespace CIDL_Sender_Impl
 {
   char*
-  Message_Impl_1::get_message (void)
+  Message_Impl_1::get_message ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender 1 sending out message. \n"));
@@ -19,22 +19,21 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::local_message (const char * local_message
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+  Sender_exec_1_i::local_message (const char * local_message)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     message_ = CORBA::string_dup (local_message);
   }
 
   char *
-  Sender_exec_1_i::local_message (void)
+  Sender_exec_1_i::local_message ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup(message_.in ());
   }
 
   Hello::CCM_ReadMessage_ptr
-  Sender_exec_1_i::get_push_message (void)
+  Sender_exec_1_i::get_push_message ()
         ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -43,34 +42,32 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::start (void)
+  Sender_exec_1_i::start ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
     ACE_DEBUG ((LM_DEBUG, "Sender 1 initiates the process.\n"));
-    this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
+    this->context_->push_click_out (event);
   }
 
   void
-  Sender_exec_1_i::set_session_context (Components::SessionContext_ptr ctx
-                                        ACE_ENV_ARG_DECL)
+  Sender_exec_1_i::set_session_context (Components::SessionContext_ptr ctx)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_1_i::set_session_context\n"));
 
     this->context_ =
-          Sender_Exec_Context::_narrow (ctx
-                                        ACE_ENV_ARG_PARAMETER);
+          Sender_Exec_Context::_narrow (ctx);
 
     if (CORBA::is_nil (this->context_.in ()))
       {
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       }
   }
 
   void
-  Sender_exec_1_i::ciao_preactivate (void)
+  Sender_exec_1_i::ciao_preactivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -79,7 +76,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::ccm_activate (void)
+  Sender_exec_1_i::ccm_activate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -91,7 +88,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::ciao_postactivate (void)
+  Sender_exec_1_i::ciao_postactivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -100,15 +97,14 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::ccm_passivate (void)
+  Sender_exec_1_i::ccm_passivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_1_i::ccm_passivate\n"));
 
     Components::ConsumerDescriptions_var retval =
-      this->context_->get_registered_consumers ("click_out"
-        ACE_ENV_ARG_PARAMETER);
+      this->context_->get_registered_consumers ("click_out");
 
     this->base_exec_->consumers (retval._retn ());
 
@@ -116,8 +112,7 @@ namespace CIDL_Sender_Impl
       this->context_->get_CCM_object ();
 
     Hello::Sender_var sender =
-      Hello::Sender::_narrow (o.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      Hello::Sender::_narrow (o.in ());
 
     Components::FacetDescriptions_var facets =
         sender->get_all_facets ();
@@ -127,12 +122,11 @@ namespace CIDL_Sender_Impl
 
       for (i = 0; i < facet_len; ++i)
       {
-        this->context_->remove_facet (facets[i]->facet_ref ()
-                                      ACE_ENV_ARG_PARAMETER);
+        this->context_->remove_facet (facets[i]->facet_ref ());
         /*
-        this->context_->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
+        this->context_->update_port_activator (oid);
 
-        this->context_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
+        this->context_->deactivate_facet (oid);
         */
       }
 
@@ -143,7 +137,7 @@ namespace CIDL_Sender_Impl
   }
 
   void
-  Sender_exec_1_i::ccm_remove (void)
+  Sender_exec_1_i::ccm_remove ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {

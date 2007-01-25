@@ -19,14 +19,14 @@ namespace CIDL_Receiver_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverSwap_exec_i::incarnate (void)
+  ReceiverSwap_exec_i::incarnate ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new Receiver_exec_i;
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverSwap_exec_i::etherealize (void)
+  ReceiverSwap_exec_i::etherealize ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new Receiver_exec_i;
@@ -41,8 +41,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::push_click_in (Hello::TimeOut *
-                                  ACE_ENV_ARG_DECL)
+  Receiver_exec_i::push_click_in (Hello::TimeOut *)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     //Get the message from the Sender first.
@@ -55,7 +54,7 @@ namespace CIDL_Receiver_Impl
 
     if (CORBA::is_nil (rev.in ()))
       {
-        ACE_THROW (CORBA::BAD_INV_ORDER ());
+        throw CORBA::BAD_INV_ORDER ();
       }
 
     CORBA::String_var str =
@@ -68,25 +67,23 @@ namespace CIDL_Receiver_Impl
 
   // Operations from Components::SessionComponen
   void
-  Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                        ACE_ENV_ARG_DECL)
+  Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::set_session_context\n"));
 
     this->context_ =
-      Receiver_Exec_Context::_narrow (ctx
-                                      ACE_ENV_ARG_PARAMETER);
+      Receiver_Exec_Context::_narrow (ctx);
 
     if (CORBA::is_nil (this->context_.in ()))
       {
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       }
   }
 
   void
-  Receiver_exec_i::ciao_preactivate (void)
+  Receiver_exec_i::ciao_preactivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -95,7 +92,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_activate (void)
+  Receiver_exec_i::ccm_activate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -103,7 +100,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_postactivate (void)
+  Receiver_exec_i::ciao_postactivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -112,7 +109,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_passivate (void)
+  Receiver_exec_i::ccm_passivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                     Components::CCMException))
   {
@@ -121,8 +118,7 @@ namespace CIDL_Receiver_Impl
     CORBA::Object_var comp_object =
       this->context_->get_CCM_object ();
 
-    Hello::Receiver_var receiver = Hello::Receiver::_narrow (comp_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+    Hello::Receiver_var receiver = Hello::Receiver::_narrow (comp_object.in ());
 
     ::Components::ConsumerDescriptions_var cons_desc =
       receiver->get_all_consumers ();
@@ -144,7 +140,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_remove (void)
+  Receiver_exec_i::ccm_remove ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -161,7 +157,7 @@ namespace CIDL_Receiver_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverHome_exec_i::create (void)
+  ReceiverHome_exec_i::create ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {

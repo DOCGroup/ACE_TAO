@@ -40,7 +40,7 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   gen_swapping_set ()
   {
     os << "this->activate_component (" << ");"
-       << "ACE_CHECK;" << endl;
+       << endl;
   }
 
   virtual void
@@ -239,8 +239,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
           this->gen_swapping_get (a);
         }
 
-        os << "return this->executor_->" << a.name () << " (" << endl
-           << ");";
+        os << "return this->executor_->" << a.name () << " ();";
       }
 
     os << "}";

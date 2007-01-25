@@ -56,8 +56,7 @@ namespace CIAO
      * @c supplier_config.
      */
     virtual void connect_event_supplier (
-        Supplier_Config_ptr supplier_config
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        Supplier_Config_ptr supplier_config)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
 
@@ -68,8 +67,7 @@ namespace CIAO
      * @c consumer_config.
      */
     virtual void connect_event_consumer (
-        Consumer_Config_ptr consumer_config
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        Consumer_Config_ptr consumer_config)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
 
@@ -79,8 +77,7 @@ namespace CIAO
      * Disconnects the event supplier associated with this object.
      */
     virtual void disconnect_event_supplier (
-        const char * consumer_id
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        const char * consumer_id)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         Components::InvalidConnection)) = 0;
@@ -91,8 +88,7 @@ namespace CIAO
      * Disconnects the event consumer with UUID @c consumer_id.
      */
     virtual void disconnect_event_consumer (
-        const char * consumer_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const char * consumer_id)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         Components::InvalidConnection)) = 0;
@@ -103,20 +99,18 @@ namespace CIAO
      * Pushes event @c ev to all consumers.
      */
     virtual void push_event (
-        Components::EventBase * ev
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        Components::EventBase * ev)
       ACE_THROW_SPEC ((
         CORBA::SystemException)) = 0;
 
     /**
-     * Pushes event @c ev to all consumers. The source id of the 
+     * Pushes event @c ev to all consumers. The source id of the
      * supplier is specified through @c source_id.
      */
     virtual void ciao_push_event (
         ::Components::EventBase * evt,
         const char * source_id,
-        ::CORBA::TypeCode_ptr tc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ::CORBA::TypeCode_ptr tc)
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
         ::Components::BadEventType));
@@ -127,23 +121,19 @@ namespace CIAO
   {
   public:
     virtual void start_conjunction_group (
-        ::CORBA::Long size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ::CORBA::Long size)
       ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
 
     virtual void start_disjunction_group (
-        ::CORBA::Long size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ::CORBA::Long size)
       ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
 
     virtual void insert_source (
-        const char * source_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const char * source_id)
       ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
 
     virtual void insert_type (
-        ::CORBA::Long  event_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ::CORBA::Long  event_type)
       ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
   };
 }

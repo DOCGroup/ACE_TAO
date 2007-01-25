@@ -18,7 +18,6 @@ MyImpl::BMDisplay_exec_impl::~BMDisplay_exec_impl ()
 void
 MyImpl::BMDisplay_exec_impl::push_data_ready (
     BasicSP::DataAvailable *ev
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -38,7 +37,7 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
     = this->context_->get_connection_comp_data ();
 
   if (CORBA::is_nil (dat.in ()))
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 
   CORBA::String_var str =
     dat->get_data ();
@@ -53,7 +52,6 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
 void
 MyImpl::BMDisplay_exec_impl::set_session_context (
     Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -65,17 +63,15 @@ MyImpl::BMDisplay_exec_impl::set_session_context (
     }
 
   this->context_ =
-    BasicSP::CCM_BMDisplay_Context::_narrow (ctx
-                                         ACE_ENV_ARG_PARAMETER);
+    BasicSP::CCM_BMDisplay_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
 MyImpl::BMDisplay_exec_impl::ciao_preactivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -83,7 +79,7 @@ MyImpl::BMDisplay_exec_impl::ciao_preactivate (
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_activate (void)
+MyImpl::BMDisplay_exec_impl::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -97,7 +93,6 @@ MyImpl::BMDisplay_exec_impl::ccm_activate (void)
 
 void
 MyImpl::BMDisplay_exec_impl::ciao_postactivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -106,7 +101,6 @@ MyImpl::BMDisplay_exec_impl::ciao_postactivate (
 
 void
 MyImpl::BMDisplay_exec_impl::ccm_passivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -119,7 +113,7 @@ MyImpl::BMDisplay_exec_impl::ccm_passivate (
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_remove (void)
+MyImpl::BMDisplay_exec_impl::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -145,7 +139,7 @@ MyImpl::BMDisplayHome_exec_impl::~BMDisplayHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMDisplayHome_exec_impl::create (void)
+MyImpl::BMDisplayHome_exec_impl::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

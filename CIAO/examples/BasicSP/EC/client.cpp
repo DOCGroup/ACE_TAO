@@ -18,20 +18,18 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, ""
-		                            ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       // Resolve HomeFinder interface
 
       CORBA::Object_var obj
-        = orb->string_to_object ("file://ec.ior" ACE_ENV_ARG_PARAMETER);
+        = orb->string_to_object ("file://ec.ior");
 
       BasicSP::ECHome_var home
-        = BasicSP::ECHome::_narrow (obj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+        = BasicSP::ECHome::_narrow (obj.in ());
 
       if (CORBA::is_nil (home.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire ECHome objref\n"), -1);
@@ -40,8 +38,7 @@ main (int argc, char *argv[])
         = home->create ();
 
       // Place to plug in the rate
-      pulser->hertz (5
-                     ACE_ENV_ARG_PARAMETER);
+      pulser->hertz (5);
 
       pulser->start ();
 
@@ -49,20 +46,17 @@ main (int argc, char *argv[])
 
       pulser->stop ();
 
-      home->remove_component (pulser.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      home->remove_component (pulser.in ());
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Who is the culprit \n");
+      ex._tao_print_exception ("Who is the culprit \n");
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Uncaught CORBA exception\n"),
                         1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

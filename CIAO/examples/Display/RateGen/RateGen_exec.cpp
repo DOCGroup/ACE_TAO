@@ -146,15 +146,14 @@ MyImpl::RateGen_exec_i::~RateGen_exec_i ()
 }
 
 CORBA::Long
-MyImpl::RateGen_exec_i::hertz (void)
+MyImpl::RateGen_exec_i::hertz ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->hertz_;
 }
 
 void
-MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz
-                               ACE_ENV_ARG_DECL_NOT_USED)
+MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->hertz_ = hertz;
@@ -163,12 +162,12 @@ MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz
 // Operations from supported interface(s)
 
 void
-MyImpl::RateGen_exec_i::start (void)
+MyImpl::RateGen_exec_i::start ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->hertz_ == 0 || this->pulser_.active())
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      throw CORBA::BAD_INV_ORDER ();
     }
 
   // @@ Start the rate generator
@@ -176,12 +175,12 @@ MyImpl::RateGen_exec_i::start (void)
 }
 
 void
-MyImpl::RateGen_exec_i::stop (void)
+MyImpl::RateGen_exec_i::stop ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (! this->pulser_.active ())
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      throw CORBA::BAD_INV_ORDER ();
     }
 
   // @@ stop the rate generator
@@ -189,7 +188,7 @@ MyImpl::RateGen_exec_i::stop (void)
 }
 
 CORBA::Boolean
-MyImpl::RateGen_exec_i::active (void)
+MyImpl::RateGen_exec_i::active ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->pulser_.active ();
@@ -200,7 +199,6 @@ MyImpl::RateGen_exec_i::active (void)
 void
 MyImpl::RateGen_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -212,26 +210,25 @@ MyImpl::RateGen_exec_i::set_session_context (
     }
 
   this->context_ =
-    HUDisplay::CCM_RateGen_Context::_narrow (ctx
-                                             ACE_ENV_ARG_PARAMETER);
+    HUDisplay::CCM_RateGen_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   // Urm, we actually discard exceptions thown from this operation.
 
 }
 
 void
-MyImpl::RateGen_exec_i::ciao_preactivate (void)
+MyImpl::RateGen_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RateGen_exec_i::ccm_activate (void)
+MyImpl::RateGen_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -245,14 +242,14 @@ MyImpl::RateGen_exec_i::ccm_activate (void)
 }
 
 void
-MyImpl::RateGen_exec_i::ciao_postactivate (void)
+MyImpl::RateGen_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RateGen_exec_i::ccm_passivate (void)
+MyImpl::RateGen_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -266,7 +263,7 @@ MyImpl::RateGen_exec_i::ccm_passivate (void)
 }
 
 void
-MyImpl::RateGen_exec_i::ccm_remove (void)
+MyImpl::RateGen_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -280,7 +277,7 @@ MyImpl::RateGen_exec_i::ccm_remove (void)
 void
 MyImpl::RateGen_exec_i::pulse (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 //       if (CIAO::debug_level () > 0)
 //         {
@@ -290,14 +287,12 @@ MyImpl::RateGen_exec_i::pulse (void)
 
       HUDisplay::tick_var ev = new OBV_HUDisplay::tick ();
 
-      this->context_->push_Pulse (ev.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+      this->context_->push_Pulse (ev.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // @@ do nothing?
     }
-  ACE_ENDTRY;
 
 }
 
@@ -310,8 +305,7 @@ MyImpl::RateGenHome_exec_i::~RateGenHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */
-                                         ACE_ENV_ARG_DECL)
+MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::EnterpriseComponent_ptr tmp = 0;
@@ -323,7 +317,7 @@ MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RateGenHome_exec_i::create (void)
+MyImpl::RateGenHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

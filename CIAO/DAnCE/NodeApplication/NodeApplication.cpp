@@ -16,7 +16,7 @@ void print_arg (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_EC_Default_Factory::init_svcs ();
 
@@ -39,13 +39,11 @@ main (int argc, char *argv[])
       // Run the main event loop for the ORB.
       nodeapp_core.run_orb ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeApp::main\t\n");
+      ex._tao_print_exception ("NodeApp::main\t\n");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) - This NodeApplication is destroyed!\n"));

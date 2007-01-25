@@ -71,22 +71,21 @@ namespace CIAO
 
       CosNaming::NamingContext_var tmpCtxVar;
 
-      ACE_TRY
+      try
         {
           tmpCtxVar = nc->bind_new_context(name);
           ACE_DEBUG ((LM_DEBUG, "Bound Context.\n\n"));
         }
-      ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+      catch (const CosNaming::NamingContext::AlreadyBound& ex)
         {
           ACE_DEBUG ((LM_DEBUG, "Context Already Bound.\n\n"));
         }
-      ACE_CATCH (CosNaming::NamingContext::NotFound, nf)
+      catch (const CosNaming::NamingContext::NotFound& nf)
         {
           ACE_DEBUG ((LM_DEBUG, "Context not found.\n\n"));
           isNotFound = true;
           lengthMissing = nf.rest_of_name.length();
         }
-      ACE_ENDTRY;
 
       if (lengthMissing == name.length())
         {
@@ -124,17 +123,16 @@ namespace CIAO
       CORBA::String_var  newSCName = nc->to_string(name);
       ACE_DEBUG ((LM_DEBUG, "The name is: %s\n", newSCName.in ()));
 
-      ACE_TRY
+      try
         {
           nc->rebind(name, obj);
         }
 
-      ACE_CATCH (CosNaming::NamingContext::NotFound, ex )
+      catch (const CosNaming::NamingContext::NotFound& ex)
         {
           ACE_DEBUG ((LM_DEBUG, "Name not found, doing new bind.\n"));
           nc->bind(name, obj);
         }
-      ACE_ENDTRY;
     }
 
     //---------------------------------------------------------------------------------------------

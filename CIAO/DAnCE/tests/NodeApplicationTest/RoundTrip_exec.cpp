@@ -20,24 +20,21 @@ namespace CIDL_RoundTrip_Impl
   }
 
   NodeAppTest::CCM_LatencyTest_ptr
-  RoundTrip_exec_i::get_facet_1 (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::get_facet_1 ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new LatencyTest_Impl;
   }
 
   NodeAppTest::CCM_LatencyTest_ptr
-  RoundTrip_exec_i::get_facet_2 (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::get_facet_2 ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new LatencyTest_Impl;
   }
 
   CORBA::Long
-  RoundTrip_exec_i::cube_long (CORBA::Long data
-                               ACE_ENV_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::cube_long (CORBA::Long data)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return data * data * data;
@@ -45,8 +42,7 @@ namespace CIDL_RoundTrip_Impl
 
   // Operations from Components::SessionComponent
   void
-  RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+  RoundTrip_exec_i::set_session_context (Components::SessionContext_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -58,7 +54,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ccm_activate (void)
+  RoundTrip_exec_i::ccm_activate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -70,7 +66,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ccm_passivate (void)
+  RoundTrip_exec_i::ccm_passivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -81,7 +77,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ccm_remove (void)
+  RoundTrip_exec_i::ccm_remove ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -92,7 +88,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ciao_preactivate (void)
+  RoundTrip_exec_i::ciao_preactivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -104,7 +100,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   void
-  RoundTrip_exec_i::ciao_postactivate (void)
+  RoundTrip_exec_i::ciao_postactivate ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -123,7 +119,7 @@ namespace CIDL_RoundTrip_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  RoundTripHome_exec_i::create (void)
+  RoundTripHome_exec_i::create ()
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
@@ -132,8 +128,7 @@ namespace CIDL_RoundTrip_Impl
 
   // Implementation for the probided inferface.
   CORBA::Long
-  LatencyTest_Impl::cube_long (CORBA::Long data
-		                           ACE_ENV_ARG_DECL_NOT_USED)
+  LatencyTest_Impl::cube_long (CORBA::Long data)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return data*data*data;
