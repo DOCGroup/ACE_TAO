@@ -9,8 +9,7 @@ using namespace TAO;
 /// or a client-side interceptor
 
 int
-test_transport_current (Transport::Current_ptr tc
-                        ACE_ENV_ARG_DECL)
+test_transport_current (Transport::Current_ptr tc)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::UserException))
 {
@@ -36,19 +35,16 @@ test_transport_current (Transport::Current_ptr tc
 }
 
 int
-test_transport_current (CORBA::ORB_ptr orb
-                        ACE_ENV_ARG_DECL)
+test_transport_current (CORBA::ORB_ptr orb)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::UserException))
 {
   // Get the Current object.
   CORBA::Object_var tcobject =
-    orb->resolve_initial_references ("TAO::Transport::Current"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("TAO::Transport::Current");
 
   Transport::Current_var tc =
-    Transport::Current::_narrow (tcobject.in ()
-                                      ACE_ENV_SINGLE_ARG_DECL);
+    Transport::Current::_narrow (tcobject.in ());
 
   if (CORBA::is_nil (tc.in ()))
     {
@@ -56,7 +52,7 @@ test_transport_current (CORBA::ORB_ptr orb
                   ACE_TEXT ("(%P|%t) client - ERROR: Could not resolve ")
                   ACE_TEXT ("TAOTransportCurrent object.\n")));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   return test_transport_current (tc.in ());

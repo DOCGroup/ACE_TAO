@@ -38,8 +38,7 @@ Vault_Client_Request_Interceptor::destroy (void)
 
 void
 Vault_Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
@@ -47,8 +46,7 @@ Vault_Client_Request_Interceptor::send_poll (
 
 void
 Vault_Client_Request_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -71,7 +69,7 @@ Vault_Client_Request_Interceptor::send_request (
       sc.context_data.replace (string_len, string_len, buf, 1);
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+      ri->add_request_service_context (sc, 0);
     }
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
@@ -90,8 +88,7 @@ Vault_Client_Request_Interceptor::send_request (
 
 void
 Vault_Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -108,8 +105,7 @@ Vault_Client_Request_Interceptor::receive_reply (
 
 void
 Vault_Client_Request_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -118,8 +114,7 @@ Vault_Client_Request_Interceptor::receive_other (
 
 void
 Vault_Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -153,24 +148,21 @@ Vault_Client_Request_Context_Interceptor::~Vault_Client_Request_Context_Intercep
 }
 
 char *
-Vault_Client_Request_Context_Interceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Client_Request_Context_Interceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Client_Request_Context_Interceptor::destroy (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Client_Request_Context_Interceptor::destroy ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Client_Request_Context_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
@@ -178,8 +170,7 @@ Vault_Client_Request_Context_Interceptor::send_poll (
 
 void
 Vault_Client_Request_Context_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -200,13 +191,12 @@ Vault_Client_Request_Context_Interceptor::send_request (
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+  ri->add_request_service_context (sc, 0);
 }
 
 void
 Vault_Client_Request_Context_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -215,8 +205,7 @@ Vault_Client_Request_Context_Interceptor::receive_other (
 
 void
 Vault_Client_Request_Context_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -224,8 +213,7 @@ Vault_Client_Request_Context_Interceptor::receive_reply (
 
 void
 Vault_Client_Request_Context_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -259,24 +247,21 @@ Vault_Client_Request_Dynamic_Interceptor::~Vault_Client_Request_Dynamic_Intercep
 }
 
 char *
-Vault_Client_Request_Dynamic_Interceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Client_Request_Dynamic_Interceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Client_Request_Dynamic_Interceptor::destroy (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Client_Request_Dynamic_Interceptor::destroy ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Client_Request_Dynamic_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
@@ -284,8 +269,7 @@ Vault_Client_Request_Dynamic_Interceptor::send_poll (
 
 void
 Vault_Client_Request_Dynamic_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -319,8 +303,7 @@ Vault_Client_Request_Dynamic_Interceptor::send_request (
 
 void
 Vault_Client_Request_Dynamic_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -347,8 +330,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (
 
 void
 Vault_Client_Request_Dynamic_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -357,8 +339,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_other (
 
 void
 Vault_Client_Request_Dynamic_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -399,16 +380,14 @@ Vault_Client_Request_NOOP_Interceptor::name (void)
 }
 
 void
-Vault_Client_Request_NOOP_Interceptor::destroy (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Vault_Client_Request_NOOP_Interceptor::destroy ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Client_Request_NOOP_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
@@ -416,8 +395,7 @@ Vault_Client_Request_NOOP_Interceptor::send_poll (
 
 void
 Vault_Client_Request_NOOP_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -426,8 +404,7 @@ Vault_Client_Request_NOOP_Interceptor::send_request (
 
 void
 Vault_Client_Request_NOOP_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -436,8 +413,7 @@ Vault_Client_Request_NOOP_Interceptor::receive_other (
 
 void
 Vault_Client_Request_NOOP_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -445,8 +421,7 @@ Vault_Client_Request_NOOP_Interceptor::receive_reply (
 
 void
 Vault_Client_Request_NOOP_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

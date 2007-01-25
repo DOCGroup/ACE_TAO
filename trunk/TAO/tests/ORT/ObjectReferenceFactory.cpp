@@ -26,8 +26,7 @@ ObjectReferenceFactory::~ObjectReferenceFactory (void)
 CORBA::Object_ptr
 ObjectReferenceFactory::make_object (
     const char *repository_id,
-    const PortableInterceptor::ObjectId & id
-    ACE_ENV_ARG_DECL)
+    const PortableInterceptor::ObjectId & id)
 {
   ACE_ASSERT (repository_id != 0);
 
@@ -35,6 +34,5 @@ ObjectReferenceFactory::make_object (
               "Invoked custom ObjectReferenceFactory::make_object()\n"));
 
   return this->old_orf_->make_object (repository_id,
-                                      id
-                                      ACE_ENV_ARG_PARAMETER);
+                                      id);
 }

@@ -68,7 +68,7 @@ Server_i::parse_args (void)
 int
 Server_i::add_IOR_to_table (CORBA::String_var ior)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -78,19 +78,17 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 
       CORBA::Object_var table_object =
         this->orb_manager_.orb ()->resolve_initial_references (
-            "IORTable"
-            ACE_ENV_ARG_PARAMETER);
+            "IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind (this->ins_, ior.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind (this->ins_, ior.in ());
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Exception caugh in add_IOR_to_table");
+      ex._tao_print_exception ("Exception caugh in add_IOR_to_table");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -98,15 +96,13 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 // Initialize the server.
 int
 Server_i::init (int argc,
-                char *argv[]
-                ACE_ENV_ARG_DECL)
+                char *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   int result = this->orb_manager_.init_child_poa (argc,
                                                   argv,
-                                                  "child_poa"
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  "child_poa");
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,12 +123,11 @@ Server_i::init (int argc,
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
 
-  ACE_TRY
+  try
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa ("INS_servant",
-                                                     &this->servant_
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                     &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -153,12 +148,12 @@ Server_i::init (int argc,
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException in activation of POA");
+      ex._tao_print_exception (
+        "\tException in activation of POA");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -16,8 +16,7 @@ void
 test_i::method (CORBA::ULong request_number,
                 CORBA::Long start_time,
                 const test::data &,
-                CORBA::ULong work
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CORBA::ULong work)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value start (0);
@@ -42,12 +41,12 @@ test_i::flush (void)
 }
 
 void
-test_i::shutdown (CORBA::Long start_time ACE_ENV_ARG_DECL)
+test_i::shutdown (CORBA::Long start_time)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value start (0);
   start.msec (start_time);
   ACE_DEBUG ((LM_DEBUG, "server: Shutting down... (%dms)\n",
               (ACE_OS::gettimeofday() - start).msec ()));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

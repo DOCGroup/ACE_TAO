@@ -35,8 +35,7 @@ public:
   // Constructor
 
   Grid_i (CORBA::Short,
-          CORBA::Short
-          ACE_ENV_ARG_DECL_NOT_USED);
+          CORBA::Short);
   // Constructor.
 
   ~Grid_i (void);
@@ -50,27 +49,23 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the height of the grid
 
-  virtual void width (CORBA::Short
-                      ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void width (CORBA::Short)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets the width of the grid.
 
-  virtual void height (CORBA::Short
-                       ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void height (CORBA::Short)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets the height of the grid.
 
   virtual void set (CORBA::Short,
                     CORBA::Short,
-                    CORBA::Long
-                    ACE_ENV_ARG_DECL_NOT_USED)
+                    CORBA::Long)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Grid::RANGE_ERROR));
   // Sets the grid value.
 
   virtual CORBA::Long get (CORBA::Short,
-                           CORBA::Short
-                           ACE_ENV_ARG_DECL_NOT_USED)
+                           CORBA::Short)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Grid::RANGE_ERROR));
   // Gets the grid value.
@@ -104,8 +99,7 @@ public:
   // Destructor.
 
   virtual Grid_ptr make_grid (CORBA::Short,
-                              CORBA::Short
-                              ACE_ENV_ARG_DECL)
+                              CORBA::Short)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This function creates and returns a <Grid>.
 

@@ -235,24 +235,21 @@ start_synchronization (test_ptr test,
                        Synchronizers &synchronizers)
 {
   CORBA::ULong synchronization_iterations = 1;
-  ACE_TRY_NEW_ENV
+  try
     {
       for (CORBA::ULong i = 0;
            i < synchronization_iterations;
            ++i)
         {
           test->method (work,
-                        prime_number
-                        ACE_ENV_ARG_PARAMETER);
+                        prime_number);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
@@ -348,7 +345,7 @@ max_throughput (test_ptr test,
   CORBA::Short CORBA_priority = 0;
   CORBA::Short native_priority = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA_priority =
         current->the_priority ();
@@ -378,19 +375,16 @@ max_throughput (test_ptr test,
             break;
 
           test->method (work,
-                        prime_number
-                        ACE_ENV_ARG_PARAMETER);
+                        prime_number);
 
           ++calls_made;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   max_rate =
     calls_made / max_throughput_timeout;
@@ -478,13 +472,11 @@ Paced_Worker::reset_priority (void)
 {
   if (set_priority)
     {
-      this->current_->the_priority (this->priority_
-                                    ACE_ENV_ARG_PARAMETER);
+      this->current_->the_priority (this->priority_);
     }
   else
     {
-      this->current_->the_priority (continuous_worker_priority
-                                    ACE_ENV_ARG_PARAMETER);
+      this->current_->the_priority (continuous_worker_priority);
     }
 }
 
@@ -631,7 +623,7 @@ Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
 int
 Paced_Worker::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       int result =
         this->setup ();
@@ -656,8 +648,7 @@ Paced_Worker::svc (void)
             }
 
           this->test_->method (work,
-                               prime_number
-                               ACE_ENV_ARG_PARAMETER);
+                               prime_number);
 
           ACE_hrtime_t time_after_call =
             ACE_OS::gethrtime ();
@@ -685,13 +676,11 @@ Paced_Worker::svc (void)
 
       this->print_stats (test_end);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -816,8 +805,7 @@ Continuous_Worker::setup (void)
 {
   if (priority_setting == AFTER_THREAD_CREATION)
     {
-      this->current_->the_priority (continuous_worker_priority
-                                    ACE_ENV_ARG_PARAMETER);
+      this->current_->the_priority (continuous_worker_priority);
     }
 
   this->CORBA_priority_ =
@@ -840,7 +828,7 @@ Continuous_Worker::setup (void)
 int
 Continuous_Worker::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Sample_History history (this->iterations_);
 
@@ -857,8 +845,7 @@ Continuous_Worker::svc (void)
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           this->test_->method (work,
-                               prime_number
-                               ACE_ENV_ARG_PARAMETER);
+                               prime_number);
 
           ACE_hrtime_t end = ACE_OS::gethrtime ();
           history.sample (end - start);
@@ -871,13 +858,11 @@ Continuous_Worker::svc (void)
       this->print_stats (history,
                          test_end);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -909,29 +894,25 @@ Task::svc (void)
 
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        test::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        RTCORBA::Current::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       RTCORBA::PriorityMapping &priority_mapping =
         *mapping_manager->mapping ();
@@ -1129,13 +1110,11 @@ Task::svc (void)
           test->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1143,10 +1122,10 @@ Task::svc (void)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       int result =
         parse_args (argc, argv);
@@ -1181,13 +1160,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

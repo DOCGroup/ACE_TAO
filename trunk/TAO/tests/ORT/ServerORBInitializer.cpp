@@ -13,26 +13,22 @@ ACE_RCSID (ORT,
 
 void
 ServerORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Object_var obj =
-    info->resolve_initial_references ("POACurrent"
-                                      ACE_ENV_ARG_PARAMETER);
+    info->resolve_initial_references ("POACurrent");
 
   PortableServer::Current_var poa_current =
-    PortableServer::Current::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+    PortableServer::Current::_narrow (obj.in ());
 
   ACE_ASSERT (!CORBA::is_nil (poa_current.in ()));
 
@@ -53,8 +49,7 @@ ServerORBInitializer::post_init (
 
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor = tmp;
 
-  info->add_server_request_interceptor (server_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (server_interceptor.in ());
 
 
   // Create and register the test's IORInterceptor
@@ -71,6 +66,5 @@ ServerORBInitializer::post_init (
   PortableInterceptor::IORInterceptor_var ior_interceptor =
     ort_test_interceptor;
 
-  info->add_ior_interceptor (ior_interceptor.in ()
-                             ACE_ENV_ARG_PARAMETER);
+  info->add_ior_interceptor (ior_interceptor.in ());
 }

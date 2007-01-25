@@ -47,8 +47,7 @@ Test_Var_Array::opname (void) const
 }
 
 void
-Test_Var_Array::dii_req_invoke (CORBA::Request *req
-                                ACE_ENV_ARG_DECL)
+Test_Var_Array::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= Param_Test::Var_Array_forany (this->in_);
   req->add_inout_arg ("s2") <<= Param_Test::Var_Array_forany (this->inout_);
@@ -64,19 +63,18 @@ Test_Var_Array::dii_req_invoke (CORBA::Request *req
   this->ret_ = Param_Test::Var_Array_dup (forany.in ());
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= forany;
   Param_Test::Var_Array_copy (this->inout_, forany.in ());
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= forany;
   this->out_ = Param_Test::Var_Array_dup (forany.in ());
 }
 
 int
-Test_Var_Array::init_parameters (Param_Test_ptr
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+Test_Var_Array::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -102,26 +100,22 @@ Test_Var_Array::reset_parameters (void)
 }
 
 int
-Test_Var_Array::run_sii_test (Param_Test_ptr objref
-                              ACE_ENV_ARG_DECL)
+Test_Var_Array::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Var_Array_out out_arr (this->out_.out ());
       this->ret_ = objref->test_var_array (this->in_,
                                            this->inout_,
-                                           out_arr
-                                           ACE_ENV_ARG_PARAMETER);
+                                           out_arr);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Var_Array::run_sii_test\n");
+      ex._tao_print_exception ("Test_Var_Array::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

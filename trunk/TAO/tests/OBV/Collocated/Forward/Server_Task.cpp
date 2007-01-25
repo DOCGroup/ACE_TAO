@@ -23,7 +23,7 @@ Server_Task::Server_Task (const char *output,
 int
 Server_Task::svc (void)
 {
- ACE_TRY_NEW_ENV
+ try
    {
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.
@@ -35,8 +35,7 @@ Server_Task::svc (void)
                       1);
 
       this->sorb_->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
@@ -46,8 +45,7 @@ Server_Task::svc (void)
                       1);
 
       this->sorb_->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
@@ -57,17 +55,16 @@ Server_Task::svc (void)
                       1);
 
       this->sorb_->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       CORBA::Object_var poa_object =
-        this->sorb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->sorb_->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,7 +84,7 @@ Server_Task::svc (void)
       Test_var test = test_impl->_this ();
 
       CORBA::String_var ior =
-        this->sorb_->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
+        this->sorb_->object_to_string (test.in ());
 
       // If the this->output_ exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (this->output_, "w");
@@ -107,17 +104,15 @@ Server_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       this->sorb_->destroy ();
    }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Exception caught:");
+     ex._tao_print_exception ("Exception caught:");
      return 1;
    }
- ACE_ENDTRY;
 
  return 0;
 }

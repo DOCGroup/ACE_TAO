@@ -25,8 +25,7 @@ Push_Iterator_Handler::~Push_Iterator_Handler (void)
 
 void
 Push_Iterator_Handler::register_callback
-  (const Web_Server::Metadata_Type &metadata
-   ACE_ENV_ARG_DECL)
+  (const Web_Server::Metadata_Type &metadata)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_servant_->metadata (metadata);
@@ -38,8 +37,7 @@ Push_Iterator_Handler::register_callback
 void
 Push_Iterator_Handler::run (int *request_count,
                             const char *pathname,
-                            Web_Server::Iterator_Factory_ptr factory
-                            ACE_ENV_ARG_DECL)
+                            Web_Server::Iterator_Factory_ptr factory)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -61,8 +59,7 @@ Push_Iterator_Handler::run (int *request_count,
   // Register the client callback with the server asynchronously.
   factory->sendc_register_callback (this->ami_handler_.in (),
                                     pathname,
-                                    this->callback_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    this->callback_.in ());
 }
 
 void
@@ -74,9 +71,8 @@ Push_Iterator_Handler::deactivate (void)
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
   // Now deactivate the AMI_CallbackHandler object.
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 }

@@ -53,8 +53,7 @@ public:
 
   // = Load_Balancer::Object_Group_Factory idl methods.
 
-  Load_Balancer::Object_Group_ptr make_round_robin (const char * id
-                                                    ACE_ENV_ARG_DECL)
+  Load_Balancer::Object_Group_ptr make_round_robin (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group));
   // Creates an <Object_Group> that resolves requests for arbitrary
@@ -63,8 +62,7 @@ public:
   // factory, and hasn't been destroyed, a <duplicate_group>
   // exception is thrown.
 
-  Load_Balancer::Object_Group_ptr make_random (const char * id
-                                               ACE_ENV_ARG_DECL)
+  Load_Balancer::Object_Group_ptr make_random (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group));
   // Creates an <Object_Group> that resolves requests for arbitrary
@@ -73,8 +71,7 @@ public:
   // factory, and hasn't been destroyed, a <duplicate_group>
   // exception is thrown.
 
-  Load_Balancer::Object_Group_ptr resolve (const char * id
-                                           ACE_ENV_ARG_DECL)
+  Load_Balancer::Object_Group_ptr resolve (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group));
   // Locates and returns an <Object_Group> by its <Group_ID>.   If
@@ -110,16 +107,14 @@ private:
   // = Helper methods.
 
   Load_Balancer::Object_Group_ptr make_group (int random,
-                                              const char * id
-                                              ACE_ENV_ARG_DECL)
+                                              const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group));
   // This function factors out common code in <make_round_robin> and
   // <make_random>.  Creates a random <Object_Group> if <random> parameter is
   // set to 1 and round robin <Object_Group> if it is 0.
 
-  Load_Balancer::Group_List * list_groups (int random
-                                           ACE_ENV_ARG_DECL);
+  Load_Balancer::Group_List * list_groups (int random);
   // This function factors out common code in <random_groups> and
   // <round_robin_groups>.  Returns a sequence of its random
   // groups if <random> parameter is set to 1 and a sequence of its
@@ -168,8 +163,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get group's id.
 
-  void bind (const Load_Balancer::Member & member
-             ACE_ENV_ARG_DECL)
+  void bind (const Load_Balancer::Member & member)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_member));
   // Adds a new <member> to the <Object_Group>.  Note that each
@@ -177,8 +171,7 @@ public:
   // group already contains a member with the same <Member_ID>, a
   // <duplicate_member> exceptions is thrown.
 
-  void unbind (const char * id
-               ACE_ENV_ARG_DECL)
+  void unbind (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_member));
   // Removes a member with the specified <Member_ID> from the
@@ -193,8 +186,7 @@ public:
   // ``round robin.''  If the group contains no members, <no_such_member>
   // exception is thrown.
 
-  CORBA::Object_ptr resolve_with_id (const char * id
-                                     ACE_ENV_ARG_DECL)
+  CORBA::Object_ptr resolve_with_id (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_member));
   // Returns an object with the specified <Member_ID>.  If this
@@ -288,8 +280,7 @@ public:
   ~RR_Object_Group (void);
   // Destructor.
 
-  void unbind (const char * id
-               ACE_ENV_ARG_DECL)
+  void unbind (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_member));
   // We need to override the implementation of <unbind> from

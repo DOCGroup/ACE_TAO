@@ -33,31 +33,26 @@ Object_Group_Factory_i::remove_group (const ACE_CString &id,
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_round_robin (const char * id
-                                          ACE_ENV_ARG_DECL)
+Object_Group_Factory_i::make_round_robin (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
   return make_group (0,
-                     id
-                     ACE_ENV_ARG_PARAMETER);
+                     id);
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_random (const char * id
-                                     ACE_ENV_ARG_DECL)
+Object_Group_Factory_i::make_random (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
   return make_group (1,
-                     id
-                     ACE_ENV_ARG_PARAMETER);
+                     id);
 }
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_group (int random,
-                                    const char * id
-                                    ACE_ENV_ARG_DECL)
+                                    const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group))
 {
@@ -120,8 +115,7 @@ Object_Group_Factory_i::make_group (int random,
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::resolve (const char * id
-                                 ACE_ENV_ARG_DECL)
+Object_Group_Factory_i::resolve (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group))
 {
@@ -137,8 +131,7 @@ Object_Group_Factory_i::resolve (const char * id
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::list_groups (int random
-                                     ACE_ENV_ARG_DECL)
+Object_Group_Factory_i::list_groups (int random)
 {
   Load_Balancer::Group_List * list;
 
@@ -181,14 +174,14 @@ Load_Balancer::Group_List *
 Object_Group_Factory_i::round_robin_groups (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return list_groups (0 ACE_ENV_ARG_PARAMETER);
+  return list_groups (0);
 }
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::random_groups (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return list_groups (1 ACE_ENV_ARG_PARAMETER);
+  return list_groups (1);
 }
 
 Object_Group_i::Object_Group_i (const char * id,
@@ -218,8 +211,7 @@ Object_Group_i::id (void)
 }
 
 void
-Object_Group_i::bind (const Load_Balancer::Member & member
-                      ACE_ENV_ARG_DECL)
+Object_Group_i::bind (const Load_Balancer::Member & member)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::duplicate_member))
 {
@@ -229,9 +221,9 @@ Object_Group_i::bind (const Load_Balancer::Member & member
   // Insert new member into <members_> and check for duplicates/failures.
   int result = members_.trybind (member_id, obj);
   if (result == 1)
-    ACE_THROW (Load_Balancer::duplicate_member ());
+    throw Load_Balancer::duplicate_member ();
   else if (result == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   // Insert new member's id into <member_id_list_>.
   ACE_CString *new_id;
@@ -239,7 +231,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
                     ACE_CString (member.id),
                     CORBA::NO_MEMORY ());
   if (member_id_list_.insert_tail (new_id) == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
+    throw CORBA::NO_MEMORY ();
 
   // Theoretically, we should deal with memory failures more
   // thoroughly.  But, practically, the whole system is going to be
@@ -252,8 +244,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member
 }
 
 void
-Object_Group_i::unbind (const char * id
-                        ACE_ENV_ARG_DECL)
+Object_Group_i::unbind (const char * id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
@@ -265,7 +256,7 @@ Object_Group_i::unbind (const char * id
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)
-    ACE_THROW (Load_Balancer::no_such_member ());
+    throw Load_Balancer::no_such_member ();
 
   // Remove all entries for this member.
   members_.unbind (member_id);
@@ -282,8 +273,7 @@ Object_Group_i::unbind (const char * id
 }
 
 CORBA::Object_ptr
-Object_Group_i::resolve_with_id (const char * id
-                                 ACE_ENV_ARG_DECL)
+Object_Group_i::resolve_with_id (const char * id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
@@ -334,11 +324,9 @@ Object_Group_i::destroy (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Destroyed object group"
@@ -450,8 +438,7 @@ RR_Object_Group::resolve (void)
 }
 
 void
-RR_Object_Group::unbind (const char *id
-                         ACE_ENV_ARG_DECL)
+RR_Object_Group::unbind (const char *id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Load_Balancer::no_such_member))
 {
@@ -459,7 +446,7 @@ RR_Object_Group::unbind (const char *id
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)
-    ACE_THROW (Load_Balancer::no_such_member ());
+    throw Load_Balancer::no_such_member ();
 
   // Remove all entries for this member.
   members_.unbind (member_id);

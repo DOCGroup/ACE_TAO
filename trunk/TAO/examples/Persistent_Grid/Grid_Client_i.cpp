@@ -67,15 +67,13 @@ Grid_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Make the Grid.
 
       Grid_ptr grid = client->make_grid (width_,
-                                         height_
-                                         ACE_ENV_ARG_PARAMETER);
+                                         height_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
@@ -89,8 +87,7 @@ Grid_Client_i::run (const char *name,
               // Set a value on the grid
               grid->set (index_,
                          ctr,
-                         (value_ + ctr)
-                         ACE_ENV_ARG_PARAMETER);
+                         (value_ + ctr));
 
             }
         }
@@ -104,19 +101,16 @@ Grid_Client_i::run (const char *name,
       }
 
     }
-  ACE_CATCH (CORBA::UserException, range_ex)
+  catch (const CORBA::UserException& range_ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,
-                           "\tFrom get and set grid");
+      range_ex._tao_print_exception ("\tFrom get and set grid");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, memex)
+  catch (const CORBA::SystemException& memex)
     {
-      ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make grid as Memory exhausted");
+      memex._tao_print_exception ("Cannot make grid as Memory exhausted");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

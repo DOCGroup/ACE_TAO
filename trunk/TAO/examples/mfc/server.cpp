@@ -43,7 +43,7 @@ END_MESSAGE_MAP()
 static unsigned long
 spawn_my_orb_thread (void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialization arguments for the ORB
       const char *orb_name = "";
@@ -51,14 +51,13 @@ spawn_my_orb_thread (void *)
       CORBA::ORB_var the_orb =
         CORBA::ORB_init (__argc,
                          __argv,
-                         orb_name
-                         ACE_ENV_ARG_PARAMETER);
+                         orb_name);
 
       CORBA::Object_var orb_obj =
-        the_orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        the_orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var the_root_poa =
-        PortableServer::POA::_narrow (orb_obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (orb_obj.in ());
 
       PortableServer::POAManager_var the_poa_manager =
         the_root_poa->the_POAManager ();
@@ -71,7 +70,7 @@ spawn_my_orb_thread (void *)
         myservant._this (ACE_TRY_CHECK);
 
       CORBA::String_var ior =
-        the_orb->object_to_string (orb_servant.in () ACE_ENV_ARG_PARAMETER);
+        the_orb->object_to_string (orb_servant.in ());
 
       FILE *output_file = ACE_OS::fopen ("ior.txt",
                                         "w");
@@ -82,13 +81,12 @@ spawn_my_orb_thread (void *)
 
       the_orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return 0;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -105,7 +103,7 @@ CServerApp::CServerApp()
 
 CServerApp::~CServerApp()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var the_shutdown_orb;
 
@@ -117,20 +115,17 @@ CServerApp::~CServerApp()
       the_shutdown_orb =
         CORBA::ORB_init (argc,
                          argv,
-                         orb_name
-                         ACE_ENV_ARG_PARAMETER);
+                         orb_name);
 
-      the_shutdown_orb->shutdown (0 // wait_for_completion
-                                  ACE_ENV_ARG_PARAMETER);
+      the_shutdown_orb->shutdown (0 // wait_for_completion);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
     }
-  ACE_ENDTRY;
 
 
   ACE::fini ();

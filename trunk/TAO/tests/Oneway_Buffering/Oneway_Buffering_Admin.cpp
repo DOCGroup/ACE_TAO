@@ -27,8 +27,7 @@ Oneway_Buffering_Admin::bytes_received_count (void)
 }
 
 void
-Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+Oneway_Buffering_Admin::request_received (CORBA::ULong payload_length)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->request_count_++;
@@ -45,5 +44,5 @@ void
 Oneway_Buffering_Admin::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

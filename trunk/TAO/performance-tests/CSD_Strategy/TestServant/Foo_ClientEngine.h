@@ -27,7 +27,7 @@ class CSD_PT_TestServant_Export Foo_ClientEngine : public ClientEngine
     Foo_ClientEngine(Foo_ptr obj, unsigned  client_id = 0);
     virtual ~Foo_ClientEngine();
 
-    virtual bool execute(unsigned num_loops ACE_ENV_ARG_DECL);
+    virtual bool execute(unsigned num_loops);
 
     static void expected_results(Foo_Statistics& stats);
 

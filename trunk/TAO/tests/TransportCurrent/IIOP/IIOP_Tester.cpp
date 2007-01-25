@@ -22,15 +22,13 @@ using namespace TAO;
 /// or a client-side interceptor
 
 int
-test_transport_current (CORBA::ORB_ptr orb
-                        ACE_ENV_ARG_DECL)
+test_transport_current (CORBA::ORB_ptr orb)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::UserException))
 {
   // Get the Current object.
   CORBA::Object_var tcobject =
-    orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current")
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current"));
 
 
   if (TAO_debug_level >= 1)
@@ -38,8 +36,7 @@ test_transport_current (CORBA::ORB_ptr orb
                 ACE_TEXT ("Tester (%P|%t) Resolved initial reference for IIOP::Current\n")));
 
   Transport::IIOP::Current_var tc =
-    Transport::IIOP::Current::_narrow (tcobject.in ()
-                                       ACE_ENV_SINGLE_ARG_DECL);
+    Transport::IIOP::Current::_narrow (tcobject.in ());
 
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -51,7 +48,7 @@ test_transport_current (CORBA::ORB_ptr orb
                   ACE_TEXT ("Tester (%P|%t) ERROR: Could not resolve ")
                   ACE_TEXT ("TAO::Transport::IIOP::Current object.\n")));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   ::CORBA::String_var rhost (tc->remote_host ());

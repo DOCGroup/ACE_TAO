@@ -36,12 +36,11 @@ ACE_RCSID (CDR,
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       static const CORBA::TypeCode_ptr tcs[]=
       {
@@ -155,12 +154,11 @@ main (int argc, char *argv[])
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TC");
+      ex._tao_print_exception ("TC");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

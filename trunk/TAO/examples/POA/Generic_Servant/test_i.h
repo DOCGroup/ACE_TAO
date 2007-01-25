@@ -33,13 +33,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A oneway operation.
 
-  void timed_method (CORBA::ULong timeout
-                     ACE_ENV_ARG_DECL)
+  void timed_method (CORBA::ULong timeout)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A timed twoway operation.
 
-  void timed_oneway_method (CORBA::ULong timeout
-                            ACE_ENV_ARG_DECL)
+  void timed_oneway_method (CORBA::ULong timeout)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A timed twoway operation.
 

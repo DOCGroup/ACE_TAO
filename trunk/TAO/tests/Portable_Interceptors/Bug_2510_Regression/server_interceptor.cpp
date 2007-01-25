@@ -34,8 +34,7 @@ Echo_Server_Request_Interceptor::destroy (void)
 
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -55,7 +54,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // retrieve the context
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (id);
 
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -76,17 +75,17 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
     CORBA::Any data;
     data <<= buf;
 
-    ACE_TRY
+    try
     {
         ri->set_slot (slotId, data);
         ACE_DEBUG ((LM_DEBUG, "receive_request_service_contexts filled Slot %d\n",(int)slotId));
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-        ACE_PRINT_EXCEPTION (ex, "Exception thrown in receive_request_service_contexts()\n");
-        ACE_TRY_THROW (CORBA::INTERNAL ());
+        ex._tao_print_exception (
+          "Exception thrown in receive_request_service_contexts()\n");
+        throw CORBA::INTERNAL ();
     }
-    ACE_ENDTRY;
 
   }
 }
@@ -94,8 +93,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
 void
 Echo_Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -104,8 +102,7 @@ Echo_Server_Request_Interceptor::receive_request (
 
 void
 Echo_Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing
@@ -113,8 +110,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
 void
 Echo_Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -123,8 +119,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
 void
 Echo_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr
-             ACE_ENV_ARG_DECL)
+             PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {

@@ -15,13 +15,11 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tPluggable_Test: server\n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       int status = pp_test_server.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
+                                        argv);
 
       if (status == -1)
         {
@@ -34,21 +32,18 @@ main (int argc, char *argv[])
           pp_test_server.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      ACE_PRINT_EXCEPTION (sysex,
-                           "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
       ACE_UNUSED_ARG (userex);
-      ACE_PRINT_EXCEPTION (userex,
-                           "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
 
   return 0;

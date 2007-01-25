@@ -51,13 +51,13 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB, resolve references and parse arguments.
 
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -65,30 +65,28 @@ main (int argc, char *argv[])
 
       // RTORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTORB");
+      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
       // PolicyCurrent.
-      object = orb->resolve_initial_references ("PolicyCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
+      object = orb->resolve_initial_references ("PolicyCurrent");
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return -1;
 
       // Test object 1.
-      object = orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      Test_var server1 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      object = orb->string_to_object (ior1);
+      Test_var server1 = Test::_narrow (object.in ());
       if (check_for_nil (server1.in (), "server1") == -1)
         return -1;
 
       // Test object 2.
-      object = orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
-      Test_var server2 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      object = orb->string_to_object (ior2);
+      Test_var server2 = Test::_narrow (object.in ());
       if (check_for_nil (server2.in (), "server2") == -1)
         return -1;
 
@@ -118,8 +116,7 @@ main (int argc, char *argv[])
         rt_orb->create_private_connection_policy ();
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::SET_OVERRIDE);
 
       // Make four invocations on test objects again.  This time,
       // since RTCORBA::PrivateConnectionPolicy is set, we expect a
@@ -148,13 +145,12 @@ main (int argc, char *argv[])
                   "\n  Testing over - shutting down\n"));
       server1->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught in Private_Connection test client:");
+      ex._tao_print_exception (
+        "Unexpected exception caught in Private_Connection test client:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

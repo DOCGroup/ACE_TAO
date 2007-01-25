@@ -13,7 +13,7 @@ class ServerApp
     ServerApp();
     ~ServerApp();
 
-    int run(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    int run(int argc, char* argv[]);
 
 
   private:

@@ -15,11 +15,10 @@ public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                    Test::Timestamp send_time
-                    ACE_ENV_ARG_DECL)
+                    Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh ACE_ENV_ARG_DECL)
+  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -37,8 +36,7 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             Test::Timestamp send_time
-                             ACE_ENV_ARG_DECL)
+                             Test::Timestamp send_time)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Throw an overload exception
@@ -48,22 +46,21 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
   // Calee owns the memory now.  Need not delete 'ts'
   Test::AMH_RoundtripExceptionHolder holder (ts);
 
-  ACE_TRY
+  try
     {
-      _tao_rh->test_method_excep (&holder ACE_ENV_ARG_PARAMETER);
+      _tao_rh->test_method_excep (&holder);
     }
-  ACE_CATCHALL
+  catch (...)
     {}
-  ACE_ENDTRY;
 
   ACE_UNUSED_ARG (send_time);
 }
 
 void
-ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/ ACE_ENV_ARG_DECL)
+ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 /*** Server Declaration ***/
@@ -116,51 +113,48 @@ ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
 
 ST_AMH_Server::~ST_AMH_Server ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      this->root_poa_->destroy (1, 1);
 
       this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 
 }
 
 int
 ST_AMH_Server::start_orb_and_poa (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->orb_ = CORBA::ORB_init (*(this->argc_),
                                     this->argv_,
-                                    "" ACE_ENV_ARG_PARAMETER);
+                                    "");
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager ();
 
       poa_manager->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -168,28 +162,26 @@ ST_AMH_Server::start_orb_and_poa (void)
 void
 ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Test::Roundtrip_var roundtrip =
         servant->_this ();
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (roundtrip.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (roundtrip.in ());
 
       (void) this->write_ior_to_file (ior);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 }
 
 void
 ST_AMH_Server::run_event_loop ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Time_Value period (0, 11000);
       while (!this->orb_->orb_core ()->has_shutdown ())
@@ -197,9 +189,8 @@ ST_AMH_Server::run_event_loop ()
               this->orb_->perform_work (&period);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {}
-  ACE_ENDTRY;
 }
 
 int

@@ -90,28 +90,24 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
                 this->ins_,
                 ior.in ()));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
 
-      adapter->bind (this->ins_, ior.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind (this->ins_, ior.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -120,15 +116,13 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
 template <class Servant> int
 Server<Servant>::init (const char *servant_name,
                        int argc,
-                       char *argv[]
-                       ACE_ENV_ARG_DECL)
+                       char *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -166,12 +160,11 @@ Server<Servant>::init (const char *servant_name,
 
   // Make sure that you check for failures here via the ACE_TRY
   // macros?!
-  ACE_TRY
+  try
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa (servant_name,
-                                                     &this->servant_
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                     &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -192,12 +185,12 @@ Server<Servant>::init (const char *servant_name,
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"\tException in activation of POA");
+      ex._tao_print_exception (
+        "\tException in activation of POA");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -227,18 +220,16 @@ Server<Servant>::register_name (void)
   bindName.length (1);
   bindName[0].id = CORBA::string_dup (name);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // (re)Bind the object.
-  ACE_TRY
+  try
     {
       CORBA::Object_var object = servant_._this ();
 
       this->orb_manager_.activate_poa_manager ();
 
       naming_client_->rebind (bindName,
-                              object.in()
-                              ACE_ENV_ARG_PARAMETER);
+                              object.in());
 
       // Test for INS.
       if (this->ins_)
@@ -251,14 +242,13 @@ Server<Servant>::register_name (void)
                               -1);
         }
     }
-  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+  catch (const CosNaming::NamingContext::AlreadyBound& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",
                          name),
                         -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -368,15 +358,13 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
   this->argv_ = argv;
 
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
+                                    0);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -385,7 +373,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
       if(this->ior_ != 0)
         {
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
+            this->orb_->string_to_object (this->ior_);
 
 
           if (CORBA::is_nil (server_object.in ()))
@@ -393,8 +381,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
                                "invalid ior <%s>\n",
                                this->ior_),
                               -1);
-          this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+          this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ());
         }
       else if (this->naming_ == 1)
         {
@@ -413,12 +400,11 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
+      ex._tao_print_exception ("Client_i::init");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;
@@ -429,7 +415,7 @@ template <class INTERFACE_OBJECT, class Var> int
 Client<INTERFACE_OBJECT, Var>::obtain_initial_references (void)
 {
 
-  ACE_TRY
+  try
     {
       // Initialize the naming services.
       if (naming_client_.init (orb_.in ()) != 0)
@@ -444,18 +430,16 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (void)
       server_name[0].id =
       CORBA::string_dup (this->name_);
       CORBA::Object_var obj =
-        naming_client_->resolve (server_name
-                                ACE_ENV_ARG_PARAMETER);
+        naming_client_->resolve (server_name);
 
-      this->server_ = INTERFACE_OBJECT::_narrow (obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+      this->server_ = INTERFACE_OBJECT::_narrow (obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client::obtain_initial_references");
+       ex._tao_print_exception (
+         "Client::obtain_initial_references");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

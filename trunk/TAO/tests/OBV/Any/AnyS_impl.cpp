@@ -12,8 +12,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 
 CORBA::Any*
 Test_impl::get_something (
-    CORBA::Boolean need_vb
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Boolean need_vb)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_ptr ret_val_ptr = 0;
@@ -48,8 +47,7 @@ Test_impl::get_something (
 }
 
 OBV_AnyTest::VB *
-Test_impl::get_vb(
-    ACE_ENV_ARG_DECL_NOT_USED)
+Test_impl::get_vb()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CORBA::ULong magic = 3145;
@@ -65,5 +63,5 @@ void
 Test_impl::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

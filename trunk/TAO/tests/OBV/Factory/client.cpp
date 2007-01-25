@@ -38,24 +38,23 @@ bool
 no_factory (OBV_FactoryTest::Test_ptr test)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Calling this without a factory registred should give a marshal
       // exception with minor code 1
       OBV_FactoryTest::BaseValue_var base_value =
         test->get_base_value ();
     }
-  ACE_CATCH (CORBA::MARSHAL, ex)
+  catch (const CORBA::MARSHAL& ex)
     {
       if ((ex.minor() & 0xFFFU) == 1)
         {
           succeed = true;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -69,20 +68,20 @@ no_factory (OBV_FactoryTest::Test_ptr test)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       OBV_FactoryTest::Test_var test =
-        OBV_FactoryTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        OBV_FactoryTest::Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -104,8 +103,7 @@ main (int argc, char *argv[])
                       1); // supplied by mapping
 
       orb->register_value_factory (base_factory->tao_repository_id (),
-                                   base_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   base_factory);
       base_factory->_remove_ref (); // release ownership
 
       OBV_FactoryTest::Value1_init *value1_factory = 0;
@@ -114,8 +112,7 @@ main (int argc, char *argv[])
                       1); // supplied by mapping
 
       orb->register_value_factory (value1_factory->tao_repository_id (),
-                                   value1_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   value1_factory);
       value1_factory->_remove_ref ();
 
       OBV_FactoryTest::Value2_init *value2_factory = 0;
@@ -124,8 +121,7 @@ main (int argc, char *argv[])
                       1); // custom implementation
 
       orb->register_value_factory (value2_factory->tao_repository_id (),
-                                   value2_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   value2_factory);
       value2_factory->_remove_ref ();
 
       // Now perform the test. I don't check return values.
@@ -154,13 +150,11 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

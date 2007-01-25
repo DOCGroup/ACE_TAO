@@ -18,8 +18,7 @@ ACE_RCSID (SMI_Iterator,
 
 // Retrieve the data from the server
 int retrieve_data (const char *content_type,
-                   Web_Server::Content_Iterator_ptr contents
-                   ACE_ENV_ARG_DECL);
+                   Web_Server::Content_Iterator_ptr contents);
 
 
 // Map content type to viewer.
@@ -34,8 +33,7 @@ int spawn_viewer (const char *content_type,
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (argc < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -45,17 +43,15 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Mighty ORB"
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "Mighty ORB");
 
       // Get a reference to the Name Service.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       // Narrow to a Naming Context
       CosNaming::NamingContext_var nc =
-        CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (obj.in ());
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -71,7 +67,7 @@ main (int argc, char *argv[])
       name[0].id = CORBA::string_dup ("Iterator_Factory");
       name[0].kind = CORBA::string_dup ("");
 
-      obj = nc->resolve (name ACE_ENV_ARG_PARAMETER);
+      obj = nc->resolve (name);
 
       // Now narrow to an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
@@ -93,8 +89,7 @@ main (int argc, char *argv[])
       Web_Server::Metadata_Type_var metadata;
       factory->get_iterator (pathname,
                              contents,
-                             metadata
-                             ACE_ENV_ARG_PARAMETER);
+                             metadata);
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("File <%s> has the following ")
@@ -106,8 +101,7 @@ main (int argc, char *argv[])
                   metadata->content_type.in ()));
 
       int result = ::retrieve_data (metadata->content_type.in (),
-                                    contents.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    contents.in ());
 
       if (result != 0)
         return -1;
@@ -115,11 +109,11 @@ main (int argc, char *argv[])
       // Done with the Content_Iterator, so destroy it.
       contents->destroy ();
 
-      orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      orb->shutdown (0);
 
       // orb->destroy ();
     }
-  ACE_CATCH (Web_Server::Error_Result, exc)
+  catch (const Web_Server::Error_Result& exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Caught Web Server exception ")
@@ -127,14 +121,12 @@ main (int argc, char *argv[])
                          exc.status),
                         -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught unexpected exception:"));
+      ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   // Wait for all children to exit.
   ACE_Process_Manager::instance ()->wait ();
@@ -144,8 +136,7 @@ main (int argc, char *argv[])
 
 
 int retrieve_data (const char *content_type,
-                   Web_Server::Content_Iterator_ptr iterator
-                   ACE_ENV_ARG_DECL)
+                   Web_Server::Content_Iterator_ptr iterator)
 {
   Web_Server::Content_Iterator_var contents =
     Web_Server::Content_Iterator::_duplicate (iterator);
@@ -175,7 +166,7 @@ int retrieve_data (const char *content_type,
 
   for (;;)
     {
-      rc = contents->next_chunk (offset, chunk ACE_ENV_ARG_PARAMETER);
+      rc = contents->next_chunk (offset, chunk);
 
       if (!rc)
         break;

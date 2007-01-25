@@ -8,17 +8,16 @@ ACE_RCSID (tests, server, "$Id$")
 int main (int argc, char *argv[])
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Orb Initialization
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO");
 
       CORBA::Object_var object;
-      object = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+      object = orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var poa = PortableServer::POA::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
+      PortableServer::POA_var poa = PortableServer::POA::_narrow(object.in());
 
 
       // Get the POAManager
@@ -38,7 +37,7 @@ int main (int argc, char *argv[])
 
       // Now we stringfy the object reference.
       CORBA::String_var ior =
-        orb->object_to_string (bottom.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (bottom.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -58,11 +57,11 @@ int main (int argc, char *argv[])
 
       orb->run();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "Multiple Execution Interrupted Exception!\n");
+      ex._tao_print_exception (
+        "Multiple Execution Interrupted Exception!\n");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -33,21 +33,18 @@ Consumer_Handler::init (int argc,
    // necessary.
   filtering_criteria = argc > 1 ? argv[1] : "";
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
+                                    0);
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
@@ -73,16 +70,14 @@ Consumer_Handler::init (int argc,
 
       // Subscribe ourselves with the notifier's broker.
       this->notifier_->subscribe (this->receiver_.in (),
-                                  filtering_criteria
-                                  ACE_ENV_ARG_PARAMETER);
+                                  filtering_criteria);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+     ACE_PRINT_EXCEPTION (ex,
                           "Consumer_Handler::init\n");
      return -1;
    }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -90,7 +85,7 @@ Consumer_Handler::init (int argc,
 int
 Consumer_Handler::get_notifier (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -104,22 +99,19 @@ Consumer_Handler::get_notifier (void)
       notifier_ref_name[0].id = CORBA::string_dup (NOTIFIER_BIND_NAME);
 
       CORBA::Object_var notifier_obj =
-        this->naming_services_client_->resolve (notifier_ref_name
-                                                ACE_ENV_ARG_PARAMETER);
+        this->naming_services_client_->resolve (notifier_ref_name);
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-        Event_Comm::Notifier::_narrow (notifier_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+        Event_Comm::Notifier::_narrow (notifier_obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Consumer_Handler::get_notifier\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -145,15 +137,13 @@ Consumer_Handler::run (void)
               "Running the Consumer...\n"));
 
   // Run the ORB.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }
 

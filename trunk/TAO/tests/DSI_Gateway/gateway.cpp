@@ -56,13 +56,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -72,7 +72,7 @@ main (int argc, char *argv[])
         }
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -85,21 +85,19 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       DSI_Simple_Server server_impl (orb.in (),
                                      object.in (),
                                      root_poa.in ());
       PortableServer::ObjectId_var oid =
-        root_poa->activate_object (&server_impl
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->activate_object (&server_impl);
 
       CORBA::Object_var server =
-        root_poa->id_to_reference (oid.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->id_to_reference (oid.in ());
 
       CORBA::String_var ior =
-              orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+              orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -124,13 +122,11 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Gateway: exception caught - ");
+      ex._tao_print_exception ("Gateway: exception caught - ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -122,13 +122,13 @@ private:
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -136,7 +136,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -155,7 +155,7 @@ main (int argc, char *argv[])
         server_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -195,13 +195,11 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) event loop finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -216,16 +214,14 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Time_Value tv (140, 0);
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
+      this->orb_->run (tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -249,30 +245,28 @@ SelfClient::validate_connection (void)
 
   for (int j = 0; j != 100; ++j)
     {
-      ACE_TRY
+      try
         {
-          this->server_->test_method (j ACE_ENV_ARG_PARAMETER);
+          this->server_->test_method (j);
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception& ex){}
     }
 }
 
 int
 SelfClient::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->validate_connection ();
 
       for (int i = 0; i < this->niterations_; ++i)
         {
-          ACE_TRY_EX (CORBALOC)
+          try
             {
               CORBA::Object_var probably_not_exist =
-                orb_->string_to_object (corbaloc_arg
-                                        ACE_ENV_ARG_PARAMETER);
+                orb_->string_to_object (corbaloc_arg);
 
-              ACE_TRY_CHECK_EX (CORBALOC);
 
               if (CORBA::is_nil (probably_not_exist.in()))
                 {
@@ -281,9 +275,7 @@ SelfClient::svc (void)
               else
                 {
                   Simple_Server_var newserver =
-                    Simple_Server::_narrow (probably_not_exist.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK_EX (CORBALOC);
+                    Simple_Server::_narrow (probably_not_exist.in ());
 
                   // should throw an exception
                   if (CORBA::is_nil (newserver.in()))
@@ -300,23 +292,19 @@ SelfClient::svc (void)
                 }
 
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "MT_SelfClient: exception raised");
+              ex._tao_print_exception ("MT_SelfClient: exception raised");
             }
-          ACE_ENDTRY;
 
           // Just make a call
-          this->server_->test_method (i ACE_ENV_ARG_PARAMETER);
+          this->server_->test_method (i);
 
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_SelfClient: exception raised");
+      ex._tao_print_exception ("MT_SelfClient: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

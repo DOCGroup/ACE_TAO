@@ -32,8 +32,7 @@ class ST_AMH_Servant
       	ST_AMH_Servant (CORBA::ORB_ptr orb);
 
      	void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                        Test::Timestamp send_time
-                        ACE_ENV_ARG_DECL)
+                        Test::Timestamp send_time)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
@@ -124,8 +123,7 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 //
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             Test::Timestamp send_time
-                             ACE_ENV_ARG_DECL_NOT_USED)
+                             Test::Timestamp send_time)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   	printf("Recieved Timestamp # %d \n", calls_received);
@@ -157,15 +155,14 @@ ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
 //
 ST_AMH_Server::~ST_AMH_Server ()
 {
-  	ACE_TRY_NEW_ENV
+  	try
     	{
-      	this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      	this->root_poa_->destroy (1, 1);
     	}
-  	ACE_CATCHANY
+  	catch (const CORBA::Exception& ex)
     	{
-      	ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      	ex._tao_print_exception ("Exception caught:");
     	}
-  	ACE_ENDTRY;
 
 }
 
@@ -173,32 +170,30 @@ ST_AMH_Server::~ST_AMH_Server ()
 //
 int ST_AMH_Server::start_orb_and_poa (const CORBA::ORB_var &_orb)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->orb_ = CORBA::ORB::_duplicate(_orb.in ());
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager ();
 
       poa_manager->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -207,7 +202,7 @@ int ST_AMH_Server::start_orb_and_poa (const CORBA::ORB_var &_orb)
 //
 void ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Test::Roundtrip_var roundtrip = servant->_this();
 
@@ -215,19 +210,17 @@ void ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 
       (void) this->write_ior_to_file(iorstr);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 }
 
 // ------------------------------------------------------------------------
 //
 void ST_AMH_Server::run_event_loop ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Time_Value period (1, 0);
       while (1)
@@ -239,9 +232,8 @@ void ST_AMH_Server::run_event_loop ()
             return;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {}
-  ACE_ENDTRY;
 }
 
 // ------------------------------------------------------------------------

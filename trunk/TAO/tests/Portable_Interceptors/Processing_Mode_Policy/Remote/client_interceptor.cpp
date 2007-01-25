@@ -40,7 +40,6 @@ Echo_Client_Request_Interceptor::destroy (void)
 void
 Echo_Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -49,8 +48,7 @@ Echo_Client_Request_Interceptor::send_poll (
 
 void
 Echo_Client_Request_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -85,8 +83,7 @@ Echo_Client_Request_Interceptor::send_request (
 
 void
 Echo_Client_Request_Interceptor::receive_other (
-  PortableInterceptor::ClientRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -102,8 +99,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
 void
 Echo_Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   client_interceptor_check_++;
@@ -151,8 +147,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
 void
 Echo_Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {

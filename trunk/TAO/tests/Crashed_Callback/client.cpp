@@ -38,16 +38,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,11 +60,9 @@ main (int argc, char *argv[])
       // Make all oneways "reliable."
       {
         CORBA::Object_var manager_object =
-          orb->resolve_initial_references("ORBPolicyManager"
-                                          ACE_ENV_ARG_PARAMETER);
+          orb->resolve_initial_references("ORBPolicyManager");
         CORBA::PolicyManager_var policy_manager =
-          CORBA::PolicyManager::_narrow(manager_object.in()
-                                        ACE_ENV_ARG_PARAMETER);
+          CORBA::PolicyManager::_narrow(manager_object.in());
 
         if (CORBA::is_nil (policy_manager.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,12 +73,10 @@ main (int argc, char *argv[])
         CORBA::PolicyList policies(1); policies.length(1);
         policies[0] =
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                              policy_value
-                              ACE_ENV_ARG_PARAMETER);
+                              policy_value);
 
         policy_manager->set_policy_overrides (policies,
-                                              CORBA::ADD_OVERRIDE
-                                              ACE_ENV_ARG_PARAMETER);
+                                              CORBA::ADD_OVERRIDE);
 
         policies[0]->destroy ();
       }
@@ -89,10 +85,10 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Service_var service =
-        Test::Service::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Service::_narrow(tmp.in ());
 
       if (CORBA::is_nil (service.in ()))
         {
@@ -113,21 +109,19 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      service->run_test (crashed_callback.in () ACE_ENV_ARG_PARAMETER);
+      service->run_test (crashed_callback.in ());
 
       orb->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

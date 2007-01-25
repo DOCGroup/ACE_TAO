@@ -21,8 +21,7 @@ RT_Properties::~RT_Properties (void)
 }
 
 RT_Properties *
-RT_Properties::read_from (const char *file_name
-                          ACE_ENV_ARG_DECL)
+RT_Properties::read_from (const char *file_name)
 {
   FILE *fp = ACE_OS::fopen (file_name, "r");
 

@@ -13,12 +13,11 @@ class CSD_TP_Test_Export AppShutdown
     AppShutdown();
     virtual ~AppShutdown();
 
-    void init(CORBA::ORB_ptr orb, 
-              unsigned num_clients
-              ACE_ENV_ARG_DECL);
+    void init(CORBA::ORB_ptr orb,
+              unsigned num_clients);
 
     void wait ();
-    
+
     void client_done();
 
     static AppShutdown* instance ();

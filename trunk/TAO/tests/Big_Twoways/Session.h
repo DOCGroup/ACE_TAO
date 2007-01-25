@@ -32,14 +32,12 @@ public:
   int svc (void);
 
   // = The skeleton methods
-  virtual void start (const Test::Session_List &other_sessions
-                      ACE_ENV_ARG_DECL)
+  virtual void start (const Test::Session_List &other_sessions)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Already_Running,
                      Test::No_Peers));
 
-  virtual Test::Payload* echo_payload (const Test::Payload &the_payload
-                                       ACE_ENV_ARG_DECL)
+  virtual Test::Payload* echo_payload (const Test::Payload &the_payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy (void)
@@ -52,8 +50,7 @@ protected:
 private:
   /// Helper function used to report any problems and destroy local
   /// resources
-  void terminate (CORBA::Boolean success
-                  ACE_ENV_ARG_DECL)
+  void terminate (CORBA::Boolean success)
     ACE_THROW_SPEC (());
 
   /// Return 1 if all the work in this session has been completed

@@ -32,11 +32,9 @@ test_i::forward (void)
   this->activator_.forward_requests ();
 
   PortableServer::ObjectId_var id =
-    this->poa_->servant_to_id (this
-                               ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this);
 
-  this->poa_->deactivate_object (id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (id.in ());
 }
 
 
@@ -44,8 +42,7 @@ void
 test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 PortableServer::POA_ptr

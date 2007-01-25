@@ -50,21 +50,18 @@ main (int argc, char **argv)
   TAO_ORB_Manager orb_manager;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tMultiple Inheritance Server\n\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       orb_manager.init_child_poa (argc,
                                   argv,
-                                  "child_poa"
-                                  ACE_ENV_ARG_PARAMETER);
+                                  "child_poa");
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::String_var ior =
         orb_manager.activate_under_child_poa ("my_object",
-                                              &servant
-                                              ACE_ENV_ARG_PARAMETER);
+                                              &servant);
 
       ACE_DEBUG ((LM_DEBUG, "%s\n",
                   ior.in ()));
@@ -84,12 +81,11 @@ main (int argc, char **argv)
 
       orb_manager.run ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -37,8 +37,7 @@ FooServantList::~FooServantList()
 
 void
 FooServantList::create_and_activate(CORBA::ORB_ptr orb,
-                                    PortableServer::POA_ptr poa
-                                    ACE_ENV_ARG_DECL)
+                                    PortableServer::POA_ptr poa)
 {
   poa_ = PortableServer::POA::_duplicate (poa);
 
@@ -55,24 +54,22 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
                     PortableServer::string_to_ObjectId(servant_name.c_str());
 
       poa->activate_object_with_id(id.in(),
-                                   this->safe_servants_[i].in()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   this->safe_servants_[i].in());
 
-      CORBA::Object_var obj = poa->id_to_reference(id.in()
-                                                   ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = poa->id_to_reference(id.in());
 
       if (CORBA::is_nil(obj.in()))
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to activate servant (%s).\n",
                      servant_name.c_str()));
-          ACE_THROW (TestException());
+          throw TestException();
         }
 
       // create the collocated object reference.
       if (this->collocated_test_ && i == 0)
         {
-          Foo_var collocated = Foo::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+          Foo_var collocated = Foo::_narrow (obj.in ());
 
           // Create the servant object.
           Callback_i* servant = new Callback_i ();
@@ -86,19 +83,18 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
 
           poa->activate_object_with_id(id.in(), safe_servant.in());
 
-          CORBA::Object_var obj = poa->id_to_reference(id.in()
-                                                       ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var obj = poa->id_to_reference(id.in());
 
           if (CORBA::is_nil(obj.in()))
             {
               ACE_ERROR((LM_ERROR,
                         "(%P|%t) Failed to activate servant (%s).\n",
                         servant_name.c_str()));
-              ACE_THROW (TestException());
+              throw TestException();
             }
 
           Callback_var callback
-            = Callback::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+            = Callback::_narrow (obj.in ());
 
           collocated_client_
             = new ClientTask(orb, collocated.in (), callback.in (), true);
@@ -106,12 +102,12 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
             {
               ACE_ERROR((LM_ERROR,
                 "(%P|%t) Failed to open the collocated client.\n"));
-              ACE_THROW (TestException());
+              throw TestException();
             }
         }
 
       CORBA::String_var ior
-        = this->orb_->object_to_string(obj.in() ACE_ENV_ARG_PARAMETER);
+        = this->orb_->object_to_string(obj.in());
 
       ACE_CString filename = servant_name + ".ior";
       FILE* ior_file = ACE_OS::fopen(filename.c_str(), "w");
@@ -121,7 +117,7 @@ FooServantList::create_and_activate(CORBA::ORB_ptr orb,
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Cannot open output file (%s) for writing IOR.",
                      filename.c_str()));
-          ACE_THROW (TestException());
+          throw TestException();
         }
       else
         {
@@ -182,10 +178,9 @@ FooServantList::deactivate_servant (void)
                 "deactivate %dth servant \n", i+1));
 
               PortableServer::ObjectId_var id =
-                poa_->servant_to_id (safe_servants_[i].in ()
-                                     ACE_ENV_ARG_PARAMETER);
+                poa_->servant_to_id (safe_servants_[i].in ());
 
-              poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+              poa_->deactivate_object (id.in ());
 
               if (this->num_servants_ == 1)
                 {

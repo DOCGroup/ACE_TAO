@@ -16,8 +16,7 @@ Grid_i::Grid_i (void)
 //  Constructor.
 
 Grid_i::Grid_i (CORBA::Short x,
-                CORBA::Short y
-                ACE_ENV_ARG_DECL)
+                CORBA::Short y)
   : width_ (x),
     height_ (y)
 {
@@ -48,8 +47,7 @@ Grid_i::~Grid_i (void)
 void
 Grid_i::set (CORBA::Short x,
              CORBA::Short y,
-             CORBA::Long value
-             ACE_ENV_ARG_DECL)
+             CORBA::Long value)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -57,7 +55,7 @@ Grid_i::set (CORBA::Short x,
       || y < 0
       || x >= width_
       || y >= height_)
-    ACE_THROW (Grid::RANGE_ERROR ());
+    throw Grid::RANGE_ERROR ();
   else
     array_[x][y] = value;
 }
@@ -66,8 +64,7 @@ Grid_i::set (CORBA::Short x,
 
 CORBA::Long
 Grid_i::get (CORBA::Short x,
-             CORBA::Short y
-             ACE_ENV_ARG_DECL)
+             CORBA::Short y)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -97,16 +94,14 @@ Grid_i::height (void)
 }
 
 void
-Grid_i::width (CORBA::Short x
-               ACE_ENV_ARG_DECL_NOT_USED)
+Grid_i::width (CORBA::Short x)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->width_ = x;
 }
 
 void
-Grid_i::height (CORBA::Short y
-                ACE_ENV_ARG_DECL_NOT_USED)
+Grid_i::height (CORBA::Short y)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->height_ = y;
@@ -170,8 +165,7 @@ Grid_Factory_i::~Grid_Factory_i (void)
 
 Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
-                           CORBA::Short height
-                           ACE_ENV_ARG_DECL)
+                           CORBA::Short height)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Grid_i *grid_ptr = 0;
@@ -190,7 +184,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
   ACE_NEW_THROW_EX (grid_ptr,
-                    Grid_i (width, height ACE_ENV_ARG_PARAMETER),
+                    Grid_i (width, height),
                     CORBA::NO_MEMORY ());
 
   // Register the Grid pointer.

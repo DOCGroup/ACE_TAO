@@ -26,9 +26,9 @@ ServerApp::~ServerApp()
 
 
 int
-ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ServerApp::run(int argc, char* argv[])
 {
-  this->orb_ = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
+  this->orb_ = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -45,12 +45,10 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   if (synch_with_server_)
   {
     CORBA::Object_var manager_object =
-      orb_->resolve_initial_references("ORBPolicyManager"
-                                       ACE_ENV_ARG_PARAMETER);
+      orb_->resolve_initial_references("ORBPolicyManager");
 
     CORBA::PolicyManager_var policy_manager
-      = CORBA::PolicyManager::_narrow(manager_object.in()
-                                      ACE_ENV_ARG_PARAMETER);
+      = CORBA::PolicyManager::_narrow(manager_object.in());
 
     if (CORBA::is_nil (policy_manager.in ()))
     {
@@ -66,18 +64,16 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
     policies[0] =
       orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                          policy_value
-                          ACE_ENV_ARG_PARAMETER);
+                          policy_value);
 
     policy_manager->set_policy_overrides (policies,
-                                          CORBA::ADD_OVERRIDE
-                                          ACE_ENV_ARG_PARAMETER);
+                                          CORBA::ADD_OVERRIDE);
 
     policies[0]->destroy ();
   }
 
   CORBA::Object_var obj
-    = orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    = orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -87,7 +83,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   PortableServer::POA_var root_poa
-    = PortableServer::POA::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+    = PortableServer::POA::_narrow(obj.in());
 
   if (CORBA::is_nil(root_poa.in()))
     {
@@ -103,13 +99,11 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   CORBA::PolicyList policies(1);
   policies.length(1);
 
-  policies[0] = root_poa->create_id_assignment_policy(PortableServer::USER_ID
-                                                      ACE_ENV_ARG_PARAMETER);
+  policies[0] = root_poa->create_id_assignment_policy(PortableServer::USER_ID);
 
   PortableServer::POA_var child_poa_1 = root_poa->create_POA("ChildPoa_1",
                                                            poa_manager.in(),
-                                                           policies
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                           policies);
 
   if (CORBA::is_nil(child_poa_1.in()))
     {
@@ -120,8 +114,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   PortableServer::POA_var child_poa_2 = root_poa->create_POA("ChildPoa_2",
                                                            poa_manager.in(),
-                                                           policies
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                           policies);
 
   if (CORBA::is_nil(child_poa_2.in()))
     {
@@ -142,7 +135,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   csd_tp_strategy->set_num_threads(2);
 
   // Tell the strategy to apply itself to the child poa.
-  if (csd_tp_strategy->apply_to(child_poa_1.in() ACE_ENV_ARG_PARAMETER) == false)
+  if (csd_tp_strategy->apply_to(child_poa_1.in()) == false)
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa 1.\n"));
@@ -150,22 +143,18 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   Foo_var foo1 = this->create_foo(child_poa_1.in(),
-                                  "foo_applied_strategy"
-                                  ACE_ENV_ARG_PARAMETER);
+                                  "foo_applied_strategy");
 
   Foo_var foo2 = this->create_foo(child_poa_2.in(),
-                                  "foo_not_applied_strategy"
-                                  ACE_ENV_ARG_PARAMETER);
+                                  "foo_not_applied_strategy");
 
   Callback_var callback1
     = this->create_callback(child_poa_1.in(),
-                            "callback_applied_strategy"
-                            ACE_ENV_ARG_PARAMETER);
+                            "callback_applied_strategy");
 
   Callback_var callback2
     = this->create_callback(child_poa_2.in(),
-                            "callback_not_applied_strategy"
-                            ACE_ENV_ARG_PARAMETER);
+                            "callback_not_applied_strategy");
 
   // Activate the POA Manager
   poa_manager->activate();
@@ -216,7 +205,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
              "(%P|%t) ServerApp is destroying the Root POA.\n"));
 
   // Tear-down the root poa and orb_.
-  root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+  root_poa->destroy(1, 1);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the ORB.\n"));
@@ -264,8 +253,7 @@ ServerApp::parse_args(int argc, char* argv[])
 Foo_ptr
 ServerApp::create_foo (
   PortableServer::POA_ptr poa,
-  const char* servant_name
-  ACE_ENV_ARG_DECL)
+  const char* servant_name)
 {
   PortableServer::ServantBase_var servant
     = new Foo_i(servant_name);
@@ -273,9 +261,9 @@ ServerApp::create_foo (
   PortableServer::ObjectId_var id =
                 PortableServer::string_to_ObjectId(servant_name);
 
-  poa->activate_object_with_id(id.in(), servant.in() ACE_ENV_ARG_PARAMETER);
+  poa->activate_object_with_id(id.in(), servant.in());
 
-  CORBA::Object_var obj = poa->id_to_reference(id.in() ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = poa->id_to_reference(id.in());
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -285,7 +273,7 @@ ServerApp::create_foo (
       ACE_THROW_RETURN (TestException(), Foo::_nil ());
     }
 
-  Foo_var foo = Foo::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+  Foo_var foo = Foo::_narrow (obj.in ());
 
   return foo._retn ();
 }
@@ -293,8 +281,7 @@ ServerApp::create_foo (
 Callback_ptr
 ServerApp::create_callback(
   PortableServer::POA_ptr poa,
-  const char* servant_name
-  ACE_ENV_ARG_DECL)
+  const char* servant_name)
 {
   PortableServer::ServantBase_var servant
     = new Callback_i();
@@ -302,9 +289,9 @@ ServerApp::create_callback(
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId("callback");
 
-  poa->activate_object_with_id(id.in(), servant.in() ACE_ENV_ARG_PARAMETER);
+  poa->activate_object_with_id(id.in(), servant.in());
 
-  CORBA::Object_var obj = poa->id_to_reference(id.in() ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = poa->id_to_reference(id.in());
 
   if (CORBA::is_nil(obj.in()))
   {
@@ -314,7 +301,7 @@ ServerApp::create_callback(
     ACE_THROW_RETURN (TestException(), Callback::_nil ());
   }
 
-  Callback_var callback = Callback::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+  Callback_var callback = Callback::_narrow (obj.in ());
 
   return callback._retn ();
 }

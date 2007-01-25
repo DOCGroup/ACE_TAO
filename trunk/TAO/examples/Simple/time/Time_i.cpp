@@ -38,7 +38,7 @@ Time_i::current_time (void)
 // Shutdown.
 
 void
-Time_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+Time_i::shutdown ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

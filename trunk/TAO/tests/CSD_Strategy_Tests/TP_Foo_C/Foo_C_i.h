@@ -17,13 +17,13 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
     virtual void op1(void)
       ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op2(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void op2(CORBA::Long value)
                                   ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual CORBA::Long op3(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long op3(CORBA::Long value)
                                   ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op4(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void op4(CORBA::Long value)
                                   ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual void op5(void)
@@ -34,9 +34,9 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
       ACE_THROW_SPEC((CORBA::SystemException));
 
     void cust_op1(void);
-    void cust_op2(long value ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    long cust_op3(long value ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    void cust_op4(long value ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void cust_op2(long value);
+    long cust_op3(long value);
+    void cust_op4(long value);
     void cust_op5(void);
 
     void gather_stats(Foo_C_Statistics& stats);

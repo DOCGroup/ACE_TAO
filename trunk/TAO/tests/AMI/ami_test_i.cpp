@@ -29,8 +29,7 @@ AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
 CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
-                 const char* in_str
-                 ACE_ENV_ARG_DECL)
+                 const char* in_str)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    A::DidTheRightThing))
 {
@@ -73,8 +72,7 @@ AMI_Test_i::yadda (void)
 
 
 void
-AMI_Test_i::yadda (CORBA::Long yadda
-                   ACE_ENV_ARG_DECL_NOT_USED)
+AMI_Test_i::yadda (CORBA::Long yadda)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -83,8 +81,7 @@ AMI_Test_i::yadda (CORBA::Long yadda
 }
 
 void
-AMI_Test_i::inout_arg_test (char *&
-                            ACE_ENV_ARG_DECL_NOT_USED)
+AMI_Test_i::inout_arg_test (char *&)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No action, this operation is to test code generation for INOUT

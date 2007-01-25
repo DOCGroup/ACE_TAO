@@ -45,8 +45,7 @@ Test_Short::opname (void) const
 }
 
 void
-Test_Short::dii_req_invoke (CORBA::Request *req
-                            ACE_ENV_ARG_DECL)
+Test_Short::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -59,17 +58,16 @@ Test_Short::dii_req_invoke (CORBA::Request *req
   req->return_value () >>= this->ret_;
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= this->inout_;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= this->out_;
 }
 
 int
-Test_Short::init_parameters (Param_Test_ptr /*objref*/
-                             ACE_ENV_ARG_DECL_NOT_USED)
+Test_Short::init_parameters (Param_Test_ptr /*objref*/)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -88,25 +86,21 @@ Test_Short::reset_parameters (void)
 }
 
 int
-Test_Short::run_sii_test (Param_Test_ptr objref
-                          ACE_ENV_ARG_DECL)
+Test_Short::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_short (this->in_,
                                        this->inout_,
-                                       this->out_
-                                       ACE_ENV_ARG_PARAMETER);
+                                       this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Short::run_sii_test\n");
+      ex._tao_print_exception ("Test_Short::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

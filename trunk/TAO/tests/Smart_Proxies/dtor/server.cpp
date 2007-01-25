@@ -9,8 +9,7 @@ class Test_i: public virtual POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  void hello (CORBA::Long howmany
-              ACE_ENV_ARG_DECL)
+  void hello (CORBA::Long howmany)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown  (void)
@@ -26,8 +25,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::hello (CORBA::Long howmany
-               ACE_ENV_ARG_DECL_NOT_USED)
+Test_i::hello (CORBA::Long howmany)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "hello called with : %i \n", howmany));
@@ -37,7 +35,7 @@ void
 Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 static const char *ior_output_file = 0;
@@ -69,24 +67,20 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
   {
     CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                           argv,
-                                          ""
-                                          ACE_ENV_ARG_PARAMETER);
+                                          "");
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     // Obtain RootPOA.
-    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
-                                                             ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in()
-                                                                     ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in());
 
     // Get the POAManager of the RootPOA
     PortableServer::POAManager_var poa_mgr =
@@ -98,15 +92,12 @@ int main (int argc, char* argv[])
     Test_i servant (orb.in ());
 
     PortableServer::ObjectId_var oid =
-      root_poa->activate_object (&servant
-                                 ACE_ENV_ARG_PARAMETER);
+      root_poa->activate_object (&servant);
 
-    obj = root_poa->id_to_reference (oid.in()
-                                     ACE_ENV_ARG_PARAMETER);
+    obj = root_poa->id_to_reference (oid.in());
 
     CORBA::String_var ior =
-      orb->object_to_string (obj.in()
-                             ACE_ENV_ARG_PARAMETER);
+      orb->object_to_string (obj.in());
 
     // If the ior_output_file exists, output the ior to it
     if (ior_output_file != 0)
@@ -131,18 +122,15 @@ int main (int argc, char* argv[])
     ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
     root_poa->destroy (1,
-                       1
-                       ACE_ENV_ARG_PARAMETER);
+                       1);
 
     orb->destroy ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Exception in setting up server");
+    ex._tao_print_exception ("Exception in setting up server");
     return 1;
   }
-  ACE_ENDTRY;
 
   return 0;
 }

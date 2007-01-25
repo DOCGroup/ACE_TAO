@@ -64,12 +64,10 @@ test_i::method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("POACurrent"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("POACurrent");
 
   PortableServer::Current_var current =
-    PortableServer::Current::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+    PortableServer::Current::_narrow (obj.in ());
 
   PortableServer::POA_var poa =
     current->get_POA ();
@@ -86,8 +84,7 @@ void
 test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 PortableServer::POA_ptr
@@ -104,12 +101,10 @@ test_i::create_POA (void)
   policies.length (2);
 
   policies[0] =
-    this->poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID
-                                             ACE_ENV_ARG_PARAMETER);
+    this->poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID);
 
   policies[1] =
-    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                        ACE_ENV_ARG_PARAMETER);
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager ();
@@ -118,8 +113,7 @@ test_i::create_POA (void)
   this->child_poa_ =
     this->poa_->create_POA (name.c_str (),
                             poa_manager.in (),
-                            policies
-                            ACE_ENV_ARG_PARAMETER);
+                            policies);
 
   // Destroy the policies
   for (CORBA::ULong i = 0;
@@ -138,14 +132,12 @@ test_i::create_POA (void)
   if (this->oid_.ptr () == 0)
     {
       this->oid_ =
-        this->child_poa_->activate_object (servant
-                                           ACE_ENV_ARG_PARAMETER);
+        this->child_poa_->activate_object (servant);
     }
   else
     {
       this->child_poa_->activate_object_with_id (this->oid_.in (),
-                                                 servant
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 servant);
     }
 
   test_var test =
@@ -158,8 +150,7 @@ void
 test_i::destroy_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->child_poa_->destroy (1, 0
-                             ACE_ENV_ARG_PARAMETER);
+  this->child_poa_->destroy (1, 0);
 }
 
 const char *ior_file = "ior";
@@ -221,27 +212,23 @@ write_ior_to_file (const char *ior)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -253,7 +240,7 @@ main (int argc, char **argv)
         servant._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (test.in ());
 
       int write_result =
         write_ior_to_file (ior.in ());
@@ -264,12 +251,11 @@ main (int argc, char **argv)
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

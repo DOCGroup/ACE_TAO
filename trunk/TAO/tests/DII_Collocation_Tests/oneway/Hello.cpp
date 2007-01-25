@@ -35,7 +35,6 @@ Test_Simple_Test_i::~Test_Simple_Test_i (void)
 
 void Test_Simple_Test_i::test_method (
     ::CORBA::ULong & error_count
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -55,7 +54,6 @@ Hello::Hello (CORBA::ORB_ptr orb,
 void
 Hello::test_basic_arg (
     ::CORBA::Long basic
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -66,8 +64,7 @@ Hello::test_basic_arg (
 }
 
 void
-Hello::test_unbounded_string_arg(const char* message
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_unbounded_string_arg(const char* message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
@@ -82,8 +79,7 @@ Hello::test_unbounded_string_arg(const char* message
 
 
 void
-Hello::test_bounded_string_arg(const char* message
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_bounded_string_arg(const char* message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
@@ -98,8 +94,7 @@ Hello::test_bounded_string_arg(const char* message
 
 
 void
-Hello::test_fixed_array_arg(const ::Test::Fixed_Array message
-                              ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
@@ -115,8 +110,7 @@ Hello::test_fixed_array_arg(const ::Test::Fixed_Array message
 
 
 void
-Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message)
                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
@@ -128,8 +122,7 @@ Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message
 
 
 void
-Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message)
                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
@@ -141,8 +134,7 @@ Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
 
 
 void
-Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t
-                             ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
                            ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (debug)
@@ -158,8 +150,7 @@ Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t
 
 
 void
-Hello::test_var_array_arg(const Test::Var_Array messages
-                            ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_var_array_arg(const Test::Var_Array messages)
                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
@@ -174,8 +165,7 @@ Hello::test_var_array_arg(const Test::Var_Array messages
 
 
 void
-Hello::test_special_basic_arg(CORBA::Char value
-                                ACE_ENV_ARG_DECL_NOT_USED)
+Hello::test_special_basic_arg(CORBA::Char value)
                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
@@ -188,7 +178,6 @@ Hello::test_special_basic_arg(CORBA::Char value
 
 void Hello::test_objref_arg (
     ::Test::Simple_Test_ptr test
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -205,7 +194,7 @@ void Hello::test_objref_arg (
     // the error_count when the server handling the test_method() call.
     CORBA::ULong error_count = 0;
     error_count ++;
-    test->test_method (error_count ACE_ENV_ARG_PARAMETER);
+    test->test_method (error_count);
     if (error_count != 0)
     {
       ERROR_COUNT ("Hello::test_objref_arg")
@@ -215,7 +204,6 @@ void Hello::test_objref_arg (
 
 void Hello::test_object_arg (
     ::CORBA::Object_ptr o
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -227,7 +215,7 @@ void Hello::test_object_arg (
 
   CORBA::ULong error_count = 0;
   error_count ++;
-  simple_test->test_method (error_count ACE_ENV_ARG_PARAMETER);
+  simple_test->test_method (error_count);
   if (error_count != 0)
   {
     ERROR_COUNT ("Hello::test_object_arg")
@@ -238,7 +226,6 @@ void Hello::test_args_1 (
     ::CORBA::Object_ptr arg1,
     ::CORBA::Char arg2,
     ::Test::Simple_Test_ptr arg3
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -250,9 +237,9 @@ void Hello::test_args_1 (
 
   CORBA::ULong error_count = 0;
   error_count ++;
-  simple_test->test_method (error_count ACE_ENV_ARG_PARAMETER);
+  simple_test->test_method (error_count);
   error_count ++;
-  arg3->test_method (error_count ACE_ENV_ARG_PARAMETER);
+  arg3->test_method (error_count);
 
   if (error_count != 0)
   {
@@ -267,7 +254,6 @@ void Hello::test_args_2 (
     const char * arg1,
     const ::Test::Fixed_Array arg2,
     const ::Test::TimeOfDay & arg3
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -295,7 +281,6 @@ void Hello::test_args_3 (
     const ::Test::Bounded_Var_Size_Arg & arg2,
     const ::Test::Unbounded_Var_Size_Arg & arg3,
     const ::Test::Var_Array arg4
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -360,7 +345,6 @@ Hello::test_unbounded_string (
     const char * s1,
     char *& s2,
     CORBA::String_out s3
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -383,7 +367,7 @@ Hello::shutdown (void)
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 CORBA::ULong Hello::error_count () const

@@ -136,7 +136,7 @@ int
 init_callback (Worker &w)
 {
   CORBA::Object_var obj =
-    w.orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+    w.orb_->resolve_initial_references ("RootPOA");
 
   if (CORBA::is_nil (obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -144,7 +144,7 @@ init_callback (Worker &w)
                       1);
 
   PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (obj.in ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager ();
@@ -157,8 +157,7 @@ init_callback (Worker &w)
   pol <<= BiDirPolicy::BOTH;
   policies[0] =
     w.orb_->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                        pol
-                        ACE_ENV_ARG_PARAMETER);
+                        pol);
 
   // Create POA as child of RootPOA with the above policies.  This POA
   // will receive request in the same connection in which it sent
@@ -166,8 +165,7 @@ init_callback (Worker &w)
   PortableServer::POA_var child_poa =
     root_poa->create_POA ("childPOA",
                           poa_manager.in (),
-                          policies
-                          ACE_ENV_ARG_PARAMETER);
+                          policies);
 
 
   Callback_i *servant = new Callback_i;

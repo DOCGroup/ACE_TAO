@@ -60,8 +60,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 #if TAO_HAS_INTERCEPTORS == 1
       Server_ORBInitializer *temp_initializer = 0;
@@ -71,15 +70,14 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "Server ORB");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,7 +85,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -103,19 +101,16 @@ main (int argc, char *argv[])
       PortableServer::POA_var first_poa =
         root_poa->create_POA ("first POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       PortableServer::ObjectId_var oid1 =
-        first_poa->activate_object (&servant1
-                                    ACE_ENV_ARG_PARAMETER);
+        first_poa->activate_object (&servant1);
 
       CORBA::Object_var obj1 =
-        first_poa->servant_to_reference (&servant1
-                                         ACE_ENV_ARG_PARAMETER);
+        first_poa->servant_to_reference (&servant1);
 
       CORBA::String_var ior1 =
-        orb->object_to_string (obj1.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj1.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "ForwardRequestTest::test servant 1: <%s>\n",
@@ -127,19 +122,16 @@ main (int argc, char *argv[])
       PortableServer::POA_var second_poa =
         root_poa->create_POA ("second POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       PortableServer::ObjectId_var oid2 =
-        second_poa->activate_object (&servant2
-                                     ACE_ENV_ARG_PARAMETER);
+        second_poa->activate_object (&servant2);
 
       CORBA::Object_var obj2 =
-        second_poa->servant_to_reference (&servant2
-                                          ACE_ENV_ARG_PARAMETER);
+        second_poa->servant_to_reference (&servant2);
 
       CORBA::String_var ior2 =
-        orb->object_to_string (obj2.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj2.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "ForwardRequestTest::test servant 2: <%s>\n",
@@ -154,7 +146,7 @@ main (int argc, char *argv[])
 
       ForwardRequestTest::ServerRequestInterceptor_var interceptor =
         ForwardRequestTest::ServerRequestInterceptor::_narrow (
-           server_interceptor.in () ACE_ENV_ARG_PARAMETER);
+           server_interceptor.in ());
 
       if (CORBA::is_nil (interceptor.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -163,8 +155,7 @@ main (int argc, char *argv[])
                           -1);
 
       interceptor->forward_references (obj1.in (),
-                                       obj2.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                                       obj2.in ());
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       // Write each IOR to a file.
@@ -193,19 +184,17 @@ main (int argc, char *argv[])
       // Run the ORB event loop.
       orb->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

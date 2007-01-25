@@ -48,8 +48,7 @@ public:
   // Destructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
+            char **argv);
   // Initialize the NestedUpCalls_Server state - parsing arguments and ...
 
   int run (void);

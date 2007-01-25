@@ -98,7 +98,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
       ACE_ASSERT (notifier != 0);
 
       // Use the notifier to notify Consumers.
-      ACE_TRY_NEW_ENV
+      try
         {
           Event_Comm::Event event;
 
@@ -109,13 +109,12 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
           // reference...  event.value_ = ...
 
           // Forward <Event> to all <Consumers>.
-          notifier->push (event ACE_ENV_ARG_PARAMETER);
+          notifier->push (event);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected Error\n");
+          ex._tao_print_exception ("Unexpected Error\n");
         }
-      ACE_ENDTRY;
     }
   return 0;
 }

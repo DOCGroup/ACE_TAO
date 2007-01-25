@@ -8,16 +8,16 @@ int
 main (int argc, char *argv[])
 {
   int received_expected_exception = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -27,25 +27,23 @@ main (int argc, char *argv[])
                             1);
         }
 
-      ACE_TRY {
+      try{
           Test::Timestamp time = 10;
-          roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
+          roundtrip->test_method (time);
         }
-      ACE_CATCH(Test::ServerOverload, ov)
+      catch (const Test::ServerOverload& )
         {
           ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
           received_expected_exception = 1;
 
           roundtrip->shutdown ();
         }
-      ACE_ENDTRY;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
+      ex._tao_print_exception ("");
       return 1;
     }
-  ACE_ENDTRY;
 
   if(!received_expected_exception)
     {

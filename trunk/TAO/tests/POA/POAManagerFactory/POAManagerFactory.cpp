@@ -70,29 +70,25 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "POAManagerFactoryTest"
-                         ACE_ENV_ARG_PARAMETER);
+                         "POAManagerFactoryTest");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Narrow to POA.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,
@@ -121,8 +117,7 @@ main (int argc, char **argv)
       // Explicitly create a POAManager - "POAManager1" .
       PortableServer::POAManager_var poa_manager_1
         = poa_manager_factory->create_POAManager ("POAManager1",
-                                                  policies
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  policies);
 
       VERIFY_CONDITION (!CORBA::is_nil(poa_manager_1.in()));
       if (verbose)
@@ -137,19 +132,16 @@ main (int argc, char **argv)
                     ACE_TEXT("Prevent duplicated POAManagers: ")));
       pretest = fail;
       CORBA::Boolean got_expected_exception = false;
-      ACE_TRY_EX (create)
+      try
       {
         PortableServer::POAManager_var poa_manager
          = poa_manager_factory->create_POAManager ("POAManager1",
-                                                   policies
-                                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK_EX (create);
+                                                   policies);
       }
-      ACE_CATCH (PortableServer::POAManagerFactory::ManagerAlreadyExists, mae)
+      catch (const PortableServer::POAManagerFactory::ManagerAlreadyExists& )
       {
         got_expected_exception = true;
       }
-      ACE_ENDTRY;
 
       VERIFY_CONDITION (got_expected_exception);
       if (verbose)
@@ -169,8 +161,7 @@ main (int argc, char **argv)
         PortableServer::POA_var child_poa =
         root_poa->create_POA ("childPOA2",
                               PortableServer::POAManager::_nil (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
         PortableServer::POAManager_var poa_manager_2
           = child_poa->the_POAManager ();
@@ -246,7 +237,7 @@ main (int argc, char **argv)
         pretest = fail;
 
         PortableServer::POAManager_var manager
-          = poa_manager_factory->find ("POAManager1" ACE_ENV_ARG_PARAMETER);
+          = poa_manager_factory->find ("POAManager1");
 
         CORBA::String_var name = manager->get_id ();
 
@@ -267,8 +258,7 @@ main (int argc, char **argv)
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager_1.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       poa_manager_1->activate ();
 
@@ -277,14 +267,13 @@ main (int argc, char **argv)
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("passed\n")));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       fail++;
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("failed\n")));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("POAManagerFactory %s\n"),
               (pretest == fail) ? ACE_TEXT ("succeeded") : ACE_TEXT ("failed")));

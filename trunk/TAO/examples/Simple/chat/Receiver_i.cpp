@@ -28,8 +28,7 @@ Receiver_i::~Receiver_i (void)
 }
 
 void
-Receiver_i::message (const char *msg
-                     ACE_ENV_ARG_DECL_NOT_USED)
+Receiver_i::message (const char *msg)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))

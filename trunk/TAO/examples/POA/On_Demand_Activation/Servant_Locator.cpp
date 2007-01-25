@@ -21,8 +21,8 @@
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (On_Demand_Activation, 
-           Servant_Locator, 
+ACE_RCSID (On_Demand_Activation,
+           Servant_Locator,
            "$Id$")
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
@@ -36,8 +36,7 @@ PortableServer::Servant
 ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                            PortableServer::POA_ptr poa,
                            const char * /* operation */,
-                           PortableServer::ServantLocator::Cookie &cookie
-                           ACE_ENV_ARG_DECL)
+                           PortableServer::ServantLocator::Cookie &cookie)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -69,8 +68,7 @@ ServantLocator::postinvoke (const PortableServer::ObjectId & /* oid */,
                             PortableServer::POA_ptr /* poa */,
                             const char * /* operation */,
                             PortableServer::ServantLocator::Cookie cookie,
-                            PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL_NOT_USED)
+                            PortableServer::Servant servant)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

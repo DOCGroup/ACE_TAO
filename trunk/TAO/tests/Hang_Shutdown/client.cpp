@@ -63,23 +63,19 @@ namespace Test
 
     virtual int svc (void)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
-      ACE_TRY
+      try
         {
           this->h_->send_stuff ("Testing",
-                                false
-                                ACE_ENV_ARG_PARAMETER);
+                                false);
 
           this->h_->send_stuff ("Testing",
-                                false
-                                ACE_ENV_ARG_PARAMETER);
+                                false);
 
           this->h_->send_stuff ("Testing",
-                                true
-                                ACE_ENV_ARG_PARAMETER);
+                                true);
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, f)
+      catch (const CORBA::COMM_FAILURE& f)
         {
           ACE_UNUSED_ARG (f);
           ACE_DEBUG ((LM_DEBUG,
@@ -90,7 +86,7 @@ namespace Test
 
           return 0;
         }
-      ACE_CATCH (CORBA::Exception, ex)
+      catch (const CORBA::Exception& ex)
         {
           ex._tao_print_exception ("Caught CORBA Exception \n");
 
@@ -99,7 +95,7 @@ namespace Test
 
           return -1;
         }
-      ACE_CATCHALL
+      catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Caught a C++ exception \n"));
@@ -108,7 +104,6 @@ namespace Test
 
           return -1;
         }
-      ACE_ENDTRY;
 
       return 0;
     }
@@ -126,9 +121,8 @@ namespace Test
 
     virtual int svc (void)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
-      ACE_TRY
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Calling shutdown \n"));
@@ -140,8 +134,7 @@ namespace Test
           // Start the timer
           profile_timer.start ();
 
-          this->o_->shutdown (blocked
-                              ACE_ENV_ARG_PARAMETER);
+          this->o_->shutdown (blocked);
 
           // Stop the timer
           profile_timer.stop ();
@@ -159,7 +152,7 @@ namespace Test
               return 0;
             }
         }
-      ACE_CATCHALL
+      catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Caught exception during shutdown \n"));
@@ -168,7 +161,6 @@ namespace Test
                       "(%P|%t) Error in test \n"));
           return -1;
         }
-      ACE_ENDTRY;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Returning from shutdown \n"));
@@ -181,26 +173,22 @@ namespace Test
   static int
   try_main (int argc, char *argv[])
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
 
-    ACE_TRY
+    try
       {
         CORBA::ORB_var orb =
           CORBA::ORB_init (argc,
                            argv,
-                           ""
-                           ACE_ENV_ARG_PARAMETER);
+                           "");
 
         if (parse_args (argc, argv) == false)
           return -1;
 
         CORBA::Object_var tmp =
-          orb->string_to_object (ior
-                                 ACE_ENV_ARG_PARAMETER);
+          orb->string_to_object (ior);
 
         Hang_var test =
-          Hang::_narrow (tmp.in ()
-                         ACE_ENV_ARG_PARAMETER);
+          Hang::_narrow (tmp.in ());
 
         if (CORBA::is_nil (test.in ()))
           {
@@ -232,21 +220,19 @@ namespace Test
         orb->destroy ();
 
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "CORBA Exception caught \n");
+        ex._tao_print_exception ("CORBA Exception caught \n");
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) Eror in test \n"));
         return -1;
       }
-    ACE_CATCHALL
+    catch (...)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Error in test \n"));
         return -1;
       }
-    ACE_ENDTRY;
 
     return 0;
   }

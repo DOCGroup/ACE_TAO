@@ -107,14 +107,11 @@ public:
 
   void vanilla_invocations (void);
 
-  void priority_invocations (int debug
-                             ACE_ENV_ARG_DECL);
+  void priority_invocations (int debug);
 
-  void set_client_protocols_policies (int debug
-                                      ACE_ENV_ARG_DECL);
+  void set_client_protocols_policies (int debug);
 
-  void set_priority_bands (int debug
-                           ACE_ENV_ARG_DECL);
+  void set_priority_bands (int debug);
 
   void set_private_connection_policies (void);
 
@@ -175,49 +172,44 @@ Worker_Thread::validate_connection (void)
   int current_attempt = 0;
   for (;;)
     {
-      ACE_TRY
+      try
         {
           ++current_attempt;
-          this->test_->_validate_connection (inconsistent_policies.out ()
-                                             ACE_ENV_ARG_PARAMETER);
+          this->test_->_validate_connection (inconsistent_policies.out ());
 
           // If successful, we are done.
           return;
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT& )
         {
           // If we have reach our maximum number of tries, throw exception.
           if (current_attempt == max_attempts)
-            ACE_RE_THROW;
+            throw;
           // Otherwise, ignore...
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // Rethrow any other exceptions.
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
     }
 }
 
 int
 Worker_Thread::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->current_->the_priority (this->priority_
-                                    ACE_ENV_ARG_PARAMETER);
+      this->current_->the_priority (this->priority_);
 
       this->validate_connection ();
 
       this->client_.vanilla_invocations ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Worker Thread exception:");
+      ex._tao_print_exception ("Worker Thread exception:");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -244,8 +236,7 @@ Client::vanilla_invocations (void)
 }
 
 void
-Client::priority_invocations (int debug
-                              ACE_ENV_ARG_DECL)
+Client::priority_invocations (int debug)
 {
   ULong_Array priorities;
   int result =
@@ -311,8 +302,7 @@ Client::priority_invocations (int debug
 }
 
 void
-Client::set_client_protocols_policies (int debug
-                                       ACE_ENV_ARG_DECL)
+Client::set_client_protocols_policies (int debug)
 {
   CORBA::PolicyList policies;
 
@@ -321,8 +311,7 @@ Client::set_client_protocols_policies (int debug
                    protocols_file,
                    this->rt_orb_.in (),
                    policies,
-                   debug
-                   ACE_ENV_ARG_PARAMETER);
+                   debug);
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -332,13 +321,11 @@ Client::set_client_protocols_policies (int debug
     }
 
   this->policy_manager_->set_policy_overrides (policies,
-                                               CORBA::ADD_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::ADD_OVERRIDE);
 }
 
 void
-Client::set_priority_bands (int debug
-                            ACE_ENV_ARG_DECL)
+Client::set_priority_bands (int debug)
 {
   CORBA::PolicyList policies;
 
@@ -347,8 +334,7 @@ Client::set_priority_bands (int debug
                         bands_file,
                         this->rt_orb_.in (),
                         policies,
-                        debug
-                        ACE_ENV_ARG_PARAMETER);
+                        debug);
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -358,8 +344,7 @@ Client::set_priority_bands (int debug
     }
 
   this->policy_manager_->set_policy_overrides (policies,
-                                               CORBA::ADD_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::ADD_OVERRIDE);
 }
 
 void
@@ -372,8 +357,7 @@ Client::set_private_connection_policies (void)
     this->rt_orb_->create_private_connection_policy ();
 
   this->policy_manager_->set_policy_overrides (policies,
-                                               CORBA::ADD_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::ADD_OVERRIDE);
 }
 
 void
@@ -382,8 +366,7 @@ Client::reset_policies (void)
   CORBA::PolicyList empty_policies;
 
   this->policy_manager_->set_policy_overrides (empty_policies,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::SET_OVERRIDE);
 }
 
 class Task : public ACE_Task_Base
@@ -409,42 +392,33 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("ORBPolicyManager"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        RTCORBA::Current::_narrow (object.in ());
 
-      current->the_priority (0
-                             ACE_ENV_ARG_PARAMETER);
+      current->the_priority (0);
 
       object =
-        this->orb_->string_to_object (ior
-                                      ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior);
 
       test_var test =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        test::_narrow (object.in ());
 
       Client client (test.in (),
                      this->orb_.in (),
@@ -460,8 +434,7 @@ Task::svc (void)
 
       client.reset_policies ();
 
-      client.set_client_protocols_policies (debug
-                                            ACE_ENV_ARG_PARAMETER);
+      client.set_client_protocols_policies (debug);
 
       client.vanilla_invocations ();
 
@@ -471,32 +444,25 @@ Task::svc (void)
 
       client.reset_policies ();
 
-      client.set_priority_bands (debug
-                                 ACE_ENV_ARG_PARAMETER);
+      client.set_priority_bands (debug);
 
-      client.priority_invocations (debug
-                                   ACE_ENV_ARG_PARAMETER);
+      client.priority_invocations (debug);
 
       client.set_private_connection_policies ();
 
-      client.priority_invocations (debug
-                                   ACE_ENV_ARG_PARAMETER);
+      client.priority_invocations (debug);
 
       client.reset_policies ();
 
-      client.set_priority_bands (debug
-                                 ACE_ENV_ARG_PARAMETER);
+      client.set_priority_bands (debug);
 
-      client.set_client_protocols_policies (0
-                                            ACE_ENV_ARG_PARAMETER);
+      client.set_client_protocols_policies (0);
 
-      client.priority_invocations (0
-                                   ACE_ENV_ARG_PARAMETER);
+      client.priority_invocations (0);
 
       client.set_private_connection_policies ();
 
-      client.priority_invocations (debug
-                                   ACE_ENV_ARG_PARAMETER);
+      client.priority_invocations (debug);
 
       client.reset_policies ();
 
@@ -505,12 +471,11 @@ Task::svc (void)
           test->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      ex._tao_print_exception ("Error!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -518,15 +483,13 @@ Task::svc (void)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -575,12 +538,11 @@ main (int argc, char **argv)
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      ex._tao_print_exception ("Error!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -40,15 +40,14 @@ static ACE_THR_FUNC_RETURN run_test(void* pData)
 {
     Test_Interceptors::Visual_ptr server = static_cast<Test_Interceptors::Visual_ptr>(pData);
 
-    ACE_TRY
+    try
     {
-        server->normal (10 ACE_ENV_ARG_PARAMETER);
+        server->normal (10);
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-        ACE_PRINT_EXCEPTION (ex, "Exception thrown in run_test()\n");
+        ex._tao_print_exception ("Exception thrown in run_test()\n");
     }
-    ACE_ENDTRY;
 
     return (ACE_THR_FUNC_RETURN)0;
 }
@@ -56,7 +55,7 @@ static ACE_THR_FUNC_RETURN run_test(void* pData)
 int
 main (int argc, char *argv[])
 {
-    ACE_TRY_NEW_ENV
+    try
     {
         PortableInterceptor::ORBInitializer_ptr temp_initializer;
 
@@ -66,20 +65,19 @@ main (int argc, char *argv[])
         PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-        PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+        PortableInterceptor::register_orb_initializer (initializer.in ());
 
         CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
         if (parse_args (argc, argv) != 0)
         return 1;
 
         CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
         Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test_Interceptors::Visual::_narrow (object.in ());
 
         if (CORBA::is_nil (server.in ()))
         {
@@ -105,14 +103,12 @@ main (int argc, char *argv[])
         server->shutdown ();
     }
 
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in client:");
+        ex._tao_print_exception ("Caught exception in client:");
         return 1;
     }
 
-    ACE_ENDTRY;
 
     return 0;
 }

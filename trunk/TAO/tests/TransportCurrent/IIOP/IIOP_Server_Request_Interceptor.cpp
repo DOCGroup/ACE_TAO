@@ -34,8 +34,7 @@ namespace Test {
 
   ///
   TAO::Transport::IIOP::Current_ptr
-  IIOP_Server_Request_Interceptor::resolve_iiop_transport_current (const char* orbid
-                                                                   ACE_ENV_ARG_DECL)
+  IIOP_Server_Request_Interceptor::resolve_iiop_transport_current (const char* orbid)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
@@ -43,29 +42,24 @@ namespace Test {
     int tmpargc = 0;
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
                                           0,
-                                          orbid
-                                          ACE_ENV_ARG_PARAMETER);
+                                          orbid);
 
     CORBA::Object_var tcobject =
-      orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current")
-                                       ACE_ENV_ARG_PARAMETER);
+      orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current"));
 
-    return TAO::Transport::IIOP::Current::_narrow (tcobject.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+    return TAO::Transport::IIOP::Current::_narrow (tcobject.in ());
   }
 
   /// On every request, a client-supplied (via the context) id is used
   /// as index in an array, where we store the endpoint
   void
-  IIOP_Server_Request_Interceptor::push_request_info (size_t requestID
-                                                      ACE_ENV_ARG_DECL)
+  IIOP_Server_Request_Interceptor::push_request_info (size_t requestID)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
 
     TAO::Transport::IIOP::Current_var tc =
-      resolve_iiop_transport_current (this->orb_id_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      resolve_iiop_transport_current (this->orb_id_.in ());
 
     CORBA::String_var host (tc->remote_host());
     EndPoint ep (tc->remote_port(), host.in ());
@@ -114,11 +108,10 @@ namespace Test {
       }
 
 
-    ACE_TRY
+    try
       {
         TAO::Transport::IIOP::Current_var tc =
-          resolve_iiop_transport_current (this->orb_id_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+          resolve_iiop_transport_current (this->orb_id_.in ());
 
         CORBA::String_var host (tc->remote_host());
         EndPoint ep (tc->remote_port(), host.in ());
@@ -133,14 +126,13 @@ namespace Test {
             return;
           }
       }
-    ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+    catch (const CORBA::BAD_INV_ORDER& )
       {
         // Last reply after the orb has been shut down. Calling
         // resolve_iiop_transport_current in this case will cause
         // BAD_INV_ORDER, so instead we swallow the exception and bid
         // goodbye.
       }
-    ACE_ENDTRY;
 
     endPoints_[requestID] = dummy;
   }
@@ -176,12 +168,11 @@ namespace Test {
 
 
   void
-  IIOP_Server_Request_Interceptor::inbound_process_context  (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                         ACE_ENV_ARG_DECL)
+  IIOP_Server_Request_Interceptor::inbound_process_context  (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
-    CORBA::String_var op (ri->operation(ACE_ENV_ARG_PARAMETER));
+    CORBA::String_var op (ri->operation());
 
     if (TAO_debug_level >=1)
       ACE_DEBUG ((LM_DEBUG,
@@ -189,12 +180,11 @@ namespace Test {
                   name.in (),
                   op.in ()));
 
-    ACE_TRY
+    try
       {
         IOP::ServiceId id = Test::Transport::CurrentTest::ContextTag;
         IOP::ServiceContext_var sc =
-          ri->get_request_service_context (id
-                                           ACE_ENV_ARG_PARAMETER);
+          ri->get_request_service_context (id);
 
         const char *buf =
           reinterpret_cast <const char *> (sc->context_data.get_buffer ());
@@ -203,7 +193,7 @@ namespace Test {
 
         this->push_request_info (requestID);
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s (%P|%t) Service context")
@@ -213,19 +203,17 @@ namespace Test {
                     name.in (),
                     op.in ()));
       }
-    ACE_ENDTRY;
 
   }
 
   void
-  IIOP_Server_Request_Interceptor::outbound_process_context (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                             ACE_ENV_ARG_DECL)
+  IIOP_Server_Request_Interceptor::outbound_process_context (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     IOP::ServiceId id = Test::Transport::CurrentTest::ContextTag;
 
     IOP::ServiceContext_var sc =
-      ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
+      ri->get_request_service_context (id);
 
     const char *buf =
       reinterpret_cast <const char *> (sc->context_data.get_buffer ());
@@ -239,16 +227,15 @@ namespace Test {
 
 
   void
-  IIOP_Server_Request_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                                     ACE_ENV_ARG_DECL)
+  IIOP_Server_Request_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
-    ACE_TRY
+    try
       {
-        inbound_process_context (ri ACE_ENV_ARG_PARAMETER);
+        inbound_process_context (ri);
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -256,24 +243,22 @@ namespace Test {
                     ACE_TEXT(" receive_request_service_contexts.\n"),
                     name.in ()));
       }
-    ACE_ENDTRY;
 
-    Server_Request_Interceptor::receive_request_service_contexts (ri ACE_ENV_ARG_PARAMETER);
+    Server_Request_Interceptor::receive_request_service_contexts (ri);
 
   }
 
 
   void
-  IIOP_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+  IIOP_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_TRY
+    try
       {
-        outbound_process_context (ri ACE_ENV_ARG_PARAMETER);
+        outbound_process_context (ri);
 
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -281,25 +266,23 @@ namespace Test {
                     ACE_TEXT("send_reply.\n"),
                     name.in ()));
       }
-    ACE_ENDTRY;
 
-    Server_Request_Interceptor::send_reply (ri ACE_ENV_ARG_PARAMETER);
+    Server_Request_Interceptor::send_reply (ri);
 
   }
 
   void
-  IIOP_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                                               ACE_ENV_ARG_DECL_NOT_USED)
+  IIOP_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
-    ACE_TRY
+    try
       {
-        outbound_process_context (ri ACE_ENV_ARG_PARAMETER);
+        outbound_process_context (ri);
 
 
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -308,22 +291,20 @@ namespace Test {
                     name.in ()));
 
       }
-    ACE_ENDTRY;
 
-    Server_Request_Interceptor::send_exception (ri ACE_ENV_ARG_PARAMETER);
+    Server_Request_Interceptor::send_exception (ri);
   }
 
   void
-  IIOP_Server_Request_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-                                           ACE_ENV_ARG_DECL)
+  IIOP_Server_Request_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
-    ACE_TRY
+    try
       {
-        outbound_process_context (ri ACE_ENV_ARG_PARAMETER);
+        outbound_process_context (ri);
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -331,9 +312,8 @@ namespace Test {
                     ACE_TEXT("send_other.\n"),
                     name.in ()));
       }
-    ACE_ENDTRY;
 
-    Server_Request_Interceptor::send_other (ri ACE_ENV_ARG_PARAMETER);
+    Server_Request_Interceptor::send_other (ri);
   }
 
 }

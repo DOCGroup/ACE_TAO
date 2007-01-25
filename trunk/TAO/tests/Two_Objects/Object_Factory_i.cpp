@@ -29,7 +29,7 @@ Object_Factory_i::create_first (void)
                     CORBA::NO_MEMORY() );
 
   Two_Objects_Test::First_var first =
-    first_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER );
+    first_impl->_this ( );
 
   return first._retn();
 }

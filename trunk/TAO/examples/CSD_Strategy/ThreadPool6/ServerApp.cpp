@@ -23,9 +23,9 @@ ServerApp::~ServerApp()
 
 
 int
-ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ServerApp::run(int argc, char* argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -40,7 +40,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   TheOrbShutdownTask::instance()->orb (orb.in ());
 
   CORBA::Object_var obj
-    = orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    = orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -50,7 +50,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   PortableServer::POA_var root_poa
-    = PortableServer::POA::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+    = PortableServer::POA::_narrow(obj.in());
 
   if (CORBA::is_nil(root_poa.in()))
     {
@@ -67,14 +67,12 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   policies.length(1);
 
   policies[0] =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-    ACE_ENV_ARG_PARAMETER);
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
   PortableServer::POA_var child_poa
     = root_poa->create_POA("ChildPoa",
                            poa_manager.in(),
-                           policies
-                           ACE_ENV_ARG_PARAMETER);
+                           policies);
 
   if (CORBA::is_nil(child_poa.in()))
     {
@@ -91,7 +89,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
                                                  new TAO::CSD::TP_Strategy();
 
   // Tell the strategy to apply itself to the child poa.
-  if (csd_tp_strategy->apply_to(child_poa.in() ACE_ENV_ARG_PARAMETER) == false)
+  if (csd_tp_strategy->apply_to(child_poa.in()) == false)
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
@@ -116,7 +114,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   // Stringify the object reference
   CORBA::String_var ior
-    = orb->object_to_string(foo.in() ACE_ENV_ARG_PARAMETER);
+    = orb->object_to_string(foo.in());
 
   // Write the stringified object reference to the ior file.
   FILE* ior_file = ACE_OS::fopen(this->ior_filename_.c_str(), "w");
@@ -157,7 +155,7 @@ ServerApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_OS::sleep (2);
 
   // Tear-down the root poa and orb.
-  root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+  root_poa->destroy(1, 1);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the ORB.\n"));

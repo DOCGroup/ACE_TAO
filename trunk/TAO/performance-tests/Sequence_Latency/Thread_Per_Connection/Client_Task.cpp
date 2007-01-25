@@ -20,8 +20,7 @@ Client_Task::Client_Task (const char *data_type,
 int
 Client_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->validate_connection ();
 
@@ -50,11 +49,10 @@ Client_Task::svc (void)
           this->test_double_seq ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return 0;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -75,11 +73,11 @@ Client_Task::validate_connection (void)
 
   for (int i = 0; i != 100; ++i)
     {
-      ACE_TRY
+      try
         {
-          (void) this->roundtrip_->test_octet_method (oc, dummy ACE_ENV_ARG_PARAMETER);
+          (void) this->roundtrip_->test_octet_method (oc, dummy);
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception& ex){}
     }
 }
 
@@ -93,7 +91,7 @@ Client_Task::test_octet_seq (void)
     {
       CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-      (void) this->roundtrip_->test_octet_method (ol, start ACE_ENV_ARG_PARAMETER);
+      (void) this->roundtrip_->test_octet_method (ol, start);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
@@ -111,7 +109,7 @@ Client_Task::test_long_seq (void)
     {
       CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-      (void) this->roundtrip_->test_long_method (ll, start ACE_ENV_ARG_PARAMETER);
+      (void) this->roundtrip_->test_long_method (ll, start);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
@@ -130,7 +128,7 @@ Client_Task::test_short_seq (void)
     {
       CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-      (void) this->roundtrip_->test_short_method (sl, start ACE_ENV_ARG_PARAMETER);
+      (void) this->roundtrip_->test_short_method (sl, start);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
@@ -148,7 +146,7 @@ Client_Task::test_char_seq (void)
     {
       CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-      (void) this->roundtrip_->test_char_method (cl, start ACE_ENV_ARG_PARAMETER);
+      (void) this->roundtrip_->test_char_method (cl, start);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
@@ -166,7 +164,7 @@ Client_Task::test_longlong_seq (void)
     {
       CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-      (void) this->roundtrip_->test_longlong_method (ll, start ACE_ENV_ARG_PARAMETER);
+      (void) this->roundtrip_->test_longlong_method (ll, start);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);
@@ -184,7 +182,7 @@ Client_Task::test_double_seq (void)
     {
       CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-      (void) this->roundtrip_->test_double_method (dl, start ACE_ENV_ARG_PARAMETER);
+      (void) this->roundtrip_->test_double_method (dl, start);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->latency_.sample (now - start);

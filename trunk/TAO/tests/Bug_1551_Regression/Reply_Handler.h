@@ -20,8 +20,7 @@ public:
   void short_sleep (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder
-      ACE_ENV_ARG_DECL)
+  void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

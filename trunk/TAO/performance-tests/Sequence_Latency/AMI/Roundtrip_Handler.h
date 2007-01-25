@@ -29,60 +29,47 @@ public:
   void dump_results (ACE_UINT32 gsf);
 
   // = The skeleton methods for test octet load
-  virtual void test_octet_method (Test::Timestamp send_time
-                                  ACE_ENV_ARG_DECL)
+  virtual void test_octet_method (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_octet_method_excep (::Messaging::ExceptionHolder *holder
-                                        ACE_ENV_ARG_DECL)
+  virtual void test_octet_method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The skeleton methods for test char load
-  virtual void test_char_method (Test::Timestamp send_time
-                                 ACE_ENV_ARG_DECL)
+  virtual void test_char_method (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_char_method_excep (::Messaging::ExceptionHolder *holder
-                                       ACE_ENV_ARG_DECL)
+  virtual void test_char_method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The skeleton methods for test long load
-  virtual void test_long_method  (Test::Timestamp send_time
-                                  ACE_ENV_ARG_DECL)
+  virtual void test_long_method  (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_long_method_excep (::Messaging::ExceptionHolder *holder
-                                       ACE_ENV_ARG_DECL)
+  virtual void test_long_method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The skeleton methods for test short load
-  virtual void test_short_method (Test::Timestamp send_time
-                                  ACE_ENV_ARG_DECL)
+  virtual void test_short_method (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_short_method_excep (::Messaging::ExceptionHolder *holder
-                                        ACE_ENV_ARG_DECL)
+  virtual void test_short_method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The skeleton methods for test longlong load
-  virtual void test_longlong_method (Test::Timestamp send_time
-                                     ACE_ENV_ARG_DECL)
+  virtual void test_longlong_method (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_longlong_method_excep (::Messaging::ExceptionHolder *holder
-                                           ACE_ENV_ARG_DECL)
+  virtual void test_longlong_method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The skeleton methods for test double load
-  virtual void test_double_method (Test::Timestamp send_time
-                                   ACE_ENV_ARG_DECL)
+  virtual void test_double_method (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_double_method_excep (::Messaging::ExceptionHolder *holder
-                                         ACE_ENV_ARG_DECL)
+  virtual void test_double_method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = Other methods
 
   virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder
-                               ACE_ENV_ARG_DECL)
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

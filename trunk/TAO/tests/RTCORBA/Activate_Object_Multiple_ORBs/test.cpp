@@ -23,30 +23,25 @@ public:
 
 int main(int, char**)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int argc = 0;
       CORBA::ORB_var orb1 =
-                    CORBA::ORB_init(argc, 0, "orb1" ACE_ENV_ARG_PARAMETER);
+                    CORBA::ORB_init(argc, 0, "orb1");
       CORBA::ORB_var orb2 =
-                    CORBA::ORB_init(argc, 0, "orb2" ACE_ENV_ARG_PARAMETER);
+                    CORBA::ORB_init(argc, 0, "orb2");
 
       CORBA::Object_var poaObj_var =
-                    orb1->resolve_initial_references ("RootPOA"
-                                                      ACE_ENV_ARG_PARAMETER);
+                    orb1->resolve_initial_references ("RootPOA");
       PortableServer::POA_var rootPoa =
-                    PortableServer::POA::_narrow (poaObj_var.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+                    PortableServer::POA::_narrow (poaObj_var.in ());
       PortableServer::POAManager_var poaManager =
                     rootPoa->the_POAManager ();
 
       CORBA::Object_var poaObj_var2 =
-                    orb2->resolve_initial_references ("RootPOA"
-                                                      ACE_ENV_ARG_PARAMETER);
+                    orb2->resolve_initial_references ("RootPOA");
       PortableServer::POA_var rootPoa2 =
-                    PortableServer::POA::_narrow (poaObj_var2.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+                    PortableServer::POA::_narrow (poaObj_var2.in ());
       PortableServer::POAManager_var poaManager2 =
                     rootPoa2->the_POAManager ();
 
@@ -62,32 +57,24 @@ int main(int, char**)
       PortableServer::ServantBase_var m2_var = m2;
 
       PortableServer::ObjectId_var monitorableId1_var =
-                    rootPoa->activate_object (monitorable_var.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+                    rootPoa->activate_object (monitorable_var.in ());
       CORBA::Object_var obj1 =
-                    rootPoa->id_to_reference (monitorableId1_var.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+                    rootPoa->id_to_reference (monitorableId1_var.in ());
       Arch_Idl::Monitorable_var monitorable1 =
-                    Arch_Idl::Monitorable::_narrow (obj1.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+                    Arch_Idl::Monitorable::_narrow (obj1.in ());
 
       PortableServer::ObjectId_var monitorableId2_var =
-                    rootPoa2->activate_object (m2_var.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+                    rootPoa2->activate_object (m2_var.in ());
       CORBA::Object_var obj2 =
-                    rootPoa2->id_to_reference (monitorableId2_var.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+                    rootPoa2->id_to_reference (monitorableId2_var.in ());
       Arch_Idl::Monitorable_var monitorable2 =
-                    Arch_Idl::Monitorable::_narrow (obj2.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+                    Arch_Idl::Monitorable::_narrow (obj2.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

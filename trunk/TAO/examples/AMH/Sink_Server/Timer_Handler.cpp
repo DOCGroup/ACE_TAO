@@ -26,16 +26,16 @@ int
 Timer_Handler::handle_timeout (const ACE_Time_Value &,
                                const void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->rh_->test_method (this->send_time_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in Timer_Handler::handle_timeout \n");
+      ex._tao_print_exception (
+        "Exception in Timer_Handler::handle_timeout \n");
       return -1;
     }
-  ACE_ENDTRY;
 
   // Returning -1 calls handle_close which will clean up and
   // deregister this handle from the reactor. DO not return anything

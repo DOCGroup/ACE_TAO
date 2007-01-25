@@ -71,16 +71,14 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -89,12 +87,10 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (IOR);
 
       // Try to narrow the object reference to a <test> reference.
-      test_var test_object = test::_narrow (object.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+      test_var test_object = test::_narrow (object.in ());
 
       test::data the_data0 (data_bytes);
       the_data0.length (data_bytes);
@@ -115,18 +111,15 @@ main (int argc, char **argv)
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data0
-                               ACE_ENV_ARG_PARAMETER);
+                               the_data0);
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data1
-                               ACE_ENV_ARG_PARAMETER);
+                               the_data1);
 
           // Invoke the oneway method.
           test_object->method (i,
-                               the_data2
-                               ACE_ENV_ARG_PARAMETER);
+                               the_data2);
         }
 
       // Shutdown server.
@@ -145,13 +138,11 @@ main (int argc, char **argv)
       // queues before main() ends.
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

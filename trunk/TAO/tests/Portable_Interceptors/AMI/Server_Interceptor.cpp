@@ -36,8 +36,7 @@ Echo_Server_Request_Interceptor::destroy (void)
 
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -49,22 +48,21 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (id);
 
   if (sc->context_data.length() != magic_cookie_len
       || ACE_OS::memcmp(
                 magic_cookie, sc->context_data.get_buffer(),
                 magic_cookie_len) != 0)
     {
-      ACE_THROW(CORBA::BAD_PARAM());
+      throw CORBA::BAD_PARAM();
     }
 }
 
 
 void
 Echo_Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -72,16 +70,14 @@ Echo_Server_Request_Interceptor::receive_request (
 
 void
 Echo_Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Echo_Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -89,8 +85,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
 void
 Echo_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr
-             ACE_ENV_ARG_DECL_NOT_USED)
+             PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {

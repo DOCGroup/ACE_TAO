@@ -57,14 +57,13 @@ Cubit_Server::parse_args (void)
 int
 Cubit_Server::init (int argc,
                     char** argv
-                    ACE_ENV_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
+ ACE_ENV_SINGLE_ARG_PARAMETER)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -88,8 +87,7 @@ Cubit_Server::init (int argc,
 
   this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",
-                                                 this->factory_impl_
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 this->factory_impl_);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",

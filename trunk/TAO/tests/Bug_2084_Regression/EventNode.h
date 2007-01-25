@@ -20,7 +20,7 @@ public:
              ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual void registerHello ( ::Test::Hello_ptr h ACE_ENV_ARG_DECL)
+  virtual void registerHello ( ::Test::Hello_ptr h)
     ACE_THROW_SPEC (( CORBA::SystemException));
 
   virtual void shutdown (void)

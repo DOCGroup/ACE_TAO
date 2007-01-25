@@ -18,7 +18,7 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const CORBA::Any& data ACE_ENV_ARG_DECL_NOT_USED)
+  void push (const CORBA::Any& data)
     throw (CORBA::SystemException);
   void disconnect_push_consumer (void)
     throw (CORBA::SystemException);

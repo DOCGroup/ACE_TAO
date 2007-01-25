@@ -66,13 +66,12 @@ Driver::~Driver (void)
 int
 Driver::init (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "local"
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "local");
 
 
       // Parse command line and verify parameters.
@@ -83,13 +82,11 @@ Driver::init (int argc, char* argv[])
                           -1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Driver::init");
+      ex._tao_print_exception ("Driver::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

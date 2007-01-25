@@ -23,18 +23,17 @@ Reply_Handler::short_sleep (void)
   Test::AMI_HelloHandler_var current =
     _this();
 
-  hello_->sendc_short_sleep(current.in() ACE_ENV_ARG_PARAMETER);
+  hello_->sendc_short_sleep(current.in());
 }
 
 void
 Reply_Handler::short_sleep_excep (
-    ::Messaging::ExceptionHolder *ex
-    ACE_ENV_ARG_DECL)
+    ::Messaging::ExceptionHolder *ex)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   check_counter();
 
-  ACE_TRY
+  try
     {
       if (ex)
         {
@@ -48,20 +47,18 @@ Reply_Handler::short_sleep_excep (
           ACE_ERROR ((LM_ERROR, "ERROR: Got nill exceptionholder\n"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Exceptions are expected and thus ignored in normal runs:
 #if 0
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Reply_Handler - caught exception:");
+      ex._tao_print_exception ("(%P|%t) Reply_Handler - caught exception:");
 #endif /* 0 */
     }
-  ACE_ENDTRY;
 
   Test::AMI_HelloHandler_var current =
     _this();
 
-  hello_->sendc_short_sleep(current.in() ACE_ENV_ARG_PARAMETER);
+  hello_->sendc_short_sleep(current.in());
 }
 
 void Reply_Handler::
@@ -71,7 +68,7 @@ check_counter(void)
   if(count == 0)
   {
     // ACE_DEBUG((LM_DEBUG, "(%P|%t) Shut down client thread\n"));
-    orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
+    orb_->shutdown(0);
     return;
   }
 #if 0

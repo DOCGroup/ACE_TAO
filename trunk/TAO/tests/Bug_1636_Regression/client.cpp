@@ -7,22 +7,18 @@
 
 int main (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY_NEW_ENV
+  try
   {
     CORBA::ORB_var orb =
       CORBA::ORB_init (argc, argv,
-                       "" /* the ORB name, it can be anything! */
-                       ACE_ENV_ARG_PARAMETER);
+                       "" /* the ORB name, it can be anything! */);
 
     ACE_DEBUG ((LM_DEBUG,"Get reference to the DynAny Factory\n"));
     CORBA::Object_var obj =
-      orb->resolve_initial_references ("DynAnyFactory"
-                                       ACE_ENV_ARG_PARAMETER);
+      orb->resolve_initial_references ("DynAnyFactory");
 
     DynamicAny::DynAnyFactory_var daf =
-      DynamicAny::DynAnyFactory::_narrow (obj.in()
-                                          ACE_ENV_ARG_PARAMETER);
+      DynamicAny::DynAnyFactory::_narrow (obj.in());
 
     UnionIecs::S_i_num s_num;
     s_num.type_num = UnionIecs::E_type_num_called_party_number;
@@ -36,11 +32,9 @@ int main (int argc, char* argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "calling from_any () and to_any () with non-empty union...\n"));
     DynamicAny::DynAny_var dynany1 =
-      daf->create_dyn_any_from_type_code (UnionIecs::_tc_S_num
-                                          ACE_ENV_ARG_PARAMETER);
+      daf->create_dyn_any_from_type_code (UnionIecs::_tc_S_num);
 
-    dynany1->from_any(MyAny1
-                      ACE_ENV_ARG_PARAMETER);
+    dynany1->from_any(MyAny1);
     CORBA::Any_var arg1 =
       dynany1->to_any ();
 
@@ -54,11 +48,9 @@ int main (int argc, char* argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "calling from_any () and to_any () with empty union...\n" ));
     DynamicAny::DynAny_var dynany2 =
-      daf-> create_dyn_any_from_type_code (UnionIecs::_tc_S_num
-                                           ACE_ENV_ARG_PARAMETER);
+      daf-> create_dyn_any_from_type_code (UnionIecs::_tc_S_num);
 
-    dynany2->from_any (MyAny2
-                       ACE_ENV_ARG_PARAMETER);
+    dynany2->from_any (MyAny2);
 
     CORBA::Any_var arg2 =
       dynany2->to_any();
@@ -68,13 +60,11 @@ int main (int argc, char* argv[])
     // Finally destroy the ORB
     orb->destroy ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception - test failed:\n");
+      ex._tao_print_exception ("Exception - test failed:\n");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

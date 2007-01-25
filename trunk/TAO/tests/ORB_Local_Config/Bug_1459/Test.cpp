@@ -131,7 +131,7 @@ testBug1459 (int , ACE_TCHAR *[])
   }
   catch(const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Unhandled exception caught");
+      ex._tao_print_exception ("Unhandled exception caught");
       return -1;
     }
   catch(...)

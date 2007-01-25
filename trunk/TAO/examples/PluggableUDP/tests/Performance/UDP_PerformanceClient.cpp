@@ -45,15 +45,14 @@ UDP_PerformanceClient::svc ()
   ACE_UINT32 micro_seconds = 0;
   ACE_UINT32 delta_micro_seconds = 1;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::String_var corba_client_name =
         CORBA::string_dup (client_name.c_str ());
 
       UDP_var udpHandler_var = udpHandler_->_this ();
 
-      udp_->setResponseHandler (udpHandler_var.in ()
-                                ACE_ENV_ARG_PARAMETER);
+      udp_->setResponseHandler (udpHandler_var.in ());
 
       ACE_High_Res_Timer timer;
       while (1)
@@ -70,8 +69,7 @@ UDP_PerformanceClient::svc ()
                j++)
             {
               udp_->invoke (corba_client_name.in (),
-                            j
-                            ACE_ENV_ARG_PARAMETER);
+                            j);
 
 
               if (micro_seconds)
@@ -91,8 +89,7 @@ UDP_PerformanceClient::svc ()
             udpHandler_->getMessagesCount ();
 
           // Reset expected request ID
-          udp_->reset (corba_client_name.in ()
-                       ACE_ENV_ARG_PARAMETER);
+          udp_->reset (corba_client_name.in ());
 
           // Give the reset a chance to propagate back to us
           ACE_OS::sleep (tv);
@@ -160,14 +157,13 @@ UDP_PerformanceClient::svc ()
 
       // Shut down local ORB, trigger the end of the ORB event loop
             // in the main thread.
-      orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      orb_->shutdown (0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException");
+      ex._tao_print_exception ("\tException");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

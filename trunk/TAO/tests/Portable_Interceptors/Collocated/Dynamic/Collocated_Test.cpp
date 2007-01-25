@@ -48,8 +48,7 @@ main (int argc, char *argv[])
   server_orb.set ("server_orb");
   client_orb.set ("client_orb");
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -60,15 +59,13 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
-                         server_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
+                         server_orb.c_str ());
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -90,8 +87,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc (),
                          catc.get_TCHAR_argv (),
-                         client_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
+                         client_orb.c_str ());
 
       Client_Task client_task (input,
                                corb.in (),
@@ -125,10 +121,9 @@ main (int argc, char *argv[])
                   " properly\n"));
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions..
     }
-  ACE_ENDTRY;
   return 0;
 }

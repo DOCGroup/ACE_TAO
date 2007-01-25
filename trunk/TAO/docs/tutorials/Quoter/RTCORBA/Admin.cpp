@@ -34,7 +34,7 @@ static bool use_naming = false;
 
 // Parse the command-line arguments and set the global options.
 
-static int 
+static int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:r:bsc");
@@ -60,7 +60,7 @@ parse_args (int argc, char *argv[])
         case 'c':
           use_naming = get_opts.opt_arg ();
           break;
-          
+
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -100,7 +100,7 @@ get_distributor_reference (CORBA::ORB_ptr orb)
     return orb->string_to_object (ior.c_str ());
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   try
@@ -111,7 +111,7 @@ main (int argc, char *argv[])
       // This call MUST come after ORB_init(), which may need to
       // extract -ORB options first.
       if (parse_args (argc, argv) != 0)
-        return 1;  
+        return 1;
 
       CORBA::Object_var obj = get_distributor_reference (orb);
 
@@ -150,7 +150,7 @@ main (int argc, char *argv[])
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Exception caught:");
       return 1;
     }

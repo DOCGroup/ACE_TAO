@@ -47,8 +47,7 @@ Test_Big_Union::opname (void) const
 }
 
 void
-Test_Big_Union::dii_req_invoke (CORBA::Request *req
-                                ACE_ENV_ARG_DECL)
+Test_Big_Union::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -63,21 +62,20 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req
   this->ret_ = new Param_Test::Big_Union (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = *tmp;
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Big_Union (*tmp);
 }
 
 int
-Test_Big_Union::init_parameters (Param_Test_ptr objref
-                                 ACE_ENV_ARG_DECL)
+Test_Big_Union::init_parameters (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       // get access to a Coffee Object
       this->cobj_ = objref->make_coffee ();
@@ -85,15 +83,15 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref
       this->reset_parameters ();
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex,"System Exception doing make_coffee");
+      sysex._tao_print_exception ("System Exception doing make_coffee");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "An exception caught in make_coffee");
+      ex._tao_print_exception (
+        "An exception caught in make_coffee");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -226,25 +224,21 @@ Test_Big_Union::reset_parameters (void)
 }
 
 int
-Test_Big_Union::run_sii_test (Param_Test_ptr objref
-                              ACE_ENV_ARG_DECL)
+Test_Big_Union::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_big_union (this->in_,
                                            this->inout_,
-                                           this->out_
-                                           ACE_ENV_ARG_PARAMETER);
+                                           this->out_);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Big_Union::run_sii_test\n");
+      ex._tao_print_exception ("Test_Big_Union::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -283,8 +277,7 @@ Test_Big_Union::check_validity (void)
       break;
     case 1:
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
-        ACE_TRY
+        try
           {
             Coffee_ptr in    = this->in_.the_interface ();
             Coffee_ptr inout = this->inout_.the_interface ();
@@ -314,11 +307,10 @@ Test_Big_Union::check_validity (void)
                                    ret_desc->name.in ()))
               return 0;
           }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
           {
             return 0;
           }
-        ACE_ENDTRY;
       }
       break;
     case 2:

@@ -28,8 +28,7 @@ CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
                  const char* in_str,
-                 const A::Payload &
-                 ACE_ENV_ARG_DECL_NOT_USED)
+                 const A::Payload &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   out_l = 931233;

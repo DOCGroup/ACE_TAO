@@ -51,8 +51,7 @@ public:
   // read in the IOR's for the two objects A and B
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
+            char **argv);
   // Initialize the Initiator_Server state - parsing arguments and ...
 
   int run (void);

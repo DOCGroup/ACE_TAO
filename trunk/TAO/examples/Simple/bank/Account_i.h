@@ -51,18 +51,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the name of the <Account> holder.
 
-  virtual void name (const char *name
-                     ACE_ENV_ARG_DECL)
+  virtual void name (const char *name)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Set the name of the <Account> holder.
 
-  virtual void deposit (CORBA::Float
-                        ACE_ENV_ARG_DECL)
+  virtual void deposit (CORBA::Float)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deposit money in the account.
 
-  virtual void withdraw (CORBA::Float
-                         ACE_ENV_ARG_DECL)
+  virtual void withdraw (CORBA::Float)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Bank::Account::Overdraft));
   // Withdraw money in the account.

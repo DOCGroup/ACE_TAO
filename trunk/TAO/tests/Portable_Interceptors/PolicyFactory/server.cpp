@@ -15,8 +15,7 @@ ACE_RCSID (PolicyFactory,
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -27,13 +26,11 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "test_orb"
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "test_orb");
 
       // Create the test policy.
 
@@ -42,32 +39,28 @@ main (int argc, char *argv[])
       any <<= val;
 
       CORBA::Policy_var p (orb->create_policy (Test::POLICY_TYPE,
-                                               any
-                                               ACE_ENV_ARG_PARAMETER));
+                                               any));
 
       const CORBA::PolicyType ptype =
         p->policy_type ();
 
       // Sanity check.
       if (ptype != Test::POLICY_TYPE)
-        ACE_TRY_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
-      Test::Policy_var policy (Test::Policy::_narrow (p.in ()
-                                                      ACE_ENV_ARG_PARAMETER));
+      Test::Policy_var policy (Test::Policy::_narrow (p.in ()));
 
       const CORBA::ULong pval = policy->value ();
 
       // Sanity check.
       if (val != pval)
-        ACE_TRY_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -85,14 +78,13 @@ main (int argc, char *argv[])
       PortableServer::POA_var poa =
         root_poa->create_POA ("Test POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       policy->destroy ();
 
       poa_manager->activate ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
 
@@ -100,14 +92,12 @@ main (int argc, char *argv[])
                   "\n"
                   "PolicyFactory test succeeded.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "PolicyFactory test:");
+      ex._tao_print_exception ("PolicyFactory test:");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

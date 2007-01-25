@@ -38,19 +38,19 @@ void get_stringList2(Test::Hello_var hello);
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -100,13 +100,11 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -115,7 +113,7 @@ void get_stringList2(Test::Hello_var hello)
 {
     Test::StringList_var seq2;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Shutdown the ORB and block until the shutdown is complete.
       hello->get_stringList2(false, seq2.out());
@@ -126,16 +124,14 @@ void get_stringList2(Test::Hello_var hello)
                   the_string.in ()));
 	  }
     }
-  ACE_CATCH(CORBA::BAD_PARAM, ex)
+  catch (const CORBA::BAD_PARAM& )
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - catched expected exception BAD_PARAM\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "get_stringList2");
+      ex._tao_print_exception ("get_stringList2");
     }
-  ACE_ENDTRY;
 
 
     return;

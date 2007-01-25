@@ -47,22 +47,20 @@ Consumer_Input_Handler::close (void)
       // Only try to unsubscribe if the Consumer initiated the
       // shutdown.  Otherwise, the Notifier initiated it and it has
       // probably gone away by now!
-      ACE_TRY_NEW_ENV
+      try
         {
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
 
           if (notifier != 0)
             notifier->unsubscribe (receiver,
-                                   ""
-                                   ACE_ENV_ARG_PARAMETER);
+                                   "");
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+          ACE_PRINT_EXCEPTION (ex,
                                "Consumer_Input_Handler::handle_close\n");
         }
-      ACE_ENDTRY;
     }
 
   // Make sure to cleanup the STDIN handler.
@@ -131,19 +129,18 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
     }
   else
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           Event_Comm::Event event;
 
           event.tag_ = ACE_OS::strdup (buf);
 
-          notifier->push (event ACE_ENV_ARG_PARAMETER);
+          notifier->push (event);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");
+          ex._tao_print_exception ("Unexpected exception\n");
         }
-      ACE_ENDTRY;
     }
 
   /* NOTREACHED */

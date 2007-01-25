@@ -15,21 +15,18 @@ ACE_RCSID (AMI_Observer,
 
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr
-get_iterator (CORBA::ORB_ptr orb
-              ACE_ENV_ARG_DECL);
+get_iterator (CORBA::ORB_ptr orb);
 
 // Perform file requests
 void invoke_requests (int argc,
                       char *argv[],
                       int *request_count,
-                      Web_Server::Iterator_Factory_ptr f
-                      ACE_ENV_ARG_DECL);
+                      Web_Server::Iterator_Factory_ptr f);
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (argc < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,16 +37,14 @@ main (int argc, char *argv[])
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Mighty ORB"
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "Mighty ORB");
 
       // Get the Root POA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Activate the POA manager.
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
@@ -57,8 +52,7 @@ main (int argc, char *argv[])
 
       // Get an Iterator_Factory reference.
       Web_Server::Iterator_Factory_var factory =
-        ::get_iterator (orb.in ()
-                        ACE_ENV_ARG_PARAMETER);
+        ::get_iterator (orb.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -78,8 +72,7 @@ main (int argc, char *argv[])
       ::invoke_requests (argc,
                          argv,
                          &request_count,
-                         factory.in ()
-                         ACE_ENV_ARG_PARAMETER);
+                         factory.in ());
 
       // 1 millisecond delay to reduce "busy waiting" in ORB event
       // loop.
@@ -100,11 +93,11 @@ main (int argc, char *argv[])
             ACE_OS::sleep (tv);
         }
 
-      orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      orb->shutdown (0);
 
       //orb->destroy ();
     }
-  ACE_CATCH (Web_Server::Error_Result, exc)
+  catch (const Web_Server::Error_Result& exc)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Caught Web Server exception ")
@@ -112,14 +105,12 @@ main (int argc, char *argv[])
                          exc.status),
                         -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught unexpected exception:"));
+      ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   // Wait for all spawned viewers to exit.
   ACE_Process_Manager::instance ()->wait ();
@@ -128,19 +119,17 @@ main (int argc, char *argv[])
 }
 
 Web_Server::Iterator_Factory_ptr
-get_iterator (CORBA::ORB_ptr o
-              ACE_ENV_ARG_DECL)
+get_iterator (CORBA::ORB_ptr o)
 {
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (o);
 
   // Get a reference to the Name Service.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("NameService"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("NameService");
 
   // Narrow to a Naming Context
   CosNaming::NamingContext_var nc =
-    CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (obj.in ());
 
   if (CORBA::is_nil (obj.in ()))
     {
@@ -155,7 +144,7 @@ get_iterator (CORBA::ORB_ptr o
   name[0].id = CORBA::string_dup ("Push_Iterator_Factory");
   name[0].kind = CORBA::string_dup ("");
 
-  obj = nc->resolve (name ACE_ENV_ARG_PARAMETER);
+  obj = nc->resolve (name);
 
   Web_Server::Iterator_Factory_ptr factory =
     Web_Server::Iterator_Factory::_narrow (obj.in ());
@@ -166,8 +155,7 @@ get_iterator (CORBA::ORB_ptr o
 void invoke_requests (int argc,
                       char *argv[],
                       int *request_count,
-                      Web_Server::Iterator_Factory_ptr f
-                      ACE_ENV_ARG_DECL)
+                      Web_Server::Iterator_Factory_ptr f)
 {
   Web_Server::Iterator_Factory_var factory =
     Web_Server::Iterator_Factory::_duplicate (f);
@@ -188,7 +176,6 @@ void invoke_requests (int argc,
       // This ends up being an AMI call, so it won't block.
       handler->run (request_count,
                     argv[i + 1],
-                    factory.in ()
-                    ACE_ENV_ARG_PARAMETER);
+                    factory.in ());
     }
 }

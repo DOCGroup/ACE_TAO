@@ -38,12 +38,10 @@ Current_Test_Impl::test_transport_current (void)
   }
 
   CORBA::Object_var tcobject =
-    orb_->resolve_initial_references ("TAO::Transport::Current"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("TAO::Transport::Current");
 
   TAO::Transport::Current_var tc =
-    TAO::Transport::Current::_narrow (tcobject.in ()
-                                      ACE_ENV_SINGLE_ARG_DECL);
+    TAO::Transport::Current::_narrow (tcobject.in ());
 
   if (TAO_debug_level >= 1)
     {
@@ -76,21 +74,20 @@ void
 Current_Test_Impl::invoked_by_client (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       this->invoked_by_client_i ();
     }
-  ACE_CATCH (TAO::Transport::NoContext, ex)
+  catch (const TAO::Transport::NoContext& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a Transport::NoContext exception\n")));
     }
-  ACE_CATCH (CORBA::SystemException, ex1)
+  catch (const CORBA::SystemException& ex1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a CORBA::SystemException exception\n")));
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -107,19 +104,17 @@ Current_Test_Impl::invoked_by_client_i (void)
   if (this->do_collocated_calls_)
     {
       CORBA::Object_var selfobject =
-        poa_->servant_to_reference (this
-                                    ACE_ENV_SINGLE_ARG_DECL);
+        poa_->servant_to_reference (this);
 
       Test::Transport::CurrentTest_var self =
-        Test::Transport::CurrentTest::_narrow (selfobject.in ()
-                                               ACE_ENV_SINGLE_ARG_DECL);
+        Test::Transport::CurrentTest::_narrow (selfobject.in ());
 
       if (TAO_debug_level >= 1)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) server - Testing a collocated call\n")));
         }
-      self->invoked_during_upcall (ACE_ENV_ARG_PARAMETER);
+      self->invoked_during_upcall ();
     }
   else
     {
@@ -152,6 +147,5 @@ Current_Test_Impl::shutdown (void)
                 ACE_TEXT ("(%P|%t) server - shutting down.\n")));
   }
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

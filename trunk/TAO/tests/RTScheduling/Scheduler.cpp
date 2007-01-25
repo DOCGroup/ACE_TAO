@@ -5,14 +5,12 @@
 #include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
-TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb)
 {
   CORBA::Object_var current_obj =
-    orb->resolve_initial_references ("RTScheduler_Current"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("RTScheduler_Current");
 
-  current_ = RTScheduling::Current::_narrow (current_obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+  current_ = RTScheduling::Current::_narrow (current_obj.in ());
 }
 
 TAO_Scheduler::~TAO_Scheduler (void)
@@ -27,8 +25,7 @@ TAO_Scheduler::scheduling_policies (void)
 }
 
 void
-TAO_Scheduler::scheduling_policies (const CORBA::PolicyList &
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::scheduling_policies (const CORBA::PolicyList &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -49,8 +46,7 @@ TAO_Scheduler::scheduling_discipline_name (void)
 
 RTScheduling::ResourceManager_ptr
 TAO_Scheduler::create_resource_manager (const char *,
-                                        CORBA::Policy_ptr
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+                                        CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -59,8 +55,7 @@ TAO_Scheduler::create_resource_manager (const char *,
 void
 TAO_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                          const char *,
-                                         CORBA::Policy_ptr
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+                                         CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -69,8 +64,7 @@ void
 TAO_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
                                              const char *,
                                              CORBA::Policy_ptr,
-                                             CORBA::Policy_ptr
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+                                             CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
@@ -80,8 +74,7 @@ void
 TAO_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &,
                                                 const char *,
                                                 CORBA::Policy_ptr,
-                                                CORBA::Policy_ptr
-                                                ACE_ENV_ARG_DECL_NOT_USED)
+                                                CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
@@ -91,8 +84,7 @@ void
 TAO_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &,
                                           const char *,
                                           CORBA::Policy_ptr,
-                                          CORBA::Policy_ptr
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                          CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
@@ -100,8 +92,7 @@ TAO_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &,
 
 void
 TAO_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
-                                       const char *
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       const char *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -109,16 +100,14 @@ TAO_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
 void
 TAO_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
                                               const char *,
-                                              CORBA::Policy_ptr
-                                              ACE_ENV_ARG_DECL_NOT_USED)
+                                              CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 
 void
-TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info
-                             ACE_ENV_ARG_DECL)
+TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -137,17 +126,15 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                                 RTScheduling::Current::IdType_out guid_out,
                                 CORBA::String_out /*name*/,
                                 CORBA::Policy_out /*sched_param*/,
-                                CORBA::Policy_out /*implicit_sched_param*/
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Policy_out /*implicit_sched_param*/)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   IOP::ServiceContext_var serv_cxt;
 
-  ACE_TRY
+  try
     {
-      serv_cxt = request_info->get_request_service_context (Server_Interceptor::SchedulingInfo
-                                                            ACE_ENV_ARG_PARAMETER);
+      serv_cxt = request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
       size_t gu_id;
       ACE_OS::memcpy (&gu_id,
@@ -169,71 +156,62 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
       guid_out.ptr () = guid;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid Service Context\n"));
     }
-  ACE_ENDTRY;
 }
 
 void
-TAO_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-TAO_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr
-                               ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 }
 
 void
-TAO_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 }
 
 void
-TAO_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 }
 
 void
-TAO_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
-                              ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-TAO_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 }
 
 void
-TAO_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr
-                              ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 }
 
 void
-TAO_Scheduler::cancel (const RTScheduling::Current::IdType &
-                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Scheduler::cancel (const RTScheduling::Current::IdType &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

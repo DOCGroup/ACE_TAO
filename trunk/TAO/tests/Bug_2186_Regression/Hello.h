@@ -23,7 +23,7 @@ public:
   virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_callback (Test::Hello_ptr call_me ACE_ENV_ARG_DECL)
+  virtual void request_callback (Test::Hello_ptr call_me)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

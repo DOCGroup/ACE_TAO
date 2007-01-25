@@ -27,15 +27,13 @@ Server_Task::Server_Task (const char *output,
 int
 Server_Task::svc (void)
 {
- ACE_TRY_NEW_ENV
+ try
    {
      CORBA::Object_var poa_object =
-       this->sorb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+       this->sorb_->resolve_initial_references("RootPOA");
 
      PortableServer::POA_var root_poa =
-       PortableServer::POA::_narrow (poa_object.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+       PortableServer::POA::_narrow (poa_object.in ());
 
      if (CORBA::is_nil (root_poa.in ()))
        ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,8 +52,7 @@ Server_Task::svc (void)
                         sorb_->orb_core()->use_global_collocation ()));
 
      CORBA::String_var ior =
-       this->sorb_->object_to_string (evNode.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+       this->sorb_->object_to_string (evNode.in ());
 
      // Output the IOR to the <this->output_>
      FILE *output_file= ACE_OS::fopen (this->output_,
@@ -78,19 +75,17 @@ Server_Task::svc (void)
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
    }
- ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+ catch (const CORBA::BAD_INV_ORDER& ex)
    {
      // Periodically we get a bad inv order on fast machines.
      // It's a false negative and is safe to ignore.
      ACE_UNUSED_ARG (ex);
    }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Exception caught:");
+     ex._tao_print_exception ("Exception caught:");
      return 1;
    }
- ACE_ENDTRY;
 
  return 0;
 }

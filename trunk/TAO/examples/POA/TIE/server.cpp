@@ -24,27 +24,25 @@ ACE_RCSID(TIE, server, "$Id$")
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   char str[256];
 
-  ACE_TRY
+  try
     {
       ACE_OS::strcpy (str, "CORBA::ORB_init");
 
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       ACE_OS::strcpy (str, "PortableServer::POA::_narrow");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       ACE_OS::strcpy (str, "PortableServer::POA::the_POAManager");
       // Get the POAManager of the RootPOA.
@@ -59,12 +57,12 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str,"PortableServer::POA::create_lifespan_policy");
       // Lifespan policy
       policies[0] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_implicit_activation_policy");
       // Implicit activation policy
       policies[1] =
-        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_POA");
       // Create the firstPOA under the RootPOA.
@@ -72,8 +70,7 @@ main (int argc, char **argv)
       PortableServer::POA_var first_poa =
         root_poa->create_POA (name.c_str (),
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
 
       ACE_OS::strcpy (str,"PortableServer::POA::create_POA");
@@ -142,20 +139,20 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str, "CORBA::ORB::object_to_string");
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
-        orb->object_to_string (a.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (a.in ());
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var second_ior =
-        orb->object_to_string (b.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (b.in ());
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var third_ior =
-        orb->object_to_string (c.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (c.in ());
 
 #if defined (ACE_HAS_USING_KEYWORD)
       // Stringyfy all the object references and print them out.
       CORBA::String_var forth_ior =
-        orb->object_to_string (a_tie.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (a_tie.in ());
 
       FILE *output_file_1 = ACE_OS::fopen ("ior_1", "w");
       FILE *output_file_2 = ACE_OS::fopen ("ior_2", "w");
@@ -187,12 +184,12 @@ main (int argc, char **argv)
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var fifth_ior =
-        orb->object_to_string (b_tie.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (b_tie.in ());
 
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var sixth_ior =
-        orb->object_to_string (c_tie.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (c_tie.in ());
 
       FILE *output_file_5 = ACE_OS::fopen ("ior_5", "w");
       FILE *output_file_6 = ACE_OS::fopen ("ior_6", "w");
@@ -215,12 +212,11 @@ main (int argc, char **argv)
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, str);
+      ex._tao_print_exception (str);
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

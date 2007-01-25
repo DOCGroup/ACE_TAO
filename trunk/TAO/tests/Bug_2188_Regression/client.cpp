@@ -39,17 +39,17 @@ main (int argc, char *argv[])
   ServerAdmin_var saobj;
   CORBA::ORB_var orb;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
-      saobj = ServerAdmin::_narrow (tmp.in() ACE_ENV_ARG_PARAMETER);
+      saobj = ServerAdmin::_narrow (tmp.in());
 
       if (CORBA::is_nil (saobj.in ()))
         {
@@ -64,17 +64,15 @@ main (int argc, char *argv[])
       CharArray_slice * char_array = CharArray_alloc();
       for (int i = 0; i < 10; i++)
         char_array[i] = (char)('a' + i);
-      atobj->a_charArray (char_array ACE_ENV_ARG_PARAMETER);
+      atobj->a_charArray (char_array);
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 
   saobj->shutdown();
 

@@ -160,8 +160,7 @@ The filtering criteria will not work.\n"));
 
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
-                       const char *filtering_criteria
-                       ACE_ENV_ARG_DECL)
+                       const char *filtering_criteria)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    Event_Comm::Notifier::CannotSubscribe
@@ -198,7 +197,8 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
           // Inform the caller that the <Event_Comm::Consumer> * is
           // already being used.
 
-          ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Duplicate consumer and filtering criteria found.\n"));
+          throw Event_Comm::Notifier::CannotSubscribe (
+            "Duplicate consumer and filtering criteria found.\n");
         }
     }
 
@@ -214,7 +214,8 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
     {
       // Prevent memory leaks.
       delete nr_entry;
-      ACE_THROW (Event_Comm::Notifier::CannotSubscribe ("Failed to add Consumer to internal map\n"));
+      throw Event_Comm::Notifier::CannotSubscribe (
+        "Failed to add Consumer to internal map\n");
     }
 }
 
@@ -222,8 +223,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
-                         const char *filtering_criteria
-                         ACE_ENV_ARG_DECL)
+                         const char *filtering_criteria)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    Event_Comm::Notifier::CannotUnsubscribe
@@ -265,21 +265,22 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
           // @@ This is a hack, we need a better approach!
           if (this->map_.unbind (me->ext_id_,
                                  nr_entry) == -1)
-            ACE_THROW (Event_Comm::Notifier::CannotUnsubscribe ("Internal map unbind failed."));
+            throw Event_Comm::Notifier::CannotUnsubscribe (
+              "Internal map unbind failed.");
           else
             delete nr_entry;
         }
     }
 
   if (found == 0)
-    ACE_THROW (Event_Comm::Notifier::CannotUnsubscribe ("The Consumer and filtering criteria were not found."));
+    throw Event_Comm::Notifier::CannotUnsubscribe (
+      "The Consumer and filtering criteria were not found.");
 }
 
 // Disconnect all the consumers, giving them the <reason>.
 
 void
-Notifier_i::disconnect (const char *reason
-                        ACE_ENV_ARG_DECL)
+Notifier_i::disconnect (const char *reason)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -303,16 +304,14 @@ Notifier_i::disconnect (const char *reason
       ACE_DEBUG ((LM_DEBUG,
                   "disconnecting client %x\n",
                   consumer_ref));
-      ACE_TRY
+      try
         {
-          consumer_ref->disconnect (reason
-                                    ACE_ENV_ARG_PARAMETER);
+          consumer_ref->disconnect (reason);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception\n");
+          ex._tao_print_exception ("Unexpected exception\n");
         }
-      ACE_ENDTRY;
 
       delete me->int_id_;
       count++;
@@ -332,8 +331,7 @@ Notifier_i::disconnect (const char *reason
 // Notify all consumers whose filtering criteria match the event.
 
 void
-Notifier_i::push (const Event_Comm::Event &event
-                  ACE_ENV_ARG_DECL)
+Notifier_i::push (const Event_Comm::Event &event)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -368,18 +366,16 @@ Notifier_i::push (const Event_Comm::Event &event
                       (const char *) event.tag_,
                       me->int_id_->criteria (),
                       consumer_ref));
-          ACE_TRY
+          try
             {
-              consumer_ref->push (event
-                                  ACE_ENV_ARG_PARAMETER);
+              consumer_ref->push (event);
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+              ACE_PRINT_EXCEPTION (ex,
                                    "Unexpected exception\n");
               continue;
             }
-          ACE_ENDTRY;
           count++;
         }
     }
@@ -414,8 +410,7 @@ Consumer_i::~Consumer_i (void)
 // occurred.
 
 void
-Consumer_i::push (const Event_Comm::Event &event
-                  ACE_ENV_ARG_DECL_NOT_USED)
+Consumer_i::push (const Event_Comm::Event &event)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *tmpstr = event.tag_;
@@ -429,8 +424,7 @@ Consumer_i::push (const Event_Comm::Event &event
 // <Event_Comm::Notifier>.
 
 void
-Consumer_i::disconnect (const char *reason
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Consumer_i::disconnect (const char *reason)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

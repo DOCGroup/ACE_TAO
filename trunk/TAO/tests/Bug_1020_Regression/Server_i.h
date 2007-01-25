@@ -16,8 +16,7 @@ class Server : public POA_Test::Server
 public:
   Server(CORBA::ORB_ptr orb);
 
-  virtual void start_task(Test::Echo_ptr client
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void start_task(Test::Echo_ptr client)
     ACE_THROW_SPEC((CORBA::SystemException));
 
 private:

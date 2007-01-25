@@ -58,8 +58,7 @@ Test_Unbounded_WString::opname (void) const
 }
 
 void
-Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req
-                                        ACE_ENV_ARG_DECL)
+Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -77,19 +76,18 @@ Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req
   this->ret_ = CORBA::wstring_dup (tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::wstring_dup (tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = CORBA::wstring_dup (tmp);
 }
 
 int
-Test_Unbounded_WString::init_parameters (Param_Test_ptr
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+Test_Unbounded_WString::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -124,27 +122,23 @@ Test_Unbounded_WString::reset_parameters (void)
 }
 
 int
-Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref
-                                      ACE_ENV_ARG_DECL)
+Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::WString_out str_out (this->out_);
 
       this->ret_ = objref->test_unbounded_wstring (this->in_,
                                                    this->inout_,
-                                                   str_out
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                   str_out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Unbounded_WString::run_sii_test\n");
+      ex._tao_print_exception ("Test_Unbounded_WString::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

@@ -18,15 +18,14 @@ ACE_RCSID (PolicyFactory,
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::PolicyFactory_ptr p;
@@ -41,8 +40,7 @@ Server_ORBInitializer::post_init (
   PortableInterceptor::PolicyFactory_var policy_factory (p);
 
   info->register_policy_factory (Test::POLICY_TYPE,
-                                 policy_factory.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                 policy_factory.in ());
 
   PortableInterceptor::IORInterceptor_ptr i;
   ACE_NEW_THROW_EX (i,
@@ -55,6 +53,5 @@ Server_ORBInitializer::post_init (
 
   PortableInterceptor::IORInterceptor_var ior_interceptor (i);
 
-  info->add_ior_interceptor (ior_interceptor.in ()
-                             ACE_ENV_ARG_PARAMETER);
+  info->add_ior_interceptor (ior_interceptor.in ());
 }

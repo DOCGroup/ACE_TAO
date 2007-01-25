@@ -21,14 +21,14 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       CORBA::Object_var object =
-        corb_->string_to_object (input_ ACE_ENV_ARG_PARAMETER);
+        corb_->string_to_object (input_);
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test_Interceptors::Visual::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -38,17 +38,15 @@ Client_Task::svc (void)
                             1);
         }
 
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      run_test (server.in ());
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in client task:");
+      ex._tao_print_exception ("Exception caught in client task:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 
@@ -56,34 +54,29 @@ Client_Task::svc (void)
 
 
 void
-Client_Task::run_test (Test_Interceptors::Visual_ptr server
-          ACE_ENV_ARG_DECL)
+Client_Task::run_test (Test_Interceptors::Visual_ptr server)
 {
-  server->normal (10 ACE_ENV_ARG_PARAMETER);
+  server->normal (10);
 
   CORBA::Long one = 1, two = 1;
   (void) server->calculate (one,
-                            two
-                            ACE_ENV_ARG_PARAMETER);
+                            two);
 
-  ACE_TRY
+  try
     {
       (void) server->user ();
     }
-  ACE_CATCH (Test_Interceptors::Silly, userex)
+  catch (const Test_Interceptors::Silly& userex)
     {
       ACE_DEBUG ((LM_DEBUG, "As expected, Caught Silly\n"));
     }
-  ACE_ENDTRY;
 
-  ACE_TRY_EX (SYS)
+  try
     {
       server->system ();
-      ACE_TRY_CHECK_EX (SYS);
     }
-  ACE_CATCH (CORBA::INV_OBJREF, sysex)
+  catch (const CORBA::INV_OBJREF& sysex)
     {
       ACE_DEBUG ((LM_DEBUG, "As expected, Caught CORBA::INV_OBJREF\n"));
     }
-  ACE_ENDTRY;
 }

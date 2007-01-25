@@ -14,17 +14,15 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb)
 int
 Client_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

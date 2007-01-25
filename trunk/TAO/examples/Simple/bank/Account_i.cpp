@@ -44,23 +44,21 @@ Account_i::balance (void)
 }
 
 void
-Account_i::deposit (CORBA::Float deposit
-                    ACE_ENV_ARG_DECL_NOT_USED)
+Account_i::deposit (CORBA::Float deposit)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   balance_ += deposit;
 }
 
 void
-Account_i::withdraw (CORBA::Float withdrawl
-                     ACE_ENV_ARG_DECL)
+Account_i::withdraw (CORBA::Float withdrawl)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Bank::Account::Overdraft))
 {
   if (balance_ >= withdrawl)
     balance_ -= withdrawl;
   else
-    ACE_THROW (Bank::Account::Overdraft ("Exception::Overdraft\n"));
+    throw Bank::Account::Overdraft ("Exception::Overdraft\n");
 }
 
 char *
@@ -71,8 +69,7 @@ Account_i::name (void)
 }
 
 void
-Account_i::name (const char *name
-                 ACE_ENV_ARG_DECL_NOT_USED)
+Account_i::name (const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->name_ = CORBA::string_dup (name);

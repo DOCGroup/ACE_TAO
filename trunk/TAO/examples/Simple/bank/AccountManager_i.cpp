@@ -45,8 +45,7 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 
 Bank::Account_ptr
 AccountManager_i::open (const char *name,
-                        CORBA::Float initial_balance
-                        ACE_ENV_ARG_DECL)
+                        CORBA::Float initial_balance)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Account_i *result = 0;
@@ -92,11 +91,10 @@ AccountManager_i::open (const char *name,
 // Shutdown.
 
 void
-AccountManager_i::close (Bank::Account_ptr account
-                         ACE_ENV_ARG_DECL)
+AccountManager_i::close (Bank::Account_ptr account)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       CORBA::String_var name =
         CORBA::string_dup (account->name ());
@@ -113,12 +111,10 @@ AccountManager_i::close (Bank::Account_ptr account
                    "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
                    (char *) name));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to close Account\n");
+      ex._tao_print_exception ("Unable to close Account\n");
     }
-  ACE_ENDTRY;
 }
 
 void

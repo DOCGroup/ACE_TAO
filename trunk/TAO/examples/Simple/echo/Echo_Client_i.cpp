@@ -28,9 +28,8 @@ Echo_Client_i::run (const char *name,
   if (client.init (name,argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       while (1)
         {
@@ -43,8 +42,7 @@ Echo_Client_i::run (const char *name,
           if (ACE_OS::fgets (buf,sizeof buf, stdin) == 0)
             break;
 
-          CORBA::String_var s = client->echo_string (buf
-                                                     ACE_ENV_ARG_PARAMETER);
+          CORBA::String_var s = client->echo_string (buf);
 
           ACE_DEBUG ((LM_DEBUG,
                       "\nString echoed by client \n%s\n",
@@ -56,12 +54,11 @@ Echo_Client_i::run (const char *name,
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"\n Exception in RMI");
+      ex._tao_print_exception ("\n Exception in RMI");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -170,22 +170,19 @@ PP_Test_Client::parse_args (void)
 void
 PP_Test_Client::send_oneway (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
       this->objref_->send_oneway ();
       this->call_count_++;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from send_oneway");
+      ex._tao_print_exception ("from send_oneway");
 
       this->error_count_++;
     }
-  ACE_ENDTRY;
 }
 
 // Twoway test.
@@ -193,22 +190,19 @@ PP_Test_Client::send_oneway (void)
 void
 PP_Test_Client::send_void (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
       this->objref_->send_void ();
       this->call_count_++;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "from send_void");
+      ex._tao_print_exception ("from send_void");
 
       this->error_count_++;
     }
-  ACE_ENDTRY;
 }
 
 // Send an octet
@@ -260,9 +254,8 @@ PP_Test_Client::run ()
 int
 PP_Test_Client::shutdown_server (int do_shutdown)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (do_shutdown)
         {
@@ -276,23 +269,20 @@ PP_Test_Client::shutdown_server (int do_shutdown)
                       "server, please ACE_OS::exit"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from shutdown_server");
+      ex._tao_print_exception ("from shutdown_server");
 
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 PP_Test_Client::run_oneway (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ULong i;
 
@@ -318,23 +308,20 @@ PP_Test_Client::run_oneway (void)
                       "server, please ACE_OS::exit"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from objref_->shutdown");
+      ex._tao_print_exception ("from objref_->shutdown");
 
       return -1;
     }
-  ACE_ENDTRY;
   return this->error_count_ == 0 ? 0 : 1;
 }
 
 int
 PP_Test_Client::run_void (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ULong i;
 
@@ -360,14 +347,12 @@ PP_Test_Client::run_void (void)
                       "server, please ACE_OS::exit"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "from objref_->shutdown");
+      ex._tao_print_exception ("from objref_->shutdown");
 
       return -1;
     }
-  ACE_ENDTRY;
   return this->error_count_ == 0 ? 0 : 1;
 }
 
@@ -396,13 +381,12 @@ PP_Test_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet"
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "internet");
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         {
@@ -418,12 +402,10 @@ PP_Test_Client::init (int argc, char **argv)
         }
 
       CORBA::Object_var factory_object =
-        this->orb_->string_to_object (this->factory_key_
-                                      ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (this->factory_key_);
 
       this->factory_ =
-        Pluggable_Test_Factory::_narrow (factory_object.in()
-                                ACE_ENV_ARG_PARAMETER);
+        Pluggable_Test_Factory::_narrow (factory_object.in());
 
       if (CORBA::is_nil (this->factory_.in ()))
         {
@@ -448,13 +430,11 @@ PP_Test_Client::init (int argc, char **argv)
                             -1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Pluggable_Test::init");
+      ex._tao_print_exception ("Pluggable_Test::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

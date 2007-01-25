@@ -14,8 +14,7 @@ Request_Interceptor::Request_Interceptor (const char *name)
 }
 
 char *
-Request_Interceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Request_Interceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
@@ -40,7 +39,7 @@ Request_Interceptor::destroy (void)
                   "is zero\n", s_count,
                   this->name_.in ()));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (e_count == 0)
@@ -51,7 +50,7 @@ Request_Interceptor::destroy (void)
                   "is zero\n",
                   e_count, this->name_.in ()));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (s_count != e_count)
@@ -67,6 +66,6 @@ Request_Interceptor::destroy (void)
                   s_count,
                   e_count));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }

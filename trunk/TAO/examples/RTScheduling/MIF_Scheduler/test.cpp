@@ -15,21 +15,17 @@ DT_Test::DT_Test (void)
 }
 
 int
-DT_Test::init (int argc, char *argv []
-         ACE_ENV_ARG_DECL)
+DT_Test::init (int argc, char *argv [])
 {
   orb_ = CORBA::ORB_init (argc,
         argv,
-        ""
-        ACE_ENV_ARG_PARAMETER);
+        "");
 
   dt_creator_->orb (orb_.in ());
 
-  CORBA::Object_ptr manager_obj = orb_->resolve_initial_references ("RTSchedulerManager"
-                   ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_ptr manager_obj = orb_->resolve_initial_references ("RTSchedulerManager");
 
-  TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
-                    ACE_ENV_ARG_PARAMETER);
+  TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj);
 
 
   ACE_NEW_RETURN (scheduler_,
@@ -38,21 +34,18 @@ DT_Test::init (int argc, char *argv []
   manager->rtscheduler (scheduler_);
 
   CORBA::Object_var object =
-    orb_->resolve_initial_references ("RTScheduler_Current"
-              ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("RTScheduler_Current");
 
   current_  =
-    RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+    RTScheduling::Current::_narrow (object.in ());
 
   return 0;
 }
 
 void
-DT_Test::run (int argc, char* argv []
-        ACE_ENV_ARG_DECL)
+DT_Test::run (int argc, char* argv [])
 {
-  init (argc,argv
-  ACE_ENV_ARG_PARAMETER);
+  init (argc,argv);
 
   TASK_STATS::instance ()->init (this->dt_creator_->total_load ());
   if (this->dt_creator_->resolve_naming_service () == -1)
@@ -70,8 +63,7 @@ DT_Test::run (int argc, char* argv []
   ACE_DEBUG ((LM_DEBUG,
         "Registered Synch Object\n"));
 
-  dt_creator_->create_distributable_threads (current_.in ()
-               ACE_ENV_ARG_PARAMETER);
+  dt_creator_->create_distributable_threads (current_.in ());
 
   orb_->destroy ();
 
@@ -117,19 +109,17 @@ long flags;
 int
 DT_Test::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      dt_creator_->create_distributable_threads (current_.in ()
-             ACE_ENV_ARG_PARAMETER);
+      dt_creator_->create_distributable_threads (current_.in ());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -144,23 +134,21 @@ DT_Test::current (void)
 int
 main (int argc, char* argv [])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_MIF_DT_Creator);
 
     ACE_DEBUG ((LM_DEBUG,
          "%t\n"));
-      DT_TEST::instance ()->run (argc, argv
-         ACE_ENV_ARG_PARAMETER);
+      DT_TEST::instance ()->run (argc, argv);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

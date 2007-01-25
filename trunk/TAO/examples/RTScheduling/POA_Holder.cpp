@@ -145,7 +145,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa)
 {
   CORBA::Policy_var priority_model_policy;
   CORBA::Policy_var lanes_policy;
@@ -155,8 +155,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
   // Create a priority model policy.
   priority_model_policy =
     rt_orb->create_priority_model_policy (priority_model_,
-                                          server_priority_
-                                          ACE_ENV_ARG_PARAMETER);
+                                          server_priority_);
 
   if (lanes_.length () != 0)
     {
@@ -174,13 +173,11 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                               allow_borrowing,
                                               allow_request_buffering,
                                               max_buffered_requests,
-                                              max_request_buffer_size
-                                              ACE_ENV_ARG_PARAMETER);
+                                              max_request_buffer_size);
 
       // Create a thread-pool policy.
       lanes_policy =
-        rt_orb->create_threadpool_policy (threadpool_id
-                                          ACE_ENV_ARG_PARAMETER);
+        rt_orb->create_threadpool_policy (threadpool_id);
 
       ACE_DEBUG ((LM_DEBUG,
       "Activated Lanes\n"));
@@ -201,12 +198,10 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                    tp_priority_,
                                    allow_request_buffering,
                                    max_buffered_requests,
-                                   max_request_buffer_size
-                                   ACE_ENV_ARG_PARAMETER);
+                                   max_request_buffer_size);
 
 
-      thread_pool_policy = rt_orb->create_threadpool_policy (threadpool_id_1
-                   ACE_ENV_ARG_PARAMETER);
+      thread_pool_policy = rt_orb->create_threadpool_policy (threadpool_id_1);
 
       ACE_DEBUG ((LM_DEBUG,
       "Activated thread pool\n"));
@@ -218,8 +213,7 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     {
       // Create a bands policy.
       bands_policy =
-        rt_orb->create_priority_banded_connection_policy (this->bands_
-                                                          ACE_ENV_ARG_PARAMETER);
+        rt_orb->create_priority_banded_connection_policy (this->bands_);
       ACE_DEBUG ((LM_DEBUG,
       "Activated Bands\n"));
 
@@ -304,6 +298,5 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
 
   parent_poa->create_POA (POA_name_.c_str (),
                           poa_manager.in (),
-                          poa_policy_list
-                          ACE_ENV_ARG_PARAMETER);
+                          poa_policy_list);
 }

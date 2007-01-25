@@ -29,20 +29,18 @@ AMI_Buffering::Nest_Guard::~Nest_Guard (void)
 }
 
 void
-AMI_Buffering::receive_data (const Test::Payload &the_payload
-                                ACE_ENV_ARG_DECL)
+AMI_Buffering::receive_data (const Test::Payload &the_payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       AMI_Buffering::Nest_Guard ng(*this);
-      this->admin_->request_received (the_payload.length () ACE_ENV_ARG_PARAMETER);
+      this->admin_->request_received (the_payload.length ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) DEBUG: AMI_Buffering::receive_data"));
     }
-  ACE_ENDTRY;
 
   this->try_shutdown();
 }
@@ -75,7 +73,7 @@ AMI_Buffering::try_shutdown(void)
     return;
   if (this->max_nest_ > 1)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) max nesting level: %d\n", max_nest_));
-  this->admin_->shutdown(ACE_ENV_ARG_PARAMETER);
+  this->admin_->shutdown();
 
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

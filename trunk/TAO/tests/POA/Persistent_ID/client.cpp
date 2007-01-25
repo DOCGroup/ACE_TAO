@@ -61,15 +61,13 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -77,12 +75,10 @@ main (int argc, char **argv)
         return parse_args_result;
 
       CORBA::Object_var object =
-        orb->string_to_object (IOR
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (IOR);
 
       test_var test1 =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        test::_narrow (object.in ());
 
       test1->method ();
 
@@ -105,12 +101,11 @@ main (int argc, char **argv)
           test1->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      ex._tao_print_exception ("Error!");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

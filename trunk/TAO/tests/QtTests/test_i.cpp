@@ -23,8 +23,7 @@ LCD_Display_imp::shutdown (void)
 }
 
 void
-LCD_Display_imp::send_val (CORBA::Long val
-                           ACE_ENV_ARG_DECL_NOT_USED)
+LCD_Display_imp::send_val (CORBA::Long val)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

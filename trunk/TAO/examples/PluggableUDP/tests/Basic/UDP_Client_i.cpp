@@ -39,9 +39,8 @@ UDP_Client_i::svc (void)
   client_name += "_";
   client_name += pid;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::String_var corba_client_name =
         CORBA::string_dup (client_name.c_str ());
@@ -52,8 +51,7 @@ UDP_Client_i::svc (void)
         {
           udp_->invoke (corba_client_name.in (),
                         udpHandler_.inout (),
-                        i
-                        ACE_ENV_ARG_PARAMETER);
+                        i);
 
           ACE_DEBUG ((LM_DEBUG,
                       "invoked %s %d, going to wait %d ms\n",
@@ -75,12 +73,11 @@ UDP_Client_i::svc (void)
       orb_->shutdown ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException");
+      ex._tao_print_exception ("\tException");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

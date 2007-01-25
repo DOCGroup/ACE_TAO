@@ -12,8 +12,7 @@ class MY_Stub_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Dia
 
   Smart_Diamond_Top_Factory (void);
 
-  virtual Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy);
 
   // This method will create the smart_proxy.
 };
@@ -25,8 +24,7 @@ class MY_Stub_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamo
 
   Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy);
 
-  virtual char * shape (
-                       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * shape ()
 
     ACE_THROW_SPEC ((
       CORBA::SystemException

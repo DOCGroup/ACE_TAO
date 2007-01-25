@@ -23,15 +23,14 @@ main (int argc, char *argv[])
 {
   CORBA::ORB_var orb;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       const char orbid[] = "mighty_orb";
 
       CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
 
       {
-        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid);
 
         my_orb = orb.in ();
 
@@ -47,7 +46,7 @@ main (int argc, char *argv[])
       // used in that scope.
       // -------------------------------------------------------------
 
-      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, orbid);
 
       // This isn't portable, but TAO implements an ORB_ptr as a
       // pointer so we're okay.
@@ -83,7 +82,7 @@ main (int argc, char *argv[])
 
       orb->destroy ();
 
-      orb = CORBA::ORB_init (argc, argv, orbid ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, orbid);
 
       // This isn't portable, but TAO implements an ORB_ptr as a
       // pointer so we're okay.
@@ -108,7 +107,7 @@ main (int argc, char *argv[])
                       "\n",
                       orbid));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // -------------------------------------------------------------
@@ -118,7 +117,7 @@ main (int argc, char *argv[])
       // -------------------------------------------------------------
 
       CORBA::Object_var object =
-        orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (IOR);
 
       // -------------------------------------------------------------
       // Initialize another two ORBs but don't explicitly destroy them
@@ -126,10 +125,10 @@ main (int argc, char *argv[])
       // clean-up.
       // -------------------------------------------------------------
       CORBA::ORB_var orb2 =
-        CORBA::ORB_init (argc, argv, "ORB number 2" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "ORB number 2");
 
       CORBA::ORB_var orb3 =
-        CORBA::ORB_init (argc, argv, "ORB number 3" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "ORB number 3");
 
       // -------------------------------------------------------------
       // Now try to perform an operation using the destroyed ORB
@@ -141,7 +140,7 @@ main (int argc, char *argv[])
       orb->destroy ();
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // If we get here, then something went wrong.  A
       // CORBA::OBJECT_NOT_EXIST() exception should have been thrown!.
@@ -155,9 +154,9 @@ main (int argc, char *argv[])
                   "\n",
                   orbid));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, exc)
+  catch (const CORBA::OBJECT_NOT_EXIST& exc)
     {
       // Do something with the exception to make sure it actually
       // exists.  If it doesn't exist then there is something wrong
@@ -170,10 +169,9 @@ main (int argc, char *argv[])
                   "This exception was expected.  It is safe to ignore it.\n",
                   exc._rep_id ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught unexpected exception:");
+      ex._tao_print_exception ("Caught unexpected exception:");
 
 
       ACE_DEBUG ((LM_ERROR,
@@ -182,7 +180,6 @@ main (int argc, char *argv[])
 
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "\n"

@@ -63,19 +63,18 @@ private:
 //int testClient (char* orbName, char* iorFile)
 int main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
           CORBA::ORB_init (argc,
                            argv,
-                           "ORB_Test_Client"
-                           ACE_ENV_ARG_PARAMETER);
+                           "ORB_Test_Client");
 
       CORBA::Object_var object =
-        orb->string_to_object (iorFile ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (iorFile);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -86,8 +85,7 @@ int main (int argc, char *argv[])
         }
 
       CORBA::String_var string =
-        orb->object_to_string (server.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Client: orb->object_to_string:\n%s\n",
@@ -101,13 +99,12 @@ int main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -126,7 +123,7 @@ Client::Client (Simple_Server_ptr server,
 int
 Client::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Octet_Seq octetSeq(SIZE_BLOCK);
       Char_Seq charSeq(SIZE_BLOCK);
@@ -138,7 +135,7 @@ Client::svc (void)
 
       // This sets up the connector, so that we do not incur
       // the overhead on the first call in the loop.
-      server_->sendCharSeq (charSeq ACE_ENV_ARG_PARAMETER);
+      server_->sendCharSeq (charSeq);
 
       timer.start ();
 
@@ -147,9 +144,9 @@ Client::svc (void)
         {
           client_count++;
 
-          server_->sendCharSeq (charSeq ACE_ENV_ARG_PARAMETER);
+          server_->sendCharSeq (charSeq);
 
-          //server_->sendOctetSeq (octetSeq ACE_ENV_ARG_PARAMETER);
+          //server_->sendOctetSeq (octetSeq);
 
           //ACE_DEBUG ((LM_DEBUG, "."));
         }
@@ -178,12 +175,11 @@ Client::svc (void)
       server_->shutdown ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "MT_Client: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }
 

@@ -33,8 +33,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   int dt_task_init (ACE_Arg_Shifter& arg_shifter);
 
-  virtual void create_distributable_threads (RTScheduling::Current_ptr  current
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void create_distributable_threads (RTScheduling::Current_ptr  current);
 
   void activate_poa_list (void);
   void activate_job_list (void);

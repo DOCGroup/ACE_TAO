@@ -11,16 +11,14 @@ ACE_RCSID (Request_Interceptor_Flow,
 
 void
 Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -38,8 +36,7 @@ Server_ORBInitializer::post_init (
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =
     si;
 
-  info->add_server_request_interceptor (si_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (si_interceptor.in ());
 
   ACE_NEW_THROW_EX (si,
                     Server_Request_Interceptor ("SERVER B"),
@@ -51,8 +48,7 @@ Server_ORBInitializer::post_init (
 
   si_interceptor = si;
 
-  info->add_server_request_interceptor (si_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (si_interceptor.in ());
 
   ACE_NEW_THROW_EX (si,
                     Server_Request_Interceptor ("SERVER C"),
@@ -64,6 +60,5 @@ Server_ORBInitializer::post_init (
 
   si_interceptor = si;
 
-  info->add_server_request_interceptor (si_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (si_interceptor.in ());
 }

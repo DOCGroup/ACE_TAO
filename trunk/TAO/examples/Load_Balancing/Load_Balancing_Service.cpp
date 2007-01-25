@@ -66,12 +66,10 @@ Load_Balancing_Service::init (int argc,
   int result;
   CORBA::String_var ior;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
+                                        argv);
       if (result == -1)
         return result;
 
@@ -86,8 +84,7 @@ Load_Balancing_Service::init (int argc,
                       Object_Group_Factory_i (),
                       -1);
       PortableServer::ServantBase_var s = factory_servant;
-      ior = orb_manager_.activate (factory_servant
-                                   ACE_ENV_ARG_PARAMETER);
+      ior = orb_manager_.activate (factory_servant);
 
       if (ior.in () == 0)
         return -1;
@@ -96,12 +93,11 @@ Load_Balancing_Service::init (int argc,
                     "Load_Balancer: Object Group Factory ior is %s\n",
                     ior.in ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Load_Balancing_Service::init");
+      ex._tao_print_exception ("Load_Balancing_Service::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   if (this->ior_output_file_ != 0)
     {
@@ -141,17 +137,15 @@ main (int argc, char *argv[])
   if (factory.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = factory.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Load_Balancing_Service");
+      ex._tao_print_exception ("Load_Balancing_Service");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (result == -1)
     return 1;

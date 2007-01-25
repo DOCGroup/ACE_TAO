@@ -7,27 +7,24 @@ int
 main (int argc, char* argv [])
 {
   CORBA::ORB_var orb;
-  ACE_TRY_NEW_ENV
+  try
     {
       orb = CORBA::ORB_init (argc,
                              argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
+                             "");
 
       test_impl foo_i;
       int something = 28;
       foo_i.bar ((CORBA::VoidData) &something);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
 
       orb->shutdown ();
       orb->destroy ();
       return 0;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

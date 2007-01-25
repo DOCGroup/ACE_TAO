@@ -34,8 +34,7 @@ public:
   virtual ~Object_A_i (void);
   // Destructor.
 
-  virtual void foo (Initiator_ptr theInitiator_ptr
-                    ACE_ENV_ARG_DECL)
+  virtual void foo (Initiator_ptr theInitiator_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void finish (void)

@@ -37,15 +37,13 @@ Time_Date_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::Long l;
 
       // Get the time & date in binary format.
-      client_->bin_date (l
-                         ACE_ENV_ARG_PARAMETER);
+      client_->bin_date (l);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Binary time_date = %d\n",
@@ -53,8 +51,7 @@ Time_Date_Client_i::run (const char *name,
 
       // Get the time & date in string format.
       CORBA::String_var str_var;
-      client_->str_date (str_var.out()
-                         ACE_ENV_ARG_PARAMETER);
+      client_->str_date (str_var.out());
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) String time_date = %s\n",
@@ -62,19 +59,16 @@ Time_Date_Client_i::run (const char *name,
 
       client_.shutdown ();
     }
-  ACE_CATCH (CORBA::UserException, range_ex)
+  catch (const CORBA::UserException& range_ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,
-                           "\tFrom get and set time_date");
+      range_ex._tao_print_exception ("\tFrom get and set time_date");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, memex)
+  catch (const CORBA::SystemException& memex)
     {
-      ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make time_date");
+      memex._tao_print_exception ("Cannot make time_date");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

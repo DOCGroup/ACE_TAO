@@ -40,8 +40,7 @@ public:
 
   void show (void);
 
-  void parse_args (int argc, char *argv[]
-                   ACE_ENV_ARG_DECL);
+  void parse_args (int argc, char *argv[]);
 
   QVBox box_;
   // A box widget..

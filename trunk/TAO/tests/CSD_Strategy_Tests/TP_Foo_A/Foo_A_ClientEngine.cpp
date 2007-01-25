@@ -39,9 +39,9 @@ Foo_A_ClientEngine::execute(void)
 
   this->obj_->op1();
 
-  this->obj_->op2(i ACE_ENV_ARG_PARAMETER);
+  this->obj_->op2(i);
 
-  CORBA::Long value = this->obj_->op3(i ACE_ENV_ARG_PARAMETER);
+  CORBA::Long value = this->obj_->op3(i);
 
   if (value != i)
     {
@@ -50,21 +50,20 @@ Foo_A_ClientEngine::execute(void)
 
   for (CORBA::Long j = 1; j <= 5; j++)
     {
-      this->obj_->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
+      this->obj_->op4(495 + (i * 5) + j);
     }
 
   bool caught_exception = false;
 
-  ACE_TRY
+  try
   {
     this->obj_->op5();
   }
-  ACE_CATCH (FooException, ex)
+  catch (const FooException& )
   {
     // Expected
     caught_exception = true;
   }
-  ACE_ENDTRY;
 
   if (! caught_exception)
     {

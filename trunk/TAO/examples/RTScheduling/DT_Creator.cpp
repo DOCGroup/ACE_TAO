@@ -179,14 +179,13 @@ DT_Creator::register_synch_obj (void)
 
   CosNaming::NamingContext_var synch_context;
 
-  ACE_TRY
+  try
     {
       // Try binding the sender context in the NS
       name [0].id =
         CORBA::string_dup ("Synch");
 
-      synch_context = this->naming_->bind_new_context (name
-                   ACE_ENV_ARG_PARAMETER);
+      synch_context = this->naming_->bind_new_context (name);
 
       //
       // We reach here if there was no exception raised in
@@ -194,7 +193,7 @@ DT_Creator::register_synch_obj (void)
       //
 
     }
-  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, al_ex)
+  catch (const CosNaming::NamingContext::AlreadyBound& )
     {
       //
       // The synch context already exists, probably created by the
@@ -206,13 +205,11 @@ DT_Creator::register_synch_obj (void)
         CORBA::string_dup ("Synch");
 
       CORBA::Object_var object =
-        this->naming_->resolve (name
-        ACE_ENV_ARG_PARAMETER);
+        this->naming_->resolve (name);
 
       synch_context = CosNaming::NamingContext::_narrow (object.in ());
 
     }
-  ACE_ENDTRY;
 
   ACE_CString synch_name ("Synch");
   ACE_Time_Value timestamp = ACE_OS::gettimeofday ();
@@ -234,8 +231,7 @@ DT_Creator::register_synch_obj (void)
 
   // Register the synch object with the Synch context.
   synch_context->rebind (name,
-       synch.in ()
-       ACE_ENV_ARG_PARAMETER);
+       synch.in ());
 
 }
 
@@ -244,12 +240,10 @@ int
 DT_Creator::activate_root_poa (void)
 {
   CORBA::Object_var object =
-    orb_->resolve_initial_references ("RootPOA"
-              ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("RootPOA");
 
   root_poa_ =
-    PortableServer::POA::_narrow (object.in ()
-          ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (object.in ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa_->the_POAManager ();
@@ -269,18 +263,15 @@ DT_Creator::activate_poa_list (void)
   if (poa_count_ > 0)
     {
       CORBA::Object_var object =
-  orb_->resolve_initial_references ("RTORB"
-            ACE_ENV_ARG_PARAMETER);
+  orb_->resolve_initial_references ("RTORB");
 
       this->rt_orb_ =
-  RTCORBA::RTORB::_narrow (object.in ()
-         ACE_ENV_ARG_PARAMETER);
+  RTCORBA::RTORB::_narrow (object.in ());
     }
 
   for (int i = 0; i < poa_count_; ++i)
     {
-      poa_list_[i]->activate (this->rt_orb_.in(), this->root_poa_.in ()
-            ACE_ENV_ARG_PARAMETER);
+      poa_list_[i]->activate (this->rt_orb_.in(), this->root_poa_.in ());
     }
 }
 
@@ -303,34 +294,28 @@ DT_Creator::activate_job_list (void)
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa_->find_POA (job->poa ().c_str (), 0
-                             ACE_ENV_ARG_PARAMETER);
+        root_poa_->find_POA (job->poa ().c_str (), 0);
 
       PortableServer::ServantBase_var servant_var (job);
 
       // Register with poa.
       PortableServer::ObjectId_var id;
 
-      id = host_poa->activate_object (job
-                                      ACE_ENV_ARG_PARAMETER);
+      id = host_poa->activate_object (job);
 
       CORBA::Object_var server =
-        host_poa->id_to_reference (id.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        host_poa->id_to_reference (id.in ());
 
       CORBA::String_var ior =
-        orb_->object_to_string (server.in ()
-                                ACE_ENV_ARG_PARAMETER);
+        orb_->object_to_string (server.in ());
 
       const ACE_CString &job_name = job->name ();
 
       CosNaming::Name_var name =
-        this->naming_->to_name (job_name.c_str ()
-                                ACE_ENV_ARG_PARAMETER);
+        this->naming_->to_name (job_name.c_str ());
 
       this->naming_->rebind (name.in (),
-                             server.in ()
-                             ACE_ENV_ARG_PARAMETER);
+                             server.in ());
 
 
     } /* while */
@@ -361,21 +346,19 @@ DT_Creator::activate_schedule (void)
     name[0].id = CORBA::string_dup (task->job ());
 
     CORBA::Object_var obj =
-      this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
+      this->naming_->resolve (name);
 
-    Job_var job = Job::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    Job_var job = Job::_narrow (obj.in ());
 
     //    if (TAO_debug_level > 0)
     // {
         // Check that the object is configured with some
         // PriorityModelPolicy.
         CORBA::Policy_var policy =
-    job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-          ACE_ENV_ARG_PARAMETER);
+    job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
         RTCORBA::PriorityModelPolicy_var priority_policy =
-    RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
-                   ACE_ENV_ARG_PARAMETER);
+    RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
         if (CORBA::is_nil (priority_policy.in ()))
     ACE_DEBUG ((LM_DEBUG,
@@ -410,8 +393,7 @@ int
 DT_Creator::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -420,8 +402,7 @@ DT_Creator::resolve_naming_service (void)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
   //@@tmp hack, otherwise crashes on exit!..??
   CosNaming::NamingContextExt::_duplicate (this->naming_.in());
@@ -429,8 +410,7 @@ DT_Creator::resolve_naming_service (void)
 }
 
 void
-DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
-            ACE_ENV_ARG_DECL)
+DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 {
   current_ = RTScheduling::Current::_duplicate (current);
 
@@ -453,8 +433,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
   const char * name = 0;
   current_->begin_scheduling_segment (name,
               sched_param.in (),
-              sched_param.in ()
-              ACE_ENV_ARG_PARAMETER);
+              sched_param.in ());
 
   ACE_NEW (base_time_,
      ACE_Time_Value (*(this->synch ()->base_time ())));
@@ -490,15 +469,13 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
       dt_list_ [i]->activate_task (current,
            sched_param.in (),
            flags,
-           base_time_
-           ACE_ENV_ARG_PARAMETER);
+           base_time_);
 
     }
 
   this->wait ();
 
-  current_->end_scheduling_segment (name
-            ACE_ENV_ARG_PARAMETER);
+  current_->end_scheduling_segment (name);
 
   this->check_ifexit ();
 }

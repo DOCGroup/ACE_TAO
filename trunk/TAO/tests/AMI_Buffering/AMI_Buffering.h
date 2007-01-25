@@ -18,8 +18,7 @@ public:
                  Test::AMI_Buffering_Admin_ptr admin);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload
-                             ACE_ENV_ARG_DECL)
+  virtual void receive_data (const Test::Payload &the_payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void flush (void)

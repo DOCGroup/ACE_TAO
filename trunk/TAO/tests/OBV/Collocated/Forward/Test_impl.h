@@ -34,8 +34,7 @@ public:
   // ctor
 
   virtual TreeController * reflect (
-      TreeController * tc
-      ACE_ENV_ARG_DECL_NOT_USED)
+      TreeController * tc)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

@@ -42,31 +42,26 @@ test_i::destroy_poa (void)
   CORBA::Boolean etherealize_objects = 1;
   CORBA::Boolean wait_for_completion = 1;
   this->poa_->destroy (etherealize_objects,
-                       wait_for_completion
-                       ACE_ENV_ARG_PARAMETER);
+                       wait_for_completion);
 }
 
 PortableServer::POA_ptr
 init_orb (int argc,
           char **argv,
-          const char *orb_name
-          ACE_ENV_ARG_DECL)
+          const char *orb_name)
 {
   // Initialize the ORB first.
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
-                                        orb_name
-                                        ACE_ENV_ARG_PARAMETER);
+                                        orb_name);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("RootPOA"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (obj.in ());
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager =
@@ -81,45 +76,41 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       PortableServer::POA_var first_poa =
         init_orb (argc,
                   argv,
-                  "first ORB"
-                  ACE_ENV_ARG_PARAMETER);
+                  "first ORB");
 
       PortableServer::POA_var second_poa =
         init_orb (argc,
                   argv,
-                  "second ORB"
-                  ACE_ENV_ARG_PARAMETER);
+                  "second ORB");
 
       test_i servant;
       test_var test_object = servant._this ();
 
       int expected_exception_raised = 0;
 
-      ACE_TRY_EX (first_poa)
+      try
         {
           servant.test_poa (first_poa.in ());
 
           test_object->destroy_poa ();
-          ACE_TRY_CHECK_EX (first_poa);
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+      catch (const CORBA::BAD_INV_ORDER& )
         {
           // This is the correct exception! Ignore
           expected_exception_raised = 1;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught of incorrect type");
+          ex._tao_print_exception (
+            "Exception caught of incorrect type");
           return -1;
         }
-      ACE_ENDTRY;
 
       // Make sure an exception was raised and it was of the correct
       // type.
@@ -132,14 +123,13 @@ main (int argc,
 
       test_object->destroy_poa ();
 
-      first_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      first_poa->destroy (1, 1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception caught");
+      ex._tao_print_exception ("Unexpected exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

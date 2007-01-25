@@ -24,14 +24,13 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_
-				       ACE_ENV_ARG_PARAMETER);
+        this->corb_->string_to_object (input_);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -67,10 +66,10 @@ Client_Task::svc (void)
       CORBA::PolicyList polList;
       polList.length(1);
       polList[0] = this->corb_->create_policy(
-        Messaging::SYNC_SCOPE_POLICY_TYPE, anyPolicy ACE_ENV_ARG_PARAMETER);
+        Messaging::SYNC_SCOPE_POLICY_TYPE, anyPolicy);
 
       CORBA::Object_var tmpGenericVar =
-        tmpVar->_set_policy_overrides(polList,CORBA::ADD_OVERRIDE ACE_ENV_ARG_PARAMETER);
+        tmpVar->_set_policy_overrides(polList,CORBA::ADD_OVERRIDE);
 
       // do unchecked narrow because ORB's not activated. Otherwise get TRANSIENT exception
       hello = Test::Hello::_narrow(tmpGenericVar.in());
@@ -95,13 +94,11 @@ Client_Task::svc (void)
 
       hello->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 

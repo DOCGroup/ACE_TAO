@@ -38,8 +38,7 @@ Echo_Client_Request_Interceptor::destroy (void)
 
 void
 Echo_Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
@@ -47,8 +46,7 @@ Echo_Client_Request_Interceptor::send_poll (
 
 void
 Echo_Client_Request_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -71,13 +69,12 @@ Echo_Client_Request_Interceptor::send_request (
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+  ri->add_request_service_context (sc, 0);
 }
 
 void
 Echo_Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var operation =
@@ -91,8 +88,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
 void
 Echo_Client_Request_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -105,8 +101,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
 void
 Echo_Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

@@ -19,8 +19,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 }
 
 Logger_ptr
-Logger_Factory_i::make_logger (const char *name
-                               ACE_ENV_ARG_DECL)
+Logger_Factory_i::make_logger (const char *name)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Logger_i *result;
@@ -110,34 +109,30 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 }
 
 void
-Logger_i::log (const Logger::Log_Record &log_rec
-               ACE_ENV_ARG_DECL)
+Logger_i::log (const Logger::Log_Record &log_rec)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity_level_);
 }
 
 void
-Logger_i::log_twoway (const Logger::Log_Record &log_rec
-                      ACE_ENV_ARG_DECL)
+Logger_i::log_twoway (const Logger::Log_Record &log_rec)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity_level_ ACE_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity_level_);
 }
 
 void
 Logger_i::logv_twoway (const Logger::Log_Record &log_rec,
-                       Logger::Verbosity_Level verbosity
-                       ACE_ENV_ARG_DECL)
+                       Logger::Verbosity_Level verbosity)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->logv (log_rec, verbosity ACE_ENV_ARG_PARAMETER);
+  this->logv (log_rec, verbosity);
 }
 
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
-               Logger::Verbosity_Level verbosity
-               ACE_ENV_ARG_DECL_NOT_USED)
+               Logger::Verbosity_Level verbosity)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create an <ACE_Log_Record> to leverage existing logging
@@ -185,8 +180,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 }
 
 void
-Logger_i::verbosity (Logger::Verbosity_Level level
-                     ACE_ENV_ARG_DECL_NOT_USED)
+Logger_i::verbosity (Logger::Verbosity_Level level)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->verbosity_level_ = level;

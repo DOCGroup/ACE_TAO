@@ -16,8 +16,7 @@ Echo::Echo(CORBA::ORB_ptr orb)
 }
 
 Test::Payload *
-Echo::echo_payload(Test::Payload const &
-                   ACE_ENV_ARG_DECL_NOT_USED)
+Echo::echo_payload(Test::Payload const &)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_Time_Value tick(0, 10000);

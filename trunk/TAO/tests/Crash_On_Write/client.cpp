@@ -41,39 +41,37 @@ parse_args (int argc, char *argv[])
 }
 
 int
-single_iteration (Test::Oneway_Receiver_ptr oneway_receiver
-                  ACE_ENV_ARG_DECL)
+single_iteration (Test::Oneway_Receiver_ptr oneway_receiver)
 {
-  ACE_TRY
+  try
     {
       oneway_receiver->receive_oneway ();
       ACE_Time_Value tv (0, 40000);
       ACE_OS::sleep (tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Oneway_Receiver_var oneway_receiver =
-        Test::Oneway_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Oneway_Receiver::_narrow(tmp.in ());
 
       if (CORBA::is_nil (oneway_receiver.in ()))
         {
@@ -87,8 +85,7 @@ main (int argc, char *argv[])
       int exception_count = 0;
       for (int i = 0; i != iterations; ++i)
         {
-          int result = single_iteration (oneway_receiver.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+          int result = single_iteration (oneway_receiver.in ());
           if (result)
             exception_count++;
           else
@@ -106,13 +103,11 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

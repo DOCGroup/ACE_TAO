@@ -60,30 +60,25 @@ public:
    */
   //@{
   virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
   //@}
@@ -93,8 +88,7 @@ private:
   // Returns 1 if the client-side test is currently being run, and 0
   // otherwise.
   CORBA::Boolean client_side_test (
-    PortableInterceptor::ClientRequestInfo_ptr info
-    ACE_ENV_ARG_DECL);
+    PortableInterceptor::ClientRequestInfo_ptr info);
 
 };
 
