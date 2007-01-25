@@ -201,7 +201,7 @@ Events::create_EC (void)
   admin[1].value <<= (CORBA::Long)2;
 
   ec_->set_admin (admin ACE_ENV_ARG_PARAMETER);
-/
+  */
 
   /****************************************************************/
   ACE_ASSERT (!CORBA::is_nil (this->ec_.in ()));
