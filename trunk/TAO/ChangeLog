@@ -1,3 +1,21 @@
+Thu Jan 25 19:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp
+        * orbsvcs/orbsvcs/Notify/Container_T.inl
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.inl
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.inl
+        * orbsvcs/orbsvcs/Notify/Seq_Worker_T.cpp
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp
+        * orbsvcs/performance-tests/RTEvent/lib/RIR_Narrow.cpp
+        * orbsvcs/tests/Notify/lib/Consumer_T.cpp
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp
+        * orbsvcs/tests/Notify/lib/Supplier_T.cpp
+          Replaced ACE_TYPENAME with typename
+
 Thu Jan 25 17:39:59 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * *.{h,cpp,inl}:
