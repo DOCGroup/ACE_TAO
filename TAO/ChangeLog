@@ -1,3 +1,9 @@
+Thu Jan 25 23:47:24 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp(destroy):
+
+          Replaced a lost '*' in the parameter to indicate it is a pointer,
+
 Thu Jan 25 19:56:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * *.cpp:

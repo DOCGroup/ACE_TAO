@@ -47,7 +47,7 @@ namespace TAO
     }
 
     void
-    IdAssignmentStrategyFactoryImpl::destroy (IdAssignmentStrategy)
+    IdAssignmentStrategyFactoryImpl::destroy (IdAssignmentStrategy *)
     {
       // Noop because both types are singletons
     }
