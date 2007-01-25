@@ -23,8 +23,7 @@ class FooServantList
     ~FooServantList();
 
     void create_and_activate(CORBA::ORB_ptr orb,
-                             PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL);
+                             PortableServer::POA_ptr poa);
 
     void client_done(void);
 

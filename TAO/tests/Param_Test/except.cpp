@@ -49,10 +49,9 @@ Test_Exception::opname (void) const
 }
 
 void
-Test_Exception::dii_req_invoke (CORBA::Request_ptr req
-                                ACE_ENV_ARG_DECL)
+Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 {
-  ACE_TRY
+  try
     {
       this->in_++;
       req->add_in_arg ("s1") <<= this->in_;
@@ -70,16 +69,16 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
       req->return_value () >>= this->ret_;
 
       CORBA::NamedValue_ptr o2 =
-        req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+        req->arguments ()->item (1);
 
       *o2->value () >>= this->inout_;
 
       CORBA::NamedValue_ptr o3 =
-        req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+        req->arguments ()->item (2);
 
       *o3->value () >>= this->out_;
     }
-  ACE_CATCH (CORBA::UnknownUserException, user_ex)
+  catch (CORBA::UnknownUserException& user_ex)
     {
       Param_Test::Ooops* oops;
       Param_Test::BadBoy* bad_boy;
@@ -108,9 +107,9 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
         }
       else if (user_ex.exception () >>= bad_boy)
         {
-          ACE_PRINT_EXCEPTION ((*bad_boy),
-                               "Test_Exception::dii_req_invoke - "
-                               "unexpected (but known) user exception\n");
+          (*bad_boy)._tao_print_exception (
+            "Test_Exception::dii_req_invoke - "
+            "unexpected (but known) user exception\n");
 
           // Since 'BadBoy' is not in the exception list the DII request,
           // it should not be caught explicitly. See comment below.
@@ -129,7 +128,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
     }
   // Catch the SystemException type CORBA::NO_MEMORY thrown by the
   // server to test the system exception.
-  ACE_CATCH (CORBA::NO_MEMORY, ex)
+  catch (const CORBA::NO_MEMORY& ex)
     {
       // 'NO_MEMORY' system exception should be caught here. This
       // happens when the IN arg == 2.
@@ -181,7 +180,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
             }
         }
     }
-  ACE_CATCH (CORBA::UNKNOWN, ex)
+  catch (const CORBA::UNKNOWN& ex)
     {
       // 'BadBoy' should be caught here. This happens when the IN arg == 3.
       // Otherwise we don't set the other arg values so the validity
@@ -232,12 +231,10 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
             }
         }
     }
-  ACE_ENDTRY;
 }
 
 int
-Test_Exception::init_parameters (Param_Test_ptr
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+Test_Exception::init_parameters (Param_Test_ptr)
 {
   this->in_ = 0;
   this->inout_ =  0;
@@ -254,18 +251,16 @@ Test_Exception::reset_parameters (void)
 }
 
 int
-Test_Exception::run_sii_test (Param_Test_ptr objref
-                              ACE_ENV_ARG_DECL)
+Test_Exception::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->in_++;
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
-                                           this->out_
-                                           ACE_ENV_ARG_PARAMETER);
+                                           this->out_);
     }
-  ACE_CATCH (Param_Test::Ooops, ex)
+  catch (const Param_Test::Ooops& ex)
     {
       const char *reason = ex.reason.in ();
 
@@ -300,7 +295,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  ACE_CATCH (CORBA::NO_MEMORY, ex)
+  catch (const CORBA::NO_MEMORY& ex)
     {
       // 'SystemException' should be caught here, 'CORBA::NO_MEMORY'
       // system exception is thrown by the servant when the
@@ -329,9 +324,8 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
 
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "Test_Exception::run_sii_test - "
-                               "expected system exception\n");
+          ex._tao_print_exception (
+            "Test_Exception::run_sii_test - ""expected system exception\n");
         }
 
       // These weren't passed back because of the exception. We
@@ -342,7 +336,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  ACE_CATCH (CORBA::UNKNOWN, ex)
+  catch (const CORBA::UNKNOWN& ex)
     {
       // 'BadBoy' should be caught here, since generated code for
       // Param_Test::test_exception() knows nothing about it.
@@ -372,9 +366,8 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
 
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "Test_Exception::run_sii_test - "
-                               "expected unknown exception\n");
+          ex._tao_print_exception (
+            "Test_Exception::run_sii_test - ""expected unknown exception\n");
         }
 
       // These weren't passed back because of the exception. We
@@ -385,16 +378,14 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  ACE_CATCH (Param_Test::BadBoy, ex)
+  catch (const Param_Test::BadBoy& ex)
     {
       // We shouldn't end up here. See comment above.
-      ACE_PRINT_EXCEPTION (ex,
-                           "Test_Exception::run_sii_test - "
-                           "unexpected user exception\n");
+      ex._tao_print_exception (
+        "Test_Exception::run_sii_test - ""unexpected user exception\n");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   // Normal reply - no exception thrown.
   return 0;

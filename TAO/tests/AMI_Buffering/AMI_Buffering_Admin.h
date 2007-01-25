@@ -23,8 +23,7 @@ public:
   virtual CORBA::ULong bytes_received_count (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_received (CORBA::ULong payload_length
-                                 ACE_ENV_ARG_DECL)
+  virtual void request_received (CORBA::ULong payload_length)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void flush (void)

@@ -18,16 +18,14 @@ Server_ORBInitializer::Server_ORBInitializer (int interceptor_type)
 
 void
 Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -68,6 +66,5 @@ Server_ORBInitializer::post_init (
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
 
-  info->add_server_request_interceptor (interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (interceptor.in ());
 }

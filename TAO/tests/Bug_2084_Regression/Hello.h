@@ -20,7 +20,7 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string ( ::CORBA::Long caller_threadid ACE_ENV_ARG_DECL )
+  virtual char * get_string ( ::CORBA::Long caller_threadid )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

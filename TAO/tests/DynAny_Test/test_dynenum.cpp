@@ -41,18 +41,16 @@ Test_DynEnum::test_name (void) const
 int
 Test_DynEnum::run_test (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/set_as_string/get_as_ulong\n"));
 
       CORBA::Object_var factory_obj =
-        this->orb_->resolve_initial_references ("DynAnyFactory"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("DynAnyFactory");
 
       DynamicAny::DynAnyFactory_var dynany_factory =
-        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ());
 
       if (CORBA::is_nil (dynany_factory.in ()))
         {
@@ -69,22 +67,19 @@ Test_DynEnum::run_test (void)
       CORBA::Any in_any1;
       in_any1 <<= te;
       DynamicAny::DynAny_var dp1 =
-        dynany_factory->create_dyn_any (in_any1
-                                        ACE_ENV_ARG_PARAMETER);
+        dynany_factory->create_dyn_any (in_any1);
 
       DynamicAny::DynEnum_var de1 =
-        DynamicAny::DynEnum::_narrow (dp1.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        DynamicAny::DynEnum::_narrow (dp1.in ());
 
-      analyzer.analyze(dp1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(dp1.in());
 
-      de1->set_as_string ("TE_FIRST"
-                          ACE_ENV_ARG_PARAMETER);
+      de1->set_as_string ("TE_FIRST");
 
       CORBA::ULong ul_out1 =
         de1->get_as_ulong ();
 
-      analyzer.analyze(de1.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(de1.in());
 
       CORBA::Any_var out_any2 =
         de1->to_any ();
@@ -103,8 +98,7 @@ Test_DynEnum::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_as_ulong/get_as_string\n"));
 
-      de1->set_as_ulong (3
-                         ACE_ENV_ARG_PARAMETER);
+      de1->set_as_ulong (3);
       CORBA::String_var s =
         de1->get_as_string ();
 
@@ -123,12 +117,10 @@ Test_DynEnum::run_test (void)
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var de2_base =
-        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_enum
-                                                       ACE_ENV_ARG_PARAMETER);
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_enum);
 
       DynamicAny::DynEnum_var de2 =
-        DynamicAny::DynEnum::_narrow (de2_base.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        DynamicAny::DynEnum::_narrow (de2_base.in ());
 
       if (CORBA::is_nil (de2.in ()))
         {
@@ -139,10 +131,9 @@ Test_DynEnum::run_test (void)
 
       CORBA::Any in_any2;
       in_any2 <<= DynAnyTests::TE_THIRD;
-      de2->from_any (in_any2
-                     ACE_ENV_ARG_PARAMETER);
+      de2->from_any (in_any2);
 
-      analyzer.analyze(de2.in() ACE_ENV_ARG_PARAMETER);
+      analyzer.analyze(de2.in());
 
       CORBA::Any_var out_any1 =
         de2->to_any ();
@@ -163,8 +154,7 @@ Test_DynEnum::run_test (void)
                  "testing: equal\n"));
 
       CORBA::Boolean equal =
-        de1->equal (de2.in ()
-                    ACE_ENV_ARG_PARAMETER);
+        de1->equal (de2.in ());
 
       if (equal)
         {
@@ -180,13 +170,11 @@ Test_DynEnum::run_test (void)
 
       de2->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "test_dynenum::run_test");
+      ex._tao_print_exception ("test_dynenum::run_test");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",

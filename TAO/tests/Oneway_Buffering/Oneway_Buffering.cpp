@@ -13,11 +13,10 @@ Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,
 }
 
 void
-Oneway_Buffering::receive_data (const Test::Payload &the_payload
-                                ACE_ENV_ARG_DECL)
+Oneway_Buffering::receive_data (const Test::Payload &the_payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->admin_->request_received (the_payload.length () ACE_ENV_ARG_PARAMETER);
+  this->admin_->request_received (the_payload.length ());
 }
 
 void
@@ -37,5 +36,5 @@ void
 Oneway_Buffering::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

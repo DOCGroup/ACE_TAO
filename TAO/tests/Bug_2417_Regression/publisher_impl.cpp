@@ -135,7 +135,6 @@ Publisher_impl::~Publisher_impl()
 
 void subscribe (
                 ::Subscriber_ptr subscriber
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS
                 )
   ACE_THROW_SPEC ((
                    ::CORBA::SystemException
@@ -144,7 +143,6 @@ void subscribe (
 void
 Publisher_impl::subscribe(
                           ::Subscriber_ptr subscriber
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS
                           )
   ACE_THROW_SPEC ((
                    ::CORBA::SystemException
@@ -155,7 +153,6 @@ Publisher_impl::subscribe(
 
 void
 Publisher_impl::shutdown (
-                          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
                           )
   ACE_THROW_SPEC ((
                    ::CORBA::SystemException

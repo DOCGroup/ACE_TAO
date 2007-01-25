@@ -139,21 +139,21 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Test_var server =
-        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -164,12 +164,10 @@ main (int argc, char *argv[])
         }
 
       // Obtain Priority Mapping used by the ORB.
-      object = orb->resolve_initial_references ("PriorityMappingManager"
-                                                ACE_ENV_ARG_PARAMETER);
+      object = orb->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       if (CORBA::is_nil (mapping_manager.in ()))
         {
@@ -220,16 +218,15 @@ main (int argc, char *argv[])
         }
       throughput.dump_results ("Aggregated", gsf);
 
-      server->shutdown ("" ACE_ENV_ARG_PARAMETER);
+      server->shutdown ("");
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception: in Single_Endpoint client::main");
+      ex._tao_print_exception (
+        "Caught exception: in Single_Endpoint client::main");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -274,7 +271,7 @@ Client::svc (void)
 
   int i = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       this->before_connection_->wait ();
 
@@ -282,12 +279,10 @@ Client::svc (void)
       for (int j = 0; j < 100; ++j)
         {
           /*    CORBA::PolicyList_var pols;
-          server_->_validate_connection (pols.out ()
-                                         ACE_ENV_ARG_PARAMETER);
+          server_->_validate_connection (pols.out ());
           */
 
-          server_->test_method (this->id_
-                                ACE_ENV_ARG_PARAMETER);
+          server_->test_method (this->id_);
         }
 
       this->after_connection_->wait ();
@@ -300,8 +295,7 @@ Client::svc (void)
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
           // Invoke method.
-          server_->test_method (this->id_
-                                ACE_ENV_ARG_PARAMETER);
+          server_->test_method (this->id_);
 
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -317,16 +311,15 @@ Client::svc (void)
                                     now - latency_base);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       char message[100];
       ACE_OS::sprintf (message,
                        "Single_Endpoint::client: Exception in thread with corba priority = %d, on iteration = %d",
                        priorities[this->id_],
                        i);
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
+      ex._tao_print_exception (message);
     }
-  ACE_ENDTRY;
   return 0;
 }
 

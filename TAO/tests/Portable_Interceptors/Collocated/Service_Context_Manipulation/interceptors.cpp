@@ -39,8 +39,7 @@ Echo_Client_Request_Interceptor::destroy (void)
 
 void
 Echo_Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
@@ -48,8 +47,7 @@ Echo_Client_Request_Interceptor::send_poll (
 
 void
 Echo_Client_Request_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -58,8 +56,7 @@ Echo_Client_Request_Interceptor::send_request (
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    this->orb_id_.in ());
     }
 
   CORBA::String_var operation =
@@ -68,7 +65,7 @@ Echo_Client_Request_Interceptor::send_request (
   CORBA::Object_var target = ri->target ();
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_request "
@@ -89,11 +86,11 @@ Echo_Client_Request_Interceptor::send_request (
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+  ri->add_request_service_context (sc, 0);
 
   // Check that the request service context can be retrieved.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (::service_id);
 
   const char *buf2 =
     reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
@@ -112,8 +109,7 @@ Echo_Client_Request_Interceptor::send_request (
 
 void
 Echo_Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -121,8 +117,7 @@ Echo_Client_Request_Interceptor::receive_reply (
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    this->orb_id_.in ());
     }
 
   CORBA::String_var operation =
@@ -132,7 +127,7 @@ Echo_Client_Request_Interceptor::receive_reply (
     ri->target ();
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_reply from "
@@ -140,13 +135,12 @@ Echo_Client_Request_Interceptor::receive_reply (
               this->myname_,
               operation.in ()));
 
-  ACE_TRY
+  try
     {
       // Check that the reply service context was received as
       // expected.
       IOP::ServiceContext_var sc =
-        ri->get_reply_service_context (::service_id
-                                       ACE_ENV_ARG_PARAMETER);
+        ri->get_reply_service_context (::service_id);
 
       const char *buf =
         reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -163,8 +157,7 @@ Echo_Client_Request_Interceptor::receive_reply (
 
       // Check that no one has messed with the request service context.
       IOP::ServiceContext_var sc2 =
-        ri->get_request_service_context (::service_id
-                                         ACE_ENV_ARG_PARAMETER);
+        ri->get_request_service_context (::service_id);
 
       const char *buf2 =
         reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
@@ -178,18 +171,16 @@ Echo_Client_Request_Interceptor::receive_reply (
                       buf2));
         }
     }
-  ACE_CATCH (CORBA::BAD_PARAM, ex)
+  catch (const CORBA::BAD_PARAM& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Service Context Error \n"));
     }
-  ACE_ENDTRY;
 }
 
 void
 Echo_Client_Request_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -200,8 +191,7 @@ Echo_Client_Request_Interceptor::receive_other (
 
 void
 Echo_Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -209,8 +199,7 @@ Echo_Client_Request_Interceptor::receive_exception (
     {
       int argc = 0;
       this->orb_ = CORBA::ORB_init (argc, 0,
-                                    this->orb_id_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    this->orb_id_.in ());
     }
 
   CORBA::String_var operation = ri->operation ();
@@ -218,7 +207,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   CORBA::Object_var target = ri->target ();
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (target.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.received_exception "
@@ -226,13 +215,12 @@ Echo_Client_Request_Interceptor::receive_exception (
               this->myname_,
               operation.in ()));
 
-    ACE_TRY
+    try
     {
       // Check that the reply service context was received as
       // expected.
       IOP::ServiceContext_var sc =
-        ri->get_reply_service_context (::service_id
-                                       ACE_ENV_ARG_PARAMETER);
+        ri->get_reply_service_context (::service_id);
 
       const char *buf =
         reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -249,8 +237,7 @@ Echo_Client_Request_Interceptor::receive_exception (
 
       // Check that no one has messed with the request service context.
       IOP::ServiceContext_var sc2 =
-        ri->get_request_service_context (::service_id
-                                         ACE_ENV_ARG_PARAMETER);
+        ri->get_request_service_context (::service_id);
 
       const char *buf2 =
         reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
@@ -264,12 +251,11 @@ Echo_Client_Request_Interceptor::receive_exception (
                       buf2));
         }
     }
-  ACE_CATCH (CORBA::BAD_PARAM, ex)
+  catch (const CORBA::BAD_PARAM& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Service Context Error \n"));
     }
-  ACE_ENDTRY;
 }
 
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
@@ -297,8 +283,7 @@ Echo_Server_Request_Interceptor::destroy (void)
 
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -312,7 +297,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
-    ri->get_request_service_context (id ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (id);
 
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
@@ -341,14 +326,13 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   scc.context_data.replace (string_len, string_len, buff, 1);
 
   // Add this context to the service context list.
-  ri->add_reply_service_context (scc, 0 ACE_ENV_ARG_PARAMETER);
+  ri->add_reply_service_context (scc, 0);
 }
 
 
 void
 Echo_Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -357,8 +341,7 @@ Echo_Server_Request_Interceptor::receive_request (
 
 void
 Echo_Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -371,7 +354,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
+    ri->get_reply_service_context (::service_id);
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
@@ -388,7 +371,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
   // Check that the request service context hasn't been changed.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (::service_id);
 
   const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
@@ -405,8 +388,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
 void
 Echo_Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -420,7 +402,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   // Check that the reply service context is set as expected.
   IOP::ServiceContext_var sc =
-    ri->get_reply_service_context (::service_id ACE_ENV_ARG_PARAMETER);
+    ri->get_reply_service_context (::service_id);
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
@@ -437,7 +419,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   // Check that the request service context hasn't been changed.
   IOP::ServiceContext_var sc2 =
-    ri->get_request_service_context (::service_id ACE_ENV_ARG_PARAMETER);
+    ri->get_request_service_context (::service_id);
 
   const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
@@ -454,8 +436,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
 void
 Echo_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr
-             ACE_ENV_ARG_DECL_NOT_USED)
+             PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {

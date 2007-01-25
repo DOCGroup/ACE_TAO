@@ -38,22 +38,21 @@ DLL_ORB::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               "\n\trunning ORB event loop (%t)\n\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Run the ORB event loop in its own thread.
       this->orb_->run ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -72,7 +71,7 @@ DLL_ORB::init (int argc, char *argv[])
 //                         -1);
      }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n\tInitialize ORB (%t)\n\n"));
@@ -81,15 +80,13 @@ DLL_ORB::init (int argc, char *argv[])
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "An ORB"
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "An ORB");
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -97,8 +94,7 @@ DLL_ORB::init (int argc, char *argv[])
                           1);
 
       this->poa_ =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       this->poa_manager_ =
         this->poa_->the_POAManager ();
@@ -113,11 +109,10 @@ DLL_ORB::init (int argc, char *argv[])
       return 0;
 #endif /* ACE_HAS_THREADS */
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "DLL_ORB::init");
+      ex._tao_print_exception ("DLL_ORB::init");
     }
-  ACE_ENDTRY;
 
   return -1;
 }
@@ -172,7 +167,7 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
 int
 Time_Date_Servant::init (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n\tTime_Date servant\n\n"));
@@ -195,8 +190,7 @@ Time_Date_Servant::init (int argc, char *argv[])
         servant->_this ();
 
       CORBA::String_var str =
-        orb->orb_->object_to_string (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+        orb->orb_->object_to_string (obj.in ());
 
       if (this->ior_output_file_)
         {
@@ -207,12 +201,11 @@ Time_Date_Servant::init (int argc, char *argv[])
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "DLL_ORB::init");
+      ex._tao_print_exception ("DLL_ORB::init");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

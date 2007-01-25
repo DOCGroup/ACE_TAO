@@ -39,8 +39,7 @@ public:
   // Runs the test.
 
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
 
   void shutdown (void);
 private:

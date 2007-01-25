@@ -103,16 +103,14 @@ Consumer_Input_Handler::register_consumer ()
   this->consumer_handler_->threshold_value_ =
     ACE_OS::atoi (needed_stock_value);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
 
       // Register with the server.
       this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_,
                                                            this->consumer_handler_->threshold_value_,
-                                                           this->consumer_handler_->consumer_var_.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                           this->consumer_handler_->consumer_var_.in ());
 
       // Note the registration.
       consumer_handler_->registered_ = 1;
@@ -123,12 +121,12 @@ Consumer_Input_Handler::register_consumer ()
       ACE_DEBUG ((LM_DEBUG,
                   "registeration done!\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Consumer_Input_Handler::register_consumer()\n");
+      ex._tao_print_exception (
+        "Consumer_Input_Handler::register_consumer()\n");
       return -1;
     }
-  ACE_ENDTRY;
 
 return 0;
 }
@@ -164,17 +162,15 @@ Consumer_Input_Handler::quit_consumer_process ()
   // Only if the consumer is registered and wants to shut
   // down, its necessary to unregister and then shutdown.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (consumer_handler_->unregistered_ != 1 && consumer_handler_->registered_ == 1)
         {
           // If the notifier has exited and the consumer tries to call
           // the unregister_callback method tehn an execption will be
-          // raised. Hence check for this case using ACE_ENV_SINGLE_ARG_PARAMETER.
-          this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ()
-                                                                 ACE_ENV_ARG_PARAMETER);
+          // raised. Hence check for this case using.
+          this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ());
 
           ACE_DEBUG ((LM_DEBUG,
                       " Consumer Unregistered \n "));
@@ -183,27 +179,23 @@ Consumer_Input_Handler::quit_consumer_process ()
         }
       this->consumer_handler_->consumer_servant_->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // There would be an exception only if there is a communication
       // failure between the notifier and consumer. On catching the
       // exception proclaim the problem and do a graceful exit.
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Communication failed!\n");
+      ex._tao_print_exception ("Communication failed!\n");
 
-      ACE_TRY_EX (block1)
+      try
         {
           this->consumer_handler_->consumer_servant_->shutdown ();
-          ACE_TRY_CHECK_EX (block1);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
         }
-      ACE_ENDTRY;
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

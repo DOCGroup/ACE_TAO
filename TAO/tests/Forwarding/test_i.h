@@ -31,7 +31,7 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  CORBA::Boolean test_is_a (const char * type ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Boolean test_is_a (const char * type)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (void)

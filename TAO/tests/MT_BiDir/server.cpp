@@ -57,17 +57,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -75,8 +74,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -89,8 +87,7 @@ main (int argc, char *argv[])
       pol <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                            pol
-                            ACE_ENV_ARG_PARAMETER);
+                            pol);
 
       // Create POA as child of RootPOA with the above policies.  This POA
       // will receive request in the same connection in which it sent
@@ -98,8 +95,7 @@ main (int argc, char *argv[])
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Creation of childPOA is over. Destroy the Policy objects.
       for (CORBA::ULong i = 0;
@@ -122,16 +118,13 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer (sender);
 
       PortableServer::ObjectId_var id =
-        child_poa->activate_object (sender
-                                    ACE_ENV_ARG_PARAMETER);
+        child_poa->activate_object (sender);
 
       CORBA::Object_var obj =
-        child_poa->id_to_reference (id.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+        child_poa->id_to_reference (id.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (obj.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -171,7 +164,7 @@ main (int argc, char *argv[])
           ACE_Time_Value tv (60, 0);
 
           // Call the ORB run from the main thread
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
+          orb->run (tv);
 
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) event loop finished\n"));
         }
@@ -179,16 +172,13 @@ main (int argc, char *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
+                         1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

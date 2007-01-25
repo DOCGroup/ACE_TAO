@@ -45,8 +45,7 @@ Test_TypeCode::opname (void) const
 }
 
 void
-Test_TypeCode::dii_req_invoke (CORBA::Request *req
-                               ACE_ENV_ARG_DECL)
+Test_TypeCode::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -61,19 +60,18 @@ Test_TypeCode::dii_req_invoke (CORBA::Request *req
   this->ret_ = CORBA::TypeCode::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::TypeCode::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = CORBA::TypeCode::_duplicate (tmp);
 }
 
 int
-Test_TypeCode::init_parameters (Param_Test_ptr
-                                ACE_ENV_ARG_DECL_NOT_USED)
+Test_TypeCode::init_parameters (Param_Test_ptr)
 {
   static CORBA::TypeCode_ptr tc_table [] =
     {
@@ -114,61 +112,51 @@ Test_TypeCode::reset_parameters (void)
 }
 
 int
-Test_TypeCode::run_sii_test (Param_Test_ptr objref
-                             ACE_ENV_ARG_DECL)
+Test_TypeCode::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
-      this->init_parameters (objref ACE_ENV_ARG_PARAMETER);
+      this->init_parameters (objref);
 
       CORBA::TypeCode_out out (this->out_);
 
       this->ret_ = objref->test_typecode (this->in_.in (),
                                           this->inout_.inout (),
-                                          out
-                                          ACE_ENV_ARG_PARAMETER);
+                                          out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_TypeCode::run_sii_test\n");
+      ex._tao_print_exception ("Test_TypeCode::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Boolean
 Test_TypeCode::check_validity (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::Boolean one, two, three;
 
-      one = this->in_.in ()->equal (this->inout_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      one = this->in_.in ()->equal (this->inout_.in ());
 
-      two = this->in_.in ()->equal (this->out_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      two = this->in_.in ()->equal (this->out_.in ());
 
-      three = this->in_.in ()->equal (this->ret_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      three = this->in_.in ()->equal (this->ret_.in ());
 
       if (one && two && three)
         return 1;
       else
         return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_TypeCode::check_validity\n");
+      ex._tao_print_exception ("Test_TypeCode::check_validity\n");
     }
-  ACE_ENDTRY;
   return 0;
 }
 

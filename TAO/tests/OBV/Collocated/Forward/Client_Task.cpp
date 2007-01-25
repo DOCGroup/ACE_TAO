@@ -17,7 +17,7 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.
@@ -29,8 +29,7 @@ Client_Task::svc (void)
                       1);
 
       this->corb_->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
@@ -40,8 +39,7 @@ Client_Task::svc (void)
                       1);
 
       this->corb_->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
@@ -51,17 +49,16 @@ Client_Task::svc (void)
                       1);
 
       this->corb_->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        this->corb_->string_to_object(this->input_ ACE_ENV_ARG_PARAMETER);
+        this->corb_->string_to_object(this->input_);
 
-      Test_var test = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+      Test_var test = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -157,7 +154,7 @@ Client_Task::svc (void)
         }
 
       TreeController_var tc_result =
-        test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
+        test->reflect (tc.in ());
 
       // The following two ifs will fail until bug 1390 is fixed.
       if (is_equal_tree (tc.in (), tc_result.in ()))
@@ -177,13 +174,11 @@ Client_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 

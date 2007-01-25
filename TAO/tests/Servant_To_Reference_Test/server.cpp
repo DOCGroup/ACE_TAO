@@ -37,33 +37,27 @@ private:
 int
 MT_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       for (CORBA::Long i = 0;
            i != 2000;
            ++i)
         {
           CORBA::Object_var one_ref =
-            this->p_->servant_to_reference (this->one_
-                                            ACE_ENV_ARG_PARAMETER);
+            this->p_->servant_to_reference (this->one_);
 
           CORBA::Object_var two_ref =
-            this->p_->servant_to_reference (this->two_
-                                            ACE_ENV_ARG_PARAMETER);
+            this->p_->servant_to_reference (this->two_);
 
           CORBA::Object_var three_ref =
-            this->p_->servant_to_reference (this->three_
-                                            ACE_ENV_ARG_PARAMETER);
+            this->p_->servant_to_reference (this->three_);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Caugh exception \n");
+      ex._tao_print_exception ("(%P|%t) Caugh exception \n");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -97,16 +91,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -143,21 +137,17 @@ main (int argc, char *argv[])
       PortableServer::POA_var first_poa =
         root_poa->create_POA ("first POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
 
       PortableServer::ObjectId_var oid1 =
-        first_poa->activate_object (one_impl
-                                    ACE_ENV_ARG_PARAMETER);
+        first_poa->activate_object (one_impl);
 
       PortableServer::ObjectId_var oid2 =
-        first_poa->activate_object (two_impl
-                                    ACE_ENV_ARG_PARAMETER);
+        first_poa->activate_object (two_impl);
 
       PortableServer::ObjectId_var oid3 =
-        first_poa->activate_object (three_impl
-                                    ACE_ENV_ARG_PARAMETER);
+        first_poa->activate_object (three_impl);
 
 
       MT_Task task (first_poa.in (),
@@ -177,17 +167,15 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

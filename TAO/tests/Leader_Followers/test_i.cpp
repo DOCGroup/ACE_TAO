@@ -14,13 +14,11 @@ void
 test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 CORBA::ULong
-test_i::method (CORBA::ULong work
-                ACE_ENV_ARG_DECL_NOT_USED)
+test_i::method (CORBA::ULong work)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

@@ -41,16 +41,14 @@ public:
   ~Policy_Verifier (void);
 
   bool init (int argc,
-             char *argv[]
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             char *argv[]);
 
   void run (void);
 
 private:
   // -- Helper methods --
   void verify_reference (Counter_ptr counter,
-                         RT_Properties *rt_properties
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                         RT_Properties *rt_properties);
 
   CORBA::Boolean check_reference (CORBA::Object_ptr object,
                                   const char *msg);

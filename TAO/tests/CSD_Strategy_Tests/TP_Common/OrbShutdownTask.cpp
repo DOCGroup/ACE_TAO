@@ -51,17 +51,16 @@ OrbShutdownTask::open(void*)
 int
 OrbShutdownTask::svc()
 {
-  ACE_TRY_NEW_ENV
+  try
   {
-    this->orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
+    this->orb_->shutdown(0);
   }
-  ACE_CATCHALL
+  catch (...)
   {
     ACE_ERROR((LM_ERROR,
       "(%P|%t) Exception raised by ORB::shutdown() call "
       "in OrbShutdownTask::svc().\n"));
   }
-  ACE_ENDTRY;
 
   return 0;
 }

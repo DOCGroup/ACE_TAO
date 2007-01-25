@@ -24,8 +24,7 @@ public:
                                             CORBA::ULong payload_size,
                                             CORBA::ULong thread_count,
                                             CORBA::ULong message_count,
-                                            CORBA::ULong peer_count
-                                            ACE_ENV_ARG_DECL)
+                                            CORBA::ULong peer_count)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

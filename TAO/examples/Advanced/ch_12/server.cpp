@@ -565,8 +565,7 @@ DeviceLocator_impl::
 preinvoke (const PortableServer::ObjectId & oid,
            PortableServer::POA_ptr          /*poa*/,
            const char *                     operation,
-           void * &                         /*cookie*/
-           ACE_ENV_ARG_DECL)
+           void * &                         /*cookie*/)
   throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
   // Convert object id into asset number.
@@ -704,8 +703,8 @@ main (int argc, char * argv[])
     }
   catch  (const CORBA::Exception & e)
     {
-      std::cerr << "Uncaught CORBA exception: " 
-                //<< e 
+      std::cerr << "Uncaught CORBA exception: "
+                //<< e
                 << std::endl;
       return 1;
     }

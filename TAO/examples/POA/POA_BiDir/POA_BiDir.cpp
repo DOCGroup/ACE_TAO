@@ -31,8 +31,7 @@ ACE_RCSID (POA_BiDir,
            "$Id$")
 
 void
-print_poa (PortableServer::POA_ptr poa
-           ACE_ENV_ARG_DECL)
+print_poa (PortableServer::POA_ptr poa)
 {
   CORBA::String_var poa_name =
     poa->the_name ();
@@ -66,32 +65,28 @@ print_poa (PortableServer::POA_ptr poa
        index != children->length ();
        ++index)
     {
-      print_poa (children[index]
-                 ACE_ENV_ARG_PARAMETER);
+      print_poa (children[index]);
     }
 }
 
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // The first step Initialize the ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // _narrow() the Object to get the POA object, i.e., the root_poa.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Policies for the new POAs
       CORBA::PolicyList policies (2);
@@ -99,27 +94,25 @@ main (int argc, char **argv)
 
       // Threading policy
       policies[0] =
-        root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL ACE_ENV_ARG_PARAMETER);
+        root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
 
       // Lifespan policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::TRANSIENT ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::TRANSIENT);
 
       // Creation of the firstPOA
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa =
         root_poa->create_POA (name.c_str (),
                               PortableServer::POAManager::_nil (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Creation of the new POA, i.e. firstPOA/secondPOA
       name = "secondPOA";
       PortableServer::POA_var second_poa =
         first_poa->create_POA (name.c_str (),
                                PortableServer::POAManager::_nil (),
-                               policies
-                               ACE_ENV_ARG_PARAMETER);
+                               policies);
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0;
@@ -137,8 +130,7 @@ main (int argc, char **argv)
 
       bidir_policy[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                            pol
-                            ACE_ENV_ARG_PARAMETER);
+                            pol);
 
 
       // Creating thirdPOA.
@@ -147,8 +139,7 @@ main (int argc, char **argv)
       PortableServer::POA_var third_poa =
         root_poa->create_POA (name.c_str (),
                               PortableServer::POAManager::_nil (),
-                              bidir_policy
-                              ACE_ENV_ARG_PARAMETER);
+                              bidir_policy);
 
       // Creation of childPOA is over. Destroy the Policy objects.
       for (CORBA::ULong k = 0;
@@ -179,16 +170,14 @@ main (int argc, char **argv)
                   second_poa_name.in (),
                   third_poa_name.in ()));
 
-      print_poa (root_poa.in ()
-                 ACE_ENV_ARG_PARAMETER);
+      print_poa (root_poa.in ());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in main ");
+      ex._tao_print_exception ("Exception caught in main ");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

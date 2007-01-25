@@ -53,20 +53,20 @@ Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 
 //
 int
-Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
 {
   // Making sure there are no stale ior files to confuse a client
   ACE_OS::unlink (ior_file_.c_str ());
 
   ACE_Argv_Type_Converter cvt (argc, argv);
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (),
-                                        cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
+                                        cvt.get_ASCII_argv ());
 
   CORBA::Object_var poa_object =
-    orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references("RootPOA");
 
   PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   if (CORBA::is_nil (root_poa.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,18 +87,16 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   PortableServer::ServantBase_var owner_transfer(hello_impl);
 
   PortableServer::ObjectId_var id =
-    root_poa->activate_object (hello_impl ACE_ENV_ARG_PARAMETER);
+    root_poa->activate_object (hello_impl);
 
   CORBA::Object_var hello_obj =
-    root_poa->id_to_reference (id.in ()
-                               ACE_ENV_ARG_PARAMETER);
+    root_poa->id_to_reference (id.in ());
 
   Test::Hello_var hello =
-    Test::Hello::_narrow (hello_obj.in ()
-                          ACE_ENV_ARG_PARAMETER);
+    Test::Hello::_narrow (hello_obj.in ());
 
   CORBA::String_var ior =
-    orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
+    orb->object_to_string (hello.in ());
 
   poa_manager->activate ();
 
@@ -120,12 +118,12 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server exiting the event loop\n")));
 
-  root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+  root_poa->destroy (1, 1);
 
   // During normal test execution the ORB would have been destroyed
   // by a request from the client.
 
-  //  orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  //  orb->shutdown (0);
 
   orb->destroy ();
 

@@ -18,8 +18,7 @@ ACE_RCSID (AMI_Iterator,
 void
 Iterator_Factory_i::get_iterator (const char *pathname,
                                   Web_Server::Content_Iterator_out contents,
-                                  Web_Server::Metadata_Type_out metadata
-                                  ACE_ENV_ARG_DECL)
+                                  Web_Server::Metadata_Type_out metadata)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -29,7 +28,7 @@ Iterator_Factory_i::get_iterator (const char *pathname,
   ACE_stat file_status;
   if (ACE_OS::stat (pathname, &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
-    ACE_THROW (Web_Server::Error_Result (500));
+    throw Web_Server::Error_Result (500);
 
   Content_Iterator_i *iterator_servant = 0;
   ACE_NEW_THROW_EX (iterator_servant,
@@ -41,10 +40,10 @@ Iterator_Factory_i::get_iterator (const char *pathname,
     {
       if (errno == EACCES)
         // HTTP 1.1 "Forbidden".
-        ACE_THROW (Web_Server::Error_Result (403));
+        throw Web_Server::Error_Result (403);
       else
         // HTTP 1.1 "Internal Server Error".
-        ACE_THROW (Web_Server::Error_Result (500));
+        throw Web_Server::Error_Result (500);
     }
 
 
@@ -62,12 +61,12 @@ Iterator_Factory_i::get_iterator (const char *pathname,
   if (this->modification_date (&file_status,
                                metadata) != 0)
     // HTTP 1.1 "Internal Server Error.
-    ACE_THROW (Web_Server::Error_Result (500));
+    throw Web_Server::Error_Result (500);
 
   if (this->content_type (pathname,
                           metadata) != 0)
     // HTTP 1.1 "Internal Server Error.
-    ACE_THROW (Web_Server::Error_Result (500));
+    throw Web_Server::Error_Result (500);
 
   contents = iterator._retn (); // Make a copy
 }

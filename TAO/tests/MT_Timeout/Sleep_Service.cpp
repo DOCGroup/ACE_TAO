@@ -12,8 +12,7 @@ Sleep_Service::Sleep_Service (CORBA::ORB_ptr orb)
 }
 
 void
-Sleep_Service::go_to_sleep (CORBA::ULong microseconds
-                            ACE_ENV_ARG_DECL_NOT_USED)
+Sleep_Service::go_to_sleep (CORBA::ULong microseconds)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong  secs = microseconds / 1000000;
@@ -28,5 +27,5 @@ Sleep_Service::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

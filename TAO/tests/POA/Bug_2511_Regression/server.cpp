@@ -80,8 +80,7 @@ public:
   ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,
                                        PortableServer::POA_ptr,
                                        const char *,
-                                       PortableServer::ServantLocator::Cookie &
-                                       ACE_ENV_ARG_DECL)
+                                       PortableServer::ServantLocator::Cookie &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -89,8 +88,7 @@ public:
                    PortableServer::POA_ptr,
                    const char *,
                    PortableServer::ServantLocator::Cookie,
-                   PortableServer::Servant
-                   ACE_ENV_ARG_DECL)
+                   PortableServer::Servant)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   test_i servant_;
@@ -105,8 +103,7 @@ Servant_Locator::Servant_Locator (PortableServer::POA_ptr poa)
 Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr,
                             const char *op,
-                            PortableServer::ServantLocator::Cookie &
-                            ACE_ENV_ARG_DECL_NOT_USED)
+                            PortableServer::ServantLocator::Cookie &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -139,8 +136,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr,
                              const char *op,
                              PortableServer::ServantLocator::Cookie,
-                             PortableServer::Servant
-                             ACE_ENV_ARG_DECL_NOT_USED)
+                             PortableServer::Servant)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++postCount;
@@ -164,21 +160,18 @@ main (int argc, char **argv)
 {
   int retval = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -190,67 +183,58 @@ main (int argc, char **argv)
 
       policies.length (current_length + 1);
       policies[current_length++] =
-        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
       policies.length (current_length + 1);
       policies[current_length++] =
-        root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN
-                                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
       policies.length (current_length + 1);
       policies[current_length++] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       Servant_Locator* servant_locator = new Servant_Locator(child_poa.in ()) ;
-      child_poa->set_servant_manager (servant_locator
-                                      ACE_ENV_ARG_PARAMETER);
+      child_poa->set_servant_manager (servant_locator);
 
       PortableServer::ObjectId_var objectID =
         PortableServer::string_to_ObjectId ("object");
 
       CORBA::Object_var objectREF =
         child_poa->create_reference_with_id (objectID.in (),
-                                             "IDL:test:1.0"
-                                             ACE_ENV_ARG_PARAMETER);
+                                             "IDL:test:1.0");
 
       test_var testObject =
-        test::_narrow (objectREF.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        test::_narrow (objectREF.in ());
 
       testObject->normal();
 
       bool caught = false;
-      ACE_TRY
+      try
       {
         testObject->exceptional();
       }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
       {
         ACE_DEBUG ((LM_DEBUG, "exceptional() yielded exception\n"));
         caught = true;
       }
-      ACE_ENDTRY;
       if (!caught) ++errorCount;
 
       caught = false;
-      ACE_TRY
+      try
       {
         testObject->notexisting();
       }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
       {
         ACE_DEBUG ((LM_DEBUG, "notexisting() yielded exception\n"));
         caught = true;
       }
-      ACE_ENDTRY;
       if (!caught) ++errorCount;
 
       if (!errorCount)
@@ -263,12 +247,11 @@ main (int argc, char **argv)
       }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       retval = -1;
     }
-  ACE_ENDTRY;
 
   return retval;
 }

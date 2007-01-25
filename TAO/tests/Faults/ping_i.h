@@ -34,8 +34,7 @@ public:
   // ctor
 
   // = The PingObject interface methods
-  void ping (PingObject_ptr callback
-             ACE_ENV_ARG_DECL)
+  void ping (PingObject_ptr callback)
     ACE_THROW_SPEC ((CORBA::SystemException));
   void pong (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -60,9 +60,8 @@ Consumer_Signal_Handler::quit_on_signal (void)
   // Only if the consumer is registered and wants to shut down, its
   // necessary to unregister and then shutdown.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (consumer_handler_->unregistered_ != 1
           && consumer_handler_->registered_ == 1)
@@ -74,12 +73,12 @@ Consumer_Signal_Handler::quit_on_signal (void)
         }
       this->consumer_handler_->consumer_servant_->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Consumer_Input_Handler::quit_consumer_process()");
+      ex._tao_print_exception (
+        "Consumer_Input_Handler::quit_consumer_process()");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -63,22 +63,20 @@ int
 Driver::init (int argc, char **argv)
 {
   // environment to track exceptions
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // retrieve the instance of Options
   Options *opt = OPTIONS::instance ();
 
   char exception_string[256];
 
-  ACE_TRY
+  try
     {
       ACE_OS::strcpy (exception_string, "ORB Initialization");
 
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "internet"
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "internet");
 
       // Parse command line and verify parameters.
       if (opt->parse_args (argc, argv) == -1)
@@ -90,7 +88,7 @@ Driver::init (int argc, char **argv)
       ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
 
       CORBA::Object_var temp =
-        this->orb_->string_to_object (opt->param_test_ior () ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (opt->param_test_ior ());
 
 
       if (CORBA::is_nil (temp.in()))
@@ -102,15 +100,14 @@ Driver::init (int argc, char **argv)
       // Get the object reference
       ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
-      this->objref_ = Param_Test::_narrow (temp.in() ACE_ENV_ARG_PARAMETER);
+      this->objref_ = Param_Test::_narrow (temp.in());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, exception_string);
+      ex._tao_print_exception (exception_string);
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -611,19 +608,17 @@ Driver::run (void)
     }
 
   // Get in a new environment variable
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (opt->shutdown ())
         {
           this->objref_->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "during shutdown");
+      ex._tao_print_exception ("during shutdown");
     }
-  ACE_ENDTRY;
 
   return retstatus;
 }

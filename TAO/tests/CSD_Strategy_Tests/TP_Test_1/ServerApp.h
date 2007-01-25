@@ -16,7 +16,7 @@ class ServerApp : public TestAppBase
 
   protected:
 
-    virtual int run_i(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    virtual int run_i(int argc, char* argv[]);
 
 
   private:

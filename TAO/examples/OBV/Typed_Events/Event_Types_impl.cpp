@@ -111,7 +111,7 @@ CORBA::Float Position_impl::x (void)
   return this->xyz()[0];
 }
 
-void Position_impl::x (CORBA::Float x ACE_ENV_ARG_DECL_NOT_USED)
+void Position_impl::x (CORBA::Float x)
 {
   this->xyz()[0] = x;
 }
@@ -121,7 +121,7 @@ CORBA::Float Position_impl::y (void)
   return this->xyz()[1];
 }
 
-void Position_impl::y (CORBA::Float y ACE_ENV_ARG_DECL_NOT_USED)
+void Position_impl::y (CORBA::Float y)
 {
   this->xyz()[1] = y;
 }
@@ -131,7 +131,7 @@ CORBA::Float Position_impl::z (void)
   return this->xyz()[2];
 }
 
-void Position_impl::z (CORBA::Float z ACE_ENV_ARG_DECL_NOT_USED)
+void Position_impl::z (CORBA::Float z)
 {
   this->xyz()[2] = z;
 }
@@ -228,8 +228,7 @@ Event_List_Link_impl::get_next_link (void)
 }
 
 void
-Event_List_Link_impl::attach_next_link (Event_List_Link *n
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+Event_List_Link_impl::attach_next_link (Event_List_Link *n)
 {
   this->next (n);
 }
@@ -259,7 +258,7 @@ Event_List_impl::~Event_List_impl (void)
 }
 
 void
-Event_List_impl::store_event (Event* e ACE_ENV_ARG_DECL_NOT_USED)
+Event_List_impl::store_event (Event* e)
 {
   // This operation should perform atomically and should
   // guard against the access to the list from another thread.
@@ -401,8 +400,7 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 
 
 CORBA::Boolean
-Temperature_Criterion_impl::is_critical (Event* e
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+Temperature_Criterion_impl::is_critical (Event* e)
 {
   // Downcast to a temperature.
   Temperature* t = Temperature::_downcast (e);
@@ -458,7 +456,7 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 
 
 CORBA::Boolean
-Position_Criterion_impl::is_critical (Event* e ACE_ENV_ARG_DECL_NOT_USED)
+Position_Criterion_impl::is_critical (Event* e)
 {
   Position* p = Position::_downcast (e);
   // Is Event really a Position ?
@@ -479,7 +477,7 @@ Position_Criterion_impl::is_critical (Event* e ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Position_Criterion_impl::do_print ( ACE_ENV_SINGLE_ARG_DECL )
+Position_Criterion_impl::do_print ( )
 {
   ACE_DEBUG((LM_DEBUG,
              "Alarm boundary for events with origin id %d is the box\n",
@@ -511,8 +509,7 @@ Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 
 
 CORBA::Boolean
-Log_Msg_Criterion_impl::is_critical (Event* e
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+Log_Msg_Criterion_impl::is_critical (Event* e)
 {
   Log_Msg* lm = Log_Msg::_downcast (e);
 
@@ -560,8 +557,7 @@ Criterion_List_impl::~Criterion_List_impl ()
 }
 
 void
-Criterion_List_impl::store_criterion (Criterion *c
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+Criterion_List_impl::store_criterion (Criterion *c)
 {
   if (!my_list ())
     {
@@ -574,7 +570,7 @@ Criterion_List_impl::store_criterion (Criterion *c
 }
 
 CORBA::Boolean
-Criterion_List_impl::is_critical (Event *e ACE_ENV_ARG_DECL_NOT_USED)
+Criterion_List_impl::is_critical (Event *e)
 {
   // Try all criterions. Walking the list is efficient enough for
   // demonstration.

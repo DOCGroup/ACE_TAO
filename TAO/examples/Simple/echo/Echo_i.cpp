@@ -27,8 +27,7 @@ Echo_i::orb (CORBA::ORB_ptr o)
 // Return a list of object references.
 
 Echo::List *
-Echo_i::echo_list (const char *
-                   ACE_ENV_ARG_DECL)
+Echo_i::echo_list (const char *)
  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Echo::List_var list;
@@ -47,16 +46,13 @@ Echo_i::echo_list (const char *
 
   // Just do something to get a list of object references.
   list[CORBA::ULong(0)] =
-    orb_->resolve_initial_references ("NameService"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(1)] =
-    orb_->resolve_initial_references ("NameService"
-                                      ACE_ENV_ARG_PARAMETER);;
+    orb_->resolve_initial_references ("NameService");;
 
   list[CORBA::ULong(2)] =
-    orb_->resolve_initial_references ("NameService"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("NameService");
 
   return list._retn ();
 }
@@ -64,8 +60,7 @@ Echo_i::echo_list (const char *
 // Return the mesg string from the server
 
 char *
-Echo_i::echo_string (const char *mesg
-                     ACE_ENV_ARG_DECL)
+Echo_i::echo_string (const char *mesg)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The pointer mesg was NULL, return.

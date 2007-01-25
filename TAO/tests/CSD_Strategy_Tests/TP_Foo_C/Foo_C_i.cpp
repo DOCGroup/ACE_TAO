@@ -27,7 +27,7 @@ Foo_C_i::op1(void)
 
 
 void
-Foo_C_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_C_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[1].push_back (value);
@@ -36,7 +36,7 @@ Foo_C_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_C_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_C_i::op3(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[2].push_back (value);
@@ -46,7 +46,7 @@ Foo_C_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_C_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_C_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[3].push_back (value);
@@ -59,7 +59,7 @@ Foo_C_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   ++this->count_[4];
-  ACE_THROW (FooException());
+  throw FooException();
 }
 
 
@@ -79,7 +79,7 @@ Foo_C_i::cust_op1(void)
 
 
 void
-Foo_C_i::cust_op2(long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_C_i::cust_op2(long value)
 {
   this->in_values_[6].push_back (value);
   ++this->count_[6];
@@ -87,7 +87,7 @@ Foo_C_i::cust_op2(long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 long
-Foo_C_i::cust_op3(long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_C_i::cust_op3(long value)
 {
   this->in_values_[7].push_back (value);
   ++this->count_[7];
@@ -96,7 +96,7 @@ Foo_C_i::cust_op3(long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_C_i::cust_op4(long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_C_i::cust_op4(long value)
 {
   this->in_values_[8].push_back (value);
   ++this->count_[8];
@@ -107,7 +107,7 @@ void
 Foo_C_i::cust_op5(void)
 {
   ++this->count_[9];
-  ACE_THROW (CustomException());
+  throw CustomException();
 }
 
 

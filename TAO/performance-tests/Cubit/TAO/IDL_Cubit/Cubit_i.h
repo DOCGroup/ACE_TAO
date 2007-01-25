@@ -48,62 +48,51 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a twoway call.
 
-  virtual CORBA::Octet cube_octet (CORBA::Octet o
-                                   ACE_ENV_ARG_DECL)
+  virtual CORBA::Octet cube_octet (CORBA::Octet o)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an octet
 
-  virtual CORBA::Short cube_short (CORBA::Short s
-                                   ACE_ENV_ARG_DECL)
+  virtual CORBA::Short cube_short (CORBA::Short s)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a short
 
-  virtual CORBA::Long cube_long (CORBA::Long l
-                                 ACE_ENV_ARG_DECL)
+  virtual CORBA::Long cube_long (CORBA::Long l)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a long
 
-  virtual Cubit::Many cube_struct (const Cubit::Many &values
-                                   ACE_ENV_ARG_DECL)
+  virtual Cubit::Many cube_struct (const Cubit::Many &values)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a struct.
 
-  virtual Cubit::oneof cube_union (const Cubit::oneof &values
-                                   ACE_ENV_ARG_DECL)
+  virtual Cubit::oneof cube_union (const Cubit::oneof &values)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a union.
 
   virtual void cube_long_sequence (const Cubit::long_seq &input,
-                                   Cubit::long_seq_out output
-                                   ACE_ENV_ARG_DECL)
+                                   Cubit::long_seq_out output)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
   virtual void cube_octet_sequence (const Cubit::octet_seq &input,
-                                    Cubit::octet_seq_out output
-                                    ACE_ENV_ARG_DECL)
+                                    Cubit::octet_seq_out output)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an octet sequence.
 
   virtual void cube_many_sequence (const Cubit::many_seq & input,
-                                   Cubit::many_seq_out output
-                                   ACE_ENV_ARG_DECL)
+                                   Cubit::many_seq_out output)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an Many sequence.
 
   virtual void cube_rti_data (const Cubit::RtiPacket &input,
-                              Cubit::RtiPacket_out output
-                              ACE_ENV_ARG_DECL)
+                              Cubit::RtiPacket_out output)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
-  virtual CORBA::Any * cube_any (const CORBA::Any & any
-                                ACE_ENV_ARG_DECL)
+  virtual CORBA::Any * cube_any (const CORBA::Any & any)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a long in an any
 
-  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any
-                                       ACE_ENV_ARG_DECL)
+  virtual CORBA::Any * cube_any_struct (const CORBA::Any & any)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a struct in an any
 

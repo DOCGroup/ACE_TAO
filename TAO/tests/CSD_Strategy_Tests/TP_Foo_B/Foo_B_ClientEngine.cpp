@@ -43,9 +43,9 @@ Foo_B_ClientEngine::execute(void)
 
   this->obj_->op1();
 
-  this->obj_->op2(this->client_id_ ACE_ENV_ARG_PARAMETER);
+  this->obj_->op2(this->client_id_);
 
-  CORBA::Long value = this->obj_->op3(this->client_id_ ACE_ENV_ARG_PARAMETER);
+  CORBA::Long value = this->obj_->op3(this->client_id_);
 
   if (value != static_cast<CORBA::Long>(this->client_id_))
     {
@@ -54,21 +54,20 @@ Foo_B_ClientEngine::execute(void)
 
   for (CORBA::ULong j = 1; j <= 5; j++)
     {
-      this->obj_->op4(495 + (this->client_id_ * 5) + j ACE_ENV_ARG_PARAMETER);
+      this->obj_->op4(495 + (this->client_id_ * 5) + j);
     }
 
   bool caught_exception = false;
 
-  ACE_TRY
+  try
   {
     this->obj_->op5();
   }
-  ACE_CATCH (FooException, ex)
+  catch (const FooException& )
   {
     // Expected
     caught_exception = true;
   }
-  ACE_ENDTRY;
 
   if (! caught_exception)
     {
@@ -88,7 +87,7 @@ Foo_B_ClientEngine::execute(void)
   // Two-Way calls with "inout" and fixed size "in" arguments.
   CORBA::String_var message = CORBA::string_dup(test_str);
 
-  CORBA::Boolean result = this->obj_->op6( t, message.inout() ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean result = this->obj_->op6( t, message.inout());
 
   ACE_UNUSED_ARG(result);
 
@@ -101,14 +100,14 @@ Foo_B_ClientEngine::execute(void)
     }
 
   // Callback test.
-  this->obj_->op7 (this->callback_.in () ACE_ENV_ARG_PARAMETER);
+  this->obj_->op7 (this->callback_.in ());
 
   // One-Way calls with various arguments.
   CORBA::String_var ub_string = CORBA::string_dup( test_str );
-  this->obj_->test_unbounded_string_arg (ub_string.in () ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_unbounded_string_arg (ub_string.in ());
 
   CORBA::String_var bd_string = CORBA::string_dup( test_str );
-  this->obj_->test_bounded_string_arg (bd_string.in () ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_bounded_string_arg (bd_string.in ());
 
   Fixed_Array fixed_array;
 
@@ -117,7 +116,7 @@ Foo_B_ClientEngine::execute(void)
      fixed_array[m] = this->client_id_ + m;
   }
 
-  this->obj_->test_fixed_array_arg (fixed_array ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_fixed_array_arg (fixed_array);
 
   Var_Array var_array;
 
@@ -128,29 +127,26 @@ Foo_B_ClientEngine::execute(void)
       var_array[k] = CORBA::string_dup(buffer);
     }
 
-  this->obj_->test_var_array_arg (var_array ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_var_array_arg (var_array);
 
   Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
 
   bd_var_size_string->replace (ACE_OS::strlen (test_str) + 1,
                                test_str);
-  this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ());
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
   ub_var_size_string->replace (ub_var_size_string->maximum (),
                                ACE_OS::strlen (test_str) + 1,
                                test_str);
-  this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ());
 
-  this->obj_->test_fixed_size_arg (t ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_fixed_size_arg (t);
 
   this->obj_->test_special_basic_arg (this->client_id_ % 2,
-                                      this->client_id_
-                                      ACE_ENV_ARG_PARAMETER);
+                                      this->client_id_);
 
-  this->obj_->test_objref_arg (this->callback_.in () ACE_ENV_ARG_PARAMETER);
+  this->obj_->test_objref_arg (this->callback_.in ());
 
   // Sleep for 5 seconds before invoking done().
   // This is a workaround with the problem that some oneway requests lost

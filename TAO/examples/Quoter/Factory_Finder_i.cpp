@@ -40,8 +40,7 @@ Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i (void)
 
 
 CosLifeCycle::Factories *
-Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
-                                         ACE_ENV_ARG_DECL)
+Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory))
 {
@@ -49,7 +48,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
 
   CosLifeCycle::Factories *factories_ptr = 0;
 
-  ACE_TRY
+  try
   {
     // Get a reference to the ORB.
     CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance ()->orb ();
@@ -57,7 +56,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
     // Get the Naming Service object reference.
     exception_message = "While resolving the Name Service";
     CORBA::Object_var namingObj_var =
-      orb_ptr->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      orb_ptr->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
       ACE_ERROR ((LM_ERROR,
@@ -66,8 +65,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
     // Narrow the object reference to a Naming Context.
     exception_message = "While narrowing the Naming Context";
     CosNaming::NamingContext_var namingContext_var =
-      CosNaming::NamingContext::_narrow (namingObj_var.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+      CosNaming::NamingContext::_narrow (namingObj_var.in ());
 
     // Take the key supplied to search for a Quoter Factory
     CosNaming::Name factoryName = (CosNaming::Name) factory_key;
@@ -75,7 +73,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
     // Try to get a reference to a Quoter Factory
     exception_message = "While resolving the Factory Object";
     CORBA::Object_var quoterFactoryObject_var =
-      namingContext_var->resolve (factoryName ACE_ENV_ARG_PARAMETER);
+      namingContext_var->resolve (factoryName);
 
     // Check if it is a valid Quoter Factory reference
     if (CORBA::is_nil (quoterFactoryObject_var.in()))
@@ -98,12 +96,11 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key
       ACE_DEBUG ((LM_DEBUG,
                   "Factory Finder: Have reference to a Quoter Factory.\n"));
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %s\n", exception_message));
       ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
     }
-  ACE_ENDTRY;
 
   return factories_ptr;
 }

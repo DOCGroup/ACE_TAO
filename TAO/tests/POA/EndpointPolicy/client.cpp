@@ -44,29 +44,27 @@ main (int argc, char *argv[])
   CORBA::ORB_var orb;
   CORBA::Object_var tmp;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      tmp = orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+      tmp = orb->string_to_object(ior);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,"client: Invocation expecting to %s\n",
                   (bad_ior ? "fail" : "work")));
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -89,17 +87,15 @@ main (int argc, char *argv[])
 
       hello->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (!bad_ior)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "client: Exception caught:");
+          ex._tao_print_exception ("client: Exception caught:");
           return 1;
         }
       ACE_DEBUG ((LM_DEBUG, "client: success!\n"));
     }
-  ACE_ENDTRY;
 
   orb->destroy ();
 

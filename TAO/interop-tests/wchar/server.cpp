@@ -80,8 +80,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
   ACE_OS::fclose (output_file);
   ACE_ERROR_RETURN ((LM_ERROR,"This test requires wchar support\n"),0);
 #else
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
         // Initialize orb
         CORBA::ORB_var orb = CORBA::ORB_init( command_line.get_argc(), command_line.get_ASCII_argv() );
@@ -89,17 +88,17 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
         //Get reference to Root POA
         CORBA::Object_var obj =
         orb->resolve_initial_references( "RootPOA"
-                                         ACE_ENV_ARG_PARAMETER );
+ );
 
         PortableServer::POA_var poa =
           PortableServer::POA::_narrow( obj.in()
-                                        ACE_ENV_ARG_PARAMETER );
+ );
 
         PortableServer::POAManager_var mgr =
-          poa->the_POAManager( ACE_ENV_SINGLE_ARG_PARAMETER );
+          poa->the_POAManager( );
 
         // Activate POA Manager
-        mgr->activate( ACE_ENV_SINGLE_ARG_PARAMETER );
+        mgr->activate( );
 
         // Create an object
         interop_WChar_Passer_i servant(orb.in(), verbose);
@@ -107,11 +106,11 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
         // Register the servant with the RootPOA, obtain its object
         // reference, stringify it, and write it to a file.
         obj = poa->servant_to_reference( &servant
-                                         ACE_ENV_ARG_PARAMETER );
+ );
 
         CORBA::String_var str =
           orb->object_to_string( obj.in()
-                                 ACE_ENV_ARG_PARAMETER );
+ );
 
         FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
         if (output_file == 0)
@@ -124,15 +123,14 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
         ACE_OS::fclose (output_file);
 
         // Accept requests
-        orb->run( ACE_ENV_SINGLE_ARG_PARAMETER );
-        orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
+        orb->run( );
+        orb->destroy( );
       }
-    ACE_CATCH(CORBA::Exception, ex)
+    catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION(ex, "uncaught exception");
+        ex._tao_print_exception ("uncaught exception");
         return 1;
       }
-    ACE_ENDTRY;
 
     return 0;
 #endif /* ACE_HAS_WCHAR */

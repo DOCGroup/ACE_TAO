@@ -21,8 +21,7 @@ Hello::get_string (void)
 
 ::Test::StringList *
 Hello::get_stringList (
-	// ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+	//
 	)
 	ACE_THROW_SPEC ((
 	::CORBA::SystemException
@@ -47,7 +46,6 @@ void
 Hello::get_stringList2 (
         ::CORBA::Boolean initialize,
         ::Test::StringList_out osl
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -73,7 +71,6 @@ Hello::get_stringList2 (
 void
 Hello::mod_stringList (
         ::Test::StringList & iosl
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -94,5 +91,5 @@ void
 Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

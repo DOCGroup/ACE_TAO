@@ -35,7 +35,7 @@ public:
 };
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+test_i::_default_POA ( /**/)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -44,28 +44,26 @@ void
 test_i::deactivate_self (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->poa_->deactivate_object (this->id_
-                                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (this->id_);
 
   // Exception flag
   int expected_exception_raised = 0;
 
-  ACE_TRY
+  try
     {
-      this->poa_->deactivate_object (this->id_
-                                     ACE_ENV_ARG_PARAMETER);
+      this->poa_->deactivate_object (this->id_);
     }
-  ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
+  catch (const PortableServer::POA::ObjectNotActive& )
     {
       // This is the correct exception! Ignore
       expected_exception_raised = 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught of incorrect type");
+      ex._tao_print_exception (
+        "Exception caught of incorrect type");
       ACE_ASSERT (0);
     }
-  ACE_ENDTRY;
 
   // Make sure an exception was raised and it was of the correct type.
   ACE_ASSERT (expected_exception_raised);
@@ -75,8 +73,7 @@ test_i::deactivate_self (void)
 
 void
 test_object_deactivation (PortableServer::POA_ptr poa,
-                          const PortableServer::ObjectId &id
-                          ACE_ENV_ARG_DECL)
+                          const PortableServer::ObjectId &id)
 {
   test_i servant;
   int expected_exception_raised = 0;
@@ -84,23 +81,21 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   PortableServer::ObjectId_var invalid_id =
     PortableServer::string_to_ObjectId ("invalid id");
 
-  ACE_TRY_EX (invalid_id)
+  try
     {
-      poa->deactivate_object (invalid_id.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (invalid_id);
+      poa->deactivate_object (invalid_id.in ());
     }
-  ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
+  catch (const PortableServer::POA::ObjectNotActive& )
     {
       // This is the correct exception! Ignore
       expected_exception_raised = 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught of incorrect type");
+      ex._tao_print_exception (
+        "Exception caught of incorrect type");
       ACE_ASSERT (0);
     }
-  ACE_ENDTRY;
 
   // Make sure an exception was raised and it was of the correct
   // type.
@@ -109,40 +104,35 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
 
   poa->activate_object_with_id (id,
-                                &servant
-                                ACE_ENV_ARG_PARAMETER);
+                                &servant);
 
-  poa->deactivate_object (id
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id);
 
   // Reset flag
   expected_exception_raised = 0;
 
-  ACE_TRY_EX (double_deactivate)
+  try
     {
-      poa->deactivate_object (id
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (double_deactivate);
+      poa->deactivate_object (id);
     }
-  ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
+  catch (const PortableServer::POA::ObjectNotActive& )
     {
       // This is the correct exception! Ignore
       expected_exception_raised = 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught of incorrect type");
+      ex._tao_print_exception (
+        "Exception caught of incorrect type");
       ACE_ASSERT (0);
     }
-  ACE_ENDTRY;
 
   // Make sure an exception was raised and it was of the correct
   // type.
   ACE_ASSERT (expected_exception_raised);
 
   poa->activate_object_with_id (id,
-                                &servant
-                                ACE_ENV_ARG_PARAMETER);
+                                &servant);
 
   servant.poa_ =
     PortableServer::POA::_duplicate (poa);
@@ -162,25 +152,21 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
@@ -190,35 +176,29 @@ main (int argc, char **argv)
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              empty_policies
-                              ACE_ENV_ARG_PARAMETER);
+                              empty_policies);
 
       poa_manager->activate ();
 
       obj =
-        root_poa->create_reference ("IDL:test:1.0"
-                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_reference ("IDL:test:1.0");
 
       PortableServer::ObjectId_var id =
-        root_poa->reference_to_id (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->reference_to_id (obj.in ());
 
       test_object_deactivation (root_poa.in (),
-                                id.in ()
-                                ACE_ENV_ARG_PARAMETER);
+                                id.in ());
 
       id = PortableServer::string_to_ObjectId ("good id");
 
       test_object_deactivation (child_poa.in (),
-                                id.in ()
-                                ACE_ENV_ARG_PARAMETER);
+                                id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

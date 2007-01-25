@@ -32,9 +32,9 @@ ServerApp::~ServerApp()
 
 
 int
-ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ServerApp::run_i(int argc, char* argv[])
 {
-  int result = this->init(argc, argv ACE_ENV_ARG_PARAMETER);
+  int result = this->init(argc, argv);
   if (result != 0)
     {
       return result;
@@ -60,9 +60,9 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
 
 int
-ServerApp::init(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ServerApp::init(int argc, char* argv[])
 {
-  this->orb_ = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
+  this->orb_ = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -77,7 +77,7 @@ ServerApp::init(int argc, char* argv[] ACE_ENV_ARG_DECL)
   unsigned num_clients = this->num_remote_clients_ +
                          this->num_collocated_clients_;
 
-  TheAppShutdown->init(this->orb_.in(), num_clients ACE_ENV_ARG_PARAMETER);
+  TheAppShutdown->init(this->orb_.in(), num_clients);
 
   return 0;
 }
@@ -87,8 +87,7 @@ void
 ServerApp::poa_setup(void)
 {
   this->poa_ = this->create_poa(this->orb_.in(),
-                                "ChildPoa"
-                                ACE_ENV_ARG_PARAMETER);
+                                "ChildPoa");
 }
 
 
@@ -97,11 +96,11 @@ ServerApp::csd_setup(void)
 {
   this->tp_strategy_ = new TAO::CSD::TP_Strategy(this->num_csd_threads_);
 
-  if (!this->tp_strategy_->apply_to(this->poa_.in() ACE_ENV_ARG_PARAMETER))
+  if (!this->tp_strategy_->apply_to(this->poa_.in()))
     {
       ACE_ERROR((LM_ERROR,
                  "Failed to apply CSD strategy to poa.\n"));
-      ACE_THROW(TestAppException());
+      throw TestAppException();
     }
 }
 
@@ -112,8 +111,7 @@ ServerApp::servant_setup(void)
   this->servants_.create_and_activate(this->num_servants_,
                                       this->orb_.in (),
                                       this->poa_.in (),
-                                      this->ior_filename_prefix_.c_str()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      this->ior_filename_prefix_.c_str());
 }
 
 
@@ -161,7 +159,7 @@ ServerApp::run_collocated_clients(void)
     {
       if (this->collocated_client_task_.open() == -1)
         {
-          ACE_THROW (TestAppException ());
+          throw TestAppException ();
         }
     }
 }
@@ -325,14 +323,12 @@ ServerApp::set_arg(unsigned&   value,
 
 PortableServer::POA_ptr
 ServerApp::create_poa(CORBA::ORB_ptr orb,
-                      const char* poa_name
-                      ACE_ENV_ARG_DECL)
+                      const char* poa_name)
 {
   // Get the Root POA.
   PortableServer::POA_var root_poa
     = RefHelper<PortableServer::POA>::resolve_initial_ref(orb,
-                                                          "RootPOA"
-                                                          ACE_ENV_ARG_PARAMETER);
+                                                          "RootPOA");
 
   // Get the POAManager from the Root POA.
   PortableServer::POAManager_var poa_manager
@@ -347,8 +343,7 @@ ServerApp::create_poa(CORBA::ORB_ptr orb,
     = AppHelper::create_poa(poa_name,
                             root_poa.in(),
                             poa_manager.in(),
-                            policies
-                            ACE_ENV_ARG_PARAMETER);
+                            policies);
 
   // Give away the child POA_ptr from the POA_var variable.
   return poa._retn();

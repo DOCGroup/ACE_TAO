@@ -20,8 +20,7 @@ ACE_RCSID (PICurrent,
 // Prototype
 
 int
-test_transport_current (CORBA::ORB_ptr
-                        ACE_ENV_ARG_DECL)  ACE_THROW_SPEC ((CORBA::SystemException,
+test_transport_current (CORBA::ORB_ptr)  ACE_THROW_SPEC ((CORBA::SystemException,
                                                             CORBA::UserException));
 
 using namespace TAO;
@@ -108,7 +107,7 @@ Worker::Worker (Test::Transport::CurrentTest_ptr server,
 int
 Worker::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       for (int i = 0; i < this->niterations_; ++i)
@@ -124,8 +123,7 @@ Worker::svc (void)
                           ACE_TEXT ("Client (%P|%t) Invoking server->invoked_by_client() via DII\n")));
 
               CORBA::Request_var request =
-                this->server_->_request ("invoked_by_client"
-                                         ACE_ENV_ARG_PARAMETER);
+                this->server_->_request ("invoked_by_client");
 
               request->set_return_type (CORBA::_tc_void);
 
@@ -144,12 +142,10 @@ Worker::svc (void)
                         i));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client: exception raised");
+      ex._tao_print_exception ("Client: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -160,8 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Test::Client_Request_Interceptor* cri = 0;
       ACE_NEW_RETURN (cri,
@@ -176,14 +171,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
       PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         CLIENT_ORB_ID
-                         ACE_ENV_ARG_PARAMETER);
+                         CLIENT_ORB_ID);
 
       if (parse_args (argc, argv) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -192,9 +185,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           -1);
 
 
-      ACE_TRY
+      try
         {
-          test_transport_current (orb.in () ACE_ENV_ARG_PARAMETER);
+          test_transport_current (orb.in ());
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Client (%P|%t) ERROR: ")
@@ -203,20 +196,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT (" Expected exception was not thrown\n")),
                             -1);
         }
-      ACE_CATCH (Transport::NoContext, ex)
+      catch (const Transport::NoContext& )
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client (%P|%t) Expected exception occured when trying ")
                       ACE_TEXT ("to access traits outside the ")
                       ACE_TEXT ("interceptor or upcall context.\n")));
         }
-      ACE_ENDTRY;
 
       // Resolve the target object
-      CORBA::Object_var obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = orb->string_to_object (ior);
 
       Test::Transport::CurrentTest_var server =
-        Test::Transport::CurrentTest::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -287,13 +279,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ((result == 0) ? ACE_TEXT ("successfuly") : ACE_TEXT ("with failure"))));
       return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Client: Transport Current test (client-side) failed:"));
+      ex._tao_print_exception (
+        ACE_TEXT (
+          "Client: Transport Current test (client-side) failed:"));
       return -1;
     }
-  ACE_ENDTRY;
 
 #else /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Client (%P|%t) Need TAO_HAS_TRANSPORT_CURRENT enabled to run.\n")));

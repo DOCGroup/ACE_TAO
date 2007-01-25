@@ -27,8 +27,7 @@ public:
 
   // = The skeleton methods
   virtual CORBA::Boolean get_data (CORBA::ULong size,
-                                   Test::Payload_out payload
-                                   ACE_ENV_ARG_DECL)
+                                   Test::Payload_out payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Long get_event_count (void)

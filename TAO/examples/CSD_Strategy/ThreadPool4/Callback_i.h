@@ -14,7 +14,6 @@ class Callback_i : public virtual POA_Callback
     virtual ~Callback_i();
 
     virtual void test_method (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException

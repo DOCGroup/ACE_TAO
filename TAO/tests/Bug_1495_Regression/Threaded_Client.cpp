@@ -64,16 +64,14 @@ main (int argc, char *argv[])
       return -1;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Argv_Type_Converter main_args_s (argc, argv);
 
       CORBA::ORB_var sorb =
         CORBA::ORB_init (main_args_s.get_argc (),
                          main_args_s.get_TCHAR_argv (),
-                         "Server_ORB"
-                         ACE_ENV_ARG_PARAMETER);
+                         "Server_ORB");
 
       ACE_Manual_Event me;
 
@@ -96,8 +94,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var corb =
         CORBA::ORB_init (main_args_c.get_argc (),
                          main_args_c.get_TCHAR_argv (),
-                         "Client_ORB"
-                         ACE_ENV_ARG_PARAMETER);
+                         "Client_ORB");
 
       {
         Client_Task client_task (ior_input_file,
@@ -115,11 +112,10 @@ main (int argc, char *argv[])
 
       corb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // ignore exceptions
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Threaded client ready.\n"));
 

@@ -21,26 +21,25 @@ Service::dump_results (void)
 }
 
 void
-Service::run_test (Test::Crashed_Callback_ptr callback
-                   ACE_ENV_ARG_DECL)
+Service::run_test (Test::Crashed_Callback_ptr callback)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int pre_crash_exceptions =
-    this->call_are_you_there (callback ACE_ENV_ARG_PARAMETER);
+    this->call_are_you_there (callback);
 
   pre_crash_exceptions +=
-    this->call_test_oneway (callback ACE_ENV_ARG_PARAMETER);
+    this->call_test_oneway (callback);
 
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) - Service, calling crash_now_please\n"));
       callback->crash_now_please ();
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception& ex){}
 
   int pos_crash_exceptions =
-    this->call_test_oneway (callback ACE_ENV_ARG_PARAMETER);
+    this->call_test_oneway (callback);
 
   if (pre_crash_exceptions != 0)
     {
@@ -65,8 +64,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback
 }
 
 int
-Service::call_are_you_there (Test::Crashed_Callback_ptr callback
-                             ACE_ENV_ARG_DECL)
+Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
@@ -75,22 +73,20 @@ Service::call_are_you_there (Test::Crashed_Callback_ptr callback
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      ACE_TRY
+      try
         {
           (void) callback->are_you_there ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           exception_count++;
         }
-      ACE_ENDTRY;
     }
   return exception_count;
 }
 
 int
-Service::call_test_oneway (Test::Crashed_Callback_ptr callback
-                           ACE_ENV_ARG_DECL)
+Service::call_test_oneway (Test::Crashed_Callback_ptr callback)
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
@@ -99,15 +95,14 @@ Service::call_test_oneway (Test::Crashed_Callback_ptr callback
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      ACE_TRY
+      try
         {
           (void) callback->test_oneway ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           exception_count++;
         }
-      ACE_ENDTRY;
     }
   return exception_count;
 }

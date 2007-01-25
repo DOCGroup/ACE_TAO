@@ -42,7 +42,7 @@ public:
   int run (void);
   // Execute client code.
 
-  int init (int argc, char **argv ACE_ENV_ARG_DECL_NOT_USED);
+  int init (int argc, char **argv);
   // Initialize the communication endpoint with server.
 
   int calculate_avg_latency (void);

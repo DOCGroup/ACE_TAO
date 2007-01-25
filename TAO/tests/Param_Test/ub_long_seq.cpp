@@ -49,8 +49,7 @@ Test_Long_Sequence::opname (void) const
 }
 
 void
-Test_Long_Sequence::dii_req_invoke (CORBA::Request *req
-                                    ACE_ENV_ARG_DECL)
+Test_Long_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -65,19 +64,18 @@ Test_Long_Sequence::dii_req_invoke (CORBA::Request *req
   this->ret_ = CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = CORBA::LongSeq (*tmp);
 }
 
 int
-Test_Long_Sequence::init_parameters (Param_Test_ptr
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+Test_Long_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -106,27 +104,23 @@ Test_Long_Sequence::reset_parameters (void)
 }
 
 int
-Test_Long_Sequence::run_sii_test (Param_Test_ptr objref
-                                  ACE_ENV_ARG_DECL)
+Test_Long_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::LongSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_long_sequence (this->in_.in (),
                                                this->inout_.inout (),
-                                               out
-                                               ACE_ENV_ARG_PARAMETER);
+                                               out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Long_Sequence::run_sii_test\n");
+      ex._tao_print_exception ("Test_Long_Sequence::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

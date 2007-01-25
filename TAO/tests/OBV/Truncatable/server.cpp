@@ -38,16 +38,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,7 +71,7 @@ main (int argc, char *argv[])
         test_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (test.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -91,8 +91,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (base_factory->tao_repository_id (),
-                                   base_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   base_factory);
       base_factory->_remove_ref (); // release ownership
 
       OBV_TruncatableTest::TValue1_init *value1_factory = 0;
@@ -101,8 +100,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (value1_factory->tao_repository_id (),
-                                   value1_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   value1_factory);
       value1_factory->_remove_ref ();
 
       OBV_TruncatableTest::TValue4_init *value4_factory = 0;
@@ -111,8 +109,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (value4_factory->tao_repository_id (),
-                                   value4_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   value4_factory);
       value4_factory->_remove_ref ();
 
       OBV_TruncatableTest::NestedValue_init *nested_value_factory = 0;
@@ -121,25 +118,22 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (nested_value_factory->tao_repository_id (),
-                                   nested_value_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   nested_value_factory);
       nested_value_factory->_remove_ref ();
 
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

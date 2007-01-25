@@ -47,8 +47,7 @@ public:
 
   int init (const char *servant_name,
             int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 

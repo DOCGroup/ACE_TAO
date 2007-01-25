@@ -70,32 +70,28 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-void run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
-                                ACE_ENV_ARG_DECL);
-void run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
-                                ACE_ENV_ARG_DECL);
-void run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver
-                                   ACE_ENV_ARG_DECL);
-void run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver
-                         ACE_ENV_ARG_DECL);
+void run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver);
+void run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver);
+void run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver);
+void run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver);
 
 
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Oneway_Receiver_var oneway_receiver =
-        Test::Oneway_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Oneway_Receiver::_narrow(tmp.in ());
 
       if (CORBA::is_nil (oneway_receiver.in ()))
         {
@@ -108,32 +104,28 @@ main (int argc, char *argv[])
       if (test_sync_with_target)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_TARGET\n"));
-          run_test_sync_with_target (oneway_receiver.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+          run_test_sync_with_target (oneway_receiver.in ());
         }
       else if (test_sync_with_server)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_SERVER\n"));
-          run_test_sync_with_server (oneway_receiver.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+          run_test_sync_with_server (oneway_receiver.in ());
         }
       else if (test_sync_with_transport)
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_WITH_TRANSPORT\n"));
-          run_test_sync_with_transport (oneway_receiver.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+          run_test_sync_with_transport (oneway_receiver.in ());
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG, "Running SYNC_NONE\n"));
-          run_test_sync_none (oneway_receiver.in ()
-                              ACE_ENV_ARG_PARAMETER);
+          run_test_sync_none (oneway_receiver.in ());
         }
 
       // Run the orb for 3 seconds, this way we make sure things are flushed
       // to the transport.
       ACE_Time_Value time (3, 0);
-      orb->run (time ACE_ENV_ARG_PARAMETER);
+      orb->run (time);
 
       if (successful_calls == 0)
         ACE_ERROR ((LM_ERROR, "ERROR: No requests were successful\n"));
@@ -149,29 +141,26 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-set_sync_scope_policy (Messaging::SyncScope sync_scope
-                       ACE_ENV_ARG_DECL)
+set_sync_scope_policy (Messaging::SyncScope sync_scope)
 {
   int argc = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, "" ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, "");
 
   CORBA::Object_var object =
-    orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("PolicyCurrent");
 
   CORBA::PolicyCurrent_var policy_current =
-    CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+    CORBA::PolicyCurrent::_narrow (object.in ());
 
   if (CORBA::is_nil (policy_current.in ()))
     {
@@ -184,11 +173,9 @@ set_sync_scope_policy (Messaging::SyncScope sync_scope
   CORBA::PolicyList policies(1); policies.length (1);
   policies[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                        scope_as_any
-                        ACE_ENV_ARG_PARAMETER);
+                        scope_as_any);
 
-  policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
+  policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
   policies[0]->destroy ();
 }
@@ -196,10 +183,9 @@ set_sync_scope_policy (Messaging::SyncScope sync_scope
 void
 run_one_iteration (int i,
                    Test::Oneway_Receiver_ptr oneway_receiver,
-                   Test::Shutdown_Helper_ptr shutdown_helper
-                   ACE_ENV_ARG_DECL)
+                   Test::Shutdown_Helper_ptr shutdown_helper)
 {
-  ACE_TRY
+  try
     {
       if (i == iterations / 3)
         {
@@ -214,10 +200,9 @@ run_one_iteration (int i,
           shutdown_helper->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   oneway_receiver->raise_no_permission ();
 }
@@ -228,14 +213,13 @@ call_failed (const CORBA::SystemException &ex)
 {
   failed_calls++;
 
-  ACE_PRINT_EXCEPTION (ex, "Exception raised");
+  ex._tao_print_exception ("Exception raised");
 }
 
 void
-run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
-                           ACE_ENV_ARG_DECL)
+run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver)
 {
-  set_sync_scope_policy (Messaging::SYNC_WITH_TARGET ACE_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_WITH_TARGET);
 
   Test::Shutdown_Helper_var shutdown_helper =
     oneway_receiver->get_shutdown_helper ();
@@ -243,26 +227,25 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
   int had_comm_failure = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      ACE_TRY
+      try
         {
-          run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
-                             ACE_ENV_ARG_PARAMETER);
+          run_one_iteration (i, oneway_receiver, shutdown_helper.in ());
         }
-      ACE_CATCH (CORBA::NO_PERMISSION, ex)
+      catch (const CORBA::NO_PERMISSION& ex)
         {
           if (server_status == ALIVE)
             successful_calls++;
           else
             call_failed (ex);
         }
-      ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+      catch (const CORBA::OBJECT_NOT_EXIST& ex)
         {
           if (server_status == DESTROYED)
             successful_calls++;
           else
             call_failed (ex);
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, ex)
+      catch (const CORBA::COMM_FAILURE& ex)
         {
           if (server_status == SHUTDOWN && had_comm_failure == 0)
             successful_calls++;
@@ -270,26 +253,24 @@ run_test_sync_with_target (Test::Oneway_Receiver_ptr oneway_receiver
             call_failed (ex);
           had_comm_failure = 1;
         }
-      ACE_CATCH (CORBA::TRANSIENT, ex)
+      catch (const CORBA::TRANSIENT& ex)
         {
           if (server_status == SHUTDOWN)
             successful_calls++;
           else
             call_failed (ex);
         }
-      ACE_CATCH (CORBA::SystemException, ex)
+      catch (const CORBA::SystemException& ex)
         {
           call_failed (ex);
         }
-      ACE_ENDTRY;
     }
 }
 
 void
-run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
-                           ACE_ENV_ARG_DECL)
+run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver)
 {
-  set_sync_scope_policy (Messaging::SYNC_WITH_SERVER ACE_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_WITH_SERVER);
 
   Test::Shutdown_Helper_var shutdown_helper =
     oneway_receiver->get_shutdown_helper ();
@@ -297,10 +278,9 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
   int had_comm_failure = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      ACE_TRY
+      try
         {
-          run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
-                             ACE_ENV_ARG_PARAMETER);
+          run_one_iteration (i, oneway_receiver, shutdown_helper.in ());
 
           if (server_status == DESTROYED
               || server_status == SHUTDOWN)
@@ -308,18 +288,18 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
           else
             successful_calls++;
         }
-      ACE_CATCH (CORBA::NO_PERMISSION, ex)
+      catch (const CORBA::NO_PERMISSION& ex)
         {
           call_failed (ex);
         }
-      ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+      catch (const CORBA::OBJECT_NOT_EXIST& ex)
         {
           if (server_status == DESTROYED)
             successful_calls++;
           else
             call_failed (ex);
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, ex)
+      catch (const CORBA::COMM_FAILURE& ex)
         {
           if (server_status == SHUTDOWN && had_comm_failure == 0)
             successful_calls++;
@@ -327,48 +307,43 @@ run_test_sync_with_server (Test::Oneway_Receiver_ptr oneway_receiver
             call_failed (ex);
           had_comm_failure = 1;
         }
-      ACE_CATCH (CORBA::TRANSIENT, ex)
+      catch (const CORBA::TRANSIENT& ex)
         {
           if (server_status == SHUTDOWN)
             successful_calls++;
           else
             call_failed (ex);
         }
-      ACE_CATCH (CORBA::SystemException, ex)
+      catch (const CORBA::SystemException& ex)
         {
           call_failed (ex);
         }
-      ACE_ENDTRY;
     }
 }
 
 /// Helper routine to run the sync_with_transport and sync_none tests.
 void
-run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
-                     ACE_ENV_ARG_DECL);
+run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver);
 
 void
-run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver
-                              ACE_ENV_ARG_DECL)
+run_test_sync_with_transport (Test::Oneway_Receiver_ptr oneway_receiver)
 {
-  set_sync_scope_policy (Messaging::SYNC_WITH_TRANSPORT ACE_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_WITH_TRANSPORT);
 
-  run_test_unreliable (oneway_receiver ACE_ENV_ARG_PARAMETER);
+  run_test_unreliable (oneway_receiver);
 }
 
 void
-run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver
-                    ACE_ENV_ARG_DECL)
+run_test_sync_none (Test::Oneway_Receiver_ptr oneway_receiver)
 {
-  set_sync_scope_policy (Messaging::SYNC_NONE ACE_ENV_ARG_PARAMETER);
+  set_sync_scope_policy (Messaging::SYNC_NONE);
 
-  run_test_unreliable (oneway_receiver ACE_ENV_ARG_PARAMETER);
+  run_test_unreliable (oneway_receiver);
 }
 
 
 void
-run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
-                     ACE_ENV_ARG_DECL)
+run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver)
 {
   Test::Shutdown_Helper_var shutdown_helper =
     oneway_receiver->get_shutdown_helper ();
@@ -377,10 +352,9 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
   int had_transient = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      ACE_TRY
+      try
         {
-          run_one_iteration (i, oneway_receiver, shutdown_helper.in ()
-                             ACE_ENV_ARG_PARAMETER);
+          run_one_iteration (i, oneway_receiver, shutdown_helper.in ());
 
           // A few failures can go undetected...
           if (server_status == SHUTDOWN)
@@ -392,19 +366,19 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
           else
             successful_calls++;
         }
-      ACE_CATCH (CORBA::NO_PERMISSION, ex)
+      catch (const CORBA::NO_PERMISSION& ex)
         {
           call_failed (ex);
         }
-      ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+      catch (const CORBA::OBJECT_NOT_EXIST& ex)
         {
           call_failed (ex);
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, ex)
+      catch (const CORBA::COMM_FAILURE& ex)
         {
           call_failed (ex);
         }
-      ACE_CATCH (CORBA::TRANSIENT, ex)
+      catch (const CORBA::TRANSIENT& ex)
         {
           if (server_status == SHUTDOWN)
             successful_calls++;
@@ -412,11 +386,10 @@ run_test_unreliable (Test::Oneway_Receiver_ptr oneway_receiver
             call_failed (ex);
           had_transient = 1;
         }
-      ACE_CATCH (CORBA::SystemException, ex)
+      catch (const CORBA::SystemException& ex)
         {
           call_failed (ex);
         }
-      ACE_ENDTRY;
     }
   ACE_DEBUG ((LM_DEBUG, "Undetected TRANSIENT count = %d\n",
               undetected));

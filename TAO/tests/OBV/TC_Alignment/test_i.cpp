@@ -12,8 +12,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 CORBA::Any *
-test_i::get_value (CORBA::Long offset
-                   ACE_ENV_ARG_DECL)
+test_i::get_value (CORBA::Long offset)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_ptr retval_ptr = 0;

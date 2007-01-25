@@ -33,7 +33,7 @@ public:
   Abstract_Worker (const char* ior);
   virtual ~Abstract_Worker (void);
   virtual int test_main (int argc,
-                    ACE_TCHAR *argv[] ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                    ACE_TCHAR *argv[]) = 0;
   virtual const ACE_TCHAR * kind (void) const = 0;
 protected:
   ACE_TString ior_file_;
@@ -47,7 +47,7 @@ class Server_Worker : public Abstract_Worker
 public:
   Server_Worker ();
   ~Server_Worker (void);
-  int test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int test_main (int argc, ACE_TCHAR *argv[]);
   const ACE_TCHAR * kind (void) const;
 
 private:
@@ -62,7 +62,7 @@ class Client_Worker : public Abstract_Worker
 public:
   Client_Worker ();
   ~Client_Worker (void);
-  int test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int test_main (int argc, ACE_TCHAR *argv[]);
   const ACE_TCHAR * kind (void) const;
 
 private:

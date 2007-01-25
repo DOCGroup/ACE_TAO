@@ -24,16 +24,15 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 void
 Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
-  CORBA::Object_ptr obj2
-  ACE_ENV_ARG_DECL)
+  CORBA::Object_ptr obj2)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
-    ACE_THROW (CORBA::INV_OBJREF (
-                 CORBA::SystemException::_tao_minor_code (
-                   TAO::VMCID,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
+    throw CORBA::INV_OBJREF (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EINVAL),
+      CORBA::COMPLETED_NO);
 
   this->obj_[0] = CORBA::Object::_duplicate (obj1);
   this->obj_[1] = CORBA::Object::_duplicate (obj2);
@@ -56,8 +55,7 @@ Server_Request_Interceptor::destroy (void)
 
 void
 Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -86,14 +84,13 @@ Server_Request_Interceptor::receive_request_service_contexts (
                   "receive_request_service_contexts().\n",
                   this->request_count_));
 
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[0]));
+      throw PortableInterceptor::ForwardRequest (this->obj_[0]);
     }
 }
 
 void
 Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -124,22 +121,20 @@ Server_Request_Interceptor::receive_request (
       // "request_count_ - 1" is used above since there was a location
       // forward.
 
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[1]));
+      throw PortableInterceptor::ForwardRequest (this->obj_[1]);
     }
 }
 
 void
 Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -147,8 +142,7 @@ Server_Request_Interceptor::send_exception (
 
 void
 Server_Request_Interceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -167,5 +161,5 @@ Server_Request_Interceptor::send_other (
   CORBA::Object_var forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 }

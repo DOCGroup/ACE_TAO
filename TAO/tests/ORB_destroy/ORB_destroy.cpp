@@ -30,19 +30,17 @@ test_with_regular_poa_manager (int argc,
                                int destroy_orb,
                                int destroy_poa)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, orb_name ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, orb_name);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -51,7 +49,7 @@ test_with_regular_poa_manager (int argc,
 
       if (destroy_poa)
         {
-          root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+          root_poa->destroy (1, 1);
         }
 
       if (destroy_orb)
@@ -59,12 +57,10 @@ test_with_regular_poa_manager (int argc,
           orb->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised");
+      ex._tao_print_exception ("Exception raised");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -77,19 +73,17 @@ test_with_funky_poa_manager (int argc,
                              int destroy_poa,
                              int funky_poa_manager)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, orb_name ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, orb_name);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       if (funky_poa_manager)
         {
@@ -101,7 +95,7 @@ test_with_funky_poa_manager (int argc,
 
       if (destroy_poa)
         {
-          root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+          root_poa->destroy (1, 1);
         }
 
       if (destroy_orb)
@@ -109,12 +103,10 @@ test_with_funky_poa_manager (int argc,
           orb->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised");
+      ex._tao_print_exception ("Exception raised");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

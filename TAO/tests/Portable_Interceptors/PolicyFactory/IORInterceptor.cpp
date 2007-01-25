@@ -33,11 +33,10 @@ IORInterceptor::destroy (void)
 
 void
 IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::IORInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       PortableInterceptor::ObjectReferenceTemplate_var t =
         info->adapter_template ();
@@ -50,24 +49,20 @@ IORInterceptor::establish_components (
       if (a->length () > 1)
         {
           CORBA::Policy_var policy (
-            info->get_effective_policy (Test::POLICY_TYPE
-                                        ACE_ENV_ARG_PARAMETER));
+            info->get_effective_policy (Test::POLICY_TYPE));
 
           Test::Policy_var test_policy (Test::Policy::_narrow (
-            policy.in ()
-            ACE_ENV_ARG_PARAMETER));
+            policy.in ()));
 
           this->success_ = true;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "EXCEPTION: "
-                           "IORInterceptor::establish_components:");
+      ex._tao_print_exception (
+        "EXCEPTION: ""IORInterceptor::establish_components:");
 
       ACE_ASSERT (false);
     }
-  ACE_ENDTRY;
 }
 

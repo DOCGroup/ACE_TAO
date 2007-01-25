@@ -33,8 +33,7 @@ Session::svc (void)
   this->barrier_.wait ();
   CORBA::ULong i = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Use the same payload over and over
       Test::Payload payload (this->payload_size_);
@@ -64,8 +63,7 @@ Session::svc (void)
 #endif /* 0 */
           for (CORBA::ULong j = 0; j != session_count; ++j)
             {
-              this->other_sessions_[j]->receive_payload (payload
-                                                         ACE_ENV_ARG_PARAMETER);
+              this->other_sessions_[j]->receive_payload (payload);
             }
         }
 
@@ -77,18 +75,17 @@ Session::svc (void)
             return 0;
           }
       }
-      this->terminate (1 ACE_ENV_ARG_PARAMETER);
+      this->terminate (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
                           "(%P|%t) ERROR: Session::svc, "
                           "send %d messages out of %d\n",
                           i, message_count_));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Session::svc - ");
+      ex._tao_print_exception ("Session::svc - ");
       return -1;
     }
-  ACE_ENDTRY;
 
   this->_remove_ref ();
 
@@ -104,32 +101,30 @@ Session::validate_connections (void)
     {
       for (CORBA::ULong j = 0; j != session_count; ++j)
         {
-          ACE_TRY
+          try
             {
               this->other_sessions_[j]->ping ();
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
             }
-          ACE_ENDTRY;
         }
     }
 }
 
 void
-Session::start (const Test::Session_List &other_sessions
-                ACE_ENV_ARG_DECL)
+Session::start (const Test::Session_List &other_sessions)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Test::Already_Running,
                    Test::No_Peers))
 {
   if (other_sessions.length () == 0)
-    ACE_THROW (Test::No_Peers ());
+    throw Test::No_Peers ();
 
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->running_)
-      ACE_THROW (Test::Already_Running ());
+      throw Test::Already_Running ();
 
     this->other_sessions_ = other_sessions;
 
@@ -137,7 +132,7 @@ Session::start (const Test::Session_List &other_sessions
       {
         // Increase the reference count because the new thread will have
         // access to this object....
-        ACE_TRY
+        try
           {
             this->_add_ref ();
 
@@ -152,12 +147,10 @@ Session::start (const Test::Session_List &other_sessions
                 this->active_thread_count_++;
               }
           }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
           {
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "Session::start, ignored");
+            ex._tao_print_exception ("Session::start, ignored");
           }
-        ACE_ENDTRY;
       }
 
     if (this->active_thread_count_ != this->thread_count_)
@@ -173,7 +166,7 @@ Session::start (const Test::Session_List &other_sessions
 
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
-  this->terminate (0 ACE_ENV_ARG_PARAMETER);
+  this->terminate (0);
 }
 
 void
@@ -182,8 +175,7 @@ Session::ping (void) ACE_THROW_SPEC ((CORBA::SystemException))
 }
 
 void
-Session::receive_payload (const Test::Payload &the_payload
-                          ACE_ENV_ARG_DECL)
+Session::receive_payload (const Test::Payload &the_payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (the_payload.length () != this->payload_size_)
@@ -220,7 +212,7 @@ Session::receive_payload (const Test::Payload &the_payload
     if (this->more_work ())
       return;
   }
-  this->terminate (1 ACE_ENV_ARG_PARAMETER);
+  this->terminate (1);
 }
 
 
@@ -233,8 +225,8 @@ Session::destroy (void)
   PortableServer::POA_var poa =
     this->_default_POA ();
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
+  poa->deactivate_object (oid.in ());
 }
 
 int
@@ -249,22 +241,17 @@ Session::more_work (void) const
 }
 
 void
-Session::terminate (CORBA::Boolean success
-                    ACE_ENV_ARG_DECL)
+Session::terminate (CORBA::Boolean success)
   ACE_THROW_SPEC (())
 {
   // Make sure that global resources are released
-  ACE_TRY_EX(GLOBAL)
+  try
     {
-      this->control_->session_finished (success
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(GLOBAL);
+      this->control_->session_finished (success);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Session::terminate, ignored");
+      ex._tao_print_exception ("Session::terminate, ignored");
     }
-  ACE_ENDTRY;
 
 }

@@ -67,8 +67,7 @@ public:
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableInterceptor::IORInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

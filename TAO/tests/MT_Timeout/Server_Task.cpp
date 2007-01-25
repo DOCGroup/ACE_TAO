@@ -18,15 +18,13 @@ Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,
 int
 Server_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (this->running_time_ ACE_ENV_ARG_PARAMETER);
+      this->orb_->run (this->running_time_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

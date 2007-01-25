@@ -7,8 +7,7 @@ Reply_Handler::Reply_Handler (CORBA::ORB_ptr o)
 }
 
 void
-Reply_Handler::next_prime (CORBA::ULong
-                           ACE_ENV_ARG_DECL_NOT_USED)
+Reply_Handler::next_prime (CORBA::ULong)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
@@ -16,30 +15,27 @@ Reply_Handler::next_prime (CORBA::ULong
 
 void
 Reply_Handler::next_prime_excep (
-    ::Messaging::ExceptionHolder *ex
-    ACE_ENV_ARG_DECL)
+    ::Messaging::ExceptionHolder *ex)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  ACE_TRY
+  try
     {
       ex->raise_exception ();
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, t)
+  catch (const CORBA::COMM_FAILURE& )
     {
       /*ACE_DEBUG ((LM_DEBUG,
                   "Callback method <next_prime_excep> called: \n"));
                   */
 
       ACE_Time_Value tv (10, 0);
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
+      this->orb_->run (tv);
 
-      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      this->orb_->shutdown (0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 }

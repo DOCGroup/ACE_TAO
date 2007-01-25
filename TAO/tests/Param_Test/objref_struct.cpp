@@ -50,8 +50,7 @@ Test_Objref_Struct::opname (void) const
 }
 
 void
-Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
-                                    ACE_ENV_ARG_DECL)
+Test_Objref_Struct::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -66,21 +65,20 @@ Test_Objref_Struct::dii_req_invoke (CORBA::Request *req
   this->ret_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new Param_Test::Objref_Struct (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new Param_Test::Objref_Struct (*tmp);
 }
 
 int
-Test_Objref_Struct::init_parameters (Param_Test_ptr objref
-                                     ACE_ENV_ARG_DECL)
+Test_Objref_Struct::init_parameters (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Generator *gen = GENERATOR::instance (); // value generator
 
@@ -92,8 +90,7 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref
       Coffee::Desc d;
       d.name = gen->gen_string ();
 
-      this->in_.y->description (d
-                                ACE_ENV_ARG_PARAMETER);
+      this->in_.y->description (d);
 
             this->inout_->x = 0;
 
@@ -104,13 +101,11 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::init_parameters\n");
+      ex._tao_print_exception ("Test_Objref_Struct::init_parameters\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -132,27 +127,23 @@ Test_Objref_Struct::reset_parameters (void)
 }
 
 int
-Test_Objref_Struct::run_sii_test (Param_Test_ptr objref
-                                  ACE_ENV_ARG_DECL)
+Test_Objref_Struct::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Objref_Struct_out out (this->out_.out ());
 
       this->ret_ = objref->test_objref_struct (this->in_,
                                                this->inout_.inout (),
-                                               out
-                                               ACE_ENV_ARG_PARAMETER);
+                                               out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::run_sii_test\n");
+      ex._tao_print_exception ("Test_Objref_Struct::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -164,9 +155,8 @@ Test_Objref_Struct::check_validity (void)
       || this->in_.x != this->ret_->x)
     return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (CORBA::is_nil (this->in_.y.in ())
           || CORBA::is_nil (this->out_->y.in ())
@@ -193,13 +183,11 @@ Test_Objref_Struct::check_validity (void)
 
       return 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::check_validity\n");
+      ex._tao_print_exception ("Test_Objref_Struct::check_validity\n");
 
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -223,9 +211,8 @@ Test_Objref_Struct::print_values (void)
               this->out_->x,
               this->ret_->x ));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       Coffee::Desc_var s_in =
         this->in_.y->description ();
@@ -263,10 +250,8 @@ Test_Objref_Struct::print_values (void)
                   s_out->name.in (),
                   s_ret->name.in () ));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Objref_Struct::print_values\n");
+      ex._tao_print_exception ("Test_Objref_Struct::print_values\n");
     }
-  ACE_ENDTRY;
 }

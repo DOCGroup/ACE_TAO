@@ -29,8 +29,7 @@ public:
   RT_Properties (void);
   ~RT_Properties (void);
 
-  static RT_Properties * read_from (const char *file_name
-                                    ACE_ENV_ARG_DECL);
+  static RT_Properties * read_from (const char *file_name);
 
   // -- Accessor Methods --
   void priority (RTCORBA::Priority priority);

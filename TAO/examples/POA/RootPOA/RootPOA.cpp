@@ -31,23 +31,21 @@ ACE_RCSID (RootPOA,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initilize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Resolve the initial references for the name RootPOA thus getting
       // an object of type CORBA::Object.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // apply _narrow on the object of type CORBA::Object, to make it
       // a POA class Object.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the name of the root POA.
       CORBA::String_var poa_name =
@@ -57,12 +55,11 @@ main (int argc, char **argv)
                   "The RootPOA is : %s\n",
                   poa_name.in ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Exception raised");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

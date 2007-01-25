@@ -71,7 +71,7 @@ private:
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "");
@@ -80,10 +80,10 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -106,13 +106,11 @@ main (int argc, char *argv[])
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -129,8 +127,7 @@ Client::Client (int niterations,
 int
 Client::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (int i = 0; i < this->niterations_; ++i)
         {
@@ -140,13 +137,13 @@ Client::svc (void)
           CORBA::String_var argv0 = CORBA::string_dup ("dummy_argv");
           char* argv[1] = { argv0.inout () };
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+            CORBA::ORB_init (argc, argv, "");
 
           CORBA::Object_var object =
-            orb->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
+            orb->string_to_object (this->ior_);
 
           Simple_Server_var server =
-            Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+            Simple_Server::_narrow (object.in ());
 
           if (CORBA::is_nil (server.in ()))
             {
@@ -161,11 +158,9 @@ Client::svc (void)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client: exception raised");
+      ex._tao_print_exception ("MT_Client: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

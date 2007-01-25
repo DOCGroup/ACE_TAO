@@ -19,7 +19,6 @@ public:
     virtual void op (
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException

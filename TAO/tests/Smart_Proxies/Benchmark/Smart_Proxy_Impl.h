@@ -7,8 +7,7 @@ public:
 
   Smart_Test_Factory (void);
 
-  virtual Test_ptr create_proxy (Test_ptr proxy
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual Test_ptr create_proxy (Test_ptr proxy);
   // This method will create the smart_proxy.
 };
 

@@ -85,16 +85,14 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Server: exception raised");
+      ex._tao_print_exception ("Server: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -110,8 +108,7 @@ server_main (int argc,
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
@@ -120,22 +117,18 @@ server_main (int argc,
 
       PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ACE_TEXT ("test_orb")
-                                            ACE_ENV_ARG_PARAMETER);
+                                            ACE_TEXT ("test_orb"));
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -158,8 +151,7 @@ server_main (int argc,
       obj = server_impl._this ();
 
       Test::Transport::CurrentTest_var server =
-        Test::Transport::CurrentTest::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+        Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -168,7 +160,7 @@ server_main (int argc,
                           -1);
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != 0)
@@ -216,14 +208,12 @@ server_main (int argc,
       orb->destroy ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Server (%P|%t) ERROR: "));
+      ex._tao_print_exception (ACE_TEXT ("Server (%P|%t) ERROR: "));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Completed successfuly.\n")));
   return 0;

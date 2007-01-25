@@ -64,8 +64,7 @@ parse_args (int argc, char **argv)
 }
 
 PortableServer::POA_ptr
-setup_poa (PortableServer::POA_ptr root_poa
-           ACE_ENV_ARG_DECL)
+setup_poa (PortableServer::POA_ptr root_poa)
 {
   // Policies for the childPOA to be created.
   CORBA::PolicyList policies (2);
@@ -73,13 +72,11 @@ setup_poa (PortableServer::POA_ptr root_poa
 
   // Tell the POA to use a servant manager.
   policies[0] =
-    root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                                ACE_ENV_ARG_PARAMETER);
+    root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
   // Allow implicit activation.
   policies[1] =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                 ACE_ENV_ARG_PARAMETER);
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager ();
@@ -89,8 +86,7 @@ setup_poa (PortableServer::POA_ptr root_poa
   PortableServer::POA_var child_poa =
     root_poa->create_POA ("childPOA",
                           poa_manager.in (),
-                          policies
-                          ACE_ENV_ARG_PARAMETER);
+                          policies);
 
   // Creation of childPOAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
@@ -105,15 +101,13 @@ setup_poa (PortableServer::POA_ptr root_poa
 
 ServantActivator *
 create_servant_manager (CORBA::ORB_ptr orb,
-                        PortableServer::POA_ptr child_poa
-                        ACE_ENV_ARG_DECL)
+                        PortableServer::POA_ptr child_poa)
 {
   CORBA::Object_var forward_to;
   if (forward_to_ior)
     {
       forward_to =
-        orb->string_to_object (forward_to_ior
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (forward_to_ior);
     }
 
   ServantActivator *activator = 0;
@@ -123,8 +117,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
                   0);
 
   // Set ServantActivator to be the servant activator.
-  child_poa->set_servant_manager (activator
-                                  ACE_ENV_ARG_PARAMETER);
+  child_poa->set_servant_manager (activator);
   // For the code above, we're using the CORBA 3.0 servant manager
   // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
   // use the following code in place of the previous line:
@@ -133,7 +126,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
   //   activator->_this ();
   //
   // child_poa->set_servant_manager (servant_activator.in (),
-  //                                 ACE_ENV_SINGLE_ARG_PARAMETER);
+  //);
 
   test_i *servant = 0;
   ACE_NEW_RETURN (servant,
@@ -149,8 +142,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
     servant->_this ();
 
   CORBA::String_var ior =
-    orb->object_to_string (test.in ()
-                           ACE_ENV_ARG_PARAMETER);
+    orb->object_to_string (test.in ());
 
   FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
@@ -169,15 +161,13 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       int result =
         parse_args (argc, argv);
@@ -187,25 +177,21 @@ main (int argc,
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       PortableServer::POA_var child_poa =
-        setup_poa (root_poa.in ()
-                   ACE_ENV_ARG_PARAMETER);
+        setup_poa (root_poa.in ());
 
       PortableServer::ServantManager_var manager =
         create_servant_manager (orb.in (),
-                                child_poa.in ()
-                                ACE_ENV_ARG_PARAMETER);
+                                child_poa.in ());
 
       poa_manager->activate ();
 
@@ -213,12 +199,11 @@ main (int argc,
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in server");
+      ex._tao_print_exception ("Exception caught in server");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

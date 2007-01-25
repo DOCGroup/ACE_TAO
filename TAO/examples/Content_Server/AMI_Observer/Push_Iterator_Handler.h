@@ -62,8 +62,7 @@ public:
 
   void run (int *request_count,
             const char *pathname,
-            Web_Server::Iterator_Factory_ptr factory
-            ACE_ENV_ARG_DECL)
+            Web_Server::Iterator_Factory_ptr factory)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Activate and run this Reply Handler.  The contents (not the
@@ -78,15 +77,13 @@ private:
   // on the heap).
 
   virtual void register_callback
-  (const Web_Server::Metadata_Type &metadata
-   ACE_ENV_ARG_DECL)
+  (const Web_Server::Metadata_Type &metadata)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // AMI callback that is invoked when a response from the
   // corresponding server method is received.
 
   virtual void register_callback_excep
-  (::Messaging::ExceptionHolder *
-   ACE_ENV_ARG_DECL_NOT_USED)
+  (::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
   void deactivate (void)

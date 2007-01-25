@@ -37,16 +37,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,10 +60,10 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Coordinator_var coordinator =
-        Test::Coordinator::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Coordinator::_narrow(tmp.in ());
 
       if (CORBA::is_nil (coordinator.in ()))
         {
@@ -84,24 +84,22 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      coordinator->add_peer (peer.in () ACE_ENV_ARG_PARAMETER);
+      coordinator->add_peer (peer.in ());
 
       orb->run ();
 
       // Wait for all the threads.
       ACE_Thread_Manager::instance ()->wait ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

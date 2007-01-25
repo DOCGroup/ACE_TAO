@@ -12,8 +12,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::client_test (Test::TestScenario scenario
-                     ACE_ENV_ARG_DECL)
+test_i::client_test (Test::TestScenario scenario)
   ACE_THROW_SPEC ((Test::X,
                    Test::UnknownScenario,
                    CORBA::SystemException))
@@ -24,19 +23,18 @@ test_i::client_test (Test::TestScenario scenario
     case 4:
       // Both the client-side and server-side tests throw this
       // exception in these scenarios.
-      ACE_THROW (Test::X ());  // Expected test exception
+      throw Test::X ();  // Expected test exception
     case 2:
     case 3:
       break;
     default:
-      ACE_THROW (Test::UnknownScenario (scenario));  // Unexpected!
+      throw Test::UnknownScenario (scenario);  // Unexpected!
     }
 }
 
 void
 test_i::server_test (Test::TestScenario scenario,
-                     CORBA::ULongSeq_out myseq
-                     ACE_ENV_ARG_DECL)
+                     CORBA::ULongSeq_out myseq)
   ACE_THROW_SPEC ((Test::X,
                    Test::UnknownScenario,
                    CORBA::SystemException))
@@ -49,12 +47,12 @@ test_i::server_test (Test::TestScenario scenario,
     case 4:
       // Both the client-side and server-side tests throw this
       // exception in these scenarios.
-      ACE_THROW (Test::X ());  // Expected test exception
+      throw Test::X ();  // Expected test exception
     case 2:
     case 3:
       break;
     default:
-      ACE_THROW (Test::UnknownScenario (scenario));  // Unexpected!
+      throw Test::UnknownScenario (scenario);  // Unexpected!
     }
 }
 
@@ -65,5 +63,5 @@ test_i::shutdown (void)
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));
 
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

@@ -30,17 +30,16 @@ int showNSonly = 0;
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
   const char *ior = 0;
 
-  ACE_TRY
+  try
     {
       // Contact the orb
       ACE_Argv_Type_Converter argcon (argcw, argvw);
       orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
-                             "" ACE_ENV_ARG_PARAMETER);
+                             "");
 
       // Scan through the command line options
       bool
@@ -208,12 +207,12 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       // Contact the name service
       CORBA::Object_var nc_obj;
       if (nameService)
-        nc_obj = orb->string_to_object (nameService ACE_ENV_ARG_PARAMETER);
+        nc_obj = orb->string_to_object (nameService);
       else
-        nc_obj = orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        nc_obj = orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var root_nc =
-        CosNaming::NamingContext::_narrow (nc_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (nc_obj.in ());
       if (CORBA::is_nil (root_nc.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -226,7 +225,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       CORBA::Object_var obj;
       if (ior)
         {
-          obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+          obj = orb->string_to_object (ior);
         }
 
       // Assemble the name from the user string given
@@ -246,26 +245,24 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         }
 
       // Now attempt the (re)bind
-      ACE_TRY_EX (inner)
+      try
         {
           if (!ior)
-            obj= root_nc->bind_new_context (the_name ACE_ENV_ARG_PARAMETER);
+            obj= root_nc->bind_new_context (the_name);
           else if (context)
             {
               CosNaming::NamingContext_var this_nc =
-                CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX (inner);
+                CosNaming::NamingContext::_narrow (obj.in ());
 
               if (rebind)
-                root_nc->rebind_context (the_name, this_nc.in () ACE_ENV_ARG_PARAMETER);
+                root_nc->rebind_context (the_name, this_nc.in ());
               else
-                root_nc->bind_context (the_name, this_nc.in () ACE_ENV_ARG_PARAMETER);
+                root_nc->bind_context (the_name, this_nc.in ());
             }
           else if (rebind)
-            root_nc->rebind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
+            root_nc->rebind (the_name, obj.in ());
           else
-            root_nc->bind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (inner);
+            root_nc->bind (the_name, obj.in ());
           if (!quiet)
             {
               unsigned int index;
@@ -293,10 +290,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
         }
-      ACE_CATCH (CosNaming::NamingContext::NotFound, nf)
+      catch (const CosNaming::NamingContext::NotFound& nf)
         {
           if (CosNaming::NamingContext::missing_node != nf.why)
-            ACE_RE_THROW; // report error to outer try/catch
+            throw; // report error to outer try/catch
 
           CosNaming::Name fullName (the_name);
           int
@@ -341,7 +338,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
 
               CosNaming::NamingContext_var this_nc =
-                root_nc->bind_new_context (the_name ACE_ENV_ARG_PARAMETER);
+                root_nc->bind_new_context (the_name);
 // report error to outer try/catch
               ++index;
             }
@@ -368,23 +365,22 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               if (context)
                 {
                   CosNaming::NamingContext_var this_nc =
-                    CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+                    CosNaming::NamingContext::_narrow (obj.in ());
 // This is not a naming context, report to outer
 
                   if (rebind)
-                    root_nc->rebind_context (the_name, this_nc.in () ACE_ENV_ARG_PARAMETER);
+                    root_nc->rebind_context (the_name, this_nc.in ());
                   else
-                    root_nc->bind_context (the_name, this_nc.in () ACE_ENV_ARG_PARAMETER);
+                    root_nc->bind_context (the_name, this_nc.in ());
                 }
               else if (rebind)
-                root_nc->rebind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
+                root_nc->rebind (the_name, obj.in ());
               else
-                root_nc->bind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
+                root_nc->bind (the_name, obj.in ());
             }
         }
-      ACE_ENDTRY;
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, nf)
+  catch (const CosNaming::NamingContext::NotFound& nf)
     {
       unsigned int index;
       ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
@@ -411,7 +407,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           why= "\nThe following is a naming context, not a final object binding";
           break;
         }
-      ACE_PRINT_EXCEPTION (nf, why );
+      nf._tao_print_exception (why);
       for (index= 0u; index < nf.rest_of_name.length(); ++index)
         {
           if (nf.rest_of_name[index].kind && nf.rest_of_name[index].kind[0])
@@ -425,15 +421,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       orb->destroy ();
       return 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in nsadd");
+      ex._tao_print_exception ("Exception in nsadd");
       orb->destroy ();
       return 1;
     }
-  ACE_ENDTRY;
 
   orb->destroy ();
   return 0;

@@ -35,18 +35,16 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                           argv,
-                                          ""
-                                          ACE_ENV_ARG_PARAMETER);
+                                          "");
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    CORBA::Object_var obj = orb->string_to_object (ior
-                                                   ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var obj = orb->string_to_object (ior);
 
     // force a scope to see the destruction of the server object
     {
@@ -58,8 +56,7 @@ int main (int argc, char* argv[])
       ACE_UNUSED_ARG (test_factory);
 
       Test_var server =
-        Test::_narrow(obj.in()
-                      ACE_ENV_ARG_PARAMETER);
+        Test::_narrow(obj.in());
 
       if (CORBA::is_nil (server.in())) {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,13 +96,11 @@ int main (int argc, char* argv[])
 
     orb->destroy();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Client-side exception:");
+    ex._tao_print_exception ("Client-side exception:");
     return 1;
   }
-  ACE_ENDTRY;
 
   return 0;
 }

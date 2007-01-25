@@ -279,8 +279,7 @@ private:
   void read_ior (void);
   // reads the cubit ior from a file.
 
-  int get_cubit (CORBA::ORB_ptr orb
-                 ACE_ENV_ARG_DECL);
+  int get_cubit (CORBA::ORB_ptr orb);
   // gets the cubit object.
 
   int run_tests (void);

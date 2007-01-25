@@ -30,11 +30,10 @@ Server_Task::Server_Task (const char *output,
 int
 Server_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var poa_object =
-        sorb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        sorb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -44,7 +43,7 @@ Server_Task::svc (void)
         }
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -60,8 +59,7 @@ Server_Task::svc (void)
       Bug1495_Regression::
         Bug1495_var bug1495 = server_impl->_this();
 
-      CORBA::String_var ior = sorb_->object_to_string (bug1495.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = sorb_->object_to_string (bug1495.in ());
 
       if (output_ != 0)
         {
@@ -88,20 +86,18 @@ Server_Task::svc (void)
 
       // The ORB will run for 15 seconds and shut down.
       ACE_Time_Value tv (15, 0);
-      sorb_->run (tv ACE_ENV_ARG_PARAMETER);
+      sorb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG,
                    "Event loop finished for the thread server.\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught an exception in server task: ");
+      ex._tao_print_exception ("Caught an exception in server task: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

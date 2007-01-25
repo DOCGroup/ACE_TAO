@@ -47,12 +47,11 @@ main (int argc, char *argv[])
   int n = 50000;
   int insertion = 1;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       ACE_Get_Opt get_opt (argc, argv, "dien:");
       int opt;
@@ -90,8 +89,7 @@ main (int argc, char *argv[])
 
       {
         CORBA::Object_var obj =
-          orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
-                                 ACE_ENV_ARG_PARAMETER);
+          orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
         Param_Test_var param_test =
           TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in (),
@@ -934,12 +932,11 @@ main (int argc, char *argv[])
                                                stats.samples_count ());
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Any performance test");
+      ex._tao_print_exception ("Any performance test");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

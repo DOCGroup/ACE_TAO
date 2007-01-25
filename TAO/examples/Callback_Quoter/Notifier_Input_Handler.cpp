@@ -68,25 +68,23 @@ Notifier_Input_Handler::init_naming_service (void)
   notifier_obj_name[0].id = CORBA::string_dup ("Notifier");
 
   // (re)Bind the object.
-  ACE_TRY
+  try
     {
       Notifier_var notifier_obj = notifier_i_._this ();
 
       this->orb_manager_.activate_poa_manager ();
 
       naming_server_->rebind (notifier_obj_name,
-                              notifier_obj.in()
-                              ACE_ENV_ARG_PARAMETER);
+                              notifier_obj.in());
 
     }
-  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+  catch (const CosNaming::NamingContext::AlreadyBound& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",
                          "Notifier"),
                         -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -138,8 +136,7 @@ Notifier_Input_Handler::parse_args (void)
 
 int
 Notifier_Input_Handler::init (int argc,
-                              char *argv[]
-                              ACE_ENV_ARG_DECL)
+                              char *argv[])
 {
 
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
@@ -150,8 +147,7 @@ Notifier_Input_Handler::init (int argc,
 
   if (this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -182,8 +178,7 @@ Notifier_Input_Handler::init (int argc,
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
-                                                 &this->notifier_i_
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 &this->notifier_i_);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -230,9 +225,8 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // The string could read contains \n\0 hence using ACE_OS::read
       // which returns the no of bytes read and hence i can manipulate
@@ -255,12 +249,11 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
           this->notifier_i_.shutdown ();
         }
     }
-   ACE_CATCHANY
+   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Input_Handler::init");
+      ex._tao_print_exception ("Input_Handler::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

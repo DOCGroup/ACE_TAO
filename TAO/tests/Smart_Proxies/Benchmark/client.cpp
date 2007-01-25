@@ -117,20 +117,18 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
+                         "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
        CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
       if (register_smart_proxy == 1)
         {
           // To use the smart proxy it is necessary to allocate the
@@ -150,8 +148,7 @@ main (int argc, char *argv[])
         }
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -196,8 +193,7 @@ main (int argc, char *argv[])
       /*
 
       Test_var server1 =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server1.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -241,13 +237,11 @@ main (int argc, char *argv[])
        server1->shutdown ();
       */
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

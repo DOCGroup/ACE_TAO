@@ -21,18 +21,15 @@ Client_Task::svc (void)
   // Wait for 2 minutes...
   ACE_Time_Value tv (60,0);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
+      this->orb_->run (tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Client_Task::svc exception!!!\n");
+      ex._tao_print_exception ("(%P|%t) Client_Task::svc exception!!!\n");
 
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;

@@ -50,7 +50,7 @@ public:
     virtual ~Bug1495_i (void);
 
     virtual
-    void get_thread_id (CORBA::Long_out thread_id ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    void get_thread_id (CORBA::Long_out thread_id)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual

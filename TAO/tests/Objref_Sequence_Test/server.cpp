@@ -13,12 +13,10 @@ public:
                  CORBA::ORB_ptr orb);
 
   void CreateExtra (CORBA::ULong length,
-                    ServerSequence_out seq
-                    ACE_ENV_ARG_DECL)
+                    ServerSequence_out seq)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void DeleteExtra (const ServerSequence &seq
-                    ACE_ENV_ARG_DECL)
+  void DeleteExtra (const ServerSequence &seq)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (void)
@@ -43,8 +41,7 @@ ServerServant::ServerServant (PortableServer::POA_ptr poa,
 /// Servant implementations
 void
 ServerServant::CreateExtra (CORBA::ULong len,
-                            ServerSequence_out seq
-                            ACE_ENV_ARG_DECL)
+                            ServerSequence_out seq)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -79,8 +76,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
 
 
 void
-ServerServant::DeleteExtra (const ServerSequence &seq
-                            ACE_ENV_ARG_DECL)
+ServerServant::DeleteExtra (const ServerSequence &seq)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -112,7 +108,7 @@ void
 ServerServant::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 /******************************************************/
@@ -148,27 +144,23 @@ int
 main (int argc, char *argv [])
 
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_TRY
+  try
     {
       // Initialize the broker
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
+                         "");
 
       CORBA::Object_var vRootPOABase =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (vRootPOABase.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (vRootPOABase.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -193,8 +185,7 @@ main (int argc, char *argv [])
 
       // Announce the server
       CORBA::String_var obj_ref =
-        orb->object_to_string (server.in ()
-                                ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -212,17 +203,15 @@ main (int argc, char *argv [])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

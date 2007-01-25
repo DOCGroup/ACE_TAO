@@ -160,11 +160,11 @@ public:
   virtual ~Position_impl ();
 
   virtual CORBA::Float x (void);
-  virtual void x (CORBA::Float ACE_ENV_ARG_DECL);
+  virtual void x (CORBA::Float);
   virtual CORBA::Float y (void);
-  virtual void y (CORBA::Float ACE_ENV_ARG_DECL);
+  virtual void y (CORBA::Float);
   virtual CORBA::Float z (void);
-  virtual void z (CORBA::Float ACE_ENV_ARG_DECL);
+  virtual void z (CORBA::Float);
   //These are the attributes
 
   virtual void do_print (void);
@@ -237,7 +237,7 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
  private:
   Event_List_Link *get_next_link (void);
 
-  void attach_next_link (Event_List_Link * chain ACE_ENV_ARG_DECL);
+  void attach_next_link (Event_List_Link * chain);
   // Attach a chain at the end.
 };
 
@@ -266,7 +266,7 @@ class Event_List_impl : public virtual OBV_Event_List,
   Event_List_impl ();
   virtual ~Event_List_impl ();
 
-  void store_event (Event* e ACE_ENV_ARG_DECL);
+  void store_event (Event* e);
 
   Event_List_Link *get_first_link(void);
   // The iterator needs it.
@@ -349,7 +349,7 @@ public:
 
   virtual ~Temperature_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event* e);
 
   virtual void do_print (void);
 };
@@ -376,7 +376,7 @@ public:
                            Position *tr);
   virtual ~Position_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event* e);
 
   virtual void do_print (void);
 };
@@ -403,7 +403,7 @@ public:
   Log_Msg_Criterion_impl ();
   virtual ~Log_Msg_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event* e);
 
   virtual void do_print (void);
 };
@@ -427,8 +427,8 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
   Criterion_List_impl ();
   virtual ~Criterion_List_impl ();
 
-  void store_criterion (Criterion *c ACE_ENV_ARG_DECL);
-  CORBA::Boolean is_critical (Event *e ACE_ENV_ARG_DECL);
+  void store_criterion (Criterion *c);
+  CORBA::Boolean is_critical (Event *e);
 };
 
 

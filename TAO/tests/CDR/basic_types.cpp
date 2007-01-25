@@ -214,12 +214,11 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       ACE_Get_Opt get_opt (argc, argv, "dn:l:");
       int opt;
@@ -275,12 +274,11 @@ main (int argc, char *argv[])
               }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Basic_Types");
+      ex._tao_print_exception ("Basic_Types");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

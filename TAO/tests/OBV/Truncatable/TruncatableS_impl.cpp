@@ -16,7 +16,6 @@ Test_impl::op1 (
     ::OBV_TruncatableTest::BaseValue * iv,
     ::OBV_TruncatableTest::BaseValue_out ov,
     char *& desc
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -45,7 +44,6 @@ Test_impl::op2 (
     const char * id,
     ::OBV_TruncatableTest::TValue1_out ov,
     char *& desc
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -74,7 +72,6 @@ Test_impl::op3 (
   ::OBV_TruncatableTest::TValue4 * iv,
   ::OBV_TruncatableTest::TValue4_out ov,
   char *& desc
-  ACE_ENV_ARG_DECL
 )
 ACE_THROW_SPEC ((
   ::CORBA::SystemException
@@ -112,7 +109,6 @@ Test_impl::op4 (
   ::OBV_TruncatableTest::TValue4 * iv3,
   ::OBV_TruncatableTest::TValue1 * iv4,
   char *& desc
-  ACE_ENV_ARG_DECL
   )
 ACE_THROW_SPEC ((
   ::CORBA::SystemException
@@ -163,7 +159,7 @@ Test_impl::op5 (const CORBA::Any& val,
                 const char * id,
                 ::OBV_TruncatableTest::TValue1_out ov,
                 char *& desc
-                ACE_ENV_ARG_DECL )
+ )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
@@ -201,5 +197,5 @@ void
 Test_impl::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

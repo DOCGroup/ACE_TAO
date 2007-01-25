@@ -10,16 +10,14 @@ Collocated_ORBInitializer::Collocated_ORBInitializer (void)
 
 void
 Collocated_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Collocated_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -39,8 +37,7 @@ Collocated_ORBInitializer::post_init (
       PortableInterceptor::ClientRequestInterceptor_var
         client_interceptor = interceptor;
 
-      info->add_client_request_interceptor (client_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+      info->add_client_request_interceptor (client_interceptor.in ());
     }
 
   else if (!ACE_OS::strcmp (orb_id.in (), "server_orb"))
@@ -56,8 +53,7 @@ Collocated_ORBInitializer::post_init (
       PortableInterceptor::ServerRequestInterceptor_var
         server_interceptor = interceptor;
 
-      info->add_server_request_interceptor (server_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+      info->add_server_request_interceptor (server_interceptor.in ());
     }
 
   else

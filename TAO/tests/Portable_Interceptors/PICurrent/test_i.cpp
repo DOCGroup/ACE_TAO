@@ -50,34 +50,29 @@ test_i::invoke_me (void)
 
   CORBA::Any_var retrieved_any;
 
-  ACE_TRY
+  try
     {
       // Retrieve data placed into RSC PICurrent by the
       // receive_request_service_contexts() interception point, and
       // then copied into the TSC current.
       retrieved_any =
-        this->current_->get_slot (this->slot_id_
-                                  ACE_ENV_ARG_PARAMETER);
+        this->current_->get_slot (this->slot_id_);
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "test_i::invoke_me() when calling "
-                           "Current::get_slot\n");
+      ex._tao_print_exception (
+        "Exception thrown in ""test_i::invoke_me() when calling ""Current::get_slot\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception\n");
+      ex._tao_print_exception ("Unexpected exception\n");
     }
-  ACE_ENDTRY;
 
   CORBA::Long retrieved;
   if (retrieved_any.in() >>= retrieved)
@@ -90,7 +85,7 @@ test_i::invoke_me (void)
                   "(%P|%t) Problem extracting data from "
                   "CORBA::Any retrieved from TSC.\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   // ----------------------------------------------------
 
@@ -110,27 +105,22 @@ test_i::invoke_me (void)
 
   data <<= str;
 
-  ACE_TRY_EX (foo)
+  try
     {
       this->current_->set_slot (this->slot_id_,
-                                data
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (foo);
+                                data);
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "test_i::invoke_me() when calling "
-                           "Current::set_slot\n");
+      ex._tao_print_exception (
+        "Exception thrown in ""test_i::invoke_me() when calling ""Current::set_slot\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW_EX (CORBA::INTERNAL (), foo);
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String \"%s\" inserted into TSC.\n",
@@ -156,27 +146,22 @@ test_i::invoke_we (void)
 
   data <<= str;
 
-  ACE_TRY_EX (foo)
+  try
     {
       this->current_->set_slot (this->slot_id_,
-                                data
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (foo);
+                                data);
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "test_i::invoke_me() when calling "
-                           "Current::set_slot\n");
+      ex._tao_print_exception (
+        "Exception thrown in ""test_i::invoke_me() when calling ""Current::set_slot\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW_EX (CORBA::INTERNAL (), foo);
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) String \"%s\" inserted into TSC.\n",
@@ -190,6 +175,5 @@ test_i::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Server is shutting down.\n"));
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

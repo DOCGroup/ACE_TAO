@@ -13,8 +13,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 }
 
 void
-Visual_i::normal (CORBA::Long arg
-                  ACE_ENV_ARG_DECL_NOT_USED)
+Visual_i::normal (CORBA::Long arg)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
@@ -33,7 +32,7 @@ Visual_i::user (void)
                    Test_Interceptors::Silly))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing Silly\n"));
-  ACE_THROW (Test_Interceptors::Silly ());
+  throw Test_Interceptors::Silly ();
 }
 
 void
@@ -41,12 +40,12 @@ Visual_i::system (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
-  ACE_THROW (CORBA::INV_OBJREF ());
+  throw CORBA::INV_OBJREF ();
 }
 
 void
 Visual_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

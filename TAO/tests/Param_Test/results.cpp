@@ -21,7 +21,7 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (Param_Test,
-           results, 
+           results,
            "results.cpp,v 1.8 1999/06/23 14:50:14 parsons Exp")
 
 Results::Results (void)
@@ -104,8 +104,7 @@ Results::print_stats (void)
 }
 
 void
-Results::print_exception (const char * /* call_name */
-                          ACE_ENV_ARG_DECL_NOT_USED)
+Results::print_exception (const char * /* call_name */)
 {
   //ACE_PRINT_EXCEPTION (call_name);
 }

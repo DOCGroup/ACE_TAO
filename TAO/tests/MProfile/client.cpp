@@ -49,49 +49,46 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_test (Simple_Server_ptr server
-          ACE_ENV_ARG_DECL);
+run_test (Simple_Server_ptr server);
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Primary server
       CORBA::Object_var object_primary =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       //Secondary server
       CORBA::Object_var object_secondary =
-        orb->string_to_object (name ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (name);
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_ptr IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0
-                                         ACE_ENV_ARG_PARAMETER);
+                                         0);
 
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);
       iors [0] = object_primary;
       iors [1] = object_secondary;
 
-      CORBA::Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var merged = iorm->merge_iors (iors);
 
       // Combined IOR stuff
       Simple_Server_var server =
-        Simple_Server::_narrow (merged.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (merged.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -101,23 +98,21 @@ main (int argc, char *argv[])
                             1);
         }
 
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      run_test (server.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception \n");
+      ex._tao_print_exception ("Caught an exception \n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
-void run_test (Simple_Server_ptr server
-               ACE_ENV_ARG_DECL)
+void run_test (Simple_Server_ptr server)
 {
   for (int loop = 0; loop < 10; loop++)
     {
-      ACE_TRY
+      try
         {
           // Make a remote call
           CORBA::Long ret =
@@ -127,11 +122,11 @@ void run_test (Simple_Server_ptr server
 
           ACE_OS::sleep (25);
         }
-      ACE_CATCH (CORBA::TRANSIENT, t)
+      catch (const CORBA::TRANSIENT& t)
         {
           if (t.completed () != CORBA::COMPLETED_NO)
             {
-              ACE_PRINT_EXCEPTION (t, "Unexpected kind of TRANSIENT");
+              t._tao_print_exception ("Unexpected kind of TRANSIENT");
             }
           else
             {
@@ -142,18 +137,16 @@ void run_test (Simple_Server_ptr server
               ACE_OS::sleep (1);
             }
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, f)
+      catch (const CORBA::COMM_FAILURE& f)
         {
-          ACE_PRINT_EXCEPTION (f, "A (sort of) expected COMM_FAILURE");
+          f._tao_print_exception ("A (sort of) expected COMM_FAILURE");
           ACE_DEBUG ((LM_DEBUG,
                       "Automagically re-issuing request on COMM_FAILURE\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Unexpected exception");
-          ACE_RE_THROW;
+          ex._tao_print_exception ("Unexpected exception");
+          throw;
         }
-      ACE_ENDTRY;
     }
 }

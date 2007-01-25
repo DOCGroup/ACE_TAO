@@ -13,13 +13,11 @@ class Subscriber_impl : public POA_Subscriber
 
     virtual void onData (
         ::CORBA::Double value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       ));
     virtual ::CORBA::Boolean isAlive (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException

@@ -39,8 +39,7 @@ public:
                     CORBA::Object_ptr forward_to);
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId & oid,
-                                             PortableServer::POA_ptr adapter
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                             PortableServer::POA_ptr adapter)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -48,8 +47,7 @@ public:
                             PortableServer::POA_ptr adapter,
                             PortableServer::Servant serv,
                             CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                            CORBA::Boolean remaining_activations)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void forward_requests (void);

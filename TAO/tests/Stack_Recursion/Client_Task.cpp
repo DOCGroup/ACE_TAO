@@ -24,8 +24,7 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->validate_connections ();
 
@@ -40,15 +39,13 @@ Client_Task::svc (void)
           Test::Payload_var pl = new Test::Payload;
           Test::Payload_out payload (pl.out ());
           this->sender_->get_data (this->event_size_,
-                                   payload
-                                   ACE_ENV_ARG_PARAMETER);
+                                   payload);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }
@@ -59,11 +56,11 @@ Client_Task::validate_connections (void)
 {
   for (int i = 0 ; i != 100; i++)
     {
-      ACE_TRY
+      try
         {
           this->sender_->ping ();
 
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception& ex){}
     }
 }

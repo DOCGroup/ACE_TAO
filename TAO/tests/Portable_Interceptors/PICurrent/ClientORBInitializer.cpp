@@ -18,31 +18,28 @@ PortableInterceptor::SlotId slot_id = 2093843211;
 void
 ClientORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
-    info->resolve_initial_references ("PICurrent"
-                                      ACE_ENV_ARG_PARAMETER);
+    info->resolve_initial_references ("PICurrent");
 
   PortableInterceptor::Current_var pi_current =
-    PortableInterceptor::Current::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+    PortableInterceptor::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (pi_current.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR: Could not resolve PICurrent object.\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   ::slot_id = info->allocate_slot_id ();
@@ -60,6 +57,5 @@ ClientORBInitializer::post_init (
   PortableInterceptor::ClientRequestInterceptor_var interceptor =
     foo;
 
-  info->add_client_request_interceptor (interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_client_request_interceptor (interceptor.in ());
 }

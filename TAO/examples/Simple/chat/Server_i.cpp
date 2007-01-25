@@ -60,16 +60,14 @@ Server_i::parse_args (int argc, char *argv[])
 
 int
 Server_i::init (int argc,
-                char *argv[]
-                ACE_ENV_ARG_DECL)
+                char *argv[])
 {
   // Parse the command line options.
   if (this-> parse_args(argc, argv) == -1)
     return -1;
 
   if (this->orb_manager_.init (argc,
-                               argv
-                               ACE_ENV_ARG_PARAMETER) == -1)
+                               argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "orb manager init failed\n"),
@@ -79,8 +77,7 @@ Server_i::init (int argc,
 
   // Activate the servant.
   CORBA::String_var str =
-    this->orb_manager_.activate (&this->broadcaster_i_
-                                 ACE_ENV_ARG_PARAMETER);
+    this->orb_manager_.activate (&this->broadcaster_i_);
 
   // Write the IOR to a file.
   this->write_IOR (str.in ());

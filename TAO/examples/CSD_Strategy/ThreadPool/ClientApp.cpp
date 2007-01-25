@@ -16,10 +16,10 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ClientApp::run(int argc, char* argv[])
 {
   CORBA::ORB_var orb
-    = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -32,7 +32,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   CORBA::Object_var obj
-    = orb->string_to_object(this->ior_.c_str() ACE_ENV_ARG_PARAMETER);
+    = orb->string_to_object(this->ior_.c_str());
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -41,7 +41,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);
     }
 
-  Foo_var foo = Foo::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+  Foo_var foo = Foo::_narrow(obj.in());
 
   if (CORBA::is_nil(foo.in()))
     {
@@ -53,7 +53,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   for (CORBA::Long i = 1; i <= 100; i++)
     {
       foo->op1();
-      foo->op2(i ACE_ENV_ARG_PARAMETER);
+      foo->op2(i);
       CORBA::Long value = foo->op3();
 
       ACE_DEBUG((LM_DEBUG,
@@ -62,20 +62,19 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
       for (CORBA::Long j = 1; j <= 5; j++)
         {
-          foo->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
+          foo->op4(495 + (i * 5) + j);
         }
 
-      ACE_TRY_NEW_ENV
+      try
       {
         foo->op5();
       }
-      ACE_CATCH (FooException, ex)
+      catch (const FooException& )
       {
         ACE_DEBUG((LM_DEBUG,
                   "(%P|%t) ===> Caught FooException - as expected.\n"));
 
       }
-      ACE_ENDTRY;
     }
 
   ACE_DEBUG((LM_DEBUG,

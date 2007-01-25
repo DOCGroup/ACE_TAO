@@ -24,11 +24,11 @@ int main(int argc, char* argv[])
   int status = 0;
   CORBA::ORB_var orb = CORBA::ORB::_nil();
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB
       orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // create Hello object
       Test::Hello_impl hello_i;
@@ -109,13 +109,11 @@ int main(int argc, char* argv[])
 
       orb->destroy();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Error - test failed - exception caught:");
+      ex._tao_print_exception ("Error - test failed - exception caught:");
       status = 1;
     }
-  ACE_ENDTRY;
 
   return status;
 }

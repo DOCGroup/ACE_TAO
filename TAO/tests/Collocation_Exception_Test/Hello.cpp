@@ -18,14 +18,14 @@ void
 Hello::system_exception_test (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  throw CORBA::INTERNAL ();
 }
 
 void
 Hello::user_exception_expected (void)
   ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A))
 {
-  ACE_THROW (::Test::Hello::A ());
+  throw ::Test::Hello::A ();
 }
 
 void
@@ -38,7 +38,7 @@ Hello::user_exception_not_expected (void)
 void
 Hello::throw_internal_b (void)
 {
-  ACE_THROW (::Test::Hello::B ());
+  throw ::Test::Hello::B ();
 }
 
 char *
@@ -88,5 +88,5 @@ void
 Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

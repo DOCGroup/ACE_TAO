@@ -17,7 +17,7 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (const char * A, const char * B, const char * C ACE_ENV_ARG_DECL)
+  virtual char * get_string (const char * A, const char * B, const char * C)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

@@ -22,8 +22,7 @@ Hello::get_helloworld (void)
 		    CORBA::NO_MEMORY ());
 
   PortableServer::ObjectId_var oid =
-    poa_->activate_object (hello_world
-                           ACE_ENV_ARG_PARAMETER);
+    poa_->activate_object (hello_world);
 
   Test::HelloWorld_var hw = hello_world->_this ();
   return hw._retn ();
@@ -33,5 +32,5 @@ void
 Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

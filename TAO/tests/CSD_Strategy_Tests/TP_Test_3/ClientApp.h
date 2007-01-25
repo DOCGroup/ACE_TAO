@@ -21,13 +21,13 @@ class ClientApp : public TestAppBase
 
   protected:
 
-    virtual int run_i(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    virtual int run_i(int argc, char* argv[]);
 
 
   private:
 
     // These are all called, in order, by the run_i() method.
-    int init(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    int init(int argc, char* argv[]);
     void poa_setup(void);
     void csd_setup(void);
     void client_setup(void);
@@ -50,8 +50,7 @@ class ClientApp : public TestAppBase
     int arg_dependency_checks();
 
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
-                                       const char* poa_name
-                                       ACE_ENV_ARG_DECL);
+                                       const char* poa_name);
 
 
     typedef ServantList<Callback_i> ServantListType;

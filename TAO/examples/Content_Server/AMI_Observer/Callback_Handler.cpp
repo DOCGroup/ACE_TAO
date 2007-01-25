@@ -43,7 +43,7 @@ Callback_Handler::next_chunk (void)
     Web_Server::Chunk_Type::allocbuf (BUFSIZ);
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
+    throw CORBA::NO_MEMORY ();
 
   ssize_t bytes_read = this->file_io_.recv (buf,
                                             BUFSIZ);
@@ -51,7 +51,7 @@ Callback_Handler::next_chunk (void)
     {
       Web_Server::Chunk_Type::freebuf (buf);
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   else if (bytes_read == 0)
     {
@@ -78,32 +78,28 @@ Callback_Handler::next_chunk (void)
 
   this->callback_->sendc_next_chunk (this->ami_handler_.in (),
                                      this->chunk_.in (),
-                                     this->last_chunk_
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this->last_chunk_);
 }
 
 void
 Callback_Handler::next_chunk_excep
-  (::Messaging::ExceptionHolder *excep_holder
-   ACE_ENV_ARG_DECL_NOT_USED)
+  (::Messaging::ExceptionHolder *excep_holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->last_chunk_ = 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->deactivate ();
 
       excep_holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            ACE_TEXT ("Exception occured during ")
                            ACE_TEXT ("sendc_next_chunk() call:"));
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -138,7 +134,7 @@ Callback_Handler::open_file (void)
                          0,
                          O_RDONLY) == -1)
     // HTTP 1.1 "Not Found"
-    ACE_THROW (Web_Server::Error_Result (404));
+    throw Web_Server::Error_Result (404);
 }
 
 void
@@ -153,9 +149,8 @@ Callback_Handler::deactivate (void)
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
   // Now deactivate the AMI_CallbackHandler object.
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 }

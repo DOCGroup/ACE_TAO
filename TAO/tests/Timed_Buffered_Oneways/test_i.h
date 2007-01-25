@@ -32,14 +32,13 @@ public:
   void method (CORBA::ULong request_number,
                CORBA::Long start_time,
                const test::data &,
-               CORBA::ULong work
-               ACE_ENV_ARG_DECL_NOT_USED)
+               CORBA::ULong work)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void flush (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Long start_time ACE_ENV_ARG_DECL)
+  void shutdown (CORBA::Long start_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

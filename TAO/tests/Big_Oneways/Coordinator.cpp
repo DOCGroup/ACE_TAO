@@ -29,8 +29,7 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
                                   CORBA::ULong payload_size,
                                   CORBA::ULong thread_count,
                                   CORBA::ULong message_count,
-                                  Test::Session_List &session_list
-                                  ACE_ENV_ARG_DECL)
+                                  Test::Session_List &session_list)
 {
   session_list.length (this->peer_count_);
   CORBA::ULong count = 0;
@@ -43,8 +42,7 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
                               payload_size,
                               thread_count,
                               message_count,
-                              this->peer_count_
-                              ACE_ENV_ARG_PARAMETER);
+                              this->peer_count_);
     }
 }
 
@@ -55,22 +53,19 @@ Coordinator::shutdown_all_peers (void)
        i != this->peers_ + this->peer_count_;
        ++i)
     {
-      ACE_TRY
+      try
         {
           (*i)->shutdown ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Coordinator::shutdown, ignored");
+          ex._tao_print_exception ("Coordinator::shutdown, ignored");
         }
-      ACE_ENDTRY;
     }
 }
 
 void
-Coordinator::add_peer (Test::Peer_ptr peer
-                       ACE_ENV_ARG_DECL_NOT_USED)
+Coordinator::add_peer (Test::Peer_ptr peer)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->peer_count_ >= this->peer_max_)

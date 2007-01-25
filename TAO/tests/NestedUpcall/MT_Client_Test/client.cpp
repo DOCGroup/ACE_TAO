@@ -149,8 +149,7 @@ MT_Client::parse_args (void)
 int
 MT_Client::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (unsigned long i = 0; i < this->iterations_; i++)
         {
@@ -164,17 +163,14 @@ MT_Client::run (void)
           // call the recursive object MT_Object for nested upcalls
           // testing
           this->mT_Object_var_->yadda (0,
-                                       0
-                                       ACE_ENV_ARG_PARAMETER);
+                                       0);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client:run");
+      ex._tao_print_exception ("MT_Client:run");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -202,8 +198,7 @@ MT_Client::init (int argc, char **argv,
 
   this->client_number_ = client_number;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       char buf[64];
       ACE_OS::sprintf (buf, "thread_%lx", reinterpret_cast<long> (this));
@@ -211,8 +206,7 @@ MT_Client::init (int argc, char **argv,
       this->orb_var_ =
         CORBA::ORB_init (this->argc_,
                          this->argv_,
-                         buf
-                         ACE_ENV_ARG_PARAMETER);
+                         buf);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -225,16 +219,14 @@ MT_Client::init (int argc, char **argv,
 
 
       CORBA::Object_var object_var =
-        this->orb_var_->string_to_object (this->object_key_
-                                          ACE_ENV_ARG_PARAMETER);
+        this->orb_var_->string_to_object (this->object_key_);
 
       if (CORBA::is_nil (object_var.in()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "No proper object has been returned.\n"),
                             -1);
 
-      this->mT_Object_var_ = MT_Object::_narrow (object_var.in()
-                                                 ACE_ENV_ARG_PARAMETER);
+      this->mT_Object_var_ = MT_Object::_narrow (object_var.in());
 
       if (CORBA::is_nil (this->mT_Object_var_.in()))
         {
@@ -247,7 +239,7 @@ MT_Client::init (int argc, char **argv,
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
 
       CORBA::Object_var poa_object =
-        this->orb_var_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_var_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -255,20 +247,18 @@ MT_Client::init (int argc, char **argv,
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client::init");
+      ex._tao_print_exception ("MT_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -279,14 +269,12 @@ MT_Client::init (int argc, char **argv,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       TAO_ORB_Manager orb_manager;
 
       int r = orb_manager.init (argc,
-                                argv
-                                ACE_ENV_ARG_PARAMETER);
+                                argv);
 
       if (r != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -345,11 +333,10 @@ main (int argc, char **argv)
 
       return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "main");
+      ex._tao_print_exception ("main");
     }
-  ACE_ENDTRY;
 
   return 1;
 }

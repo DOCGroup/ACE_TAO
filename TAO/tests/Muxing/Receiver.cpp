@@ -24,8 +24,7 @@ Receiver::dump_results ()
 }
 
 void
-Receiver::receive_data (const Test::Payload &payload
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Receiver::receive_data (const Test::Payload &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -45,5 +44,5 @@ void
 Receiver::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

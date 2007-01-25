@@ -31,11 +31,10 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 {
   refcnt_++;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   Test::Payload pload(1024); pload.length(1024);
   ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
-  ACE_TRY
+  try
   {
     Test::Echo_var echo = Test::Echo::_duplicate(this->echo_.in());
     if(CORBA::is_nil(echo.in()))
@@ -43,14 +42,13 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 
     echo->echo_payload(pload);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     this->echo_ = Test::Echo::_nil ();
 
     if(this->reactor()->cancel_timer(this) != 0)
       refcnt_--;
   }
-  ACE_ENDTRY;
 
   refcnt_--;
   if(refcnt_ == 0)

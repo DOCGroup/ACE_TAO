@@ -27,14 +27,12 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void normal (CORBA::Long arg
-               ACE_ENV_ARG_DECL_NOT_USED)
+  void normal (CORBA::Long arg)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long calculate (
                          CORBA::Long one,
-                         CORBA::Long two
-                         ACE_ENV_ARG_DECL_NOT_USED)
+                         CORBA::Long two)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void user (void)

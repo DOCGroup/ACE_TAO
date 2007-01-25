@@ -24,11 +24,10 @@ int
 Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   int successful_calls = 0;
 
-  ACE_TRY
+  try
     {
       this->validate_connection ();
 
@@ -47,13 +46,11 @@ Client_Task::svc (void)
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
@@ -65,24 +62,23 @@ Client_Task::svc (void)
 void
 Client_Task::validate_connection (void)
 {
-  ACE_TRY
+  try
     {
       for (int i = 0; i != 100; ++i)
         {
           (void) this->process_factory_->noop ();
         }
     }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT& )
     {
       // Ignore transient exceptions
     }
-  ACE_ENDTRY;
 }
 
 int
 Client_Task::one_iteration (void)
 {
-  ACE_TRY
+  try
     {
       Test::Process_var process =
         this->process_factory_->create_new_process ();
@@ -93,17 +89,15 @@ Client_Task::one_iteration (void)
 
       return 1;
     }
-  ACE_CATCH(Test::Spawn_Failed, ignored)
+  catch (const Test::Spawn_Failed& )
     {
       // Ignore this exception, it is usually caused by a transient
       // condition
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

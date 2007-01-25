@@ -9,8 +9,7 @@
 ACE_RCSID(Faults, test_i, "$Id$")
 
 void
-PingObject_i::ping (PingObject_ptr callback
-      ACE_ENV_ARG_DECL)
+PingObject_i::ping (PingObject_ptr callback)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   callback->pong ();
@@ -26,7 +25,7 @@ void
 PingObject_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 PortableServer::POA_ptr

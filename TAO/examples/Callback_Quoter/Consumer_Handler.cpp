@@ -161,8 +161,7 @@ Consumer_Handler::parse_args (void)
 int
 Consumer_Handler::via_naming_service (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -176,23 +175,21 @@ Consumer_Handler::via_naming_service (void)
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
 
       CORBA::Object_var notifier_obj =
-        this->naming_services_client_->resolve (notifier_ref_name
-                                                ACE_ENV_ARG_PARAMETER);
+        this->naming_services_client_->resolve (notifier_ref_name);
 
       // The CORBA::Object_var object is downcast to Notifier_var using
       // the <_narrow> method.
       this->server_ =
-        Notifier::_narrow (notifier_obj.in ()
-                           ACE_ENV_ARG_PARAMETER);
+        Notifier::_narrow (notifier_obj.in ());
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_Handler::via_naming_service\n");
+      ex._tao_print_exception (
+        "Consumer_Handler::via_naming_service\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -208,14 +205,12 @@ Consumer_Handler::init (int argc, char **argv)
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
+                                    0);
 
 
       // Parse command line and verify parameters.
@@ -276,8 +271,7 @@ Consumer_Handler::init (int argc, char **argv)
                               -1);
 
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_
-                                          ACE_ENV_ARG_PARAMETER);
+            this->orb_->string_to_object (this->ior_);
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -286,17 +280,15 @@ Consumer_Handler::init (int argc, char **argv)
                               -1);
           // The downcasting from CORBA::Object_var to Notifier_var is
           // done using the <_narrow> method.
-          this->server_ = Notifier::_narrow (server_object.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+          this->server_ = Notifier::_narrow (server_object.in ());
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "Consumer_Handler::init");
+      ex._tao_print_exception ("Consumer_Handler::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -305,15 +297,14 @@ int
 Consumer_Handler::run (void)
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Obtain and activate the RootPOA.
      CORBA::Object_var obj =
-            this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+            this->orb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
      PortableServer::POAManager_var poa_manager=
        root_poa->the_POAManager ();
@@ -336,8 +327,7 @@ Consumer_Handler::run (void)
           // Register with the server.
           this->server_->register_callback (this->stock_name_,
                                             this->threshold_value_,
-                                            this->consumer_var_.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+                                            this->consumer_var_.in ());
 
           // Note the registration.
           this->registered_ = 1;
@@ -351,12 +341,11 @@ Consumer_Handler::run (void)
       this->orb_->run ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_Handler::init");
+      ex._tao_print_exception ("Consumer_Handler::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

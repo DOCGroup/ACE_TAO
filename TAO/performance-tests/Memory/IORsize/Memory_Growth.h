@@ -22,8 +22,7 @@ public:
   Memory_Growth (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void send_objref (const Test::PayLoad &p
-                            ACE_ENV_ARG_DECL)
+  virtual void send_objref (const Test::PayLoad &p)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

@@ -19,8 +19,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 CORBA::Long
 test_i::method (CORBA::Long client_id,
-                CORBA::Long iteration
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CORBA::Long iteration)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
@@ -59,6 +58,5 @@ void
 test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

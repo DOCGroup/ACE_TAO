@@ -29,15 +29,13 @@ Server_Task::Server_Task (const char *output,
 int
 Server_Task::svc (void)
 {
- ACE_TRY_NEW_ENV
+ try
    {
      CORBA::Object_var poa_object =
-       this->sorb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+       this->sorb_->resolve_initial_references("RootPOA");
 
      PortableServer::POA_var root_poa =
-       PortableServer::POA::_narrow (poa_object.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+       PortableServer::POA::_narrow (poa_object.in ());
 
      if (CORBA::is_nil (root_poa.in ()))
        ACE_ERROR_RETURN ((LM_ERROR,
@@ -59,8 +57,7 @@ Server_Task::svc (void)
        hello_impl->_this ();
 
      CORBA::String_var ior =
-       this->sorb_->object_to_string (hello.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+       this->sorb_->object_to_string (hello.in ());
 
      // Output the IOR to the <this->output_>
      FILE *output_file= ACE_OS::fopen (this->output_,
@@ -85,8 +82,7 @@ Server_Task::svc (void)
        simple_impl->_this ();
 
      CORBA::String_var simple_test_ior =
-       this->sorb_->object_to_string (simple_test.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+       this->sorb_->object_to_string (simple_test.in ());
 
      // Output the IOR to the <this->output_>
      FILE *simple_test_output_file= ACE_OS::fopen (this->simple_test_output_,
@@ -115,20 +111,18 @@ Server_Task::svc (void)
 
      error_count_ += errors;
    }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
      error_count_ ++;
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Exception caught:");
+     ex._tao_print_exception ("Exception caught:");
      return 1;
    }
- ACE_CATCHALL
+ catch (...)
    {
      error_count_ ++;
      ACE_ERROR ((LM_ERROR, "(%P|%t)Server_Task::svc - caught unknown exception \n"));
      return 1;
    }
- ACE_ENDTRY;
 
  return 0;
 }

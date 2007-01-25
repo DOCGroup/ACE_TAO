@@ -14,7 +14,7 @@ main (int, char *[])
   int niterations = 10;
   int norbs = 10;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       for (int i = 0; i != niterations; ++i)
         {
@@ -25,14 +25,13 @@ main (int, char *[])
 
               int argc = 0;
               CORBA::ORB_var orb =
-                CORBA::ORB_init (argc, 0, buf ACE_ENV_ARG_PARAMETER);
+                CORBA::ORB_init (argc, 0, buf);
 
               CORBA::Object_var object =
-                orb->string_to_object ("DLL:Test_Object"
-                                       ACE_ENV_ARG_PARAMETER);
+                orb->string_to_object ("DLL:Test_Object");
 
               Test_var test =
-                Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+                Test::_narrow (object.in ());
 
               CORBA::Long count =
                 test->instance_count ();
@@ -55,26 +54,23 @@ main (int, char *[])
 
           int argc = 0;
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, 0, buf ACE_ENV_ARG_PARAMETER);
+            CORBA::ORB_init (argc, 0, buf);
 
           CORBA::Object_var obj =
-            orb->resolve_initial_references ("RootPOA"
-                                             ACE_ENV_ARG_PARAMETER);
+            orb->resolve_initial_references ("RootPOA");
 
           PortableServer::POA_var poa =
-            PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+            PortableServer::POA::_narrow (obj.in ());
 
-          poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+          poa->destroy (1, 1);
 
           orb->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "main()");
+      ex._tao_print_exception ("main()");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

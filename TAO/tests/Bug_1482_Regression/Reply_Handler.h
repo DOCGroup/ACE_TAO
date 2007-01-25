@@ -14,12 +14,10 @@ public:
   Reply_Handler (CORBA::ORB_ptr o);
 
 
-  void next_prime (CORBA::ULong ami_return_val
-                   ACE_ENV_ARG_DECL)
+  void next_prime (CORBA::ULong ami_return_val)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void next_prime_excep (::Messaging::ExceptionHolder * excep_holder
-                         ACE_ENV_ARG_DECL)
+  void next_prime_excep (::Messaging::ExceptionHolder * excep_holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

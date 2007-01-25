@@ -62,8 +62,7 @@ private:
 
 
   void create_objects (size_t number_of_objects,
-                       Load_Balancer::Object_Group_ptr group
-                       ACE_ENV_ARG_DECL);
+                       Load_Balancer::Object_Group_ptr group);
   // Creates the specified number of identity objects, and registers
   // each one with the provided <Object_Group>.  Identity servants are
   // given names

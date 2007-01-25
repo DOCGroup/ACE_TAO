@@ -31,12 +31,10 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Long id
-                    ACE_ENV_ARG_DECL_NOT_USED)
+  void test_method (CORBA::Long id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (const char *orb_id
-                 ACE_ENV_ARG_DECL_NOT_USED)
+  void shutdown (const char *orb_id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -196,13 +196,12 @@ DII_Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB.
       this->orb_var_ = CORBA::ORB_init (this->argc_,
                                         this->argv_,
-                                        "internet"
-                                        ACE_ENV_ARG_PARAMETER);
+                                        "internet");
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -213,12 +212,10 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       // Get a factory object reference from the factory IOR.
       this->factory_var_ =
-        this->orb_var_->string_to_object (this->factory_IOR_
-                                          ACE_ENV_ARG_PARAMETER);
+        this->orb_var_->string_to_object (this->factory_IOR_);
 
       // Get a Cubit object with a DII request on the Cubit factory.
-      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit"
-                                                               ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit"));
 
 
       // make_cubit takes a char* arg that it doesn't use, but we must
@@ -241,13 +238,11 @@ DII_Cubit_Client::init (int argc, char **argv)
                            " could not obtain Cubit object from Cubit factory <%s>\n"),
                           -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DII_Cubit_Client::init");
+      ex._tao_print_exception ("DII_Cubit_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -369,11 +364,10 @@ DII_Cubit_Client::print_stats (const char *call_name,
 void
 DII_Cubit_Client::cube_short_dii (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_short"
-                                                        ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_short"));
 
 
       CORBA::Short ret_short = 0;
@@ -398,24 +392,21 @@ DII_Cubit_Client::cube_short_dii (void)
           this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_short_dii");
+      ex._tao_print_exception ("cube_short_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 void
 DII_Cubit_Client::cube_long_dii (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_long"
-                                                        ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_long"));
 
 
       CORBA::Long ret_long = 0;
@@ -441,24 +432,21 @@ DII_Cubit_Client::cube_long_dii (void)
             this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_long_dii");
+      ex._tao_print_exception ("cube_long_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 void
 DII_Cubit_Client::cube_octet_dii (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_octet"
-                                                        ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_octet"));
 
 
       CORBA::Octet ret_octet = 0;
@@ -487,24 +475,21 @@ DII_Cubit_Client::cube_octet_dii (void)
           this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_octet_dii");
+      ex._tao_print_exception ("cube_octet_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 void
 DII_Cubit_Client::cube_union_dii (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_union"
-                                                        ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_union"));
 
 
       Cubit::oneof arg_union;
@@ -540,24 +525,21 @@ DII_Cubit_Client::cube_union_dii (void)
           this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_union_dii");
+      ex._tao_print_exception ("cube_union_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 void
 DII_Cubit_Client::cube_struct_dii (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_struct"
-                                                        ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_struct"));
 
 
       Cubit::Many arg_struct, *ret_struct_ptr;
@@ -590,24 +572,21 @@ DII_Cubit_Client::cube_struct_dii (void)
           this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_struct_dii");
+      ex._tao_print_exception ("cube_struct_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 void
 DII_Cubit_Client::cube_octet_seq_dii (int length)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_octet_sequence"
-                                                         ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_octet_sequence"));
 
 
       // Same length as in IDL_Cubit tests so timings can be compared.
@@ -649,24 +628,21 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
           this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_octet_seq_dii");
+      ex._tao_print_exception ("cube_octet_seq_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 void
 DII_Cubit_Client::cube_long_seq_dii (int length)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Create the request ...
-      CORBA::Request_var req (this->obj_var_->_request ("cube_long_sequence"
-                                                        ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (this->obj_var_->_request ("cube_long_sequence"));
 
 
       // Same length as in IDL_Cubit tests so timings can be compared.
@@ -709,14 +685,12 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
           this->error_count_++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       this->error_count_++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "cube_long_seq_dii");
+      ex._tao_print_exception ("cube_long_seq_dii");
       return;
     }
-  ACE_ENDTRY;
 }
 
 // Wrappers for operations with non-void arg lists and the 3-in-1
@@ -787,13 +761,12 @@ DII_Cubit_Client::run (void)
                          dii_elapsed_time);
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Shut down server via a DII request.
       if (this->shutdown_)
         {
-          CORBA::Request_var req (this->obj_var_->_request ("shutdown"
-                                                            ACE_ENV_ARG_PARAMETER));
+          CORBA::Request_var req (this->obj_var_->_request ("shutdown"));
 
 
           // Cubit::shutdown () is a oneway operation.
@@ -804,13 +777,11 @@ DII_Cubit_Client::run (void)
                       "\n\t Shutting down IDL_Cubit server \n\n"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DII_Cubit_Client: server shutdown");
+      ex._tao_print_exception ("DII_Cubit_Client: server shutdown");
       return -1;
     }
-  ACE_ENDTRY;
 
   return this->error_count_ == 0 ? 0 : 1;
 }

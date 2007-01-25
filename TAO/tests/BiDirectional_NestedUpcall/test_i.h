@@ -57,12 +57,10 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Boolean do_callback
-                           ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Long test_method (CORBA::Boolean do_callback)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void callback_object (Callback_ptr callback
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  void callback_object (Callback_ptr callback)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (void)

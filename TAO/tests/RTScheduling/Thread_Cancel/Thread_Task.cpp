@@ -17,7 +17,7 @@ Thread_Task::guids (void)
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_NEW_RETURN (shutdown_lock_,
                       ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
@@ -29,18 +29,14 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
-      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
-                                                                              ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
 
-      this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+      this->current_ = RTScheduling::Current::_narrow (current_obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
-  ACE_ENDTRY;
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
@@ -63,7 +59,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 int
 Thread_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -72,8 +68,7 @@ Thread_Task::svc (void)
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Chamber of Secrets",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
+                                                implicit_sched_param);
 
       size_t count = 0;
       ACE_OS::memcpy (&count,
@@ -83,16 +78,14 @@ Thread_Task::svc (void)
 
       this->current_->begin_scheduling_segment ("Potter",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
+                                                implicit_sched_param);
 
       this->guid_[guid_index++] = *(this->current_->id ());
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
+                                                implicit_sched_param);
 
 
       {
@@ -113,22 +106,19 @@ Thread_Task::svc (void)
 
       ACE_OS::sleep (50);
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
+      this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment
 
 
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
+      this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
+      this->current_->end_scheduling_segment (name);
 
 
     }
-  ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)
+  catch (const CORBA::THREAD_CANCELLED& )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Distributable Thread Cancelled - Expected Exception\n"));
@@ -141,11 +131,9 @@ Thread_Task::svc (void)
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -85,7 +85,7 @@ Object_Activator::Object_Activator (ACE_Thread_Manager &thread_manager,
 int
 Object_Activator::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       test_i *servant =
         new test_i (this->poa_.in ());
@@ -93,20 +93,18 @@ Object_Activator::svc (void)
       PortableServer::ServantBase_var safe_servant (servant);
 
       PortableServer::ObjectId_var id =
-        this->poa_->activate_object (servant
-                                     ACE_ENV_ARG_PARAMETER);
+        this->poa_->activate_object (servant);
 
       this->object_activated_.signal ();
 
-      this->poa_->deactivate_object (id.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+      this->poa_->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in activator thread");
+      ex._tao_print_exception (
+        "Exception caught in activator thread");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -121,8 +119,7 @@ public:
   Servant_Activator (PortableServer::POA_ptr poa);
 
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                     PortableServer::POA_ptr poa
-                                     ACE_ENV_ARG_DECL)
+                                     PortableServer::POA_ptr poa)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -130,8 +127,7 @@ public:
                     PortableServer::POA_ptr adapter,
                     PortableServer::Servant servant,
                     CORBA::Boolean cleanup_in_progress,
-                    CORBA::Boolean remaining_activations
-                    ACE_ENV_ARG_DECL)
+                    CORBA::Boolean remaining_activations)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_var poa_;
@@ -147,8 +143,7 @@ Servant_Activator::Servant_Activator (PortableServer::POA_ptr poa)
 
 PortableServer::Servant
 Servant_Activator::incarnate (const PortableServer::ObjectId &,
-                              PortableServer::POA_ptr
-                              ACE_ENV_ARG_DECL)
+                              PortableServer::POA_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -158,11 +153,9 @@ Servant_Activator::incarnate (const PortableServer::ObjectId &,
   PortableServer::ServantBase_var safe_servant (servant);
 
   this->id_ =
-    this->poa_->activate_object (servant
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->activate_object (servant);
 
-  this->poa_->deactivate_object (this->id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (this->id_.in ());
 
   int result =
     global_object_activator->activate ();
@@ -204,8 +197,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &,
                                 PortableServer::POA_ptr,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
-                                CORBA::Boolean
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Boolean)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   servant->_remove_ref ();
@@ -214,21 +206,18 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &,
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -240,30 +229,24 @@ main (int argc, char **argv)
 
       policies.length (current_length + 1);
       policies[current_length++] =
-        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       Servant_Activator servant_activator (child_poa.in ());
-      child_poa->set_servant_manager (&servant_activator
-                                      ACE_ENV_ARG_PARAMETER);
+      child_poa->set_servant_manager (&servant_activator);
 
       CORBA::Object_var first_object =
-        child_poa->create_reference ("IDL:test:1.0"
-                                     ACE_ENV_ARG_PARAMETER);
+        child_poa->create_reference ("IDL:test:1.0");
 
       test_var first_test =
-        test::_narrow (first_object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        test::_narrow (first_object.in ());
 
       PortableServer::ObjectId_var id =
-        child_poa->reference_to_id (first_object.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+        child_poa->reference_to_id (first_object.in ());
 
       ACE_Thread_Manager thread_manager;
 
@@ -275,22 +258,19 @@ main (int argc, char **argv)
 
       first_test->method ();
 
-      child_poa->deactivate_object (id.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      child_poa->deactivate_object (id.in ());
 
       // Wait for the Object_Activator thread to exit.
       thread_manager.wait ();
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
+                         1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

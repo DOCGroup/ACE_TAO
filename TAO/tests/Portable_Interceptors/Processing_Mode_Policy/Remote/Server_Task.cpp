@@ -26,11 +26,11 @@ Server_Task::Server_Task (const char *output,
 int
 Server_Task::svc (void)
 {
- ACE_TRY_NEW_ENV
+ try
    {
 
       CORBA::Object_var poa_object =
-        sorb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        sorb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -38,7 +38,7 @@ Server_Task::svc (void)
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -49,19 +49,16 @@ Server_Task::svc (void)
       ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (server_impl
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->activate_object (server_impl);
 
       CORBA::Object_var test_obj =
-        root_poa->id_to_reference (id.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->id_to_reference (id.in ());
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (test_obj.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+        Test_Interceptors::Visual::_narrow (test_obj.in ());
 
       CORBA::String_var ior =
-        this->sorb_->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        this->sorb_->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ior.in ()));
 
@@ -85,17 +82,15 @@ Server_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       this->sorb_->destroy ();
    }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Exception caught in server task:");
+     ex._tao_print_exception ("Exception caught in server task:");
      return 1;
    }
- ACE_ENDTRY;
 
  return 0;
 }

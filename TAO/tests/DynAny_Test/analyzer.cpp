@@ -79,7 +79,7 @@ void DynAnyAnalyzer::resetTab (void)
   level_ = 0;
 }
 
-void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
+void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 {
   CORBA::TypeCode_var tc = da->type ();
 
@@ -100,7 +100,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
      case CORBA::tk_struct:
       {
         DynamicAny::DynStruct_var ds
-          = DynamicAny::DynStruct::_narrow (da ACE_ENV_ARG_PARAMETER);
+          = DynamicAny::DynStruct::_narrow (da);
 
         tab (level_);
 
@@ -132,7 +132,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 
                 if (!CORBA::is_nil (cc.in ()))
                   {
-                    this->analyze (cc.in () ACE_ENV_ARG_PARAMETER);
+                    this->analyze (cc.in ());
                   }
 
               } while (da->next ());
@@ -151,7 +151,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
         else
           {
             DynamicAny::DynSequence_var ds =
-              DynamicAny::DynSequence::_narrow (da ACE_ENV_ARG_PARAMETER);
+              DynamicAny::DynSequence::_narrow (da);
 
             int i = 0;
             tab(level_);
@@ -178,7 +178,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 
                     if (!CORBA::is_nil (cc.in ()))
                       {
-                        analyze (cc.in () ACE_ENV_ARG_PARAMETER);
+                        analyze (cc.in ());
                       }
 
                     i++;
@@ -218,7 +218,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 
             if (!CORBA::is_nil (cc.in ()))
               {
-                analyze (cc.in () ACE_ENV_ARG_PARAMETER);
+                analyze (cc.in ());
               }
 
             da->next ();
@@ -230,7 +230,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
     case CORBA::tk_union:
       {
         DynamicAny::DynUnion_var value =
-          DynamicAny::DynUnion::_narrow (da ACE_ENV_ARG_PARAMETER);
+          DynamicAny::DynUnion::_narrow (da);
 
         if (!value->has_no_active_member ())
           {
@@ -238,7 +238,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
 
             if (!CORBA::is_nil (disc.in ()))
               {
-                this->analyze (disc.in () ACE_ENV_ARG_PARAMETER);
+                this->analyze (disc.in ());
               }
           }
       }
@@ -250,12 +250,11 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
         CORBA::Any_var any = da->get_any ();
 
         dynany =
-          dynany_factory_->create_dyn_any (any.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+          dynany_factory_->create_dyn_any (any.in ());
 
         if (!CORBA::is_nil (dynany.in ()))
           {
-            this->analyze (dynany.in () ACE_ENV_ARG_PARAMETER);
+            this->analyze (dynany.in ());
           }
 
         dynany->destroy ();
@@ -265,7 +264,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da ACE_ENV_ARG_DECL)
     case CORBA::tk_enum:
       {
         DynamicAny::DynEnum_var value =
-          DynamicAny::DynEnum::_narrow (da ACE_ENV_ARG_PARAMETER);
+          DynamicAny::DynEnum::_narrow (da);
 
         CORBA::String_var s = value->get_as_string ();
         tab (level_);

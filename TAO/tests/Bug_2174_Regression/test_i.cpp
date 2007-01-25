@@ -14,8 +14,7 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 
 CORBA::Long
 Simple_Server_i::echo (CORBA::Long x,
-                       CORBA::Long msecs
-                       ACE_ENV_ARG_DECL_NOT_USED)
+                       CORBA::Long msecs)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value tv (msecs / 1000, (msecs % 1000) * 1000);
@@ -33,5 +32,5 @@ Simple_Server_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "server (%P) Received shutdown request from client\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

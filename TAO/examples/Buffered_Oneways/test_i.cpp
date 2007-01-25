@@ -10,8 +10,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::method (CORBA::ULong request_number
-                ACE_ENV_ARG_DECL_NOT_USED)
+test_i::method (CORBA::ULong request_number)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -23,6 +22,5 @@ void
 test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

@@ -30,7 +30,7 @@ Foo_B_i::op1(void)
 
 
 void
-Foo_B_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[1] ++;
@@ -39,7 +39,7 @@ Foo_B_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_B_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::op3(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[2] ++;
@@ -49,7 +49,7 @@ Foo_B_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_B_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[3] ++;
@@ -62,14 +62,13 @@ Foo_B_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4] ++;
-  ACE_THROW (FooException());
+  throw FooException();
 }
 
 
 CORBA::Boolean
 Foo_B_i::op6(const TimeOfDay& t,
-             char*& message
-             ACE_ENV_ARG_DECL_NOT_USED)
+             char*& message)
                         ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[5] ++;
@@ -83,8 +82,7 @@ Foo_B_i::op6(const TimeOfDay& t,
 
 
 void
-Foo_B_i::op7(Callback_ptr cb
-             ACE_ENV_ARG_DECL)
+Foo_B_i::op7(Callback_ptr cb)
   ACE_THROW_SPEC((CORBA::SystemException,
                   FooException))
 {
@@ -95,7 +93,7 @@ Foo_B_i::op7(Callback_ptr cb
       error_count_ ++;
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::op7  nil callback error_count %u\n",
         error_count_));
-      ACE_THROW (FooException ());
+      throw FooException ();
     }
   else
     {
@@ -105,8 +103,7 @@ Foo_B_i::op7(Callback_ptr cb
 
 
 void
-Foo_B_i::test_unbounded_string_arg(const char* message
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_unbounded_string_arg(const char* message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[7] ++;
@@ -118,8 +115,7 @@ Foo_B_i::test_unbounded_string_arg(const char* message
 
 
 void
-Foo_B_i::test_bounded_string_arg(const char* message
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_bounded_string_arg(const char* message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[8] ++;
@@ -131,8 +127,7 @@ Foo_B_i::test_bounded_string_arg(const char* message
 
 
 void
-Foo_B_i::test_fixed_array_arg(const Fixed_Array message
-                              ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_fixed_array_arg(const Fixed_Array message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[9] ++;
@@ -159,8 +154,7 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message
 
 
 void
-Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message)
                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[10] ++;
@@ -172,8 +166,7 @@ Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message
 
 
 void
-Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message)
                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[11] ++;
@@ -185,8 +178,7 @@ Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message
 
 
 void
-Foo_B_i::test_fixed_size_arg(const TimeOfDay& t
-                             ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_fixed_size_arg(const TimeOfDay& t)
                            ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(t);
@@ -199,8 +191,7 @@ Foo_B_i::test_fixed_size_arg(const TimeOfDay& t
 
 
 void
-Foo_B_i::test_var_array_arg(const Var_Array messages
-                            ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_var_array_arg(const Var_Array messages)
                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[13] ++;
@@ -244,8 +235,7 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
 
 void
 Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
-                                CORBA::Long client_id
-                                ACE_ENV_ARG_DECL_NOT_USED)
+                                CORBA::Long client_id)
                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[14] ++;
@@ -264,8 +254,7 @@ Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
 
 
 void
-Foo_B_i::test_objref_arg(Callback_ptr cb
-                         ACE_ENV_ARG_DECL_NOT_USED)
+Foo_B_i::test_objref_arg(Callback_ptr cb)
                             ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(cb);

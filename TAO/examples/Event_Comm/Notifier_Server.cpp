@@ -24,11 +24,10 @@ Notifier_Server::~Notifier_Server (void)
 int
 Notifier_Server::close (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // disconnect all the consumers.
-      this->servant_.disconnect ("notifier shutdown."
-                                 ACE_ENV_ARG_PARAMETER);
+      this->servant_.disconnect ("notifier shutdown.");
 
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
@@ -36,17 +35,15 @@ Notifier_Server::close (void)
       notifier_obj_name[0].id =
         CORBA::string_dup (NOTIFIER_BIND_NAME);
 
-      this->naming_server_->unbind (notifier_obj_name
-                                    ACE_ENV_ARG_PARAMETER);
+      this->naming_server_->unbind (notifier_obj_name);
 
       // Instruct the ORB to shutdown.
       this->orb_manager_.orb ()->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
     return 0;
 }
@@ -57,7 +54,7 @@ Notifier_Server::close (void)
 int
 Notifier_Server::init_naming_service (void)
 {
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -80,16 +77,14 @@ Notifier_Server::init_naming_service (void)
 
       // Now, attach the object name to the context.
       this->naming_server_->bind (notifier_obj_name,
-                                  notifier_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  notifier_obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Notifier_Server::init_naming_service\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -98,16 +93,14 @@ Notifier_Server::init_naming_service (void)
 // Initialize the server.
 int
 Notifier_Server::init (int argc,
-                       char *argv[]
-                       ACE_ENV_ARG_DECL)
+                       char *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
 
  if (this->orb_manager_.init_child_poa (argc,
                                         argv,
-                                        "child_poa"
-                                        ACE_ENV_ARG_PARAMETER) == -1)
+                                        "child_poa") == -1)
 
    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -119,8 +112,7 @@ Notifier_Server::init (int argc,
  // Activate the servant in the POA.
  CORBA::String_var str =
    this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
-                                                 &this->servant_
-                                                ACE_ENV_ARG_PARAMETER);
+                                                 &this->servant_);
 
  return this->init_naming_service ();
 }

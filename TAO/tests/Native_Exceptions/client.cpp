@@ -89,7 +89,7 @@ main (int argc, char *argv[])
     }
   catch (CORBA::SystemException &ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 

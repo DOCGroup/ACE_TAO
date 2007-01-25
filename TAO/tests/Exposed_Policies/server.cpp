@@ -21,13 +21,12 @@ ACE_RCSID(tao, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       Policy_Tester policy_tester;
 
-      int result = policy_tester.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int result = policy_tester.init (argc, argv);
 
       if (result != 0)
         return result;
@@ -35,14 +34,12 @@ main (int argc, char *argv[])
       policy_tester.run ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("CORBA Exception Raised."));
+      ex._tao_print_exception (ACE_TEXT ("CORBA Exception Raised."));
       return 1;
     }
 
-  ACE_ENDTRY;
 
   return 0;
 }

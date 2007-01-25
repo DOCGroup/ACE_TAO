@@ -34,8 +34,7 @@ ServerRequestInterceptor::destroy (void)
 
 void
 ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -45,7 +44,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
-  ACE_TRY
+  try
     {
       // Insert data into the RSC (request scope current).
 
@@ -54,35 +53,32 @@ ServerRequestInterceptor::receive_request_service_contexts (
       CORBA::Any data;
       data <<= number;
 
-      ri->set_slot (this->slot_id_, data ACE_ENV_ARG_PARAMETER);
+      ri->set_slot (this->slot_id_, data);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Inserted number <%d> into RSC.\n",
                   number));
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "receive_request_service_contexts()\n");
+      ex._tao_print_exception (
+        "Exception thrown in ""receive_request_service_contexts()\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
 }
 
 void
 ServerRequestInterceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ACE_TRY
+  try
     {
       CORBA::Any new_data;
       CORBA::Long number = 19;
@@ -90,14 +86,12 @@ ServerRequestInterceptor::receive_request (
 
       // Set a value in RSC, this should not effect TSC anymore
       ri->set_slot (this->slot_id_,
-                    new_data
-                    ACE_ENV_ARG_PARAMETER);
+                    new_data);
 
       // Now retrieve the data from the TSC again.  It should not have
       // changed to the new value
       CORBA::Any_var data2 =
-        this->pi_current_->get_slot (this->slot_id_
-                                     ACE_ENV_ARG_PARAMETER);
+        this->pi_current_->get_slot (this->slot_id_);
 
       CORBA::Long number2 = 0;
       if ((data2.in () >>= number2)
@@ -107,22 +101,19 @@ ServerRequestInterceptor::receive_request (
                       "(%P|%t) ERROR: TSC was modified because "
                       "RSC was modified.\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "send_reply()\n");
+      ex._tao_print_exception ("Exception thrown in ""send_reply()\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Server side RSC/TSC semantics appear "
@@ -132,8 +123,7 @@ ServerRequestInterceptor::receive_request (
 
 void
 ServerRequestInterceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -142,7 +132,7 @@ ServerRequestInterceptor::send_reply (
   if (ACE_OS::strcmp (op.in (), "invoke_me") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
-  ACE_TRY
+  try
     {
       CORBA::Any_var data;
 
@@ -150,7 +140,7 @@ ServerRequestInterceptor::send_reply (
       // should be different from the original data (a CORBA::Long)
       // stored into the RSC by the receive_request_service_contexts()
       // interception point.
-      data = ri->get_slot (this->slot_id_ ACE_ENV_ARG_PARAMETER);
+      data = ri->get_slot (this->slot_id_);
 
       // The original data in the RSC was of type CORBA::Long.  If the
       // following extraction from the CORBA::Any fails, then the
@@ -169,7 +159,7 @@ ServerRequestInterceptor::send_reply (
                       "(%P|%t) Unable to extract data (a string) "
                       "from the RSC.\n"));
 
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // Now verify that the RSC is truly independent of the TSC.  In
@@ -183,14 +173,12 @@ ServerRequestInterceptor::send_reply (
       // Now reset the contents of our slot in the thread-scope
       // current (TSC).
       this->pi_current_->set_slot (this->slot_id_,
-                                   new_data
-                                   ACE_ENV_ARG_PARAMETER);
+                                   new_data);
 
       // Now retrieve the data from the RSC again.  It should not have
       // changed!
       CORBA::Any_var data2 =
-        ri->get_slot (this->slot_id_
-                      ACE_ENV_ARG_PARAMETER);
+        ri->get_slot (this->slot_id_);
 
       const char *str2 = 0;
       if (!(data2.in () >>= str2)
@@ -200,22 +188,19 @@ ServerRequestInterceptor::send_reply (
                       "(%P|%t) ERROR: RSC was modified after "
                       "TSC was modified.\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "send_reply()\n");
+      ex._tao_print_exception ("Exception thrown in ""send_reply()\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Server side RSC/TSC semantics appear "
@@ -224,8 +209,7 @@ ServerRequestInterceptor::send_reply (
 
 void
 ServerRequestInterceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -233,8 +217,7 @@ ServerRequestInterceptor::send_exception (
 
 void
 ServerRequestInterceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

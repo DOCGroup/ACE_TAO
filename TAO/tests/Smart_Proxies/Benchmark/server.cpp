@@ -32,8 +32,7 @@ public:
   CORBA::Short box_prices  (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long tickets  (CORBA::Short number
-                        ACE_ENV_ARG_DECL)
+  CORBA::Long tickets  (CORBA::Short number)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown  (void)
@@ -57,8 +56,7 @@ Test_i::box_prices (void)
 }
 
 CORBA::Long
-Test_i::tickets (CORBA::Short number
-                 ACE_ENV_ARG_DECL_NOT_USED)
+Test_i::tickets (CORBA::Short number)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125 * number;
@@ -68,7 +66,7 @@ void
 Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 static const char *ior_output_file = 0;
@@ -101,27 +99,23 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       Test_i servant (orb.in ());
       // Obtain RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
 
 
       // Get the POAManager of the RootPOA.
@@ -132,8 +126,7 @@ main (int argc, char *argv[])
         servant._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (Test_object.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (Test_object.in ());
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -161,15 +154,12 @@ main (int argc, char *argv[])
                   "event loop finished\n"));
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
+                         1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in setting up server");
+      ex._tao_print_exception ("Exception in setting up server");
       ACE_ASSERT (0);
     }
-  ACE_ENDTRY;
   return 0;
 }

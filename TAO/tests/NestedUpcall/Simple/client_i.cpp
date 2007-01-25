@@ -10,8 +10,7 @@ client_i::client_i (int quiet,
 }
 
 void
-client_i::ping (CORBA::UShort time_to_live
-                ACE_ENV_ARG_DECL)
+client_i::ping (CORBA::UShort time_to_live)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!this->quiet_)
@@ -23,7 +22,6 @@ client_i::ping (CORBA::UShort time_to_live
 
   if (time_to_live > 0)
     {
-      this->server_->ping (time_to_live
-                           ACE_ENV_ARG_PARAMETER);
+      this->server_->ping (time_to_live);
     }
 }
