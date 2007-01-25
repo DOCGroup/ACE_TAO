@@ -56,8 +56,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
   try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc
-                                                           );
+      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
       if (_tao_equiv == false)
         {
@@ -142,8 +141,7 @@ TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 
 template<typename T>
 void
-TAO::Any_Basic_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
-                                       )
+TAO::Any_Basic_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr)
 {
   if (! this->demarshal_value (cdr))
     {

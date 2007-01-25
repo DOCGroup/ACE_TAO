@@ -109,23 +109,19 @@ TAO::TypeCode::Union<char const *,
   // this method, meaning that the CORBA::tk_union TypeCode methods
   // are supported.
 
-  CORBA::ULong const tc_count =
-    tc->member_count ();
+  CORBA::ULong const tc_count = tc->member_count ();
 
   CORBA::Long tc_def = tc->default_index ();
 
-  if (tc_count != this->ncases_
-      || tc_def != this->default_index_)
+  if (tc_count != this->ncases_ || tc_def != this->default_index_)
     return false;
 
   // Check the discriminator type.
-  CORBA::TypeCode_var tc_discriminator =
-    tc->discriminator_type ();
+  CORBA::TypeCode_var tc_discriminator = tc->discriminator_type ();
 
   CORBA::Boolean const equal_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equal (
-      tc_discriminator.in ()
-     );
+      tc_discriminator.in ());
 
   if (!equal_discriminators)
     return false;
@@ -143,10 +139,7 @@ TAO::TypeCode::Union<char const *,
 
       case_type const & lhs_case = *this->cases_[i];
 
-      bool const equal_case =
-        lhs_case.equal (i,
-                        tc
-                       );
+      bool const equal_case = lhs_case.equal (i, tc);
 
       if (!equal_case)
         return false;
@@ -161,28 +154,22 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
-
-  CORBA::ULong const tc_count =
-    tc->member_count ();
+  CORBA::ULong const tc_count = tc->member_count ();
 
   CORBA::Long tc_def = tc->default_index ();
 
-  if (tc_count != this->ncases_
-      || tc_def != this->default_index_)
+  if (tc_count != this->ncases_ || tc_def != this->default_index_)
     return false;
 
-  CORBA::TypeCode_var tc_discriminator =
-    tc->discriminator_type ();
+  CORBA::TypeCode_var tc_discriminator = tc->discriminator_type ();
 
   CORBA::Boolean const equiv_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equivalent (
-      tc_discriminator.in ()
-     );
+      tc_discriminator.in ());
 
   if (!equiv_discriminators)
     return false;
@@ -200,10 +187,7 @@ TAO::TypeCode::Union<char const *,
 
       case_type const & lhs_case = *this->cases_[i];
 
-      bool const equivalent_case =
-        lhs_case.equivalent (i,
-                             tc
-                            );
+      bool const equivalent_case = lhs_case.equivalent (i, tc);
 
       if (!equivalent_case)
         return false;
@@ -329,8 +313,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::member_type_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -345,8 +328,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::member_label_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   if (index >= this->ncases_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),

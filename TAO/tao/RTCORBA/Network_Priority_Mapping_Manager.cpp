@@ -22,14 +22,8 @@ TAO_Network_Priority_Mapping_Manager::~TAO_Network_Priority_Mapping_Manager (
 }
 
 TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj
-                                               )
+TAO_Network_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj)
 {
-  if (CORBA::is_nil (obj))
-    {
-      return TAO_Network_Priority_Mapping_Manager::_nil ();
-    }
-
   return
     TAO_Network_Priority_Mapping_Manager::_duplicate (
         dynamic_cast<TAO_Network_Priority_Mapping_Manager_ptr> (obj)

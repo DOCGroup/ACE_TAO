@@ -33,14 +33,11 @@ RTCORBA::Priority
 TAO_RT_Current::the_priority (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Protocols_Hooks *tph =
-    this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
   RTCORBA::Priority priority;
 
-  int result =
-    tph->get_thread_CORBA_priority (priority
-                                   );
+  int const result = tph->get_thread_CORBA_priority (priority);
 
   if (result == -1)
     ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO), -1);
@@ -49,17 +46,13 @@ TAO_RT_Current::the_priority (void)
 }
 
 void
-TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
-                              )
+TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
-  int result =
-    tph->set_thread_CORBA_priority (the_priority
-                                   );
+  int const result = tph->set_thread_CORBA_priority (the_priority);
 
   if (result == -1)
     throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);

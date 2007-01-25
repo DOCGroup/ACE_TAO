@@ -26,7 +26,7 @@ TAO_Direct_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                         RTCORBA::NativePriority &native_priority)
 {
   native_priority = corba_priority;
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -34,7 +34,7 @@ TAO_Direct_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
                                        RTCORBA::Priority &corba_priority)
 {
   corba_priority = native_priority;
-  return 1;
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

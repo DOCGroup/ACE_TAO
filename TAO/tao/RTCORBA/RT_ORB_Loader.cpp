@@ -22,8 +22,7 @@ TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
 }
 
 int
-TAO_RT_ORB_Loader::init (int argc,
-                         ACE_TCHAR* argv[])
+TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_RT_ORB_Loader::init");
 

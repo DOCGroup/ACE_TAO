@@ -33,8 +33,7 @@ public:
   /// destructor
   virtual ~TAO_Default_Protocols_Hooks (void);
 
-  void init_hooks (TAO_ORB_Core *orb_core
-                  );
+  void init_hooks (TAO_ORB_Core *orb_core);
 
   CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
                                               TAO_Stub *stub
@@ -97,21 +96,16 @@ public:
                                        CORBA::Short &max_priority,
                                        bool &in_range);
 
-  int get_thread_CORBA_priority (CORBA::Short &
-                                );
+  int get_thread_CORBA_priority (CORBA::Short &);
 
-  int get_thread_native_priority (CORBA::Short &
-                                 );
+  int get_thread_native_priority (CORBA::Short &);
 
   int get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                            CORBA::Short &
-                                           );
+                                            CORBA::Short &);
 
-  int set_thread_CORBA_priority (CORBA::Short
-                                );
+  int set_thread_CORBA_priority (CORBA::Short);
 
-  int set_thread_native_priority (CORBA::Short
-                                 );
+  int set_thread_native_priority (CORBA::Short);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

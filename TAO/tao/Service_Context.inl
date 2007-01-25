@@ -24,8 +24,7 @@ TAO_Service_Context::service_info (void) const
 
 
 ACE_INLINE void
-TAO_Service_Context::set_context (IOP::ServiceId id,
-                                  TAO_OutputCDR &cdr)
+TAO_Service_Context::set_context (IOP::ServiceId id, TAO_OutputCDR &cdr)
 {
   this->set_context_i (id,
                        cdr);

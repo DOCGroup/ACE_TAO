@@ -14,16 +14,14 @@ TAO_Default_Protocols_Hooks::~TAO_Default_Protocols_Hooks (void)
 }
 
 void
-TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *
-                                         )
+TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *)
 {
 }
 
 void
 TAO_Default_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &,
                                                           CORBA::Policy *,
-                                                          CORBA::Short &
-                                                          )
+                                                          CORBA::Short &)
 {
 }
 
@@ -78,8 +76,7 @@ TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short)
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
                                                  TAO_Service_Context &,
-                                                 CORBA::Boolean
-                                                 )
+                                                 CORBA::Boolean)
 {
 }
 
@@ -92,69 +89,68 @@ TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
 
 CORBA::Boolean
 TAO_Default_Protocols_Hooks::set_server_network_priority (IOP::ProfileId,
-                                                          CORBA::Policy *
-                                                          )
+                                                          CORBA::Policy *)
 {
   return false;
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_IIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_IIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_UIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_UIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_SHMIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_SHMIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_DIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_DIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_SCIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
-                                                                      )
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_SCIOP_Protocol_Properties &)
 {
 }
 

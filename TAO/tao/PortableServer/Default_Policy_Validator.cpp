@@ -24,8 +24,7 @@ TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator (void)
 }
 
 void
-TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
-                                                 )
+TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies)
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::Policy_var policy =
@@ -33,18 +32,14 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
                                );
 
   PortableServer::ServantRetentionPolicy_var srp =
-    PortableServer::ServantRetentionPolicy::_narrow (policy.in ()
-                                                    );
+    PortableServer::ServantRetentionPolicy::_narrow (policy.in ());
   PortableServer::ServantRetentionPolicyValue servant_retention =
     srp->value ();
 
-  policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING
-                               );
+  policy = policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING);
 
   PortableServer::RequestProcessingPolicy_var rpp =
-    PortableServer::RequestProcessingPolicy::_narrow (policy.in ()
-                                                     );
+    PortableServer::RequestProcessingPolicy::_narrow (policy.in ());
   PortableServer::RequestProcessingPolicyValue request_processing =
     rpp->value ();
 
@@ -60,30 +55,22 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
     if (servant_retention != PortableServer::RETAIN)
       throw PortableServer::POA::InvalidPolicy ();
 
-  policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS
-                               );
-
+  policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS);
 
   PortableServer::IdUniquenessPolicy_var iup =
-    PortableServer::IdUniquenessPolicy::_narrow (policy.in ()
-                                                );
+    PortableServer::IdUniquenessPolicy::_narrow (policy.in ());
   PortableServer::IdUniquenessPolicyValue id_uniqueness =
     iup->value ();
 
   policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION);
 
   PortableServer::ImplicitActivationPolicy_var iap =
-    PortableServer::ImplicitActivationPolicy::_narrow (policy.in ()
-                                                      );
+    PortableServer::ImplicitActivationPolicy::_narrow (policy.in ());
   PortableServer::ImplicitActivationPolicyValue implicit_activation =
     iap->value ();
 
-  policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT
-                               );
+  policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT);
 
   PortableServer::IdAssignmentPolicy_var idap =
     PortableServer::IdAssignmentPolicy::_narrow (policy.in ());
@@ -131,9 +118,7 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 }
 
 void
-TAO_POA_Default_Policy_Validator::merge_policies_impl (
-  TAO_Policy_Set &
-  )
+TAO_POA_Default_Policy_Validator::merge_policies_impl (TAO_Policy_Set &)
 {
 }
 

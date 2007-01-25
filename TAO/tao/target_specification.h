@@ -83,9 +83,7 @@ public:
    * index. Please see the header file IOPC.h on why a profile index
    * is required.
    */
-  void target_specifier (IOP::IOR &ior,
-                         CORBA::ULong prof_index);
-
+  void target_specifier (IOP::IOR &ior, CORBA::ULong prof_index);
 
   /**
    * Returns the object key after a check of the stored specifier. If

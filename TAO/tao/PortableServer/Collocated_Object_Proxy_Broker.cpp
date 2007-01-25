@@ -31,15 +31,13 @@ namespace TAO
           == TAO_ORB_Core::THRU_POA)
       {
         TAO::Portable_Server::Servant_Upcall servant_upcall (
-          stub->servant_orb_var ()->orb_core ()
-        );
+          stub->servant_orb_var ()->orb_core ());
 
       CORBA::Object_var forward_to;
       servant_upcall.prepare_for_upcall (
           stub->profile_in_use ()->object_key (),
           "_is_a",
-          forward_to.out ()
-        );
+          forward_to.out ());
 
       servant_upcall.pre_invoke_collocated_request ();
 
@@ -113,35 +111,30 @@ namespace TAO
         ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
       {
         TAO::Portable_Server::Servant_Upcall servant_upcall (
-          target->_stubobj ()->servant_orb_var ()->orb_core ()
-          );
+          target->_stubobj ()->servant_orb_var ()->orb_core ());
 
         CORBA::Object_var forward_to;
 
         servant_upcall.prepare_for_upcall (
           target->_stubobj ()->object_key (),
           "_non_existent",
-          forward_to.out ()
-          );
+          forward_to.out ());
 
         servant_upcall.pre_invoke_collocated_request ();
 
-        _tao_retval =
-          servant_upcall.servant ()->_non_existent ();
+        _tao_retval = servant_upcall.servant ()->_non_existent ();
       }
     // Direct collocation strategy is used.
     else if (target->_servant () != 0)
       {
-        _tao_retval =
-          target->_servant ()->_non_existent ();
+        _tao_retval = target->_servant ()->_non_existent ();
       }
 
     return _tao_retval;
   }
 
   CORBA::Object_ptr
-  Collocated_Object_Proxy_Broker::_get_component (CORBA::Object_ptr target
-                                                  )
+  Collocated_Object_Proxy_Broker::_get_component (CORBA::Object_ptr target)
   {
     CORBA::Object_var _tao_retval (CORBA::Object::_nil ());
 
@@ -155,24 +148,20 @@ namespace TAO
               ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
-                stub->servant_orb_var ()->orb_core ()
-                );
+                stub->servant_orb_var ()->orb_core ());
 
             CORBA::Object_var forward_to;
             servant_upcall.prepare_for_upcall (
                 stub->profile_in_use ()->object_key (),
                 "_component",
-                forward_to.out ()
-              );
+                forward_to.out ());
 
-            _tao_retval =
-              servant_upcall.servant ()->_get_component ();
+            _tao_retval = servant_upcall.servant ()->_get_component ();
           }
         // Direct collocation strategy is used.
         else if (target->_servant () != 0)
           {
-            _tao_retval =
-              target->_servant ()->_get_component ();
+            _tao_retval = target->_servant ()->_get_component ();
           }
       }
     catch ( ::CORBA::OBJECT_NOT_EXIST&)
@@ -202,16 +191,14 @@ namespace TAO
               == TAO_ORB_Core::THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
-                target->_stubobj ()->servant_orb_var ()->orb_core ()
-                );
+                target->_stubobj ()->servant_orb_var ()->orb_core ());
 
             CORBA::Object_var forward_to;
 
             servant_upcall.prepare_for_upcall (
                 target->_stubobj ()->object_key (),
                 "_interface",
-                forward_to.out ()
-              );
+                forward_to.out ());
 
             servant_upcall.pre_invoke_collocated_request ();
 
@@ -221,8 +208,7 @@ namespace TAO
         // Direct collocation strategy is used.
         else if (target->_servant () != 0)
           {
-            _tao_retval =
-              target->_servant ()->_get_interface ();
+            _tao_retval = target->_servant ()->_get_interface ();
           }
       }
     catch ( ::CORBA::OBJECT_NOT_EXIST&)

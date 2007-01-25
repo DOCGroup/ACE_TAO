@@ -65,9 +65,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
   try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean const _tao_equiv =
-        any_tc->equivalent (tc
-                           );
+      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
       if (_tao_equiv == false)
         {
@@ -103,8 +101,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
         );
 
       // We know this will work since the unencoded case is covered above.
-      TAO::Unknown_IDL_Type *unk =
-        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+      TAO::Unknown_IDL_Type *unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.
@@ -124,11 +121,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  catch ( ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception&)
     {
     }
 
-  return 0;
+  return false;
 }
 
 template<typename T_slice, typename T_forany>

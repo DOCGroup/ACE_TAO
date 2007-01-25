@@ -27,8 +27,7 @@ TAO::Unknown_IDL_Type::lock_i (void)
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,
-    TAO_InputCDR &cdr
-  )
+    TAO_InputCDR &cdr)
   : TAO::Any_Impl (0, tc, true)
   , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
 {
@@ -65,8 +64,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
       TAO::traverse_status status =
         TAO_Marshal_Object::perform_append (this->type_,
                                             &for_reading,
-                                            &cdr
-                                           );
+                                            &cdr);
 
       if (status != TAO::TRAVERSE_CONTINUE)
         {
@@ -105,8 +103,7 @@ TAO::Unknown_IDL_Type::_tao_byte_order (void) const
   return this->cdr_.byte_order ();
 }
 void
-TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
-                                    )
+TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
 {
   // @@ (JP) The following code depends on the fact that
   //         TAO_InputCDR does not contain chained message blocks,
@@ -118,9 +115,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
 
   // Skip over the next argument.
   TAO::traverse_status status =
-    TAO_Marshal_Object::perform_skip (this->type_,
-                                      &cdr
-                                     );
+    TAO_Marshal_Object::perform_skip (this->type_, &cdr);
 
   if (status != TAO::TRAVERSE_CONTINUE)
     {
@@ -207,11 +202,9 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
 {
   try
     {
-      CORBA::ULong kind =
-        this->type_->kind ();
+      CORBA::ULong kind = this->type_->kind ();
 
-      CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+      CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
@@ -253,11 +246,9 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
 {
   try
     {
-      CORBA::ULong kind =
-        this->type_->kind ();
+      CORBA::ULong kind = this->type_->kind ();
 
-      CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+      CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
@@ -271,7 +262,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
           return false;
         }
 
-    TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
+      TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
       if (orb_core == 0)
         {
           orb_core = TAO_ORB_Core_instance ();
@@ -285,8 +276,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
         }
 
       TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
-      return adapter->stream_to_abstract_base (this->cdr_,
-                                               obj);
+      return adapter->stream_to_abstract_base (this->cdr_, obj);
     }
   catch ( ::CORBA::Exception&)
     {

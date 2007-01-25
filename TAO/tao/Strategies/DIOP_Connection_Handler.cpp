@@ -128,26 +128,19 @@ TAO_DIOP_Connection_Handler::open (void*)
   // for consistency with other protocols.
   TAO_DIOP_Protocol_Properties protocol_properties;
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
-
+  bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
   try
     {
       if (client)
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-           );
+          tph->client_protocol_properties_at_orb_level (protocol_properties);
         }
       else
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-           );
+          tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
   catch ( ::CORBA::Exception&)

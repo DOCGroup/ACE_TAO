@@ -35,8 +35,7 @@ namespace TAO
   }
 
   void
-  Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec
-                                       )
+  Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec)
   {
     /**
      * Mega hack for RTCORBA start. I don't think that
@@ -46,8 +45,7 @@ namespace TAO
     this->resolver_.stub ()->orb_core ()->service_context_list (
       this->resolver_.stub (),
       this->details_.request_service_context (),
-      0
-     );
+      0);
     /**
      * Mega hack for RTCORBA END
      */
@@ -65,10 +63,10 @@ namespace TAO
           IOP::TaggedProfile *tp =
             pfile->create_tagged_profile ();
 
-        if (tp)
-          {
-            target_spec.target_specifier (*tp);
-          }
+          if (tp)
+            {
+              target_spec.target_specifier (*tp);
+            }
         }
         break;
 
@@ -110,8 +108,7 @@ namespace TAO
                                    TAO_OutputCDR &out_stream
                                    )
   {
-    this->resolver_.transport ()->clear_translators (0,
-                                                     &out_stream);
+    this->resolver_.transport ()->clear_translators (0, &out_stream);
 
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
@@ -122,13 +119,11 @@ namespace TAO
         throw ::CORBA::MARSHAL ();
       }
 
-    this->resolver_.transport ()->assign_translators (0,
-                                                      &out_stream);
+    this->resolver_.transport ()->assign_translators (0, &out_stream);
   }
 
   void
-  Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream
-                                   )
+  Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
   {
     if (this->details_.marshal_args (out_stream) == false)
       {
@@ -141,16 +136,14 @@ namespace TAO
   Invocation_Status
   Remote_Invocation::send_message (TAO_OutputCDR &cdr,
                                    short message_semantics,
-                                   ACE_Time_Value *max_wait_time
-                                   )
+                                   ACE_Time_Value *max_wait_time)
   {
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
     CORBA::Boolean set_client_network_priority =
       tph->set_client_network_priority (this->resolver_.transport ()->tag (),
-                                        this->resolver_.stub ()
-                                       );
+                                        this->resolver_.stub ());
 
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();
