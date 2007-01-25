@@ -484,7 +484,7 @@ private:
   /// The current block in the chain where we are writing.
   ACE_Message_Block *current_;
 
-#if !defined (ACE_LACKS_CDR_IALIGNMENT)
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
   /**
    * The current alignment as measured from the start of the buffer.
    * Usually this coincides with the alignment of the buffer in
