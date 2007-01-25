@@ -107,8 +107,7 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // None of these calls should throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
@@ -120,18 +119,15 @@ TAO::TypeCode::Value<char const *,
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
-  CORBA::TypeCode_var rhs_concrete_base_type =
-    tc->concrete_base_type ();
+  CORBA::TypeCode_var rhs_concrete_base_type = tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
-    this->equal (rhs_concrete_base_type.in ()
-                );
+    this->equal (rhs_concrete_base_type.in ());
 
   if (!equal_concrete_base_types)
     return false;
 
-  CORBA::ULong const tc_nfields =
-    tc->member_count ();
+  CORBA::ULong const tc_nfields = tc->member_count ();
 
   if (tc_nfields != this->nfields_)
     return false;
@@ -142,17 +138,14 @@ TAO::TypeCode::Value<char const *,
         this->fields_[i];
 
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
-      CORBA::Visibility const rhs_visibility =
-        tc->member_visibility (i
-                              );
+      CORBA::Visibility const rhs_visibility = tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
         return false;
 
       char const * const lhs_name =
         Traits<char const *>::get_string (lhs_field.name);;
-      char const * const rhs_name = tc->member_name (i
-                                                    );
+      char const * const rhs_name = tc->member_name (i);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return false;
@@ -160,12 +153,10 @@ TAO::TypeCode::Value<char const *,
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
-        tc->member_type (i
-                        );
+        tc->member_type (i);
 
       CORBA::Boolean const equal_members =
-        lhs_tc->equal (rhs_tc.in ()
-                      );
+        lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
         return false;
@@ -217,8 +208,7 @@ TAO::TypeCode::Value<char const *,
       CORBA::Visibility const lhs_visibility =
         lhs_field.visibility;
       CORBA::Visibility const rhs_visibility =
-        tc->member_visibility (i
-                              );
+        tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
         return false;
@@ -226,12 +216,10 @@ TAO::TypeCode::Value<char const *,
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<char const *>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
-        tc->member_type (i
-                        );
+        tc->member_type (i);
 
       CORBA::Boolean const equiv_types =
-        lhs_tc->equivalent (rhs_tc.in ()
-                           );
+        lhs_tc->equivalent (rhs_tc.in ());
 
       if (!equiv_types)
         return false;
@@ -299,8 +287,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::id_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::id_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -312,8 +299,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::name_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -325,8 +311,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::member_count_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::member_count_i (void) const
 {
   return this->nfields_;
 }
@@ -337,8 +322,7 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::member_name_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -354,8 +338,7 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::member_type_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -372,8 +355,7 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::member_visibility_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   if (index >= this->nfields_)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
@@ -387,8 +369,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::type_modifier_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::type_modifier_i (void) const
 {
   return this->type_modifier_;
 }

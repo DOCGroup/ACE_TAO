@@ -32,7 +32,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   ACE_Countdown_Time countdown (max_wait_time);
 
   // Reactor does not change inside the loop.
-  ACE_Reactor* const reactor =
+  ACE_Reactor *const reactor =
     this->transport_->orb_core ()->reactor ();
 
   // Do the event loop, till we fully receive a reply.

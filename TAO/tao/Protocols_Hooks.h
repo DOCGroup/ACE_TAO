@@ -14,19 +14,17 @@
 #define TAO_PROTOCOLS_HOOKS_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/IOP_IORC.h"
 #include "ace/SString.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -110,63 +108,59 @@ public:
   virtual ~TAO_Protocols_Hooks (void);
 
   /// Initialize the protocols hooks instance.
-  virtual void init_hooks (TAO_ORB_Core *orb_core
-                           ) = 0;
+  virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;
 
-  virtual CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
-                                                      TAO_Stub *stub
-                                                      ) = 0;
+  virtual CORBA::Boolean set_client_network_priority (
+    IOP::ProfileId protocol_tag,
+    TAO_Stub *stub) = 0;
 
-  virtual CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
-                                                      CORBA::Policy *policy
-                                                      ) = 0;
+  virtual CORBA::Boolean set_server_network_priority (
+    IOP::ProfileId protocol_tag,
+    CORBA::Policy *policy) = 0;
 
-  virtual void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void server_protocol_properties_at_orb_level (
+    TAO_IIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void client_protocol_properties_at_orb_level (
+    TAO_IIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void server_protocol_properties_at_orb_level (
+    TAO_UIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void client_protocol_properties_at_orb_level (
+    TAO_UIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void server_protocol_properties_at_orb_level (
+    TAO_SHMIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void client_protocol_properties_at_orb_level (
+    TAO_SHMIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void server_protocol_properties_at_orb_level (
+    TAO_DIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void client_protocol_properties_at_orb_level (
+    TAO_DIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void server_protocol_properties_at_orb_level (
+    TAO_SCIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                                        ) = 0;
+  virtual void client_protocol_properties_at_orb_level (
+    TAO_SCIOP_Protocol_Properties &protocol_properties) = 0;
 
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
-                                   CORBA::Boolean restart
-                                   ) = 0;
+                                   CORBA::Boolean restart) = 0;
 
   virtual void add_rt_service_context_hook (
     TAO_Service_Context &service_context,
     CORBA::Policy *model_policy,
-    CORBA::Short &client_priority
-    ) = 0;
+    CORBA::Short &client_priority) = 0;
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
-                                  CORBA::Boolean
-                                  &is_client_propagated,
+                                  CORBA::Boolean &is_client_propagated,
                                   CORBA::Short &server_priority) = 0;
 
   virtual void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
@@ -182,23 +176,17 @@ public:
    * these operations are no-ops.
    */
   //@{
-  virtual int get_thread_CORBA_priority (CORBA::Short &
-                                         ) = 0;
+  virtual int get_thread_CORBA_priority (CORBA::Short &) = 0;
 
-  virtual int get_thread_native_priority (CORBA::Short &
-                                          ) = 0;
+  virtual int get_thread_native_priority (CORBA::Short &) = 0;
 
   virtual int get_thread_CORBA_and_native_priority (
     CORBA::Short &,
-    CORBA::Short &
-    ) = 0;
+    CORBA::Short &) = 0;
 
-  virtual int set_thread_CORBA_priority (CORBA::Short
-                                         ) = 0;
+  virtual int set_thread_CORBA_priority (CORBA::Short) = 0;
 
-  virtual int set_thread_native_priority (CORBA::Short
-                                          ) = 0;
-
+  virtual int set_thread_native_priority (CORBA::Short) = 0;
   //@}
 };
 

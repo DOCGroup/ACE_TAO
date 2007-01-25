@@ -16,34 +16,27 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    )
+    const CORBA::Any &value)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    return TAO_PriorityModelPolicy::create (value
-                                           );
+    return TAO_PriorityModelPolicy::create (value);
 
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE)
-    return TAO_ThreadpoolPolicy::create (value
-                                        );
+    return TAO_ThreadpoolPolicy::create (value);
 
   if (type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-    return TAO_ServerProtocolPolicy::create (value
-                                            );
+    return TAO_ServerProtocolPolicy::create (value);
 
   if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-    return TAO_ClientProtocolPolicy::create (value
-                                            );
+    return TAO_ClientProtocolPolicy::create (value);
 
   if (type == RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE)
-    return TAO_PrivateConnectionPolicy::create (value
-                                               );
+    return TAO_PrivateConnectionPolicy::create (value);
 
   if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
-    return TAO_PriorityBandedConnectionPolicy::create (value
-                                                      );
+    return TAO_PriorityBandedConnectionPolicy::create (value);
 
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());

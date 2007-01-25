@@ -20,14 +20,8 @@ TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager (void)
 }
 
 TAO_Priority_Mapping_Manager_ptr
-TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj
-                                       )
+TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj)
 {
-  if (CORBA::is_nil (obj))
-    {
-      return TAO_Priority_Mapping_Manager::_nil ();
-    }
-
   return
     TAO_Priority_Mapping_Manager::_duplicate (
         dynamic_cast<TAO_Priority_Mapping_Manager_ptr> (obj)

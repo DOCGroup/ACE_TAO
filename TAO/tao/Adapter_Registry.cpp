@@ -89,8 +89,8 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter)
       if (this->adapters_[i]->priority () >= priority)
         {
           for (size_t j = this->adapters_count_ + 1;
-            j > i;
-            --j)
+               j > i;
+               --j)
             {
               this->adapters_[j] = this->adapters_[j - 1];
             }
@@ -139,7 +139,7 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
               // a servant so we need to give the rest of the adapters a chance to
               // initialise the stub and find a servant or forward us or whatever.
               for (CORBA::Long go_on = 1; go_on && i != this->adapters_count_;
-                ++i)
+                   ++i)
                 {
                   // initialize_collocated_object only returns 0 if it has completely
                   // initialised the object.
@@ -174,8 +174,8 @@ TAO_Adapter *
 TAO_Adapter_Registry::find_adapter (const char *name) const
 {
   for (TAO_Adapter **i = this->adapters_;
-    i != this->adapters_ + this->adapters_count_;
-    ++i)
+       i != this->adapters_ + this->adapters_count_;
+       ++i)
     if (ACE_OS::strcmp ((*i)->name (), name) == 0)
       return *i;
 

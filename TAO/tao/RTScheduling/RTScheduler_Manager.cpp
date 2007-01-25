@@ -20,8 +20,7 @@ TAO_RTScheduler_Manager::~TAO_RTScheduler_Manager (void)
 }
 
 TAO_RTScheduler_Manager_ptr
-TAO_RTScheduler_Manager::_narrow (CORBA::Object_ptr obj
-                                  )
+TAO_RTScheduler_Manager::_narrow (CORBA::Object_ptr obj)
 {
   return
     TAO_RTScheduler_Manager::_duplicate (

@@ -86,13 +86,11 @@ public:
 
   void rt_service_context (TAO_Stub *stub,
                            TAO_Service_Context &service_context,
-                           CORBA::Boolean restart
-                          );
+                           CORBA::Boolean restart);
 
   void add_rt_service_context_hook (TAO_Service_Context &service_context,
                                     CORBA::Policy *model_policy,
-                                    CORBA::Short &client_priority
-                                   );
+                                    CORBA::Short &client_priority);
 
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
@@ -111,21 +109,15 @@ public:
    * some critical components.
    */
   //@{
-  int get_thread_CORBA_priority (CORBA::Short &
-                                );
+  int get_thread_CORBA_priority (CORBA::Short &);
 
-  int get_thread_native_priority (CORBA::Short &
-                                 );
+  int get_thread_native_priority (CORBA::Short &);
 
-  int get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                            CORBA::Short &
-                                           );
+  int get_thread_CORBA_and_native_priority (CORBA::Short &, CORBA::Short &);
 
-  int set_thread_CORBA_priority (CORBA::Short
-                                );
+  int set_thread_CORBA_priority (CORBA::Short);
 
-  int set_thread_native_priority (CORBA::Short
-                                 );
+  int set_thread_native_priority (CORBA::Short);
 
   //@}
 
@@ -150,24 +142,19 @@ protected:
                                                                              );
 
   void extract_protocol_properties (TAO_IIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                   );
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_UIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                   );
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_SHMIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                   );
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_DIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                   );
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   void extract_protocol_properties (TAO_SCIOP_Protocol_Properties &to,
-                                    RTCORBA::ProtocolProperties_ptr from
-                                   );
+                                    RTCORBA::ProtocolProperties_ptr from);
 
   CORBA::Boolean set_network_priority (IOP::ProfileId protocol_tag,
                                        RTCORBA::ProtocolProperties_ptr protocol_properties

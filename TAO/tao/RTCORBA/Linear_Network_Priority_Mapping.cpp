@@ -107,7 +107,7 @@ TAO_Linear_Network_Priority_Mapping::to_network (
                 "TAO_Linear_Network_Priority_Mapping::to_network corba_priority %d\n",
                 corba_priority));
 
-  const int total_slots = sizeof (dscp) / sizeof (int);
+  int const total_slots = sizeof (dscp) / sizeof (int);
 
   int array_slot =
     static_cast<int> (((corba_priority - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots);

@@ -53,8 +53,7 @@ TAO_Thread_Pool_Threads::svc (void)
     return 0;
 
   // Set TSS resources for this thread.
-  TAO_Thread_Pool_Threads::set_tss_resources (orb_core,
-                                              this->lane_);
+  TAO_Thread_Pool_Threads::set_tss_resources (orb_core, this->lane_);
 
   try
     {
@@ -312,8 +311,7 @@ TAO_Thread_Lane::open (void)
     }
 
   // Open the acceptor registry.
-  int result = 0;
-  result =
+  int const result =
     this->resources_.open_acceptor_registry (endpoint_set,
                                              ignore_address
                                             );

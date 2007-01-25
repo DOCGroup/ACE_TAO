@@ -79,8 +79,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
                                                    _tao_destructor destructor,
                                                    CORBA::TypeCode_ptr tc,
                                                    const T *& _tao_elem,
-                                                   CORBA::ULong bound
-  )
+                                                   CORBA::ULong bound)
 {
   _tao_elem = 0;
 
@@ -101,8 +100,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return false;
         }
 
-      CORBA::ULong length =
-        unaliased_any_type->length ();
+      CORBA::ULong length = unaliased_any_type->length ();
 
       if (length != bound)
         {
@@ -171,9 +169,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
 template<typename T, typename from_T, typename to_T>
 CORBA::Boolean
-TAO::Any_Special_Impl_T<T, from_T, to_T>::marshal_value (
-    TAO_OutputCDR &cdr
-  )
+TAO::Any_Special_Impl_T<T, from_T, to_T>::marshal_value (TAO_OutputCDR &cdr)
 {
   return (cdr << from_T (this->value_, this->bound_));
 }
@@ -201,10 +197,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value (void)
 
 template<typename T, typename from_T, typename to_T>
 void
-TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
-    TAO_InputCDR &cdr
-
-  )
+TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (TAO_InputCDR &cdr)
 {
   if (this->value_destructor_ != 0)
     {

@@ -68,7 +68,6 @@ public:
   /// Constructor
   TAO_Service_Context (void);
 
-
   /// = Generic components
 
   /// Insert the component into the list, making a copy of the octet
@@ -113,7 +112,7 @@ public:
   /// list.
   void set_context (IOP::ServiceContext &context, TAO_OutputCDR &cdr);
 
-  /// Is the <id> available in the underlying service context list? If
+  /// Is the @a id available in the underlying service context list? If
   /// so return true, else return false
   bool is_service_id (IOP::ServiceId id);
 
@@ -123,11 +122,11 @@ public:
 
   /// Return the underlying service context list
   IOP::ServiceContextList &service_info (void);
-  const IOP::ServiceContextList &service_info (void) const;
 
-  // @@ Note: The above method is only for backward comptiblity. We
+  // @note This method is only for backward comptiblity. We
   // need to get this removed once RT folks have their service
   // addition info done through this interface
+  const IOP::ServiceContextList &service_info (void) const;
 
 private:
   /// Helper methods to implement set_context()

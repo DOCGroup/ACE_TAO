@@ -27,16 +27,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *val
-    )
+    ACE_Time_Value *val)
 {
   if (r == 0)
     throw ::CORBA::INTERNAL ();
 
   CORBA::Policy_var client_protocol_policy_base =
-    TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL,
-                                   *r
-                                  );
+    TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL, *r);
 
   if (client_protocol_policy_base.ptr () == 0)
     {
@@ -44,10 +41,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
         {
           r->profile (r->stub ()->profile_in_use ());
 
-          int status =
-            this->endpoint_from_profile (*r,
-                                         val
-                                        );
+          int const status = this->endpoint_from_profile (*r, val);
 
           if (status == 1)
             return;
@@ -62,8 +56,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     {
       RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
         RTCORBA::ClientProtocolPolicy::_narrow (
-          client_protocol_policy_base.in ()
-         );
+          client_protocol_policy_base.in ());
 
       /// Cast to TAO_ClientProtocolPolicy
       TAO_ClientProtocolPolicy *tao_client_protocol_policy =
@@ -87,8 +80,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     TAO::Profile_Transport_Resolver &r,
     RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
     RTCORBA::ProtocolList &client_protocols,
-    ACE_Time_Value *val
-    )
+    ACE_Time_Value *val)
 {
   CORBA::Boolean valid_profile_found = false;
 
@@ -141,8 +133,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
             r.inconsistent_policies ();
 
           p->length (1);
-          (*p)[0u] =
-            CORBA::Policy::_duplicate (client_protocol_policy);
+          (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
         }
       throw ::CORBA::INV_POLICY ();
     }
@@ -156,8 +147,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 int
 TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     TAO::Profile_Transport_Resolver &r,
-    ACE_Time_Value *val
-    )
+    ACE_Time_Value *val)
 {
   // Narrow to the RT Stub.
   TAO_RT_Stub *rt_stub =
@@ -165,14 +155,12 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =
-    rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                               );
+    rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   // Get the bands policy.
   CORBA::Policy_var bands_policy =
-    TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION,
-                                   r
-                                  );
+    TAO_RT_Endpoint_Utils::policy (
+      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION, r);
 
   int all_endpoints_are_valid = 0;
   int match_priority = 0;
@@ -189,12 +177,10 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
         {
           if (r.inconsistent_policies ())
             {
-              CORBA::PolicyList *p =
-                r.inconsistent_policies ();
+              CORBA::PolicyList *p = r.inconsistent_policies ();
 
               p->length (1);
-              (*p)[0u] =
-                CORBA::Policy::_duplicate (bands_policy.in ());
+              (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
             }
           // Indicate error.
           ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
@@ -212,7 +198,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
         r.stub ()->orb_core ()->get_protocols_hooks ();
 
       CORBA::Short server_priority = 0;
-      CORBA::Boolean is_client_propagated = 0;
+      CORBA::Boolean is_client_propagated = false;
 
       // Check the priority model policy to see if it is client
       // propagated.
@@ -267,11 +253,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                   if (r.inconsistent_policies ())
                     {
 
-                      CORBA::PolicyList *p =
-                        r.inconsistent_policies ();
+                      CORBA::PolicyList *p = r.inconsistent_policies ();
                       p->length (2);
-                      (*p)[0u] =
-                        CORBA::Policy::_duplicate (bands_policy.in ());
+                      (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
                       (*p)[1u] =
                         CORBA::Policy::_duplicate (
                           priority_model_policy.in ());
@@ -294,8 +278,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   while (ep != 0)
     {
       // Get the priority of the endpoint.
-      CORBA::Short endpoint_priority =
-        ep->priority ();
+      CORBA::Short endpoint_priority = ep->priority ();
 
       // If <all_endpoints_are_valid> or match the priority of the
       // client thread or match the priority of the band or

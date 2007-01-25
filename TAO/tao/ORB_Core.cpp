@@ -1335,8 +1335,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                       -1);
 
   // Initialize the protocols hooks instance.
-  this->protocols_hooks_->init_hooks (this
-                                     );
+  this->protocols_hooks_->init_hooks (this);
 
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
@@ -1355,8 +1354,7 @@ TAO_ORB_Core::fini (void)
   try
     {
       // Shutdown the ORB and block until the shutdown is complete.
-      this->shutdown (1
-                     );
+      this->shutdown (1);
     }
   catch ( ::CORBA::Exception& ex)
     {

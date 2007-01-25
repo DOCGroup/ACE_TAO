@@ -84,10 +84,7 @@ public:
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.  Verify that ior is in the correct format.
-  int make_mprofile (
-      const char *ior,
-      TAO_MProfile &mprofile
-     );
+  int make_mprofile (const char *ior, TAO_MProfile &mprofile);
 
   /// Helper function to assist corbaloc parsing. The default simply validates
   /// the protocol identifyier and scans up to the next comma or slash.
@@ -95,13 +92,10 @@ public:
   /// method to  provide a custom scanner.
   /// The profile returned is either null if this the ior does not match or an
   /// empty profile of the correct type, obtained from make_profile().
-  virtual TAO_Profile * corbaloc_scan (const char *ior,
-                                       size_t &len
-                                      );
+  virtual TAO_Profile *corbaloc_scan (const char *ior, size_t &len);
 
   ///  Initialize object and register with reactor.
-  virtual int open (
-      TAO_ORB_Core *orb_core) = 0;
+  virtual int open (TAO_ORB_Core *orb_core) = 0;
 
   /// Shutdown Connector bridge and concrete Connector.
   virtual int close (void) = 0;
@@ -111,29 +105,23 @@ public:
    * connect ()  method so it can be called from the invocation code
    * independent of the actual transport protocol in use.
    */
-  virtual TAO_Transport* connect (
-      TAO::Profile_Transport_Resolver *r,
-      TAO_Transport_Descriptor_Interface *desc,
-      ACE_Time_Value *timeout
-     );
+  virtual TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface *desc,
+                                  ACE_Time_Value *timeout);
 
   /// A variation on connect that will try simultanious connections
   /// on all endpoints listed in the desc.
-  virtual TAO_Transport* parallel_connect (
-      TAO::Profile_Transport_Resolver *r,
-      TAO_Transport_Descriptor_Interface *desc,
-      ACE_Time_Value *timeout
-     );
+  virtual TAO_Transport *parallel_connect (TAO::Profile_Transport_Resolver *r,
+                                           TAO_Transport_Descriptor_Interface
+                                           *desc, ACE_Time_Value *timeout);
 
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in @a cdr
-  virtual TAO_Profile *create_profile (
-      TAO_InputCDR& cdr) = 0;
+  virtual TAO_Profile *create_profile (TAO_InputCDR &cdr) = 0;
 
   /// Check that the prefix of the provided endpoint is valid for use
   /// with a given pluggable protocol.
-  virtual int check_prefix (
-      const char *endpoint) = 0;
+  virtual int check_prefix (const char *endpoint) = 0;
 
   /// Return the object key delimiter to use or expect.
   virtual char object_key_delimiter (void) const = 0;
@@ -154,10 +142,9 @@ protected:
   virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
 
   /// Make a connection
-  virtual TAO_Transport* make_connection (
-      TAO::Profile_Transport_Resolver *r,
-      TAO_Transport_Descriptor_Interface &desc,
-      ACE_Time_Value *timeout) = 0;
+  virtual TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
+                                          TAO_Transport_Descriptor_Interface
+                                          &desc, ACE_Time_Value *timeout) = 0;
 
   /// Make a connection using - not a pure virtual since not all
   /// protocols support this.
@@ -167,8 +154,7 @@ protected:
       ACE_Time_Value *timeout);
 
   /// Cancel the passed cvs handler from the connector
-  virtual int cancel_svc_handler (
-      TAO_Connection_Handler *svc_handler) = 0;
+  virtual int cancel_svc_handler (TAO_Connection_Handler *svc_handler) = 0;
 
   /// Check whether the connection is not closed
   /**
@@ -176,8 +162,8 @@ protected:
    * because an other thread managed to open the handler
    * @retval -1 The connection is closed
    */
-  virtual int check_connection_closure (
-      TAO_Connection_Handler *connection_handler);
+  virtual int check_connection_closure (TAO_Connection_Handler
+                                        *connection_handler);
 
   /**
    * Wait for connection completion. We have a transport that is not

@@ -43,20 +43,19 @@ namespace CORBA
   public:
 
     /// Copy constructor.
-    UserException (UserException const & rhs);
+    UserException (UserException const &rhs);
 
     /// Destructor.
     virtual ~UserException (void);
 
     /// Assignment operator.
-    UserException & operator= (UserException const & rhs);
+    UserException &operator= (UserException const &rhs);
 
     /// The narrow operation.
-    static UserException * _downcast (CORBA::Exception * exception);
+    static UserException *_downcast (CORBA::Exception *exception);
 
-        /// The const version of narrow operation
-    static const UserException * _downcast (
-      CORBA::Exception const * exception);
+    /// The const version of narrow operation
+    static const UserException *_downcast (CORBA::Exception const *exception);
 
     virtual void _raise (void) const = 0;
 
@@ -65,8 +64,7 @@ namespace CORBA
     // = TAO specific extension.
 
     /// Constructor from a repository id.
-    UserException (char const * repository_id,
-                   char const * local_name);
+    UserException (char const *repository_id, char const *local_name);
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
