@@ -1,3 +1,8 @@
+Thu Jan 25 07:50:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.cpp:
+          Use typename
+
 Wed Jan 24 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.h:

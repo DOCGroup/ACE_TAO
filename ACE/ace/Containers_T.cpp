@@ -1243,7 +1243,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (void)
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
 
   ACE_NEW (this->search_structure_,
-           ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
+           typename ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
 
   for (size_t i = 0; i < this->max_size_; ++i)
     this->search_structure_[i].is_free_ = 1;
@@ -1264,7 +1264,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
 
   ACE_NEW (this->search_structure_,
-           ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
+           typename ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
 
   for (size_t i = 0; i < this->cur_size_; i++)
     this->search_structure_[i] = bs.search_structure_[i];
@@ -1281,7 +1281,7 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
         {
           delete [] this->search_structure_;
           ACE_NEW (this->search_structure_,
-                   ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
+                   typename ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
           this->max_size_ = bs.cur_size_;
         }
 
@@ -1299,7 +1299,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (size_t size)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
   ACE_NEW (this->search_structure_,
-           ACE_TYPENAME ACE_Bounded_Set<T>::Search_Structure[size]);
+           typename ACE_Bounded_Set<T>::Search_Structure[size]);
 
   for (size_t i = 0; i < this->max_size_; i++)
     this->search_structure_[i].is_free_ = 1;
