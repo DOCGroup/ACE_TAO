@@ -35,15 +35,13 @@ public:
 
   void connect (int event_a,
                 int event_b,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+                RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
 
   void disconnect (void);
   // Disconnect from the EC.
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet& events)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -81,8 +79,7 @@ public:
 
   void push_consumer (void* consumer_cookie,
                       ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& events
-                      ACE_ENV_ARG_DECL_NOT_USED);
+                      const RtecEventComm::EventSet& events);
   // Callback method for consumers, if any of our consumers has
   // received events it will invoke this method.
 
@@ -90,8 +87,7 @@ private:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
-  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
+  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_consumers (void);
   // Connect and disconnect the consumers.
 

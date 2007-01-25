@@ -81,7 +81,7 @@ EC_BCast::execute_test (void)
   // UDP socket.
   RtecEventChannelAdmin::ConsumerQOS sub;
   int shutdown_event_type;
-  this->build_consumer_qos (0, sub, shutdown_event_type ACE_ENV_ARG_PARAMETER);
+  this->build_consumer_qos (0, sub, shutdown_event_type);
 
   // Obtain UDP address in the string format for Gateway initialization.
   char address_server_arg [256];
@@ -108,8 +108,7 @@ EC_BCast::execute_test (void)
     return;
 
   gateway.run (this->orb_.in (),
-               this->event_channel_.in ()
-               ACE_ENV_ARG_PARAMETER);
+               this->event_channel_.in ());
 
   if (this->allocate_tasks () == -1)
     return;
@@ -146,8 +145,7 @@ Simple_Address_Server (const ACE_INET_Addr& address)
 
 void
 Simple_Address_Server::get_addr (const RtecEventComm::EventHeader&,
-                                 RtecUDPAdmin::UDP_Addr& address
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+                                 RtecUDPAdmin::UDP_Addr& address)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   address = this->address_;

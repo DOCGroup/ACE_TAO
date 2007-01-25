@@ -140,127 +140,98 @@ protected:
                  CORBA::Any &any);
   // Determine the primitive type and insert into the Any.
 
-  void element_type (AST_Type *base_type
-                     ACE_ENV_ARG_DECL);
+  void element_type (AST_Type *base_type);
   // Creates or looks up the element type of an array or sequence,
   // and stores the result in ir_current_.
 
-  int create_interface_def (AST_Interface *node
-                            ACE_ENV_ARG_DECL);
+  int create_interface_def (AST_Interface *node);
   // Code encapsulated out of visit_interface().
 
-  int create_value_def (AST_ValueType *node
-                        ACE_ENV_ARG_DECL);
+  int create_value_def (AST_ValueType *node);
   // Code encapsulated out of visit_valuetype().
 
-  int create_component_def (AST_Component *node
-                            ACE_ENV_ARG_DECL);
+  int create_component_def (AST_Component *node);
   // Code encapsulated out of visit_component().
 
-  int create_home_def (AST_Home *node
-                       ACE_ENV_ARG_DECL);
+  int create_home_def (AST_Home *node);
   // Code encapsulated out of visit_home().
 
-  int create_event_def (AST_EventType *node
-                        ACE_ENV_ARG_DECL);
+  int create_event_def (AST_EventType *node);
   // Code encapsulated out of visit_eventtype().
 
   int create_value_member (AST_Field *node);
   // Conditional call from visit_field().
 
-  void get_referenced_type (AST_Type *node
-                            ACE_ENV_ARG_DECL);
+  void get_referenced_type (AST_Type *node);
   // Utility method to update ir_current_ for struct members, union
   // members, operation parameters and operation return types.
 
   void fill_base_value (CORBA::ValueDef_ptr &result,
-                        AST_ValueType *node
-                        ACE_ENV_ARG_DECL);
+                        AST_ValueType *node);
 
   void fill_base_component (CORBA::ComponentIR::ComponentDef_ptr &result,
-                            AST_Component *node
-                            ACE_ENV_ARG_DECL);
+                            AST_Component *node);
 
   void fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
-                       AST_Home *node
-                       ACE_ENV_ARG_DECL);
+                       AST_Home *node);
 
   void fill_managed_component (CORBA::ComponentIR::ComponentDef_ptr &result,
-                               AST_Home *node
-                               ACE_ENV_ARG_DECL);
+                               AST_Home *node);
 
   void fill_primary_key (CORBA::ValueDef_ptr &result,
-                         AST_Home *node
-                         ACE_ENV_ARG_DECL);
+                         AST_Home *node);
 
   void fill_abstract_base_values (CORBA::ValueDefSeq &result,
-                                  AST_ValueType *node
-                                  ACE_ENV_ARG_DECL);
+                                  AST_ValueType *node);
 
   void fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
-                                  AST_Interface *node
-                                  ACE_ENV_ARG_DECL);
+                                  AST_Interface *node);
 
   void fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
-                                  AST_Interface *node
-                                  ACE_ENV_ARG_DECL);
+                                  AST_Interface *node);
 
   void fill_interfaces (CORBA::InterfaceDefSeq &result,
                         AST_Interface **list,
-                        CORBA::Long length
-                        ACE_ENV_ARG_DECL);
+                        CORBA::Long length);
 
   void fill_initializers (CORBA::ExtInitializerSeq &result,
-                          AST_ValueType *node
-                          ACE_ENV_ARG_DECL);
+                          AST_ValueType *node);
 
   void fill_get_exceptions (CORBA::ExceptionDefSeq &result,
-                            AST_Attribute *node
-                            ACE_ENV_ARG_DECL);
+                            AST_Attribute *node);
 
   void fill_set_exceptions (CORBA::ExceptionDefSeq &result,
-                            AST_Attribute *node
-                            ACE_ENV_ARG_DECL);
+                            AST_Attribute *node);
 
   void fill_exceptions (CORBA::ExceptionDefSeq &result,
-                        AST_Decl *node
-                        ACE_ENV_ARG_DECL);
+                        AST_Decl *node);
 
   void fill_exceptions (CORBA::ExceptionDefSeq &result,
-                        UTL_ExceptList *list
-                        ACE_ENV_ARG_DECL);
+                        UTL_ExceptList *list);
 
   void fill_params (CORBA::ParDescriptionSeq &result,
-                    AST_Operation *node
-                    ACE_ENV_ARG_DECL);
+                    AST_Operation *node);
 
   void visit_all_provides (AST_Component *node,
-                           CORBA::ComponentIR::ComponentDef_ptr c
-                           ACE_ENV_ARG_DECL);
+                           CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_uses (AST_Component *node,
-                       CORBA::ComponentIR::ComponentDef_ptr c
-                       ACE_ENV_ARG_DECL);
+                       CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_emits (AST_Component *node,
-                        CORBA::ComponentIR::ComponentDef_ptr c
-                        ACE_ENV_ARG_DECL);
+                        CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_publishes (AST_Component *node,
-                            CORBA::ComponentIR::ComponentDef_ptr c
-                            ACE_ENV_ARG_DECL);
+                            CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_consumes (AST_Component *node,
-                           CORBA::ComponentIR::ComponentDef_ptr c
-                           ACE_ENV_ARG_DECL);
+                           CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_factories (AST_Home *node,
-                            CORBA::ComponentIR::HomeDef_ptr h
-                            ACE_ENV_ARG_DECL);
+                            CORBA::ComponentIR::HomeDef_ptr h);
 
   void visit_all_finders (AST_Home *node,
-                          CORBA::ComponentIR::HomeDef_ptr h
-                          ACE_ENV_ARG_DECL);
+                          CORBA::ComponentIR::HomeDef_ptr h);
 
   void expand_id (ACE_CString &str,
                   const char *local_name);

@@ -11,33 +11,30 @@
 //
 int main( int argc, char *argv[] )
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER ) ;
+      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, 0 ) ;
 
-      ACE_TRY_EX (nested)
+      try
         {
            CORBA::Object_var naming =
-              orb->resolve_initial_references( "NameService" ACE_ENV_ARG_PARAMETER) ;
-           ACE_TRY_CHECK_EX (nested);
+              orb->resolve_initial_references( "NameService") ;
            if( CORBA::is_nil( naming.in() ) )
              {
                 return 1 ;
              }
         }
-      ACE_CATCH (CORBA::Exception, ex)
+      catch (const CORBA::Exception& ex)
         {
           ACE_UNUSED_ARG (ex);
           return 1 ;
         }
-      ACE_ENDTRY;
     }
-  ACE_CATCH ( CORBA::Exception, ex )
+  catch (const CORBA::Exception& ex)
     {
        ACE_UNUSED_ARG (ex);
        return 2 ;
     }
-  ACE_ENDTRY;
 
   return 0 ;
 }

@@ -44,24 +44,22 @@ namespace TAO
 
     /////////////////
     // initialization
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_group(
         const char * role,
-        int write_iors
-        ACE_ENV_ARG_DECL)
+        int write_iors)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_infrastructure_managed_group(
-        const char * type_id
-        ACE_ENV_ARG_DECL)
+        const char * type_id)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    int unregister_role(const char * role ACE_ENV_ARG_DECL);
+    int unregister_role(const char * role);
 
     ////////////
     // shut down
@@ -77,8 +75,7 @@ namespace TAO
     const char * role,
     const char * type_id,
     PortableGroup::ObjectGroupId group_id,
-    const PortableGroup::Location & location
-    ACE_ENV_ARG_DECL);
+    const PortableGroup::Location & location);
 
     ////////////////////
     // forbidden methods

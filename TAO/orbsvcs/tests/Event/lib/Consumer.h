@@ -46,8 +46,7 @@ public:
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
 
   /**
    * The driver program can build the QoS attributes and we use
@@ -56,8 +55,7 @@ public:
    */
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
 
   /// returns 0 if it is not connected
   virtual int connected (void) const;
@@ -79,8 +77,7 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

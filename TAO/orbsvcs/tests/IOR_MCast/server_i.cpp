@@ -29,28 +29,27 @@ Server_i::~Server_i (void)
 
 int
 Server_i::init (int &argc,
-                char **&argv
-                ACE_ENV_ARG_DECL)
+                char **&argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY
+  try
     {
       // First initialize the ORB, that will remove some arguments...
       this->orb_ =
         CORBA::ORB_init (this->argc_,
                          this->argv_,
                          "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 
       // Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA");
 
       // Narrow down to the correct reference.
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Set a POA Manager.
       PortableServer::POAManager_var poa_manager =
@@ -69,10 +68,10 @@ Server_i::init (int &argc,
         server_i._this ();
 
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in ());
 
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -81,9 +80,8 @@ Server_i::init (int &argc,
       else
         {
           ior =
-            this->orb_->object_to_string (mcast_server.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-          adapter->bind ("MCASTServer", ior.in () ACE_ENV_ARG_PARAMETER);
+            this->orb_->object_to_string (mcast_server.in ());
+          adapter->bind ("MCASTServer", ior.in ());
         }
 
       // Enable such that the server can listen for multicast requests
@@ -94,7 +92,7 @@ Server_i::init (int &argc,
                       "ERROR: Unable to enable multicast "
                       "on specified address.\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // Run the ORB
@@ -104,12 +102,11 @@ Server_i::init (int &argc,
       poa->destroy (1, 1);
       this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

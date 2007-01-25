@@ -67,21 +67,18 @@ public:
    * has been destroyed.  The strategy has to (at the very least),
    * reclaim all the resources attached to that object.
    */
-  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy);
 
   /**
    * Invoked by helper classes when they detect that a consumer no
    * longer exists (i.e. _non_existent() returns true and/or the
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
-  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy);
 
   /// Some system exception was rasied while trying to push an event.
   virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this

@@ -87,9 +87,9 @@ Delivery_Request::should_retry () const
 void
 Delivery_Request::dispatch (
   TAO_Notify_ProxySupplier * proxy_supplier,
-  bool filter ACE_ENV_ARG_DECL)
+  bool filter)
 {
-  this->routing_slip_->dispatch (proxy_supplier, filter ACE_ENV_ARG_PARAMETER);
+  this->routing_slip_->dispatch (proxy_supplier, filter);
 }
 
 const Routing_Slip_Ptr &

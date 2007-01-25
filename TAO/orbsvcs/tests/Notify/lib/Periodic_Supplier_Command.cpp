@@ -76,8 +76,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
-           ACE_DECLARE_NEW_CORBA_ENV;
-           act_mgr->_register (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+           act_mgr->_register (supplier, this->name_.c_str ());
          }
 
          supplier->init_state (arg_shifter);
@@ -146,8 +145,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
   // Locate the supplier
   TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  act_mgr->resolve (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  act_mgr->resolve (supplier, this->name_.c_str ());
 
   if (supplier == 0)
     ACE_DEBUG ((LM_DEBUG, "Supplier %s not found by Lookup Manager\n", this->name_.c_str ()));
@@ -174,7 +172,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (void)
   if (supplier == 0)
     return;
 
-  supplier->offer_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
+  supplier->offer_change (this->added_, this->removed_);
 }
 
 void
@@ -216,7 +214,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (void)
   if (supplier == 0)
     return;
 
-  supplier->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
+  supplier->set_qos (this->qos_);
 }
 
 void

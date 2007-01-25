@@ -55,7 +55,7 @@ protected:
                      CORBA::SystemException
                      ));
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidConstraint
@@ -63,7 +63,6 @@ protected:
 
   virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
                                    const CosNotifyFilter::ConstraintInfoSeq & modify_list
-                                   ACE_ENV_ARG_DECL
                                    )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -71,7 +70,7 @@ protected:
                      CosNotifyFilter::ConstraintNotFound
                      ));
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::ConstraintNotFound
@@ -92,30 +91,30 @@ protected:
                      CORBA::SystemException
                      ));
 
-  virtual CORBA::Boolean match (const CORBA::Any & filterable_data ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean match (const CORBA::Any & filterable_data)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void detach_callback (CosNotifyFilter::CallbackID callback ACE_ENV_ARG_DECL)
+  virtual void detach_callback (CosNotifyFilter::CallbackID callback)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::CallbackNotFound
@@ -127,7 +126,7 @@ protected:
                      ));
 
 private:
-  void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq ACE_ENV_ARG_DECL)
+  void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidConstraint

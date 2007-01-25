@@ -47,19 +47,17 @@ main (int argc, char *argv [])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::Object_var manager_object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyManager::_narrow (manager_object.in ());
 
       CORBA::Any sync_scope;
       sync_scope <<= Messaging::SYNC_WITH_TARGET;
@@ -68,11 +66,9 @@ main (int argc, char *argv [])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_scope
-                            ACE_ENV_ARG_PARAMETER);
+                            sync_scope);
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::SET_OVERRIDE);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "CORBA Messaging disabled in this configuration,"
@@ -80,7 +76,7 @@ main (int argc, char *argv [])
 #endif /* TAO_HAS_MESSAGING */
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,7 +84,7 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -100,11 +96,10 @@ main (int argc, char *argv [])
 
       // Get the event channel object reference
       CORBA::Object_var object =
-        orb->string_to_object (ec_ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ec_ior);
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (object.in ());
       if (CORBA::is_nil (ec.in ()))
         {
           ACE_ERROR ((LM_ERROR,
@@ -148,8 +143,7 @@ main (int argc, char *argv [])
       h1.source = ACE_ES_EVENT_SOURCE_ANY;
 
       proxy_supplier->connect_push_consumer (consumer_reference.in (),
-                                             consumer_qos
-                                             ACE_ENV_ARG_PARAMETER);
+                                             consumer_qos);
 
       ACE_DEBUG ((LM_DEBUG, "Connected consumer\n"));
 
@@ -176,8 +170,7 @@ main (int argc, char *argv [])
       sh0.source = 1;                      // first free event source
 
       proxy_consumer->connect_push_supplier (supplier_reference.in (),
-                                             supplier_qos
-                                             ACE_ENV_ARG_PARAMETER);
+                                             supplier_qos);
 
       ACE_DEBUG ((LM_DEBUG, "Connected supplier\n"));
 
@@ -189,7 +182,7 @@ main (int argc, char *argv [])
       while (!task.done () || !consumer.done ())
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
+          orb->run (tv);
         }
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
@@ -225,19 +218,18 @@ main (int argc, char *argv [])
 
       PortableServer::ObjectId_var id;
 
-      id = root_poa->servant_to_id (&consumer ACE_ENV_ARG_PARAMETER);
-      root_poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+      id = root_poa->servant_to_id (&consumer);
+      root_poa->deactivate_object (id.in ());
 
-      id = root_poa->servant_to_id (&supplier ACE_ENV_ARG_PARAMETER);
-      root_poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+      id = root_poa->servant_to_id (&supplier);
+      root_poa->deactivate_object (id.in ());
 
       orb->destroy ();
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, argv[0]);
+      ex._tao_print_exception (argv[0]);
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -297,8 +289,7 @@ EC_Latency_Consumer::done (void)
 }
 
 void
-EC_Latency_Consumer::push (const RtecEventComm::EventSet& events
-                           ACE_ENV_ARG_DECL_NOT_USED)
+EC_Latency_Consumer::push (const RtecEventComm::EventSet& events)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t creation;
@@ -354,7 +345,7 @@ Task::done (void)
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       RtecEventComm::EventSet event (1);
       event.length (1);
@@ -368,7 +359,7 @@ Task::svc (void)
           ACE_hrtime_t creation = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                          creation);
-          this->consumer_->push (event ACE_ENV_ARG_PARAMETER);
+          this->consumer_->push (event);
 
           // ACE_Time_Value tv (0, 5000);
           // ACE_OS::sleep (tv);
@@ -385,10 +376,9 @@ Task::svc (void)
             return 0;
         }
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Task::svc");
+      ex._tao_print_exception ("Task::svc");
     }
-  ACE_ENDTRY;
   return 0;
 }

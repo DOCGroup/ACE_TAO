@@ -133,29 +133,24 @@ TAO_ConstantDef_i::type_def_i (void)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (type_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::IDLType::_narrow (obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  return CORBA::IDLType::_narrow (obj.in ());
 }
 
 void
-TAO_ConstantDef_i::type_def (CORBA::IDLType_ptr type_def
-                             ACE_ENV_ARG_DECL)
+TAO_ConstantDef_i::type_def (CORBA::IDLType_ptr type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->type_def_i (type_def
-                    ACE_ENV_ARG_PARAMETER);
+  this->type_def_i (type_def);
 }
 
 void
-TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def
-                               ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type_def);
@@ -217,21 +212,18 @@ TAO_ConstantDef_i::value_i (void)
 }
 
 void
-TAO_ConstantDef_i::value (const CORBA::Any &value
-                          ACE_ENV_ARG_DECL)
+TAO_ConstantDef_i::value (const CORBA::Any &value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->value_i (value
-                 ACE_ENV_ARG_PARAMETER);
+  this->value_i (value);
 }
 
 void
-TAO_ConstantDef_i::value_i (const CORBA::Any &value
-                            ACE_ENV_ARG_DECL)
+TAO_ConstantDef_i::value_i (const CORBA::Any &value)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_var my_tc =
@@ -240,8 +232,7 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
   CORBA::TypeCode_var val_tc = value.type ();
 
   CORBA::Boolean const equal_tc =
-    my_tc.in ()->equal (val_tc.in ()
-                        ACE_ENV_ARG_PARAMETER);
+    my_tc.in ()->equal (val_tc.in ());
 
   if (!equal_tc)
     {

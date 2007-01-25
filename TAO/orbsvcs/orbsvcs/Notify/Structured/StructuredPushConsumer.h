@@ -39,22 +39,22 @@ public:
   TAO_Notify_StructuredPushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Init the Consumer
-  void init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
+  void init (CosNotifyComm::StructuredPushConsumer_ptr push_consumer);
 
   /// Destructor
   virtual ~TAO_Notify_StructuredPushConsumer ();
 
   /// Push <event> to this consumer.
-//  virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
+//  virtual void push_i (const TAO_Notify_Event* event);
 
   /// Push <event> to this consumer.
-  virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL);
+  virtual void push (const CORBA::Any& event);
 
   /// Push <event> to this consumer.
-  virtual void push (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
+  virtual void push (const CosNotification::StructuredEvent& event);
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
+  virtual void push (const CosNotification::EventBatch& event);
 
   /// Retrieve the ior of this peer
   virtual ACE_CString get_ior (void) const;
@@ -62,8 +62,7 @@ public:
   /// on reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (
-    TAO_Notify_Consumer* old_consumer
-    ACE_ENV_ARG_DECL);
+    TAO_Notify_Consumer* old_consumer);
 
 
 protected:

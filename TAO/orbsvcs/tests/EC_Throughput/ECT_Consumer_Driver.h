@@ -44,8 +44,7 @@ public:
   int run (int argc, char* argv[]);
   // Execute the test.
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void shutdown_consumer (void* consumer_cookie);
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
@@ -55,8 +54,7 @@ private:
   // parse the command line args
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_consumers (void);
   // Connect and disconnect the consumers.
 

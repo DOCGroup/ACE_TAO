@@ -4,8 +4,7 @@
 #include "Supplier.h"
 
 void
-Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel
-                     ACE_ENV_ARG_DECL)
+Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
   // = Connect as a consumer.
   this->supplier_admin_ =
@@ -32,8 +31,7 @@ Supplier::connect (void)
 
   CosEventComm::PushSupplier_var objref = this->_this ();
 
-  this->consumer_proxy_->connect_push_supplier (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  this->consumer_proxy_->connect_push_supplier (objref.in ());
 }
 
 void
@@ -50,10 +48,9 @@ Supplier::disconnect (void)
 }
 
 void
-Supplier::send_event (const CORBA::Any & data
-                           ACE_ENV_ARG_DECL)
+Supplier::send_event (const CORBA::Any & data)
 {
-  this->consumer_proxy_->push (data ACE_ENV_ARG_PARAMETER);
+  this->consumer_proxy_->push (data);
 }
 
 void
@@ -68,9 +65,7 @@ Supplier::disconnect_push_supplier (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }

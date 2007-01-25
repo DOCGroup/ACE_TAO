@@ -109,17 +109,13 @@ public:
   // = Documented in TAO_CEC_SupplierControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy);
   virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this
@@ -181,8 +177,7 @@ class TAO_CEC_Ping_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPushConsum
 public:
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPushConsumer *consumer);
 
 private:
   TAO_CEC_SupplierControl *control_;
@@ -196,8 +191,7 @@ class TAO_CEC_Ping_Typed_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_TypedProx
 public:
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_TypedProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_TypedProxyPushConsumer *consumer);
 
 private:
   TAO_CEC_SupplierControl *control_;
@@ -211,8 +205,7 @@ class TAO_CEC_Ping_Pull_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsum
 public:
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPullConsumer *consumer);
 
 private:
   TAO_CEC_SupplierControl *control_;

@@ -39,8 +39,7 @@ public:
   void connect (const char* name,
                 int event_a,
                 int event_b,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+                RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
   void disconnect (void);
@@ -99,8 +98,7 @@ public:
 
   void push_supplier (void* supplier_cookie,
                       RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                      const RtecEventComm::EventSet &events
-                      ACE_ENV_ARG_DECL_NOT_USED);
+                      const RtecEventComm::EventSet &events);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
@@ -110,8 +108,7 @@ private:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
-  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
+  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_suppliers (void);
   // Connect the suppliers.
 

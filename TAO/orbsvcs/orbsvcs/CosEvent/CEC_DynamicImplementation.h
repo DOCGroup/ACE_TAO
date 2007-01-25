@@ -38,28 +38,24 @@ public:
                                        TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer,
                                        TAO_CEC_TypedEventChannel *typed_event_channel);
 
-  //Destructor 
+  //Destructor
   virtual ~TAO_CEC_DynamicImplementationServer (void);
 
   // = The DynamicImplementation methods.
-  virtual void invoke (CORBA::ServerRequest_ptr request
-                       ACE_ENV_ARG_DECL)
+  virtual void invoke (CORBA::ServerRequest_ptr request)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL
     )
       ACE_THROW_SPEC (());
 
   virtual PortableServer::POA_ptr _default_POA (
-      ACE_ENV_SINGLE_ARG_DECL
     );
 
   // Handles the _is_a call
-  virtual void is_a (CORBA::ServerRequest_ptr request
-                     ACE_ENV_ARG_DECL);
+  virtual void is_a (CORBA::ServerRequest_ptr request);
 
 private:
   // The POA

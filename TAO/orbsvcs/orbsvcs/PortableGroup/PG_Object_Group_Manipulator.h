@@ -53,8 +53,7 @@ namespace TAO
      * Initializes the group creator.
      */
     void init (CORBA::ORB_ptr orb,
-               PortableServer::POA_ptr poa
-               ACE_ENV_ARG_DECL);
+               PortableServer::POA_ptr poa);
 
     /**
      * Create an empty object group.
@@ -62,23 +61,19 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr create_object_group (
       const char * type_id,
       const char * domain_id,
-      PortableGroup::ObjectGroupId & group_id
-      ACE_ENV_ARG_DECL);
+      PortableGroup::ObjectGroupId & group_id);
 
     PortableGroup::ObjectGroup_ptr remove_profiles (
       PortableGroup::ObjectGroup_ptr group,
-      PortableGroup::ObjectGroup_ptr profile
-      ACE_ENV_ARG_DECL) const;
+      PortableGroup::ObjectGroup_ptr profile) const;
 
     PortableGroup::ObjectGroup_ptr merge_iors (
-      TAO_IOP::TAO_IOR_Manipulation::IORList & iors
-      ACE_ENV_ARG_DECL) const;
+      TAO_IOP::TAO_IOR_Manipulation::IORList & iors) const;
 
     int set_primary (
       TAO_IOP::TAO_IOR_Property * prop,
       PortableGroup::ObjectGroup_ptr reference,
-      CORBA::Object_ptr new_primary
-      ACE_ENV_ARG_DECL) const;
+      CORBA::Object_ptr new_primary) const;
 
   void dump_membership (const char * label,
                         PortableGroup::ObjectGroup_ptr member) const;

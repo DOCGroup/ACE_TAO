@@ -29,8 +29,7 @@ class TAO_RTEC_Perf_Export RTPOA_Setup
 public:
   /// Constructor
   RTPOA_Setup (CORBA::ORB_ptr orb,
-               const RTCORBA_Setup &rtcorba_setup
-               ACE_ENV_ARG_DECL);
+               const RTCORBA_Setup &rtcorba_setup);
 
   PortableServer::POA_ptr poa (void);
 

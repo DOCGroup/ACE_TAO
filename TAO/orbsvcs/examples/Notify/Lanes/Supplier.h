@@ -36,7 +36,7 @@ class TAO_Notify_Lanes_Supplier
   TAO_Notify_Lanes_Supplier (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
-  void init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int count ACE_ENV_ARG_DECL);
+  void init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int count);
 
   /// Run
   void run (void);
@@ -55,7 +55,7 @@ protected:
   void deactivate (void);
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
 
   /// Destructor
   virtual ~TAO_Notify_Lanes_Supplier ();
@@ -64,7 +64,6 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,

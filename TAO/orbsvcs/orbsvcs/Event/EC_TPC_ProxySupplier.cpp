@@ -32,8 +32,7 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
 
   if (this->is_connected_i ())
     {
-      this->tpc_dispatching ()->remove_consumer (this->consumer_.in()
-                                                 ACE_ENV_ARG_PARAMETER);
+      this->tpc_dispatching ()->remove_consumer (this->consumer_.in());
     }
   BASECLASS::disconnect_push_supplier ();
 
@@ -52,13 +51,12 @@ TAO_EC_TPC_ProxyPushSupplier::tpc_dispatching ()
 void
 TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
-      const RtecEventChannelAdmin::ConsumerQOS& qos
-      ACE_ENV_ARG_DECL)
+      const RtecEventChannelAdmin::ConsumerQOS& qos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecEventChannelAdmin::AlreadyConnected,
                      RtecEventChannelAdmin::TypeError))
 {
-  BASECLASS::connect_push_consumer (push_consumer, qos ACE_ENV_ARG_PARAMETER);
+  BASECLASS::connect_push_consumer (push_consumer, qos);
 
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): EC_ProxySupplier(%@): refcount=%u,consumer=%@\n",
@@ -67,7 +65,7 @@ TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
   TAO_EC_TPC_Dispatching* tpcdispatcher = this->tpc_dispatching ();
 
   // the new dispatching task gets automatically created
-  tpcdispatcher->add_consumer (push_consumer ACE_ENV_ARG_PARAMETER);
+  tpcdispatcher->add_consumer (push_consumer);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

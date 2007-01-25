@@ -77,8 +77,7 @@ public:
 
   /// Open an acceptor based on a tagged profile.
   void open (const TAO_Profile* profile,
-             TAO_ORB_Core &orb_core
-             ACE_ENV_ARG_DECL);
+             TAO_ORB_Core &orb_core);
 
   /// Close all open acceptors.
   int close_all (void);
@@ -91,8 +90,7 @@ protected:
   /// Helper function to open a group acceptor.
   void open_i (const TAO_Profile* profile,
                TAO_ORB_Core &orb_core,
-               TAO_ProtocolFactorySetItor &factory
-               ACE_ENV_ARG_DECL);
+               TAO_ProtocolFactorySetItor &factory);
 
   /// Find an acceptor by using a profile.
   int find (const TAO_Profile* profile,

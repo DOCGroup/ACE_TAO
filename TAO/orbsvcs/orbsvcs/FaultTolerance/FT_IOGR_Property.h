@@ -67,8 +67,7 @@ public:
 
   /// Set the property for the IOGR
   virtual CORBA::Boolean set_property (
-      CORBA::Object_ptr &ior
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Object_ptr &ior)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       TAO_IOP::Invalid_IOR
@@ -77,8 +76,7 @@ public:
   /// Set <ior1> as  primary which is a part of <ior2>
   virtual CORBA::Boolean set_primary (
       CORBA::Object_ptr &ior1,
-      CORBA::Object_ptr ior2
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Object_ptr ior2)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       TAO_IOP::NotFound,
@@ -87,8 +85,7 @@ public:
 
   /// Get the primary member from the IOGR <ior>
   virtual CORBA::Object_ptr get_primary (
-      CORBA::Object_ptr ior
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Object_ptr ior)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -96,15 +93,13 @@ public:
 
   /// Is there a primary available for <ior>
   virtual CORBA::Boolean is_primary_set (
-      CORBA::Object_ptr ior
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Object_ptr ior)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   virtual CORBA::Boolean remove_primary_tag (
-      CORBA::Object_ptr &iogr
-      ACE_ENV_ARG_DECL)
+      CORBA::Object_ptr &iogr)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Reset the underlying tagged components held by the class
@@ -114,8 +109,7 @@ public:
   /// Extract the TagFTGroupTaggedComponent inside the <ior>
   CORBA::Boolean get_tagged_component (
       const CORBA::Object_ptr iogr,
-      FT::TagFTGroupTaggedComponent &ft_group
-      ACE_ENV_ARG_DECL) const
+      FT::TagFTGroupTaggedComponent &ft_group) const
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

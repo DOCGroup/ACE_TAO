@@ -38,8 +38,7 @@ public:
   //@{
   /** @name The Federated_Test::Control methods
    */
-  virtual void join (Federated_Test::Peer_ptr peer
-                     ACE_ENV_ARG_DECL)
+  virtual void join (Federated_Test::Peer_ptr peer)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableServer::POA_ptr _default_POA (void)

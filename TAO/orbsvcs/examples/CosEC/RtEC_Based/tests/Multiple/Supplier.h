@@ -37,8 +37,7 @@ public:
   Supplier ();
   // Constructor.
 
-  void open (CosEventChannelAdmin::EventChannel_ptr event_channel
-             ACE_ENV_ARG_DECL);
+  void open (CosEventChannelAdmin::EventChannel_ptr event_channel);
   // This method connects the supplier to the EC.
 
   void close (void);
@@ -49,8 +48,7 @@ public:
   void disconnect (void);
   // Disconnect from the EC, but do not forget about it or close it.
 
-  void send_event (const CORBA::Any &data
-                   ACE_ENV_ARG_DECL);
+  void send_event (const CORBA::Any &data);
   // Send one event.
 
   virtual void disconnect_push_supplier (void)

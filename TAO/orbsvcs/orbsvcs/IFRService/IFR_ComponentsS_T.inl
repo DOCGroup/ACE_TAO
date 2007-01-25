@@ -128,14 +128,12 @@ POA_CORBA::ComponentIR::EventDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::EventDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -144,14 +142,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -161,7 +157,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::lookup  (
     const char * search_name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -169,7 +164,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup (
     search_name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -180,7 +174,6 @@ template <class T> ACE_INLINE
 ::CORBA::ContainedSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::contents  (
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -189,7 +182,6 @@ template <class T> ACE_INLINE
   return this->ptr_->contents (
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -202,7 +194,6 @@ template <class T> ACE_INLINE
     ::CORBA::Long levels_to_search,
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -213,7 +204,6 @@ template <class T> ACE_INLINE
     levels_to_search,
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -225,7 +215,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -235,7 +224,6 @@ template <class T> ACE_INLINE
     limit_type,
     exclude_inherited,
     max_returned_objs
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -247,7 +235,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -257,7 +244,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -271,7 +257,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -283,7 +268,6 @@ template <class T> ACE_INLINE
     version,
     type,
     value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -296,7 +280,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -307,7 +290,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -321,7 +303,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -333,7 +314,6 @@ template <class T> ACE_INLINE
     version,
     discriminator_type,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -346,7 +326,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::EnumMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -357,7 +336,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -370,7 +348,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -381,7 +358,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -394,7 +370,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -405,7 +380,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -424,7 +398,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -441,7 +414,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -454,7 +426,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -465,7 +436,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -478,7 +448,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -489,7 +458,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -501,7 +469,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -511,7 +478,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -524,7 +490,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -535,7 +500,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -548,7 +512,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -559,7 +522,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -578,7 +540,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -595,7 +556,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -604,14 +564,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -621,7 +579,6 @@ char * POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -629,7 +586,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -638,14 +594,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -655,7 +609,6 @@ char * POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -663,7 +616,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -672,14 +624,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -689,7 +639,6 @@ char * POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -697,7 +646,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -706,14 +654,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -722,14 +668,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -738,14 +682,12 @@ char * POA_CORBA::ComponentIR::EventDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -754,14 +696,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::EventDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -773,7 +713,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -783,7 +722,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -792,14 +730,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::type  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -808,14 +744,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::supported_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->supported_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -825,7 +759,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::supported_interfaces  (
     const ::CORBA::InterfaceDefSeq & supported_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -833,7 +766,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::supported_interfaces  (
 {
   this->ptr_->supported_interfaces (
     supported_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -842,14 +774,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::supported_interfaces  (
 
 template <class T> ACE_INLINE
 ::CORBA::InitializerSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::initializers  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->initializers (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -859,7 +789,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::initializers  (
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -867,7 +796,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::initializers  (
 {
   this->ptr_->initializers (
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -876,14 +804,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::initializers  (
 
 template <class T> ACE_INLINE
 ::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::EventDef_tie<T>::base_value  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->base_value (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -893,7 +819,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::base_value  (
     ::CORBA::ValueDef_ptr base_value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -901,7 +826,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::base_value  (
 {
   this->ptr_->base_value (
     base_value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -910,14 +834,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::base_value  (
 
 template <class T> ACE_INLINE
 ::CORBA::ValueDefSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::abstract_base_values  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->abstract_base_values (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -927,7 +849,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::abstract_base_values  (
     const ::CORBA::ValueDefSeq & abstract_base_values
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -935,7 +856,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::abstract_base_values  (
 {
   this->ptr_->abstract_base_values (
     abstract_base_values
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -944,14 +864,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::abstract_base_values  (
 
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_abstract  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->is_abstract (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -961,7 +879,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::is_abstract  (
     ::CORBA::Boolean is_abstract
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -969,7 +886,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::is_abstract  (
 {
   this->ptr_->is_abstract (
     is_abstract
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -978,14 +894,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::is_abstract  (
 
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_custom  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->is_custom (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -995,7 +909,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::is_custom  (
     ::CORBA::Boolean is_custom
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1003,7 +916,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::is_custom  (
 {
   this->ptr_->is_custom (
     is_custom
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1012,14 +924,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::is_custom  (
 
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_truncatable  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->is_truncatable (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -1029,7 +939,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::is_truncatable  (
     ::CORBA::Boolean is_truncatable
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1037,7 +946,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::is_truncatable  (
 {
   this->ptr_->is_truncatable (
     is_truncatable
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1047,7 +955,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::is_truncatable  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventDef_tie<T>::is_a  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1055,7 +962,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1064,14 +970,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::ValueDef::FullValueDescription * POA_CORBA::ComponentIR::EventDef_tie<T>::describe_value  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe_value (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -1085,7 +989,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     ::CORBA::Visibility access
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1097,7 +1000,6 @@ template <class T> ACE_INLINE
     version,
     type,
     access
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1111,7 +1013,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     ::CORBA::AttributeMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1123,7 +1024,6 @@ template <class T> ACE_INLINE
     version,
     type,
     mode
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1140,7 +1040,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ParDescriptionSeq & params,
     const ::CORBA::ExceptionDefSeq & exceptions,
     const ::CORBA::ContextIdSeq & contexts
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1155,7 +1054,6 @@ template <class T> ACE_INLINE
     params,
     exceptions,
     contexts
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1164,14 +1062,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::ExtInitializerSeq * POA_CORBA::ComponentIR::EventDef_tie<T>::ext_initializers  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->ext_initializers (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -1181,7 +1077,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventDef_tie<T>::ext_initializers  (
     const ::CORBA::ExtInitializerSeq & ext_initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1189,7 +1084,6 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::ext_initializers  (
 {
   this->ptr_->ext_initializers (
     ext_initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1198,14 +1092,12 @@ void POA_CORBA::ComponentIR::EventDef_tie<T>::ext_initializers  (
 
 template <class T> ACE_INLINE
 ::CORBA::ExtValueDef::ExtFullValueDescription * POA_CORBA::ComponentIR::EventDef_tie<T>::describe_ext_value  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe_ext_value (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -1221,7 +1113,6 @@ template <class T> ACE_INLINE
     ::CORBA::AttributeMode mode,
     const ::CORBA::ExceptionDefSeq & get_exceptions,
     const ::CORBA::ExceptionDefSeq & set_exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1235,7 +1126,6 @@ template <class T> ACE_INLINE
     mode,
     get_exceptions,
     set_exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1337,14 +1227,12 @@ POA_CORBA::ComponentIR::Container_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::Container_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -1353,14 +1241,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::Container_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -1370,7 +1256,6 @@ void POA_CORBA::ComponentIR::Container_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::Container_tie<T>::lookup  (
     const char * search_name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1378,7 +1263,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup (
     search_name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1389,7 +1273,6 @@ template <class T> ACE_INLINE
 ::CORBA::ContainedSeq * POA_CORBA::ComponentIR::Container_tie<T>::contents  (
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1398,7 +1281,6 @@ template <class T> ACE_INLINE
   return this->ptr_->contents (
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1411,7 +1293,6 @@ template <class T> ACE_INLINE
     ::CORBA::Long levels_to_search,
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1422,7 +1303,6 @@ template <class T> ACE_INLINE
     levels_to_search,
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1434,7 +1314,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1444,7 +1323,6 @@ template <class T> ACE_INLINE
     limit_type,
     exclude_inherited,
     max_returned_objs
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1456,7 +1334,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1466,7 +1343,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1480,7 +1356,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1492,7 +1367,6 @@ template <class T> ACE_INLINE
     version,
     type,
     value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1505,7 +1379,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1516,7 +1389,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1530,7 +1402,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1542,7 +1413,6 @@ template <class T> ACE_INLINE
     version,
     discriminator_type,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1555,7 +1425,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::EnumMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1566,7 +1435,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1579,7 +1447,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1590,7 +1457,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1603,7 +1469,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1614,7 +1479,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1633,7 +1497,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1650,7 +1513,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1663,7 +1525,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1674,7 +1535,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1687,7 +1547,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1698,7 +1557,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1710,7 +1568,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1720,7 +1577,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1733,7 +1589,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1744,7 +1599,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1757,7 +1611,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1768,7 +1621,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1787,7 +1639,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1804,7 +1655,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1818,7 +1668,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::ComponentIR::ComponentDef_ptr base_component,
     const ::CORBA::InterfaceDefSeq & supports_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1830,7 +1679,6 @@ template <class T> ACE_INLINE
     version,
     base_component,
     supports_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1846,7 +1694,6 @@ template <class T> ACE_INLINE
     ::CORBA::ComponentIR::ComponentDef_ptr managed_component,
     const ::CORBA::InterfaceDefSeq & supports_interfaces,
     ::CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1860,7 +1707,6 @@ template <class T> ACE_INLINE
     managed_component,
     supports_interfaces,
     primary_key
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1879,7 +1725,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -1896,7 +1741,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -1998,14 +1842,12 @@ POA_CORBA::ComponentIR::ModuleDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::ModuleDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2014,14 +1856,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ModuleDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2031,7 +1871,6 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::lookup  (
     const char * search_name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2039,7 +1878,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup (
     search_name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2050,7 +1888,6 @@ template <class T> ACE_INLINE
 ::CORBA::ContainedSeq * POA_CORBA::ComponentIR::ModuleDef_tie<T>::contents  (
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2059,7 +1896,6 @@ template <class T> ACE_INLINE
   return this->ptr_->contents (
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2072,7 +1908,6 @@ template <class T> ACE_INLINE
     ::CORBA::Long levels_to_search,
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2083,7 +1918,6 @@ template <class T> ACE_INLINE
     levels_to_search,
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2095,7 +1929,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2105,7 +1938,6 @@ template <class T> ACE_INLINE
     limit_type,
     exclude_inherited,
     max_returned_objs
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2117,7 +1949,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2127,7 +1958,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2141,7 +1971,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2153,7 +1982,6 @@ template <class T> ACE_INLINE
     version,
     type,
     value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2166,7 +1994,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2177,7 +2004,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2191,7 +2017,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2203,7 +2028,6 @@ template <class T> ACE_INLINE
     version,
     discriminator_type,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2216,7 +2040,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::EnumMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2227,7 +2050,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2240,7 +2062,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2251,7 +2072,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2264,7 +2084,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2275,7 +2094,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2294,7 +2112,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2311,7 +2128,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2324,7 +2140,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2335,7 +2150,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2348,7 +2162,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2359,7 +2172,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2371,7 +2183,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2381,7 +2192,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2394,7 +2204,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2405,7 +2214,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2418,7 +2226,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2429,7 +2236,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2448,7 +2254,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2465,7 +2270,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2474,14 +2278,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2491,7 +2293,6 @@ char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2499,7 +2300,6 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2508,14 +2308,12 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2525,7 +2323,6 @@ char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2533,7 +2330,6 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2542,14 +2338,12 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2559,7 +2353,6 @@ char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2567,7 +2360,6 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2576,14 +2368,12 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2592,14 +2382,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2608,14 +2396,12 @@ char * POA_CORBA::ComponentIR::ModuleDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::ModuleDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2624,14 +2410,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::ModuleDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2643,7 +2427,6 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2653,7 +2436,6 @@ void POA_CORBA::ComponentIR::ModuleDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2667,7 +2449,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::ComponentIR::ComponentDef_ptr base_component,
     const ::CORBA::InterfaceDefSeq & supports_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2679,7 +2460,6 @@ template <class T> ACE_INLINE
     version,
     base_component,
     supports_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2695,7 +2475,6 @@ template <class T> ACE_INLINE
     ::CORBA::ComponentIR::ComponentDef_ptr managed_component,
     const ::CORBA::InterfaceDefSeq & supports_interfaces,
     ::CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2709,7 +2488,6 @@ template <class T> ACE_INLINE
     managed_component,
     supports_interfaces,
     primary_key
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2728,7 +2506,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2745,7 +2522,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2847,14 +2623,12 @@ POA_CORBA::ComponentIR::Repository_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::Repository_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2863,14 +2637,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::Repository_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -2880,7 +2652,6 @@ void POA_CORBA::ComponentIR::Repository_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::Repository_tie<T>::lookup  (
     const char * search_name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2888,7 +2659,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup (
     search_name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2899,7 +2669,6 @@ template <class T> ACE_INLINE
 ::CORBA::ContainedSeq * POA_CORBA::ComponentIR::Repository_tie<T>::contents  (
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2908,7 +2677,6 @@ template <class T> ACE_INLINE
   return this->ptr_->contents (
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2921,7 +2689,6 @@ template <class T> ACE_INLINE
     ::CORBA::Long levels_to_search,
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2932,7 +2699,6 @@ template <class T> ACE_INLINE
     levels_to_search,
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2944,7 +2710,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2954,7 +2719,6 @@ template <class T> ACE_INLINE
     limit_type,
     exclude_inherited,
     max_returned_objs
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2966,7 +2730,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -2976,7 +2739,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -2990,7 +2752,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3002,7 +2763,6 @@ template <class T> ACE_INLINE
     version,
     type,
     value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3015,7 +2775,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3026,7 +2785,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3040,7 +2798,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3052,7 +2809,6 @@ template <class T> ACE_INLINE
     version,
     discriminator_type,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3065,7 +2821,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::EnumMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3076,7 +2831,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3089,7 +2843,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3100,7 +2853,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3113,7 +2865,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3124,7 +2875,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3143,7 +2893,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3160,7 +2909,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3173,7 +2921,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3184,7 +2931,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3197,7 +2943,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3208,7 +2953,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3220,7 +2964,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3230,7 +2973,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3243,7 +2985,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3254,7 +2995,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3267,7 +3007,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3278,7 +3017,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3297,7 +3035,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3314,7 +3051,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3324,7 +3060,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::Repository_tie<T>::lookup_id  (
     const char * search_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3332,7 +3067,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup_id (
     search_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3342,7 +3076,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::ComponentIR::Repository_tie<T>::get_canonical_typecode  (
     ::CORBA::TypeCode_ptr tc
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3350,7 +3083,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->get_canonical_typecode (
     tc
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3360,7 +3092,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::PrimitiveDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::get_primitive  (
     ::CORBA::PrimitiveKind kind
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3368,7 +3099,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->get_primitive (
     kind
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3378,7 +3108,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::StringDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_string  (
     ::CORBA::ULong bound
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3386,7 +3115,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->create_string (
     bound
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3396,7 +3124,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::WstringDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_wstring  (
     ::CORBA::ULong bound
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3404,7 +3131,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->create_wstring (
     bound
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3415,7 +3141,6 @@ template <class T> ACE_INLINE
 ::CORBA::SequenceDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_sequence  (
     ::CORBA::ULong bound,
     ::CORBA::IDLType_ptr element_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3424,7 +3149,6 @@ template <class T> ACE_INLINE
   return this->ptr_->create_sequence (
     bound,
     element_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3435,7 +3159,6 @@ template <class T> ACE_INLINE
 ::CORBA::ArrayDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_array  (
     ::CORBA::ULong length,
     ::CORBA::IDLType_ptr element_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3444,7 +3167,6 @@ template <class T> ACE_INLINE
   return this->ptr_->create_array (
     length,
     element_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3455,7 +3177,6 @@ template <class T> ACE_INLINE
 ::CORBA::FixedDef_ptr POA_CORBA::ComponentIR::Repository_tie<T>::create_fixed  (
     ::CORBA::UShort digits,
     ::CORBA::Short scale
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3464,7 +3185,6 @@ template <class T> ACE_INLINE
   return this->ptr_->create_fixed (
     digits,
     scale
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3478,7 +3198,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::ComponentIR::ComponentDef_ptr base_component,
     const ::CORBA::InterfaceDefSeq & supports_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3490,7 +3209,6 @@ template <class T> ACE_INLINE
     version,
     base_component,
     supports_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3506,7 +3224,6 @@ template <class T> ACE_INLINE
     ::CORBA::ComponentIR::ComponentDef_ptr managed_component,
     const ::CORBA::InterfaceDefSeq & supports_interfaces,
     ::CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3520,7 +3237,6 @@ template <class T> ACE_INLINE
     managed_component,
     supports_interfaces,
     primary_key
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3539,7 +3255,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3556,7 +3271,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3658,14 +3372,12 @@ POA_CORBA::ComponentIR::ProvidesDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::ProvidesDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3674,14 +3386,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3690,14 +3400,12 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3707,7 +3415,6 @@ char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3715,7 +3422,6 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3724,14 +3430,12 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3741,7 +3445,6 @@ char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3749,7 +3452,6 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3758,14 +3460,12 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3775,7 +3475,6 @@ char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3783,7 +3482,6 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3792,14 +3490,12 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::ProvidesDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3808,14 +3504,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3824,14 +3518,12 @@ char * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::ProvidesDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3840,14 +3532,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::ProvidesDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3859,7 +3549,6 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3869,7 +3558,6 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -3878,14 +3566,12 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::ProvidesDef_tie<T>::interface_type  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->interface_type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -3895,7 +3581,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::interface_type  (
     ::CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -3903,7 +3588,6 @@ void POA_CORBA::ComponentIR::ProvidesDef_tie<T>::interface_type  (
 {
   this->ptr_->interface_type (
     interface_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4005,14 +3689,12 @@ POA_CORBA::ComponentIR::UsesDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::UsesDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4021,14 +3703,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::UsesDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4037,14 +3717,12 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4054,7 +3732,6 @@ char * POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4062,7 +3739,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4071,14 +3747,12 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4088,7 +3762,6 @@ char * POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4096,7 +3769,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4105,14 +3777,12 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4122,7 +3792,6 @@ char * POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4130,7 +3799,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4139,14 +3807,12 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::UsesDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4155,14 +3821,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::UsesDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4171,14 +3835,12 @@ char * POA_CORBA::ComponentIR::UsesDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::UsesDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4187,14 +3849,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::UsesDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4206,7 +3866,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4216,7 +3875,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4225,14 +3883,12 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDef_ptr POA_CORBA::ComponentIR::UsesDef_tie<T>::interface_type  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->interface_type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4242,7 +3898,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::UsesDef_tie<T>::interface_type  (
     ::CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4250,7 +3905,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::interface_type  (
 {
   this->ptr_->interface_type (
     interface_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4259,14 +3913,12 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::interface_type  (
 
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::UsesDef_tie<T>::is_multiple  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->is_multiple (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4276,7 +3928,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::UsesDef_tie<T>::is_multiple  (
     ::CORBA::Boolean is_multiple
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4284,7 +3935,6 @@ void POA_CORBA::ComponentIR::UsesDef_tie<T>::is_multiple  (
 {
   this->ptr_->is_multiple (
     is_multiple
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4386,14 +4036,12 @@ POA_CORBA::ComponentIR::EventPortDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::EventPortDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4402,14 +4050,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventPortDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4418,14 +4064,12 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4435,7 +4079,6 @@ char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4443,7 +4086,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4452,14 +4094,12 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4469,7 +4109,6 @@ char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4477,7 +4116,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4486,14 +4124,12 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4503,7 +4139,6 @@ char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4511,7 +4146,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4520,14 +4154,12 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::EventPortDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4536,14 +4168,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4552,14 +4182,12 @@ char * POA_CORBA::ComponentIR::EventPortDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::EventPortDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4568,14 +4196,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::EventPortDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4587,7 +4213,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4597,7 +4222,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4606,14 +4230,12 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::EventPortDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4623,7 +4245,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EventPortDef_tie<T>::event  (
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4631,7 +4252,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::event  (
 {
   this->ptr_->event (
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4641,7 +4261,6 @@ void POA_CORBA::ComponentIR::EventPortDef_tie<T>::event  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::EventPortDef_tie<T>::is_a  (
     const char * event_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4649,7 +4268,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     event_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4751,14 +4369,12 @@ POA_CORBA::ComponentIR::EmitsDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::EmitsDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4767,14 +4383,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EmitsDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4783,14 +4397,12 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4800,7 +4412,6 @@ char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4808,7 +4419,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4817,14 +4427,12 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4834,7 +4442,6 @@ char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4842,7 +4449,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4851,14 +4457,12 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4868,7 +4472,6 @@ char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4876,7 +4479,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4885,14 +4487,12 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::EmitsDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4901,14 +4501,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4917,14 +4515,12 @@ char * POA_CORBA::ComponentIR::EmitsDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::EmitsDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4933,14 +4529,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::EmitsDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4952,7 +4546,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4962,7 +4555,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -4971,14 +4563,12 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::EmitsDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -4988,7 +4578,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::EmitsDef_tie<T>::event  (
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -4996,7 +4585,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::event  (
 {
   this->ptr_->event (
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5006,7 +4594,6 @@ void POA_CORBA::ComponentIR::EmitsDef_tie<T>::event  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::EmitsDef_tie<T>::is_a  (
     const char * event_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5014,7 +4601,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     event_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5116,14 +4702,12 @@ POA_CORBA::ComponentIR::PublishesDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::PublishesDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5132,14 +4716,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::PublishesDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5148,14 +4730,12 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5165,7 +4745,6 @@ char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5173,7 +4752,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5182,14 +4760,12 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5199,7 +4775,6 @@ char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5207,7 +4782,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5216,14 +4790,12 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5233,7 +4805,6 @@ char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5241,7 +4812,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5250,14 +4820,12 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::PublishesDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5266,14 +4834,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5282,14 +4848,12 @@ char * POA_CORBA::ComponentIR::PublishesDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::PublishesDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5298,14 +4862,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::PublishesDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5317,7 +4879,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5327,7 +4888,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5336,14 +4896,12 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::PublishesDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5353,7 +4911,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::PublishesDef_tie<T>::event  (
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5361,7 +4918,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::event  (
 {
   this->ptr_->event (
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5371,7 +4927,6 @@ void POA_CORBA::ComponentIR::PublishesDef_tie<T>::event  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::PublishesDef_tie<T>::is_a  (
     const char * event_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5379,7 +4934,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     event_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5481,14 +5035,12 @@ POA_CORBA::ComponentIR::ConsumesDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::ConsumesDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5497,14 +5049,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5513,14 +5063,12 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5530,7 +5078,6 @@ char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5538,7 +5085,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5547,14 +5093,12 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5564,7 +5108,6 @@ char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5572,7 +5115,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5581,14 +5123,12 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5598,7 +5138,6 @@ char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5606,7 +5145,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5615,14 +5153,12 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::ConsumesDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5631,14 +5167,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5647,14 +5181,12 @@ char * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::ConsumesDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5663,14 +5195,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::ConsumesDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5682,7 +5212,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5692,7 +5221,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5701,14 +5229,12 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::EventDef_ptr POA_CORBA::ComponentIR::ConsumesDef_tie<T>::event  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->event (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5718,7 +5244,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::event  (
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5726,7 +5251,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::event  (
 {
   this->ptr_->event (
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5736,7 +5260,6 @@ void POA_CORBA::ComponentIR::ConsumesDef_tie<T>::event  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::ConsumesDef_tie<T>::is_a  (
     const char * event_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5744,7 +5267,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     event_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5846,14 +5368,12 @@ POA_CORBA::ComponentIR::ComponentDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::ComponentDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5862,14 +5382,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -5879,7 +5397,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::lookup  (
     const char * search_name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5887,7 +5404,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup (
     search_name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5898,7 +5414,6 @@ template <class T> ACE_INLINE
 ::CORBA::ContainedSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::contents  (
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5907,7 +5422,6 @@ template <class T> ACE_INLINE
   return this->ptr_->contents (
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5920,7 +5434,6 @@ template <class T> ACE_INLINE
     ::CORBA::Long levels_to_search,
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5931,7 +5444,6 @@ template <class T> ACE_INLINE
     levels_to_search,
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5943,7 +5455,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5953,7 +5464,6 @@ template <class T> ACE_INLINE
     limit_type,
     exclude_inherited,
     max_returned_objs
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5965,7 +5475,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -5975,7 +5484,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -5989,7 +5497,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6001,7 +5508,6 @@ template <class T> ACE_INLINE
     version,
     type,
     value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6014,7 +5520,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6025,7 +5530,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6039,7 +5543,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6051,7 +5554,6 @@ template <class T> ACE_INLINE
     version,
     discriminator_type,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6064,7 +5566,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::EnumMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6075,7 +5576,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6088,7 +5588,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6099,7 +5598,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6112,7 +5610,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6123,7 +5620,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6142,7 +5638,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6159,7 +5654,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6172,7 +5666,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6183,7 +5676,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6196,7 +5688,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6207,7 +5698,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6219,7 +5709,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6229,7 +5718,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6242,7 +5730,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6253,7 +5740,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6266,7 +5752,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6277,7 +5762,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6296,7 +5780,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6313,7 +5796,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6322,14 +5804,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6339,7 +5819,6 @@ char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6347,7 +5826,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6356,14 +5834,12 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6373,7 +5849,6 @@ char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6381,7 +5856,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6390,14 +5864,12 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6407,7 +5879,6 @@ char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6415,7 +5886,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6424,14 +5894,12 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6440,14 +5908,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6456,14 +5922,12 @@ char * POA_CORBA::ComponentIR::ComponentDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6472,14 +5936,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6491,7 +5953,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6501,7 +5962,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6510,14 +5970,12 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::type  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6526,14 +5984,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->base_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6543,7 +5999,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_interfaces  (
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6551,7 +6006,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_interfaces  (
 {
   this->ptr_->base_interfaces (
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6561,7 +6015,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_interfaces  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::ComponentDef_tie<T>::is_a  (
     const char * interface_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6569,7 +6022,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     interface_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6578,14 +6030,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDef::FullInterfaceDescription * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe_interface  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe_interface (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6599,7 +6049,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     ::CORBA::AttributeMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6611,7 +6060,6 @@ template <class T> ACE_INLINE
     version,
     type,
     mode
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6628,7 +6076,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ParDescriptionSeq & params,
     const ::CORBA::ExceptionDefSeq & exceptions,
     const ::CORBA::ContextIdSeq & contexts
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6643,7 +6090,6 @@ template <class T> ACE_INLINE
     params,
     exceptions,
     contexts
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6652,14 +6098,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * POA_CORBA::ComponentIR::ComponentDef_tie<T>::describe_ext_interface  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe_ext_interface (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6675,7 +6119,6 @@ template <class T> ACE_INLINE
     ::CORBA::AttributeMode mode,
     const ::CORBA::ExceptionDefSeq & get_exceptions,
     const ::CORBA::ExceptionDefSeq & set_exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6689,7 +6132,6 @@ template <class T> ACE_INLINE
     mode,
     get_exceptions,
     set_exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6698,14 +6140,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_component  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->base_component (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6715,7 +6155,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_component  (
     ::CORBA::ComponentIR::ComponentDef_ptr base_component
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6723,7 +6162,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_component  (
 {
   this->ptr_->base_component (
     base_component
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6732,14 +6170,12 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::base_component  (
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::ComponentDef_tie<T>::supported_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->supported_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6749,7 +6185,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::ComponentDef_tie<T>::supported_interfaces  (
     const ::CORBA::InterfaceDefSeq & supported_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6757,7 +6192,6 @@ void POA_CORBA::ComponentIR::ComponentDef_tie<T>::supported_interfaces  (
 {
   this->ptr_->supported_interfaces (
     supported_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6770,7 +6204,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6781,7 +6214,6 @@ template <class T> ACE_INLINE
     name,
     version,
     interface_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6795,7 +6227,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::InterfaceDef_ptr interface_type,
     ::CORBA::Boolean is_multiple
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6807,7 +6238,6 @@ template <class T> ACE_INLINE
     version,
     interface_type,
     is_multiple
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6820,7 +6250,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6831,7 +6260,6 @@ template <class T> ACE_INLINE
     name,
     version,
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6844,7 +6272,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6855,7 +6282,6 @@ template <class T> ACE_INLINE
     name,
     version,
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6868,7 +6294,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -6879,7 +6304,6 @@ template <class T> ACE_INLINE
     name,
     version,
     event
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -6981,14 +6405,12 @@ POA_CORBA::ComponentIR::FactoryDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::FactoryDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -6997,14 +6419,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7013,14 +6433,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7030,7 +6448,6 @@ char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7038,7 +6455,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7047,14 +6463,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7064,7 +6478,6 @@ char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7072,7 +6485,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7081,14 +6493,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7098,7 +6508,6 @@ char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7106,7 +6515,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7115,14 +6523,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7131,14 +6537,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7147,14 +6551,12 @@ char * POA_CORBA::ComponentIR::FactoryDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7163,14 +6565,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::FactoryDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7182,7 +6582,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7192,7 +6591,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7201,14 +6599,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::result  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->result (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7217,14 +6613,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::IDLType_ptr POA_CORBA::ComponentIR::FactoryDef_tie<T>::result_def  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->result_def (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7234,7 +6628,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::result_def  (
     ::CORBA::IDLType_ptr result_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7242,7 +6635,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::result_def  (
 {
   this->ptr_->result_def (
     result_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7251,14 +6643,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::result_def  (
 
 template <class T> ACE_INLINE
 ::CORBA::ParDescriptionSeq * POA_CORBA::ComponentIR::FactoryDef_tie<T>::params  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->params (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7268,7 +6658,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::params  (
     const ::CORBA::ParDescriptionSeq & params
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7276,7 +6665,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::params  (
 {
   this->ptr_->params (
     params
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7285,14 +6673,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::params  (
 
 template <class T> ACE_INLINE
 ::CORBA::OperationMode POA_CORBA::ComponentIR::FactoryDef_tie<T>::mode  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->mode (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7302,7 +6688,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::mode  (
     ::CORBA::OperationMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7310,7 +6695,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::mode  (
 {
   this->ptr_->mode (
     mode
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7319,14 +6703,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::mode  (
 
 template <class T> ACE_INLINE
 ::CORBA::ContextIdSeq * POA_CORBA::ComponentIR::FactoryDef_tie<T>::contexts  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->contexts (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7336,7 +6718,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::contexts  (
     const ::CORBA::ContextIdSeq & contexts
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7344,7 +6725,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::contexts  (
 {
   this->ptr_->contexts (
     contexts
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7353,14 +6733,12 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::contexts  (
 
 template <class T> ACE_INLINE
 ::CORBA::ExceptionDefSeq * POA_CORBA::ComponentIR::FactoryDef_tie<T>::exceptions  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->exceptions (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7370,7 +6748,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FactoryDef_tie<T>::exceptions  (
     const ::CORBA::ExceptionDefSeq & exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7378,7 +6755,6 @@ void POA_CORBA::ComponentIR::FactoryDef_tie<T>::exceptions  (
 {
   this->ptr_->exceptions (
     exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7480,14 +6856,12 @@ POA_CORBA::ComponentIR::FinderDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::FinderDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7496,14 +6870,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7512,14 +6884,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7529,7 +6899,6 @@ char * POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7537,7 +6906,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7546,14 +6914,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7563,7 +6929,6 @@ char * POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7571,7 +6936,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7580,14 +6944,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7597,7 +6959,6 @@ char * POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7605,7 +6966,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7614,14 +6974,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7630,14 +6988,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::FinderDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7646,14 +7002,12 @@ char * POA_CORBA::ComponentIR::FinderDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7662,14 +7016,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::FinderDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7681,7 +7033,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7691,7 +7042,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7700,14 +7050,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::result  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->result (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7716,14 +7064,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::IDLType_ptr POA_CORBA::ComponentIR::FinderDef_tie<T>::result_def  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->result_def (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7733,7 +7079,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::result_def  (
     ::CORBA::IDLType_ptr result_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7741,7 +7086,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::result_def  (
 {
   this->ptr_->result_def (
     result_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7750,14 +7094,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::result_def  (
 
 template <class T> ACE_INLINE
 ::CORBA::ParDescriptionSeq * POA_CORBA::ComponentIR::FinderDef_tie<T>::params  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->params (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7767,7 +7109,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::params  (
     const ::CORBA::ParDescriptionSeq & params
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7775,7 +7116,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::params  (
 {
   this->ptr_->params (
     params
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7784,14 +7124,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::params  (
 
 template <class T> ACE_INLINE
 ::CORBA::OperationMode POA_CORBA::ComponentIR::FinderDef_tie<T>::mode  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->mode (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7801,7 +7139,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::mode  (
     ::CORBA::OperationMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7809,7 +7146,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::mode  (
 {
   this->ptr_->mode (
     mode
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7818,14 +7154,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::mode  (
 
 template <class T> ACE_INLINE
 ::CORBA::ContextIdSeq * POA_CORBA::ComponentIR::FinderDef_tie<T>::contexts  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->contexts (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7835,7 +7169,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::contexts  (
     const ::CORBA::ContextIdSeq & contexts
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7843,7 +7176,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::contexts  (
 {
   this->ptr_->contexts (
     contexts
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7852,14 +7184,12 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::contexts  (
 
 template <class T> ACE_INLINE
 ::CORBA::ExceptionDefSeq * POA_CORBA::ComponentIR::FinderDef_tie<T>::exceptions  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->exceptions (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7869,7 +7199,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::FinderDef_tie<T>::exceptions  (
     const ::CORBA::ExceptionDefSeq & exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -7877,7 +7206,6 @@ void POA_CORBA::ComponentIR::FinderDef_tie<T>::exceptions  (
 {
   this->ptr_->exceptions (
     exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -7979,14 +7307,12 @@ POA_CORBA::ComponentIR::HomeDef_tie<T>::_default_POA (void)
 
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::ComponentIR::HomeDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -7995,14 +7321,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8012,7 +7336,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::lookup  (
     const char * search_name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8020,7 +7343,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->lookup (
     search_name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8031,7 +7353,6 @@ template <class T> ACE_INLINE
 ::CORBA::ContainedSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::contents  (
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8040,7 +7361,6 @@ template <class T> ACE_INLINE
   return this->ptr_->contents (
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8053,7 +7373,6 @@ template <class T> ACE_INLINE
     ::CORBA::Long levels_to_search,
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8064,7 +7383,6 @@ template <class T> ACE_INLINE
     levels_to_search,
     limit_type,
     exclude_inherited
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8076,7 +7394,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8086,7 +7403,6 @@ template <class T> ACE_INLINE
     limit_type,
     exclude_inherited,
     max_returned_objs
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8098,7 +7414,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8108,7 +7423,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8122,7 +7436,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8134,7 +7447,6 @@ template <class T> ACE_INLINE
     version,
     type,
     value
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8147,7 +7459,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8158,7 +7469,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8172,7 +7482,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8184,7 +7493,6 @@ template <class T> ACE_INLINE
     version,
     discriminator_type,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8197,7 +7505,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::EnumMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8208,7 +7515,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8221,7 +7527,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8232,7 +7537,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8245,7 +7549,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8256,7 +7559,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8275,7 +7577,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8292,7 +7593,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8305,7 +7605,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8316,7 +7615,6 @@ template <class T> ACE_INLINE
     name,
     version,
     original_type_def
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8329,7 +7627,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::StructMemberSeq & members
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8340,7 +7637,6 @@ template <class T> ACE_INLINE
     name,
     version,
     members
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8352,7 +7648,6 @@ template <class T> ACE_INLINE
     const char * id,
     const char * name,
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8362,7 +7657,6 @@ template <class T> ACE_INLINE
     id,
     name,
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8375,7 +7669,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8386,7 +7679,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8399,7 +7691,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8410,7 +7701,6 @@ template <class T> ACE_INLINE
     name,
     version,
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8429,7 +7719,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ValueDefSeq & abstract_base_values,
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8446,7 +7735,6 @@ template <class T> ACE_INLINE
     abstract_base_values,
     supported_interfaces,
     initializers
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8455,14 +7743,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->id (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8472,7 +7758,6 @@ char * POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
     const char * id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8480,7 +7765,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
 {
   this->ptr_->id (
     id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8489,14 +7773,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::id  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8506,7 +7788,6 @@ char * POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
     const char * name
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8514,7 +7795,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
 {
   this->ptr_->name (
     name
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8523,14 +7803,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::name  (
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->version (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8540,7 +7818,6 @@ char * POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
     const char * version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8548,7 +7825,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
 {
   this->ptr_->version (
     version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8557,14 +7833,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::version  (
 
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::defined_in  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->defined_in (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8573,14 +7847,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 char * POA_CORBA::ComponentIR::HomeDef_tie<T>::absolute_name  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->absolute_name (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8589,14 +7861,12 @@ char * POA_CORBA::ComponentIR::HomeDef_tie<T>::absolute_name  (
 
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::containing_repository  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->containing_repository (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8605,14 +7875,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8624,7 +7892,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::move  (
     ::CORBA::Container_ptr new_container,
     const char * new_name,
     const char * new_version
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8634,7 +7901,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::move  (
     new_container,
     new_name,
     new_version
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8643,14 +7909,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::move  (
 
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::type  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8659,14 +7923,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::base_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->base_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8676,7 +7938,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_interfaces  (
     const ::CORBA::InterfaceDefSeq & base_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8684,7 +7945,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_interfaces  (
 {
   this->ptr_->base_interfaces (
     base_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8694,7 +7954,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_interfaces  (
 template <class T> ACE_INLINE
 ::CORBA::Boolean POA_CORBA::ComponentIR::HomeDef_tie<T>::is_a  (
     const char * interface_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8702,7 +7961,6 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->is_a (
     interface_id
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8711,14 +7969,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDef::FullInterfaceDescription * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe_interface  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe_interface (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8732,7 +7988,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr type,
     ::CORBA::AttributeMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8744,7 +7999,6 @@ template <class T> ACE_INLINE
     version,
     type,
     mode
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8761,7 +8015,6 @@ template <class T> ACE_INLINE
     const ::CORBA::ParDescriptionSeq & params,
     const ::CORBA::ExceptionDefSeq & exceptions,
     const ::CORBA::ContextIdSeq & contexts
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8776,7 +8029,6 @@ template <class T> ACE_INLINE
     params,
     exceptions,
     contexts
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8785,14 +8037,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * POA_CORBA::ComponentIR::HomeDef_tie<T>::describe_ext_interface  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->describe_ext_interface (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8808,7 +8058,6 @@ template <class T> ACE_INLINE
     ::CORBA::AttributeMode mode,
     const ::CORBA::ExceptionDefSeq & get_exceptions,
     const ::CORBA::ExceptionDefSeq & set_exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8822,7 +8071,6 @@ template <class T> ACE_INLINE
     mode,
     get_exceptions,
     set_exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8831,14 +8079,12 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::HomeDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::base_home  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->base_home (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8848,7 +8094,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_home  (
     ::CORBA::ComponentIR::HomeDef_ptr base_home
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8856,7 +8101,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_home  (
 {
   this->ptr_->base_home (
     base_home
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8865,14 +8109,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::base_home  (
 
 template <class T> ACE_INLINE
 ::CORBA::InterfaceDefSeq * POA_CORBA::ComponentIR::HomeDef_tie<T>::supported_interfaces  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->supported_interfaces (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8882,7 +8124,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::supported_interfaces  (
     const ::CORBA::InterfaceDefSeq & supported_interfaces
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8890,7 +8131,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::supported_interfaces  (
 {
   this->ptr_->supported_interfaces (
     supported_interfaces
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8899,14 +8139,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::supported_interfaces  (
 
 template <class T> ACE_INLINE
 ::CORBA::ComponentIR::ComponentDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::managed_component  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->managed_component (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8916,7 +8154,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::managed_component  (
     ::CORBA::ComponentIR::ComponentDef_ptr managed_component
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8924,7 +8161,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::managed_component  (
 {
   this->ptr_->managed_component (
     managed_component
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8933,14 +8169,12 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::managed_component  (
 
 template <class T> ACE_INLINE
 ::CORBA::ValueDef_ptr POA_CORBA::ComponentIR::HomeDef_tie<T>::primary_key  (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
   ))
 {
   return this->ptr_->primary_key (
-    ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
@@ -8950,7 +8184,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::ComponentIR::HomeDef_tie<T>::primary_key  (
     ::CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8958,7 +8191,6 @@ void POA_CORBA::ComponentIR::HomeDef_tie<T>::primary_key  (
 {
   this->ptr_->primary_key (
     primary_key
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8972,7 +8204,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::ParDescriptionSeq & params,
     const ::CORBA::ExceptionDefSeq & exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -8984,7 +8215,6 @@ template <class T> ACE_INLINE
     version,
     params,
     exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -8998,7 +8228,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::ParDescriptionSeq & params,
     const ::CORBA::ExceptionDefSeq & exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException
@@ -9010,7 +8239,6 @@ template <class T> ACE_INLINE
     version,
     params,
     exceptions
-    ACE_ENV_ARG_PARAMETER
   );
 }
 

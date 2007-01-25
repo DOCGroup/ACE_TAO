@@ -13,10 +13,9 @@ main (int argc, char *argv[])
 {
   IFR_Service server;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int status = server.init (argc, argv);
 
       if (status != 0)
         {
@@ -34,16 +33,15 @@ main (int argc, char *argv[])
             }
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
+      ex._tao_print_exception ("Unknown Exception");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
@@ -25,7 +25,7 @@ TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
 
   for (; iter.next (entry); iter.advance ())
     {
-      ret_val = event->do_match (entry->int_id_.in () ACE_ENV_ARG_PARAMETER);
+      ret_val = event->do_match (entry->int_id_.in ());
 
       if (ret_val == 1)
         return 1;

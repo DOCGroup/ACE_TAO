@@ -49,7 +49,7 @@ public:
   virtual void shutdown (void);
 
   /// Exec the request.
-  virtual void execute (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL);
+  virtual void execute (TAO_Notify_Method_Request& method_request);
 
   /// The object used by clients to register timers. This method returns a Reactor based Timer.
   virtual TAO_Notify_Timer* timer (void);

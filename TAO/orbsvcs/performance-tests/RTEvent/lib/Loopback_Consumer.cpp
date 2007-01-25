@@ -27,8 +27,7 @@ Loopback_Consumer (CORBA::Long experiment_id,
 }
 
 void
-Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                            ACE_ENV_ARG_DECL)
+Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
@@ -59,8 +58,7 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
   h1.type   = this->event_type_;
 
   this->proxy_supplier_->connect_push_consumer (consumer.in (),
-                                                consumer_qos
-                                                ACE_ENV_ARG_PARAMETER);
+                                                consumer_qos);
 }
 
 void
@@ -74,23 +72,21 @@ Loopback_Consumer::disconnect (void)
     proxy = this->proxy_supplier_._retn ();
   }
 
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
+  Implicit_Deactivator deactivator (this);
 
-  ACE_TRY
+  try
     {
       proxy->disconnect_push_supplier ();
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception& ex){}
 }
 
 void
-Loopback_Consumer::push (const RtecEventComm::EventSet &events
-                              ACE_ENV_ARG_DECL)
+Loopback_Consumer::push (const RtecEventComm::EventSet &events)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Loopback_Consumer::push (%P|%t)\n"));
-  this->supplier_->push (events ACE_ENV_ARG_PARAMETER);
+  this->supplier_->push (events);
 }
 
 void

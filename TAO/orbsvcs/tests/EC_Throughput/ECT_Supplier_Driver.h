@@ -34,8 +34,7 @@ public:
   ECT_Supplier_Driver (void);
   virtual ~ECT_Supplier_Driver (void);
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void shutdown_consumer (void* consumer_cookie);
   // Not used....
 
   enum {
@@ -51,8 +50,7 @@ private:
   // parse the command line args
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
   void disconnect_suppliers (void);
   // Connect the suppliers.
 

@@ -43,7 +43,7 @@ PushSupplier_impl::~PushSupplier_impl()
   reactor_task_.wait();
 }
 
-int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel ACE_ENV_ARG_DECL)
+int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
 {
 
   ACE_DEBUG((LM_DEBUG, "for_suppliers\n"));
@@ -70,7 +70,7 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel ACE_
 
     ACE_DEBUG((LM_DEBUG, "connect_push_supplier\n"));
   consumer_->connect_push_supplier(supplier.in(),
-    qos   ACE_ENV_ARG_PARAMETER);
+    qos);
 
   ACE_DEBUG((LM_DEBUG, "push_consumer connected\n"));
 
@@ -88,7 +88,6 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel ACE_
 
 
 void  PushSupplier_impl::disconnect_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -98,14 +97,13 @@ void  PushSupplier_impl::disconnect_push_supplier (
   reactor_task_.reactor_->end_reactor_event_loop();
 
   PortableServer::Current_var current =
-    resolve_init<PortableServer::Current>(orb_.in(), "POACurrent" ACE_ENV_ARG_PARAMETER);
+    resolve_init<PortableServer::Current>(orb_.in(), "POACurrent");
 
   PortableServer::POA_var poa = current->get_POA();
 
   PortableServer::ObjectId_var oid = current->get_object_id();
 
-  poa->deactivate_object (oid.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 }
 
 int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
@@ -114,8 +112,7 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
   ACE_UNUSED_ARG(act);
   ACE_UNUSED_ARG(current_time);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
+  try{
     RtecEventComm::EventSet event (1);
     event.length (1);
     event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
@@ -127,14 +124,13 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
     event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
     event[0].data.any_value <<= seq_no_;
 
-    consumer_->push(event ACE_ENV_ARG_PARAMETER);
+    consumer_->push(event);
     ACE_DEBUG((LM_DEBUG, "sending data %d\n", seq_no_));
     ++seq_no_;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    ex._tao_print_exception ("A CORBA Exception occurred.");
   }
-  ACE_ENDTRY;
   return 0;
 }

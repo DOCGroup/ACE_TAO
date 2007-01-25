@@ -54,26 +54,24 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
+                         "");
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Narrow down to the correct reference
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Set a POA Manager
       PortableServer::POAManager_var poa_manager =
@@ -87,21 +85,18 @@ main (int argc, char *argv[])
 
       // Id Assignment policy
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       // Lifespan policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                          ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
       // We use a different POA, otherwise the user would have to change
       // the object key each time it invokes the server.
       PortableServer::POA_var poa =
         root_poa->create_POA ("Simple_Naming",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0;
@@ -119,8 +114,7 @@ main (int argc, char *argv[])
         simple_naming_i._this ();
 
       CORBA::String_var string_obj_ref =
-        orb->object_to_string (simple_naming.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (simple_naming.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -134,17 +128,16 @@ main (int argc, char *argv[])
 
       orb->run ();
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Unexpected excpeption in PSS Test");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

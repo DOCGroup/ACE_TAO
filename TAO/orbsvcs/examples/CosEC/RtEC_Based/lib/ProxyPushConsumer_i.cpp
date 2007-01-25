@@ -73,11 +73,9 @@ TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 
   // @@ If we keep a list remember to remove this object from the
   // list.
@@ -98,8 +96,7 @@ TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i (void)
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data
-                                     ACE_ENV_ARG_DECL)
+TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::Event buffer[1];
@@ -132,8 +129,7 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data
 
   e.data.any_value = data;
 
-  this->proxypushconsumer_->push (events
-                                  ACE_ENV_ARG_PARAMETER);
+  this->proxypushconsumer_->push (events);
 }
 
 void
@@ -147,21 +143,18 @@ TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier
-                                                      ACE_ENV_ARG_DECL)
+TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected))
 {
   if (this->connected ())
-    ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+    throw CosEventChannelAdmin::AlreadyConnected ();
 
   TAO_CosEC_PushSupplierWrapper *wrapper;
 
@@ -180,8 +173,7 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
 
   this->proxypushconsumer_->connect_push_supplier
     (rtecpushsupplier,
-     this->qos_
-     ACE_ENV_ARG_PARAMETER);
+     this->qos_);
 
   this->wrapper_ = auto_wrapper.release ();
 }

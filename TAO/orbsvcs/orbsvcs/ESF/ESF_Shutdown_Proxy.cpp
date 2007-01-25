@@ -13,18 +13,16 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY> void
-TAO_ESF_Shutdown_Proxy<PROXY>::work (PROXY *proxy
-                                     ACE_ENV_ARG_DECL)
+TAO_ESF_Shutdown_Proxy<PROXY>::work (PROXY *proxy)
 {
-  ACE_TRY
+  try
     {
       proxy->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Do not propagate any exceptions
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

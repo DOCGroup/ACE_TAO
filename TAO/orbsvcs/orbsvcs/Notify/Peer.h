@@ -56,8 +56,7 @@ public:
 
   // Dispatch updates
   virtual void dispatch_updates (const TAO_Notify_EventTypeSeq & added,
-                                 const TAO_Notify_EventTypeSeq & removed
-                                 ACE_ENV_ARG_DECL);
+                                 const TAO_Notify_EventTypeSeq & removed);
 
   /// QoS changed notification from the Peer.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
@@ -71,8 +70,7 @@ public:
 protected:
   /// Implementation of Peer specific dispatch_updates
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed
-                                   ACE_ENV_ARG_DECL) = 0;
+                                   const CosNotification::EventTypeSeq& removed) = 0;
 
 private:
   /// Release

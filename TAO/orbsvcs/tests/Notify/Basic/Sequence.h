@@ -36,7 +36,6 @@ public:
   // = SequencePushConsumer methods
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -75,8 +74,7 @@ public:
                   char *argv[]) ;
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // Initialization.
 
   void on_event_received (void);

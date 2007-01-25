@@ -36,25 +36,25 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::init (void)
 }
 
 template <class PROXY, class ACE_LOCK> void
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::connect (PROXY* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::connect (PROXY* proxy)
 {
-  this->updates_entry_.connected (proxy ACE_ENV_ARG_PARAMETER);
+  this->updates_entry_.connected (proxy);
 
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
   ++this->proxy_count_;
 }
 
 template <class PROXY, class ACE_LOCK> void
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy)
 {
-  this->updates_entry_.disconnected (proxy ACE_ENV_ARG_PARAMETER);
+  this->updates_entry_.disconnected (proxy);
 
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
   --this->proxy_count_;
 }
 
 template <class PROXY, class ACE_LOCK> int
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_EventType& event_type)
 {
   ENTRY* entry;
 
@@ -81,7 +81,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
 
     entry->init ();
 
-    entry->connected (proxy ACE_ENV_ARG_PARAMETER);
+    entry->connected (proxy);
 
     ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
@@ -95,14 +95,14 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
   }
   else // Add to existing entry or the broadcast entry.
     {
-      entry->connected (proxy ACE_ENV_ARG_PARAMETER);
+      entry->connected (proxy);
     }
 
   return 0;
 }
 
 template <class PROXY, class ACE_LOCK> int
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_EventType& event_type)
 {
   ENTRY* entry = 0;
 
@@ -110,7 +110,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
     {
       entry = &this->broadcast_entry_;
 
-      entry->disconnected (proxy ACE_ENV_ARG_PARAMETER);
+      entry->disconnected (proxy);
     }
   else
     {
@@ -124,7 +124,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
 
       if (result == 0)
         {
-          entry->disconnected (proxy ACE_ENV_ARG_PARAMETER);
+          entry->disconnected (proxy);
 
           if (entry->count () == 0)
             {

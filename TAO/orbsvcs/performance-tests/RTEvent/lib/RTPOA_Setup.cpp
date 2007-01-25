@@ -22,18 +22,15 @@ ACE_RCSID (TAO_PERF_RTEC,
            "$Id$")
 
 RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
-                          const RTCORBA_Setup &rtcorba_setup
-                          ACE_ENV_ARG_DECL)
+                          const RTCORBA_Setup &rtcorba_setup)
 {
   RTPortableServer::POA_var root_poa =
     RIR_Narrow<RTPortableServer::POA>::resolve (orb,
-                                                "RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
+                                                "RootPOA");
 
   RTCORBA::RTORB_var rtorb =
     RIR_Narrow<RTCORBA::RTORB>::resolve (orb,
-                                         "RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+                                         "RTORB");
 
   const CORBA::ULong stacksize = 1024 * 1024; // 1 Mb
   const RTCORBA::ThreadpoolLanes &lanes = rtcorba_setup.lanes ();
@@ -48,30 +45,25 @@ RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
                                          allow_borrowing,
                                          allow_request_buffering,
                                          max_buffered_requests,
-                                         max_request_buffer_size
-                                         ACE_ENV_ARG_PARAMETER);
+                                         max_request_buffer_size);
 
   // @@ We need an 'auto_ptr for thread pools' here!
   CORBA::PolicyList policies (4); policies.length (4);
   policies[0] =
     rtorb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                         rtcorba_setup.process_priority ()
-                                         ACE_ENV_ARG_PARAMETER);
+                                         rtcorba_setup.process_priority ());
 
   policies[1] =
-    root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID
-                                           ACE_ENV_ARG_PARAMETER);
+    root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
 
   policies[2] =
-    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                 ACE_ENV_ARG_PARAMETER);
+    root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
 #if 0
   policies.length (3);
 #else
   policies[3] =
-    rtorb->create_threadpool_policy (pool_id
-                                     ACE_ENV_ARG_PARAMETER);
+    rtorb->create_threadpool_policy (pool_id);
 #endif /* 0 */
 
   PortableServer::POAManager_var poa_manager =
@@ -80,8 +72,7 @@ RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
   this->poa_ =
     root_poa->create_POA ("RTEC_Perf",
                           poa_manager.in (),
-                          policies
-                          ACE_ENV_ARG_PARAMETER);
+                          policies);
 
   for (CORBA::ULong i = 0; i != policies.length (); ++i)
     {

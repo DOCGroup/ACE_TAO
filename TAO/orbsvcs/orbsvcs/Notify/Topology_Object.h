@@ -72,21 +72,21 @@ namespace TAO_Notify
     ///   if (is_persistent ())
     ///   {
     ///     bool want_all_children = saver.begin_object(
-    ///       this->id(), type, attrs, change ACE_ENV_ARG_PARAMETER);
+    ///       this->id(), type, attrs, change);
     ///     for all children
     ///     {
     ///       if (want_all_children || child.is_changed())
     ///       {
-    ///         child.save_persistent(saver ACE_ENV_ARG_PARAMETER);
+    ///         child.save_persistent(saver);
     ///       }
     ///     }
     ///     for all deleted children
     ///     {
     ///       saver.delete_child(child_type, child_id);
     ///     }
-    ///     saver.end_object(this->id(), type ACE_ENV_ARG_PARAMETER);
+    ///     saver.end_object(this->id(), type);
     ///   )
-    virtual void save_persistent (Topology_Saver& saver ACE_ENV_ARG_DECL) = 0;
+    virtual void save_persistent (Topology_Saver& saver) = 0;
 
     /// Re-establish connections that we had before a shutdown.
     ///
@@ -116,7 +116,7 @@ namespace TAO_Notify
     virtual ~Topology_Object ();
 
     /// Init this object with data from <rhs>.
-    virtual void initialize (Topology_Parent* topology_parent ACE_ENV_ARG_DECL);
+    virtual void initialize (Topology_Parent* topology_parent);
 
     /// \brief Create a child of the appropriate type and return it.
     ///
@@ -125,8 +125,7 @@ namespace TAO_Notify
     /// its new ID.
     virtual Topology_Object* load_child (const ACE_CString & /*type*/,
       CORBA::Long /* id */,
-      const NVPList& /* attrs */
-      ACE_ENV_ARG_DECL_NOT_USED);
+      const NVPList& /* attrs */);
 
     /// \brief Find the id associated with topology object.
     ///

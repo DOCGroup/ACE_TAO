@@ -49,7 +49,7 @@ public:
   /**
    * Publish this objects IOR.
    */
-  int init (CORBA::ORB_ptr orbManager, ::FT::FaultNotifier_var & notifier ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orbManager, ::FT::FaultNotifier_var & notifier);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -76,7 +76,6 @@ public:
 
     virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -84,7 +83,6 @@ public:
       ));
 
     virtual void disconnect_sequence_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -93,7 +91,6 @@ public:
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
      ACE_THROW_SPEC ((
        CORBA::SystemException, CosNotifyComm::InvalidEventType

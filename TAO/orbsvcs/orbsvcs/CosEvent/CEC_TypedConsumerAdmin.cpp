@@ -28,35 +28,30 @@ TAO_CEC_TypedConsumerAdmin::~TAO_CEC_TypedConsumerAdmin (void)
 }
 
 void
-TAO_CEC_TypedConsumerAdmin::invoke (const TAO_CEC_TypedEvent& typed_event
-                                    ACE_ENV_ARG_DECL)
+TAO_CEC_TypedConsumerAdmin::invoke (const TAO_CEC_TypedEvent& typed_event)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_CEC_Propagate_Typed_Event typed_event_worker (typed_event, this->typed_event_channel_);
 
-  this->typed_push_admin_.for_each (&typed_event_worker
-                                    ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.for_each (&typed_event_worker);
 }
 
 void
-TAO_CEC_TypedConsumerAdmin::connected (TAO_CEC_ProxyPushSupplier *supplier
-                                       ACE_ENV_ARG_DECL)
+TAO_CEC_TypedConsumerAdmin::connected (TAO_CEC_ProxyPushSupplier *supplier)
 {
-  this->typed_push_admin_.connected (supplier ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.connected (supplier);
 }
 
 void
-TAO_CEC_TypedConsumerAdmin::reconnected (TAO_CEC_ProxyPushSupplier *supplier
-                                         ACE_ENV_ARG_DECL)
+TAO_CEC_TypedConsumerAdmin::reconnected (TAO_CEC_ProxyPushSupplier *supplier)
 {
-  this->typed_push_admin_.reconnected (supplier ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.reconnected (supplier);
 }
 
 void
-TAO_CEC_TypedConsumerAdmin::disconnected (TAO_CEC_ProxyPushSupplier *supplier
-                                          ACE_ENV_ARG_DECL)
+TAO_CEC_TypedConsumerAdmin::disconnected (TAO_CEC_ProxyPushSupplier *supplier)
 {
-  this->typed_push_admin_.disconnected (supplier ACE_ENV_ARG_PARAMETER);
+  this->typed_push_admin_.disconnected (supplier);
 }
 
 void
@@ -68,7 +63,6 @@ TAO_CEC_TypedConsumerAdmin::shutdown (void)
 CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
     const char * /*supported_interface*/
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -81,7 +75,6 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
     const char * uses_interface
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -90,7 +83,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 
 {
   // Register the consumer uses_interface with the EC
-  int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface ACE_ENV_ARG_PARAMETER);
+  int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface);
 
   if (result == -1)
     {
@@ -123,10 +116,9 @@ TAO_CEC_TypedConsumerAdmin::_default_POA (void)
 // ****************************************************************
 
 void
-TAO_CEC_Propagate_Typed_Event::work (TAO_CEC_ProxyPushSupplier *supplier
-                                     ACE_ENV_ARG_DECL)
+TAO_CEC_Propagate_Typed_Event::work (TAO_CEC_ProxyPushSupplier *supplier)
 {
-  supplier->invoke (this->typed_event_ ACE_ENV_ARG_PARAMETER);
+  supplier->invoke (this->typed_event_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

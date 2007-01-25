@@ -47,10 +47,10 @@ public:
   virtual ~TAO_Notify_ProxySupplier ();
 
   /// Init
-  virtual void init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
+  virtual void init (TAO_Notify_ConsumerAdmin* consumer_admin);
 
   /// Connect
-  void connect (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL)
+  void connect (TAO_Notify_Consumer* consumer)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosEventChannelAdmin::AlreadyConnected
@@ -59,7 +59,7 @@ public:
   void disconnect (void);
 
   /// Dispatch Event to consumer
-  virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request ACE_ENV_ARG_DECL);
+  virtual void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
 
   /// Override TAO_Notify_Container_T::shutdown  method
   virtual int shutdown (void);

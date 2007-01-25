@@ -12,7 +12,6 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 TAO_Trader (TAO_Trader_Base::Trader_Components components)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // @@ Seth, we need a way to propagate the exception out.  This will
   // not work on platforms using environment variable.
@@ -86,28 +85,26 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 {
   // Remove Trading Components from POA
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     {
       if (this->ifs_[i] != 0)
         {
-          ACE_TRY
+          try
             {
               PortableServer::POA_var poa =
                 this->ifs_[i]->_default_POA ();
 
               PortableServer::ObjectId_var id =
-                poa->servant_to_id (this->ifs_[i] ACE_ENV_ARG_PARAMETER);
+                poa->servant_to_id (this->ifs_[i]);
 
-              poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+              poa->deactivate_object (id.in ());
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
               // Don't let exceptions propagate out of this call since
               // it's the destructor!
             }
-          ACE_ENDTRY;
         }
     }
 }
@@ -195,7 +192,7 @@ TAO_Support_Attributes<IF>::supports_proxy_offers (void)
 }
 
 template <class IF> CosTrading::TypeRepository_ptr
-TAO_Support_Attributes<IF>::type_repos (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+TAO_Support_Attributes<IF>::type_repos ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::TypeRepository::_duplicate (this->attrs_.type_repos ());

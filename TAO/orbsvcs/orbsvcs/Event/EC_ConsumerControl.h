@@ -66,14 +66,12 @@ public:
    * has been destroyed.  The strategy has to (at the very least),
    * reclaim all the resources attached to that object.
    */
-  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL);
+  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy);
 
   /// Some system exception was raised while trying to contact the
   /// consumer
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL);
+                                 CORBA::SystemException &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

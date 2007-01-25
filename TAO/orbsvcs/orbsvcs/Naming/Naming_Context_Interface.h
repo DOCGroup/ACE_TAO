@@ -67,8 +67,7 @@ public:
    * participate in name resolution later.
    */
   virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                     CORBA::Object_ptr obj)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNaming::NamingContext::NotFound,
                      CosNaming::NamingContext::CannotProceed,
@@ -82,8 +81,7 @@ public:
    * new one.
    */
   virtual void rebind (const CosNaming::Name &n,
-                       CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       CORBA::Object_ptr obj)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
@@ -95,8 +93,7 @@ public:
    * compound names are passed to be resolved.
    */
   virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             CosNaming::NamingContext_ptr nc)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
@@ -109,8 +106,7 @@ public:
    * names are passed.
    */
   virtual void rebind_context (const CosNaming::Name &n,
-                               CosNaming::NamingContext_ptr nc
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               CosNaming::NamingContext_ptr nc)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
@@ -123,8 +119,7 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
@@ -135,8 +130,7 @@ public:
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void unbind (const CosNaming::Name &n)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
@@ -148,8 +142,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CosNaming::NamingContext_ptr new_context ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -159,8 +152,7 @@ public:
    * bound (the name argument excluding the last component).
    */
   virtual CosNaming::NamingContext_ptr bind_new_context (
-      const CosNaming::Name &n
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const CosNaming::Name &n)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::AlreadyBound,
@@ -187,8 +179,7 @@ public:
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out bl,
-                     CosNaming::BindingIterator_out bi
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                     CosNaming::BindingIterator_out bi)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -197,8 +188,7 @@ public:
    * is invalid i.e. if the number of characters in the name is zero,
    * an InvalidName exception is to be raised.
    */
-  virtual char * to_string (const CosNaming::Name &n
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual char * to_string (const CosNaming::Name &n)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNaming::NamingContext::InvalidName));
 
@@ -207,8 +197,7 @@ public:
    * escape character '\' and destringifies the stringified name and returns
    * it.
    */
-  virtual CosNaming::Name * to_name (const char *sn
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CosNaming::Name * to_name (const char *sn)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNaming::NamingContext::InvalidName));
 
@@ -219,8 +208,7 @@ public:
    * iiopname://1.1@myhost.555xyz.com:9999/a/b/c
    */
   virtual char * to_url ( const char * addr,
-                          const char * sn
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                          const char * sn)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNaming::NamingContextExt::InvalidAddress,
@@ -284,8 +272,7 @@ private:
   /// Validate the to_url() method input, and compute the size of the
   /// returned URL address.
   static size_t to_url_validate_and_compute_size (const char *add,
-                                                  const char *sn
-                                                  ACE_ENV_ARG_DECL);
+                                                  const char *sn);
 
 protected:
 
@@ -322,8 +309,7 @@ public:
    * participate in name resolution later.
    */
   virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj
-                     ACE_ENV_ARG_DECL) = 0;
+                     CORBA::Object_ptr obj) = 0;
 
   /**
    * This is similar to <bind> operation above, except for when the
@@ -332,8 +318,7 @@ public:
    * new one.
    */
   virtual void rebind (const CosNaming::Name &n,
-                       CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL) = 0;
+                       CORBA::Object_ptr obj) = 0;
 
   /**
    * This is the version of <bind> specifically for binding naming
@@ -341,8 +326,7 @@ public:
    * compound names are passed to be resolved.
    */
   virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc
-                             ACE_ENV_ARG_DECL) = 0;
+                             CosNaming::NamingContext_ptr nc) = 0;
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
@@ -350,8 +334,7 @@ public:
    * names are passed.
    */
   virtual void rebind_context (const CosNaming::Name &n,
-                               CosNaming::NamingContext_ptr nc
-                               ACE_ENV_ARG_DECL) = 0;
+                               CosNaming::NamingContext_ptr nc) = 0;
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -360,16 +343,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     ACE_ENV_ARG_DECL) = 0;
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n) = 0;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n
-                       ACE_ENV_ARG_DECL) = 0;
+  virtual void unbind (const CosNaming::Name &n) = 0;
 
   /**
    * This operation returns a new naming context implemented by the
@@ -384,8 +365,7 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n
-                                                         ACE_ENV_ARG_DECL) = 0;
+  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n) = 0;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -405,8 +385,7 @@ public:
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi
-                     ACE_ENV_ARG_DECL) = 0;
+                     CosNaming::BindingIterator_out &bi) = 0;
 
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void) = 0;

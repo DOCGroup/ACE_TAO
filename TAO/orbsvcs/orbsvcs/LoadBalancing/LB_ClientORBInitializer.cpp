@@ -11,16 +11,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_LB_ClientORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ClientRequestInterceptor_ptr tmp;
@@ -34,8 +32,7 @@ TAO_LB_ClientORBInitializer::post_init (
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor = tmp;
 
-  info->add_client_request_interceptor (client_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_client_request_interceptor (client_interceptor.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

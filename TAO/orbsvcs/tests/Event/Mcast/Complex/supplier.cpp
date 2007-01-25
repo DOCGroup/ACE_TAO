@@ -7,8 +7,7 @@
 #include "ace/Log_Msg.h"
 
 void
-send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer
-             ACE_ENV_ARG_DECL)
+send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer)
 {
   // Events we'll send.
   RtecEventComm::EventSet events (1);
@@ -22,13 +21,13 @@ send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer
     {
       // Send 1 event of each type.
       events[0].header.type = A_EVENT_TYPE;
-      consumer->push (events ACE_ENV_ARG_PARAMETER);
+      consumer->push (events);
 
       events[0].header.type = B_EVENT_TYPE;
-      consumer->push (events ACE_ENV_ARG_PARAMETER);
+      consumer->push (events);
 
       events[0].header.type = C_EVENT_TYPE;
-      consumer->push (events ACE_ENV_ARG_PARAMETER);
+      consumer->push (events);
     }
 }
 
@@ -53,22 +52,20 @@ parse_args (int /*argc*/, char ** /*argv*/)
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize ORB and parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) == -1)
         return 1;
 
       // Obtain reference to EC.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("Event_Service" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("Event_Service");
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
         return 1;
 
@@ -87,23 +84,20 @@ main (int argc, char *argv[])
 
       consumer->connect_push_supplier
         (RtecEventComm::PushSupplier::_nil (),
-         qos.get_SupplierQOS ()
-         ACE_ENV_ARG_PARAMETER);
+         qos.get_SupplierQOS ());
 
       // Send events to EC.
-      send_events (consumer.in () ACE_ENV_ARG_PARAMETER);
+      send_events (consumer.in ());
 
       // Tell EC to shut down.
       ec->destroy ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Supplier:");
+      ex._tao_print_exception ("Exception in Supplier:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

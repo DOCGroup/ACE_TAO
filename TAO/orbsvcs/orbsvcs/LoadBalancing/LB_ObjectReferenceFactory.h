@@ -70,8 +70,7 @@ class TAO_LB_ObjectReferenceFactory
   //@{
   virtual CORBA::Object_ptr make_object (
       const char * repository_id,
-      const PortableInterceptor::ObjectId & id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableInterceptor::ObjectId & id)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -99,8 +98,7 @@ protected:
   /// RepositoryId.
   CORBA::Boolean find_object_group (const char * repository_id,
                                     CORBA::ULong & index,
-                                    PortableGroup::ObjectGroup_out object_group
-                                    ACE_ENV_ARG_DECL);
+                                    PortableGroup::ObjectGroup_out object_group);
 
   /// Determine if object with given RepositoryId is load managed.
   CORBA::Boolean load_managed_object (const char * repository_id,

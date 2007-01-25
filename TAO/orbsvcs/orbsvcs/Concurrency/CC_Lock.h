@@ -70,8 +70,7 @@ public:
   void unlock (void);
 
   /// Changes the mode of this lock.
-  void change_mode (CosConcurrencyControl::lock_mode new_mode
-                   ACE_ENV_ARG_DECL);
+  void change_mode (CosConcurrencyControl::lock_mode new_mode);
 
   /// Sets the mode_ of the lock. Used in initialization
   void set_mode (CosConcurrencyControl::lock_mode mode);

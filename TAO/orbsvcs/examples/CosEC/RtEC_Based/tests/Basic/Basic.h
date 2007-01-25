@@ -36,7 +36,7 @@ public:
   ~Basic (void);
   // Destructor.
 
-  void init (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv[]);
   // Starts up an ORB and the CosEC.
   // Returns 0 on success, -1 on error.
 
@@ -48,7 +48,7 @@ public:
   // Closes down the CosEC.
 
 private:
-  void init_ORB (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv[]);
   // initializes the ORB.
   // Returns 0 on success, -1 on error.
 

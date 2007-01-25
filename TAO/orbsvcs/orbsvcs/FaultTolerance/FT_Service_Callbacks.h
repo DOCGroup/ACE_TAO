@@ -77,15 +77,13 @@ public:
   /// reinvocaton.
   virtual TAO::Invocation_Status raise_comm_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+      TAO_Profile *profile);
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
   virtual TAO::Invocation_Status raise_transient_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+      TAO_Profile *profile);
 
   static TimeBase::TimeT now (void);
 

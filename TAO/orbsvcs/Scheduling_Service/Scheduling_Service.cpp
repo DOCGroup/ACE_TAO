@@ -50,13 +50,13 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
   CORBA::ORB_var orb;
   PortableServer::POAManager_ptr poa_manager;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Initialize ORB manager.
-      this->orb_manager_.init (command_line.get_argc(), command_line.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
+      this->orb_manager_.init (command_line.get_argc(), command_line.get_ASCII_argv());
 
       orb = this->orb_manager_.orb ();
 
@@ -95,20 +95,20 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 
       // Locate the naming service.
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to locate the Naming Service.\n"),
                           -1);
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       RtecScheduler::Scheduler_var scheduler =
         this->scheduler_impl_->_this ();
 
       CORBA::String_var scheduler_ior_string =
-        orb->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (scheduler.in ());
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%s>\n"),
                             ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ())));
@@ -117,7 +117,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (this->service_name_.rep());
-      naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
+      naming_context->rebind (schedule_name, scheduler.in ());
 
       if (this->ior_file_name_.rep() != 0)
         {
@@ -143,12 +143,11 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Scheduling_Service::init");
+      ex._tao_print_exception ("TAO_Scheduling_Service::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -233,7 +232,7 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_Scheduling_Service scheduling_service;
 
@@ -248,12 +247,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       scheduling_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "schedule_service");
+      ex._tao_print_exception ("schedule_service");
           return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -37,8 +37,7 @@ public:
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL);
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
   void disconnect (void);
   void deactivate (void);
 
@@ -49,8 +48,7 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

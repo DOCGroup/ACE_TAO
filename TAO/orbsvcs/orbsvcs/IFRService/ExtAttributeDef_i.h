@@ -52,56 +52,46 @@ public:
   // Destructor
 
   virtual CORBA::ExcDescriptionSeq *get_exceptions (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExcDescriptionSeq *get_exceptions_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void get_exceptions (
       const CORBA::ExcDescriptionSeq &get_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void get_exceptions_i (
       const CORBA::ExcDescriptionSeq &get_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExcDescriptionSeq *set_exceptions (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExcDescriptionSeq *set_exceptions_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void set_exceptions (
       const CORBA::ExcDescriptionSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_exceptions_i (
       const CORBA::ExcDescriptionSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExtAttributeDescription *describe_attribute (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtAttributeDescription *describe_attribute_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -109,7 +99,6 @@ public:
   // ComponentDescription.
   void fill_description (
       CORBA::ExtAttributeDescription &desc
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -117,8 +106,7 @@ private:
   /// Common code for the set and get varieties.
 
   void fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
-                        const char *sub_section
-                        ACE_ENV_ARG_DECL);
+                        const char *sub_section);
 
   void exceptions (const char *sub_section,
                    const CORBA::ExcDescriptionSeq &exceptions);

@@ -18,20 +18,20 @@ TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()
 }
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->init (parent_poa, child_poa_name.c_str (), tp_params ACE_ENV_ARG_PARAMETER);
+  this->init (parent_poa, child_poa_name.c_str (), tp_params);
 }
 
 void
 TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
-                                 , const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
+                                 , const NotifyExt::ThreadPoolParams& tp_params)
 {
   CORBA::PolicyList policy_list (4);
 
-  this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
+  this->set_policy (parent_poa, policy_list);
 
   RTCORBA::RTORB_var rt_orb = TAO_Notify_RT_PROPERTIES::instance ()->rt_orb ();
 
@@ -46,8 +46,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
   policy_list.length (3);
   policy_list[2] =
     rt_orb->create_priority_model_policy (priority_model,
-                                          tp_params.server_priority
-                                          ACE_ENV_ARG_PARAMETER);
+                                          tp_params.server_priority);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Creating threadpool: static threads = %d, def. prio = %d\n"
@@ -61,32 +60,30 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
                                tp_params.default_priority,
                                tp_params.allow_request_buffering,
                                tp_params.max_buffered_requests,
-                               tp_params.max_request_buffer_size
-                               ACE_ENV_ARG_PARAMETER);
+                               tp_params.max_request_buffer_size);
 
   policy_list.length (4);
   policy_list[3] =
-    rt_orb->create_threadpool_policy (threadpool_id
-                                      ACE_ENV_ARG_PARAMETER);
+    rt_orb->create_threadpool_policy (threadpool_id);
 
-  this->create_i (parent_poa, poa_name, policy_list ACE_ENV_ARG_PARAMETER);
+  this->create_i (parent_poa, poa_name, policy_list);
 }
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->init (parent_poa, child_poa_name.c_str (), tpl_params ACE_ENV_ARG_PARAMETER);
+  this->init (parent_poa, child_poa_name.c_str (), tpl_params);
 }
 
 void
 TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
-                                 , const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
+                                 , const NotifyExt::ThreadPoolLanesParams& tpl_params)
 {
   CORBA::PolicyList policy_list (4);
 
-  this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
+  this->set_policy (parent_poa, policy_list);
 
   RTCORBA::RTORB_var rt_orb = TAO_Notify_RT_PROPERTIES::instance ()->rt_orb ();
 
@@ -97,8 +94,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
   policy_list.length (3);
   policy_list[2] =
     rt_orb->create_priority_model_policy (priority_model,
-                                          tpl_params.server_priority
-                                          ACE_ENV_ARG_PARAMETER);
+                                          tpl_params.server_priority);
 
   // Populate RTCORBA Lanes.
   RTCORBA::ThreadpoolLanes lanes (tpl_params.lanes.length ());
@@ -124,19 +120,17 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* 
                                           tpl_params.allow_borrowing,
                                           tpl_params.allow_request_buffering,
                                           tpl_params.max_buffered_requests,
-                                          tpl_params.max_request_buffer_size
-                                          ACE_ENV_ARG_PARAMETER);
+                                          tpl_params.max_request_buffer_size);
 
   policy_list.length (4);
   policy_list[3] =
-    rt_orb->create_threadpool_policy (threadpool_id
-                                      ACE_ENV_ARG_PARAMETER);
+    rt_orb->create_threadpool_policy (threadpool_id);
 
-  this->create_i (parent_poa, poa_name, policy_list ACE_ENV_ARG_PARAMETER);
+  this->create_i (parent_poa, poa_name, policy_list);
 }
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa)
 {
   CORBA::PolicyList policy_list (1);
 
@@ -146,12 +140,11 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_D
 
   policy_list[0] =
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0
-                                          ACE_ENV_ARG_PARAMETER);
+                                          0);
 
   ACE_CString child_poa_name = this->get_unique_id ();
 
-  this->create_i (parent_poa, child_poa_name.c_str (), policy_list ACE_ENV_ARG_PARAMETER);
+  this->create_i (parent_poa, child_poa_name.c_str (), policy_list);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

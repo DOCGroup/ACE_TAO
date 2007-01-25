@@ -51,13 +51,13 @@ public:
   virtual ~TAO_Notify_Admin ();
 
   /// Init
-  void init (TAO_Notify::Topology_Parent * parent ACE_ENV_ARG_DECL);
+  void init (TAO_Notify::Topology_Parent * parent);
 
   /// Insert the proxy in the <proxy_container_>.
-  void insert (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL);
+  void insert (TAO_Notify_Proxy* proxy);
 
   /// Remove type from container_
-  void remove (TAO_Notify_Proxy *proxy ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_Proxy *proxy);
 
   /// Access Admin FilterAdmin.
   TAO_Notify_FilterAdmin& filter_admin (void);
@@ -71,16 +71,15 @@ public:
   CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator (void);
 
   /// Obtain the Admin's subscribed types.
-  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types
-                         ACE_ENV_ARG_DECL);
+  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types);
 
   TAO_Notify_EventChannel * event_channel () const;
   /// Shutdown
   virtual int shutdown (void);
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
-    CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
+    CORBA::Long id, const TAO_Notify::NVPList& attrs);
   virtual void reconnect (void);
 
   void set_default (bool is_default);

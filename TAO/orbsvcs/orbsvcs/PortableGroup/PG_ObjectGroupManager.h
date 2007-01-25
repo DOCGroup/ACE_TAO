@@ -68,8 +68,7 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
       const char * type_id,
-      const PortableGroup::Criteria & the_criteria
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Criteria & the_criteria)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberAlreadyPresent,
@@ -82,8 +81,7 @@ public:
   virtual PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
-      CORBA::Object_ptr member
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Object_ptr member)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberAlreadyPresent,
@@ -98,37 +96,32 @@ public:
    */
   virtual PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Location & the_location)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
 
   /// Return the locations of the members in the given ObjectGroup.
   virtual PortableGroup::Locations * locations_of_members (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableGroup::ObjectGroup_ptr object_group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
   /// Return the locations of the members in the given ObjectGroup.
   virtual PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Location & the_location)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   /// @note Does this method make sense for load balanced objects?
   virtual PortableGroup::ObjectGroupId get_object_group_id (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableGroup::ObjectGroup_ptr object_group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
   /// @note Does this method make sense for load balanced objects?
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableGroup::ObjectGroup_ptr object_group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
@@ -136,8 +129,7 @@ public:
   /// ObjectGroup at the given location.
   virtual CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Location & loc)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
@@ -147,7 +139,6 @@ public:
    */
    virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
         PortableGroup::ObjectGroupId group_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -168,8 +159,7 @@ public:
       const PortableGroup::Location & the_location,
       CORBA::Object_ptr member,
       const char * type_id,
-      const CORBA::Boolean propagate_member_already_present
-      ACE_ENV_ARG_DECL)
+      const CORBA::Boolean propagate_member_already_present)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::MemberAlreadyPresent,
                      PortableGroup::NoFactory));
@@ -184,28 +174,24 @@ public:
     CORBA::ULong group_id,
     const PortableServer::ObjectId &oid,
     const char * type_id,
-    const PortableGroup::Criteria & the_criteria
-    ACE_ENV_ARG_DECL);
+    const PortableGroup::Criteria & the_criteria);
 
   /// Destroy the object group corresponding to the given ObjectId.
   /**
    * @note This method is used mainly by the
    *       GenericFactory::delete_object() method.
    */
-  void destroy_object_group (const PortableServer::ObjectId & oid
-                             ACE_ENV_ARG_DECL);
+  void destroy_object_group (const PortableServer::ObjectId & oid);
 
   /// Return the properties set when the object group was created, and
   /// the dynamic properties that may have overridden them.
   PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL)
+      PortableGroup::ObjectGroup_ptr object_group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
   /// Return the type_id for the given object group.
-  char * type_id (PortableGroup::ObjectGroup_ptr object_group
-                  ACE_ENV_ARG_DECL);
+  char * type_id (PortableGroup::ObjectGroup_ptr object_group);
 
   /// Return the object group associated with the given ObjectId.
   /**
@@ -216,8 +202,7 @@ public:
     const PortableServer::ObjectId & oid);
 
   /// Return the number of members in the given object group.
-  CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group
-                             ACE_ENV_ARG_DECL)
+  CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
@@ -243,8 +228,7 @@ protected:
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member,
-    const CORBA::Boolean check_type_id
-    ACE_ENV_ARG_DECL)
+    const CORBA::Boolean check_type_id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberAlreadyPresent,
@@ -253,8 +237,7 @@ protected:
   /// Obtain the ObjectGroup hash map entry corresponding to the given
   /// ObjectGroup reference.
   TAO_PG_ObjectGroup_Map_Entry * get_group_entry (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL)
+      PortableGroup::ObjectGroup_ptr object_group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
@@ -282,8 +265,7 @@ protected:
   CORBA::Boolean valid_type_id (
     PortableGroup::ObjectGroup_ptr object_group,
     TAO_PG_ObjectGroup_Map_Entry * group_entry,
-    CORBA::Object_ptr member
-    ACE_ENV_ARG_DECL);
+    CORBA::Object_ptr member);
 
 private:
 

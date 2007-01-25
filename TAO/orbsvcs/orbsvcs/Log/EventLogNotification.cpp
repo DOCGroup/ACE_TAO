@@ -42,11 +42,10 @@ TAO_EventLogNotification::obtain_proxy_consumer()
 }
 
 void
-TAO_EventLogNotification::send_notification (const CORBA::Any& any
-                                             ACE_ENV_ARG_DECL)
+TAO_EventLogNotification::send_notification (const CORBA::Any& any)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  consumer_->push (any ACE_ENV_ARG_PARAMETER);
+  consumer_->push (any);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

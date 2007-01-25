@@ -63,8 +63,7 @@ PortableGroup::ObjectGroup_ptr
 TAO::PG_Object_Group_Manipulator::create_object_group (
   const char * type_id,
   const char * domain_id,
-  PortableGroup::ObjectGroupId & group_id
-  ACE_ENV_ARG_DECL)
+  PortableGroup::ObjectGroupId & group_id)
 {
    allocate_ogid(group_id);
    PortableServer::ObjectId_var oid = convert_ogid_to_oid (group_id);
@@ -72,8 +71,7 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
   // Create a reference for the ObjectGroup
   CORBA::Object_var object_group =
     this->poa_->create_reference_with_id (oid.in(),
-                                          type_id
-                                          ACE_ENV_ARG_PARAMETER);
+                                          type_id);
 
   PortableGroup::TagGroupTaggedComponent tag_component;
 
@@ -92,8 +90,7 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
 
 void
 TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb,
-                                        PortableServer::POA_ptr poa
-                                        ACE_ENV_ARG_DECL)
+                                        PortableServer::POA_ptr poa)
 {
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()) && !CORBA::is_nil (orb));
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -103,39 +100,37 @@ TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb,
 
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM = this->orb_->resolve_initial_references (
-    TAO_OBJID_IORMANIPULATION, 0 ACE_ENV_ARG_PARAMETER);
+    TAO_OBJID_IORMANIPULATION, 0);
 
   this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
-    IORM.in () ACE_ENV_ARG_PARAMETER);
+    IORM.in ());
 }
 
 int TAO::PG_Object_Group_Manipulator::set_primary (
       TAO_IOP::TAO_IOR_Property * prop,
       PortableGroup::ObjectGroup_ptr group,
-      CORBA::Object_ptr new_primary
-      ACE_ENV_ARG_DECL) const
+      CORBA::Object_ptr new_primary) const
 {
-  int sts = this->iorm_->is_primary_set (prop, group ACE_ENV_ARG_PARAMETER);
+  int sts = this->iorm_->is_primary_set (prop, group);
   if (sts)
   {
-    (void)this->iorm_->remove_primary_tag (prop, group ACE_ENV_ARG_PARAMETER);
+    (void)this->iorm_->remove_primary_tag (prop, group);
   }
   /////note: iorm takes it's parameters in the "wrong" order for this call
-  return this->iorm_->set_primary (prop, new_primary, group ACE_ENV_ARG_PARAMETER);
+  return this->iorm_->set_primary (prop, new_primary, group);
 }
 
 PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group_Manipulator::merge_iors(
-  TAO_IOP::TAO_IOR_Manipulation::IORList & list ACE_ENV_ARG_DECL) const
+  TAO_IOP::TAO_IOR_Manipulation::IORList & list) const
 {
-  return this->iorm_->merge_iors (list ACE_ENV_ARG_PARAMETER);
+  return this->iorm_->merge_iors (list);
 }
 
 PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group_Manipulator::remove_profiles(
       PortableGroup::ObjectGroup_ptr group,
-      PortableGroup::ObjectGroup_ptr profile
-      ACE_ENV_ARG_DECL) const
+      PortableGroup::ObjectGroup_ptr profile) const
 {
-  return this->iorm_->remove_profiles(group, profile ACE_ENV_ARG_PARAMETER);
+  return this->iorm_->remove_profiles(group, profile);
 }
 
 void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member)

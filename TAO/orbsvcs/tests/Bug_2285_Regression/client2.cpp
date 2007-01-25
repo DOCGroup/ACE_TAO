@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
 }
 
 CORBA::Object_ptr
-make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, Test::Hello_ptr* refs ACE_ENV_ARG_DECL)
+make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, Test::Hello_ptr* refs)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
   // Create the list
@@ -52,7 +52,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
     }
 
   CORBA::Object_var new_ref =
-    iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+    iorm->merge_iors (iors);
 
   // Property values
 
@@ -75,8 +75,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 
   // Set the property
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                              new_ref.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+                                              new_ref.in ());
 
   // Set the primary
   // See we are setting the second ior as the primary
@@ -84,8 +83,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
     {
       retval = iorm->set_primary (&iogr_prop,
                                   refs[0],
-                                  new_ref.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  new_ref.in ());
     }
 
   return new_ref._retn ();
@@ -95,10 +93,10 @@ int
 main (int argc, char *argv[])
 {
   CORBA::Boolean result = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -106,12 +104,11 @@ main (int argc, char *argv[])
       // Get a ref to the IORManipulation object
       CORBA::Object_var IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0
-                                         ACE_ENV_ARG_PARAMETER);
+                                         0);
 
       // Narrow
       iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
       Test::Hello_ptr *servers = new Test::Hello_ptr [number_of_servers];
 
@@ -123,10 +120,10 @@ main (int argc, char *argv[])
           const char *ior = ((ior_file += number) += ".ior").c_str ();
 
           CORBA::Object_var tmp =
-            orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+            orb->string_to_object(ior);
 
           servers[i] =
-            Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+            Test::Hello::_narrow(tmp.in ());
 
           if (CORBA::is_nil (servers[i]))
             {
@@ -137,20 +134,20 @@ main (int argc, char *argv[])
             }
         }
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, servers  ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, servers);
 
-      Test::Hello_var hello_iogr = Test::Hello::_narrow(iogr.in () ACE_ENV_ARG_PARAMETER);
+      Test::Hello_var hello_iogr = Test::Hello::_narrow(iogr.in ());
 
       CORBA::ULong last_server = 0;
 
-      ACE_TRY
+      try
         {
           last_server = hello_iogr->drop_down_dead ();
           // If the call 'succeeds' the server has identified a regression.
           result = 1;
           ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified by server %u. Test Failed !!\n", last_server));
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, my_ex)
+      catch (const CORBA::COMM_FAILURE& my_ex)
         {
           ACE_UNUSED_ARG (my_ex);
           // We can't use the word exception for fear of upsetting the build log parser
@@ -158,19 +155,17 @@ main (int argc, char *argv[])
                       "although it doesn't in this case) and which we cannot name because the autobuild "
                       "script will think we have a problem if we do mention the word. No problem !\n"));
         }
-      ACE_ENDTRY;
 
       for (CORBA::ULong j = last_server; j < number_of_servers; ++j)
         {
-          ACE_TRY
+          try
             {
               servers[j]->shutdown ();
             }
-          ACE_CATCHALL
+          catch (...)
             {
               // Well we tried...
             }
-          ACE_ENDTRY;
 
           CORBA::release (servers [j]);
         }
@@ -184,13 +179,12 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test failed (Not regression) because unexpected exception caught:");
+      ex._tao_print_exception (
+        "Test failed (Not regression) because unexpected exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (result)
     {

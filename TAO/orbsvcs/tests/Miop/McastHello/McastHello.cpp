@@ -15,7 +15,7 @@ McastHello::McastHello (CORBA::ORB_ptr orb,
 }
 
 void
-McastHello::send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL_NOT_USED)
+McastHello::send_forty_two (CORBA::Long forty_two)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->small_request_status_ == 0 &&
@@ -28,7 +28,7 @@ McastHello::send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-McastHello::send_large_octet_array (const Test::Octets &payload ACE_ENV_ARG_DECL_NOT_USED)
+McastHello::send_large_octet_array (const Test::Octets &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean valid_payload = 1;
@@ -58,7 +58,7 @@ void
 McastHello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 CORBA::Boolean

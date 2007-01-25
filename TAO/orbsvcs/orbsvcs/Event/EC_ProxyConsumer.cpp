@@ -44,8 +44,7 @@ TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
 
 CORBA::Boolean
 TAO_EC_ProxyPushConsumer::supplier_non_existent (
-      CORBA::Boolean_out disconnected
-      ACE_ENV_ARG_DECL)
+      CORBA::Boolean_out disconnected)
 {
   CORBA::Object_var supplier;
   {
@@ -74,8 +73,7 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
 }
 
 void
-TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier
-                                     ACE_ENV_ARG_DECL)
+TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
                                           this->refcount_,
@@ -84,12 +82,11 @@ TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier
   if (!ace_mon.locked ())
     return;
 
-  ace_mon.filter->connected (supplier ACE_ENV_ARG_PARAMETER);
+  ace_mon.filter->connected (supplier);
 }
 
 void
-TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier
-                                       ACE_ENV_ARG_DECL)
+TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
                                           this->refcount_,
@@ -98,12 +95,11 @@ TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier
   if (!ace_mon.locked ())
     return;
 
-  ace_mon.filter->reconnected (supplier ACE_ENV_ARG_PARAMETER);
+  ace_mon.filter->reconnected (supplier);
 }
 
 void
-TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier
-                                        ACE_ENV_ARG_DECL)
+TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
                                           this->refcount_,
@@ -112,24 +108,21 @@ TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier
   if (!ace_mon.locked ())
     return;
 
-  ace_mon.filter->disconnected (supplier ACE_ENV_ARG_PARAMETER);
+  ace_mon.filter->disconnected (supplier);
 }
 
 void
-TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushConsumer*
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushConsumer*)
 {
 }
 
 void
-TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushConsumer*
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushConsumer*)
 {
 }
 
 void
-TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushConsumer*
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushConsumer*)
 {
 }
 
@@ -166,16 +159,15 @@ TAO_EC_ProxyPushConsumer::shutdown (void)
   if (CORBA::is_nil (supplier.in ()))
     return;
 
-  ACE_TRY
+  try
     {
       supplier->disconnect_push_supplier ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -196,20 +188,19 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
 void
 TAO_EC_ProxyPushConsumer::deactivate (void)
 {
-  ACE_TRY
+  try
     {
       PortableServer::ObjectId id =
           this->object_id ();
-      this->default_POA_->deactivate_object (id ACE_ENV_ARG_PARAMETER);
+      this->default_POA_->deactivate_object (id);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }
-  ACE_ENDTRY;
 }
 
 CORBA::ULong

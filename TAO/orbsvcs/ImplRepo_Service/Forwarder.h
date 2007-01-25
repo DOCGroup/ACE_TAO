@@ -49,7 +49,6 @@ public:
     PortableServer::POA_ptr poa,
     const char * operation,
     PortableServer::ServantLocator::Cookie &cookie
-    ACE_ENV_ARG_DECL
   ) ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest));
 
   virtual void postinvoke (
@@ -58,10 +57,9 @@ public:
     const char * operation,
     PortableServer::ServantLocator::Cookie the_cookie,
     PortableServer::Servant the_servant
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void init(CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  void init(CORBA::ORB_ptr orb);
 
 private:
   /// Where we find out where to forward to.

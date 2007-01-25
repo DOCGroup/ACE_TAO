@@ -306,22 +306,20 @@ TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
 TAO_Literal_Constraint::
 TAO_Literal_Constraint (CORBA::Any* any)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::Any& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();
   // @@ No where to throw exception back.
   CORBA::TCKind corba_type = CORBA::tk_null;
-  ACE_TRY
+  try
     {
       corba_type = type->kind ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // @@ Seth: Don't know what else to do.  Make sure we can tell
       // when this constructor fails.
       return;
     }
-  ACE_ENDTRY;
 
   this->type_ = TAO_Literal_Constraint::comparable_type (type.in ());
   switch (this->type_)
@@ -500,18 +498,16 @@ TAO_Expression_Type
 TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 {
   // Convert a CORBA::TCKind into a TAO_Literal_Type
-  ACE_DECLARE_NEW_CORBA_ENV;
   TAO_Expression_Type return_value = TAO_UNKNOWN;
   CORBA::TCKind kind = CORBA::tk_null;
-  ACE_TRY
+  try
     {
       kind = type->kind ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return return_value;
     }
-  ACE_ENDTRY;
   // Since this is a "top level try block, no need to check again.
 
   switch (kind)
@@ -542,18 +538,16 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
     case CORBA::tk_alias:
       {
         CORBA::TCKind kind = CORBA::tk_void;
-        ACE_TRY_EX (label2)
+        try
           {
             CORBA::TypeCode_var typecode = type->content_type ();
-            ACE_TRY_CHECK_EX (label2);
             kind = typecode->kind ();
-            ACE_TRY_CHECK_EX (label2);;
+            ;
           }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
           {
             return return_value;
           }
-        ACE_ENDTRY;
         // Since this is a "top level try block, no need to check again.
 
         if (kind == CORBA::tk_sequence)

@@ -33,12 +33,11 @@ Supplier::Supplier (void)
 int
 Supplier::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
 
 /*
@@ -55,9 +54,9 @@ Supplier::run (int argc, char* argv[])
      // this->orb_ = orb.in ();
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -66,23 +65,21 @@ Supplier::run (int argc, char* argv[])
       // command line argument or resolve_initial_references(), but
       // this is simpler...
 /*      object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (argv[1]);
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (object.in ());
 */
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references (NAMING_SERVICE_NAME
-                                            ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references (NAMING_SERVICE_NAME);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
 
       CosNaming::Name name (1);
@@ -90,12 +87,10 @@ Supplier::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup (EVENT_TLS_LOG_FACTORY_NAME);
 
       CORBA::Object_var obj =
-        this->naming_context_->resolve (name
-                                       ACE_ENV_ARG_PARAMETER);
+        this->naming_context_->resolve (name);
 
       this->event_log_factory_ =
-        RTEventLogAdmin::EventLogFactory::_narrow (obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+        RTEventLogAdmin::EventLogFactory::_narrow (obj.in ());
 
       ACE_ASSERT (!CORBA::is_nil (this->event_log_factory_.in ()));
 
@@ -119,8 +114,7 @@ Supplier::run (int argc, char* argv[])
         this->event_log_factory_->create (logfullaction,
                                           max_size,
                                           threshold,
-                                          logid
-                                          ACE_ENV_ARG_PARAMETER);
+                                          logid);
 
 
       ACE_DEBUG ((LM_DEBUG,
@@ -146,8 +140,7 @@ Supplier::run (int argc, char* argv[])
       h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
       h0.source = 1;                      // first free event source
 
-      this->consumer_->connect_push_supplier (supplier.in (), qos
-                                       ACE_ENV_ARG_PARAMETER);
+      this->consumer_->connect_push_supplier (supplier.in (), qos);
 
 
       // Create some fake log events.
@@ -162,7 +155,7 @@ Supplier::run (int argc, char* argv[])
 
       for (int i = 0; i != LOG_EVENT_COUNT; ++i)
         {
-          this->consumer_->push (event ACE_ENV_ARG_PARAMETER);
+          this->consumer_->push (event);
           ACE_OS::sleep (sleep_time);
         }
 
@@ -209,7 +202,7 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Deleting records... \n"));
 
-      retval = event_log->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
+      retval = event_log->delete_records (QUERY_LANG, QUERY_2);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_n_records...\n"));
@@ -240,20 +233,19 @@ Supplier::run (int argc, char* argv[])
 
      // Deactivate this object...
      PortableServer::ObjectId_var id =
-       poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-     poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+       poa->servant_to_id (this);
+     poa->deactivate_object (id.in ());
 
      // Destroy the POA
-     poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
+     poa->destroy (1, 0);
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier::run");
+      ex._tao_print_exception ("Supplier::run");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

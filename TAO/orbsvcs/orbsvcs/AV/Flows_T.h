@@ -47,8 +47,7 @@ public:
   AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev
-                                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                       char *& named_fdev)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::streamOpDenied,
@@ -60,15 +59,13 @@ public:
   virtual AVStreams::FlowProducer_ptr make_producer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev
-                                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                                       char *& named_fdev);
 
   /// create a flow consumer object.
   virtual AVStreams::FlowConsumer_ptr create_consumer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev
-                                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                       char *& named_fdev)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::streamOpDenied,
@@ -80,14 +77,12 @@ public:
   virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,
                                                        CORBA::Boolean_out met_qos,
-                                                       char *& named_fdev
-                                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                                       char *& named_fdev);
 
   /// bind this FDev with another FDev.
   virtual AVStreams::FlowConnection_ptr bind (AVStreams::FDev_ptr peer_device,
                                               AVStreams::QoS & the_qos,
-                                              CORBA::Boolean_out is_met
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              CORBA::Boolean_out is_met)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::QoSRequestFailed));
@@ -95,16 +90,14 @@ public:
   /// multicast bind is not implemented yet.
   virtual AVStreams::FlowConnection_ptr bind_mcast (AVStreams::FDev_ptr first_peer,
                                                     AVStreams::QoS & the_qos,
-                                                    CORBA::Boolean_out is_met
-                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                    CORBA::Boolean_out is_met)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
                      AVStreams::QoSRequestFailed));
 
   /// destroys this FDev.
   virtual void destroy (AVStreams::FlowEndPoint_ptr the_ep,
-                        const char * fdev_name
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                        const char * fdev_name)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::notSupported));
 

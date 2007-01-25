@@ -252,8 +252,7 @@ public:
                                size_t context_size,
                                TAO_Naming_Service_Persistence_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
-                               TAO_Storable_Naming_Context **new_context
-                               ACE_ENV_ARG_DECL);
+                               TAO_Storable_Naming_Context **new_context);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
@@ -265,8 +264,7 @@ public:
                               int reentering,
                               TAO_Naming_Service_Persistence_Factory *factory,
                               const ACE_TCHAR *persistence_directory,
-                              int use_redundancy
-                              ACE_ENV_ARG_DECL);
+                              int use_redundancy);
 
 
   /**
@@ -284,13 +282,11 @@ public:
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi
-                     ACE_ENV_ARG_DECL);
+                     CosNaming::BindingIterator_out &bi);
 
 
   virtual void rebind (const CosNaming::Name& n,
-                       CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL);
+                       CORBA::Object_ptr obj);
 
   /**
    * Create a binding for name <n> and object <obj> in the naming
@@ -302,8 +298,7 @@ public:
    * participate in name resolution later.
    */
   virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Object_ptr obj);
 
 
   /**
@@ -312,8 +307,7 @@ public:
    * compound names are passed to be resolved.
    */
   virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc
-                             ACE_ENV_ARG_DECL);
+                             CosNaming::NamingContext_ptr nc);
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
@@ -321,8 +315,7 @@ public:
    * names are passed.
    */
    virtual void rebind_context (const CosNaming::Name &n,
-                                CosNaming::NamingContext_ptr nc
-                                ACE_ENV_ARG_DECL);
+                                CosNaming::NamingContext_ptr nc);
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -331,16 +324,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n
-                       ACE_ENV_ARG_DECL);
+  virtual void unbind (const CosNaming::Name &n);
 
   /**
    * This operation creates a new context and binds it to the name
@@ -349,8 +340,7 @@ public:
    * bound (the name argument excluding the last component).
    */
   virtual CosNaming::NamingContext_ptr bind_new_context (
-                                const CosNaming::Name &n
-                                ACE_ENV_ARG_DECL);
+                                const CosNaming::Name &n);
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -427,8 +417,7 @@ public:
 
   /// Constructor - we always need the object which we guard.
   File_Open_Lock_and_Check(TAO_Storable_Naming_Context * context,
-                                const char * mode
-                                ACE_ENV_ARG_DECL);
+                                const char * mode);
 
   /// Destructor
   ~File_Open_Lock_and_Check(void);
@@ -461,7 +450,7 @@ private:
 
   friend class File_Open_Lock_and_Check;
 
-  int load_map(File_Open_Lock_and_Check *flck ACE_ENV_ARG_DECL);
+  int load_map(File_Open_Lock_and_Check *flck);
 
   void Write(TAO_Storable_Base& wrtr);
 

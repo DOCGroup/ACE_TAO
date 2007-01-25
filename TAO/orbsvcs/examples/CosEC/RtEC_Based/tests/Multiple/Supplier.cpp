@@ -43,8 +43,7 @@ Supplier::parse_args (int argc, char *argv [])
 }
 
 void
-Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel
-                     ACE_ENV_ARG_DECL)
+Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
   // = Connect as a consumer.
   this->supplier_admin_ =
@@ -71,8 +70,7 @@ Supplier::connect (void)
 
   CosEventComm::PushSupplier_var objref = this->_this ();
 
-  this->consumer_proxy_->connect_push_supplier (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  this->consumer_proxy_->connect_push_supplier (objref.in ());
 }
 
 void
@@ -89,10 +87,9 @@ Supplier::disconnect (void)
 }
 
 void
-Supplier::send_event (const CORBA::Any & data
-                           ACE_ENV_ARG_DECL)
+Supplier::send_event (const CORBA::Any & data)
 {
-  this->consumer_proxy_->push (data ACE_ENV_ARG_PARAMETER);
+  this->consumer_proxy_->push (data);
 }
 
 void
@@ -107,25 +104,21 @@ Supplier::disconnect_push_supplier (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 void
 Supplier::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Create an Any type to pass to the Cos EC.
       CORBA::Any any;
       any <<= CORBA::Long (50);
 
-      this->open (this->cos_ec_
-                  ACE_ENV_ARG_PARAMETER);
+      this->open (this->cos_ec_);
 
       this->connect ();
 
@@ -137,8 +130,7 @@ Supplier::run (void)
            count != 0;
            count--)
         {
-          this->send_event (any
-                            ACE_ENV_ARG_PARAMETER);
+          this->send_event (any);
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -146,12 +138,10 @@ Supplier::run (void)
 
       this->close ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in CosEC_Multiple::run\n");
+      ex._tao_print_exception ("Exception in CosEC_Multiple::run\n");
     }
-  ACE_ENDTRY;
 }
 
 int

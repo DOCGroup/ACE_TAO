@@ -51,7 +51,6 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.

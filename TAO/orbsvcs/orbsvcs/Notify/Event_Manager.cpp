@@ -32,7 +32,7 @@ public:
 
 protected:
   ///= TAO_ESF_Worker method
-  void work (TAO_Notify_ProxyConsumer* proxy ACE_ENV_ARG_DECL);
+  void work (TAO_Notify_ProxyConsumer* proxy);
 
   const TAO_Notify_EventTypeSeq& added_;
   const TAO_Notify_EventTypeSeq& removed_;
@@ -53,7 +53,7 @@ public:
 
 protected:
   ///= TAO_ESF_Worker method
-  void work (TAO_Notify_ProxySupplier* proxy ACE_ENV_ARG_DECL);
+  void work (TAO_Notify_ProxySupplier* proxy);
 
   const TAO_Notify_EventTypeSeq& added_;
   const TAO_Notify_EventTypeSeq& removed_;
@@ -107,60 +107,60 @@ TAO_Notify_Event_Manager::shutdown (void)
 }
 
 void
-TAO_Notify_Event_Manager::connect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::connect (TAO_Notify_ProxySupplier* proxy_supplier)
 {
-  this->consumer_map().connect (proxy_supplier ACE_ENV_ARG_PARAMETER);
+  this->consumer_map().connect (proxy_supplier);
 
   // Inform about offered types.
   TAO_Notify_EventTypeSeq removed;
-  proxy_supplier->types_changed (this->offered_types (), removed ACE_ENV_ARG_PARAMETER);
+  proxy_supplier->types_changed (this->offered_types (), removed);
 }
 
 void
-TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxySupplier* proxy_supplier)
 {
-  this->consumer_map().disconnect (proxy_supplier ACE_ENV_ARG_PARAMETER);
+  this->consumer_map().disconnect (proxy_supplier);
 }
 
 void
-TAO_Notify_Event_Manager::connect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::connect (TAO_Notify_ProxyConsumer* proxy_consumer)
 {
-  this->supplier_map().connect (proxy_consumer ACE_ENV_ARG_PARAMETER);
+  this->supplier_map().connect (proxy_consumer);
   // Inform about subscription types.
   TAO_Notify_EventTypeSeq removed;
-  proxy_consumer->types_changed (this->subscription_types (), removed ACE_ENV_ARG_PARAMETER);
+  proxy_consumer->types_changed (this->subscription_types (), removed);
 }
 
 void
-TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxyConsumer* proxy_consumer)
 {
-  this->supplier_map().disconnect (proxy_consumer ACE_ENV_ARG_PARAMETER);
+  this->supplier_map().disconnect (proxy_consumer);
 }
 
 void
-TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
 {
   TAO_Notify_EventTypeSeq new_added, last_removed;
 
-  this->publish (proxy_consumer, added, new_added ACE_ENV_ARG_PARAMETER);
+  this->publish (proxy_consumer, added, new_added);
 
-  this->un_publish (proxy_consumer, removed, last_removed ACE_ENV_ARG_PARAMETER);
+  this->un_publish (proxy_consumer, removed, last_removed);
 
   TAO_Notify_Consumer_Map::ENTRY::COLLECTION* updates_collection = this->consumer_map().updates_collection ();
 
   TAO_Notify_ProxySupplier_Update_Worker worker (new_added, last_removed);
 
   if (updates_collection != 0)
-    updates_collection->for_each (&worker ACE_ENV_ARG_PARAMETER);
+    updates_collection->for_each (&worker);
 }
 
 void
-TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
 {
   TAO_Notify_EventTypeSeq new_added, last_removed;
 
-  this->subscribe (proxy_supplier, added, new_added ACE_ENV_ARG_PARAMETER);
-  this->un_subscribe (proxy_supplier, removed, last_removed ACE_ENV_ARG_PARAMETER);
+  this->subscribe (proxy_supplier, added, new_added);
+  this->un_subscribe (proxy_supplier, removed, last_removed);
 
   TAO_Notify_Supplier_Map::ENTRY::COLLECTION* updates_collection = this->supplier_map().updates_collection ();
 
@@ -168,12 +168,12 @@ TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_s
 
   if (updates_collection != 0)
     {
-      updates_collection->for_each (&worker ACE_ENV_ARG_PARAMETER);
+      updates_collection->for_each (&worker);
     }
 }
 
 void
-TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq)
 {
   TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
 
@@ -181,7 +181,7 @@ TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, c
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = this->consumer_map().insert (proxy_supplier, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = this->consumer_map().insert (proxy_supplier, *event_type);
 
       if (result == 1)
         new_seq.insert (*event_type);
@@ -189,7 +189,7 @@ TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, c
 }
 
 void
-TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq)
 {
   TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
 
@@ -197,7 +197,7 @@ TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = this->consumer_map().remove (proxy_supplier, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = this->consumer_map().remove (proxy_supplier, *event_type);
 
       if (result == 1)
         last_seq.insert (*event_type);
@@ -205,7 +205,7 @@ TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier
 }
 
 void
-TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq)
 {
   TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
 
@@ -213,7 +213,7 @@ TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, con
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = supplier_map().insert (proxy_consumer, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = supplier_map().insert (proxy_consumer, *event_type);
 
       if (result == 1)
         new_seq.insert (*event_type);
@@ -221,7 +221,7 @@ TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, con
 }
 
 void
-TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq)
 {
   TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
 
@@ -229,7 +229,7 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
 
   for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      int result = supplier_map().remove (proxy_consumer, *event_type ACE_ENV_ARG_PARAMETER);
+      int result = supplier_map().remove (proxy_consumer, *event_type);
 
       if (result == 1)
         last_seq.insert (*event_type);
@@ -270,9 +270,9 @@ TAO_Notify_ProxyConsumer_Update_Worker::TAO_Notify_ProxyConsumer_Update_Worker (
 }
 
 void
-TAO_Notify_ProxyConsumer_Update_Worker::work (TAO_Notify_ProxyConsumer* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer_Update_Worker::work (TAO_Notify_ProxyConsumer* proxy)
 {
-  proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
+  proxy->types_changed (added_, removed_);
 }
 
 /*****************************************************************************/
@@ -283,9 +283,9 @@ TAO_Notify_ProxySupplier_Update_Worker::TAO_Notify_ProxySupplier_Update_Worker (
 }
 
 void
-TAO_Notify_ProxySupplier_Update_Worker::work (TAO_Notify_ProxySupplier* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier_Update_Worker::work (TAO_Notify_ProxySupplier* proxy)
 {
-  proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
+  proxy->types_changed (added_, removed_);
 }
 
 /*****************************************************************************/

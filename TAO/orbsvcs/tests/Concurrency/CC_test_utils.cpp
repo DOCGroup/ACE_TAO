@@ -50,8 +50,7 @@ CC_TestUtils::create_lock_set (void)
   // Create the lock set and return an obj ref corresponding to the
   // key.
   CosConcurrencyControl::LockSet_ptr lock_set(0);
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       lock_set =
         CC_naming_service::Instance()->get_lock_set_factory ()->create ();
@@ -61,12 +60,10 @@ CC_TestUtils::create_lock_set (void)
                            "null lock set objref returned by factory\n"),
                           0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_Client::create_lock_set");
+      ex._tao_print_exception ("CC_Client::create_lock_set");
       return 0;
     }
-  ACE_ENDTRY;
   return lock_set;
 }

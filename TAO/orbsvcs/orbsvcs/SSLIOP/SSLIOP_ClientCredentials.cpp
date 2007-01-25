@@ -46,16 +46,14 @@ TAO::SSLIOP::ClientCredentials::client_principal (void)
 }
 
 SecurityLevel3::StatementList *
-TAO::SSLIOP::ClientCredentials::client_supporting_statements (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::client_supporting_statements ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 SecurityLevel3::ResourceNameList *
-TAO::SSLIOP::ClientCredentials::client_restricted_resources (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::client_restricted_resources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -69,16 +67,14 @@ TAO::SSLIOP::ClientCredentials::target_principal (void)
 }
 
 SecurityLevel3::StatementList *
-TAO::SSLIOP::ClientCredentials::target_supporting_statements (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::target_supporting_statements ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 SecurityLevel3::ResourceNameList *
-TAO::SSLIOP::ClientCredentials::target_restricted_resources (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::ClientCredentials::target_restricted_resources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -101,8 +97,7 @@ TAO::SSLIOP::ClientCredentials::parent_credentials (void)
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::client_authentication (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::ClientCredentials::client_authentication ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If the client presented no certificate (i.e. cert_.ptr() == 0),

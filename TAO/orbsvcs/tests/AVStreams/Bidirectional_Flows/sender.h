@@ -89,8 +89,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Method to initialize the various data components.
 
   int pace_data (void);

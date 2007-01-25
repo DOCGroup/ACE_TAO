@@ -34,8 +34,7 @@ public:
   RTClient_Setup (int use_rt_corba,
                   CORBA::ORB_ptr orb,
                   const RT_Class &rt_class,
-                  int nthreads
-                  ACE_ENV_ARG_DECL);
+                  int nthreads);
 
   /// Return non-zero if RTCORBA is enabled
   int use_rt_corba (void) const;

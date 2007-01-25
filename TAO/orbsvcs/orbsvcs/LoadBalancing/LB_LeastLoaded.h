@@ -90,46 +90,39 @@ public:
   virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosLoadBalancing::Properties * get_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CosLoadBalancing::Properties * get_properties ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const CosLoadBalancing::LoadList & loads)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Location & the_location)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosLoadBalancing::LocationNotFound));
 
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CosLoadBalancing::LoadManager_ptr load_manager)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
 
   virtual void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CosLoadBalancing::LoadManager_ptr load_manager)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
   /// Initialize the LeastLoaded instance with the given properties.
-  void init (const PortableGroup::Properties & props
-             ACE_ENV_ARG_DECL);
+  void init (const PortableGroup::Properties & props);
 
 protected:
 
@@ -140,8 +133,7 @@ protected:
   /// locations.
   CORBA::Boolean get_location (CosLoadBalancing::LoadManager_ptr load_manager,
                                const PortableGroup::Locations & locations,
-                               PortableGroup::Location & location
-                               ACE_ENV_ARG_DECL);
+                               PortableGroup::Location & location);
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
@@ -152,14 +144,12 @@ protected:
   void push_loads (
       const PortableGroup::Location & the_location,
       const CosLoadBalancing::LoadList & loads,
-      CosLoadBalancing::Load & effective_load
-      ACE_ENV_ARG_DECL);
+      CosLoadBalancing::Load & effective_load);
 
   /// Utility method to extract a CORBA::Float value from the given
   /// property.
   void extract_float_property (const PortableGroup::Property & property,
-                               CORBA::Float & value
-                               ACE_ENV_ARG_DECL);
+                               CORBA::Float & value);
 
 private:
 

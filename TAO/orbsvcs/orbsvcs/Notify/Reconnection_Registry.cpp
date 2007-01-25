@@ -44,8 +44,7 @@ namespace TAO_Notify
 
   NotifyExt::ReconnectionRegistry::ReconnectionID
   Reconnection_Registry::register_callback (
-    NotifyExt::ReconnectionCallback_ptr callback
-    ACE_ENV_ARG_DECL)
+    NotifyExt::ReconnectionCallback_ptr callback)
   {
     //@@todo DO WE NEED THREAD SAFENESS?
     NotifyExt::ReconnectionRegistry::ReconnectionID next_id = ++highest_id_;
@@ -60,7 +59,7 @@ namespace TAO_Notify
     TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
     CORBA::ORB_var orb = properties->orb ();
 
-    CORBA::String_var cior = orb->object_to_string (callback ACE_ENV_ARG_PARAMETER);
+    CORBA::String_var cior = orb->object_to_string (callback);
     ACE_CString ior(cior.in ());
     if ( 0 != reconnection_registry_.bind (next_id, ior))
     {
@@ -72,8 +71,7 @@ namespace TAO_Notify
   }
 
   void
-  Reconnection_Registry::unregister_callback (NotifyExt::ReconnectionRegistry::ReconnectionID id
-    ACE_ENV_ARG_DECL)
+  Reconnection_Registry::unregister_callback (NotifyExt::ReconnectionRegistry::ReconnectionID id)
   {
     if (DEBUG_LEVEL > 0)
     {
@@ -99,7 +97,7 @@ namespace TAO_Notify
   // During topology save
 
   void
-  Reconnection_Registry::save_persistent (Topology_Saver& saver ACE_ENV_ARG_DECL)
+  Reconnection_Registry::save_persistent (Topology_Saver& saver)
   {
     bool change = this->self_changed_;
     this->self_changed_ = false;
@@ -107,7 +105,7 @@ namespace TAO_Notify
 
     NVPList attrs;
     //@@todo: bool want_all_children =
-      saver.begin_object (0, REGISTRY_TYPE, attrs, change ACE_ENV_ARG_PARAMETER);
+      saver.begin_object (0, REGISTRY_TYPE, attrs, change);
 
     Reconnection_Registry_Type::ENTRY *entry;
     for (Reconnection_Registry_Type::ITERATOR iter (this->reconnection_registry_);
@@ -124,15 +122,15 @@ namespace TAO_Notify
       }
       cattrs.push_back(NVP(RECONNECT_ID, entry->ext_id_));
       cattrs.push_back(NVP(RECONNECT_IOR, entry->int_id_));
-      saver.begin_object (entry->ext_id_, REGISTRY_CALLBACK_TYPE, cattrs, true ACE_ENV_ARG_PARAMETER);
-      saver.end_object (entry->ext_id_, REGISTRY_CALLBACK_TYPE ACE_ENV_ARG_PARAMETER);
+      saver.begin_object (entry->ext_id_, REGISTRY_CALLBACK_TYPE, cattrs, true);
+      saver.end_object (entry->ext_id_, REGISTRY_CALLBACK_TYPE);
     }
 // todo:
 //    for all deleted children
 //    {
 //      saver.delete_child(child_type, child_id);
 //    }
-    saver.end_object (0, REGISTRY_TYPE ACE_ENV_ARG_PARAMETER);
+    saver.end_object (0, REGISTRY_TYPE);
   }
 
   ///////////////////////////////////////
@@ -141,8 +139,7 @@ namespace TAO_Notify
   Topology_Object*
   Reconnection_Registry::load_child (const ACE_CString & type,
         CORBA::Long,
-        const NVPList& attrs
-        ACE_ENV_ARG_DECL_NOT_USED)
+        const NVPList& attrs)
   {
     if (type == REGISTRY_CALLBACK_TYPE)
     {
@@ -178,8 +175,7 @@ namespace TAO_Notify
   }
 
   void
-  Reconnection_Registry::send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
-    ACE_ENV_ARG_DECL_NOT_USED)
+  Reconnection_Registry::send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
   {
     TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
     CORBA::ORB_var orb = properties->orb ();
@@ -190,8 +186,7 @@ namespace TAO_Notify
       iter.next (entry);
       iter.advance ())
     {
-      ACE_DECLARE_NEW_ENV;
-      ACE_TRY
+      try
       {
         if (DEBUG_LEVEL > 0)
         {
@@ -201,12 +196,12 @@ namespace TAO_Notify
             ));
         }
         ACE_CString & ior = entry->int_id_;
-        CORBA::Object_var obj = orb->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var obj = orb->string_to_object (ior.c_str ());
         NotifyExt::ReconnectionCallback_var callback =
           NotifyExt::ReconnectionCallback::_narrow (obj.in ());
         if (!CORBA::is_nil (callback.in ()))
         {
-          callback->reconnect (dest_factory ACE_ENV_ARG_PARAMETER);
+          callback->reconnect (dest_factory);
         }
         else
         {
@@ -219,7 +214,7 @@ namespace TAO_Notify
           bad_ids.push_back (entry->ext_id_);
         }
       }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnection Registry: Exception sending reconnection to client -- discarding registry entry\n")
@@ -228,7 +223,6 @@ namespace TAO_Notify
         bad_ids.push_back (entry->ext_id_);
         //@@todo : we might want to check for retryable exceptions, but for now...
       }
-      ACE_ENDTRY;
     }
     size_t bad_count = bad_ids.size ();
     for (size_t nbad = 0; nbad < bad_count; ++nbad)

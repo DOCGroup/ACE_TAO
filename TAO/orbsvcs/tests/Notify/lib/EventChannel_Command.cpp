@@ -119,21 +119,18 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (void)
 
   LOOKUP_MANAGER->resolve (naming);
 
-  notify_service->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
+  notify_service->init_service (orb.in ());
 
   // Activate the factory
   notify_factory =
-    notify_service->create (poa.in ()
-                            ACE_ENV_ARG_PARAMETER);
+    notify_service->create (poa.in ());
 
   // Register with the Naming Service
   CosNaming::Name_var name =
-    naming->to_name (TAO_Notify_Tests_Name::event_channel_factory
-                     ACE_ENV_ARG_PARAMETER);
+    naming->to_name (TAO_Notify_Tests_Name::event_channel_factory);
 
   naming->rebind (name.in (),
-                  notify_factory.in ()
-                  ACE_ENV_ARG_PARAMETER);
+                  notify_factory.in ());
 }
 
 void
@@ -146,7 +143,7 @@ TAO_Notify_Tests_EventChannel_Command::handle_create (void)
 
   CosNotifyChannelAdmin::EventChannelFactory_var ec_factory;
 
-  LOOKUP_MANAGER->resolve (ec_factory , TAO_Notify_Tests_Name::event_channel_factory ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (ec_factory , TAO_Notify_Tests_Name::event_channel_factory);
 
   CosNotification::QoSProperties qos;
   CosNotification::AdminProperties admin;
@@ -155,10 +152,9 @@ TAO_Notify_Tests_EventChannel_Command::handle_create (void)
   CosNotifyChannelAdmin::EventChannel_var ec =
     ec_factory->create_channel (qos,
                                 admin,
-                                this->id_
-                                ACE_ENV_ARG_PARAMETER);
+                                this->id_);
 
-  LOOKUP_MANAGER->_register (ec.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->_register (ec.in(), this->name_.c_str ());
 }
 
 void
@@ -167,7 +163,7 @@ TAO_Notify_Tests_EventChannel_Command::handle_destroy (void)
   ACE_DEBUG ((LM_DEBUG, "Destroying event channel %s\n", this->name_.c_str ()));
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (ec, this->name_.c_str ());
 
   ec->destroy ();
 }
@@ -176,9 +172,9 @@ TAO_Notify_Tests_EventChannel_Command::handle_set_qos (void)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (ec, this->name_.c_str ());
 
-  ec->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
+  ec->set_qos (this->qos_);
 }
 
 void

@@ -18,19 +18,19 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::TAO_Notify_Fin
 }
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> TYPE*
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (const TAO_Notify_Object::ID id, CONTAINER& container)
 {
   this->id_ = id;
 
-  container.collection ()->for_each (this ACE_ENV_ARG_PARAMETER);
+  container.collection ()->for_each (this);
 
   return this->result_;
 }
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> INTERFACE_PTR
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container)
 {
-  this->find (id, container ACE_ENV_ARG_PARAMETER);
+  this->find (id, container);
 
   if (this->result_ == 0)
     ACE_THROW_RETURN (EXCEPTION ()
@@ -38,7 +38,7 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const
 
   CORBA::Object_var object = this->result_->ref ();
 
-  return INTERFACE::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+  return INTERFACE::_narrow (object.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

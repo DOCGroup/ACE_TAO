@@ -46,8 +46,7 @@ public:
   /// Validate the given properties.  Throw an exception when the
   /// first invalid property is encountered.  The remaining properties
   /// will not be validated.
-  virtual void validate_property (const PortableGroup::Properties & props
-                          ACE_ENV_ARG_DECL)
+  virtual void validate_property (const PortableGroup::Properties & props)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
@@ -55,8 +54,7 @@ public:
   /// Validate the given properties/criteria.  All criteria
   /// will be validated regardless of whether or not an invalid
   /// property was encountered.
-  virtual void validate_criteria (const PortableGroup::Properties & criteria
-                          ACE_ENV_ARG_DECL)
+  virtual void validate_criteria (const PortableGroup::Properties & criteria)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidCriteria,
                      PortableGroup::CannotMeetCriteria));

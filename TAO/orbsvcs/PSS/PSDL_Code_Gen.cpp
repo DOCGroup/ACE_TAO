@@ -29,15 +29,13 @@ TAO_PSDL_Code_Gen::~TAO_PSDL_Code_Gen (void)
 int
 TAO_PSDL_Code_Gen::set_codec (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Obtain a reference to the CodecFactory.
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("CodecFactory"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("CodecFactory");
 
   IOP::CodecFactory_var codec_factory =
-    IOP::CodecFactory::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    IOP::CodecFactory::_narrow (obj.in ());
 
   // Set up a structure that contains information necessary to
   // create a GIOP 1.1 CDR encapsulation Codec.
@@ -48,7 +46,7 @@ TAO_PSDL_Code_Gen::set_codec (void)
 
   // Obtain the CDR encapsulation Codec.
   this->codec_ =
-    codec_factory->create_codec (encoding ACE_ENV_ARG_PARAMETER);
+    codec_factory->create_codec (encoding);
 
   if (this->codec_.in () == 0)
     {
@@ -61,8 +59,7 @@ TAO_PSDL_Code_Gen::set_codec (void)
 
 int
 TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
-                                     const char *string_obj_ref
-                                     ACE_ENV_ARG_DECL)
+                                     const char *string_obj_ref)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Invoke the helper encode method which will
@@ -71,8 +68,7 @@ TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
   // hash_map to the database.
 
   // Encode the stringified object reference to a CORBA::OctetSeq *
-  CORBA::OctetSeq_var octet_seq = this->encode (string_obj_ref
-                                                ACE_ENV_ARG_PARAMETER);
+  CORBA::OctetSeq_var octet_seq = this->encode (string_obj_ref);
 
   // Insert the new entry to the hash map which contains all the
   // name-octet_seq entries. And, write the hash_map to a file.
@@ -96,8 +92,7 @@ TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
 }
 
 const char *
-TAO_PSDL_Code_Gen::get_obj_ref (const char *name
-                                ACE_ENV_ARG_DECL)
+TAO_PSDL_Code_Gen::get_obj_ref (const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get from the hash_map saved in the database, the corresponding entry
@@ -113,8 +108,7 @@ TAO_PSDL_Code_Gen::get_obj_ref (const char *name
   if (result == 0)
     {
       // Decode the octet_seq.
-      const char *obj_ref = this->decode (octet_seq
-                                          ACE_ENV_ARG_PARAMETER);
+      const char *obj_ref = this->decode (octet_seq);
 
       return CORBA::string_dup (obj_ref);
     }
@@ -129,8 +123,7 @@ TAO_PSDL_Code_Gen::get_obj_ref (const char *name
 
 
 CORBA::OctetSeq *
-TAO_PSDL_Code_Gen::encode (const char *string_obj_ref
-                           ACE_ENV_ARG_DECL)
+TAO_PSDL_Code_Gen::encode (const char *string_obj_ref)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any data;
@@ -138,7 +131,7 @@ TAO_PSDL_Code_Gen::encode (const char *string_obj_ref
 
   CORBA::OctetSeq *encoded_data = 0;
 
-  encoded_data = this->codec_->encode (data ACE_ENV_ARG_PARAMETER);
+  encoded_data = this->codec_->encode (data);
 
   CORBA::OctetSeq_var safe_encoded_data = encoded_data;
 
@@ -146,16 +139,14 @@ TAO_PSDL_Code_Gen::encode (const char *string_obj_ref
 }
 
 const char *
-TAO_PSDL_Code_Gen::decode (const CORBA::OctetSeq &data
-                           ACE_ENV_ARG_DECL)
+TAO_PSDL_Code_Gen::decode (const CORBA::OctetSeq &data)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *extracted_value;
 
   // Extract the data from the octet sequence.
   CORBA::Any_var decoded_data =
-    this->codec_->decode (data
-                          ACE_ENV_ARG_PARAMETER);
+    this->codec_->decode (data);
 
   decoded_data.in() >>= extracted_value;
 

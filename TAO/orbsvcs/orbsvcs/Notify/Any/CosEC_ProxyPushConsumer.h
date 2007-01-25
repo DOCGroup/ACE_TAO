@@ -54,13 +54,13 @@ public:
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
-  virtual void push (const CORBA::Any & data ACE_ENV_ARG_DECL)
+  virtual void push (const CORBA::Any & data)
     ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
                    ));
 
-  virtual void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+  virtual void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected

@@ -95,22 +95,19 @@ public:
   /// Add a GroupId->ObjectKey mapping to the map.
   /// This function takes ownership of the memory pointed to be group_id
   void add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
-                                   const TAO::ObjectKey &key
-                                   ACE_ENV_ARG_DECL);
+                                   const TAO::ObjectKey &key);
 
 
   /// Remove a GroupId->ObjectKey mapping from the map.
   void remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* group_id,
-                                      const TAO::ObjectKey &key
-                                      ACE_ENV_ARG_DECL);
+                                      const TAO::ObjectKey &key);
 
   /// Dispatch a request to all of the ObjectIds that belong to
   /// the specified group.
   void dispatch (PortableGroup::TagGroupTaggedComponent* group_id,
                                     TAO_ORB_Core *orb_core,
                                     TAO_ServerRequest &request,
-                                    CORBA::Object_out forward_to
-                                    ACE_ENV_ARG_DECL);
+                                    CORBA::Object_out forward_to);
 
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex<

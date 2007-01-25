@@ -26,8 +26,7 @@ TAO_Notify_ProxyPushSupplier::release (void)
 }
 
 void
-TAO_Notify_ProxyPushSupplier::connect_any_push_consumer (CosEventComm::PushConsumer_ptr push_consumer
-                                                     ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyPushSupplier::connect_any_push_consumer (CosEventComm::PushConsumer_ptr push_consumer)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected,
@@ -40,9 +39,9 @@ TAO_Notify_ProxyPushSupplier::connect_any_push_consumer (CosEventComm::PushConsu
                     TAO_Notify_PushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
+  consumer->init (push_consumer);
 
-  this->connect (consumer ACE_ENV_ARG_PARAMETER);
+  this->connect (consumer);
   this->self_change ();
 }
 
@@ -80,24 +79,22 @@ TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
   if (attrs.load("PeerIOR", ior))
     {
       CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           CosNotifyComm::PushConsumer_var pc =
             CosNotifyComm::PushConsumer::_nil();
           if (ior.length() > 0)
             {
               CORBA::Object_var obj =
-                orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-              pc = CosNotifyComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+                orb->string_to_object(ior.c_str());
+              pc = CosNotifyComm::PushConsumer::_unchecked_narrow(obj.in());
             }
-          this->connect_any_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
+          this->connect_any_push_consumer(pc.in());
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // if we can't reconnect, tough...
         }
-      ACE_ENDTRY;
     }
 }
 

@@ -88,14 +88,12 @@ Consumer_Client::parse_args (int argc, char *argv[])
 }
 
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
-create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      ACE_ENV_ARG_DECL)
+create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::OR_OP,
-    adminid
-    ACE_ENV_ARG_PARAMETER);
+    adminid);
 
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
@@ -103,8 +101,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
-                  Notify_Test_Client* client
-                  ACE_ENV_ARG_DECL)
+                  Notify_Test_Client* client)
 {
   // startup the first consumer
   ACE_NEW_THROW_EX (consumer_1,
@@ -114,42 +111,42 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
     expected,
     *client),
     CORBA::NO_MEMORY ());
-  consumer_1->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
+  consumer_1->init (client->root_poa ());
 
-  consumer_1->_connect (admin ACE_ENV_ARG_PARAMETER);
+  consumer_1->_connect (admin);
 }
 
 int main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     Consumer_Client client;
 
-    int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    int status = client.init (argc, argv);
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);
 
     CosNotifyChannelAdmin::EventChannel_var ec =
-      client.create_event_channel ("MyEventChannel", 1 ACE_ENV_ARG_PARAMETER);
+      client.create_event_channel ("MyEventChannel", 1);
 
     CORBA::ORB_ptr orb = client.orb ();
     CORBA::Object_var object =
-      orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+      orb->string_to_object (ior);
 
-    sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+    sig_var sig = sig::_narrow (object.in ());
 
     ACE_ASSERT(! CORBA::is_nil (sig.in ()));
 
     CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-      create_consumeradmin (ec.in () ACE_ENV_ARG_PARAMETER);
+      create_consumeradmin (ec.in ());
 
     ACE_ASSERT(!CORBA::is_nil (admin.in ()));
 
-    create_consumers (admin.in (), &client ACE_ENV_ARG_PARAMETER);
+    create_consumers (admin.in (), &client);
 
     sig->go ();
 
-    client.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
+    client.ORB_run( );
 
     ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
     consumer_1->disconnect();
@@ -158,11 +155,10 @@ int main (int argc, char* argv[])
 
     return 0;
   }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "Error: ");
+    e._tao_print_exception ("Error: ");
   }
-  ACE_ENDTRY;
 
   return 1;
 }

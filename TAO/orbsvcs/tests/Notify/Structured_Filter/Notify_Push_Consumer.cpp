@@ -30,7 +30,7 @@ Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
 
 void
 Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel ACE_ENV_ARG_DECL)
+                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel)
                                 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(notify_channel);
@@ -40,14 +40,13 @@ Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consume
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
     CosNotifyChannelAdmin::STRUCTURED_EVENT,
-    proxy_id_
-    ACE_ENV_ARG_PARAMETER);
+    proxy_id_);
 
   this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-    proxysupplier.in () ACE_ENV_ARG_PARAMETER);
+    proxysupplier.in ());
 
-  this->proxy_->connect_structured_push_consumer (objref.in () ACE_ENV_ARG_PARAMETER);
+  this->proxy_->connect_structured_push_consumer (objref.in ());
 
   // give ownership to POA
   this->_remove_ref ();
@@ -65,8 +64,7 @@ static void validate_expression(bool expr, const char* msg)
 
 void
 Notify_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event
-  ACE_ENV_ARG_DECL_NOT_USED)
+  const CosNotification::StructuredEvent& event)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG, "-"));

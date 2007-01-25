@@ -15,17 +15,16 @@ main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -57,43 +56,37 @@ main (int argc, char* argv[])
 
       CEC_Counting_Supplier supplier_00;
 
-      supplier_00.connect (supplier_admin.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      supplier_00.connect (supplier_admin.in ());
 
       // ****************************************************************
 
       CEC_Counting_Supplier supplier_01;
 
-      supplier_01.connect (supplier_admin.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      supplier_01.connect (supplier_admin.in ());
 
       // ****************************************************************
 
       CEC_Counting_Supplier supplier_10;
 
-      supplier_10.connect (supplier_admin.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      supplier_10.connect (supplier_admin.in ());
 
       // ****************************************************************
 
       CEC_Counting_Supplier supplier_11;
 
-      supplier_11.connect (supplier_admin.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      supplier_11.connect (supplier_admin.in ());
 
       // ****************************************************************
 
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
       CEC_Counting_Consumer consumer_00 ("Consumer/00");
-      consumer_00.connect (consumer_admin.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      consumer_00.connect (consumer_admin.in ());
 
       // ****************************************************************
 
       CEC_Counting_Consumer consumer_01 ("Consumer/01");
-      consumer_01.connect (consumer_admin.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      consumer_01.connect (consumer_admin.in ());
 
       // ****************************************************************
 
@@ -147,7 +140,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       orb->destroy ();
 
@@ -162,11 +155,10 @@ main (int argc, char* argv[])
       consumer_00.dump_results (expected, 5);
       consumer_01.dump_results (expected, 5);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

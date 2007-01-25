@@ -12,21 +12,19 @@ main (int argc, char *argv [])
 
   client.parse_args (argc, argv);
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      client.init (argc, argv
-                   ACE_ENV_ARG_PARAMETER); //Init the Client
+      client.init (argc, argv); //Init the Client
 
       client.run ();
 
       client.destroy_ec ();
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

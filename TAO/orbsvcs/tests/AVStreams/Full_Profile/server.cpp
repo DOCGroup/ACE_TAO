@@ -10,17 +10,15 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
   protocols [0] = CORBA::string_dup ("TCP");
   protocols [1] = CORBA::string_dup ("UDP");
   protocols [2] = CORBA::string_dup ("RTP/UDP");
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->set_protocol_restriction (protocols
-                                      ACE_ENV_ARG_PARAMETER);
+      this->set_protocol_restriction (protocols);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint\n");
+      ex._tao_print_exception (
+        "FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint\n");
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -101,8 +99,7 @@ int
 Server::init (int argc,
               char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableServer::POAManager_var mgr
         = this->poa_->the_POAManager ();
@@ -128,7 +125,7 @@ Server::init (int argc,
 
       fep_b_obj_ = this->fep_b_->_this ();
 
-      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() ACE_ENV_ARG_PARAMETER );
+      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() );
 
      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
 
@@ -140,34 +137,30 @@ Server::init (int argc,
 
       // Register the video control object with the naming server.
       this->my_naming_client_->rebind (server_sep_b_name,
-                                       sep_b_.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+                                       sep_b_.in ());
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 Server::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->orb_->run ();
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::run\n");
+      ex._tao_print_exception ("server::run\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -215,28 +208,25 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      poa.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   result = FTP_SERVER::instance ()->init (argc,argv);
 

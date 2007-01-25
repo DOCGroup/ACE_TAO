@@ -114,8 +114,7 @@ public:
 
   /// Checks for illegal member type in given container type.
   static void valid_container (CORBA::DefinitionKind container_kind,
-                               CORBA::DefinitionKind contained_kind
-                               ACE_ENV_ARG_DECL)
+                               CORBA::DefinitionKind contained_kind)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Wrapper for id_exists() and name_exists().
@@ -123,21 +122,18 @@ public:
                          name_clash_checker checker,
                          ACE_Configuration_Section_Key &key,
                          TAO_Repository_i *repo,
-                         CORBA::DefinitionKind kind
-                         ACE_ENV_ARG_DECL);
+                         CORBA::DefinitionKind kind);
 
   /// Checks for a global repository id clash.
   static void id_exists (const char *id,
-                         TAO_Repository_i *repo
-                         ACE_ENV_ARG_DECL)
+                         TAO_Repository_i *repo)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Checks for a local name clash.
   static void name_exists (name_clash_checker checker,
                            ACE_Configuration_Section_Key &key,
                            TAO_Repository_i *repo,
-                           CORBA::DefinitionKind kind
-                           ACE_ENV_ARG_DECL)
+                           CORBA::DefinitionKind kind)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used by interfaces and components to check for name clashes
@@ -145,8 +141,7 @@ public:
   static void check_subsection (name_clash_checker checker,
                                 const char *sub_section,
                                 ACE_Configuration *config,
-                                ACE_Configuration_Section_Key &key
-                                ACE_ENV_ARG_DECL)
+                                ACE_Configuration_Section_Key &key)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Top-level method which calls all the above error-checking methods.
@@ -155,8 +150,7 @@ public:
                               const char *id,
                               name_clash_checker checker,
                               ACE_Configuration_Section_Key &key,
-                              TAO_Repository_i *repo
-                              ACE_ENV_ARG_DECL);
+                              TAO_Repository_i *repo);
 
   /// Code common to the creation of an entry for any non-anonymous type.
   static ACE_TString create_common (
@@ -170,7 +164,6 @@ public:
       name_clash_checker checker,
       const char *version,
       const char *sub_section_name
-      ACE_ENV_ARG_DECL
     );
 
   /// Common to Container::create_value() and ValueDef::supported_interfaces(),
@@ -191,14 +184,12 @@ public:
   static CORBA::TypeCode_ptr gen_valuetype_tc_r (
       ACE_Configuration_Section_Key &,
       TAO_Repository_i *
-      ACE_ENV_ARG_DECL
     );
 
   /// Called from the above function.
   static void fill_valuemember_seq (CORBA::ValueMemberSeq &,
                                     ACE_Configuration_Section_Key &,
-                                    TAO_Repository_i *
-                                    ACE_ENV_ARG_DECL);
+                                    TAO_Repository_i *);
 
   /// Converison from IR Object reference to key location path.
   static char *reference_to_path (CORBA::IRObject_ptr obj);
@@ -227,14 +218,12 @@ public:
 
   /// Conversion from key location path to IR Object reference.
   static CORBA::Object_ptr path_to_ir_object (ACE_TString &path,
-                                              TAO_Repository_i *repo
-                                              ACE_ENV_ARG_DECL);
+                                              TAO_Repository_i *repo);
 
   /// Can be called from the above method or directly from a derived class.
   static CORBA::Object_ptr create_objref (CORBA::DefinitionKind def_kind,
                                           const char *obj_id,
-                                          TAO_Repository_i *repo
-                                          ACE_ENV_ARG_DECL);
+                                          TAO_Repository_i *repo);
 
   /// Copy and octet sequence to a string..
   static char *oid_to_string (PortableServer::ObjectId &oid);

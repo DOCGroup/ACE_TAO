@@ -38,7 +38,7 @@ public:
     ACE_THROW_SPEC ((Simple_Server::WrongProtocolType,
                      CORBA::SystemException));
 
-  CORBA::Long test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Long test_method (CORBA::Long x)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (void)

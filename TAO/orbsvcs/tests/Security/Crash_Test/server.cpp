@@ -41,19 +41,18 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
       ACE_OS::putenv (env.c_str ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,7 +60,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -75,34 +74,29 @@ main (int argc, char *argv[])
       policies.length (2);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                          ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
       PortableServer::POA_var persistent_poa =
         root_poa->create_POA ("PersistentPOA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId ("object1");
 
       persistent_poa->activate_object_with_id (oid.in (),
-                                               &server_impl
-                                               ACE_ENV_ARG_PARAMETER);
+                                               &server_impl);
 
 
       CORBA::Object_var server =
         persistent_poa->create_reference_with_id (oid.in (),
-                                                  "IDL:Simple_Server:1.0"
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  "IDL:Simple_Server:1.0");
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -135,19 +129,17 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "SERVER (%P): Event loop finished.\n"));
 
-      persistent_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      persistent_poa->destroy (1, 1);
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       ACE_OS::sleep (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "SERVER (%P): Caught exception:");
+      ex._tao_print_exception ("SERVER (%P): Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

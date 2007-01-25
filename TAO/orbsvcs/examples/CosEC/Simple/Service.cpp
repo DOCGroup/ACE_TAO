@@ -18,12 +18,11 @@ main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) == -1)
         {
@@ -33,9 +32,9 @@ main (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -50,7 +49,7 @@ main (int argc, char* argv[])
         ec_impl._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (event_channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -78,12 +77,11 @@ main (int argc, char* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

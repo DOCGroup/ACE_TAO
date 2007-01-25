@@ -41,17 +41,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * the PROXY interface must implement:
  *
  * @verbatim
- * void connected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void reconnected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void disconnected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void connected (PEER *peer) throw ();
+ * void reconnected (PEER *peer) throw ();
+ * void disconnected (PEER *peer) throw ();
  * @endverbatim
  *
  * Similarly, the PEER interface must implement:
  *
  * @verbatim
- * void connected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void reconnected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
- * void disconnected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void connected (PROXY *proxy) throw ();
+ * void reconnected (PROXY *proxy) throw ();
+ * void disconnected (PROXY *proxy) throw ();
  * @endverbatim
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
@@ -69,8 +69,7 @@ public:
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void peer_connected (PEER *peer
-                               ACE_ENV_ARG_DECL)
+  virtual void peer_connected (PEER *peer)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -79,8 +78,7 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void peer_reconnected (PEER *peer
-                                 ACE_ENV_ARG_DECL)
+  virtual void peer_reconnected (PEER *peer)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -88,8 +86,7 @@ public:
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void peer_disconnected (PEER *peer
-                                  ACE_ENV_ARG_DECL)
+  virtual void peer_disconnected (PEER *peer)
       ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

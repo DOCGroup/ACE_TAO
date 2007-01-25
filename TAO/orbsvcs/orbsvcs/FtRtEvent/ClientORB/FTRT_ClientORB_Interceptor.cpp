@@ -43,21 +43,19 @@ FTRT_ClientORB_Interceptor::destroy (void)
 
 void
 FTRT_ClientORB_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FTRT_ClientORB_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::send_request");
-  ACE_TRY
+  try
   {
     // Add FT_REQUEST context
     IOP::ServiceContext sc;
@@ -89,34 +87,30 @@ FTRT_ClientORB_Interceptor::send_request (
       }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-    ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+    ri->add_request_service_context (sc, 0);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     // Not much can be done anyway. Just keep quiet
   }
-  ACE_ENDTRY;
 }
 
 void
 FTRT_ClientORB_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::receive_reply");
 
 
   IOP::ServiceContext_var service_context;
-  ACE_TRY {
+  try{
     service_context =
-      ri->get_reply_service_context(FTRT::FT_FORWARD
-                                    ACE_ENV_ARG_PARAMETER);
+      ri->get_reply_service_context(FTRT::FT_FORWARD);
   }
-  ACE_CATCHANY {
+  catch (const CORBA::Exception& ex){
     return;
   }
-  ACE_ENDTRY;
 
 
   const char * buf =
@@ -138,8 +132,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
 
 void
 FTRT_ClientORB_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -147,8 +140,7 @@ FTRT_ClientORB_Interceptor::receive_other (
 
 void
 FTRT_ClientORB_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

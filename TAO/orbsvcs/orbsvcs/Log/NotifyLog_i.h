@@ -70,13 +70,13 @@ public:
   ~TAO_NotifyLog_i ();
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -97,7 +97,7 @@ public:
       CORBA::SystemException
     ));
 
-  void set_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
+  void set_filter (CosNotifyFilter::Filter_ptr filter)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -128,27 +128,27 @@ public:
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
   new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID& id ACE_ENV_ARG_DECL)
+    CosNotifyChannelAdmin::AdminID& id)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
   new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-    CosNotifyChannelAdmin::AdminID& id ACE_ENV_ARG_DECL)
+    CosNotifyChannelAdmin::AdminID& id)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::ConsumerAdmin_ptr
-  get_consumeradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
+  get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
     ACE_THROW_SPEC ((
       CosNotifyChannelAdmin::AdminNotFound,
       CORBA::SystemException
     ));
 
   CosNotifyChannelAdmin::SupplierAdmin_ptr
-  get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DECL)
+  get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
     ACE_THROW_SPEC ((
       CosNotifyChannelAdmin::AdminNotFound,
       CORBA::SystemException
@@ -172,7 +172,7 @@ public:
       CORBA::SystemException
     ));
 
-  void set_admin (const CosNotification::AdminProperties& admin ACE_ENV_ARG_DECL)
+  void set_admin (const CosNotification::AdminProperties& admin)
     ACE_THROW_SPEC ((
       CosNotification::UnsupportedAdmin,
       CORBA::SystemException
@@ -184,14 +184,14 @@ public:
       CORBA::SystemException
     ));
 
-  void set_qos (const CosNotification::QoSProperties& ACE_ENV_ARG_DECL)
+  void set_qos (const CosNotification::QoSProperties&)
     ACE_THROW_SPEC ((
       CosNotification::UnsupportedQoS,
       CORBA::SystemException
     ));
 
   void validate_qos (const CosNotification::QoSProperties&,
-    CosNotification::NamedPropertyRangeSeq_out ACE_ENV_ARG_DECL)
+    CosNotification::NamedPropertyRangeSeq_out)
     ACE_THROW_SPEC ((
       CosNotification::UnsupportedQoS,
       CORBA::SystemException

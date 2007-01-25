@@ -28,7 +28,7 @@ CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
   const int size,
   ACE_SYNCH_MUTEX *mutex)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
           /*
        *  The pointers to the beginnings of the lists must be globally visible,
@@ -63,16 +63,15 @@ CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
       this->granted_ = &lock_array[1];
       this->pending_ = &lock_array[2];
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG((LM_ERROR,
                  "Error in %s: Line %d - Could not generate a Locklist in shared memory\n",
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                           "Exception: CosSchedulingLockList()");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -254,7 +253,7 @@ PCP_Manager::PCP_Manager(CosSchedulingLockList *locks,
 void
 PCP_Manager::lock(const int priority_ceiling, const int priority)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       /// we do not want the thread to be pre-empted inside
@@ -331,21 +330,20 @@ PCP_Manager::lock(const int priority_ceiling, const int priority)
       this->current_->the_priority(priority_ceiling);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG((LM_ERROR,
                  "Error in %s: Line %d - Could lock resource\n"
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                           "Exception: PCP_Manager::lock");
     }
-  ACE_ENDTRY;
 }
 
 void PCP_Manager::release_lock()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       /// To prevent pre-emption in the critical section,
       /// which could lead to unbounded blocking
@@ -372,22 +370,21 @@ void PCP_Manager::release_lock()
       /// We do not need to restore priority because we have already set this
       // thread to wait at RTCORBA::maxPriority at the start of this method
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG((LM_ERROR,
                  "Error in %s: Line %d - Could not release lock\n"
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                           "Exception: PCP_Manager::release_lock");
     }
-  ACE_ENDTRY;
 }
 
 
 PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 #if !defined (ACE_LACKS_MMAP)
       char temp_file[MAXPATHLEN + 1];
@@ -480,17 +477,16 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
                           );
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR((LM_ERROR,
                  "Error in %s: Line %d - Error in creating "
                  "PCP_Manager_Factory to create new PCP_Managers\n"
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION(ex,
                          "PCP_Manager_Factory::PCP_Manager_Factory\n");
     }
-  ACE_ENDTRY;
 }
 
 PCP_Manager_Factory::~PCP_Manager_Factory()

@@ -62,7 +62,7 @@ protected:
   virtual int make_mediactrl (T_MediaCtrl *&media_ctrl);
 
 
-  char* activate_with_poa (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  char* activate_with_poa (PortableServer::Servant servant);
 
   CORBA::ORB_var orb_;
 
@@ -105,8 +105,7 @@ public:
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 };
 
@@ -136,8 +135,7 @@ public:
 
   /// Called by the MMDevice, when it needs to create a B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 };
 
 // ----------------------------------------------------------------------
@@ -173,11 +171,10 @@ protected:
    * return them to the client
    */
   int activate_objects (int argc,
-                        char **argv
-                        ACE_ENV_ARG_DECL);
+                        char **argv);
 
   ///activate the servant with the poa
-  char* activate_with_poa (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  char* activate_with_poa (PortableServer::Servant servant);
 
   /// Removes the vdev and streamendpoint names from the naming service.
   int unbind_names (void);

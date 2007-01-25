@@ -53,10 +53,10 @@ public:
   void init (void);
 
   /// Connect
-  void connected (PROXY* proxy ACE_ENV_ARG_DECL);
+  void connected (PROXY* proxy);
 
   /// Disconnect
-  void disconnected (PROXY* proxy ACE_ENV_ARG_DECL);
+  void disconnected (PROXY* proxy);
 
   /// Collection accessor
   COLLECTION* collection (void);

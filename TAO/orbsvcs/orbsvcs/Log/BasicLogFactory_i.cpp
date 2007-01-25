@@ -17,28 +17,23 @@ TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i (void)
 
 DsLogAdmin::BasicLogFactory_ptr
 TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
-                                 PortableServer::POA_ptr poa
-                                 ACE_ENV_ARG_DECL)
+                                 PortableServer::POA_ptr poa)
 {
-  TAO_LogMgr_i::init (orb, poa ACE_ENV_ARG_PARAMETER);
+  TAO_LogMgr_i::init (orb, poa);
 
 
   PortableServer::ObjectId_var oid =
-    this->factory_poa_->activate_object (this
-					 ACE_ENV_ARG_PARAMETER);
+    this->factory_poa_->activate_object (this);
 
   CORBA::Object_var obj =
-    this->factory_poa_->id_to_reference (oid.in ()
-					 ACE_ENV_ARG_PARAMETER);
+    this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
   this->log_mgr_ =
-    DsLogAdmin::LogMgr::_narrow (obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    DsLogAdmin::LogMgr::_narrow (obj.in ());
 
   DsLogAdmin::BasicLogFactory_var v_return =
-    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
-					  ACE_ENV_ARG_PARAMETER);
+    DsLogAdmin::BasicLogFactory::_narrow (obj.in ());
 
   return v_return._retn ();
 }
@@ -46,8 +41,7 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
 DsLogAdmin::BasicLog_ptr
 TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                                CORBA::ULongLong max_size,
-                               DsLogAdmin::LogId_out id_out
-                               ACE_ENV_ARG_DECL)
+                               DsLogAdmin::LogId_out id_out)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidLogFullAction
                    ))
@@ -55,16 +49,15 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
   this->create_i (full_action,
 		  max_size,
 		  0,
-		  id_out
-		  ACE_ENV_ARG_PARAMETER);
+		  id_out);
   DsLogAdmin::LogId id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
-    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
+    this->create_log_reference (id);
 #else
   DsLogAdmin::Log_var log =
-    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+    this->create_log_object (id);
 #endif
 
   // narrow to BasicLog
@@ -77,8 +70,7 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
 DsLogAdmin::BasicLog_ptr
 TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                                        DsLogAdmin::LogFullActionType full_action,
-                                       CORBA::ULongLong max_size
-                                       ACE_ENV_ARG_DECL)
+                                       CORBA::ULongLong max_size)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    DsLogAdmin::LogIdAlreadyExists,
@@ -88,15 +80,14 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   this->create_with_id_i (id,
 			  full_action,
 			  max_size,
-			  0
-			  ACE_ENV_ARG_PARAMETER);
+			  0);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
-    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
+    this->create_log_reference (id);
 #else
   DsLogAdmin::Log_var log =
-    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+    this->create_log_object (id);
 #endif
 
   // narrow to BasicLog
@@ -113,8 +104,7 @@ TAO_BasicLogFactory_i::create_repositoryid ()
 }
 
 PortableServer::ServantBase*
-TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id
-					   ACE_ENV_ARG_DECL)
+TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
   TAO_BasicLog_i* basic_log_i;
 

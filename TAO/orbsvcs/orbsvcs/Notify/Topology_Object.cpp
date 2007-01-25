@@ -40,7 +40,7 @@ namespace TAO_Notify
   }
 
   void
-  Topology_Object::initialize (Topology_Parent* topology_parent ACE_ENV_ARG_DECL_NOT_USED)
+  Topology_Object::initialize (Topology_Parent* topology_parent)
   {
     ACE_ASSERT (topology_parent != 0 && this->topology_parent_ == 0);
     this->topology_parent_ = topology_parent;
@@ -57,8 +57,7 @@ namespace TAO_Notify
   Topology_Object *
   Topology_Object::load_child (const ACE_CString & /*type*/,
     CORBA::Long /* id */,
-    const NVPList& /* attrs */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const NVPList& /* attrs */)
   {
     return 0;
   }

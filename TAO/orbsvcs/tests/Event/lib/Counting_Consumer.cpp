@@ -13,8 +13,7 @@ EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
 
 void
 EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   const RtecEventChannelAdmin::ConsumerQOS &qos
-                   ACE_ENV_ARG_DECL)
+                   const RtecEventChannelAdmin::ConsumerQOS &qos)
 {
   // The canonical protocol to connect to the EC
 
@@ -28,8 +27,7 @@ EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
     }
 
   this->supplier_proxy_->connect_push_consumer (consumer.in (),
-                                                qos
-                                                ACE_ENV_ARG_PARAMETER);
+                                                qos);
 }
 
 void
@@ -50,8 +48,8 @@ EC_Counting_Consumer::deactivate (void)
   PortableServer::POA_var consumer_poa =
     this->_default_POA ();
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  consumer_poa->deactivate_object (consumer_id.in () ACE_ENV_ARG_PARAMETER);
+    consumer_poa->servant_to_id (this);
+  consumer_poa->deactivate_object (consumer_id.in ());
 
 }
 
@@ -76,8 +74,7 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-EC_Counting_Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
+EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)

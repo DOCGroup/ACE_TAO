@@ -31,11 +31,10 @@ TAO_Notify_Supplier::proxy (void)
 void
 TAO_Notify_Supplier::dispatch_updates_i (
   const CosNotification::EventTypeSeq& added,
-  const CosNotification::EventTypeSeq& removed
-  ACE_ENV_ARG_DECL)
+  const CosNotification::EventTypeSeq& removed)
 {
   if (!CORBA::is_nil (this->subscribe_.in ()))
-    this->subscribe_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
+    this->subscribe_->subscription_change (added, removed);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

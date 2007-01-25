@@ -95,7 +95,7 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
       parse_args (argc, argv);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
@@ -115,8 +115,7 @@ int main (int argc, char *argv[])
       mgr->activate ();
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      poa.in ());
 
       // Register the video mmdevice object with the ORB
       Reactive_Strategy *reactive_strategy;
@@ -133,7 +132,7 @@ int main (int argc, char *argv[])
         mmdevice_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (mmdevice.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (mmdevice.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -164,11 +163,11 @@ int main (int argc, char *argv[])
       AVStreams::FDev_var pong_fdev =
         pong_fdev_impl->_this ();
 
-      mmdevice->add_fdev (ping_fdev.in () ACE_ENV_ARG_PARAMETER);
+      mmdevice->add_fdev (ping_fdev.in ());
 
       if (respond == 1)
         {
-          mmdevice->add_fdev (pong_fdev.in () ACE_ENV_ARG_PARAMETER);
+          mmdevice->add_fdev (pong_fdev.in ());
         }
 
       orb->run ();
@@ -181,13 +180,11 @@ int main (int argc, char *argv[])
       recv_latency.dump_results ("Receive", gsf);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -61,16 +61,14 @@ public:
   /// Activate this servant with the ORB and POA passed in.
   DsLogAdmin::BasicLogFactory_ptr
     activate (CORBA::ORB_ptr orb,
-              PortableServer::POA_ptr poa
-              ACE_ENV_ARG_DECL);
+              PortableServer::POA_ptr poa);
 
   /// Allows clients to create new BasicLog objects.
   /// Raises DsLogAdmin::InvalidThreshold.
   DsLogAdmin::BasicLog_ptr
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
-            DsLogAdmin::LogId_out id
-            ACE_ENV_ARG_DECL)
+            DsLogAdmin::LogId_out id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidLogFullAction
                      ));
@@ -79,8 +77,7 @@ public:
   DsLogAdmin::BasicLog_ptr
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
-                    CORBA::ULongLong max_size
-                    ACE_ENV_ARG_DECL)
+                    CORBA::ULongLong max_size)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      DsLogAdmin::LogIdAlreadyExists,
@@ -90,10 +87,9 @@ public:
 protected:
   virtual CORBA::RepositoryId
     create_repositoryid ();
-	
+
   virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id
-			ACE_ENV_ARG_DECL);
+    create_log_servant (DsLogAdmin::LogId id);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var        log_mgr_;

@@ -8,8 +8,7 @@ ACE_RCSID(Trading, Offer_Exporter, "$Id$")
 
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
-                    CORBA::Boolean verbose
-                    ACE_ENV_ARG_DECL)
+                    CORBA::Boolean verbose)
   ACE_THROW_SPEC ((CORBA::SystemException))
     : verbose_ (verbose)
 {
@@ -53,12 +52,11 @@ TAO_Offer_Exporter::export_offers (void)
       this->props_fs_[i][4].value <<= "Default";
     }
 
-  this->export_to (this->register_.in () ACE_ENV_ARG_PARAMETER);
+  this->export_to (this->register_.in ());
 }
 
 void
-TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
-                               ACE_ENV_ARG_DECL)
+TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Register::InvalidObjectRef,
                    CosTrading::IllegalServiceType,
@@ -70,7 +68,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
                    CosTrading::MissingMandatoryProperty,
                    CosTrading::DuplicatePropertyName))
 {
-  ACE_TRY
+  try
     {
       for (int i = 0; i < NUM_OFFERS; i++)
         {
@@ -79,8 +77,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
           CosTrading::OfferId_var offer_id =
             reg->_cxx_export (offer_obj,
                               TT_Info::INTERFACE_NAMES[1],
-                              this->props_plotters_[i]
-                              ACE_ENV_ARG_PARAMETER);
+                              this->props_plotters_[i]);
 
           if (this->verbose_)
             {
@@ -91,8 +88,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
 
           offer_id = reg->_cxx_export (offer_obj,
                                        TT_Info::INTERFACE_NAMES[2],
-                                       this->props_printers_[i]
-                                       ACE_ENV_ARG_PARAMETER);
+                                       this->props_printers_[i]);
 
           if (this->verbose_)
             {
@@ -103,9 +99,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
 
           offer_id = reg->_cxx_export (offer_obj,
                                        TT_Info::INTERFACE_NAMES[3],
-                                       this->props_fs_[i]
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK
+                                       this->props_fs_[i]);
 
           if (this->verbose_)
             {
@@ -113,12 +107,12 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::export_offers");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Exporter::export_offers");
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -159,7 +153,7 @@ TAO_Offer_Exporter::export_offers_to_all (void)
 
   for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
     {
-      ACE_TRY
+      try
         {
           if (this->verbose_)
             {
@@ -168,7 +162,7 @@ TAO_Offer_Exporter::export_offers_to_all (void)
             }
 
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[i] ACE_ENV_ARG_PARAMETER);
+            link_if->describe_link (link_name_seq[i]);
 
           for (int j = 0; j < NUM_OFFERS; j++)
             {
@@ -183,13 +177,12 @@ TAO_Offer_Exporter::export_offers_to_all (void)
                           static_cast<const char*> (link_name_seq[i])));
             }
 
-          this->export_to (link_info->target_reg.in () ACE_ENV_ARG_PARAMETER);
+          this->export_to (link_info->target_reg.in ());
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // @@ IGNORE??
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -203,7 +196,7 @@ TAO_Offer_Exporter::withdraw_offers (void)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing all offers.\n"));
 
-  ACE_TRY
+  try
     {
       CORBA::ULong length;
 
@@ -214,16 +207,16 @@ TAO_Offer_Exporter::withdraw_offers (void)
           length = offer_id_seq->length ();
           for (CORBA::ULong i = 0; i < length; i++)
             {
-              this->register_->withdraw (offer_id_seq[i] ACE_ENV_ARG_PARAMETER);
+              this->register_->withdraw (offer_id_seq[i]);
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::withdraw_offers");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Exporter::withdraw_offers");
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -235,7 +228,7 @@ TAO_Offer_Exporter::describe_offers (void)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Describing all offers.\n"));
 
-  ACE_TRY
+  try
     {
       CORBA::ULong length;
       CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids ();
@@ -250,24 +243,24 @@ TAO_Offer_Exporter::describe_offers (void)
           for (CORBA::ULong i = 0; i < length; i++)
             {
               CosTrading::Register::OfferInfo_var offer_info =
-                this->register_->describe (offer_id_seq[i] ACE_ENV_ARG_PARAMETER);
+                this->register_->describe (offer_id_seq[i]);
 
               if (this->verbose_)
                 {
                   ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *) offer_id_seq[i]));
                   ACE_DEBUG ((LM_DEBUG, "Service Type: %s\n", offer_info->type.in ()));
-                  TT_Info::dump_properties (offer_info->properties, 0 ACE_ENV_ARG_PARAMETER);
+                  TT_Info::dump_properties (offer_info->properties, 0);
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
                 }
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::describe_offers");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Exporter::describe_offers");
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -287,7 +280,7 @@ TAO_Offer_Exporter::modify_offers (void)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Modifying all offers.\n"));
 
-  ACE_TRY
+  try
     {
       CosTrading::OfferIdSeq_var offer_id_seq = this->grab_offerids ();
 
@@ -309,17 +302,16 @@ TAO_Offer_Exporter::modify_offers (void)
             {
               this->register_->modify (offer_id_seq[i],
                                        del_list,
-                                       modify_list
-                                       ACE_ENV_ARG_PARAMETER);
+                                       modify_list);
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Exporter::modify_offers");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Exporter::modify_offers");
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -339,30 +331,26 @@ withdraw_offers_using_constraints (void)
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "Constraint: %s\n", constraint));
 
-  ACE_TRY
+  try
     {
       this->register_->
         withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::PLOTTER],
-                                   constraint
-                                   ACE_ENV_ARG_PARAMETER);
+                                   constraint);
 
       this->register_->
         withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::PRINTER],
-                                   constraint
-                                   ACE_ENV_ARG_PARAMETER);
+                                   constraint);
 
       this->register_->
         withdraw_using_constraint (TT_Info::INTERFACE_NAMES[TT_Info::FILESYSTEM],
-                                   constraint
-                                   ACE_ENV_ARG_PARAMETER);
+                                   constraint);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_Offer_Exporter::withdraw_using_constraint");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Exporter::withdraw_using_constraint");
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 CosTrading::OfferIdSeq*
@@ -374,15 +362,14 @@ TAO_Offer_Exporter::grab_offerids (void)
     ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Grabbing all offer ids.\n"));
 
   CosTrading::OfferIdSeq *offer_id_seq;
-  ACE_TRY
+  try
     {
       CORBA::ULong length = NUM_OFFERS;
       CosTrading::OfferIdIterator_ptr offer_id_iter;
 
       this->admin_->list_offers (NUM_OFFERS,
                                  CosTrading::OfferIdSeq_out (offer_id_seq),
-                                 CosTrading::OfferIdIterator_out (offer_id_iter)
-                                 ACE_ENV_ARG_PARAMETER);
+                                 CosTrading::OfferIdIterator_out (offer_id_iter));
 
       if ((! CORBA::is_nil (offer_id_iter)) && offer_id_seq != 0)
         {
@@ -394,8 +381,7 @@ TAO_Offer_Exporter::grab_offerids (void)
             {
               any_left =
                 offer_id_iter->next_n (length,
-                                       CosTrading::OfferIdSeq_out (id_seq)
-                                       ACE_ENV_ARG_PARAMETER);
+                                       CosTrading::OfferIdSeq_out (id_seq));
 
               int offers = id_seq->length ();
               int old_length = offer_id_seq->length ();
@@ -418,13 +404,11 @@ TAO_Offer_Exporter::grab_offerids (void)
             ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *)(*offer_id_seq)[j]));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_Offer_Exporter::grab_offerids");
-      ACE_RE_THROW;
+      ex._tao_print_exception ("TAO_Offer_Exporter::grab_offerids");
+      throw;
     }
-  ACE_ENDTRY;
   // @@ redundant.
 
   return offer_id_seq;

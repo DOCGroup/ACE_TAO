@@ -23,7 +23,7 @@ namespace {
 
 int parse_args(int argc, ACE_TCHAR** argv)
 {
-  ACE_TRY_NEW_ENV {
+  try{
     ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:n:o:"));
     int opt;
     CosNaming::Name name(1);
@@ -36,10 +36,8 @@ int parse_args(int argc, ACE_TCHAR** argv)
       {
       case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
-                                                        ACE_ENV_ARG_PARAMETER);
-          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                                ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ());
+          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
         }
         break;
       case 'n':
@@ -55,37 +53,32 @@ int parse_args(int argc, ACE_TCHAR** argv)
       /// we should get the ftec from Naming Service
 
       CosNaming::NamingContext_var naming_context =
-        resolve_init<CosNaming::NamingContext>(orb.in(), "NameService"
-        ACE_ENV_ARG_PARAMETER);
+        resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
 
       ftec = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
-        name
-        ACE_ENV_ARG_PARAMETER);
+        name);
 
       if (CORBA::is_nil(ftec.in()))
         ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
     }
   }
-  ACE_CATCHANY {
+  catch (const CORBA::Exception& ex){
     ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
   }
-  ACE_ENDTRY;
   return 0;
 }
 
 int main(int argc,  ACE_TCHAR** argv)
 {
-  ACE_TRY_NEW_ENV
+  try
   {
-    orb = CORBA::ORB_init (argc, argv, ""
-                           ACE_ENV_ARG_PARAMETER);
+    orb = CORBA::ORB_init (argc, argv, "");
 
     if (parse_args(argc, argv)==-1)
       return 1;
 
     PortableServer::POA_var
-      root_poa =  resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
-      ACE_ENV_ARG_PARAMETER);
+      root_poa =  resolve_init<PortableServer::POA>(orb.in(), "RootPOA");
 
     // create POAManager
     PortableServer::POAManager_var
@@ -97,12 +90,11 @@ int main(int argc,  ACE_TCHAR** argv)
     TAO_FTRTEC::FTEC_Gateway gateway_servant(orb.in(), ftec.in());
 
     RtecEventChannelAdmin::EventChannel_var gateway =
-      gateway_servant.activate(root_poa.in() ACE_ENV_ARG_PARAMETER);
+      gateway_servant.activate(root_poa.in());
 
     if (ior_file_name.length())
     {
-      CORBA::String_var str = orb->object_to_string(gateway.in()
-        ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var str = orb->object_to_string(gateway.in());
 
       FILE *output_file=
         ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name.c_str()),
@@ -118,9 +110,8 @@ int main(int argc,  ACE_TCHAR** argv)
 
     orb->run();
   }
-  ACE_CATCHANY {
+  catch (const CORBA::Exception& ex){
     return 1;
   }
-  ACE_ENDTRY;
   return 0;
 }

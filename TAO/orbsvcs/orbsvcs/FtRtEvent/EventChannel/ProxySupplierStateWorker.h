@@ -31,8 +31,7 @@ public:
   ~ProxySupplierStateWorker();
 
   virtual void set_size(size_t size);
-  virtual void work(TAO_EC_ProxyPushSupplier* object
-            ACE_ENV_ARG_DECL);
+  virtual void work(TAO_EC_ProxyPushSupplier* object);
 private:
   int index_;
   FtRtecEventChannelAdmin::ProxySupplierStates& supplierStates_;

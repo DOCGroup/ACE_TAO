@@ -65,8 +65,7 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-      CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy
-      ACE_ENV_ARG_DECL)
+      CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
@@ -92,23 +91,19 @@ public:
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   /// Push an event into the queue.
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL);
+  void push (const CORBA::Any &event);
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   virtual void connect_pull_consumer (
-                CosEventComm::PullConsumer_ptr pull_consumer
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CosEventComm::PullConsumer_ptr pull_consumer)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
   virtual CORBA::Any * pull (void)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
   virtual void disconnect_pull_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));

@@ -113,24 +113,21 @@ TAO_LB_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 int
 TAO_LB_Signal_Handler::perform_cleanup (int signum)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Shutdown the POA.
       //
       // Shutting down the POA will cause servants "owned" by the POA
       // to be destroyed.  Servants will then have the opportunity to
       // clean up all resources they are responsible for.
-      this->poa_->destroy (1, 1
-                           ACE_ENV_ARG_PARAMETER);
+      this->poa_->destroy (1, 1);
 
       // Now shutdown the ORB.
-      this->orb_->shutdown (1
-                            ACE_ENV_ARG_PARAMETER);
+      this->orb_->shutdown (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception");
 
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,7 +135,6 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
                          signum),
                         -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

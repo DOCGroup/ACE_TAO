@@ -59,7 +59,7 @@ public:
   TAO_Notify_EventChannelFactory (void);
 
   /// Init the factory
-  void init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr poa);
 
   /// Destructor
   virtual ~TAO_Notify_EventChannelFactory ();
@@ -69,11 +69,10 @@ public:
   virtual void _remove_ref (void);
 
   /// Remove <channel> from the <ec_container_>
-  void remove (TAO_Notify_EventChannel* channel ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_EventChannel* channel);
 
   /// Accesor for the default filter factory shared by all EC's.
   virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (
-      ACE_ENV_SINGLE_ARG_DECL
     );
 
 
@@ -94,12 +93,11 @@ public:
 
   virtual bool is_persistent () const;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual bool change_to_parent (void);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_Notify::NVPList& attrs
-                                                   ACE_ENV_ARG_DECL);
+                                                   const TAO_Notify::NVPList& attrs);
   CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
   virtual void reconnect (void);
 
@@ -111,9 +109,9 @@ public:
   virtual void save_topology (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
+  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
+  TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
   virtual TAO_Notify_Object::ID get_id () const;
 
 
@@ -135,13 +133,11 @@ public:
 
   virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
-      NotifyExt::ReconnectionCallback_ptr reconnection
-      ACE_ENV_ARG_DECL)
+      NotifyExt::ReconnectionCallback_ptr reconnection)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void unregister_callback (
-      NotifyExt::ReconnectionRegistry::ReconnectionID id
-      ACE_ENV_ARG_DECL)
+      NotifyExt::ReconnectionRegistry::ReconnectionID id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean is_alive (void)
@@ -153,20 +149,17 @@ public:
       const CosNotification::QoSProperties & initial_qos,
       const CosNotification::AdminProperties & initial_admin,
       CosNotifyChannelAdmin::ChannelID_out id
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotification::UnsupportedQoS,
                      CosNotification::UnsupportedAdmin));
 
   virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
       CosNotifyChannelAdmin::ChannelID id
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyChannelAdmin::ChannelNotFound));

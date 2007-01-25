@@ -29,8 +29,7 @@ TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver (void)
 void
 TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             TAO_ECG_Refcounted_Endpoint ignore_from,
-                            RtecUDPAdmin::AddrServer_ptr addr_server
-                            ACE_ENV_ARG_DECL)
+                            RtecUDPAdmin::AddrServer_ptr addr_server)
 {
   // Verify arguments.
   // <addr_server> is allowed to be nil.  But then, if get_addr () method
@@ -40,7 +39,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
       ACE_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::init(): "
                   "<lcl_ec> argument is nil.\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   this->cdr_receiver_.init (ignore_from);
@@ -53,15 +52,14 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 }
 
 void
-TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub
-                               ACE_ENV_ARG_DECL)
+TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   "Error initializing TAO_ECG_UDP_Receiver: "
                   "init() hasn't been called before connect().\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (pub.publications.length () == 0)
@@ -69,22 +67,21 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub
       ACE_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::connect(): "
                   "0-length publications argument.\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
-      this->new_connect (pub ACE_ENV_ARG_PARAMETER);
+      this->new_connect (pub);
     }
   else
     {
-      this->reconnect (pub ACE_ENV_ARG_PARAMETER);
+      this->reconnect (pub);
     }
 }
 
 void
-TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
-                                   ACE_ENV_ARG_DECL)
+TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub)
 {
   // Activate with poa.
   RtecEventComm::PushSupplier_var supplier_ref;
@@ -94,8 +91,7 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
   activate (supplier_ref,
             poa.in (),
             this,
-            deactivator
-            ACE_ENV_ARG_PARAMETER);
+            deactivator);
 
   // Connect as a supplier to the local EC.
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
@@ -106,8 +102,7 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
   ECG_Receiver_Auto_Proxy_Disconnect new_proxy_disconnect (proxy.in ());
 
   proxy->connect_push_supplier (supplier_ref.in (),
-                                pub
-                                ACE_ENV_ARG_PARAMETER);
+                                pub);
 
   // Update resource managers.
   this->consumer_proxy_ = proxy._retn ();
@@ -116,26 +111,24 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
 }
 
 void
-TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub
-                                 ACE_ENV_ARG_DECL)
+TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushSupplier_var supplier_ref;
   PortableServer::POA_var poa = this->_default_POA ();
 
-  CORBA::Object_var obj = poa->servant_to_reference (this ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = poa->servant_to_reference (this);
   supplier_ref =
-    RtecEventComm::PushSupplier::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    RtecEventComm::PushSupplier::_narrow (obj.in ());
 
   if (CORBA::is_nil (supplier_ref.in ()))
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // Reconnect.
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
-                                                pub
-                                                ACE_ENV_ARG_PARAMETER);
+                                                pub);
 }
 
 void
@@ -190,8 +183,7 @@ TAO_ECG_Event_CDR_Decoder::decode (TAO_InputCDR &cdr)
 int
 TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Make sure we are connected to the Event Channel before proceeding
       // any further.
@@ -222,17 +214,16 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
                             0);
         }
 
-      this->consumer_proxy_->push (cdr_decoder.events ACE_ENV_ARG_PARAMETER);
+      this->consumer_proxy_->push (cdr_decoder.events);
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "
                   "ECG_UDP_Receiver::handle_input: %s\n",
-                  ACE_ANY_EXCEPTION._info ().c_str ()));
+                  ex._info ().c_str ()));
     }
-  ACE_ENDTRY;
   return 0;
 }
 

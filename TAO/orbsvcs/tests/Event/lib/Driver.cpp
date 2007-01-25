@@ -61,13 +61,13 @@ EC_Driver::~EC_Driver (void)
 int
 EC_Driver::run (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Calibrate the high resolution timer *before* starting the
       // test.
       ACE_High_Res_Timer::calibrate ();
 
-      this->run_init (argc, argv ACE_ENV_ARG_PARAMETER);
+      this->run_init (argc, argv);
 
       this->execute_test ();
 
@@ -75,27 +75,24 @@ EC_Driver::run (int argc, char* argv[])
 
       this->run_cleanup ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "EC_Driver::run");
+      ex._tao_print_exception ("EC_Driver::run");
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR ((LM_ERROR, "EC_Driver (%P|%t) non-corba exception raised\n"));
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-EC_Driver::run_init (int &argc, char* argv[]
-                     ACE_ENV_ARG_DECL)
+EC_Driver::run_init (int &argc, char* argv[])
 {
-  this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
+  this->initialize_orb_and_poa (argc, argv);
 
   if (this->parse_args (argc, argv))
-    ACE_THROW (CORBA::INTERNAL (TAO::VMCID,
-                                CORBA::COMPLETED_NO));
+    throw CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
 
   if (this->verbose ())
     this->print_args ();
@@ -112,18 +109,15 @@ EC_Driver::run_init (int &argc, char* argv[]
     }
 
   if (this->move_to_rt_class () == -1)
-    ACE_THROW (CORBA::INTERNAL (TAO::VMCID,
-                                CORBA::COMPLETED_NO));
+    throw CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
 
   this->initialize_ec_impl ();
 
   if (this->allocate_consumers () == -1)
-    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
-                                 CORBA::COMPLETED_NO));
+    throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   if (this->allocate_suppliers () == -1)
-    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
-                                 CORBA::COMPLETED_NO));
+    throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   this->connect_clients ();
 }
@@ -150,7 +144,7 @@ EC_Driver::run_cleanup (void)
   this->cleanup_consumers ();
   this->cleanup_ec ();
 
-  this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+  this->root_poa_->destroy (1, 1);
   this->root_poa_ = PortableServer::POA::_nil ();
 
   this->orb_->destroy ();
@@ -158,14 +152,13 @@ EC_Driver::run_cleanup (void)
 }
 
 void
-EC_Driver::initialize_orb_and_poa (int &argc, char* argv[]
-                                   ACE_ENV_ARG_DECL)
+EC_Driver::initialize_orb_and_poa (int &argc, char* argv[])
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (argc, argv, "");
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
     {
@@ -175,7 +168,7 @@ EC_Driver::initialize_orb_and_poa (int &argc, char* argv[]
     }
 
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
     this->root_poa_->the_POAManager ();
@@ -280,24 +273,24 @@ EC_Driver::obtain_remote_ec (void)
   channel_name[0].id = CORBA::string_dup (this->event_service_name_);
 
   CORBA::Object_var tmp =
-    naming_context->resolve (channel_name ACE_ENV_ARG_PARAMETER);
+    naming_context->resolve (channel_name);
 
   this->event_channel_ =
-    RtecEventChannelAdmin::EventChannel::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
+    RtecEventChannelAdmin::EventChannel::_narrow (tmp.in ());
 }
 
 CosNaming::NamingContext_ptr
 EC_Driver::get_naming_context (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("NameService");
 
   if (CORBA::is_nil (naming_obj.in ()))
     ACE_ERROR ((LM_ERROR,
                 "EC_Driver (%P|%t) Unable to obtain the "
                 "Naming Service.\n"));
 
-  return CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+  return CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 #endif
 
@@ -332,8 +325,8 @@ EC_Driver::deactivate_ec (void)
     PortableServer::POA_var poa =
       this->ec_impl_->_default_POA ();
     PortableServer::ObjectId_var id =
-      poa->servant_to_id (this->ec_impl_ ACE_ENV_ARG_PARAMETER);
-    poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+      poa->servant_to_id (this->ec_impl_);
+    poa->deactivate_object (id.in ());
   }
 
   if (this->verbose ())
@@ -417,7 +410,7 @@ EC_Driver::connect_consumers (void)
 
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->connect_consumer (consumer_admin.in (), i ACE_ENV_ARG_PARAMETER);
+      this->connect_consumer (consumer_admin.in (), i);
     }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) connected consumer(s)\n"));
@@ -426,25 +419,22 @@ EC_Driver::connect_consumers (void)
 void
 EC_Driver::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   RtecEventChannelAdmin::ConsumerQOS qos;
   int shutdown_event_type;
-  this->build_consumer_qos (i, qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
+  this->build_consumer_qos (i, qos, shutdown_event_type);
 
   this->consumers_[i]->connect (consumer_admin,
                                 qos,
-                                shutdown_event_type
-                                ACE_ENV_ARG_PARAMETER);
+                                shutdown_event_type);
 }
 
 void
 EC_Driver::build_consumer_qos (
   int i,
   RtecEventChannelAdmin::ConsumerQOS& qos,
-  int& shutdown_event_type
-  ACE_ENV_ARG_DECL_NOT_USED)
+  int& shutdown_event_type)
 {
   RtecBase::handle_t rt_info = 0;
 
@@ -472,7 +462,7 @@ EC_Driver::connect_suppliers (void)
 
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->connect_supplier (supplier_admin.in (), i ACE_ENV_ARG_PARAMETER);
+      this->connect_supplier (supplier_admin.in (), i);
     }
 
   if (this->verbose ())
@@ -482,25 +472,22 @@ EC_Driver::connect_suppliers (void)
 void
 EC_Driver::connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   RtecEventChannelAdmin::SupplierQOS qos;
   int shutdown_event_type;
-  this->build_supplier_qos (i, qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
+  this->build_supplier_qos (i, qos, shutdown_event_type);
 
   this->suppliers_[i]->connect (supplier_admin,
                                 qos,
-                                shutdown_event_type
-                                ACE_ENV_ARG_PARAMETER);
+                                shutdown_event_type);
 }
 
 void
 EC_Driver::build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED)
+      int& shutdown_event_type)
 {
   int type_start = this->supplier_type_start_ + i*this->supplier_type_shift_;
   int supplier_id = i + 1;
@@ -958,25 +945,21 @@ EC_Driver::decode_supplier_cookie (void* cookie) const
 
 void
 EC_Driver::consumer_push (void*,
-                          const RtecEventComm::EventSet&
-                          ACE_ENV_ARG_DECL_NOT_USED)
+                          const RtecEventComm::EventSet&)
 {
 }
 
 void
-EC_Driver::consumer_shutdown (void*
-                              ACE_ENV_ARG_DECL_NOT_USED)
+EC_Driver::consumer_shutdown (void*)
 {
 }
 
 void
-EC_Driver::consumer_disconnect (void*
-                                ACE_ENV_ARG_DECL_NOT_USED)
+EC_Driver::consumer_disconnect (void*)
 {
 }
 
 void
-EC_Driver::supplier_disconnect (void*
-                                ACE_ENV_ARG_DECL_NOT_USED)
+EC_Driver::supplier_disconnect (void*)
 {
 }

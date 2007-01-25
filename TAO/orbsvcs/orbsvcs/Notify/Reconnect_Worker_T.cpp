@@ -28,7 +28,7 @@ namespace TAO_Notify
 
   template<class TOPOOBJ>
   void
-  Reconnect_Worker<TOPOOBJ>::work (TOPOOBJ* o ACE_ENV_ARG_DECL)
+  Reconnect_Worker<TOPOOBJ>::work (TOPOOBJ* o)
   {
     ACE_ASSERT(o != 0);
     o->reconnect ();

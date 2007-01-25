@@ -67,7 +67,7 @@ protected:
   void obtain_proxy_consumer ();
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any ACE_ENV_ARG_DECL)
+  virtual void send_notification (const CORBA::Any& any)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 

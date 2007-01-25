@@ -39,17 +39,14 @@ Multiple::init (int argc, char *argv[])
 int
 Multiple::init_ORB  (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    ""
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "");
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -57,21 +54,18 @@ Multiple::init_ORB  (int argc, char *argv [])
                           -1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Multiple::init_ORB\n");
+      ex._tao_print_exception ("Exception in Multiple::init_ORB\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -79,8 +73,7 @@ Multiple::init_ORB  (int argc, char *argv [])
 int
 Multiple::init_CosEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialization of the naming service.
       if (this->naming_client_.init (this->orb_.in ()) != 0)
@@ -95,23 +88,19 @@ Multiple::init_CosEC (void)
         CORBA::string_dup (this->service_name);
 
       CORBA::Object_var EC_obj =
-        this->naming_client_->resolve (ec_ref_name
-                                      ACE_ENV_ARG_PARAMETER);
+        this->naming_client_->resolve (ec_ref_name);
 
       // The CORBA::Object_var object is downcast to
       // CosEventChannelAdmin::EventChannel
       // using the <_narrow> method.
       this->cos_ec_ =
-        CosEventChannelAdmin::EventChannel::_narrow (EC_obj.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+        CosEventChannelAdmin::EventChannel::_narrow (EC_obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Multiple::init_ORB\n");
+      ex._tao_print_exception ("Exception in Multiple::init_ORB\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -119,16 +108,14 @@ Multiple::init_CosEC (void)
 int
 Multiple::runORB (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -17,7 +17,6 @@ PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 
 void
 PushConsumer_impl::push (const RtecEventComm::EventSet & event
-             ACE_ENV_ARG_DECL_NOT_USED
              )
              ACE_THROW_SPEC ((
              CORBA::SystemException
@@ -42,12 +41,11 @@ PushConsumer_impl::disconnect_push_consumer (void)
                        ))
 {
   PortableServer::Current_var current =
-    resolve_init<PortableServer::Current>(orb_.in(), "POACurrent" ACE_ENV_ARG_PARAMETER);
+    resolve_init<PortableServer::Current>(orb_.in(), "POACurrent");
 
   PortableServer::POA_var poa = current->get_POA();
 
   PortableServer::ObjectId_var oid = current->get_object_id();
 
-  poa->deactivate_object(oid.in ()
-                         ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object(oid.in ());
 }

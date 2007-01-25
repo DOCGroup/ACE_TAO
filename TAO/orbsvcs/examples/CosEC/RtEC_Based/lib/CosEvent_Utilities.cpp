@@ -34,8 +34,7 @@ CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
                          PortableServer::POA_ptr poa,
                          char *,
                          char *,
-                         char *
-                         ACE_ENV_ARG_DECL)
+                         char *)
 {
   ACE_ASSERT (!CORBA::is_nil (thispoa));
   ACE_ASSERT (!CORBA::is_nil (poa));
@@ -73,21 +72,18 @@ CosEC_ServantBase::activate (void)
    // Note that the POA is <thispoa_>
 
    PortableServer::ObjectId_var oid =
-     this->thispoa_->activate_object (this
-                                      ACE_ENV_ARG_PARAMETER);
+     this->thispoa_->activate_object (this);
 
    this->_remove_ref ();
 
    CORBA::Object_var obj =
-     this->thispoa_->id_to_reference (oid.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+     this->thispoa_->id_to_reference (oid.in ());
 
    return 0; // success.
 }
 
 int
-CosEC_ServantBase::activate (const char* servant_id
-                             ACE_ENV_ARG_DECL)
+CosEC_ServantBase::activate (const char* servant_id)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->thispoa_.in ()));
@@ -106,14 +102,12 @@ CosEC_ServantBase::activate (const char* servant_id
   // Activate ourselves.
   // Note that the POA is <thispoa_>
   this->thispoa_->activate_object_with_id (oid.in (),
-                                           this
-                                           ACE_ENV_ARG_PARAMETER);
+                                           this);
 
   this->_remove_ref ();
 
   CORBA::Object_var obj =
-    this->thispoa_->id_to_reference (oid.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+    this->thispoa_->id_to_reference (oid.in ());
 
   return 0; // success.
 }
@@ -123,14 +117,12 @@ CosEC_ServantBase::activate_rtec (void)
 {
   // Activate the Rtec
   PortableServer::ObjectId_var oid =
-    this->poa_->activate_object (this->rtec_servant_
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->activate_object (this->rtec_servant_);
 
   this->rtec_servant_->_remove_ref ();
 
   CORBA::Object_var obj =
-    this->poa_->id_to_reference (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (oid.in ());
 
   this->rtec_ =
     RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
@@ -161,20 +153,17 @@ CosEC_ServantBase::activate_cosec (void)
 
   if (this->cosec_servant_->init (consumerqos,
                                   supplierqos,
-                                  this->rtec_.in ()
-                                  ACE_ENV_ARG_PARAMETER) != 0)
+                                  this->rtec_.in ()) != 0)
     return -1;
 
   // Activate the CosEC
   PortableServer::ObjectId_var oid =
-    this->poa_->activate_object (this->cosec_servant_
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->activate_object (this->cosec_servant_);
 
   this->cosec_servant_->_remove_ref ();
 
   CORBA::Object_var obj =
-    this->poa_->id_to_reference (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (oid.in ());
 
   this->cosec_ =
     CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
@@ -191,12 +180,10 @@ CosEC_ServantBase::deactivate (void)
 
   // Finally we go away..
   PortableServer::ObjectId_var oid =
-    this->thispoa_->servant_to_id (this
-                                   ACE_ENV_ARG_PARAMETER);
+    this->thispoa_->servant_to_id (this);
 
   // deactivate from the poa.
-  this->thispoa_->deactivate_object (oid.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+  this->thispoa_->deactivate_object (oid.in ());
 }
 
 void
@@ -204,12 +191,10 @@ CosEC_ServantBase::deactivate_rtec (void)
 {
   // Deactivate the rtec.
   PortableServer::ObjectId_var oid =
-    this->poa_->servant_to_id (this->rtec_servant_
-                               ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this->rtec_servant_);
 
   // deactivate from the poa.
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (oid.in ());
 }
 
 void
@@ -217,12 +202,10 @@ CosEC_ServantBase::deactivate_cosec (void)
 {
   // Deactivate the cosec.
   PortableServer::ObjectId_var oid =
-    this->poa_->servant_to_id (this->cosec_servant_
-                               ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this->cosec_servant_);
 
   // deactivate from the poa.
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (oid.in ());
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr

@@ -20,20 +20,17 @@ void
 activate_object_with_id (T * &result,
                          PortableServer::POA_ptr poa,
                          PortableServer::ServantBase *servant,
-                         const FtRtecEventComm::ObjectId &oid
-                         ACE_ENV_ARG_DECL)
+                         const FtRtecEventComm::ObjectId &oid)
 {
   const PortableServer::ObjectId& id =
     reinterpret_cast<const PortableServer::ObjectId&> (oid);
   poa->activate_object_with_id(id,
-                               servant
-                               ACE_ENV_ARG_PARAMETER);
+                               servant);
 
   CORBA::Object_var object =
-    poa->id_to_reference(id
-                         ACE_ENV_ARG_PARAMETER);
+    poa->id_to_reference(id);
 
-  result = T::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
+  result = T::_narrow(object.in());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

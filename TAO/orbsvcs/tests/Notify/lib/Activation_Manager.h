@@ -61,15 +61,15 @@ public:
                      ));
 
   /// Register Supplier
-  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);
   /// Register Consumer
-  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name);
 
   /// Resolve Supplier
-  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name);
 
   /// Resolve Consumer
-  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name);
 
   // Activate the tasks for each supplier.
   int activate_suppliers (void);

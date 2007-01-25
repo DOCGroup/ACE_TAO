@@ -45,8 +45,7 @@ public:
                 int burst_pause,
                 int type_start,
                 int type_count,
-                RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+                RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
   void disconnect (void);

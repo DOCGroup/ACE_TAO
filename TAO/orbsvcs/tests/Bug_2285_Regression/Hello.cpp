@@ -26,22 +26,22 @@ void
 Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 void
 Hello::throw_exception (void)
   ACE_THROW_SPEC ((CORBA::SystemException, Test::MyException))
 {
-  ACE_THROW (Test::MyException ());
+  throw Test::MyException ();
 }
 
 // Nested sequence step 1 - This op called by the client on the server
 CORBA::Boolean
-Hello::call_me_back (Test::Hello_ptr me ACE_ENV_ARG_DECL)
+Hello::call_me_back (Test::Hello_ptr me)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Boolean result = me->call_back (ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean result = me->call_back ();
   return result;
 }
 

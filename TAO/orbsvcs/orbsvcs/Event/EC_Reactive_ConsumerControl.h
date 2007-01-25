@@ -88,11 +88,9 @@ public:
   // = Documented in TAO_EC_ConsumerControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy);
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
@@ -137,8 +135,7 @@ class TAO_EC_Ping_Consumer : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 public:
   TAO_EC_Ping_Consumer (TAO_EC_ConsumerControl *control);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
 
 private:
   TAO_EC_ConsumerControl *control_;

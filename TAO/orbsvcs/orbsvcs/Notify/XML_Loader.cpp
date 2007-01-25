@@ -124,7 +124,7 @@ namespace TAO_Notify
 
   //virtual
   void
-  XML_Loader::load (Topology_Object *root ACE_ENV_ARG_DECL)
+  XML_Loader::load (Topology_Object *root)
   {
     ACE_ASSERT (root != 0);
     this->live_ = true;
@@ -157,14 +157,14 @@ namespace TAO_Notify
         // The only way to find out what it is, it to let it print itself, so...
         ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
         ex.print ();
-        ACE_THROW(CORBA::INTERNAL());
+        throw CORBA::INTERNAL();
       }
       ACEXML_ENDTRY;
     }
     else
     {
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("Unable to open the XML input file: %s.\n"), file_name_.c_str()));
-      ACE_THROW(CORBA::INTERNAL());
+      throw CORBA::INTERNAL();
     }
   }
 
@@ -183,8 +183,7 @@ namespace TAO_Notify
       Topology_Object* cur = 0;
       if (object_stack_.top (cur) == 0)
       {
-        ACE_DECLARE_NEW_ENV;
-        ACE_TRY
+        try
         {
           NVPList attrs;
           CORBA::Long id = makeNVPList (attrs, xml_attrs);
@@ -196,15 +195,14 @@ namespace TAO_Notify
 
           ACE_CString cname (name);
           Topology_Object* next = cur->load_child (
-            cname, id, attrs ACE_ENV_ARG_PARAMETER);
+            cname, id, attrs);
           ACE_ASSERT(next != 0);
           object_stack_.push (next);
         }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
         {
-          ACEXML_THROW (ACEXML_SAXException (ACE_ANY_EXCEPTION._info ().c_str ()));
+          ACEXML_THROW (ACEXML_SAXException (ex._info ().c_str ()));
         }
-        ACE_ENDTRY;
       }
     }
   }

@@ -17,15 +17,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Intialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
 
       // Call TAO_CEC_Event_Loader::init (argc, argv) from here.
       TAO_CEC_Event_Loader event_service;
@@ -62,11 +61,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // Destroy the ORB
       orb->destroy();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, argv[0]);
+      ex._tao_print_exception (argv[0]);
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

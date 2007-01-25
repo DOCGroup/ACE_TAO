@@ -5,8 +5,7 @@
 
 void
 Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-                     CORBA::ORB_ptr orb
-                     ACE_ENV_ARG_DECL)
+                     CORBA::ORB_ptr orb)
 {
   this->orb_ = orb;
 
@@ -36,8 +35,7 @@ Consumer::connect (void)
   this->supplier_proxy_ =
     this->consumer_admin_->obtain_push_supplier ();
 
-  this->supplier_proxy_->connect_push_consumer (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  this->supplier_proxy_->connect_push_consumer (objref.in ());
 }
 
 void
@@ -54,8 +52,7 @@ Consumer::disconnect (void)
 }
 
 void
-Consumer::push (const CORBA::Any &
-                     ACE_ENV_ARG_DECL_NOT_USED)
+Consumer::push (const CORBA::Any &)
  ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected
@@ -79,9 +76,7 @@ Consumer::disconnect_push_consumer (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }

@@ -51,8 +51,7 @@ main (int argc, char *argv[])
 {
 
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Server_ORBInitializer *temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
@@ -61,17 +60,16 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // We do the command line parsing first
       if (parse_args (argc, argv) != 0)
         return 1;
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,7 +77,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -87,14 +85,14 @@ main (int argc, char *argv[])
       CORBA::PolicyList policies;
       policies.length (3);
       policies[0] = root_poa->create_id_assignment_policy (
-          PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
+          PortableServer::USER_ID);
       policies[1] = root_poa->create_implicit_activation_policy (
-          PortableServer::NO_IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
+          PortableServer::NO_IMPLICIT_ACTIVATION);
       policies[2] = root_poa->create_lifespan_policy (
-          PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER);
+          PortableServer::PERSISTENT);
 
       PortableServer::POA_var poa = root_poa->create_POA (
-          "PERS_POA", poa_manager.in (), policies ACE_ENV_ARG_PARAMETER);
+          "PERS_POA", poa_manager.in (), policies);
 
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
@@ -106,13 +104,13 @@ main (int argc, char *argv[])
       PortableServer::ObjectId_var id =
 	      PortableServer::string_to_ObjectId ("IOGR_OID");
 
-      poa->activate_object_with_id (id.in(), &display_impl ACE_ENV_ARG_PARAMETER);
+      poa->activate_object_with_id (id.in(), &display_impl);
 
       CORBA::Object_var server =
-          poa->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
+          poa->id_to_reference (id.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -135,7 +133,7 @@ main (int argc, char *argv[])
 
       Simple_ServerRequestInterceptor_var interceptor =
         Simple_ServerRequestInterceptor::_narrow (
-           server_interceptor.in () ACE_ENV_ARG_PARAMETER);
+           server_interceptor.in ());
 
       if (CORBA::is_nil (interceptor.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -143,19 +141,16 @@ main (int argc, char *argv[])
                            "server request interceptor.\n"),
                           -1);
 
-      interceptor->forward_reference (merged_iorstr
-				      ACE_ENV_ARG_PARAMETER);
+      interceptor->forward_reference (merged_iorstr);
 
       poa_manager->activate ();
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

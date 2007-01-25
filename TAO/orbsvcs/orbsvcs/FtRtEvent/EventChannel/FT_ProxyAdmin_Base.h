@@ -30,8 +30,7 @@ public:
   FT_ProxyAdmin_Base(PortableServer::ServantBase* servant,
               PortableServer::POA_var poa);
   virtual ~FT_ProxyAdmin_Base();
-  void activate(const FtRtecEventComm::ObjectId& oid
-              ACE_ENV_ARG_DECL);
+  void activate(const FtRtecEventComm::ObjectId& oid);
 
   const FtRtecEventComm::ObjectId& object_id(void) const;
 

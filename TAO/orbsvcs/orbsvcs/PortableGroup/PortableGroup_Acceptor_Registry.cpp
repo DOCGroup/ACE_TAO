@@ -37,8 +37,7 @@ TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry (void)
 
 void
 TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
-                                           TAO_ORB_Core &orb_core
-                                           ACE_ENV_ARG_DECL)
+                                           TAO_ORB_Core &orb_core)
 {
   Entry *entry;
 
@@ -68,8 +67,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
             {
               this->open_i (profile,
                             orb_core,
-                            factory
-                            ACE_ENV_ARG_PARAMETER);
+                            factory);
 
               // found = 1;  // A usable protocol was found.
             }
@@ -84,8 +82,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
 void
 TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                                              TAO_ORB_Core &orb_core,
-                                             TAO_ProtocolFactorySetItor &factory
-                                             ACE_ENV_ARG_DECL)
+                                             TAO_ProtocolFactorySetItor &factory)
 {
   TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
@@ -118,11 +115,11 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                         buffer,
                         ""));
 
-          ACE_THROW (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO));
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       // Add acceptor to list.
@@ -143,11 +140,11 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                         buffer,
                         ""));
 
-          ACE_THROW (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO));
+          throw CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
     }
   else
@@ -158,11 +155,11 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                     ACE_TEXT ("unable to create acceptor ")
                     ));
 
-      ACE_THROW (CORBA::BAD_PARAM (
-          CORBA::SystemException::_tao_minor_code (
-            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-            EINVAL),
-          CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 }
 

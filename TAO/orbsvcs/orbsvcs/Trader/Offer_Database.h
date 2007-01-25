@@ -66,15 +66,13 @@ public:
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
-  int remove_offer (const CosTrading::OfferId offer_id
-                    ACE_ENV_ARG_DECL)
+  int remove_offer (const CosTrading::OfferId offer_id)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
 
   /// Lookup an offer whose offer_id is <offer_id>, and return
   /// it. Otherwise, throw the appropriate exception.
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id
-                                   ACE_ENV_ARG_DECL)
+  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
 
@@ -84,8 +82,7 @@ public:
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name
-                                   ACE_ENV_ARG_DECL)
+                                   char*& type_name)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId));
 
@@ -138,8 +135,7 @@ private:
   /// and id that were used to generate the offer id.
   static void parse_offer_id (const CosTrading::OfferId offer_id,
                               char* &service_type,
-                              CORBA::ULong& id
-                              ACE_ENV_ARG_DECL)
+                              CORBA::ULong& id)
     ACE_THROW_SPEC ((CosTrading::IllegalOfferId));
 
   // = Disallow these operations.

@@ -69,22 +69,18 @@ BE_save_orb_args (int &argc, char *argv[])
 int
 BE_ifr_orb_init (int &ac, char *av[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       be_global->orb (CORBA::ORB_init (ac,
                                        av,
-                                       0
-                                       ACE_ENV_ARG_PARAMETER));
+                                       0));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_ifr_orb_init"));
+      ex._tao_print_exception (ACE_TEXT ("BE_ifr_orb_init"));
 
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -15,19 +15,16 @@ Gateway_ObjRef_Factory (
 CORBA::Object_ptr
 Gateway_ObjRef_Factory::
 make_object (const char *interface_repository_id,
-             const PortableInterceptor::ObjectId & id
-             ACE_ENV_ARG_DECL)
+             const PortableInterceptor::ObjectId & id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
     this->old_factory_->make_object (interface_repository_id,
-                                     id
-                                     ACE_ENV_ARG_PARAMETER);
+                                     id);
 
   CORBA::Object_ptr object_ptr =
     this->gateway_object_factory_->create_object (interface_repository_id,
-                                                  object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  object.in ());
 
   return object_ptr;
 }

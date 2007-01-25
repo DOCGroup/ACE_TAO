@@ -34,8 +34,7 @@ TAO::SL3::ObjectCredentialsPolicy::creds_list (void)
 }
 
 CORBA::PolicyType
-TAO::SL3::ObjectCredentialsPolicy::policy_type (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ObjectCredentialsPolicy::policy_type ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::ObjectCredentialsPolicyType;

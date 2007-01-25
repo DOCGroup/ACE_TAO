@@ -44,8 +44,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -53,8 +52,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -67,11 +65,10 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     return;
   }
 
-  ACE_TRY
+  try
   {
     IOP::ServiceContext_var sc =
-      ri->get_request_service_context (IOP::FT_REQUEST
-                                       ACE_ENV_ARG_PARAMETER);
+      ri->get_request_service_context (IOP::FT_REQUEST);
 
     TAO_InputCDR cdr (reinterpret_cast <const char*>
                                        (sc->context_data.get_buffer ()
@@ -82,8 +79,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
     if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
       {
-        ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                               CORBA::COMPLETED_NO));
+        throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
       }
 
     cdr.reset_byte_order (static_cast <int>(byte_order));
@@ -91,8 +87,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     FT::FTRequestServiceContext ftrsc;
 
     if ((cdr >> ftrsc) == 0)
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                               CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
     FILE* last_exp_time_file = ACE_OS::fopen ("last_expiration_time", "r+");
     TimeBase::TimeT last_exp_time = 0;
@@ -180,14 +175,13 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     // Goodbye cruel world !!
     ACE_OS::abort ();
   }
-ACE_CATCHANY
+catch (const CORBA::Exception& ex)
   {
     ACE_DEBUG ((LM_ERROR, "Unexpected (non regression problem) error - test failed\n"));
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Exception in TAO249_ServerRequest_Interceptor2::receive_request \n");
-    ACE_RE_THROW;
+    ex._tao_print_exception (
+      "Exception in TAO249_ServerRequest_Interceptor2::receive_request \n");
+    throw;
   }
-ACE_ENDTRY;
 
 }
 
@@ -209,16 +203,14 @@ TAO249_ServerRequest_Interceptor2::get_now (void)
 
 void
 TAO249_ServerRequest_Interceptor2::send_reply (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -226,8 +218,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 TAO249_ServerRequest_Interceptor2::send_other (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {

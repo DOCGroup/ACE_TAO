@@ -23,7 +23,7 @@ CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 
 RtecEventChannelAdmin::EventChannel_ptr
-get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
+get_event_channel(int argc, ACE_TCHAR** argv)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
     ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hi:n"));
@@ -36,10 +36,8 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       {
       case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
-                                                        ACE_ENV_ARG_PARAMETER);
-          channel = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                                ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ());
+          channel = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
         }
         break;
       case 'n':
@@ -65,12 +63,10 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       name[0].id = CORBA::string_dup("FT_EventService");
 
       CosNaming::NamingContext_var naming_context =
-        resolve_init<CosNaming::NamingContext>(orb.in(), "NameService"
-        ACE_ENV_ARG_PARAMETER);
+        resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
 
       channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
-        name
-        ACE_ENV_ARG_PARAMETER);
+        name);
     }
 
     if (use_gateway)
@@ -84,20 +80,18 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 
 int main(int argc, ACE_TCHAR** argv)
 {
-  ACE_TRY_NEW_ENV {
-    orb = CORBA::ORB_init(argc, argv, ""
-      ACE_ENV_ARG_PARAMETER);
+  try{
+    orb = CORBA::ORB_init(argc, argv, "");
 
     RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
+      = get_event_channel(argc, argv);
 
 
     if (CORBA::is_nil(channel.in()))
       ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
 
     PortableServer::POA_var poa =
-      resolve_init<PortableServer::POA>(orb.in(), "RootPOA"
-                            ACE_ENV_ARG_PARAMETER);
+      resolve_init<PortableServer::POA>(orb.in(), "RootPOA");
 
     PortableServer::POAManager_var mgr = poa->the_POAManager();
 
@@ -123,16 +117,15 @@ int main(int argc, ACE_TCHAR** argv)
       push_consumer_impl._this();
 
     supplier->connect_push_consumer(push_consumer.in(),
-      qos   ACE_ENV_ARG_PARAMETER);
+      qos);
 
     orb->run();
 
   }
-  ACE_CATCHANY {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+  catch (const CORBA::Exception& ex){
+    ex._tao_print_exception ("A CORBA Exception occurred.");
     return -1;
   }
-  ACE_ENDTRY;
 
   return 0;
 }

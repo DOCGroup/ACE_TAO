@@ -35,8 +35,7 @@ template <typename T>
 void activate (T & obj_ref,
                PortableServer::POA_ptr poa,
                PortableServer::ServantBase * servant,
-               TAO_EC_Object_Deactivator & object_deactivator
-               ACE_ENV_ARG_DECL);
+               TAO_EC_Object_Deactivator & object_deactivator);
 
 
 //***************************************************************************

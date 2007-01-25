@@ -38,8 +38,7 @@ public:
   /// Factory method to create a FilterFactory reference
   /// The Factory is activated in the default POA. The filters created are activated in the <filter_poa>.
   virtual CosNotifyFilter::FilterFactory_ptr create (
-      PortableServer::POA_var& filter_poa 
-      ACE_ENV_ARG_DECL) = 0;
+      PortableServer::POA_var& filter_poa) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

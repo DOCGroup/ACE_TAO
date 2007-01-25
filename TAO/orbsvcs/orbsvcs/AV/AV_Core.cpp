@@ -154,8 +154,7 @@ TAO_AV_Core::reactor (void)
 
 int
 TAO_AV_Core::init (CORBA::ORB_ptr orb,
-                   PortableServer::POA_ptr poa
-                   ACE_ENV_ARG_DECL_NOT_USED)
+                   PortableServer::POA_ptr poa)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Core::init "));
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -587,7 +586,7 @@ TAO_AV_Acceptor*
 TAO_AV_Core::get_acceptor (const char *flowname)
 {
 
-  ACE_TRY_NEW_ENV
+  try
     {
 
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
@@ -601,11 +600,10 @@ TAO_AV_Core::get_acceptor (const char *flowname)
             return *acceptor;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_Core::get_acceptor");
+      ex._tao_print_exception ("TAO_AV_Core::get_acceptor");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -613,7 +611,7 @@ int
 TAO_AV_Core::remove_acceptor (const char *flowname)
 {
 
-  ACE_TRY_NEW_ENV
+  try
     {
 
       TAO_AV_AcceptorSetItor acceptor =  this->acceptor_registry_->begin ();
@@ -630,11 +628,10 @@ TAO_AV_Core::remove_acceptor (const char *flowname)
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_AV_Core::get_acceptor");
+      ex._tao_print_exception ("TAO_AV_Core::get_acceptor");
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -1129,23 +1126,19 @@ TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
   // the servant when all pending requests on this servant are
   // complete.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableServer::POA_var poa = servant->_default_POA ();
 
-      PortableServer::ObjectId_var id = poa->servant_to_id (servant
-                                                            ACE_ENV_ARG_PARAMETER);
+      PortableServer::ObjectId_var id = poa->servant_to_id (servant);
 
-      poa->deactivate_object (id.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      poa->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "deactivate_servant");
+      ex._tao_print_exception ("deactivate_servant");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

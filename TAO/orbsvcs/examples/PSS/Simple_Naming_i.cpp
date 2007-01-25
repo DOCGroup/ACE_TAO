@@ -20,26 +20,24 @@ Naming_Context_i::~Naming_Context_i ()
 
 int
 Naming_Context_i::bind (const char *n,
-                        const char *obj
-                        ACE_ENV_ARG_DECL)
+                        const char *obj)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Save the binding to database.
   int result =
-    this->code_gen_->set_name_obj_ref (n, obj ACE_ENV_ARG_PARAMETER);
+    this->code_gen_->set_name_obj_ref (n, obj);
 
   return result;
 }
 
 char *
-Naming_Context_i::find (const char *n
-                        ACE_ENV_ARG_DECL)
+Naming_Context_i::find (const char *n)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the Stringified object reference corresponding to
   // 'n'
   CORBA::String_var obj_ref =
-    this->code_gen_->get_obj_ref (n ACE_ENV_ARG_PARAMETER);
+    this->code_gen_->get_obj_ref (n);
 
   return CORBA::string_dup (obj_ref.in ());
 }

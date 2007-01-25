@@ -152,8 +152,7 @@ public:
    * participate in name resolution later.
    */
   virtual void bind (const CosNaming::Name &n,
-                     CORBA::Object_ptr obj
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Object_ptr obj);
 
   /**
    * This is similar to <bind> operation above, except for when the
@@ -162,8 +161,7 @@ public:
    * new one.
    */
   virtual void rebind (const CosNaming::Name &n,
-                       CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL);
+                       CORBA::Object_ptr obj);
 
   /**
    * This is the version of <bind> specifically for binding naming
@@ -171,8 +169,7 @@ public:
    * compound names are passed to be resolved.
    */
   virtual void bind_context (const CosNaming::Name &n,
-                             CosNaming::NamingContext_ptr nc
-                             ACE_ENV_ARG_DECL);
+                             CosNaming::NamingContext_ptr nc);
 
   /**
    * This is a version of <rebind> specifically for naming contexts,
@@ -180,8 +177,7 @@ public:
    * names are passed.
    */
    virtual void rebind_context (const CosNaming::Name &n,
-                               CosNaming::NamingContext_ptr nc
-                               ACE_ENV_ARG_DECL);
+                               CosNaming::NamingContext_ptr nc);
 
   /**
    * Return object reference that is bound to the name.  Compound name
@@ -190,16 +186,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n
-                                     ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n);
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n
-                       ACE_ENV_ARG_DECL);
+  virtual void unbind (const CosNaming::Name &n);
 
   /**
    * This operation creates a new context and binds it to the name
@@ -207,8 +201,7 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n
-                                                         ACE_ENV_ARG_DECL);
+  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n);
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -233,8 +226,7 @@ protected:
    * component that doesn't need to be resolved), and returns a
    * pointer to the target context.
    */
-  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name
-                                            ACE_ENV_ARG_DECL);
+  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name);
 
   /**
    * Pointer to the data structure used to store this Naming Context's

@@ -184,7 +184,7 @@ TAO_Notify_Tests_Periodic_Supplier::send_warmup_events (void)
 
   for (int i = 0; i < WARMUP_COUNT ; ++i)
     {
-      this->send_event (this->event_.event () ACE_ENV_ARG_PARAMETER);
+      this->send_event (this->event_.event ());
     }
 }
 
@@ -210,7 +210,7 @@ TAO_Notify_Tests_Periodic_Supplier::send_prologue (void)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
 
-  this->send_event (zeroth_event.event () ACE_ENV_ARG_PARAMETER);
+  this->send_event (zeroth_event.event ());
 }
 
 void
@@ -250,7 +250,7 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc (void)
         ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
                     this->name_.c_str (), i));
 
-      this->send_event (this->event_.event () ACE_ENV_ARG_PARAMETER);
+      this->send_event (this->event_.event ());
 
       after = ACE_OS::gethrtime ();
 
@@ -302,7 +302,7 @@ TAO_Notify_Tests_Periodic_Supplier::svc (void)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // First, send warmup events.
       this->send_warmup_events ();
@@ -318,17 +318,16 @@ TAO_Notify_Tests_Periodic_Supplier::svc (void)
 
       this->handle_svc ();
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
+      ue._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
+      se._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

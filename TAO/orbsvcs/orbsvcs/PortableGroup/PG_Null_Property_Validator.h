@@ -41,8 +41,7 @@ public:
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_property (const PortableGroup::Properties & props
-                          ACE_ENV_ARG_DECL)
+  void validate_property (const PortableGroup::Properties & props)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
@@ -52,8 +51,7 @@ public:
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_criteria (const PortableGroup::Properties & criteria
-                          ACE_ENV_ARG_DECL)
+  void validate_criteria (const PortableGroup::Properties & criteria)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidCriteria,
                      PortableGroup::CannotMeetCriteria));

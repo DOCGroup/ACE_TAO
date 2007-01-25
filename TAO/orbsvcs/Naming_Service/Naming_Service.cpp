@@ -30,15 +30,14 @@ TAO_Naming_Service::init (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Initialize the ORB
       this->orb_ =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
 
       // Parse the args for '-t' option. If '-t' option is passed, do
       // the needful and then remove the option from the list of
@@ -54,12 +53,11 @@ TAO_Naming_Service::init (int argc,
       if (result == -1)
         return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::init");
+      ex._tao_print_exception ("TAO_Naming_Service::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -112,7 +110,7 @@ TAO_Naming_Service::run (void)
   else
     {
       ACE_Time_Value tv (time_);
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
+      this->orb_->run (tv);
     }
 
   return 0;
@@ -121,27 +119,25 @@ TAO_Naming_Service::run (void)
 void
 TAO_Naming_Service::shutdown (void)
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 int
 TAO_Naming_Service::fini (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   this->my_naming_server_.fini();
 
-  ACE_TRY
+  try
   {
     // destroy implies shutdown
     this->orb_->destroy ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Service::fini");
+    ex._tao_print_exception ("TAO_Naming_Service::fini");
     return -1;
   }
-  ACE_ENDTRY;
   return 0;
 }
 

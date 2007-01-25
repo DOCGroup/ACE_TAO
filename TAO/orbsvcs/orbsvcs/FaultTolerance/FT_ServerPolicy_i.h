@@ -49,8 +49,7 @@ public:
   TAO_FT_Heart_Beat_Enabled_Policy (
       const TAO_FT_Heart_Beat_Enabled_Policy &rhs);
 
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
@@ -59,20 +58,16 @@ public:
   virtual TAO_FT_Heart_Beat_Enabled_Policy *clone (void) const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual CORBA::Boolean heartbeat_enabled_policy_value (
-      ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean heartbeat_enabled_policy_value ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

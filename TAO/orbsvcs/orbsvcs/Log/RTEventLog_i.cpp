@@ -31,7 +31,6 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
     poa_ (PortableServer::POA::_duplicate (poa)),
     log_poa_ (PortableServer::POA::_duplicate (log_poa))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   TAO_EC_Event_Channel_Attributes attr (poa_.in(), poa_.in());
 
@@ -49,33 +48,33 @@ TAO_RTEventLog_i::~TAO_RTEventLog_i ()
 
 
 DsLogAdmin::Log_ptr
-TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
+TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
-    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
+    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   RTEventLogAdmin::EventLog_var log =
     eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_,
-                             id ACE_ENV_ARG_PARAMETER);
+                             id);
 
-  copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  copy_attributes (log.in ());
 
   return log._retn ();
 }
 
 DsLogAdmin::Log_ptr
-TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
+TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
     ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
-    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
+    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   RTEventLogAdmin::EventLog_var log =
     eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0,
-                                     thresholds_ ACE_ENV_ARG_PARAMETER);
+                                     thresholds_);
 
-  copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  copy_attributes (log.in ());
 
   return log._retn ();
 }
@@ -84,19 +83,16 @@ void
 TAO_RTEventLog_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
+  notifier_->object_deletion (logid_);
 
   // Remove ourselves from the list of logs.
-  this->logmgr_i_.remove (this->logid_
-			  ACE_ENV_ARG_PARAMETER);
+  this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
   PortableServer::ObjectId_var id =
-    this->log_poa_->servant_to_id (this
-                                   ACE_ENV_ARG_PARAMETER);
+    this->log_poa_->servant_to_id (this);
 
-  this->log_poa_->deactivate_object (id.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+  this->log_poa_->deactivate_object (id.in ());
 }
 
 void
@@ -118,7 +114,6 @@ TAO_RTEventLog_i::for_consumers (void)
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_RTEventLog_i::for_suppliers (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -129,27 +124,24 @@ TAO_RTEventLog_i::for_suppliers (
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_RTEventLog_i::append_observer (
-       RtecEventChannelAdmin::Observer_ptr observer
-       ACE_ENV_ARG_DECL)
+       RtecEventChannelAdmin::Observer_ptr observer)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  return this->observer_strategy_->append_observer (observer
-                                                    ACE_ENV_ARG_PARAMETER);
+  return this->observer_strategy_->append_observer (observer);
 }
 
 void
 TAO_RTEventLog_i::remove_observer (
-       RtecEventChannelAdmin::Observer_Handle handle
-       ACE_ENV_ARG_DECL)
+       RtecEventChannelAdmin::Observer_Handle handle)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
-  this->observer_strategy_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
+  this->observer_strategy_->remove_observer (handle);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

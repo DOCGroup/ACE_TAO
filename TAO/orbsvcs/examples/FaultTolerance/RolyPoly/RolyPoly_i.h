@@ -28,7 +28,7 @@ public:
   // RolyPoly
   //
   virtual CORBA::Short
-  number (char *&s ACE_ENV_ARG_DECL)
+  number (char *&s)
     ACE_THROW_SPEC ((CORBA::SystemException, RolyPoly::E));
 
   virtual void

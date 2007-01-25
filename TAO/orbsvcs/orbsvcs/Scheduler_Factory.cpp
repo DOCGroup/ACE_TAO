@@ -160,21 +160,19 @@ static_server (void)
                        ACE_Null_Mutex>::instance ()) == 0)
         return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       server_ = ace_scheduler_factory_data->scheduler_._this ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
                            ACE_TEXT("cannot allocate server\n"));
     }
-  ACE_ENDTRY;
 
   return server_;
 }
@@ -195,28 +193,24 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     // config runs.
     return 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (name);
       CORBA::Object_var objref =
-        naming->resolve (schedule_name
-                         ACE_ENV_ARG_PARAMETER);
+        naming->resolve (schedule_name);
 
       server_ =
-        RtecScheduler::Scheduler::_narrow(objref.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+        RtecScheduler::Scheduler::_narrow(objref.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       server_ = 0;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            ACE_TEXT("ACE_Scheduler_Factory::use_config - ")
                            ACE_TEXT(" exception while resolving server\n"));
     }
-  ACE_ENDTRY;
 
   status_ = ACE_Scheduler_Factory::CONFIG;
   return 0;

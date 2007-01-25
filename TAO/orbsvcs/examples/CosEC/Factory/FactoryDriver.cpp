@@ -52,13 +52,11 @@ FactoryDriver::parse_args (int argc, char *argv [])
 int
 FactoryDriver::start (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       orb_ = CORBA::ORB_init (argc,
                               argv,
-                              ""
-                              ACE_ENV_ARG_PARAMETER);
+                              "");
 
       if (this->parse_args (argc, argv) == -1)
         return -1;
@@ -69,8 +67,7 @@ FactoryDriver::start (int argc, char *argv [])
                       -1);
 
       CORBA::Object_var poa_object  =
-        orb_->resolve_initial_references("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,8 +75,7 @@ FactoryDriver::start (int argc, char *argv [])
                           -1);
 
       root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa_->the_POAManager ();
@@ -100,8 +96,7 @@ FactoryDriver::start (int argc, char *argv [])
 
       if (factory_servant_->init (root_poa_.in (),
                                   child_poa_name_,
-                                  context.in ()
-                                 ACE_ENV_ARG_PARAMETER) != 0)
+                                  context.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to initialize "
                            "the factory. \n"),
@@ -114,8 +109,7 @@ FactoryDriver::start (int argc, char *argv [])
       factory_servant_->_remove_ref ();
 
       CORBA::String_var
-        str = orb_->object_to_string (factory_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        str = orb_->object_to_string (factory_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "CosEvent_Service: The Cos Event Channel Factory IOR is <%s>\n",
@@ -125,27 +119,23 @@ FactoryDriver::start (int argc, char *argv [])
       name.length (1);
       name[0].id = CORBA::string_dup (factoryName_);
       naming_client_->rebind (name,
-                              factory_.in ()
-                              ACE_ENV_ARG_PARAMETER);
+                              factory_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Registered with the naming service as %s\n", factoryName_));
 
       orb_->run ();
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "cosecfactory: ");
+      ue._tao_print_exception ("cosecfactory: ");
       return 1;
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "cosecfactory: ");
+      se._tao_print_exception ("cosecfactory: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -14,8 +14,7 @@ ACE_RCSID (Application_Test,
 CORBA::Boolean
 inventory_i::getCDinfo (const char * artist,
                         char *& title,
-                        CORBA::Float_out price
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        CORBA::Float_out price)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean in_stock = 0;

@@ -16,8 +16,7 @@ CORBA::Object_ptr
 Factory::create_object (
     const char * /*type_id*/,
     const PortableGroup::Criteria & /*the_criteria*/,
-    PortableGroup::GenericFactory::FactoryCreationId_out fcid
-    ACE_ENV_ARG_DECL)
+    PortableGroup::GenericFactory::FactoryCreationId_out fcid)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::NoFactory,
                    PortableGroup::ObjectNotCreated,
@@ -60,8 +59,7 @@ Factory::create_object (
   this->poa_ =
     servant->_default_POA ();
 
-  this->oid_ = this->poa_->servant_to_id (servant
-                                          ACE_ENV_ARG_PARAMETER);
+  this->oid_ = this->poa_->servant_to_id (servant);
 
   return servant->_this ();
 
@@ -70,8 +68,7 @@ Factory::create_object (
 void
 Factory::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
-      fcid
-    ACE_ENV_ARG_DECL)
+      fcid)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableGroup::ObjectNotFound))
 {
@@ -84,19 +81,18 @@ Factory::delete_object (
       if (this->factory_map_.find (my_fcid, entry) == 0)
         {
 	  if (this->factory_map_.unbind (my_fcid) != 0)
-	    ACE_THROW (CORBA::INTERNAL ());
+	    throw CORBA::INTERNAL ();
 	}
     }
   else
-    ACE_THROW (PortableGroup::ObjectNotFound ());
+    throw PortableGroup::ObjectNotFound ();
 
   if (my_fcid == this->fcid_)
     {
-      this->poa_->deactivate_object (this->oid_.in ()
-		                     ACE_ENV_ARG_PARAMETER);
+      this->poa_->deactivate_object (this->oid_.in ());
     }
   else
     {
-      ACE_THROW (PortableGroup::ObjectNotFound ());
+      throw PortableGroup::ObjectNotFound ();
     }
 }

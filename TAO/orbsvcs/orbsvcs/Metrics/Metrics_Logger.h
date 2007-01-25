@@ -122,8 +122,7 @@ public:
   virtual int svc (void);
   // Active object loop for processing logged data.
 
-  void send_banner (const char *banner
-                   ACE_ENV_ARG_DECL)
+  void send_banner (const char *banner)
     throw (CORBA::SystemException);
   // Sends a banner to be written to the log file and to the visualization browser.
 
@@ -131,8 +130,7 @@ public:
   // Writes banner to the log file and/or to the visualization browser.
 
   void log_aggregate_QoS (const Metrics::QoSParameter_Set & qos_params,
-                          Metrics::Time interval
-                          ACE_ENV_ARG_DECL)
+                          Metrics::Time interval)
     throw (CORBA::SystemException);
   // Reports the aggregate QoS information for all operations
   // to the passed QoS logger.
@@ -142,21 +140,18 @@ public:
   // Processes the aggregate QoS information for all operations
   // to the passed QoS logger.
 
-  void set_identities (const Metrics::ProbeIdentity_Set & probe_identities
-                       ACE_ENV_ARG_DECL)
+  void set_identities (const Metrics::ProbeIdentity_Set & probe_identities)
     throw (CORBA::SystemException);
   // Binds the names of various timeprobes to their identifiers so
   // that ids alone can be used (for efficiency) in passing data.
 
-  void set_identity (const Metrics::ProbeIdentity_t & probe_identity
-                     ACE_ENV_ARG_DECL)
+  void set_identity (const Metrics::ProbeIdentity_t & probe_identity)
     throw (CORBA::SystemException);
   // Binds the names of various timeprobes to their identifiers so
   // that ids alone can be used (for efficiency) in passing data.
 
   void log_timeprobe_data (const Metrics::TimeprobeParameter_Set & timeprobe_params,
-                           Metrics::Time interval
-                           ACE_ENV_ARG_DECL)
+                           Metrics::Time interval)
     throw (CORBA::SystemException);
   // Reports timeprobe data collected since last run.
 

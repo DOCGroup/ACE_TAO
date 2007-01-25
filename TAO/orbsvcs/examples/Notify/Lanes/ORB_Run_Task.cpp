@@ -16,16 +16,15 @@ TAO_Notify_ORB_Run_Task::~TAO_Notify_ORB_Run_Task ()
 int
 TAO_Notify_ORB_Run_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->orb_objects_.current_->the_priority (0 ACE_ENV_ARG_PARAMETER);
+      this->orb_objects_.current_->the_priority (0);
 
       this->orb_objects_.orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }

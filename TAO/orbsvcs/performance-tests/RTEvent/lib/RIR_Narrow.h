@@ -28,8 +28,7 @@ public:
   typedef typename Interface::_var_type Interface_var;
 
   static Interface_ptr resolve (CORBA::ORB_ptr orb,
-                                const char *object_id
-                                ACE_ENV_ARG_DECL);
+                                const char *object_id);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

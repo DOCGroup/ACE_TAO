@@ -88,8 +88,7 @@ Distributer_Receiver_StreamEndPoint::set_protocol_object (const char *,
 }
 
 CORBA::Boolean
-Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec
-                                                                  ACE_ENV_ARG_DECL_NOT_USED)
+Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec)
 {
   //if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -295,8 +294,7 @@ Distributer::parse_args (int argc,
 
 int
 Distributer::init (int argc,
-                   char ** argv
-                   ACE_ENV_ARG_DECL)
+                   char ** argv)
 {
   /// Initialize the connection class.
   int result =
@@ -360,16 +358,14 @@ Distributer::init (int argc,
   /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->distributer_name_,
-                                            distributer_receiver_mmdevice.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+                                            distributer_receiver_mmdevice.in ());
 
   /// Connect to sender.
   this->connection_manager_.connect_to_sender ();
 
   /// Bind to receivers.
   this->connection_manager_.bind_to_receivers (this->distributer_name_,
-                                               distributer_sender_mmdevice.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+                                               distributer_sender_mmdevice.in ());
 
   /// Connect to receivers
   this->connection_manager_.connect_to_receivers ();
@@ -386,7 +382,7 @@ Distributer::done (void) const
 void
 Distributer::shut_down (void)
 {
-  ACE_TRY
+  try
     {
       AVStreams::MMDevice_var receiver_mmdevice =
         this->distributer_receiver_mmdevice_->_this ();
@@ -403,11 +399,10 @@ Distributer::shut_down (void)
     //  DISTRIBUTER::instance ()->connection_manager ().destroy ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Distributer::shut_down");
+      ex._tao_print_exception ("Distributer::shut_down");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -420,24 +415,20 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
         = root_poa->the_POAManager ();
@@ -446,14 +437,12 @@ main (int argc,
 
       /// Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      root_poa.in ());
 
       /// Initialize the Distributer
       int result =
         DISTRIBUTER::instance ()->init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
+                                        argv);
 
       if (result != 0)
         return result;
@@ -471,15 +460,14 @@ main (int argc,
 
       DISTRIBUTER::instance ()->shut_down ();
 
-//      orb->shutdown(1 ACE_ENV_ARG_PARAMETER);
+//      orb->shutdown(1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"main");
+      ex._tao_print_exception ("main");
       return -1;
     }
-  ACE_ENDTRY;
 
   DISTRIBUTER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

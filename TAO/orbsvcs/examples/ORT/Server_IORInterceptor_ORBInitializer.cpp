@@ -13,25 +13,22 @@ ACE_RCSID (ORT,
 void
 Server_IORInterceptor_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_IORInterceptor_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
-    info->resolve_initial_references ("Gateway_Object_Factory"
-                                      ACE_ENV_ARG_PARAMETER);
+    info->resolve_initial_references ("Gateway_Object_Factory");
 
   /// Narrow it down correctly.
   Gateway::Object_Factory_var gateway_object_factory =
-    Gateway::Object_Factory::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+    Gateway::Object_Factory::_narrow (obj.in ());
 
   /// Check for nil reference
   if (CORBA::is_nil (gateway_object_factory.in ()))
@@ -50,6 +47,5 @@ Server_IORInterceptor_ORBInitializer::post_init (
 
   PortableInterceptor::IORInterceptor_var ior_interceptor = gateway;
 
-  info->add_ior_interceptor (ior_interceptor.in ()
-                             ACE_ENV_ARG_PARAMETER);
+  info->add_ior_interceptor (ior_interceptor.in ());
 }

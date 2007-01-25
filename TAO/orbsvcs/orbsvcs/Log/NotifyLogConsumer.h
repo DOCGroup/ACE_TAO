@@ -59,7 +59,7 @@ public:
   TAO_Notify_LogConsumer (TAO_NotifyLog_i *log);
 
   /// Connect to NotifyLog.
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from NotifyLog.
   virtual void disconnect (void);
@@ -72,7 +72,6 @@ protected:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -82,7 +81,6 @@ protected:
   // = PushSupplier methods
   virtual void push (
       const CORBA::Any & event
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -90,7 +88,6 @@ protected:
      ));
 
   virtual void disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
       )
     ACE_THROW_SPEC ((
       CORBA::SystemException

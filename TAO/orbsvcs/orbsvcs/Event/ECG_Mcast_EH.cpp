@@ -36,20 +36,19 @@ TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
 }
 
 void
-TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   if (!this->receiver_)
     {
       // We are shut down.
-      ACE_THROW (CORBA::INTERNAL());
+      throw CORBA::INTERNAL();
     }
 
   if (CORBA::is_nil (ec))
     {
       ACE_ERROR ((LM_ERROR,  "TAO_ECG_Mcast_EH::open(): "
                              "nil ec argument"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // Create and activate Event Channel Observer.
@@ -58,7 +57,7 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
 
   if (!this->observer_.in ())
     {
-      ACE_THROW (CORBA::NO_MEMORY ());
+      throw CORBA::NO_MEMORY ();
     }
 
   TAO_EC_Object_Deactivator observer_deactivator;
@@ -69,12 +68,10 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec
   activate (observer_ref,
             poa.in (),
             this->observer_.in (),
-            observer_deactivator
-            ACE_ENV_ARG_PARAMETER);
+            observer_deactivator);
 
   RtecEventChannelAdmin::Observer_Handle handle =
-    ec->append_observer (observer_ref.in ()
-                         ACE_ENV_ARG_PARAMETER);
+    ec->append_observer (observer_ref.in ());
 
   this->observer_->set_deactivator (observer_deactivator);
   this->auto_observer_disconnect_.set_command
@@ -133,15 +130,13 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 
 void
 TAO_ECG_Mcast_EH::update_consumer (
-         const RtecEventChannelAdmin::ConsumerQOS& sub
-    ACE_ENV_ARG_DECL)
+         const RtecEventChannelAdmin::ConsumerQOS& sub)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Address_Set multicast_addresses;
 
   this->compute_required_subscriptions (sub,
-                                        multicast_addresses
-                                        ACE_ENV_ARG_PARAMETER);
+                                        multicast_addresses);
 
   this->delete_unwanted_subscriptions (multicast_addresses);
 
@@ -151,8 +146,7 @@ TAO_ECG_Mcast_EH::update_consumer (
 void
 TAO_ECG_Mcast_EH::compute_required_subscriptions (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    Address_Set& multicast_addresses
-    ACE_ENV_ARG_DECL)
+    Address_Set& multicast_addresses)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong count = sub.dependencies.length ();
@@ -166,7 +160,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
         }
       RtecUDPAdmin::UDP_Addr addr;
 
-      this->receiver_->get_addr (header, addr ACE_ENV_ARG_PARAMETER);
+      this->receiver_->get_addr (header, addr);
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
       // Ignore errors, if the element is in the set we simply ignore
@@ -272,18 +266,16 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& sub
-    ACE_ENV_ARG_DECL)
+    const RtecEventChannelAdmin::ConsumerQOS& sub)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->eh_)
-    this->eh_->update_consumer (sub ACE_ENV_ARG_PARAMETER);
+    this->eh_->update_consumer (sub);
 }
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const RtecEventChannelAdmin::SupplierQOS&)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

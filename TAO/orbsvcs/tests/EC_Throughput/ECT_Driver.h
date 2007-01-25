@@ -33,8 +33,7 @@ class ECT_Driver
 public:
   virtual ~ECT_Driver (void);
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void shutdown_consumer (void* consumer_cookie) = 0;
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.

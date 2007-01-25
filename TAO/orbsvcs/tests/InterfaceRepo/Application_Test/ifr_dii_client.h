@@ -19,8 +19,7 @@ public:
   ~IFR_DII_Client (void);
 
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
   // Initialize the client.
 
   int run (void);

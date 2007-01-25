@@ -35,7 +35,7 @@ class Subscribe
   Subscribe (void);
   ~Subscribe ();
 
-  void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv []);
   // Init the Client.
 
   void run (void);
@@ -45,7 +45,7 @@ class Subscribe
   // Called when all events we are waiting for have occured.
 
  protected:
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);
@@ -129,7 +129,7 @@ class Subscribe_StructuredPushConsumer
   Subscribe_StructuredPushConsumer (Subscribe* subscribe);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
@@ -158,7 +158,6 @@ protected:
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -168,7 +167,6 @@ protected:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -176,7 +174,6 @@ protected:
        ));
 
   virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -199,16 +196,14 @@ class Subscribe_StructuredPushSupplier
   Subscribe_StructuredPushSupplier (void);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy consumer and connects to it.
 
   void disconnect (void);
   // Disconnect from the supplier.
 
-  virtual void send_event (const CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
   // Send one event.
 
 protected:
@@ -227,7 +222,6 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -236,7 +230,6 @@ protected:
 
   // = StructuredPushSupplier method
     virtual void disconnect_structured_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -38,7 +38,6 @@ public:
   // = PushSupplier methods
   virtual void push (
       const CORBA::Any & data
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected));
@@ -75,8 +74,7 @@ public:
                   char *argv[]) ;
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // initialization.
 
   void on_event_received (void);

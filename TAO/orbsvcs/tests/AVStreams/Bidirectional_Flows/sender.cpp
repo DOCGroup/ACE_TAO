@@ -105,23 +105,19 @@ Sender::eof (void)
 void
 Sender::shutdown (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     // File reading is complete, destroy the stream.
     AVStreams::flowSpec stop_spec;
-    this->streamctrl_->destroy (stop_spec
-                                ACE_ENV_ARG_PARAMETER);
+    this->streamctrl_->destroy (stop_spec);
 
       // Shut the orb down.
-    TAO_AV_CORE::instance ()->orb ()->shutdown (0
-                                                ACE_ENV_ARG_PARAMETER);
+    TAO_AV_CORE::instance ()->orb ()->shutdown (0);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "shutdown\n");
+      ex._tao_print_exception ("shutdown\n");
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -167,12 +163,10 @@ Sender::bind_to_receiver (void)
 
   // Resolve the receiver object reference from the Naming Service
   CORBA::Object_var receiver_mmdevice_obj =
-    this->naming_client_->resolve (name
-                                   ACE_ENV_ARG_PARAMETER);
+    this->naming_client_->resolve (name);
 
   this->receiver_mmdevice_ =
-    AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ());
 
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -184,8 +178,7 @@ Sender::bind_to_receiver (void)
 
 int
 Sender::init (int argc,
-              char **argv
-              ACE_ENV_ARG_DECL)
+              char **argv)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -279,8 +272,7 @@ Sender::init (int argc,
     this->streamctrl_->bind_devs (mmdevice.in (),
                                   this->receiver_mmdevice_.in (),
                                   the_qos.inout (),
-                                  flow_spec
-                                  ACE_ENV_ARG_PARAMETER);
+                                  flow_spec);
 
   if (bind_result == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -307,7 +299,7 @@ Sender::pace_data (void)
                 this->frame_rate_,
                 inter_frame_time.msec ()));
 
-  ACE_TRY
+  try
     {
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
@@ -369,8 +361,7 @@ Sender::pace_data (void)
 
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
-                  TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                         ACE_ENV_ARG_PARAMETER);
+                  TAO_AV_CORE::instance ()->orb ()->run (wait_time);
                 }
             }
 
@@ -398,20 +389,18 @@ Sender::pace_data (void)
 
          // File reading is complete, destroy the stream.
         AVStreams::flowSpec stop_spec;
-        this->streamctrl_->destroy (stop_spec
-                                    ACE_ENV_ARG_PARAMETER);
+        this->streamctrl_->destroy (stop_spec);
 
         // Shut the orb down.
         //TAO_AV_CORE::instance ()->orb ()->shutdown (1,
-        //                                            ACE_ENV_SINGLE_ARG_PARAMETER);
+        //);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      //ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      //ACE_PRINT_EXCEPTION (ex,
        //                    "Sender::pace_data Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -419,23 +408,19 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+        = PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
         = root_poa->the_POAManager ();
@@ -444,17 +429,15 @@ main (int argc,
 
       // Initialize the AV Stream components.
 /*      TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER); */
+                                      root_poa.in ()); */
 
       // Initialize the AVStreams components.
-      TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in () ACE_ENV_ARG_PARAMETER);
+      TAO_AV_CORE::instance ()->init (orb.in (), root_poa.in ());
 
       // Initialize the Sender.
       int result = 0;
       result = SENDER::instance ()->init (argc,
-                                          argv
-                                          ACE_ENV_ARG_PARAMETER);
+                                          argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -479,13 +462,11 @@ main (int argc,
       ACE_Time_Value tv(3,0);
       orb->run (tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender Failed\n");
+      ex._tao_print_exception ("Sender Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

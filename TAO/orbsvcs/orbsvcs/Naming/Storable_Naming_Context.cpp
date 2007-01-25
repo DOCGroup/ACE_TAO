@@ -181,8 +181,7 @@ TAO_Storable_Bindings_Map::find (const char *id,
     }
   else
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      obj = orb_->string_to_object (entry.ref_.in() ACE_ENV_ARG_PARAMETER);
+      obj = orb_->string_to_object (entry.ref_.in());
       type = entry.type_;
 
       return 0;
@@ -351,8 +350,7 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
 
 // Helper function to load a new context into the binding_map
 int
-TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
-                                      ACE_ENV_ARG_DECL)
+TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck)
 {
   ACE_TRACE("load_map");
   // assume file already open for reading
@@ -422,8 +420,7 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::File_Open_Lock_and_Check(
                                  TAO_Storable_Naming_Context * context,
-                                 const char * mode
-                                 ACE_ENV_ARG_DECL)
+                                 const char * mode)
 :closed_(1),
  context_(context)
 {
@@ -446,7 +443,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
   if( rwflags_ <= 0 )
   {
     errno = EINVAL;
-    ACE_THROW(CORBA::PERSIST_STORE());
+    throw CORBA::PERSIST_STORE();
   }
 
   // build the file name
@@ -461,7 +458,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
     if (fl_->open() != 0)
       {
         delete fl_;
-        ACE_THROW(CORBA::PERSIST_STORE());
+        throw CORBA::PERSIST_STORE();
       }
 
     // acquire a lock on it
@@ -469,7 +466,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
       {
          fl_->close();
          delete fl_;
-         ACE_THROW(CORBA::INTERNAL());
+         throw CORBA::INTERNAL();
       }
 
     // now that the file is successfully opened and locked it must be
@@ -486,7 +483,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
          // Throw our map away
          delete context->storable_context_;
          // and build a new one from disk
-         context->load_map(this ACE_ENV_ARG_PARAMETER);
+         context->load_map(this);
        }
     }
   }
@@ -495,7 +492,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
     if (fl_->open() != 0)
       {
         delete fl_;
-        ACE_THROW(CORBA::PERSIST_STORE());
+        throw CORBA::PERSIST_STORE();
       }
 
     // now that the file is successfully opened
@@ -505,7 +502,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
     if(!context->storable_context_)
     {
       // Load the map from disk
-      context->load_map(this ACE_ENV_ARG_PARAMETER);
+      context->load_map(this);
     }
   }
   else
@@ -610,8 +607,7 @@ TAO_Storable_Naming_Context::make_new_context (
                               size_t context_size,
                               TAO_Naming_Service_Persistence_Factory *factory,
                               const ACE_TCHAR *persistence_directory,
-                              TAO_Storable_Naming_Context **new_context
-                              ACE_ENV_ARG_DECL)
+                              TAO_Storable_Naming_Context **new_context)
 {
   ACE_TRACE("make_new_context");
   // Store the stub we will return here.
@@ -655,18 +651,16 @@ TAO_Storable_Naming_Context::make_new_context (
   // thrown which is transmitted as a CORBA::UNKNOWN on the wire. To rectify
   // this problem, we explicitly throw the correct INS exception in
   // this situation.
-  ACE_TRY
+  try
     {
       poa->activate_object_with_id (id.in (),
-                                    context
-                                    ACE_ENV_ARG_PARAMETER);
+                                    context);
     }
-  ACE_CATCH (PortableServer::POA::ObjectAlreadyActive, ex)
+  catch (const PortableServer::POA::ObjectAlreadyActive& ex)
     {
       ACE_THROW_RETURN (CosNaming::NamingContext::AlreadyBound(),
                         CosNaming::NamingContext::_nil ());
     }
-  ACE_ENDTRY;
 
 
   result = context->_this ();
@@ -688,8 +682,7 @@ TAO_Storable_Naming_Context::new_context (void)
 
   {
     // Open the backing file
-    File_Open_Lock_and_Check flck(this, "r"
-                                       ACE_ENV_ARG_PARAMETER);
+    File_Open_Lock_and_Check flck(this, "r");
 
     // Check to make sure this object didn't have <destroy> method
     // invoked on it.
@@ -750,8 +743,7 @@ TAO_Storable_Naming_Context::new_context (void)
                       this->storable_context_->total_size (),
                       this->factory_,
                       ACE_TEXT_CHAR_TO_TCHAR (this->persistence_directory_.c_str ()),
-                      &new_context
-                      ACE_ENV_ARG_PARAMETER);
+                      &new_context);
 
   // Since this is a new context, make an empty map in it
   ACE_NEW_THROW_EX (new_context->storable_context_,
@@ -759,7 +751,7 @@ TAO_Storable_Naming_Context::new_context (void)
                     CORBA::NO_MEMORY ());
   new_context->context_ = new_context->storable_context_;
 
-  File_Open_Lock_and_Check flck(new_context, "wc" ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(new_context, "wc");
   new_context->Write(flck.peer());
 
   return result._retn ();
@@ -767,8 +759,7 @@ TAO_Storable_Naming_Context::new_context (void)
 
 void
 TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
-                                     CORBA::Object_ptr obj
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Object_ptr obj)
 {
   ACE_TRACE("rebind");
   // Get the length of the name.
@@ -776,7 +767,7 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW (CosNaming::NamingContext::InvalidName());
+    throw CosNaming::NamingContext::InvalidName();
 
   // we didn't need a lock to check the input arg, but now we do
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
@@ -784,13 +775,12 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -801,12 +791,12 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
       flck.release();
 
       CosNaming::NamingContext_var context =
-        get_context (n ACE_ENV_ARG_PARAMETER);
+        get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->rebind (simple_name, obj ACE_ENV_ARG_PARAMETER);
+      context->rebind (simple_name, obj);
     }
   // If we received a simple name, we need to rebind it in this
   // context.
@@ -819,11 +809,12 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
 
       // Check for error conditions.
       if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       else if (result == -2)
-        ACE_THROW (CosNaming::NamingContext::NotFound
-                   (CosNaming::NamingContext::not_object, n));
+        throw CosNaming::NamingContext::NotFound(
+          CosNaming::NamingContext::not_object,
+          n);
 
       this->Write(flck.peer());
     }
@@ -831,8 +822,7 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
 
 void
 TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
-                                           CosNaming::NamingContext_ptr nc
-                                           ACE_ENV_ARG_DECL)
+                                           CosNaming::NamingContext_ptr nc)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::bind_context");
   // Get the length of the name.
@@ -840,11 +830,11 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW (CosNaming::NamingContext::InvalidName());
+    throw CosNaming::NamingContext::InvalidName();
 
   // Do not allow binding of nil context reference.
   if (CORBA::is_nil (nc))
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   // we didn't need a lock to check the input arg, but now we do
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
@@ -852,13 +842,12 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding
@@ -869,12 +858,12 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
       flck.release();
 
       CosNaming::NamingContext_var context =
-        get_context (n ACE_ENV_ARG_PARAMETER);
+        get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->bind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
+      context->bind_context (simple_name, nc);
     }
   // If we received a simple name, we need to bind it in this context.
   else
@@ -885,11 +874,11 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
                                          nc,
                                          CosNaming::ncontext);
       if (result == 1)
-        ACE_THROW (CosNaming::NamingContext::AlreadyBound());
+        throw CosNaming::NamingContext::AlreadyBound();
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       this->Write(flck.peer());
     }
@@ -897,8 +886,7 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
 
 void
 TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
-                                         CosNaming::NamingContext_ptr nc
-                                         ACE_ENV_ARG_DECL)
+                                         CosNaming::NamingContext_ptr nc)
 {
   ACE_TRACE("rebind_context");
   // Get the length of the name.
@@ -906,7 +894,7 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW (CosNaming::NamingContext::InvalidName());
+    throw CosNaming::NamingContext::InvalidName();
 
   // we didn't need a lock to check the input arg, but now we do
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
@@ -914,13 +902,12 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -931,12 +918,12 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
       flck.release();
 
       CosNaming::NamingContext_var context =
-        get_context (n ACE_ENV_ARG_PARAMETER);
+        get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->rebind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
+      context->rebind_context (simple_name, nc);
     }
   // If we received a simple name, we need to rebind it in this
   // context.
@@ -948,18 +935,18 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
                                            CosNaming::ncontext);
       // Check for error conditions.
       if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       else if (result == -2)
-        ACE_THROW (CosNaming::NamingContext::NotFound
-                   (CosNaming::NamingContext::not_context, n));
+        throw CosNaming::NamingContext::NotFound(
+          CosNaming::NamingContext::not_context,
+          n);
 
       this->Write(flck.peer());
     }
 }
 
 CORBA::Object_ptr
-TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
-                                      ACE_ENV_ARG_DECL)
+TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n)
 {
   ACE_TRACE("resolve");
   // Get the length of the name.
@@ -975,8 +962,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, "r"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, "r");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -1013,8 +999,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
       if (type == CosNaming::ncontext)
         {
           // Narrow to NamingContext.
-          context = CosNaming::NamingContext::_narrow (result.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+          context = CosNaming::NamingContext::_narrow (result.in ());
         }
       else
         // The first name component wasn't bound to a NamingContext.
@@ -1043,8 +1028,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
              const_cast<CosNaming::NameComponent*> (n.get_buffer ()) + 1);
 
           // If there are any exceptions, they will propagate up.
-          return context->resolve (rest_of_name
-                                   ACE_ENV_ARG_PARAMETER);
+          return context->resolve (rest_of_name);
         }
     }
   // If the name we had to resolve was simple, we just need to return
@@ -1053,8 +1037,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
 }
 
 void
-TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n
-                                 ACE_ENV_ARG_DECL)
+TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n)
 {
   ACE_TRACE("unbind");
   // Get the length of the name.
@@ -1062,7 +1045,7 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW (CosNaming::NamingContext::InvalidName());
+    throw CosNaming::NamingContext::InvalidName();
 
   // we didn't need a lock to check the input arg, but now we do
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
@@ -1070,13 +1053,12 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If we received compound name, resolve it to get the context in
   // which the unbinding should take place, then perform the unbinding
@@ -1087,12 +1069,12 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n
       flck.release();
 
       CosNaming::NamingContext_var context =
-        get_context (n ACE_ENV_ARG_PARAMETER);
+        get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->unbind (simple_name ACE_ENV_ARG_PARAMETER);
+      context->unbind (simple_name);
     }
   // If we received a simple name, we need to unbind it in this
   // context.
@@ -1100,16 +1082,16 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n
     {
       if (this->context_->unbind (n[0].id,
                                   n[0].kind) == -1)
-        ACE_THROW (CosNaming::NamingContext::NotFound
-                    (CosNaming::NamingContext::missing_node, n));
+        throw CosNaming::NamingContext::NotFound(
+          CosNaming::NamingContext::missing_node,
+          n);
 
       this->Write(flck.peer());
     }
 }
 
 CosNaming::NamingContext_ptr
-TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
-                                               ACE_ENV_ARG_DECL)
+TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
 {
   ACE_TRACE("bind_new_context");
   // Get the length of the name.
@@ -1132,8 +1114,7 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
                       CosNaming::NamingContext::_nil ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -1150,12 +1131,12 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
       flck.release();
 
       CosNaming::NamingContext_var context =
-        get_context (n ACE_ENV_ARG_PARAMETER);
+        get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      return context->bind_new_context (simple_name ACE_ENV_ARG_PARAMETER);
+      return context->bind_new_context (simple_name);
     }
   // If we received a simple name, we need to bind it in this context.
 
@@ -1170,31 +1151,26 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
   result = new_context ();
 
   // Bind the new context to the name.
-  ACE_TRY
+  try
     {
       bind_context (n,
-                    result.in ()
-                    ACE_ENV_ARG_PARAMETER);
+                    result.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
-        ACE_TRY_EX(DESTROY)
+        try
           {
             result->destroy ();
-            ACE_TRY_CHECK_EX(DESTROY);
           }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
           {
             // Do nothing?
           }
-        ACE_ENDTRY;
       }
       // Re-raise the exception in bind_context()
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
   return result._retn ();
 }
 
@@ -1208,16 +1184,15 @@ TAO_Storable_Naming_Context::destroy (void)
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   if (this->context_->current_size () != 0)
-    ACE_THROW (CosNaming::NamingContext::NotEmpty());
+    throw CosNaming::NamingContext::NotEmpty();
 
   // Destroy is a no-op on a root context.
   if (root ())
@@ -1238,8 +1213,7 @@ TAO_Storable_Naming_Context::destroy (void)
         PortableServer::string_to_ObjectId (poa_id_.fast_rep ());
 
 
-      poa->deactivate_object (id.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      poa->deactivate_object (id.in ());
 
       this->Write(flck.peer());
     }
@@ -1248,8 +1222,7 @@ TAO_Storable_Naming_Context::destroy (void)
 
 void
 TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
-                               CORBA::Object_ptr obj
-                               ACE_ENV_ARG_DECL)
+                               CORBA::Object_ptr obj)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::bind");
   // Get the length of the name.
@@ -1257,7 +1230,7 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW (CosNaming::NamingContext::InvalidName());
+    throw CosNaming::NamingContext::InvalidName();
 
   // we didn't need a lock to check the input arg, but now we do
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon,
@@ -1265,13 +1238,12 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding
@@ -1282,12 +1254,12 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
       flck.release();
 
       CosNaming::NamingContext_var context =
-        get_context (n ACE_ENV_ARG_PARAMETER);
+        get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->bind (simple_name, obj ACE_ENV_ARG_PARAMETER);
+      context->bind (simple_name, obj);
     }
   // If we received a simple name, we need to bind it in this context.
   else
@@ -1298,11 +1270,11 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
                                          obj,
                                          CosNaming::nobject);
       if (result == 1)
-        ACE_THROW (CosNaming::NamingContext::AlreadyBound());
+        throw CosNaming::NamingContext::AlreadyBound();
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       this->Write(flck.peer());
     }
@@ -1312,8 +1284,7 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
 void
 TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                                    CosNaming::BindingList_out &bl,
-                                   CosNaming::BindingIterator_out &bi
-                                   ACE_ENV_ARG_DECL)
+                                   CosNaming::BindingIterator_out &bi)
 {
   ACE_TRACE("list");
   // Allocate nil out parameters in case we won't be able to complete
@@ -1330,13 +1301,12 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                       CORBA::INTERNAL ());
 
   // Open the backing file
-  File_Open_Lock_and_Check flck(this, "r"
-                                     ACE_ENV_ARG_PARAMETER);
+  File_Open_Lock_and_Check flck(this, "r");
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // We have the map in memory, let the disk go
   flck.release();
@@ -1386,7 +1356,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
       hash_iter->advance ();
 
       if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
-          ACE_THROW (CORBA::NO_MEMORY());
+          throw CORBA::NO_MEMORY();
     }
 
   // Now we are done with the BindingsList, and we can follow up on
@@ -1399,7 +1369,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
     {
       //  ***  This is a problem.  Is there an exception we can throw? ***
       ACE_UNUSED_ARG (bind_iter);
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      throw CORBA::NO_IMPLEMENT ();
 
 #if 0
       // Create a BindingIterator for return.
@@ -1427,8 +1397,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter
-                                           ACE_ENV_ARG_PARAMETER);
+                                           bind_iter);
 
       bi = bind_iter->_this ();
 #endif  /* 0 */
@@ -1449,8 +1418,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                                int reentering,
                                TAO_Naming_Service_Persistence_Factory *factory,
                                const ACE_TCHAR *persistence_directory,
-                               int use_redundancy
-                               ACE_ENV_ARG_DECL)
+                               int use_redundancy)
 {
   ACE_TRACE("recreate_all");
 
@@ -1471,8 +1439,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                       context_size,
                       factory,
                       persistence_directory,
-                      &new_context
-                      ACE_ENV_ARG_PARAMETER);
+                      &new_context);
 
   // Now does this already exist on disk?
   ACE_TString file_name(persistence_directory);
@@ -1482,7 +1449,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   if (fl->exists())
   {
     // Load the map from disk
-    File_Open_Lock_and_Check flck(new_context, "r" ACE_ENV_ARG_PARAMETER);
+    File_Open_Lock_and_Check flck(new_context, "r");
   }
   else
   {
@@ -1491,7 +1458,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                       TAO_Storable_Bindings_Map (context_size,orb),
                       CORBA::NO_MEMORY ());
     new_context->context_ = new_context->storable_context_;
-    File_Open_Lock_and_Check flck(new_context, "wc" ACE_ENV_ARG_PARAMETER);
+    File_Open_Lock_and_Check flck(new_context, "wc");
     new_context->Write(flck.peer());
   }
 

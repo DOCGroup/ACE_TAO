@@ -35,20 +35,19 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_sum_orb" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "client_sum_orb");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       ORT::sum_server_var server =
-        ORT::sum_server::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        ORT::sum_server::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -62,20 +61,17 @@ main (int argc, char *argv[])
       CORBA::ULong b = 3;
 
       CORBA::ULong result = server->add_variables (a,
-                                                   b
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                   b);
 
       if (result != 8)
         ACE_DEBUG ((LM_DEBUG,
                     "Error: Add Variables did not return the right value\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ORT example on client side :");
+      ex._tao_print_exception ("ORT example on client side :");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

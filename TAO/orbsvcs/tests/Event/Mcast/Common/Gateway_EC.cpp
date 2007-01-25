@@ -55,12 +55,11 @@ Gateway_EC::parse_args (int argc, char *argv [])
 
 void
 Gateway_EC::write_ior_file (CORBA::ORB_ptr orb,
-                            RtecEventChannelAdmin::EventChannel_ptr ec
-                            ACE_ENV_ARG_DECL)
+                            RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   // Write EC ior to a file.
   CORBA::String_var str;
-  str = orb->object_to_string (ec ACE_ENV_ARG_PARAMETER);
+  str = orb->object_to_string (ec);
 
   FILE *output_file= ACE_OS::fopen (this->ec_ior_file_, "w");
   if (output_file == 0)
@@ -68,7 +67,7 @@ Gateway_EC::write_ior_file (CORBA::ORB_ptr orb,
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
                   this->ec_ior_file_));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   ACE_OS::fprintf (output_file, "%s", str.in ());
@@ -85,20 +84,20 @@ Gateway_EC::run (int argc, char ** argv)
 
   TAO_EC_ORB_Holder orb_destroyer;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
       orb_destroyer.init (orb);
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
         return -1;
       PortableServer::POAManager_var manager =
@@ -119,11 +118,10 @@ Gateway_EC::run (int argc, char ** argv)
       activate (ec,
                 poa.in (),
                 ec_wrapper.in (),
-                ec_deactivator
-                ACE_ENV_ARG_PARAMETER);
+                ec_deactivator);
       ec_wrapper->set_deactivator (ec_deactivator);
 
-      this->write_ior_file (orb.in (), ec.in () ACE_ENV_ARG_PARAMETER);
+      this->write_ior_file (orb.in (), ec.in ());
 
       // Set up multicast components.
       // Obtain mcast gateway from service configurator.
@@ -133,19 +131,17 @@ Gateway_EC::run (int argc, char ** argv)
 
       if (!gateway)
         {
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
-      gateway->run (orb.in (), ec.in () ACE_ENV_ARG_PARAMETER);
+      gateway->run (orb.in (), ec.in ());
 
       // Run server.
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected Exception in Gateway EC:");
+      ex._tao_print_exception ("Unexpected Exception in Gateway EC:");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

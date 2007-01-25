@@ -44,16 +44,12 @@ public:
   virtual ~TAO_CEC_TypedSupplierAdmin (void);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
 
   /// Keep track of connected consumers.
-  virtual void connected (TAO_CEC_TypedProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_TypedProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_TypedProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_TypedProxyPushConsumer*);
+  virtual void reconnected (TAO_CEC_TypedProxyPushConsumer*);
+  virtual void disconnected (TAO_CEC_TypedProxyPushConsumer*);
 
   /// The typed event channel is shutting down, inform all the consumers of
   /// this
@@ -61,14 +57,12 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedSupplierAdmin methods...
   virtual CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
-    obtain_typed_push_consumer (const char * supported_interface
-                                ACE_ENV_ARG_DECL)
+    obtain_typed_push_consumer (const char * supported_interface)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::InterfaceNotSupported));
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_typed_pull_consumer (const char * uses_interface
-                                ACE_ENV_ARG_DECL)
+    obtain_typed_pull_consumer (const char * uses_interface)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosTypedEventChannelAdmin::NoSuchImplementation));
 

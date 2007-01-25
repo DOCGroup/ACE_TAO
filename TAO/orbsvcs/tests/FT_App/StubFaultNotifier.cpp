@@ -112,7 +112,7 @@ int StubFaultNotifier::fini (void)
   if(this->ns_name_ != 0)
   {
     CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      this->orb_->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -121,14 +121,13 @@ int StubFaultNotifier::fini (void)
     }
 
     CosNaming::NamingContext_var naming_context =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      CosNaming::NamingContext::_narrow (naming_obj.in ());
 
     CosNaming::Name this_name (1);
     this_name.length (1);
     this_name[0].id = CORBA::string_dup (this->ns_name_);
 
-    naming_context->unbind (this_name
-                            ACE_ENV_ARG_PARAMETER);
+    naming_context->unbind (this_name);
   }
   return 0;
 }
@@ -137,15 +136,14 @@ int StubFaultNotifier::fini (void)
 /**
  * Publish this objects IOR.
  */
-int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+int StubFaultNotifier::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -154,8 +152,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   // Get the POA object.
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
 
   if (CORBA::is_nil(this->poa_.in ()))
@@ -172,12 +169,11 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   // Register with the POA.
 
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this);
 
   // find my identity as a corba object
   CORBA::Object_var this_obj =
-    this->poa_->id_to_reference (object_id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (object_id_.in ());
 
   //////////////////////////////////////////
   // resolve references to detector factory
@@ -261,8 +257,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
           this->factory_->create_object (
             type_id.in(),
             criteria.in(),
-            factory_creation_id
-            ACE_ENV_ARG_PARAMETER);
+            factory_creation_id);
         }
       }
     }
@@ -286,7 +281,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       this->identity_ += this->ns_name_;
 
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil(naming_obj.in ())){
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -295,14 +290,13 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       }
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name this_name (1);
       this_name.length (1);
       this_name[0].id = CORBA::string_dup (this->ns_name_);
 
-      naming_context->rebind (this_name, this_obj.in()
-                              ACE_ENV_ARG_PARAMETER);
+      naming_context->rebind (this_name, this_obj.in());
     }
   }
   return result;
@@ -334,12 +328,11 @@ const char * StubFaultNotifier::identity () const
  */
 void StubFaultNotifier::shutdown_i (void)
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 void StubFaultNotifier::push_structured_fault (
     const CosNotification::StructuredEvent & event
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -369,19 +362,17 @@ void StubFaultNotifier::push_structured_fault (
 
 void StubFaultNotifier::push_sequence_fault (
     const CosNotification::EventBatch & events
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   ACE_UNUSED_ARG (events);
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  throw CORBA::NO_IMPLEMENT();
 }
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
     const char * constraint_grammar
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -397,7 +388,6 @@ void StubFaultNotifier::push_sequence_fault (
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -414,7 +404,6 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -429,7 +418,6 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
 
 void StubFaultNotifier::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -438,7 +426,7 @@ void StubFaultNotifier::disconnect_consumer (
 {
   ACE_UNUSED_ARG(connection);
 
-  ACE_THROW (CORBA::NO_IMPLEMENT());
+  throw CORBA::NO_IMPLEMENT();
 }
 
 CORBA::Boolean StubFaultNotifier::is_alive (void)
@@ -447,25 +435,24 @@ CORBA::Boolean StubFaultNotifier::is_alive (void)
   return 1;
 }
 
-int StubFaultNotifier::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
+int StubFaultNotifier::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;
-  ACE_TRY_NEW_ENV
+  try
   {
     if(!CORBA::is_nil(this->factory_.in ()))
     {
-      int ok = this->factory_->is_alive( ACE_ENV_SINGLE_ARG_PARAMETER);
+      int ok = this->factory_->is_alive();
       if (!ok)
       {
         quit = 1;
       }
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     quit = 1;
   }
-  ACE_ENDTRY;
   return quit;
 }

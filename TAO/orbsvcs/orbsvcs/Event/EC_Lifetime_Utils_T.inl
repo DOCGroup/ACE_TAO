@@ -55,15 +55,14 @@ TAO_EC_Auto_Command<T>::execute (void)
     {
       this->allow_command_ = 0;
 
-      ACE_TRY_NEW_ENV
+      try
         {
           this->command_.execute ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // ignore.
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -136,15 +135,14 @@ TAO_EC_Servant_Var(TAO_EC_Servant_Var<T> const & rhs)
 {
   if (ptr_)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           ptr_->_add_ref ();
         }
-      ACE_CATCHALL
+      catch (...)
         {
-	  ACE_RE_THROW;
+	  throw;
         }
-	ACE_ENDTRY;
     }
 }
 
@@ -186,14 +184,13 @@ ACE_INLINE TAO_EC_Servant_Var<T>::
   // destructor.
   if (ptr_ != 0)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
       ptr_->_remove_ref ();
     }
-    ACE_CATCHALL
+    catch (...)
     {
     }
-    ACE_ENDTRY;
   }
 }
 

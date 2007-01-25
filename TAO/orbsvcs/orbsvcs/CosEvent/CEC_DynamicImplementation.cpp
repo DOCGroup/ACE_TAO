@@ -21,14 +21,13 @@ TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer (void)
 
 // The DSI invoke request
 void
-TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request
-                                             ACE_ENV_ARG_DECL)
+TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Trap the _is_a request
   if (ACE_OS::strcmp ("_is_a", request->operation () ) == 0)
     {
-      this->is_a (request ACE_ENV_ARG_PARAMETER);
+      this->is_a (request);
     }
   else
     {
@@ -46,30 +45,28 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request
                           ACE_TEXT ("***** Operation not found in IFR cache *****\n")));
             }
 
-          this->typed_event_channel_->create_list (0, list ACE_ENV_ARG_PARAMETER);
+          this->typed_event_channel_->create_list (0, list);
         }
       else
         {
           // Populate the NVList from the parameter information.
-          this->typed_event_channel_->create_operation_list (oper_params, list
-                                                             ACE_ENV_ARG_PARAMETER);
+          this->typed_event_channel_->create_operation_list (oper_params, list);
 
           // Get the operation arguments. This ahould demarshal correctly.
-          request->arguments (list ACE_ENV_ARG_PARAMETER);
+          request->arguments (list);
 
           // Populate the TypedEvent with the list and operation name.
           TAO_CEC_TypedEvent typed_event (list, request->operation () );
 
           // Pass the TypedEvent to the TypedProxyPushConsumer
-          this->typed_pp_consumer_->invoke (typed_event ACE_ENV_ARG_PARAMETER);
+          this->typed_pp_consumer_->invoke (typed_event);
         }
     }
 }
 
 CORBA::RepositoryId
 TAO_CEC_DynamicImplementationServer::_primary_interface (const PortableServer::ObjectId &,
-                                                         PortableServer::POA_ptr
-                                                         ACE_ENV_ARG_DECL_NOT_USED)
+                                                         PortableServer::POA_ptr)
   ACE_THROW_SPEC (())
 {
   return CORBA::string_dup (repository_id_);
@@ -82,25 +79,22 @@ TAO_CEC_DynamicImplementationServer::_default_POA (void)
 }
 
 void
-TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
-                                           ACE_ENV_ARG_DECL)
+TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
 {
   CORBA::NVList_ptr list;
 
-  this->typed_event_channel_->create_list (0, list ACE_ENV_ARG_PARAMETER);
+  this->typed_event_channel_->create_list (0, list);
 
   CORBA::Any any_1;
   any_1._tao_set_typecode(CORBA::_tc_string);
 
   list->add_value ("value",
                    any_1,
-                   CORBA::ARG_IN
-                   ACE_ENV_ARG_PARAMETER);
+                   CORBA::ARG_IN);
 
-  request->arguments (list
-                      ACE_ENV_ARG_PARAMETER);
+  request->arguments (list);
 
-  CORBA::NamedValue_ptr nv = list->item (0 ACE_ENV_ARG_PARAMETER);
+  CORBA::NamedValue_ptr nv = list->item (0);
 
   CORBA::Any_ptr ap = nv->value ();
   const char *value;
@@ -162,7 +156,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
   CORBA::Any::from_boolean from_boolean (result);
   result_any <<= from_boolean;
 
-  request->set_result (result_any ACE_ENV_ARG_PARAMETER);
+  request->set_result (result_any);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

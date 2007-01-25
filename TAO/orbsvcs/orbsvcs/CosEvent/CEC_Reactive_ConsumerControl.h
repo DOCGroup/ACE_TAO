@@ -111,13 +111,10 @@ public:
   // = Documented in TAO_CEC_ConsumerControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy);
   virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this
@@ -180,8 +177,7 @@ class TAO_CEC_Ping_Push_Consumer
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPushSupplier *supplier);
 
 private:
   TAO_CEC_ConsumerControl *control_;
@@ -195,8 +191,7 @@ class TAO_CEC_Ping_Pull_Consumer
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_CEC_ProxyPullSupplier *supplier);
 
 private:
   TAO_CEC_ConsumerControl *control_;

@@ -10,8 +10,7 @@ ACE_RCSID (LoadBalancing,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
-TAO_LB_ClientRequestInterceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_ClientRequestInterceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_LB_ClientRequestInterceptor");
@@ -25,8 +24,7 @@ TAO_LB_ClientRequestInterceptor::destroy (void)
 
 void
 TAO_LB_ClientRequestInterceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -71,30 +69,26 @@ TAO_LB_ClientRequestInterceptor::send_request (
 
   const CORBA::Boolean replace = 0;
   ri->add_request_service_context (service_context,
-                                   replace
-                                   ACE_ENV_ARG_PARAMETER);
+                                   replace);
 }
 
 void
 TAO_LB_ClientRequestInterceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientRequestInterceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientRequestInterceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -102,8 +96,7 @@ TAO_LB_ClientRequestInterceptor::receive_exception (
 
 void
 TAO_LB_ClientRequestInterceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

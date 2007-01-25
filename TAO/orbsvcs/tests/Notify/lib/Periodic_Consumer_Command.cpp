@@ -86,8 +86,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
-           ACE_DECLARE_NEW_CORBA_ENV;
-           act_mgr->_register (consumer, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+           act_mgr->_register (consumer, this->name_.c_str ());
          }
 
          consumer->init_state (arg_shifter);
@@ -159,8 +158,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
   TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
 
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    act_mgr->resolve (consumer, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+    act_mgr->resolve (consumer, this->name_.c_str ());
   }
 
   if (consumer == 0)
@@ -172,7 +170,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos (void)
 {
-  this->consumer ()->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
+  this->consumer ()->set_qos (this->qos_);
 }
 
 void
@@ -195,7 +193,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (void)
   if (consumer == 0)
     return;
 
-  consumer->subscription_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
+  consumer->subscription_change (this->added_, this->removed_);
 }
 
 void

@@ -35,8 +35,7 @@ public:
   // Contructor.
 
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
-                             const CosNotification::EventTypeSeq & removed
-                             ACE_ENV_ARG_DECL)
+                             const CosNotification::EventTypeSeq & removed)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyComm::InvalidEventType));
   // Offer change is conveyed here.
@@ -59,7 +58,6 @@ public:
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyComm::InvalidEventType));
@@ -78,7 +76,7 @@ public:
   Updates (void);
   virtual ~Updates ();
 
-  int init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  int init (int argc, char *argv []);
   // initialization.
 
   void run_test (void);

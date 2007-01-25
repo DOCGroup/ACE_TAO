@@ -25,12 +25,11 @@ Consumer::Consumer (void)
 int
 Consumer::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.
@@ -44,9 +43,9 @@ Consumer::run (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -55,11 +54,10 @@ Consumer::run (int argc, char* argv[])
       // command line argument or resolve_initial_references(), but
       // this is simpler...
       object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (argv[1]);
 
       CosEventChannelAdmin::EventChannel_var event_channel =
-        CosEventChannelAdmin::EventChannel::_narrow (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        CosEventChannelAdmin::EventChannel::_narrow (object.in ());
 
       // The canonical protocol to connect to the EC
       CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -71,7 +69,7 @@ Consumer::run (int argc, char* argv[])
       CosEventComm::PushConsumer_var consumer =
         this->_this ();
 
-      supplier->connect_push_consumer (consumer.in () ACE_ENV_ARG_PARAMETER);
+      supplier->connect_push_consumer (consumer.in ());
 
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
@@ -84,18 +82,16 @@ Consumer::run (int argc, char* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer::run");
+      ex._tao_print_exception ("Consumer::run");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-Consumer::push (const CORBA::Any &
-                ACE_ENV_ARG_DECL_NOT_USED)
+Consumer::push (const CORBA::Any &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->event_count_ ++;
@@ -114,6 +110,6 @@ Consumer::disconnect_push_consumer (void)
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have
   // to be the case....
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 

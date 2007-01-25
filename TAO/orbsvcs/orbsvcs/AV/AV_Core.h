@@ -95,8 +95,7 @@ public:
   ~TAO_AV_Core (void);
 
   int init (CORBA::ORB_ptr orb,
-            PortableServer::POA_ptr poa
-            ACE_ENV_ARG_DECL);
+            PortableServer::POA_ptr poa);
   int run (void);
   int stop_run (void);
   int init_forward_flows (TAO_Base_StreamEndPoint *endpoint,

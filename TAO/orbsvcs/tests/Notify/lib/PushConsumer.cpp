@@ -24,9 +24,9 @@ TAO_Notify_Tests_PushConsumer::~TAO_Notify_Tests_PushConsumer ()
 }
 
 void
-TAO_Notify_Tests_PushConsumer::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_PushConsumer::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)
 {
-  proxy_ptr->connect_any_push_consumer (peer_ptr ACE_ENV_ARG_PARAMETER);
+  proxy_ptr->connect_any_push_consumer (peer_ptr);
 }
 
 void
@@ -46,7 +46,7 @@ TAO_Notify_Tests_PushConsumer::disconnect_push_consumer (void)
 }
 
 void
-TAO_Notify_Tests_PushConsumer::push (const CORBA::Any & /*data*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_PushConsumer::push (const CORBA::Any & /*data*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected

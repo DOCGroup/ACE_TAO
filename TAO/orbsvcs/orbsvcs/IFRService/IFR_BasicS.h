@@ -79,53 +79,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::Repository *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -135,7 +127,6 @@ namespace POA_CORBA
 
     virtual ::CORBA::Contained_ptr lookup_id (
         const char * search_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -145,7 +136,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -153,7 +143,6 @@ namespace POA_CORBA
 
     virtual ::CORBA::TypeCode_ptr get_canonical_typecode (
         ::CORBA::TypeCode_ptr tc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -163,7 +152,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -171,7 +159,6 @@ namespace POA_CORBA
 
     virtual ::CORBA::PrimitiveDef_ptr get_primitive (
         ::CORBA::PrimitiveKind kind
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -181,7 +168,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -189,7 +175,6 @@ namespace POA_CORBA
 
     virtual ::CORBA::StringDef_ptr create_string (
         ::CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -199,7 +184,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -207,7 +191,6 @@ namespace POA_CORBA
 
     virtual ::CORBA::WstringDef_ptr create_wstring (
         ::CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -217,7 +200,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -226,7 +208,6 @@ namespace POA_CORBA
     virtual ::CORBA::SequenceDef_ptr create_sequence (
         ::CORBA::ULong bound,
         ::CORBA::IDLType_ptr element_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -236,7 +217,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -245,7 +225,6 @@ namespace POA_CORBA
     virtual ::CORBA::ArrayDef_ptr create_array (
         ::CORBA::ULong length,
         ::CORBA::IDLType_ptr element_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -255,7 +234,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -264,7 +242,6 @@ namespace POA_CORBA
     virtual ::CORBA::FixedDef_ptr create_fixed (
         ::CORBA::UShort digits,
         ::CORBA::Short scale
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -274,7 +251,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -282,7 +258,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -293,7 +268,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -304,7 +278,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -315,7 +288,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -326,7 +298,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -337,7 +308,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -348,7 +318,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -359,7 +328,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -370,7 +338,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -381,7 +348,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -392,7 +358,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -403,7 +368,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -414,7 +378,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -425,7 +388,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -436,7 +398,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -447,7 +408,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -458,7 +418,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -469,7 +428,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -480,7 +438,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -491,7 +448,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -519,53 +475,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ModuleDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -575,7 +523,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -586,7 +533,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -597,7 +543,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -608,7 +553,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -619,7 +563,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -630,7 +573,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -641,7 +583,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -652,7 +593,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -663,7 +603,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -674,7 +613,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -685,7 +623,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -696,7 +633,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -707,7 +643,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -718,7 +653,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -729,7 +663,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -740,7 +673,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -751,7 +683,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -762,7 +693,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -773,7 +703,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -784,7 +713,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -792,7 +720,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -800,7 +727,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -808,7 +734,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -816,7 +741,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -824,7 +748,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -832,7 +755,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -840,7 +762,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -848,7 +769,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -856,7 +776,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -867,7 +786,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -878,7 +796,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -905,53 +822,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ConstantDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -960,7 +869,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -970,14 +878,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr type_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -987,7 +893,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -995,7 +900,6 @@ namespace POA_CORBA
 
     virtual void type_def (
         ::CORBA::IDLType_ptr type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1005,14 +909,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Any * value (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1022,7 +924,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -1030,7 +931,6 @@ namespace POA_CORBA
 
     virtual void value (
         const ::CORBA::Any & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1040,7 +940,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -1048,7 +947,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1059,7 +957,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1067,7 +964,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1075,7 +971,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1083,7 +978,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1091,7 +985,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1099,7 +992,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1107,7 +999,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1115,7 +1006,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1123,7 +1013,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1131,7 +1020,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1142,7 +1030,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1153,7 +1040,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -1181,53 +1067,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::StructDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1236,7 +1114,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::StructMemberSeq * members (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1246,7 +1123,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -1254,7 +1130,6 @@ namespace POA_CORBA
 
     virtual void members (
         const ::CORBA::StructMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1264,7 +1139,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -1272,7 +1146,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1283,7 +1156,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1291,7 +1163,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1299,7 +1170,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1307,7 +1177,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1315,7 +1184,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1323,7 +1191,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1331,7 +1198,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1339,7 +1205,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1347,7 +1212,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1355,7 +1219,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1366,7 +1229,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1377,7 +1239,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1385,7 +1246,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1396,7 +1256,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1407,7 +1266,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1418,7 +1276,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1429,7 +1286,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1440,7 +1296,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1451,7 +1306,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1462,7 +1316,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1473,7 +1326,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1484,7 +1336,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1495,7 +1346,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1506,7 +1356,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1517,7 +1366,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1528,7 +1376,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1539,7 +1386,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1550,7 +1396,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1561,7 +1406,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1572,7 +1416,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1583,7 +1426,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -1611,53 +1453,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::UnionDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1666,7 +1500,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr discriminator_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1676,14 +1509,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr discriminator_type_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1693,7 +1524,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -1701,7 +1531,6 @@ namespace POA_CORBA
 
     virtual void discriminator_type_def (
         ::CORBA::IDLType_ptr discriminator_type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1711,14 +1540,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::UnionMemberSeq * members (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1728,7 +1555,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -1736,7 +1562,6 @@ namespace POA_CORBA
 
     virtual void members (
         const ::CORBA::UnionMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -1746,7 +1571,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -1754,7 +1578,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1765,7 +1588,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1773,7 +1595,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1781,7 +1602,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1789,7 +1609,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1797,7 +1616,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1805,7 +1623,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1813,7 +1630,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1821,7 +1637,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1829,7 +1644,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1837,7 +1651,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1848,7 +1661,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1859,7 +1671,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -1867,7 +1678,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1878,7 +1688,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1889,7 +1698,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1900,7 +1708,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1911,7 +1718,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1922,7 +1728,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1933,7 +1738,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1944,7 +1748,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1955,7 +1758,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1966,7 +1768,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1977,7 +1778,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1988,7 +1788,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -1999,7 +1798,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2010,7 +1808,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2021,7 +1818,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2032,7 +1828,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2043,7 +1838,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2054,7 +1848,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2065,7 +1858,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -2092,53 +1884,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::EnumDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2147,7 +1931,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::EnumMemberSeq * members (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2157,7 +1940,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -2165,7 +1947,6 @@ namespace POA_CORBA
 
     virtual void members (
         const ::CORBA::EnumMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2175,7 +1956,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -2183,7 +1963,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2194,7 +1973,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2202,7 +1980,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2210,7 +1987,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2218,7 +1994,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2226,7 +2001,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2234,7 +2008,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2242,7 +2015,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2250,7 +2022,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2258,7 +2029,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2266,7 +2036,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2277,7 +2046,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2288,7 +2056,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2296,7 +2063,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -2323,53 +2089,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::AliasDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2378,7 +2136,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr original_type_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2388,7 +2145,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -2396,7 +2152,6 @@ namespace POA_CORBA
 
     virtual void original_type_def (
         ::CORBA::IDLType_ptr original_type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2406,7 +2161,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -2414,7 +2168,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2425,7 +2178,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2433,7 +2185,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2441,7 +2192,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2449,7 +2199,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2457,7 +2206,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2465,7 +2213,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2473,7 +2220,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2481,7 +2227,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2489,7 +2234,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2497,7 +2241,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2508,7 +2251,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2519,7 +2261,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2527,7 +2268,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -2554,53 +2294,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::NativeDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2610,7 +2342,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2621,7 +2352,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2629,7 +2359,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2637,7 +2366,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2645,7 +2373,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2653,7 +2380,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2661,7 +2387,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2669,7 +2394,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2677,7 +2401,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2685,7 +2408,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2693,7 +2415,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2704,7 +2425,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2715,7 +2435,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2723,7 +2442,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -2750,53 +2468,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::PrimitiveDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2805,7 +2515,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::PrimitiveKind kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2815,7 +2524,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -2823,7 +2531,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2834,7 +2541,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2842,7 +2548,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -2869,53 +2574,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::StringDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2924,7 +2621,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ULong bound (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2934,7 +2630,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -2942,7 +2637,6 @@ namespace POA_CORBA
 
     virtual void bound (
         ::CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -2952,7 +2646,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -2960,7 +2653,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -2971,7 +2663,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -2979,7 +2670,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -3006,53 +2696,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::WstringDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -3061,7 +2743,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ULong bound (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3071,7 +2752,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -3079,7 +2759,6 @@ namespace POA_CORBA
 
     virtual void bound (
         ::CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3089,7 +2768,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -3097,7 +2775,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3108,7 +2785,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3116,7 +2792,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -3143,53 +2818,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::SequenceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -3198,7 +2865,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ULong bound (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3208,7 +2874,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -3216,7 +2881,6 @@ namespace POA_CORBA
 
     virtual void bound (
         ::CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3226,14 +2890,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr element_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3243,14 +2905,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr element_type_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3260,7 +2920,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -3268,7 +2927,6 @@ namespace POA_CORBA
 
     virtual void element_type_def (
         ::CORBA::IDLType_ptr element_type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3278,7 +2936,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -3286,7 +2943,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3297,7 +2953,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3305,7 +2960,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -3332,53 +2986,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ArrayDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -3387,7 +3033,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ULong length (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3397,7 +3042,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -3405,7 +3049,6 @@ namespace POA_CORBA
 
     virtual void length (
         ::CORBA::ULong length
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3415,14 +3058,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr element_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3432,14 +3073,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr element_type_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3449,7 +3088,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -3457,7 +3095,6 @@ namespace POA_CORBA
 
     virtual void element_type_def (
         ::CORBA::IDLType_ptr element_type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3467,7 +3104,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -3475,7 +3111,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3486,7 +3121,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3494,7 +3128,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -3522,53 +3155,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ExceptionDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -3577,7 +3202,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3587,14 +3211,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::StructMemberSeq * members (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3604,7 +3226,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -3612,7 +3233,6 @@ namespace POA_CORBA
 
     virtual void members (
         const ::CORBA::StructMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -3622,7 +3242,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -3630,7 +3249,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3641,7 +3259,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3649,7 +3266,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3657,7 +3273,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3665,7 +3280,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3673,7 +3287,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3681,7 +3294,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3689,7 +3301,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3697,7 +3308,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3705,7 +3315,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -3713,7 +3322,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3724,7 +3332,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3735,7 +3342,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3746,7 +3352,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3757,7 +3362,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3768,7 +3372,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3779,7 +3382,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3790,7 +3392,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3801,7 +3402,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3812,7 +3412,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3823,7 +3422,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3834,7 +3432,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3845,7 +3442,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3856,7 +3452,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3867,7 +3462,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3878,7 +3472,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3889,7 +3482,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3900,7 +3492,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3911,7 +3502,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3922,7 +3512,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -3933,7 +3522,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -3960,53 +3548,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::AttributeDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -4015,7 +3595,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4025,14 +3604,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr type_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4042,7 +3619,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4050,7 +3626,6 @@ namespace POA_CORBA
 
     virtual void type_def (
         ::CORBA::IDLType_ptr type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4060,14 +3635,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::AttributeMode mode (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4077,7 +3650,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4085,7 +3657,6 @@ namespace POA_CORBA
 
     virtual void mode (
         ::CORBA::AttributeMode mode
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4095,7 +3666,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -4103,7 +3673,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4114,7 +3683,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4122,7 +3690,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4130,7 +3697,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4138,7 +3704,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4146,7 +3711,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4154,7 +3718,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4162,7 +3725,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4170,7 +3732,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4178,7 +3739,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4186,7 +3746,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4197,7 +3756,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4208,7 +3766,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -4235,53 +3792,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ExtAttributeDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -4290,7 +3839,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ExcDescriptionSeq * get_exceptions (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4300,7 +3848,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4308,7 +3855,6 @@ namespace POA_CORBA
 
     virtual void get_exceptions (
         const ::CORBA::ExcDescriptionSeq & get_exceptions
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4318,14 +3864,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ExcDescriptionSeq * set_exceptions (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4335,7 +3879,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4343,7 +3886,6 @@ namespace POA_CORBA
 
     virtual void set_exceptions (
         const ::CORBA::ExcDescriptionSeq & set_exceptions
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4353,14 +3895,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ExtAttributeDescription * describe_attribute (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4370,7 +3910,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -4378,7 +3917,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4389,7 +3927,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4397,7 +3934,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4405,7 +3941,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4413,7 +3948,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4421,7 +3955,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4429,7 +3962,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4437,7 +3969,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4445,7 +3976,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4453,7 +3983,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4461,7 +3990,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4472,7 +4000,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4483,7 +4010,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4491,7 +4017,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4499,7 +4024,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4507,7 +4031,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4515,7 +4038,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4523,7 +4045,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -4550,53 +4071,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::OperationDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -4605,7 +4118,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::TypeCode_ptr result (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4615,14 +4127,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::IDLType_ptr result_def (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4632,7 +4142,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4640,7 +4149,6 @@ namespace POA_CORBA
 
     virtual void result_def (
         ::CORBA::IDLType_ptr result_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4650,14 +4158,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ParDescriptionSeq * params (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4667,7 +4173,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4675,7 +4180,6 @@ namespace POA_CORBA
 
     virtual void params (
         const ::CORBA::ParDescriptionSeq & params
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4685,14 +4189,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::OperationMode mode (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4702,7 +4204,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4710,7 +4211,6 @@ namespace POA_CORBA
 
     virtual void mode (
         ::CORBA::OperationMode mode
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4720,14 +4220,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ContextIdSeq * contexts (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4737,7 +4235,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4745,7 +4242,6 @@ namespace POA_CORBA
 
     virtual void contexts (
         const ::CORBA::ContextIdSeq & contexts
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4755,14 +4251,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ExceptionDefSeq * exceptions (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4772,7 +4266,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -4780,7 +4273,6 @@ namespace POA_CORBA
 
     virtual void exceptions (
         const ::CORBA::ExceptionDefSeq & exceptions
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4790,7 +4282,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -4798,7 +4289,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4809,7 +4299,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4817,7 +4306,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4825,7 +4313,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4833,7 +4320,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4841,7 +4327,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4849,7 +4334,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4857,7 +4341,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4865,7 +4348,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4873,7 +4355,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -4881,7 +4362,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4892,7 +4372,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -4903,7 +4382,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -4932,53 +4410,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::InterfaceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -4987,7 +4457,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::InterfaceDefSeq * base_interfaces (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -4997,7 +4466,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -5005,7 +4473,6 @@ namespace POA_CORBA
 
     virtual void base_interfaces (
         const ::CORBA::InterfaceDefSeq & base_interfaces
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5015,7 +4482,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -5023,7 +4489,6 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean is_a (
         const char * interface_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5033,14 +4498,12 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::InterfaceDef::FullInterfaceDescription * describe_interface (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5050,7 +4513,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -5062,7 +4524,6 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         ::CORBA::AttributeMode mode
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5072,7 +4533,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -5087,7 +4547,6 @@ namespace POA_CORBA
         const ::CORBA::ParDescriptionSeq & params,
         const ::CORBA::ExceptionDefSeq & exceptions,
         const ::CORBA::ContextIdSeq & contexts
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5097,7 +4556,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void
@@ -5105,7 +4563,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5116,7 +4573,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5127,7 +4583,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5138,7 +4593,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5149,7 +4603,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5160,7 +4613,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5171,7 +4623,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5182,7 +4633,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5193,7 +4643,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5204,7 +4653,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5215,7 +4663,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5226,7 +4673,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5237,7 +4683,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5248,7 +4693,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5259,7 +4703,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5270,7 +4713,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5281,7 +4723,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5292,7 +4733,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5303,7 +4743,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5314,7 +4753,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5322,7 +4760,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5330,7 +4767,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5338,7 +4774,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5346,7 +4781,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5354,7 +4788,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5362,7 +4795,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5370,7 +4802,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5378,7 +4809,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5386,7 +4816,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5397,7 +4826,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5408,7 +4836,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5416,7 +4843,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -5443,53 +4869,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::InterfaceAttrExtension *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -5498,7 +4916,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription * describe_ext_interface (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5508,7 +4925,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from
@@ -5522,7 +4938,6 @@ namespace POA_CORBA
         ::CORBA::AttributeMode mode,
         const ::CORBA::ExceptionDefSeq & get_exceptions,
         const ::CORBA::ExceptionDefSeq & set_exceptions
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -5532,7 +4947,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
   };
 
@@ -5560,53 +4974,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ExtInterfaceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -5616,7 +5022,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5627,7 +5032,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5638,7 +5042,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5649,7 +5052,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5660,7 +5062,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5671,7 +5072,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5682,7 +5082,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5693,7 +5092,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5704,7 +5102,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5715,7 +5112,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5726,7 +5122,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5737,7 +5132,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5748,7 +5142,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5759,7 +5152,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5770,7 +5162,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5781,7 +5172,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5792,7 +5182,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5803,7 +5192,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5814,7 +5202,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5825,7 +5212,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5833,7 +5219,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5841,7 +5226,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5849,7 +5233,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5857,7 +5240,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5865,7 +5247,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5873,7 +5254,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5881,7 +5261,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5889,7 +5268,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5897,7 +5275,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5908,7 +5285,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5919,7 +5295,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5927,7 +5302,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5935,7 +5309,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -5943,7 +5316,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5954,7 +5326,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5965,7 +5336,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5976,7 +5346,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5987,7 +5356,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -5998,7 +5366,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6009,7 +5376,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -6036,53 +5402,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::AbstractInterfaceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -6092,7 +5450,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6103,7 +5460,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6114,7 +5470,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6125,7 +5480,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6136,7 +5490,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6147,7 +5500,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6158,7 +5510,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6169,7 +5520,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6180,7 +5530,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6191,7 +5540,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6202,7 +5550,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6213,7 +5560,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6224,7 +5570,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6235,7 +5580,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6246,7 +5590,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6257,7 +5600,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6268,7 +5610,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6279,7 +5620,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6290,7 +5630,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6301,7 +5640,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6309,7 +5647,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6317,7 +5654,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6325,7 +5661,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6333,7 +5668,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6341,7 +5675,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6349,7 +5682,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6357,7 +5689,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6365,7 +5696,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6373,7 +5703,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6384,7 +5713,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6395,7 +5723,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6403,7 +5730,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6411,7 +5737,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6419,7 +5744,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6430,7 +5754,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6441,7 +5764,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6452,7 +5774,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6463,7 +5784,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -6491,53 +5811,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ExtAbstractInterfaceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -6547,7 +5859,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6558,7 +5869,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6569,7 +5879,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6580,7 +5889,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6591,7 +5899,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6602,7 +5909,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6613,7 +5919,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6624,7 +5929,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6635,7 +5939,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6646,7 +5949,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6657,7 +5959,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6668,7 +5969,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6679,7 +5979,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6690,7 +5989,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6701,7 +5999,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6712,7 +6009,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6723,7 +6019,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6734,7 +6029,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6745,7 +6039,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6756,7 +6049,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6764,7 +6056,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6772,7 +6063,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6780,7 +6070,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6788,7 +6077,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6796,7 +6084,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6804,7 +6091,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6812,7 +6098,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6820,7 +6105,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6828,7 +6112,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6839,7 +6122,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6850,7 +6132,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6858,7 +6139,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6866,7 +6146,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -6874,7 +6153,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6885,7 +6163,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6896,7 +6173,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6907,7 +6183,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6918,7 +6193,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6929,7 +6203,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -6940,7 +6213,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -6967,53 +6239,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::LocalInterfaceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -7023,7 +6287,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7034,7 +6297,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7045,7 +6307,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7056,7 +6317,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7067,7 +6327,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7078,7 +6337,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7089,7 +6347,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7100,7 +6357,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7111,7 +6367,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7122,7 +6377,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7133,7 +6387,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7144,7 +6397,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7155,7 +6407,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7166,7 +6417,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7177,7 +6427,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7188,7 +6437,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7199,7 +6447,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7210,7 +6457,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7221,7 +6467,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7232,7 +6477,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7240,7 +6484,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7248,7 +6491,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7256,7 +6498,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7264,7 +6505,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7272,7 +6512,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7280,7 +6519,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7288,7 +6526,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7296,7 +6533,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7304,7 +6540,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7315,7 +6550,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7326,7 +6560,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7334,7 +6567,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7342,7 +6574,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7350,7 +6581,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7361,7 +6591,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7372,7 +6601,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7383,7 +6611,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7394,7 +6621,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 
@@ -7422,53 +6648,45 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
-        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::ExtLocalInterfaceDef *_this (
 
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -7478,7 +6696,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7489,7 +6706,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7500,7 +6716,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7511,7 +6726,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7522,7 +6736,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7533,7 +6746,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7544,7 +6756,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7555,7 +6766,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7566,7 +6776,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7577,7 +6786,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7588,7 +6796,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7599,7 +6806,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7610,7 +6816,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7621,7 +6826,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7632,7 +6836,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7643,7 +6846,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7654,7 +6856,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7665,7 +6866,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7676,7 +6876,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7687,7 +6886,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7695,7 +6893,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7703,7 +6900,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7711,7 +6907,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7719,7 +6914,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7727,7 +6921,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7735,7 +6928,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7743,7 +6935,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7751,7 +6942,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7759,7 +6949,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7770,7 +6959,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7781,7 +6969,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7789,7 +6976,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7797,7 +6983,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static void
@@ -7805,7 +6990,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7816,7 +7000,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7827,7 +7010,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7838,7 +7020,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7849,7 +7030,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7860,7 +7040,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
@@ -7871,7 +7050,6 @@ namespace POA_CORBA
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
 

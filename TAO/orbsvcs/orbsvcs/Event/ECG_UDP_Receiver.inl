@@ -85,8 +85,7 @@ TAO_ECG_UDP_Receiver::set_handler_shutdown (
 
 ACE_INLINE void
 TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
-                                RtecUDPAdmin::UDP_Addr_out addr
-                                ACE_ENV_ARG_DECL)
+                                RtecUDPAdmin::UDP_Addr_out addr)
 {
   if (CORBA::is_nil (this->addr_server_.in ()))
     {
@@ -95,11 +94,10 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
                   "nil Address Server was supplied during "
                   "initialization through init().\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
-  this->addr_server_->get_addr (header, addr
-                                ACE_ENV_ARG_PARAMETER);
+  this->addr_server_->get_addr (header, addr);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -11,8 +11,7 @@ ACE_RCSID (Send_File,
            "$Id$")
 
 void
-Simple_Server_i::send_line (const char *
-                            ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::send_line (const char *)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 

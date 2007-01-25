@@ -86,7 +86,7 @@ TAO_StructDef_i::type_i (void)
 
   if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
     return this->repo_->tc_factory ()->
-                 create_recursive_tc ( id.c_str () ACE_ENV_ARG_PARAMETER);
+                 create_recursive_tc ( id.c_str ());
 
   TAO_RecursiveDef_OuterScopes NowSeenThis( id );
 
@@ -105,8 +105,7 @@ TAO_StructDef_i::type_i (void)
 
   return this->repo_->tc_factory ()->create_struct_tc (id.c_str (),
                                                        name.c_str (),
-                                                       members.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+                                                       members.in ());
 }
 
 CORBA::StructMemberSeq *
@@ -213,11 +212,9 @@ TAO_StructDef_i::members_i (void)
 
       obj = TAO_IFR_Service_Utils::create_objref (kind,
                                                   path.c_str (),
-                                                  this->repo_
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  this->repo_);
 
-      retval[k].type_def = CORBA::IDLType::_narrow (obj.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+      retval[k].type_def = CORBA::IDLType::_narrow (obj.in ());
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            path,
@@ -243,21 +240,18 @@ TAO_StructDef_i::members_i (void)
 }
 
 void
-TAO_StructDef_i::members (const CORBA::StructMemberSeq &members
-                          ACE_ENV_ARG_DECL)
+TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->members_i (members
-                   ACE_ENV_ARG_PARAMETER);
+  this->members_i (members);
 }
 
 void
-TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
-                            ACE_ENV_ARG_DECL)
+TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our old members, both refs and defns.

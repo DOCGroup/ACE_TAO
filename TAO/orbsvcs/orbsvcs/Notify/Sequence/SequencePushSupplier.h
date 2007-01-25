@@ -42,7 +42,7 @@ public:
   virtual ~TAO_Notify_SequencePushSupplier ();
 
   /// Init
-  void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
+  void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier);
 
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);

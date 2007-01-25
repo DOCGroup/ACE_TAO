@@ -23,16 +23,14 @@ ImR_Locator_Shutdown::ImR_Locator_Shutdown (ImR_Locator_i &imr)
 void
 ImR_Locator_Shutdown::operator () (int /*which_signal*/)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->imr_.shutdown (true ACE_ENV_ARG_PARAMETER);
+      this->imr_.shutdown (true);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR: ");
+      ex._tao_print_exception ("ImR: ");
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -43,10 +41,9 @@ run_standalone (Options& opts)
   ImR_Locator_Shutdown killer (server);
   Service_Shutdown kill_contractor(killer);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
+      int status = server.init (opts);
       if (status == -1)
         {
           return 1;
@@ -64,19 +61,18 @@ run_standalone (Options& opts)
         }
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
+      ex._tao_print_exception ("Unknown Exception");
     }
-  ACE_ENDTRY;
 
   return 1;
 }

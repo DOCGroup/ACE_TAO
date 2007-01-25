@@ -44,7 +44,6 @@ Throughput_StructuredPushConsumer::dump_stats (const char* msg,
 void
 Throughput_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
@@ -158,7 +157,6 @@ Throughput_StructuredPushSupplier::svc (void)
 
   event.remainder_of_body <<= test_client_->payload_;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   this->throughput_start_ = ACE_OS::gethrtime ();
 
@@ -174,8 +172,7 @@ Throughput_StructuredPushSupplier::svc (void)
           // Any.
           event.filterable_data[0].value <<= Throughput_base;
 
-          this->proxy_->push_structured_event (event
-                                                        ACE_ENV_ARG_PARAMETER);
+          this->proxy_->push_structured_event (event);
 
           ACE_hrtime_t end = ACE_OS::gethrtime ();
           this->throughput_.sample (end - this->throughput_start_,
@@ -211,29 +208,24 @@ Notify_Throughput::Notify_Throughput (void)
 
 Notify_Throughput::~Notify_Throughput ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 
   delete payload_;
 }
 
 int
-Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
+Notify_Throughput::init (int argc, char* argv [])
 {
   // Initialize base class.
   Notify_Test_Client::init_ORB (argc,
-                                argv
-                                ACE_ENV_ARG_PARAMETER);
+                                argv);
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   CORBA::Object_var manager_object =
-    orb_->resolve_initial_references ("ORBPolicyManager"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("ORBPolicyManager");
 
   CORBA::PolicyManager_var policy_manager =
-    CORBA::PolicyManager::_narrow (manager_object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+    CORBA::PolicyManager::_narrow (manager_object.in ());
 
   CORBA::Any sync_scope;
   sync_scope <<= Messaging::SYNC_WITH_TARGET;
@@ -242,11 +234,9 @@ Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
   policy_list.length (1);
   policy_list[0] =
     orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                        sync_scope
-                        ACE_ENV_ARG_PARAMETER);
+                        sync_scope);
   policy_manager->set_policy_overrides (policy_list,
-                                        CORBA::SET_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
+                                        CORBA::SET_OVERRIDE);
 #else
   ACE_DEBUG ((LM_DEBUG,
               "CORBA Messaging disabled in this configuration,"
@@ -268,12 +258,12 @@ Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid ACE_ENV_ARG_PARAMETER);
+    ec_->new_for_suppliers (this->ifgop_, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid ACE_ENV_ARG_PARAMETER);
+    ec_->new_for_consumers (this->ifgop_, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -293,11 +283,9 @@ Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
       ACE_NEW_RETURN (consumers_[i],
                       Throughput_StructuredPushConsumer (this),
                       -1);
-      consumers_[i]->init (root_poa_.in ()
-                           ACE_ENV_ARG_PARAMETER);
+      consumers_[i]->init (root_poa_.in ());
 
-      consumers_[i]->connect (this->consumer_admin_.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      consumers_[i]->connect (this->consumer_admin_.in ());
     }
 
   for (i = 0; i < this->supplier_count_; ++i)
@@ -307,10 +295,8 @@ Notify_Throughput::init (int argc, char* argv [] ACE_ENV_ARG_DECL)
                       -1);
       suppliers_[i]->TAO_Notify_Tests_StructuredPushSupplier::init (
                          root_poa_.in ()
-                         ACE_ENV_ARG_PARAMETER
                        );
-      suppliers_[i]->connect (this->supplier_admin_.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      suppliers_[i]->connect (this->supplier_admin_.in ());
     }
 
   return 0;
@@ -425,8 +411,7 @@ Notify_Throughput::create_EC (void)
 
       // Activate the factory
       this->notify_factory_ =
-        notify_service->create (this->root_poa_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        notify_service->create (this->root_poa_.in ());
 
       ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
     }
@@ -444,12 +429,10 @@ Notify_Throughput::create_EC (void)
       name[0].id = CORBA::string_dup (ec_name_.c_str ());
 
       CORBA::Object_var obj =
-        this->naming_context_->resolve (name
-                                        ACE_ENV_ARG_PARAMETER);
+        this->naming_context_->resolve (name);
 
       this->ec_ =
-        CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
     }
 else
   {
@@ -457,8 +440,7 @@ else
 
     ec_ = notify_factory_->create_channel (initial_qos_,
                                            initial_admin_,
-                                           id
-                                           ACE_ENV_ARG_PARAMETER);
+                                           id);
   }
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
@@ -488,8 +470,7 @@ Notify_Throughput::run_test (void)
   for (int i = 0; i < this->supplier_count_; ++i)
     {
       suppliers_[i]->
-        TAO_Notify_Tests_StructuredPushSupplier::init (root_poa_.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+        TAO_Notify_Tests_StructuredPushSupplier::init (root_poa_.in ());
 
       if (suppliers_[i]->ACE_Task_Base::activate (THR_NEW_LWP | THR_JOINABLE) != 0)
         {
@@ -579,10 +560,9 @@ main (int argc, char* argv[])
       return 1;
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      events.init (argc, argv
-                      ACE_ENV_ARG_PARAMETER); //Init the Client
+      events.init (argc, argv); //Init the Client
 
       events.run_test ();
 
@@ -593,12 +573,11 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "ending main...\n"));
 
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

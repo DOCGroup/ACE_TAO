@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * file for detailed descriptions apart from the comments in
  * this file.
  */
-class TAO_Concurrency_Serv_Export CC_LockSetFactory 
+class TAO_Concurrency_Serv_Export CC_LockSetFactory
   : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
@@ -47,13 +47,11 @@ public:
   /// Destructor.
   ~CC_LockSetFactory (void);
 
-  virtual CosConcurrencyControl::LockSet_ptr create (
-      ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosConcurrencyControl::LockSet_ptr create ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosConcurrencyControl::LockSet_ptr create_related (
-      CosConcurrencyControl::LockSet_ptr which
-      ACE_ENV_ARG_DECL)
+      CosConcurrencyControl::LockSet_ptr which)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

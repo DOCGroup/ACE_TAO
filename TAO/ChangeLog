@@ -1,3 +1,11 @@
+Thu Jan 25 17:39:59 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * *.{h,cpp,inl}:
+
+          Removed the ACE exception macros from all files.  There are a few
+          number of files that still use ACE_PRINT_EXCEPTION.  They will be
+          dealt with in my next commit.
+
 Thu Jan 25 13:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/IDL_Test.mpc:

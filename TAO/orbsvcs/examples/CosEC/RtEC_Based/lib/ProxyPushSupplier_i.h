@@ -50,8 +50,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Ends the event communication and disposes this object.
 
-  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer
-                                     ACE_ENV_ARG_DECL)
+  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected,
                        CosEventChannelAdmin::TypeError));

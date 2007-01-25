@@ -19,27 +19,25 @@ TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer (void)
 
 void
 TAO_Notify_LogConsumer::connect (
-  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-  ACE_ENV_ARG_DECL)
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::PushConsumer_var objref =
     this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
-    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
+    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
   // narrow
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::ProxyPushSupplier::
-    _narrow (proxysupplier.in () ACE_ENV_ARG_PARAMETER);
+    _narrow (proxysupplier.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
-  proxy_supplier_->connect_any_push_consumer (objref.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+  proxy_supplier_->connect_any_push_consumer (objref.in ());
 
 }
 
@@ -53,8 +51,7 @@ TAO_Notify_LogConsumer::disconnect (void)
 void
 TAO_Notify_LogConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const CosNotification::EventTypeSeq & /*removed*/)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosNotifyComm::InvalidEventType
@@ -65,8 +62,7 @@ TAO_Notify_LogConsumer::offer_change
 
 void
 TAO_Notify_LogConsumer::push
-   (const CORBA::Any& event
-    ACE_ENV_ARG_DECL)
+   (const CORBA::Any& event)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -102,28 +98,27 @@ TAO_Notify_LogConsumer::push
   //
   // I have submitted a defect report to the OMG for clarification.
   //    --jtc
-  ACE_TRY
+  try
     {
       // log the RecordList.
-      this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
+      this->log_->write_recordlist (recList);
     }
-  ACE_CATCH (DsLogAdmin::LogFull, ex)
+  catch (const DsLogAdmin::LogFull& )
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
-  ACE_CATCH (DsLogAdmin::LogOffDuty, ex)
+  catch (const DsLogAdmin::LogOffDuty& )
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
-  ACE_CATCH (DsLogAdmin::LogLocked, ex)
+  catch (const DsLogAdmin::LogLocked& )
     {
-      ACE_THROW (CORBA::NO_PERMISSION ());
+      throw CORBA::NO_PERMISSION ();
     }
-  ACE_CATCH (DsLogAdmin::LogDisabled, ex)
+  catch (const DsLogAdmin::LogDisabled& )
     {
-      ACE_THROW (CORBA::TRANSIENT ());
+      throw CORBA::TRANSIENT ();
     }
-  ACE_ENDTRY;
 }
 
 void

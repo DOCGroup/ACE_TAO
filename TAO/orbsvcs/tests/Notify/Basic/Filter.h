@@ -35,8 +35,7 @@ public:
   virtual ~Filter (void);
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // initialization.
 
   void run_test (void);
@@ -47,16 +46,16 @@ protected:
   // Create EC
 
   /// Run some tests to check the filters.
-  void run_filter_test (CosNotifyFilter::FilterAdmin_ptr ACE_ENV_ARG_DECL);
+  void run_filter_test (CosNotifyFilter::FilterAdmin_ptr);
 
   /// Print the filter ids.
-  void print_filters (CosNotifyFilter::FilterAdmin_ptr filter_seq ACE_ENV_ARG_DECL);
+  void print_filters (CosNotifyFilter::FilterAdmin_ptr filter_seq);
 
   /// Verify filter count.
-  void verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count ACE_ENV_ARG_DECL);
+  void verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count);
 
   /// Add a filter.
-  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DECL);
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin);
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var ffact_;

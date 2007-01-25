@@ -74,7 +74,7 @@ private:
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const RtecEventComm::EventSet& events ACE_ENV_ARG_DECL)
+  void push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// ProxyPushSupplier used to connect to RTEventLog.

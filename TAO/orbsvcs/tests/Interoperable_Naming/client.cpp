@@ -24,8 +24,7 @@ int main (int argc, char *argv [])
 {
   int result = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       NContextExt_Client_i client;
@@ -35,12 +34,11 @@ int main (int argc, char *argv [])
 
       result = client.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return result;
 }

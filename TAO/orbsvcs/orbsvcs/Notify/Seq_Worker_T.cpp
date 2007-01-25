@@ -17,7 +17,7 @@ TAO_Notify_Seq_Worker_T<T>::TAO_Notify_Seq_Worker_T (void)
 }
 
 template<class TYPE> ACE_TYPENAME TAO_Notify_Seq_Worker_T<TYPE>::SEQ*
-TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
+TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container)
 {
   SEQ* tmp;
   ACE_NEW_THROW_EX (tmp, //this->seq_,
@@ -26,7 +26,7 @@ TAO_Notify_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
 
   this->seq_ = tmp;
 
-  container.collection ()->for_each (this ACE_ENV_ARG_PARAMETER);
+  container.collection ()->for_each (this);
 
   return this->seq_._retn ();
 

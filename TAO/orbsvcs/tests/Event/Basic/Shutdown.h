@@ -42,12 +42,10 @@ public:
   void dump_results (void);
 
   /// One of the consumers in the test has been disconnected from the EC
-  virtual void consumer_disconnect (void* consumer_cookie
-                                    ACE_ENV_ARG_DECL);
+  virtual void consumer_disconnect (void* consumer_cookie);
 
   /// One of the suppliers in the test has been disconnected from the EC
-  virtual void supplier_disconnect (void* supplier_cookie
-                                    ACE_ENV_ARG_DECL);
+  virtual void supplier_disconnect (void* supplier_cookie);
 
 
 private:

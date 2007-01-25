@@ -19,24 +19,23 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
 	  CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
 	  // Obtain the naming service
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -44,7 +43,7 @@ main (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
 	  TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
@@ -62,11 +61,11 @@ main (int argc, char* argv[])
       name[0].kind = CORBA::string_dup ("");
 
       // Register with the name server
-      naming_context->bind (name, event_channel.in () ACE_ENV_ARG_PARAMETER);
+      naming_context->bind (name, event_channel.in ());
 
       // Example code: How to write ior to file
       CORBA::String_var ior =
-        orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (event_channel.in ());
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -92,12 +91,11 @@ main (int argc, char* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

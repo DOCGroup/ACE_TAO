@@ -44,8 +44,7 @@ public:
 
   /// Notification of subscriptions set at the admin.
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed
-                                    ACE_ENV_ARG_DECL);
+                                    const CosNotification::EventTypeSeq & removed);
 
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void)
     ACE_THROW_SPEC ((
@@ -54,7 +53,6 @@ public:
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -63,7 +61,6 @@ public:
   virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

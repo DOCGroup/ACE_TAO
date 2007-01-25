@@ -42,7 +42,7 @@ namespace FTAPP
     // initialization
     int parse_args (int argc, char *argv[]);
 
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     ////////////
     // execution

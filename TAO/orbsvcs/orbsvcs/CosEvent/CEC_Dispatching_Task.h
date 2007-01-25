@@ -54,13 +54,11 @@ public:
   virtual int svc (void);
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     CORBA::Any& event
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Any& event);
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL);
+                       TAO_CEC_TypedEvent& typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:

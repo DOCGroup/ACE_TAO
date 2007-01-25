@@ -88,8 +88,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Method to initialize the various data components.
 
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object);

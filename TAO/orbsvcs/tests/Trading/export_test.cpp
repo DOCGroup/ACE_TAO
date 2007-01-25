@@ -15,10 +15,10 @@ ACE_RCSID (Trading,
 int
 main (int argc, char** argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      orb_manager.init (argc, argv);
 
       // Command line argument interpretation.
       TT_Parse_Args parse_args (argc, argv);
@@ -30,7 +30,7 @@ main (int argc, char** argv)
       char* ior = parse_args.ior ();
       CORBA::Object_var trading_obj = (ior == 0) ?
         orb->resolve_initial_references ("TradingService") :
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       if (CORBA::is_nil (trading_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,13 +40,12 @@ main (int argc, char** argv)
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
       CosTrading::Lookup_var lookup_if =
-        CosTrading::Lookup::_narrow (trading_obj.in () ACE_ENV_ARG_PARAMETER);
+        CosTrading::Lookup::_narrow (trading_obj.in ());
 
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter (lookup_if.in (),
-                                               ! parse_args.quiet ()
-                                               ACE_ENV_ARG_PARAMETER);
+                                               ! parse_args.quiet ());
 
       type_exporter.remove_all_types ();
 
@@ -71,7 +70,7 @@ main (int argc, char** argv)
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
-      TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet () ACE_ENV_ARG_PARAMETER);
+      TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet ());
 
       // = Test series.
 
@@ -123,11 +122,10 @@ main (int argc, char** argv)
 
       orb_manager.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trader Export Tests Failed"), -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -68,16 +68,16 @@ public:
   virtual TAO_Notify_Proxy* proxy (void);
 
   /// Dispatch Event to consumer
-  void deliver (TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL);
+  void deliver (TAO_Notify_Method_Request_Event * request);
 
   /// Push <event> to this consumer.
-  virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL) = 0;
+  virtual void push (const CORBA::Any& event) = 0;
 
   /// Push <event> to this consumer.
-  virtual void push (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL) = 0;
+  virtual void push (const CosNotification::StructuredEvent& event) = 0;
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL) = 0;
+  virtual void push (const CosNotification::EventBatch& event) = 0;
 
   /// Dispatch the batch of events to the attached consumer
   DispatchStatus dispatch_batch (const CosNotification::EventBatch& batch);
@@ -100,8 +100,7 @@ public:
   /// on reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (
-    TAO_Notify_Consumer* old_consumer
-    ACE_ENV_ARG_DECL) = 0;
+    TAO_Notify_Consumer* old_consumer) = 0;
 
   /// Override, Peer::qos_changed
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
@@ -125,19 +124,17 @@ protected:
     Request_Queue & requests,
     ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon);
 
-  void enqueue_request(TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL);
+  void enqueue_request(TAO_Notify_Method_Request_Event * request);
 
   /// Add request to a queue if necessary.
   /// Overridden by sequence consumer to "always" put incoming events into the queue.
   /// @returns true the request has been enqueued; false the request should be handled now.
   virtual bool enqueue_if_necessary(
-    TAO_Notify_Method_Request_Event * request
-    ACE_ENV_ARG_DECL);
+    TAO_Notify_Method_Request_Event * request);
 
   // Dispatch updates
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed
-                                   ACE_ENV_ARG_DECL);
+                                   const CosNotification::EventTypeSeq& removed);
 
   /// Get the shared Proxy Lock
   TAO_SYNCH_MUTEX* proxy_lock (void);

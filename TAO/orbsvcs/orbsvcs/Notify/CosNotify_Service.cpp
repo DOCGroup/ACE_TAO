@@ -218,7 +218,7 @@ TAO_CosNotify_Service::fini (void)
 }
 
 void
-TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
 {
   ACE_DEBUG ((LM_DEBUG, "Loading the Cos Notification Service...\n"));
 
@@ -233,38 +233,38 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
           char *argv0 = 0;
           char **argv = &argv0;  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
-                                                       "default_dispatcher" ACE_ENV_ARG_PARAMETER);
+                                                       "default_dispatcher");
 
           TAO_Notify_PROPERTIES::instance()->dispatching_orb(dispatcher.in());
         }
 
-      this->init_i2 (orb, TAO_Notify_PROPERTIES::instance()->dispatching_orb() ACE_ENV_ARG_PARAMETER);
+      this->init_i2 (orb, TAO_Notify_PROPERTIES::instance()->dispatching_orb());
 
     }
   else
     {
-      this->init_i (orb ACE_ENV_ARG_PARAMETER);
+      this->init_i (orb);
     }
 }
 
 void
-TAO_CosNotify_Service::init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb)
 {
-  this->init_i2 (orb, dispatching_orb ACE_ENV_ARG_PARAMETER);
+  this->init_i2 (orb, dispatching_orb);
 }
 
 void
-TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
 {
   // Obtain the Root POA
   CORBA::Object_var object  =
-    orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
     ACE_ERROR ((LM_ERROR,
                 " (%P|%t) Unable to resolve the RootPOA.\n"));
 
-  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
 
   // Set the properties
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -283,16 +283,16 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb)
 {
   // Obtain the Root POA
   CORBA::Object_var object  =
-    orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
     ACE_ERROR ((LM_ERROR, " (%P|%t) Unable to resolve the RootPOA.\n"));
 
-  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+  PortableServer::POA_var default_poa = PortableServer::POA::_narrow (object.in ());
 
   // Set the properties
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -338,13 +338,13 @@ TAO_CosNotify_Service::create_builder (void)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_CosNotify_Service::create (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+TAO_CosNotify_Service::create (PortableServer::POA_ptr poa)
 {
-  return this->builder().build_event_channel_factory (poa ACE_ENV_ARG_PARAMETER);
+  return this->builder().build_event_channel_factory (poa);
 }
 
 void
-TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/)
 {
   // NOP.
 }

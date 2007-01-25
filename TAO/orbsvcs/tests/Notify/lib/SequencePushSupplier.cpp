@@ -25,19 +25,17 @@ TAO_Notify_Tests_SequencePushSupplier::~TAO_Notify_Tests_SequencePushSupplier ()
 
 void
 TAO_Notify_Tests_SequencePushSupplier::send_events (const CosNotification::EventBatch& events
-                                          ACE_ENV_ARG_DECL
                                           )
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
-  this->proxy_->push_structured_events (events ACE_ENV_ARG_PARAMETER);
+  this->proxy_->push_structured_events (events);
 }
 
 void
-TAO_Notify_Tests_SequencePushSupplier::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_SequencePushSupplier::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)
 {
-  proxy_ptr->connect_sequence_push_supplier (peer_ptr
-                                               ACE_ENV_ARG_PARAMETER);
+  proxy_ptr->connect_sequence_push_supplier (peer_ptr);
 }
 
 void

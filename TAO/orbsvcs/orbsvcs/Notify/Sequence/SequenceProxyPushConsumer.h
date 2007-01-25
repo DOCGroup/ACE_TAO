@@ -66,7 +66,6 @@ protected:
                      ));
 
   virtual void connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier
-                                               ACE_ENV_ARG_DECL
                                                )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -74,7 +73,6 @@ protected:
                      ));
 
   virtual void push_structured_events (const CosNotification::EventBatch & notifications
-                                      ACE_ENV_ARG_DECL
                                       )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,

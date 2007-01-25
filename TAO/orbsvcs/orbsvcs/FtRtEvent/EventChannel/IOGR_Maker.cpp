@@ -25,12 +25,10 @@ IOGR_Maker::IOGR_Maker()
 }
 
 void
-IOGR_Maker::init(CORBA::ORB_ptr orb
-                 ACE_ENV_ARG_DECL)
+IOGR_Maker::init(CORBA::ORB_ptr orb)
 {
     iorm_ = resolve_init<TAO_IOP::TAO_IOR_Manipulation>(orb,
-                                                        TAO_OBJID_IORMANIPULATION
-                                                        ACE_ENV_ARG_PARAMETER);
+                                                        TAO_OBJID_IORMANIPULATION);
     ft_tag_component_.group_domain_id = "ft_eventchannel";
     ft_tag_component_.object_group_id = 0;
     ft_tag_component_.object_group_ref_version = 0;
@@ -45,12 +43,11 @@ IOGR_Maker::instance()
 }
 
 CORBA::Object_ptr
-IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
-                       ACE_ENV_ARG_DECL)
+IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list)
 {
   CORBA::Object_var obj;
   if (list.length() != 1)
-    obj = iorm_->merge_iors(list ACE_ENV_ARG_PARAMETER);
+    obj = iorm_->merge_iors(list);
   else
     obj = CORBA::Object::_duplicate(list[0]);
   return obj._retn();
@@ -59,17 +56,15 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
 
 CORBA::Object_ptr
 IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
-                      CORBA::ULong object_group_ref_version
-                      ACE_ENV_ARG_DECL)
+                      CORBA::ULong object_group_ref_version)
 {
   /// generate a new IOGR if the object group changes.
-  CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = merge_iors(list);
 
   FT::TagFTGroupTaggedComponent ft_tag_component(ft_tag_component_);
   /// the generated IOGR should use a new object_group_ref_version
   ft_tag_component.object_group_ref_version = object_group_ref_version;
-  set_tag_components(obj.in(), list[0], ft_tag_component
-                     ACE_ENV_ARG_PARAMETER);
+  set_tag_components(obj.in(), list[0], ft_tag_component);
 
   return obj._retn();
 }
@@ -82,8 +77,7 @@ void replace_key(char* ior, char* end_ior,
 
 
 CORBA::Object_ptr
-IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL)
+IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
 {
   /// forge an IOGR whose object_key is the same with that of \a obj.
   CORBA::Object_var merged;
@@ -93,8 +87,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
   if (! CORBA::is_nil(successor.in())) {
     TAO::ObjectKey_var newkey = obj->_key();
 
-    CORBA::Object_var new_base = ior_replace_key(successor.in(), newkey.in()
-                                                 ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var new_base = ior_replace_key(successor.in(), newkey.in());
 
     if (CORBA::is_nil( new_base.in() ))
       return CORBA::Object::_nil();
@@ -104,8 +97,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
     TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
     TAO_Stub *stub = orb_core->create_stub (CORBA::string_dup(obj->_stubobj ()->type_id.in ()), // give the id string
-      base_profiles
-      ACE_ENV_ARG_PARAMETER);
+      base_profiles);
 
     // Make the stub memory allocation exception safe for the duration
     // of this method.
@@ -123,14 +115,12 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
 
 
     merged =
-      iorm_->add_profiles(obj, temp_obj
-      ACE_ENV_ARG_PARAMETER);
+      iorm_->add_profiles(obj, temp_obj);
   }
   else
     merged = CORBA::Object::_duplicate(obj);
 
-  set_tag_components(merged.in(), obj, ft_tag_component_
-                     ACE_ENV_ARG_PARAMETER);
+  set_tag_components(merged.in(), obj, ft_tag_component_);
 
 
   return merged._retn();
@@ -138,8 +128,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
 
 CORBA::Object_ptr
 IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
-                            const TAO::ObjectKey& key
-                            ACE_ENV_ARG_DECL)
+                            const TAO::ObjectKey& key)
 {
     TAO_OutputCDR out_cdr;
     if (!(out_cdr << obj))
@@ -237,22 +226,18 @@ void
 IOGR_Maker::set_tag_components(
   CORBA::Object_ptr merged,
   CORBA::Object_ptr primary,
-  FT::TagFTGroupTaggedComponent& ft_tag_component
-  ACE_ENV_ARG_DECL)
+  FT::TagFTGroupTaggedComponent& ft_tag_component)
 {
     // set the primary
     TAO_FT_IOGR_Property prop (ft_tag_component);
 
 
-    prop.remove_primary_tag(merged
-                         ACE_ENV_ARG_PARAMETER);
+    prop.remove_primary_tag(merged);
 
-    iorm_->set_primary (&prop, merged, primary
-                       ACE_ENV_ARG_PARAMETER);
+    iorm_->set_primary (&prop, merged, primary);
       // Set the property
     iorm_->set_property (&prop,
-                        merged
-                        ACE_ENV_ARG_PARAMETER);
+                        merged);
 
 
 }

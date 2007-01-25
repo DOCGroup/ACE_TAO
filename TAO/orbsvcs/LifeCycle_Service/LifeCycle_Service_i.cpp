@@ -37,8 +37,7 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
 
 
 CORBA::Boolean
-Life_Cycle_Service_i::supports (const CosLifeCycle::Key &
-                                ACE_ENV_ARG_DECL_NOT_USED)
+Life_Cycle_Service_i::supports (const CosLifeCycle::Key &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -46,8 +45,7 @@ Life_Cycle_Service_i::supports (const CosLifeCycle::Key &
 
 CORBA::Object_ptr
 Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
-                                     const CosLifeCycle::Criteria &the_criteria
-                                     ACE_ENV_ARG_DECL)
+                                     const CosLifeCycle::Criteria &the_criteria)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLifeCycle::NoFactory,
                    CosLifeCycle::InvalidCriteria,
@@ -95,19 +93,17 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
       else
         {
           CosLifeCycle::GenericFactory_var genericFactory_var;
-          ACE_TRY
+          try
             {
               genericFactory_var =
-                CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr
-                                                       ACE_ENV_ARG_PARAMETER);
+                CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr);
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
               // see if there is an exception, if yes then throw the
               // NoFactory exception throw a NoFactory exception
-              ACE_TRY_THROW (CosLifeCycle::NoFactory (factory_key));
+              throw CosLifeCycle::NoFactory (factory_key);
             }
-          ACE_ENDTRY;
 
           if (CORBA::is_nil (genericFactory_var.in()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,8 +115,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 
           // Now retrieve the Object obj ref corresponding to the key.
           CORBA::Object_var object_var = genericFactory_var->create_object (factory_key,
-                                                                            the_criteria
-                                                                            ACE_ENV_ARG_PARAMETER);
+                                                                            the_criteria);
 
           if (this->debug_level_ >= 2)
             ACE_DEBUG ((LM_DEBUG,
@@ -148,8 +143,7 @@ void
 Life_Cycle_Service_i::register_factory (const char * name,
                                         const char * location,
                                         const char * description,
-                                        CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+                                        CORBA::Object_ptr object)
   ACE_THROW_SPEC (( CORBA::SystemException))
 {
   if (factory_trader_ptr_ == 0)

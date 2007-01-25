@@ -334,11 +334,9 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints (void)
 }
 
 void
-TAO_SSLIOP_Profile::parse_string (const char * ior
-                                  ACE_ENV_ARG_DECL)
+TAO_SSLIOP_Profile::parse_string (const char * ior)
 {
-   TAO_IIOP_Profile::parse_string (ior
-                                   ACE_ENV_ARG_PARAMETER);
+   TAO_IIOP_Profile::parse_string (ior);
 
    this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 

@@ -30,7 +30,6 @@ public:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -38,13 +37,11 @@ public:
 
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
         CosEventComm::Disconnected));
 
   virtual void disconnect_structured_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -76,7 +73,6 @@ public:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -84,13 +80,11 @@ public:
 
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
         CosEventComm::Disconnected));
 
   virtual void disconnect_sequence_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -123,7 +117,6 @@ public:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -131,13 +124,11 @@ public:
 
   virtual void push (
         const CORBA::Any & data
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
         CosEventComm::Disconnected));
 
   virtual void disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -171,8 +162,7 @@ public:
 
   void init (
     PortableServer::POA_ptr poa,
-    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_
-    ACE_ENV_ARG_DECL);
+    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_);
 
   void fini (void);
 
@@ -180,7 +170,6 @@ public:
 
   virtual void reconnect (
       CORBA::Object_ptr reconnection
-      ACE_ENV_ARG_DECL
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean is_alive (void)
@@ -203,14 +192,13 @@ class Consumer_Main
   int parse_args (int argc, char *argv[]);
   int parse_single_arg (int argc, char *argv[]);
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  int init (int argc, char *argv[]);
   int run (void);
   int fini (void);
   void usage (FILE * log) const;
 
   void reconnect (
-      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
-      ACE_ENV_ARG_DECL)
+      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
@@ -229,7 +217,7 @@ class Consumer_Main
   void init_sequence_proxy_supplier (void);
   void init_any_proxy_supplier (void);
 
-  void set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy ACE_ENV_ARG_DECL);
+  void set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy);
 
   void save_ids();
   bool load_ids();
