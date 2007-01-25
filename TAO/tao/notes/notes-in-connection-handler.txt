@@ -1,0 +1,24 @@
+In IIOP_Connection_Handler.cpp, there are wo functions that
+set the DiffServ codepoint:
+
+1. set_dscp_codepoint (CORBA::Boolean ...)
+2. set_dscp_codepoint (CORBA::Long ...)
+
+The function #1 is called when the RT-CORBA way of setting DiffServ codepoint
+is used, while the function #2 is used, if the DiffServ policy way of setting
+DiffServ codepoint is used.
+
+So what it means is that the
+
+get_dscp_codepoint () function defined on the Protocols_Hooks class
+can be specialized.
+
+So the function returning the DiffServ codepoint can be named:
+
+get_rt_dscp_codepoint () in RT_CORBA Protocols_Hooks
+
+and
+
+get_dscp_codepoint () in the DiffServ_Protocols_Hooks.
+
+
