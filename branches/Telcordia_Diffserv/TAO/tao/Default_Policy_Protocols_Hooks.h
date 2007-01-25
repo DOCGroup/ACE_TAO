@@ -35,6 +35,14 @@ public:
   /// destructor
   virtual ~TAO_Default_Policy_Protocols_Hooks (void);
 
+  CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
+                                              TAO_Stub *stub
+                                              ACE_ENV_ARG_DECL);
+
+  CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
+                                              CORBA::Policy *policy
+                                              ACE_ENV_ARG_DECL);
+
   CORBA::Long get_dscp_codepoint (void);
 
   void set_dscp_codepoint (CORBA::Long &dscp_codepoint
