@@ -16,14 +16,14 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T ()
 {
 }
 
-template <class Supplier_Traits> ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+template <class Supplier_Traits> typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::get_proxy_consumer (void)
 {
   return this->get_proxy ();
 }
 
-template <class Supplier_Traits> ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Admin_Traits_PTR admin_ptr)
+template <class Supplier_Traits> typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Admin_Traits_PTR admin_ptr)
 {
   Supplier_Traits traits;
 
@@ -38,8 +38,8 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Not
   return Proxy_Traits_INTERFACE::_narrow (proxy_consumer.in ());
 }
 
-template <class Supplier_Traits> ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Admin_Ext_Traits_PTR admin_ptr
+template <class Supplier_Traits> typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Admin_Ext_Traits_PTR admin_ptr
                                              , CosNotification::QoSProperties& qos)
 {
   Supplier_Traits traits;
@@ -75,7 +75,7 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::Eve
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
   /// subscribe
-  ACE_TYPENAME Proxy_Traits::PTR proxy_consumer = this->get_proxy ();
+  typename Proxy_Traits::PTR proxy_consumer = this->get_proxy ();
 
   proxy_consumer->offer_change (added, removed);
 }

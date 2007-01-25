@@ -19,7 +19,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
 {
   ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->db_lock_);
 
-  for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
+  for (typename Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
     {
@@ -51,7 +51,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 insert_offer (const char* type, CosTrading::Offer* offer)
 {
   CosTrading::OfferId return_value = 0;
-  ACE_TYPENAME Offer_Database::ENTRY* database_entry = 0;
+  typename Offer_Database::ENTRY* database_entry = 0;
   CORBA::String_var service_type (type);
 
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
@@ -101,7 +101,7 @@ remove_offer (const char* type, CORBA::ULong id)
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, -1);
 
   int return_value = -1;
-  ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
+  typename Offer_Database::ENTRY* db_entry = 0;
   CORBA::String_var service_type (type);
 
   if (this->offer_db_.find (service_type, db_entry) == 0)
@@ -212,7 +212,7 @@ lookup_offer (const char* type, CORBA::ULong id)
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
   CosTrading::Offer* return_value = 0;
-  ACE_TYPENAME Offer_Database::ENTRY* db_entry = 0;
+  typename Offer_Database::ENTRY* db_entry = 0;
   CORBA::String_var service_type (type);
 
   if (this->offer_db_.find (service_type, db_entry) == 0)
@@ -241,7 +241,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
                   0);
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
-  for (ACE_TYPENAME Offer_Database::iterator type_iter (this->offer_db_);
+  for (typename Offer_Database::iterator type_iter (this->offer_db_);
        ! type_iter.done ();
        type_iter++)
     {
@@ -322,7 +322,7 @@ TAO_Service_Offer_Iterator (const char* type,
   if (this->stm_.db_lock_.acquire_read () == -1)
     return;
 
-  ACE_TYPENAME TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry = 0;
+  typename TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry = 0;
   if (this->stm_.offer_db_.find (service_type, entry) == -1)
     return;
   else

@@ -15,7 +15,7 @@
 
 #include "ace/Log_Msg.h"
 
-template<class Interface> ACE_TYPENAME RIR_Narrow<Interface>::Interface_ptr
+template<class Interface> typename RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
                                 const char *object_id)
 {
