@@ -1,3 +1,26 @@
+Thu Jan 25 19:59:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+            The include of rules.cia.GNU must come before the include of
+            rules.tao.GNU in order for CIAO libraries to have the correct
+            version numbers.
+
+        * bin/auto_run_tests.pl:
+
+          Fixed the -l option to use the correct variable name and corrected
+          a bug where the script changed to the wrong directory if the -l
+          option was used.
+
+        * bin/clean_sems.sh:
+
+          Support the ngvipc command to clean up semaphores on MacOS X.
+
+        * bin/rm_exception_macros.pl:
+
+          A new script to assist users in the removal of all ACE related
+          exception macros.
+
 Thu Jan 25 19:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
