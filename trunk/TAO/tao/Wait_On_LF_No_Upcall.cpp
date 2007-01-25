@@ -28,11 +28,11 @@ namespace TAO
   public:
     // Maybe we should instead just take in a ptr to
     // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
-    Nested_Upcall_Guard (TAO_Transport* t)
+    Nested_Upcall_Guard (TAO_Transport *t)
       : t_ (t)
     {
       TAO_ORB_Core_TSS_Resources *tss =
-        t_->orb_core()->get_tss_resources ();
+        t_->orb_core ()->get_tss_resources ();
 
       tss->upcalls_temporarily_suspended_on_this_thread_ = true;
 
@@ -45,7 +45,7 @@ namespace TAO
     ~Nested_Upcall_Guard (void)
     {
       TAO_ORB_Core_TSS_Resources *tss =
-        t_->orb_core()->get_tss_resources ();
+        t_->orb_core ()->get_tss_resources ();
 
       tss->upcalls_temporarily_suspended_on_this_thread_ =
         false;
@@ -58,16 +58,18 @@ namespace TAO
 
   private:
 
-    Nested_Upcall_Guard (void) {}
+    Nested_Upcall_Guard (void)
+    {
+    }
 
     /// Disallow copying and assignment.
     Nested_Upcall_Guard (const Nested_Upcall_Guard&);
-    Nested_Upcall_Guard & operator= (const Nested_Upcall_Guard&);
+    Nested_Upcall_Guard &operator= (const Nested_Upcall_Guard&);
 
   private:
 
     /// Pointer to the transport that we plan to use.
-    TAO_Transport* t_;
+    TAO_Transport *t_;
   };
 
 
@@ -95,7 +97,7 @@ namespace TAO
   Wait_On_LF_No_Upcall::can_process_upcalls (void) const
   {
     TAO_ORB_Core_TSS_Resources *tss =
-      this->transport_->orb_core()->get_tss_resources ();
+      this->transport_->orb_core ()->get_tss_resources ();
 
     if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
         (this->transport_->bidirectional_flag () == 0) &&

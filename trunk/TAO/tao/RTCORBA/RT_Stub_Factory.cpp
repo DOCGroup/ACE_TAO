@@ -25,18 +25,14 @@ TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)
 TAO_Stub *
 TAO_RT_Stub_Factory::create_stub (const char *repository_id,
                                   const TAO_MProfile &profiles,
-                                  TAO_ORB_Core *orb_core
-                                  )
+                                  TAO_ORB_Core *orb_core)
 {
-  // @@ TODO: As soon as the RT_STUB is done change this to
-  // create an RT_STUB
   TAO_Stub *retval = 0;
 
   ACE_NEW_THROW_EX (retval,
                     TAO_RT_Stub (repository_id, profiles, orb_core),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_MAYBE));
-
 
   return retval;
 }

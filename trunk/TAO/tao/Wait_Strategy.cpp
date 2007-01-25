@@ -32,8 +32,8 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
  */
 //@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_START
 int
-TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
-                                    int            /* two_way */)
+TAO_Wait_Strategy::sending_request (TAO_ORB_Core */* orb_core */,
+                                    int/* two_way */)
 {
   return 0;
 }

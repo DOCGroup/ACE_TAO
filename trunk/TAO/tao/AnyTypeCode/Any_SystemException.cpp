@@ -92,8 +92,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
   try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc
-                                                           );
+      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
       if (_tao_equiv == false)
         {
@@ -176,8 +175,7 @@ TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
 {
   try
     {
-      this->value_->_tao_encode (cdr
-                                );
+      this->value_->_tao_encode (cdr);
       return true;
     }
   catch ( ::CORBA::Exception&)
@@ -191,8 +189,7 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
 {
   try
     {
-      this->value_->_tao_decode (cdr
-                                );
+      this->value_->_tao_decode (cdr);
       return true;
     }
   catch ( ::CORBA::Exception&)

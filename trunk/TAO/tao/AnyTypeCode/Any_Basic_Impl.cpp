@@ -23,8 +23,7 @@ namespace TAO
     : Any_Impl (0, tc),
       kind_ (CORBA::tk_null)
   {
-    this->kind_ = TAO::unaliased_kind (tc
-                                      );
+    this->kind_ = TAO::unaliased_kind (tc);
 
     switch (this->kind_)
     {
@@ -103,8 +102,7 @@ namespace TAO
       {
         CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
         CORBA::Boolean _tao_equiv =
-          any_tc->equivalent (tc
-                             );
+          any_tc->equivalent (tc);
 
         if (!_tao_equiv)
           {
@@ -123,8 +121,7 @@ namespace TAO
                 return false;
               }
 
-            Any_Basic_Impl::assign_value (_tao_elem,
-                                          narrow_impl);
+            Any_Basic_Impl::assign_value (_tao_elem, narrow_impl);
             return true;
           }
 
@@ -258,8 +255,7 @@ namespace TAO
   }
 
   void
-  Any_Basic_Impl::_tao_decode (TAO_InputCDR &cdr
-                               )
+  Any_Basic_Impl::_tao_decode (TAO_InputCDR &cdr)
   {
     if (! this->demarshal_value (cdr))
       {

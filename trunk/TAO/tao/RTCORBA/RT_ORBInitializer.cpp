@@ -62,9 +62,7 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
 }
 
 void
-TAO_RT_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
@@ -163,9 +161,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info
-                             );
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -191,9 +187,7 @@ TAO_RT_ORBInitializer::pre_init (
                       CORBA::COMPLETED_NO));
   CORBA::Object_var safe_rt_orb = rt_orb;
 
-  info->register_initial_reference (TAO_OBJID_RTORB,
-                                    rt_orb
-                                   );
+  info->register_initial_reference (TAO_OBJID_RTORB, rt_orb);
 
   // Create the RT_Current.
   CORBA::Object_ptr current = CORBA::Object::_nil ();
@@ -216,20 +210,15 @@ TAO_RT_ORBInitializer::pre_init (
 }
 
 void
-TAO_RT_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+TAO_RT_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_policy_factories (info
-                                  );
-
+  this->register_policy_factories (info);
 }
 
 void
 TAO_RT_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  )
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   // The RTCorba policy factory is stateless and reentrant, so share a
   // single instance between all ORBs.
@@ -268,9 +257,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
     {
       try
         {
-          info->register_policy_factory (*i,
-                                         this->policy_factory_.in ()
-                                        );
+          info->register_policy_factory (*i, this->policy_factory_.in ());
         }
       catch ( ::CORBA::BAD_INV_ORDER& ex)
         {

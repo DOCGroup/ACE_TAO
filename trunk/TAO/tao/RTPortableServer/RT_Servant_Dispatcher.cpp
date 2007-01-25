@@ -80,8 +80,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     }
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
   const char *priority_model = 0;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
@@ -301,22 +300,18 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   //
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-  if (tph->get_thread_CORBA_and_native_priority (pre_invoke_state.original_CORBA_priority_,
-                                                 pre_invoke_state.original_native_priority_
-                                                )
-      == -1)
+  if (tph->get_thread_CORBA_and_native_priority (
+        pre_invoke_state.original_CORBA_priority_,
+        pre_invoke_state.original_native_priority_) == -1)
     throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
   // Change the priority of the current thread for the duration of
   // request.
   if (servant_priority != pre_invoke_state.original_CORBA_priority_)
     {
-      if (tph->set_thread_CORBA_priority (servant_priority
-                                         )
-          == -1)
+      if (tph->set_thread_CORBA_priority (servant_priority) == -1)
         throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
       pre_invoke_state.state_ =
@@ -335,7 +330,6 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
       pre_invoke_state.state_ =
         TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
 
-
       try
         {
           // Reset the priority of the current thread back to its original
@@ -344,8 +338,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
             poa.orb_core ().get_protocols_hooks ();
 
           if (tph->set_thread_native_priority (
-                 pre_invoke_state.original_native_priority_
-                                              )
+                 pre_invoke_state.original_native_priority_)
               == -1)
             throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
                                                CORBA::COMPLETED_NO);

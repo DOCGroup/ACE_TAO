@@ -105,26 +105,20 @@ TAO_IIOP_Connection_Handler::open (void*)
   protocol_properties.dont_route_ =
    this->orb_core ()->orb_params ()->sock_dontroute ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  bool const client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
+  bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
 
   try
     {
       if (client)
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-           );
+          tph->client_protocol_properties_at_orb_level (protocol_properties);
         }
       else
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-           );
+          tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
   catch ( ::CORBA::Exception&)
@@ -135,7 +129,9 @@ TAO_IIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
@@ -231,7 +227,7 @@ TAO_IIOP_Connection_Handler::open (void*)
           (void) remote_addr.addr_to_string (remote_as_string,
                                              sizeof(remote_as_string));
 
-          ACE_ERROR ((LM_WARNING,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
                       ACE_TEXT("invalid connection from IPv4 mapped IPv6 interface <%s>!\n"),
                       remote_as_string));

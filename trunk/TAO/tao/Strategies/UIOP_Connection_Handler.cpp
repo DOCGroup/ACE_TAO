@@ -88,26 +88,20 @@ TAO_UIOP_Connection_Handler::open (void*)
   protocol_properties.recv_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
+  bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
 
   try
     {
       if (client)
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-           );
+          tph->client_protocol_properties_at_orb_level (protocol_properties);
         }
       else
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-           );
+          tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
   catch ( ::CORBA::Exception& ex)
