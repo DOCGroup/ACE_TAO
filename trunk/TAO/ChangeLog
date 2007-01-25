@@ -1,3 +1,9 @@
+Thu Jan 25 13:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Temporarily removed struct.idl, when the IDL compiler fix is in the repo
+          I will enable this file again
+
 Wed Jan 24 18:46:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
