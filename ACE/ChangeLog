@@ -1,3 +1,13 @@
+Thu Jan 25 11:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.h:
+          Fixed typo, fixes part of bugzilla bug 2780, thanks to
+          <sailzeng at tencent dot com> for reporting this.
+
+        * docs/Download.html:
+          Enabled links for source only packages, they are available
+          from x.5.5
+
 Thu Jan 25 07:50:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Containers_T.cpp:
