@@ -99,9 +99,9 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
     }
   catch (const CORBA::Exception& ex)
   {
-      ACE_PRINT_EXCEPTION (ex,
-                           "DualEC_Supplier::DualEC_Supplier : could "
-                           "not resolve reference to terminator");
+      ex._tao_print_exception (
+        "DualEC_Supplier::DualEC_Supplier : could "
+        "not resolve reference to terminator");
   }
 
   // Initialize the high priority RT_Info data
@@ -154,8 +154,7 @@ DualEC_Supplier::~DualEC_Supplier ()
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "DualEC_Supplier::~DualEC_Supplier");
+      ex._tao_print_exception ("DualEC_Supplier::~DualEC_Supplier");
     }
 
   // @@TBD - destroy the ECs
@@ -202,8 +201,7 @@ DualEC_Supplier::init ()
   }
   catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         "DualEC_Supplier::init");
+    ex._tao_print_exception ("DualEC_Supplier::init");
     return -1;
   }
 
@@ -568,8 +566,7 @@ DualEC_Supplier::create_schedulers (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "DualEC_Supplier::create_schedulers");
+      ex._tao_print_exception ("DualEC_Supplier::create_schedulers");
       return -1;
     }
 
@@ -620,8 +617,7 @@ DualEC_Supplier::create_event_channels (void)
   }
   catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         "DualEC_Supplier::create_event_channels");
+    ex._tao_print_exception ("DualEC_Supplier::create_event_channels");
     return -1;
   }
 

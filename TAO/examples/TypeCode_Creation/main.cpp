@@ -103,8 +103,7 @@ int main(int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "exception:");
+      ex._tao_print_exception ("exception:");
       return 1;
     }
 

@@ -78,8 +78,7 @@ TAO_Security_Current::init (void)
   catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 1)
-        ACE_PRINT_EXCEPTION (ex,
-                             "Could not initialize SecurityCurrent:");
+        ex._tao_print_exception ("Could not initialize SecurityCurrent:");
 
       result = -1;
     }

@@ -75,8 +75,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
   catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 4)
-        ACE_PRINT_EXCEPTION (ex,
-                             "TAO_Policy_Set::TAO_Policy_Set");
+        ex._tao_print_exception ("TAO_Policy_Set::TAO_Policy_Set");
 
       // "Try" to make this recoverable as we must have run out of memory.
       this->policy_list_.length (0);

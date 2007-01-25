@@ -169,9 +169,9 @@ static_server (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
-                           ACE_TEXT("cannot allocate server\n"));
+      ex._tao_print_exception (
+        ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
+        ACE_TEXT("cannot allocate server\n"));
     }
 
   return server_;
@@ -207,9 +207,9 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
   catch (const CORBA::Exception& ex)
     {
       server_ = 0;
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("ACE_Scheduler_Factory::use_config - ")
-                           ACE_TEXT(" exception while resolving server\n"));
+      ex._tao_print_exception (
+        ACE_TEXT("ACE_Scheduler_Factory::use_config - ")
+        ACE_TEXT(" exception while resolving server\n"));
     }
 
   status_ = ACE_Scheduler_Factory::CONFIG;

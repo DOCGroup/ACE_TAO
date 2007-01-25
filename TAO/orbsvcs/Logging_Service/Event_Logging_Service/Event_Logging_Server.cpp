@@ -67,8 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Failed to start the Telecom Log Service.\n");
+      ex._tao_print_exception ("Failed to start the Telecom Log Service.\n");
       return 1;
     }
 

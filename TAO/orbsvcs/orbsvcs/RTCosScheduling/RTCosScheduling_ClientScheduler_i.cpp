@@ -341,9 +341,9 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ex,
-                          "There was an error constructing the "
-                          "ClientScheduler Interceptor\n");
+      ex._tao_print_exception (
+        "There was an error constructing the "
+        "ClientScheduler Interceptor\n");
     }
 }
 
@@ -394,8 +394,7 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ex,
-                          "Error in creating Client Interceptor\n");
+      ex._tao_print_exception ("Error in creating Client Interceptor\n");
     }
 }
 
@@ -441,8 +440,7 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "ERROR - in Client interceptor\n");
+      ex._tao_print_exception ("ERROR - in Client interceptor\n");
       throw CORBA::INTERNAL ();
     }
 }

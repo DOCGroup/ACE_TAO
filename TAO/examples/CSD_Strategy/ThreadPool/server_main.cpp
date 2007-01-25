@@ -27,8 +27,7 @@ main(int argc, char* argv[])
   }
   catch (const CORBA::Exception& ex)
   {
-     ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception in main() for ServerApp");
+     ex._tao_print_exception ("Caught exception in main() for ServerApp");
   }
   catch (...)
   {

@@ -68,8 +68,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("Failed to run the Notification Service\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Failed to run the Notification Service\n"));
       return 1;
     }
 

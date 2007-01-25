@@ -69,8 +69,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Concurrency Service");
+      ex._tao_print_exception ("Concurrency Service");
       return CORBA::Object::_nil ();
     }
 
@@ -91,8 +90,7 @@ TAO_Concurrency_Server::fini (void)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               ACE_TEXT ("TAO_Concurrency_Server"));
+          ex._tao_print_exception (ACE_TEXT ("TAO_Concurrency_Server"));
         }
 
       return -1;

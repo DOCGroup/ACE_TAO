@@ -1,3 +1,9 @@
+Thu Jan 25 19:56:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * *.cpp:
+
+          Removed all of the ACE_PRINT_EXCEPTION macros.
+
 Thu Jan 25 19:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp

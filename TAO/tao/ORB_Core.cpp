@@ -1363,8 +1363,7 @@ TAO_ORB_Core::fini (void)
       message += this->orbid_;
       message += "\n";
 
-      ACE_PRINT_EXCEPTION (ex,
-                           message.c_str ());
+      ex._tao_print_exception (message.c_str ());
     }
 
   // Wait for any server threads, ignoring any failures.
@@ -3288,9 +3287,9 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
             }
           catch ( ::CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ex,
-                                   "Cannot initialize the "
-                                   "ior_interceptor_adapter \n");
+              ex._tao_print_exception (
+                "Cannot initialize the "
+                "ior_interceptor_adapter \n");
             }
         }
     }
@@ -3481,9 +3480,9 @@ TAO_ORB_Core::valuetype_adapter (void)
             }
           catch ( ::CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ex,
-                                   "Cannot initialize the "
-                                   "valuetype_adapter \n");
+              ex._tao_print_exception (
+                "Cannot initialize the "
+                "valuetype_adapter \n");
             }
         }
 

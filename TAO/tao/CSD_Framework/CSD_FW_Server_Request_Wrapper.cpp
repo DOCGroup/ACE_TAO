@@ -107,9 +107,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (
-              ex,
-              "FW_Server_Request_Wrapper::dispatch ()");
+          ex._tao_print_exception ("FW_Server_Request_Wrapper::dispatch ()");
         }
      }
   catch (...)
@@ -149,9 +147,8 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (
-              exception,
-              "FW_Server_Request_Wrapper::dispatch ()");
+          exception._tao_print_exception (
+            "FW_Server_Request_Wrapper::dispatch ()");
         }
      }
 

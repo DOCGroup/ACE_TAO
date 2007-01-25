@@ -58,8 +58,8 @@ TAO_RTScheduler_Loader::init (int,
     }
   catch ( ::CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Unexpected exception caught while initializing the RTScheduler:");
+      ex._tao_print_exception (
+        "Unexpected exception caught while initializing the RTScheduler:");
       return 1;
     }
 

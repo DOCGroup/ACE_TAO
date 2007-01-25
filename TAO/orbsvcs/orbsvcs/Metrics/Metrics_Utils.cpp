@@ -65,9 +65,9 @@ TAO_Metrics_Utils::set_mission_state (int i, Metrics::QoSLogger_ptr logger)
   catch (const CORBA::Exception& ex)
     {
 #if defined (METRICS_UTILS_ERROR_OUTPUT_ENABLED)
-      ACE_PRINT_EXCEPTION (ex,
-                           "TAO_Metrics_LocalCache::set_mission_state:"
-                           " logger call failed\n");
+      ex._tao_print_exception (
+        "TAO_Metrics_LocalCache::set_mission_state:"
+        " logger call failed\n");
 #endif
     }
 }
@@ -116,8 +116,8 @@ TAO_Metrics_Utils::get_logger (const char * logger_ior_str,
       catch (const CORBA::Exception& ex)
         {
 #if defined (METRICS_UTILS_ERROR_OUTPUT_ENABLED)
-          ACE_PRINT_EXCEPTION (ex,
-                               "TAO_Metrics_LocalCache::set_logger exception");
+          ex._tao_print_exception (
+            "TAO_Metrics_LocalCache::set_logger exception");
 #endif
           return logger;
         }

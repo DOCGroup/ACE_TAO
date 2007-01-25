@@ -44,8 +44,7 @@ TAO_LB_Push_Handler::handle_timeout (
       //  @@ Yah?
 
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "(%P|%t) Push_Handler::handle_timeout()\n");
+        ex._tao_print_exception ("(%P|%t) Push_Handler::handle_timeout()\n");
     }
 
   return 0;

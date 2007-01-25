@@ -32,8 +32,7 @@ TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception");
+      ex._tao_print_exception ("Caught exception");
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Problem during LoadMonitor cleanup "

@@ -105,8 +105,7 @@ Client_Task::narrow_servant (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception caught trying to narrow servant\n");
+      ex._tao_print_exception ("Exception caught trying to narrow servant\n");
       return 0;
     }
   return 1;

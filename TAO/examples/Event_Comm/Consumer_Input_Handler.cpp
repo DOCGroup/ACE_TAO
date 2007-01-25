@@ -58,8 +58,7 @@ Consumer_Input_Handler::close (void)
         }
       catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "Consumer_Input_Handler::handle_close\n");
+          ex._tao_print_exception ("Consumer_Input_Handler::handle_close\n");
         }
     }
 

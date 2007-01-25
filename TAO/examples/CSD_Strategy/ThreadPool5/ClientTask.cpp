@@ -180,8 +180,7 @@ ClientTask::svc()
   }
   catch (const CORBA::Exception& ex)
   {
-     ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception in ClientTask::svc:");
+     ex._tao_print_exception ("Caught exception in ClientTask::svc:");
   }
   catch (...)
   {

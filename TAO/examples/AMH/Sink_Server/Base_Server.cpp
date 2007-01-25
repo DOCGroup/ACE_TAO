@@ -30,8 +30,8 @@ Base_Server::~Base_Server (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception caught while destroying Base_Server \n");
+      ex._tao_print_exception (
+        "Exception caught while destroying Base_Server \n");
     }
 }
 
@@ -129,8 +129,7 @@ Base_Server::start_orb_and_poa (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception raised initialising ORB or POA");
+      ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
     }
 
@@ -154,8 +153,7 @@ Base_Server::register_servant (AMH_Servant *servant)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception raised while registering servant");
+      ex._tao_print_exception ("Exception raised while registering servant");
     }
 }
 
@@ -182,8 +180,8 @@ Base_Server::run_event_loop (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exceptionin Base_Server::run_event_loop");
+      ex._tao_print_exception (
+        "Caught exceptionin Base_Server::run_event_loop");
     }
 }
 

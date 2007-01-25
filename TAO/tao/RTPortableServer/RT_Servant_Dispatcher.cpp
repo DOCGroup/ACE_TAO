@@ -346,10 +346,10 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
       catch ( ::CORBA::Exception& ex)
         {
           // Eat up the exception.
-          ACE_PRINT_EXCEPTION (ex,
-                               "Exception caught: TAO - "
-                               "Priority_Model_Processing::"
-                               "~Priority_Model_Processing");
+          ex._tao_print_exception (
+            "Exception caught: TAO - "
+            "Priority_Model_Processing::"
+            "~Priority_Model_Processing");
         }
     }
 }

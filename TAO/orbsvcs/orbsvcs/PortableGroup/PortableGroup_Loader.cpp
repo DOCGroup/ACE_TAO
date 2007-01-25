@@ -44,8 +44,8 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Unexpected exception caught while initializing the PortableGroup:");
+      ex._tao_print_exception (
+        "Unexpected exception caught while initializing the PortableGroup:");
       return 1;
     }
 

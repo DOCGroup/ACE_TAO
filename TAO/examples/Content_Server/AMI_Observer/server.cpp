@@ -67,8 +67,7 @@ main (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT ("Caught unexpected exception:"));
+      ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }

@@ -139,8 +139,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
   catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "Exception in handle_timeout()\n");
+        ex._tao_print_exception ("Exception in handle_timeout()\n");
 
       return -1;
     }
