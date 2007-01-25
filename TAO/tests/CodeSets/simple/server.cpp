@@ -38,8 +38,7 @@ public:
   // implementation of corba interface
   char * op1 (const char * name,
               const CORBA::Any & inany,
-              CORBA::Any_out outany
-              ACE_ENV_ARG_DECL_NOT_USED)
+              CORBA::Any_out outany)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -59,8 +58,7 @@ public:
     return CORBA::string_dup (name);
   };
 
-  ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::wstring_dup (s1);
@@ -69,7 +67,7 @@ public:
   void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+    this->orb_->shutdown (0);
   };
 
 private:
@@ -84,18 +82,16 @@ private:
 int main(int argc, char *argv[])
 {
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Init the orb
       CORBA::ORB_var orb= CORBA::ORB_init (argc,
                                            argv,
-                                           ""
-                                           ACE_ENV_ARG_PARAMETER);
+                                           "");
 
       // Initialize POA
       CORBA::Object_var poa_object=
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Check POA
       if (CORBA::is_nil (poa_object.in ()))
@@ -107,8 +103,7 @@ int main(int argc, char *argv[])
 
       // Get the ROOT POA
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Get the POA manager
       PortableServer::POAManager_var poa_manager =
@@ -124,8 +119,7 @@ int main(int argc, char *argv[])
       simple_var server = my_impl->_this ();
 
       // Get the IOR for our object
-      CORBA::String_var ior = orb->object_to_string (server.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = orb->object_to_string (server.in ());
 
       FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
@@ -142,17 +136,15 @@ int main(int argc, char *argv[])
       // Wait for calls
       orb->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in server:");
+      ex._tao_print_exception ("Exception caught in server:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

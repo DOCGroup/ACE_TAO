@@ -124,11 +124,9 @@ test_state (base_ptr abs)
 }
 
 void
-test_operation (base_ptr abs
-                ACE_ENV_ARG_DECL)
+test_operation (base_ptr abs)
 {
-  CORBA::String_var retval = abs->base_op ("base_op"
-                                           ACE_ENV_ARG_PARAMETER);
+  CORBA::String_var retval = abs->base_op ("base_op");
 
   if (debug)
     {
@@ -139,11 +137,9 @@ test_operation (base_ptr abs
 
   CORBA::Object_var obj = abs->_to_object ();
 
-  foo_var concrete = foo::_narrow (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+  foo_var concrete = foo::_narrow (obj.in ());
 
-  retval = concrete->foo_op ("foo_op"
-                             ACE_ENV_ARG_PARAMETER);
+  retval = concrete->foo_op ("foo_op");
 
   if (debug)
     {
@@ -152,8 +148,7 @@ test_operation (base_ptr abs
                   retval.in ()));
     }
 
-  retval = concrete->base_op ("base_op"
-                              ACE_ENV_ARG_PARAMETER);
+  retval = concrete->base_op ("base_op");
 
   if (debug)
     {
@@ -164,11 +159,9 @@ test_operation (base_ptr abs
 }
 
 void
-test_exception (base_ptr abs
-                ACE_ENV_ARG_DECL)
+test_exception (base_ptr abs)
 {
-  CORBA::String_var retval = abs->base_op ("bad_name"
-                                           ACE_ENV_ARG_PARAMETER);
+  CORBA::String_var retval = abs->base_op ("bad_name");
 
   if (debug)
     {
@@ -183,12 +176,11 @@ main (int argc, char *argv[])
 {
   CORBA::String_var retval;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       if (parse_args (argc, argv) != 0)
         {
@@ -196,8 +188,7 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior_input_file
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior_input_file);
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -206,8 +197,7 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      passer_var objref = passer::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+      passer_var objref = passer::_narrow (obj.in ());
 
       if (CORBA::is_nil (objref.in ()))
         {
@@ -227,8 +217,7 @@ main (int argc, char *argv[])
                           1);
 
           orb->register_value_factory (bn_factory->tao_repository_id (),
-                                       bn_factory
-                                       ACE_ENV_ARG_PARAMETER);
+                                       bn_factory);
           bn_factory->_remove_ref (); // release ownership
 
           // Create and register factory for TreeController.
@@ -238,8 +227,7 @@ main (int argc, char *argv[])
                           1);
 
           orb->register_value_factory (tc_factory->tao_repository_id (),
-                                       tc_factory
-                                       ACE_ENV_ARG_PARAMETER);
+                                       tc_factory);
           tc_factory->_remove_ref (); // release ownership
 
           // Create and register factory for StringNode.
@@ -249,12 +237,10 @@ main (int argc, char *argv[])
                           1);
 
           orb->register_value_factory (sn_factory->tao_repository_id (),
-                                       sn_factory
-                                       ACE_ENV_ARG_PARAMETER);
+                                       sn_factory);
           sn_factory->_remove_ref (); // release ownership
 
-          objref->pass_state (package.out ()
-                              ACE_ENV_ARG_PARAMETER);
+          objref->pass_state (package.out ());
 
           if (CORBA::is_nil (package.in ()))
             {
@@ -268,8 +254,7 @@ main (int argc, char *argv[])
 
       if (which_test != TEST_STATE)
         {
-          objref->pass_ops (package.out ()
-                            ACE_ENV_ARG_PARAMETER);
+          objref->pass_ops (package.out ());
 
           if (CORBA::is_nil (package.in ()))
             {
@@ -281,25 +266,22 @@ main (int argc, char *argv[])
 
       if (which_test == TEST_OPERATION || which_test == TEST_ALL)
         {
-          test_operation (package.in ()
-                          ACE_ENV_ARG_PARAMETER);
+          test_operation (package.in ());
         }
 
       if (which_test == TEST_EXCEPTION || which_test == TEST_ALL)
         {
           which_test = TEST_EXCEPTION;
-          test_exception (package.in ()
-                          ACE_ENV_ARG_PARAMETER);
+          test_exception (package.in ());
         }
 
       orb->destroy ();
     }
-  ACE_CATCH (BadInput, ex)
+  catch (const BadInput& ex)
     {
       if (which_test != TEST_EXCEPTION)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Client: exception caught - ");
+          ex._tao_print_exception ("Client: exception caught - ");
 
           return 1;
         }
@@ -311,14 +293,12 @@ main (int argc, char *argv[])
                       ex.message.in ()));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client: exception caught - ");
+      ex._tao_print_exception ("Client: exception caught - ");
 
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

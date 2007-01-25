@@ -41,7 +41,7 @@ public:
     CORBA::Long a,
     CORBA::Long_out b,
     CORBA::Long &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException ) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestLong\n") );
@@ -68,7 +68,7 @@ public:
     const char *a,
     CORBA::String_out b,
     char *&c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestString\n") );
@@ -115,7 +115,7 @@ public:
     const Test::MyNonVarStruct &a,
     Test::MyNonVarStruct_out b,
     Test::MyNonVarStruct &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     Test::MyNonVarStruct
@@ -153,7 +153,7 @@ public:
     const Test::MyVarStruct &a,
     Test::MyVarStruct_out b,
     Test::MyVarStruct &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC(( CORBA::SystemException ))
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n") );
@@ -217,7 +217,7 @@ public:
     const Test::MyNonVarUnion &a,
     Test::MyNonVarUnion_out b,
     Test::MyNonVarUnion &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     Test::MyNonVarUnion
@@ -265,7 +265,7 @@ public:
     const Test::MyVarUnion &a,
     Test::MyVarUnion_out b,
     Test::MyVarUnion &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC (( CORBA::SystemException ))
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarUnion\n") );
@@ -315,7 +315,7 @@ public:
     const Test::MySeqOfLong &a,
     Test::MySeqOfLong_out b,
     Test::MySeqOfLong &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestSeqOfLong\n") );
@@ -366,7 +366,7 @@ public:
     const CORBA::Any &a,
     CORBA::Any_out b,
     CORBA::Any &c
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestAny\n") );
@@ -420,11 +420,11 @@ public:
   //-----------------------------------------------------------
 
   void ShutdownServer(
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in ShutdownServer\n") );
-    orb->shutdown(0 ACE_ENV_ARG_PARAMETER);
+    orb->shutdown(0);
   }
 };
 
@@ -434,20 +434,20 @@ public:
 class AnInterceptor : public PortableInterceptor::ServerRequestInterceptor
 {
 public:
-  char *name( ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+  char *name( )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     return const_cast<char *>("");
   }
 
-  void destroy( ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+  void destroy( )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -597,13 +597,13 @@ public:
 
   void receive_request(
     PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
     ACE_DEBUG( (LM_INFO, "AnInterceptor::receive_request\n") );
     Dynamic::ParameterList
-      *pArgs= ri->arguments( ACE_ENV_SINGLE_ARG_PARAMETER );
+      *pArgs= ri->arguments( );
     display_arg_list( pArgs );
   }
 
@@ -614,23 +614,23 @@ public:
   // be premiturely deleted before being sent back to the client.
   void send_reply(
     PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, "AnInterceptor::send_reply\n") );
     Dynamic::ParameterList
-      *pArgs= ri->arguments( ACE_ENV_SINGLE_ARG_PARAMETER );
+      *pArgs= ri->arguments( );
     display_arg_list( pArgs );
     ACE_DEBUG( (LM_INFO, "  result is an ") );
     CORBA::Any
-      *pAny= ri->result( ACE_ENV_SINGLE_ARG_PARAMETER );
+      *pAny= ri->result( );
     display_any( CORBA::Any_var( pAny ).in() );
     ACE_DEBUG( (LM_INFO, "\n") );
   }
 
   void send_exception(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED  )
+  )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -638,7 +638,7 @@ public:
 
   void send_other(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -655,14 +655,14 @@ public:
 
   void pre_init(
     PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED )
+ )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void post_init(
      PortableInterceptor::ORBInitInfo_ptr info
-     ACE_ENV_ARG_DECL_NOT_USED )
+ )
      ACE_THROW_SPEC( (CORBA::SystemException) )
    {
      info->add_server_request_interceptor( interceptor_ );
@@ -674,7 +674,7 @@ private:
 
 int main( int argc, char *argv[] )
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     ACE_DEBUG( (LM_INFO, "Server start\n") );
     AnInterceptor
@@ -686,48 +686,47 @@ int main( int argc, char *argv[] )
       initialiser= initialiser_p;
     PortableInterceptor::register_orb_initializer( initialiser.in() );
 
-    orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
+    orb= CORBA::ORB_init( argc, argv, 0 );
     CORBA::Object_var
-      Object = orb->resolve_initial_references( "RootPOA" ACE_ENV_ARG_PARAMETER );
+      Object = orb->resolve_initial_references( "RootPOA" );
     PortableServer::POA_var rootPOA=
-      PortableServer::POA::_narrow( Object.in() ACE_ENV_ARG_PARAMETER );
+      PortableServer::POA::_narrow( Object.in() );
     PortableServer::POAManager_var
-      rootPOAMgr = rootPOA->the_POAManager( ACE_ENV_SINGLE_ARG_PARAMETER );
+      rootPOAMgr = rootPOA->the_POAManager( );
 
     FooImpl
       phooey;
     PortableServer::ObjectId_var
-      phooeyId= rootPOA->activate_object( &phooey ACE_ENV_ARG_PARAMETER );
+      phooeyId= rootPOA->activate_object( &phooey );
     CORBA::Object_var
-      phooeyObj= rootPOA->id_to_reference( phooeyId.in() ACE_ENV_ARG_PARAMETER );
+      phooeyObj= rootPOA->id_to_reference( phooeyId.in() );
     CORBA::String_var
-      stringifiedObj= orb->object_to_string( phooeyObj.in() ACE_ENV_ARG_PARAMETER );
+      stringifiedObj= orb->object_to_string( phooeyObj.in() );
     ofstream file( "server.ior" );
     file << stringifiedObj;
     file.close();
 
-    rootPOAMgr->activate( ACE_ENV_SINGLE_ARG_PARAMETER );
+    rootPOAMgr->activate( );
 
-    orb->run( 0 ACE_ENV_ARG_PARAMETER );
+    orb->run( 0 );
 
-    orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
+    orb->destroy( );
   }
-  ACE_CATCH( CORBA::SystemException, exception )
+  catch (const CORBA::SystemException& exception)
   {
-    ACE_PRINT_EXCEPTION( exception, "CORBA::SystemException: " );
+    exception._tao_print_exception ("CORBA::SystemException: ");
     return -1;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION( ACE_ANY_EXCEPTION, "CORBA::Exception: " );
+    ex._tao_print_exception ("CORBA::Exception: ");
     return -1;
   }
-  ACE_CATCHALL
+  catch (...)
   {
     ACE_DEBUG( (LM_ERROR, "Unexpected general exception.\n") );
     return -1;
   }
-  ACE_ENDTRY;
 
   ACE_DEBUG( (LM_INFO, "Server stopped\n") );
   return 0;

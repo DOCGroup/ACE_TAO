@@ -110,9 +110,8 @@ public:
 
   int svc (void)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
-      ACE_TRY
+      try
         {
           u_long work_from_this_thread = 0;
           ACE_Time_Value sleep_for_this_thread;
@@ -135,8 +134,7 @@ public:
                       "Client: Invoking server from thread %t for time %d @ %T\n",
                       work_from_this_thread));
 
-          CORBA::ULong result = this->test_->method (work_from_this_thread
-                                                     ACE_ENV_ARG_PARAMETER);
+          CORBA::ULong result = this->test_->method (work_from_this_thread);
 
           if (work_from_this_thread != result)
             {
@@ -147,13 +145,11 @@ public:
 
           ACE_DEBUG ((LM_DEBUG, "Client: client loop finished for thread %t @ %T\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught in thread:");
+          ex._tao_print_exception ("Exception caught in thread:");
           return -1;
         }
-      ACE_ENDTRY;
 
 
       return 0;
@@ -184,9 +180,8 @@ public:
 
   int svc (void)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
-      ACE_TRY
+      try
         {
           u_long event_loop_timeout_for_this_thread = 0;
 
@@ -204,17 +199,15 @@ public:
           ACE_Time_Value timeout (0,
                                   event_loop_timeout_for_this_thread * 1000);
 
-          this->orb_->run (timeout ACE_ENV_ARG_PARAMETER);
+          this->orb_->run (timeout);
 
           ACE_DEBUG ((LM_DEBUG, "Client: Event loop finished for thread %t @ %T\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught in thread:");
+          ex._tao_print_exception ("Exception caught in thread:");
           return -1;
         }
-      ACE_ENDTRY;
 
 
       return 0;
@@ -234,16 +227,14 @@ private:
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -252,11 +243,10 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (IOR);
 
       // Try to narrow the object reference to a <server> reference.
-      test_var server = test::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+      test_var server = test::_narrow (object.in ());
 
       Client_Task client_task (server.in ());
 
@@ -289,13 +279,11 @@ main (int argc, char **argv)
           server->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

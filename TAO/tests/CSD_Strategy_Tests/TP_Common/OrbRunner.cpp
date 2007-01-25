@@ -42,7 +42,7 @@ OrbRunner::run(void)
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to open the OrbTask.\n"));
-          ACE_THROW(TestAppException());
+          throw TestAppException();
         }
 
       // This will use the current (mainline) thread to run the ORB event loop.

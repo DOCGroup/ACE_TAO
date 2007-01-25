@@ -51,8 +51,7 @@ Callback_i::~Callback_i (void)
 
 void
 Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
-                        CORBA::Boolean last_chunk
-                        ACE_ENV_ARG_DECL)
+                        CORBA::Boolean last_chunk)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!last_chunk)
@@ -108,8 +107,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
 void
 Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       {
         ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -135,13 +133,12 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
           (void) this->spawn_viewer ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            ACE_TEXT ("Caught unexpected exception ")
                            ACE_TEXT ("in Callback_i::metdata(...):"));
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -283,9 +280,8 @@ Callback_i::deactivate (void)
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 }

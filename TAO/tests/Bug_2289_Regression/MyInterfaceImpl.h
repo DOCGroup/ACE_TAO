@@ -9,11 +9,11 @@ class MyInterfaceImpl
 {
   public:
   MyInterfaceImpl (CORBA::ORB_ptr orb);
-  
+
   static const char* my_string;
 
   // = The skeleton methods
-  virtual CORBA::Boolean myMethod (const char* stringParam ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean myMethod (const char* stringParam)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

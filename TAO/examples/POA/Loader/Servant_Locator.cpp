@@ -20,8 +20,8 @@
 #include "Servant_Locator.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Loader, 
-           Servant_Locator, 
+ACE_RCSID (Loader,
+           Servant_Locator,
            "$Id$")
 
 // Initialization.The dllname is used by the Loactor to load it into
@@ -69,8 +69,7 @@ PortableServer::Servant
 ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                            PortableServer::POA_ptr poa,
                            const char * /* operation */,
-                           PortableServer::ServantLocator::Cookie &cookie
-                           ACE_ENV_ARG_DECL)
+                           PortableServer::ServantLocator::Cookie &cookie)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -100,8 +99,7 @@ ServantLocator::postinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr poa ,
                             const char * /* operation */,
                             PortableServer::ServantLocator::Cookie cookie,
-                            PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL_NOT_USED)
+                            PortableServer::Servant servant)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

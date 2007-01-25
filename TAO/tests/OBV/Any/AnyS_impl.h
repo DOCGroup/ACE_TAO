@@ -32,8 +32,7 @@ public:
   // ctor
 
   virtual CORBA::Any * get_something (
-      CORBA::Boolean need_vb
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::Boolean need_vb)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual OBV_AnyTest::VB * get_vb (void)

@@ -12,8 +12,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::method (CORBA::ULong request_number,
-                const test::data &
-                ACE_ENV_ARG_DECL_NOT_USED)
+                const test::data &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -33,6 +32,5 @@ test_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shudown... "));
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

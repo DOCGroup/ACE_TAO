@@ -51,8 +51,7 @@ parse_args (int argc, char *argv[])
 
 
 void
-run_test (Test_Interceptors::Secure_Vault_ptr server
-          ACE_ENV_ARG_DECL)
+run_test (Test_Interceptors::Secure_Vault_ptr server)
 {
   int i = 0;
   const char user[] = "root";
@@ -86,7 +85,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server
 
   marker.dump_stats ("Ready method  ", gsf, 1);
 
-  ACE_TRY
+  try
     {
       marker.accumulate_into (throughput, 2);
       throughput_base = ACE_OS::gethrtime ();
@@ -96,7 +95,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server
           // Record current time.
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-          server->authenticate (user ACE_ENV_ARG_PARAMETER);
+          server->authenticate (user);
 
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -111,11 +110,10 @@ run_test (Test_Interceptors::Secure_Vault_ptr server
         }
       marker.dump_stats ("Authenticate method  ", gsf, 2);
     }
-  ACE_CATCH (Test_Interceptors::Invalid, userex)
+  catch (const Test_Interceptors::Invalid& userex)
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid user\n"));
     }
-  ACE_ENDTRY;
 
   Test_Interceptors::Secure_Vault::Record record;
   record.check_num = 1;
@@ -131,8 +129,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
       server->update_records (id,
-                              record
-                              ACE_ENV_ARG_PARAMETER);
+                              record);
 
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -177,7 +174,7 @@ main (int argc, char *argv[])
   int interceptor_type;
   get_interceptor_type (argc, argv, interceptor_type);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer;
 
@@ -187,21 +184,19 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Test_Interceptors::Secure_Vault_var server =
-        Test_Interceptors::Secure_Vault::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        Test_Interceptors::Secure_Vault::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -216,17 +211,15 @@ main (int argc, char *argv[])
       // This test is useful for  benchmarking the differences when
       // the same method is intercepted by different interceptors
       // wanting to achieve different functionality.
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      run_test (server.in ());
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
      return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

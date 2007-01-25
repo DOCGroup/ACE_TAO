@@ -69,8 +69,7 @@ public:
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr adapter,
                                              const char *operation,
-                                             PortableServer::ServantLocator::Cookie &the_cookie
-                                             ACE_ENV_ARG_DECL)
+                                             PortableServer::ServantLocator::Cookie &the_cookie)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
   // This method is invoked by a POA whenever it receives a request
@@ -87,8 +86,7 @@ public:
                            PortableServer::POA_ptr adapter,
                            const char *operation,
                            PortableServer::ServantLocator::Cookie the_cookie,
-                           PortableServer::Servant the_servant
-                           ACE_ENV_ARG_DECL)
+                           PortableServer::Servant the_servant)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This method is invoked whenever a test servant completes a
   // request. As the Servant Loactor interface is used when the POA

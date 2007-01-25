@@ -3,8 +3,7 @@
 #include "Smart_Proxy_Impl.h"
 
 Test_ptr
-Test_Smart_Factory::create_proxy (Test_ptr proxy
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+Test_Smart_Factory::create_proxy (Test_ptr proxy)
 {
   // creat Smart_Proxy
   ACE_DEBUG ((LM_DEBUG,

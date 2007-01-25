@@ -17,8 +17,7 @@ class Echo
 public:
   Echo(CORBA::ORB_ptr orb);
 
-  virtual char * echo_operation(char const * the_input
-                      ACE_ENV_ARG_DECL)
+  virtual char * echo_operation(char const * the_input)
     ACE_THROW_SPEC((CORBA::SystemException));
   virtual void shutdown(void)
     ACE_THROW_SPEC((CORBA::SystemException));

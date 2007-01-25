@@ -141,7 +141,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (ex, "CORBANAME_Parser");
+          ex._tao_print_exception ("CORBANAME_Parser");
         }
     }
 

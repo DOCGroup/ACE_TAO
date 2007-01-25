@@ -43,8 +43,7 @@ Logger_Server::parse_args (void)
 
 int
 Logger_Server::init (int argc,
-                     char *argv[]
-                     ACE_ENV_ARG_DECL)
+                     char *argv[])
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -53,8 +52,7 @@ Logger_Server::init (int argc,
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -73,8 +71,7 @@ Logger_Server::init (int argc,
   // Activate the logger_factory.
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
-                                                 &this->factory_impl_
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 &this->factory_impl_);
     if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The IOR is: <%s>\n",
@@ -96,7 +93,7 @@ Logger_Server::init (int argc,
 // and logger_factory object.
 
 int
-Logger_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
+Logger_Server::init_naming_service ( ACE_ENV_SINGLE_ARG_PARAMETER)
 {
   // Get pointers to the ORB and child POA
   CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -113,8 +110,7 @@ Logger_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SIN
   factory_name.length (1);
   factory_name[0].id = CORBA::string_dup ("Logger_Factory");
   this->my_name_server_->bind (factory_name,
-                               factory.in ()
-                               ACE_ENV_ARG_PARAMETER);
+                               factory.in ());
 
   return 0;
 }

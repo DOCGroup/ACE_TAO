@@ -22,10 +22,10 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ClientApp::run_i(int argc, char* argv[])
 {
   // Initialize the ORB before parsing our own args.
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Returns -1 if problems are encountered.
@@ -38,8 +38,7 @@ ClientApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
   // Convert the IOR string to a Foo_A object reference.
   Foo_A_var foo = RefHelper<Foo_A>::string_to_ref(orb.in(),
-                                                  this->ior_.c_str()
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  this->ior_.c_str());
 
   // Create the appropriate client "engine" object.
   Foo_A_ClientEngine engine(foo.in());

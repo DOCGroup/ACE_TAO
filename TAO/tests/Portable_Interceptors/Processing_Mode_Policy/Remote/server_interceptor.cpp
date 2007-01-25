@@ -39,8 +39,7 @@ Echo_Server_Request_Interceptor::destroy (void)
 
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -48,8 +47,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
 void
 Echo_Server_Request_Interceptor::receive_request (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -90,8 +88,7 @@ Echo_Server_Request_Interceptor::receive_request (
 
 void
 Echo_Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++server_interceptor_check_;
@@ -141,8 +138,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
 void
 Echo_Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -163,7 +159,7 @@ Echo_Server_Request_Interceptor::send_exception (
       ACE_DEBUG ((LM_DEBUG,
                   "No TypeCode information available; perhaps the user IDL\n"
                   "  has been compiled with TAO_IDL \"-St -Sa\" options?\n"));
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      throw CORBA::NO_IMPLEMENT ();
     }
 
   ++server_interceptor_check_;
@@ -177,8 +173,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
 void
 Echo_Server_Request_Interceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

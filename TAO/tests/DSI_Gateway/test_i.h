@@ -34,14 +34,13 @@ public:
   CORBA::Long test_method (CORBA::Long x,
                            const Structure& the_in_structure,
                            Structure_out the_out_structure,
-                           char *&name
-                           ACE_ENV_ARG_DECL_NOT_USED)
+                           char *&name)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
    CORBA::Long test_val (void)
      ACE_THROW_SPEC (( CORBA::SystemException));
 
-   void test_val (CORBA::Long test_val ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+   void test_val (CORBA::Long test_val)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
   void raise_user_exception (void)

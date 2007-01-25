@@ -51,8 +51,7 @@ public:
   // The channel is disconnecting.
 
   // = (not protected to allow short-circuiting) protected:
-  virtual void push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void push (const RtecEventComm::EventSet &events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // If the <events>[0] is a notification, prints out the data from
   // the supplier.  If its a shutdown message, the consumer

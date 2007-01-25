@@ -66,8 +66,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO server-side ORB initialization code.
   // -----------------------------------------------------------------
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Add one to the new argc since "dummy" is being added to the
       // argv vector.
@@ -90,14 +89,13 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
-                                    "SERVER"
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "SERVER");
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -105,7 +103,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                           1);
 
       this->poa_ =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       this->poa_manager_ = this->poa_->the_POAManager ();
 
@@ -117,7 +115,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj = this->servant_._this ();
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Servant:\n<%s>\n",
@@ -136,13 +134,11 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 
       this->servant_.orb (this->orb_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Server_Module::init"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::init"));
       return -1;
     }
-  ACE_ENDTRY;
 
 #if defined (ACE_HAS_THREADS)
 
@@ -180,8 +176,7 @@ Test_Server_Module::fini (void)
 int
 Test_Server_Module::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Run the ORB event loop in its own thread.
       this->orb_->run ();
@@ -203,13 +198,11 @@ Test_Server_Module::svc (void)
           this->orb_->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Server_Module::svc"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::svc"));
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -47,13 +47,13 @@ main (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG, "Starting server\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,7 +61,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -79,7 +79,7 @@ main (int argc, char *argv[])
         payload_receiver_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (payload_receiver.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (payload_receiver.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -106,7 +106,7 @@ main (int argc, char *argv[])
         int prev_count = count;
         int sn_prev_count = sn_count;
         ACE_Time_Value tv(0, 100 * 1000);
-        orb->run (tv ACE_ENV_ARG_PARAMETER);
+        orb->run (tv);
         count = payload_receiver_impl->count();
         sn_count = payload_receiver_impl->count(true);
         if ((count < expected && count == prev_count) ||
@@ -148,17 +148,16 @@ main (int argc, char *argv[])
                   count, expected, payload_receiver_impl->count(true),
                   runtime.sec(), runtime.usec()));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
 
       return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Ending server\n"));
 

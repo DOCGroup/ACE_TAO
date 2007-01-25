@@ -35,15 +35,15 @@ const char *ior_output_file = "test.ior";
 
 int main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "ORB_Test_Server" ACE_ENV_ARG_PARAMETER);
+                         "ORB_Test_Server");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -51,21 +51,21 @@ int main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       Simple_Server_i server_impl (orb.in ());
 
-      PortableServer::ObjectId_var oidServer = root_poa->activate_object (&server_impl ACE_ENV_ARG_PARAMETER);
+      PortableServer::ObjectId_var oidServer = root_poa->activate_object (&server_impl);
 
-      CORBA::Object_var objOne = root_poa->id_to_reference (oidServer.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var objOne = root_poa->id_to_reference (oidServer.in ());
 
-      Simple_Server_var server = Simple_Server::_narrow (objOne.in () ACE_ENV_ARG_PARAMETER);
+      Simple_Server_var server = Simple_Server::_narrow (objOne.in ());
 
       CORBA::String_var ior =
-              orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+              orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -88,17 +88,16 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

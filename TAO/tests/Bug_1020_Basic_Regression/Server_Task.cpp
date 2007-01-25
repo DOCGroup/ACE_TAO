@@ -20,22 +20,19 @@ Server_Task::svc (void)
   Test::Payload payload (32768);
   payload.length (32768);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Send messages till the remote guy crashes
       for (;;)
         {
-          this->echo_->echo_payload (payload
-                                     ACE_ENV_ARG_PARAMETER);
+          this->echo_->echo_payload (payload);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_NOTREACHED (return 0);
 }

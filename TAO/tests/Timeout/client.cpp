@@ -57,16 +57,15 @@ static int in_time_count[4] = {0, 0, 0, 0};
 void
 send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
            Simple_Server_ptr server,
-           CORBA::Long t
-           ACE_ENV_ARG_DECL)
+           CORBA::Long t)
 {
-  ACE_TRY
+  try
     {
-      server->echo (0, t ACE_ENV_ARG_PARAMETER);
+      server->echo (0, t);
 
       in_time_count[ctype]++;
     }
-  ACE_CATCH (CORBA::TIMEOUT, timeout)
+  catch (const CORBA::TIMEOUT& )
     {
       timeout_count[ctype]++;
 
@@ -81,27 +80,26 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
       // This is a non-standard TAO call that's used to give the
       // client ORB a chance to cleanup the reply that's come back
       // from the server.
-      orb->run (tv ACE_ENV_ARG_PARAMETER);
+      orb->run (tv);
     }
-  ACE_ENDTRY;
 }
 
 
 int main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -112,18 +110,16 @@ int main (int argc, char* argv[])
         }
 
       object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        orb->resolve_initial_references ("PolicyCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       TimeBase::TimeT mid_value =
         10000 * (min_timeout + max_timeout) / 2; // convert from msec to "TimeT" (0.1 usec units)
@@ -139,15 +135,13 @@ int main (int argc, char* argv[])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                            any_object
-                            ACE_ENV_ARG_PARAMETER);
+                            any_object);
       object =
         server->_set_policy_overrides (policy_list,
-                                       CORBA::SET_OVERRIDE
-                                       ACE_ENV_ARG_PARAMETER);
+                                       CORBA::SET_OVERRIDE);
 
       Simple_Server_var timeout_server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in ());
 
       policy_list[0]->destroy ();
       policy_list[0] = CORBA::Policy::_nil ();
@@ -167,13 +161,11 @@ int main (int argc, char* argv[])
 
           policy_list.length (0);
           policy_manager->set_policy_overrides (policy_list,
-                                                CORBA::SET_OVERRIDE
-                                                ACE_ENV_ARG_PARAMETER);
+                                                CORBA::SET_OVERRIDE);
           policy_current->set_policy_overrides (policy_list,
-                                                CORBA::SET_OVERRIDE
-                                                ACE_ENV_ARG_PARAMETER);
+                                                CORBA::SET_OVERRIDE);
 
-          send_echo (none, orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (none, orb.in (), server.in (), t);
 
 
 
@@ -184,14 +176,12 @@ int main (int argc, char* argv[])
           policy_list.length (1);
           policy_list[0] =
             orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                any_orb
-                                ACE_ENV_ARG_PARAMETER);
+                                any_orb);
 
           policy_manager->set_policy_overrides (policy_list,
-                                                CORBA::SET_OVERRIDE
-                                                ACE_ENV_ARG_PARAMETER);
+                                                CORBA::SET_OVERRIDE);
 
-          send_echo (orb1, orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (orb1, orb.in (), server.in (), t);
 
           policy_list[0]->destroy ();
 
@@ -207,14 +197,12 @@ int main (int argc, char* argv[])
           policy_list.length (1);
           policy_list[0] =
             orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                any_thread
-                                ACE_ENV_ARG_PARAMETER);
+                                any_thread);
 
           policy_current->set_policy_overrides (policy_list,
-                                                CORBA::SET_OVERRIDE
-                                                ACE_ENV_ARG_PARAMETER);
+                                                CORBA::SET_OVERRIDE);
 
-          send_echo (thread1, orb.in (), server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (thread1, orb.in (), server.in (), t);
 
           policy_list[0]->destroy ();
 
@@ -226,7 +214,7 @@ int main (int argc, char* argv[])
 
           ACE_DEBUG ((LM_DEBUG,
                       "client(%P) Use the object policies\n"));
-          send_echo (object1, orb.in (), timeout_server.in (), t ACE_ENV_ARG_PARAMETER);
+          send_echo (object1, orb.in (), timeout_server.in (), t);
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -234,13 +222,11 @@ int main (int argc, char* argv[])
                   "resynch with server\n"));
       policy_list.length (0);
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::SET_OVERRIDE);
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::SET_OVERRIDE);
 
-      send_echo (none, orb.in (), server.in (), 0 ACE_ENV_ARG_PARAMETER);
+      send_echo (none, orb.in (), server.in (), 0);
 
       server->shutdown ();
 
@@ -267,11 +253,10 @@ int main (int argc, char* argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

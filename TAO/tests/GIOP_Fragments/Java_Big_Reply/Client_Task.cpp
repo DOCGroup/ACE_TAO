@@ -21,10 +21,9 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Now get the big replies..
-  ACE_TRY
+  try
     {
       for (int i = 0; i != this->event_count_; ++i)
         {
@@ -46,13 +45,11 @@ Client_Task::svc (void)
 //          ACE_OS::sleep(tv);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception Caught \n");
+      ex._tao_print_exception ("Exception Caught \n");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;

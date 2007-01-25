@@ -23,20 +23,17 @@ DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc (void)
 }
 
 DatabaseImpl::Entry::Entry (CORBA::ORB_ptr orb,
-                            PortableServer::POA_ptr poa
-                            ACE_ENV_ARG_DECL)
+                            PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
   // Get the POA Current object reference
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("POACurrent"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("POACurrent");
 
   // Narrow the object reference to a POA Current reference
   this->poa_current_ =
-    PortableServer::Current::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+    PortableServer::Current::_narrow (obj.in ());
 }
 
 DatabaseImpl::Entry::~Entry (void)
@@ -44,8 +41,7 @@ DatabaseImpl::Entry::~Entry (void)
 }
 
 void
-DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request
-                             ACE_ENV_ARG_DECL)
+DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request)
 {
   // The servant determines the key associated with the database
   // entry represented by self.
@@ -63,15 +59,14 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request
   if (ACE_OS::strcmp (operation,
                       "_is_a") == 0)
     {
-      this->is_a (request ACE_ENV_ARG_PARAMETER);
+      this->is_a (request);
     }
   else
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
-                           ACE_ENV_ARG_DECL)
+DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request)
 {
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
@@ -81,14 +76,11 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
 
   list->add_value ("value",
                    any_1,
-                   CORBA::ARG_IN
-                   ACE_ENV_ARG_PARAMETER);
+                   CORBA::ARG_IN);
 
-  request->arguments (list
-                      ACE_ENV_ARG_PARAMETER);
+  request->arguments (list);
 
-  CORBA::NamedValue_ptr nv = list->item (0
-                                         ACE_ENV_ARG_PARAMETER);
+  CORBA::NamedValue_ptr nv = list->item (0);
 
   CORBA::Any_ptr ap = nv->value ();
   const char *value;
@@ -109,13 +101,12 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
   CORBA::Any::from_boolean from_boolean (result);
   result_any <<= from_boolean;
 
-  request->set_result (result_any ACE_ENV_ARG_PARAMETER);
+  request->set_result (result_any);
 }
 
 CORBA::RepositoryId
 DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/,
-                                         PortableServer::POA_ptr
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+                                         PortableServer::POA_ptr)
 {
   return 0;
 }
@@ -127,17 +118,14 @@ DatabaseImpl::Entry::_default_POA (void)
 }
 
 DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
-                            PortableServer::POA_ptr poa
-                            ACE_ENV_ARG_DECL)
+                            PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     common_servant_ (orb,
-                     poa
-                     ACE_ENV_ARG_PARAMETER)
+                     poa)
 {
 
-  this->poa_->set_servant (&this->common_servant_
-                           ACE_ENV_ARG_PARAMETER);
+  this->poa_->set_servant (&this->common_servant_);
 }
 
 DatabaseImpl::Agent::~Agent (void)
@@ -147,8 +135,7 @@ DatabaseImpl::Agent::~Agent (void)
 Database::Entry_ptr
 DatabaseImpl::Agent::create_entry (const char *key,
                                    const char *entry_type,
-                                   const Database::NVPairSequence &initial_attributes
-                                   ACE_ENV_ARG_DECL)
+                                   const Database::NVPairSequence &initial_attributes)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Database::Unknown_Type,
                    Database::Duplicate_Key))
@@ -202,19 +189,16 @@ DatabaseImpl::Agent::create_entry (const char *key,
 
   CORBA::Object_var obj =
     this->poa_->create_reference_with_id (obj_id.in (),
-                                          repository_id.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                          repository_id.in ());
 
-  Database::Entry_var entry = Database::Entry::_narrow (obj.in ()
-                                                        ACE_ENV_ARG_PARAMETER);
+  Database::Entry_var entry = Database::Entry::_narrow (obj.in ());
 
   return entry._retn ();
 }
 
 Database::Entry_ptr
 DatabaseImpl::Agent::find_entry (const char *key,
-                                 const char *entry_type
-                                 ACE_ENV_ARG_DECL)
+                                 const char *entry_type)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Database::Unknown_Type,
                    Database::Not_Found))
@@ -245,11 +229,9 @@ DatabaseImpl::Agent::find_entry (const char *key,
         DatabaseImpl::entry_type_to_repository_id ("Entry");
       CORBA::Object_var obj =
         this->poa_->create_reference_with_id (obj_id.in (),
-                                              repository_id.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+                                              repository_id.in ());
 
-      entry = Database::Entry::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+      entry = Database::Entry::_narrow (obj.in ());
     }
   else
     {
@@ -266,14 +248,13 @@ DatabaseImpl::Agent::find_entry (const char *key,
 
 void
 DatabaseImpl::Agent::destroy_entry (const char *key,
-                                    const char *entry_type
-                                    ACE_ENV_ARG_DECL)
+                                    const char *entry_type)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Database::Unknown_Type,
                    Database::Unknown_Key))
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
-    ACE_THROW (Database::Unknown_Type ());
+    throw Database::Unknown_Type ();
 
   void *temp;
   if (DATABASE::instance ()->unbind (key, temp) == 0)
@@ -295,7 +276,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
                   "Employee with key = %s not found\n",
                   key));
 
-      ACE_THROW (Database::Unknown_Key ());
+      throw Database::Unknown_Key ();
     }
 }
 

@@ -61,51 +61,41 @@ Activity::current (void)
 }
 
 int
-Activity::init (int& argc, char *argv []
-                ACE_ENV_ARG_DECL)
+Activity::init (int& argc, char *argv [])
 {
   // Copy command line parameter.
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
                                 command_line.get_ASCII_argv(),
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
+                                "");
 
   CORBA::Object_var object =
-    orb_->resolve_initial_references ("RootPOA"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("RootPOA");
 
   root_poa_ =
-    PortableServer::POA::_narrow (object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (object.in ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa_->the_POAManager ();
 
   object =
-    orb_->resolve_initial_references ("RTORB"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("RTORB");
 
   this->rt_orb_ =
-    RTCORBA::RTORB::_narrow (object.in ()
-                             ACE_ENV_ARG_PARAMETER);
+    RTCORBA::RTORB::_narrow (object.in ());
 
   object =
-    orb_->resolve_initial_references ("RTCurrent"
-                                      ACE_ENV_ARG_PARAMETER);
+    orb_->resolve_initial_references ("RTCurrent");
 
   current_ =
-    RTCORBA::Current::_narrow (object.in ()
-                               ACE_ENV_ARG_PARAMETER);
+    RTCORBA::Current::_narrow (object.in ());
 
   poa_manager->activate ();
 
-  object = this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                   ACE_ENV_ARG_PARAMETER);
+  object = this->orb_->resolve_initial_references ("PriorityMappingManager");
   RTCORBA::PriorityMappingManager_var mapping_manager =
-    RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+    RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
   this->priority_mapping_ = mapping_manager->mapping ();
 
@@ -116,8 +106,7 @@ int
 Activity::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -126,8 +115,7 @@ Activity::resolve_naming_service (void)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
   //@@tmp hack, otherwise crashes on exit!..??
   CosNaming::NamingContextExt::_duplicate (this->naming_.in());
@@ -142,8 +130,7 @@ Activity::activate_poa_list (void)
 
   for (int i = 0; i < count; ++i)
     {
-      list[i]->activate (this->rt_orb_.in(), this->root_poa_.in ()
-                         ACE_ENV_ARG_PARAMETER);
+      list[i]->activate (this->rt_orb_.in(), this->root_poa_.in ());
     }
 }
 
@@ -163,34 +150,28 @@ Activity::activate_job_list (void)
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa_->find_POA (job->poa ().c_str (), 0
-                             ACE_ENV_ARG_PARAMETER);
+        root_poa_->find_POA (job->poa ().c_str (), 0);
 
       PortableServer::ServantBase_var servant_var (job);
 
       // Register with poa.
       PortableServer::ObjectId_var id;
 
-      id = host_poa->activate_object (job
-                                      ACE_ENV_ARG_PARAMETER);
+      id = host_poa->activate_object (job);
 
       CORBA::Object_var server =
-        host_poa->id_to_reference (id.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        host_poa->id_to_reference (id.in ());
 
       CORBA::String_var ior =
-        orb_->object_to_string (server.in ()
-                                ACE_ENV_ARG_PARAMETER);
+        orb_->object_to_string (server.in ());
 
       const ACE_CString &job_name = job->name ();
 
       CosNaming::Name_var name =
-        this->naming_->to_name (job_name.c_str ()
-                                ACE_ENV_ARG_PARAMETER);
+        this->naming_->to_name (job_name.c_str ());
 
       this->naming_->rebind (name.in (),
-                             server.in ()
-                             ACE_ENV_ARG_PARAMETER);
+                             server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Registered %s with the naming service\n",
@@ -225,21 +206,19 @@ Activity::activate_schedule (void)
       name[0].id = CORBA::string_dup (task->job ());
 
       CORBA::Object_var obj =
-        this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
+        this->naming_->resolve (name);
 
-      Job_var job = Job::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      Job_var job = Job::_narrow (obj.in ());
 
       if (TAO_debug_level > 0)
         {
           // Check that the object is configured with some
           // PriorityModelPolicy.
           CORBA::Policy_var policy =
-            job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                              ACE_ENV_ARG_PARAMETER);
+            job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
           RTCORBA::PriorityModelPolicy_var priority_policy =
-            RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+            RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
           if (CORBA::is_nil (priority_policy.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -320,17 +299,15 @@ Activity::check_ifexit (void)
 }
 
 CORBA::Short
-Activity::get_server_priority (CORBA::Object_ptr server
-                               ACE_ENV_ARG_DECL)
+Activity::get_server_priority (CORBA::Object_ptr server)
 {
   // Get the Priority Model Policy from the stub.
   CORBA::Policy_var policy =
-    server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                         ACE_ENV_ARG_PARAMETER);
+    server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
   // Narrow down to correct type.
   RTCORBA::PriorityModelPolicy_var priority_policy =
-    RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
+    RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
   // Make sure that we have the SERVER_DECLARED priority model.
   RTCORBA::PriorityModel priority_model =
@@ -343,9 +320,9 @@ Activity::get_server_priority (CORBA::Object_ptr server
 }
 
 void
-Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
+Activity::run (int argc, char *argv[])
 {
-  this->init (argc, argv ACE_ENV_ARG_PARAMETER);
+  this->init (argc, argv);
 
   if (this->resolve_naming_service () == -1)
     return;
@@ -406,17 +383,16 @@ main (int argc, char *argv[])
   ACE_Timer_Heap timer_queue;
   ACE_Reactor::instance ()->timer_queue (&timer_queue);
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ACTIVITY::instance()->run (argc, argv ACE_ENV_ARG_PARAMETER);
+      ACTIVITY::instance()->run (argc, argv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

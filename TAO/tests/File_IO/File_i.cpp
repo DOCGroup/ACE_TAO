@@ -27,9 +27,8 @@ FileImpl::System::System (PortableServer::POA_ptr poa)
     // Create the Default Descriptor Servant
     fd_servant_ (poa)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   // set the default servant of the POA
-  poa->set_servant (&this->fd_servant_ ACE_ENV_ARG_PARAMETER);
+  poa->set_servant (&this->fd_servant_);
 }
 
 FileImpl::System::~System (void)
@@ -44,8 +43,7 @@ FileImpl::System::_default_POA (void)
 
 File::Descriptor_ptr
 FileImpl::System::open (const char *file_name,
-                        CORBA::Long flags
-                        ACE_ENV_ARG_DECL)
+                        CORBA::Long flags)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
@@ -74,12 +72,11 @@ FileImpl::System::open (const char *file_name,
   // from ACE_HANDLE string
   CORBA::Object_var obj =
     this->poa_->create_reference_with_id (oid.in (),
-                                          "IDL:File/Descriptor:1.0"
-                                          ACE_ENV_ARG_PARAMETER);
+                                          "IDL:File/Descriptor:1.0");
 
   // Narrow the object reference to a File Descriptor
   File::Descriptor_var fd =
-    File::Descriptor::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+    File::Descriptor::_narrow (obj.in ());
 
 
   return fd._retn ();
@@ -114,31 +111,29 @@ FileImpl::Descriptor::fd (void)
 
   // Get the ObjectId from the reference
   PortableServer::ObjectId_var oid1 =
-    this->poa_->reference_to_id (me.in () ACE_ENV_ARG_PARAMETER);
+    this->poa_->reference_to_id (me.in ());
 
   //
   // Another way of getting our id.
   //
 
   PortableServer::ObjectId_var oid2 =
-    this->poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    this->poa_->servant_to_id (this);
 
   //
   // Yet another way of getting our id.
   //
 
   int argc = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, 0 ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, 0);
 
   // Get the POA Current object reference
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("POACurrent"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("POACurrent");
 
   // Narrow the object reference to a POA Current reference
   PortableServer::Current_var poa_current =
-    PortableServer::Current::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+    PortableServer::Current::_narrow (obj.in ());
 
   PortableServer::ObjectId_var oid3 =
     poa_current->get_object_id ();
@@ -155,8 +150,7 @@ FileImpl::Descriptor::fd (void)
 }
 
 CORBA::Long
-FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer
-                             ACE_ENV_ARG_DECL)
+FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
@@ -174,8 +168,7 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer
 }
 
 File::Descriptor::DataBuffer *
-FileImpl::Descriptor::read (CORBA::Long num_bytes
-                            ACE_ENV_ARG_DECL)
+FileImpl::Descriptor::read (CORBA::Long num_bytes)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
@@ -196,8 +189,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes
 
 CORBA::ULong
 FileImpl::Descriptor::lseek (CORBA::ULong offset,
-                             CORBA::Long whence
-                             ACE_ENV_ARG_DECL)
+                             CORBA::Long whence)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {

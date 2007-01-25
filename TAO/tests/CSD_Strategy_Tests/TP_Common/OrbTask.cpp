@@ -75,17 +75,16 @@ OrbTask::open(void*)
 int
 OrbTask::svc()
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     this->orb_->run();
   }
-  ACE_CATCHALL
+  catch (...)
   {
     ACE_ERROR((LM_ERROR,
       "(%P|%t) Exception raised by ORB::run() method. "
       "OrbTask is stopping.\n"));
   }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -35,8 +35,7 @@ Iterator_Handler::~Iterator_Handler (void)
 
 void
 Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
-                              const Web_Server::Chunk_Type &chunk_data
-                              ACE_ENV_ARG_DECL)
+                              const Web_Server::Chunk_Type &chunk_data)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (pending_data)
@@ -58,8 +57,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
         this->offset_ += chunk->length ();
 
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
-                                         this->offset_
-                                         ACE_ENV_ARG_PARAMETER);
+                                         this->offset_);
 
     }
   else
@@ -71,8 +69,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
       (*this->request_count_)--;  // No more data.
 
       // Done with the iterator, so destroy it.
-      this->contents_->sendc_destroy (this->ami_handler_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      this->contents_->sendc_destroy (this->ami_handler_.in ());
 
       // File retrieval has completed, so spawn an external viewer to
       // display its contents.
@@ -92,8 +89,7 @@ Iterator_Handler::destroy (void)
 void
 Iterator_Handler::run (int *request_count,
                        const char *pathname,
-                       Web_Server::Iterator_Factory_ptr factory
-                       ACE_ENV_ARG_DECL)
+                       Web_Server::Iterator_Factory_ptr factory)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -101,34 +97,30 @@ Iterator_Handler::run (int *request_count,
       this->request_count_ = request_count;
   else
     // @@ Application code shouldn't throw system exceptions.
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
   // Initialize the Content Iterator
   this->initialize_content_iterator (pathname,
-                                     factory
-                                     ACE_ENV_ARG_PARAMETER);
+                                     factory);
 
   // Activate this Reply Handler.
   this->ami_handler_ = this->_this ();
 
   // Begin the asynchronous invocation.
   this->contents_->sendc_next_chunk (this->ami_handler_.in (),
-                                     this->offset_
-                                     ACE_ENV_ARG_PARAMETER);
+                                     this->offset_);
 }
 
 void
 Iterator_Handler::initialize_content_iterator
   (const char *pathname,
-   Web_Server::Iterator_Factory_ptr factory
-   ACE_ENV_ARG_DECL)
+   Web_Server::Iterator_Factory_ptr factory)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
   // Obtain a Content Iterator for the desired file.
   factory->get_iterator (pathname,
                          this->contents_,
-                         this->metadata_
-                         ACE_ENV_ARG_PARAMETER);
+                         this->metadata_);
 
   // Create a temporary file to store the retrieved data.
   ACE_FILE_Connector connector;
@@ -157,10 +149,10 @@ Iterator_Handler::deactivate (void)
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 }
 
 

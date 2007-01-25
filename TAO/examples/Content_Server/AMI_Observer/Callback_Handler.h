@@ -81,8 +81,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback for this reply handler.
 
-  virtual void next_chunk_excep (::Messaging::ExceptionHolder *
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void next_chunk_excep (::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void run (void)

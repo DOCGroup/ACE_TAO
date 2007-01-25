@@ -61,8 +61,7 @@ public:
                    const char *protocol,
                    CORBA::ULong invocation_rate,
                    CORBA::ULong message_size,
-                   CORBA::ULong iterations
-                   ACE_ENV_ARG_DECL)
+                   CORBA::ULong iterations)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void end_test (void)
@@ -76,14 +75,12 @@ public:
 
   void oneway_method (CORBA::Long session_id,
                       CORBA::ULong iteration,
-                      const ::test::octets &payload
-                      ACE_ENV_ARG_DECL)
+                      const ::test::octets &payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void twoway_method (CORBA::Long &session_id,
                       CORBA::ULong &iteration,
-                      ::test::octets &payload
-                      ACE_ENV_ARG_DECL)
+                      ::test::octets &payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (void)
@@ -143,8 +140,7 @@ test_i::start_test (CORBA::Long session_id,
                     const char *protocol,
                     CORBA::ULong invocation_rate,
                     CORBA::ULong message_size,
-                    CORBA::ULong iterations
-                    ACE_ENV_ARG_DECL)
+                    CORBA::ULong iterations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList protocols;
@@ -176,8 +172,7 @@ test_i::start_test (CORBA::Long session_id,
   // Make sure we have a connection to the server using the test
   // protocol.
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::SET_OVERRIDE);
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
@@ -186,15 +181,14 @@ test_i::start_test (CORBA::Long session_id,
 
     test_protocol_setup:
 
-      ACE_TRY_EX (B1)
+      try
         {
           // Send a message to ensure that the connection is setup.
           this->receiver_->oneway_sync ();
-          ACE_TRY_CHECK_EX (B1);
 
           goto test_protocol_success;
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT& exception)
         {
           ++j;
 
@@ -204,13 +198,11 @@ test_i::start_test (CORBA::Long session_id,
               goto test_protocol_setup;
             }
         }
-      ACE_ENDTRY;
 
       ACE_ERROR ((LM_ERROR,
                   "Cannot setup test protocol\n"));
 
-      ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
  test_protocol_success:
@@ -218,8 +210,7 @@ test_i::start_test (CORBA::Long session_id,
   // Use IIOP for setting up the test since the test protocol maybe
   // unreliable.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::SET_OVERRIDE);
 
   // Since the network maybe unavailable temporarily, make sure to try
   // for a few times before giving up.
@@ -228,20 +219,18 @@ test_i::start_test (CORBA::Long session_id,
 
     base_protocol_setup:
 
-      ACE_TRY_EX (B2)
+      try
         {
           // Let the server know what to expect..
           this->receiver_->start_test (session_id,
                                        protocol,
                                        invocation_rate,
                                        message_size,
-                                       iterations
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (B2);
+                                       iterations);
 
           goto base_protocol_success;
         }
-      ACE_CATCH (CORBA::TRANSIENT, exception)
+      catch (const CORBA::TRANSIENT& exception)
         {
           ACE_OS::sleep (1);
 
@@ -251,21 +240,18 @@ test_i::start_test (CORBA::Long session_id,
               goto base_protocol_setup;
             }
         }
-      ACE_ENDTRY;
 
       ACE_ERROR ((LM_ERROR,
                   "Cannot setup base protocol\n"));
 
-      ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
  base_protocol_success:
 
   // Select the test protocol for these invocation.
   this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::SET_OVERRIDE);
 }
 
 void
@@ -274,8 +260,7 @@ test_i::end_test (void)
 {
   // Use IIOP to indicate end of test to server.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
-                                               CORBA::SET_OVERRIDE
-                                               ACE_ENV_ARG_PARAMETER);
+                                               CORBA::SET_OVERRIDE);
 
   this->receiver_->end_test ();
 }
@@ -297,27 +282,23 @@ test_i::twoway_sync (void)
 void
 test_i::oneway_method (CORBA::Long session_id,
                        CORBA::ULong iteration,
-                       const ::test::octets &payload
-                       ACE_ENV_ARG_DECL)
+                       const ::test::octets &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->oneway_method (session_id,
                                   iteration,
-                                  payload
-                                  ACE_ENV_ARG_PARAMETER);
+                                  payload);
 }
 
 void
 test_i::twoway_method (CORBA::Long &session_id,
                        CORBA::ULong &iteration,
-                       ::test::octets &payload
-                       ACE_ENV_ARG_DECL)
+                       ::test::octets &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->twoway_method (session_id,
                                   iteration,
-                                  payload
-                                  ACE_ENV_ARG_PARAMETER);
+                                  payload);
 }
 
 PortableServer::POA_ptr
@@ -332,36 +313,30 @@ test_i::shutdown (void)
 {
   this->receiver_->shutdown ();
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rtorb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyManager::_narrow (object.in ());
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -369,23 +344,19 @@ main (int argc, char **argv)
         return parse_args_result;
 
       object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       test_var receiver =
-        test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
+        test::_narrow (object.in ());
 
       test_i *servant =
         new test_i (orb.in (),
@@ -400,7 +371,7 @@ main (int argc, char **argv)
         servant->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (test.in ());
 
       FILE *output_file =
         ACE_OS::fopen (ior_file, "w");
@@ -419,12 +390,11 @@ main (int argc, char **argv)
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

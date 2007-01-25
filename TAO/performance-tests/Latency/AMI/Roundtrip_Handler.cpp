@@ -24,8 +24,7 @@ Roundtrip_Handler::dump_results (ACE_UINT32 gsf)
 }
 
 void
-Roundtrip_Handler::test_method (Test::Timestamp send_time
-                                ACE_ENV_ARG_DECL_NOT_USED)
+Roundtrip_Handler::test_method (Test::Timestamp send_time)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
@@ -35,20 +34,18 @@ Roundtrip_Handler::test_method (Test::Timestamp send_time
 }
 
 void
-Roundtrip_Handler::test_method_excep (::Messaging::ExceptionHolder *holder
-                                      ACE_ENV_ARG_DECL)
+Roundtrip_Handler::test_method_excep (::Messaging::ExceptionHolder *holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "test_method:");
+      ex._tao_print_exception ("test_method:");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -58,17 +55,15 @@ Roundtrip_Handler::shutdown (void)
 }
 
 void
-Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder
-                                   ACE_ENV_ARG_DECL)
+Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "shutdown:");
+      ex._tao_print_exception ("shutdown:");
     }
-  ACE_ENDTRY;
 }

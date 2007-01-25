@@ -37,26 +37,21 @@ public:
   virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     PortableInterceptor::ForwardRequest));
 
@@ -89,28 +84,23 @@ public:
   virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 

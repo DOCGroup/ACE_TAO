@@ -49,11 +49,11 @@ private:
 
 public:
   /// initialize the ORB et. al.
-  int init (int& argc, char *argv [] ACE_ENV_ARG_DECL);
+  int init (int& argc, char *argv []);
 
 
   /// Activate the tasks, jobs, poas.
-  void run (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  void run (int argc, char *argv[]);
 
   /// Resolve the naming service.
   int resolve_naming_service (void);
@@ -64,8 +64,7 @@ public:
   void builder (Builder* builder);
 
   /// Returns priority if server declared model else -1
-  CORBA::Short get_server_priority (CORBA::Object_ptr server
-                                    ACE_ENV_ARG_DECL);
+  CORBA::Short get_server_priority (CORBA::Object_ptr server);
   /// = Callbacks
   /// Task ended notification
   void task_ended (Periodic_Task* ended_task);

@@ -32,8 +32,7 @@ public:
   virtual ~Sender_i (void);
 
   // = The skeleton methods
-  virtual void active_objects (CORBA::ULong ao
-                               ACE_ENV_ARG_DECL)
+  virtual void active_objects (CORBA::ULong ao)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_ready_message (void)

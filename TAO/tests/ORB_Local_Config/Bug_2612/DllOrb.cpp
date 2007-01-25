@@ -101,8 +101,7 @@ int DllOrb::init (int argc, char *argv[])
   }
   catch(CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         ACE_TEXT ("(%P|%t) init failed:"));
+    ex._tao_print_exception (ACE_TEXT ("(%P|%t) init failed:"));
     return -1;
   }
   catch(...)
@@ -144,8 +143,7 @@ int DllOrb::fini (void)
     }
   catch(CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         ACE_TEXT ("(%P|%t) fini failed:"));
+    ex._tao_print_exception (ACE_TEXT ("(%P|%t) fini failed:"));
     return -1;
   }
   catch(...)
@@ -171,8 +169,9 @@ int DllOrb::fini (void)
     }
   catch(CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         ACE_TEXT ("(%P|%t) init failed to destroy the orb:"));
+    ex._tao_print_exception (
+      ACE_TEXT (
+        "(%P|%t) init failed to destroy the orb:"));
     return -1;
   }
 
@@ -219,8 +218,7 @@ int DllOrb::svc (void)
     }
   catch(CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         ACE_TEXT ("(%P|%t) svc - orb->run() failed:"));
+    ex._tao_print_exception (ACE_TEXT ("(%P|%t) svc - orb->run() failed:"));
     return -1;
   }
   catch(...)

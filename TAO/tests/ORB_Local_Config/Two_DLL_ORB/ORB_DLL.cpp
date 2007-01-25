@@ -111,8 +111,7 @@ Service_Config_ORB_DLL::svc (void)
   ACE_ASSERT (this->worker_.get () != 0);
   ACE_ASSERT (this->argv_.get () != 0);
 
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) %@ %s is active, argv[%d]=\'%s\'\n"),
@@ -122,8 +121,7 @@ Service_Config_ORB_DLL::svc (void)
                 this->argv_->buf ()));
 
     int ret = this->worker_->test_main (this->argv_->argc (),
-                                        this->argv_->argv ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        this->argv_->argv ());
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) %@ %s bows out - so long, cruel world! (%d)\n"),
@@ -132,14 +130,13 @@ Service_Config_ORB_DLL::svc (void)
                 ret));
     return ret;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, ACE_TEXT("Failure:"));
+    ex._tao_print_exception (ACE_TEXT("Failure:"));
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Aborting.\n")),
                        -1);
   }
-  ACE_ENDTRY;
 
 }
 

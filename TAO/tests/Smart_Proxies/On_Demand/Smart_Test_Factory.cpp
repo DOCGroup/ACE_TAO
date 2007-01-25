@@ -9,8 +9,7 @@ Smart_Test_Factory::Smart_Test_Factory (void)
 }
 
 Test_ptr
-Smart_Test_Factory::create_proxy (Test_ptr proxy
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+Smart_Test_Factory::create_proxy (Test_ptr proxy)
  {
    ACE_DEBUG ((LM_DEBUG,
                "create_smart_proxy\n"));

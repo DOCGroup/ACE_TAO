@@ -7,14 +7,13 @@
 
 int main (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv,
                          "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 
       if (argc < 2)
         {
@@ -23,11 +22,11 @@ int main (int argc, char* argv[])
         }
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // narrow down to the correct reference
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Set a POA Manager
       PortableServer::POAManager_var poa_manager =
@@ -45,12 +44,11 @@ int main (int argc, char* argv[])
 
       // Get a reference to Naming Context
       CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       // Narrow down the reference
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_context_object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_context_object.in ());
 
       // Bind Iterator_Factory to the Naming Context
       CosNaming::Name name (1);
@@ -63,16 +61,15 @@ int main (int argc, char* argv[])
       orb->run ();
 
       // Destroy the POA, waiting until the destruction terminates
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
       orb->destroy ();
     }
-  ACE_CATCH (CORBA::SystemException, ex) {
-    ACE_PRINT_EXCEPTION (ex, "CORBA exception raised! ");
+  catch (const CORBA::SystemException& ex){
+    ex._tao_print_exception ("CORBA exception raised! ");
   }
-  ACE_CATCHANY {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in server");
+  catch (const CORBA::Exception& ex){
+    ex._tao_print_exception ("Exception caught in server");
   }
-  ACE_ENDTRY;
 
   return 0;
 }

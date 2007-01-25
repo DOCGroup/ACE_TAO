@@ -62,16 +62,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
         coordinator_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (coordinator.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (coordinator.in ());
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -113,7 +113,7 @@ main (int argc, char *argv[])
            ++i)
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
+          orb->run (tv);
         }
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
 
@@ -139,8 +139,7 @@ main (int argc, char *argv[])
                                              payload_size,
                                              thread_count,
                                              message_count,
-                                             session_list
-                                             ACE_ENV_ARG_PARAMETER);
+                                             session_list);
 
       ACE_ASSERT (session_list.length () == peer_count);
 
@@ -162,8 +161,7 @@ main (int argc, char *argv[])
                 Test::Session::_duplicate (session_list[k]);
             }
 
-          session_list[j]->start (other_sessions
-                                  ACE_ENV_ARG_PARAMETER);
+          session_list[j]->start (other_sessions);
 
         }
 
@@ -174,7 +172,7 @@ main (int argc, char *argv[])
            ++k)
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
+          orb->run (tv);
         }
 
       if (!session_control_impl->all_sessions_finished ())
@@ -198,17 +196,15 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -35,19 +35,18 @@ foo_i::destroy ()
 {
   bool expected_exception_raised = false;
 
-  ACE_TRY
+  try
     {
       // This should case an BAD_INV_ORDER exception
       this->orb_->destroy ();
     }
-  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+  catch (const CORBA::BAD_INV_ORDER& ex)
     {
       if ((ex.minor() & 0xFFFU) == 3)
         {
           expected_exception_raised = true;
         }
     }
-  ACE_ENDTRY;
 
   if (!expected_exception_raised)
     ACE_ERROR ((LM_ERROR, "ERROR: Caught incorrect exception\n"));

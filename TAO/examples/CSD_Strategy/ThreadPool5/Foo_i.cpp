@@ -33,7 +33,7 @@ Foo_i::op1(void)
 
 
 void
-Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op2_;
@@ -57,7 +57,7 @@ Foo_i::op3(void)
 
 
 void
-Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op4_;
@@ -80,7 +80,7 @@ Foo_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   ++this->count_op5_;
-  ACE_THROW (FooException());
+  throw FooException();
 }
 
 
@@ -88,7 +88,6 @@ CORBA::Boolean
 Foo_i::op6 (
   const char * user_name,
   char *& message
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -105,7 +104,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_unbounded_string_arg (
   const char * message
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
 CORBA::SystemException
@@ -120,7 +118,6 @@ CORBA::SystemException
 void
 Foo_i::test_bounded_string_arg (
   const char * message
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
 CORBA::SystemException
@@ -135,7 +132,6 @@ CORBA::SystemException
 void
 Foo_i::test_fixed_array_arg (
   const ::Fixed_Array message
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -153,7 +149,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_bounded_var_size_arg (
   const ::Bounded_Var_Size & message
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -168,7 +163,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_unbounded_var_size_arg (
   const ::Unbounded_Var_Size & message
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -183,7 +177,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_fixed_size_arg (
   const ::TimeOfDay & t
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -197,7 +190,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_fixed_size_arg_two_way (
   const ::TimeOfDay & t
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -211,7 +203,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_var_array_arg (
   const ::Var_Array messages
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -229,7 +220,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_special_basic_arg (
   ::CORBA::Boolean value
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -243,7 +233,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_objref_arg (
   ::Callback_ptr cb
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -258,7 +247,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::callback_object (
   ::Callback_ptr cb
-  ACE_ENV_ARG_DECL_NOT_USED
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -269,7 +257,6 @@ ACE_THROW_SPEC ((
 
 void
 Foo_i::test_callback (
-  ACE_ENV_SINGLE_ARG_DECL
 )
 ACE_THROW_SPEC ((
   CORBA::SystemException, FooException
@@ -277,7 +264,7 @@ ACE_THROW_SPEC ((
 {
   if (CORBA::is_nil (this->callback_.in ()))
     {
-      ACE_THROW (FooException ());
+      throw FooException ();
     }
   else
     {

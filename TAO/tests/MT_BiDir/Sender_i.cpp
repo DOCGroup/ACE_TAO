@@ -29,8 +29,7 @@ Sender_i::Sender_i (int no_clients,
 
 
 CORBA::Long
-Sender_i::receiver_object (Receiver_ptr recv
-                           ACE_ENV_ARG_DECL)
+Sender_i::receiver_object (Receiver_ptr recv)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Sender::Table_Full))
 {
@@ -64,6 +63,5 @@ Sender_i::send_message (void)
   int send_to =
     ACE_OS::rand () % this->no_clients_;
 
-  this->receivers_[send_to]->receive_payload (this->payload_
-                                              ACE_ENV_ARG_PARAMETER);
+  this->receivers_[send_to]->receive_payload (this->payload_);
 }

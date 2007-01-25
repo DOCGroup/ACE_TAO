@@ -39,7 +39,6 @@ public:
   virtual ~simple_i (void);
 
 virtual void test (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

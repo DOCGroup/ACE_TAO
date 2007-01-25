@@ -58,8 +58,7 @@ Test_Bounded_WString::opname (void) const
 }
 
 void
-Test_Bounded_WString::dii_req_invoke (CORBA::Request *req
-                                      ACE_ENV_ARG_DECL)
+Test_Bounded_WString::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= CORBA::Any::from_wstring (this->in_, 128);
   req->add_inout_arg ("s2") <<= CORBA::Any::from_wstring (this->inout_, 128);
@@ -77,19 +76,18 @@ Test_Bounded_WString::dii_req_invoke (CORBA::Request *req
   this->ret_ = CORBA::wstring_dup (tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *arg2->value () >>= CORBA::Any::to_wstring (tmp, 128);
   this->inout_ = CORBA::wstring_dup (tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *arg3->value () >>= CORBA::Any::to_wstring (tmp, 128);
   this->out_ = CORBA::wstring_dup (tmp);
 }
 
 int
-Test_Bounded_WString::init_parameters (Param_Test_ptr
-                                                               ACE_ENV_ARG_DECL_NOT_USED)
+Test_Bounded_WString::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -124,27 +122,23 @@ Test_Bounded_WString::reset_parameters (void)
 }
 
 int
-Test_Bounded_WString::run_sii_test (Param_Test_ptr objref
-                                                            ACE_ENV_ARG_DECL)
+Test_Bounded_WString::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::WString_out str_out (this->out_);
 
       this->ret_ = objref->test_bounded_wstring (this->in_,
                                                  this->inout_,
-                                                 str_out
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 str_out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_WString::run_sii_test\n");
+      ex._tao_print_exception ("Test_Bounded_WString::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

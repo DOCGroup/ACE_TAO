@@ -60,8 +60,7 @@ public:
                      CORBA::ORB_ptr orb);
 
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                  const char *name
-                                  ACE_ENV_ARG_DECL)
+                                  const char *name)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::PolicyList first_poa_policies_;
@@ -82,16 +81,14 @@ Adapter_Activator::Adapter_Activator (PortableServer::POAManager_ptr poa_manager
 
 CORBA::Boolean
 Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
-                                    const char *name
-                                    ACE_ENV_ARG_DECL)
+                                    const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (name, "firstPOA") == 0)
     {
       PortableServer::POA_var child = parent->create_POA (name,
                                                           this->poa_manager_.in (),
-                                                          this->first_poa_policies_
-                                                          ACE_ENV_ARG_PARAMETER);
+                                                          this->first_poa_policies_);
 
       // Creation of firstPOA is over. Destroy the Policy objects.
       for (CORBA::ULong i = 0;
@@ -101,15 +98,13 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           this->first_poa_policies_[i]->destroy ();
         }
 
-      child->the_activator (this
-                            ACE_ENV_ARG_PARAMETER);
+      child->the_activator (this);
 
       reference_counted_test_i *servant =
         new reference_counted_test_i (this->orb_.in (),
                                       child.in ());
 
-      child->set_servant (servant
-                          ACE_ENV_ARG_PARAMETER);
+      child->set_servant (servant);
 
       // This means that the ownership of <servant> now belongs to the
       // POA.
@@ -122,8 +117,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     {
       PortableServer::POA_var child = parent->create_POA (name,
                                                           this->poa_manager_.in (),
-                                                          this->second_poa_policies_
-                                                          ACE_ENV_ARG_PARAMETER);
+                                                          this->second_poa_policies_);
 
       // Creation of secondPOA is over. Destroy the Policy objects.
       for (CORBA::ULong i = 0;
@@ -141,8 +135,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
         PortableServer::string_to_ObjectId ("third test");
 
       child->activate_object_with_id (oid.in (),
-                                      servant
-                                      ACE_ENV_ARG_PARAMETER);
+                                      servant);
 
       // This means that the ownership of <servant> now belongs to the
       // POA.
@@ -255,15 +248,13 @@ write_iors_to_file (const char *first_ior,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -271,13 +262,11 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
@@ -290,8 +279,7 @@ main (int argc, char **argv)
       PortableServer::AdapterActivator_var adapter_activator_var =
         adapter_activator;
 
-      root_poa->the_activator (adapter_activator_var.in ()
-                               ACE_ENV_ARG_PARAMETER);
+      root_poa->the_activator (adapter_activator_var.in ());
 
       PortableServer::POA_var first_poa;
       PortableServer::POA_var second_poa;
@@ -303,29 +291,24 @@ main (int argc, char **argv)
 
         // Id Assignment Policy
         policies[0] =
-          root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID
-                                                 ACE_ENV_ARG_PARAMETER);
+          root_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
 
         // Lifespan policy
         policies[1] =
-          root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                            ACE_ENV_ARG_PARAMETER);
+          root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
         // Request Processing policy
         policies[2] =
-          root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
-                                                      ACE_ENV_ARG_PARAMETER);
+          root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
 
         // Id Uniqueness
         policies[3] =
-          root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
-                                                 ACE_ENV_ARG_PARAMETER);
+          root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
         // Create the firstPOA under the RootPOA.
         first_poa = root_poa->create_POA ("firstPOA",
                                           poa_manager.in (),
-                                          policies
-                                          ACE_ENV_ARG_PARAMETER);
+                                          policies);
       }
 
       {
@@ -335,19 +318,16 @@ main (int argc, char **argv)
 
         // Id Assignment Policy
         policies[0] =
-          root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                                 ACE_ENV_ARG_PARAMETER);
+          root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
         // Lifespan policy
         policies[1] =
-          root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                            ACE_ENV_ARG_PARAMETER);
+          root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
         // Create the secondPOA under the firstPOA.
         second_poa = first_poa->create_POA ("secondPOA",
                                             poa_manager.in (),
-                                            policies
-                                            ACE_ENV_ARG_PARAMETER);
+                                            policies);
       }
 
       // Create a servant.
@@ -355,35 +335,30 @@ main (int argc, char **argv)
                                               root_poa.in ());
 
       PortableServer::ObjectId_var first_oid =
-        root_poa->activate_object (&first_servant
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->activate_object (&first_servant);
 
       // Get Object Reference for the first_servant object.
       test_var first_test = first_servant._this ();
 
       CORBA::Object_var second_test =
-        first_poa->create_reference ("IDL:test:1.0"
-                                     ACE_ENV_ARG_PARAMETER);
+        first_poa->create_reference ("IDL:test:1.0");
 
       PortableServer::ObjectId_var third_oid =
         PortableServer::string_to_ObjectId ("third test");
 
       CORBA::Object_var third_test =
         second_poa->create_reference_with_id (third_oid.in (),
-                                              "IDL:test:1.0"
-                                              ACE_ENV_ARG_PARAMETER);
+                                              "IDL:test:1.0");
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
-        orb->object_to_string (first_test.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (first_test.in ());
 
       CORBA::String_var second_ior =
-        orb->object_to_string (second_test.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (second_test.in ());
 
       CORBA::String_var third_ior =
-        orb->object_to_string (third_test.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (third_test.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n%s\n",
@@ -398,20 +373,18 @@ main (int argc, char **argv)
         return write_result;
 
       first_poa->destroy (1,
-                          1
-                          ACE_ENV_ARG_PARAMETER);
+                          1);
 
       poa_manager->activate ();
 
       orb->run ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

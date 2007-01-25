@@ -13,14 +13,13 @@ Foo_C_cust_op2::Foo_C_cust_op2(Foo_C_i* servant, long arg)
   // This try-catch block is not really necessary, but we have to add it to
   // satisfy the non-exception builds. Since there is actually no exception
   // raised from _add_ref, we just ignore the exception here.
-  ACE_TRY_NEW_ENV
+  try
   {
     servant_->_add_ref ();
   }
-  ACE_CATCHALL
+  catch (...)
   {
   }
-  ACE_ENDTRY;
 }
 
 
@@ -29,14 +28,13 @@ Foo_C_cust_op2::~Foo_C_cust_op2()
   // This try-catch block is not really necessary, but we have to add it to
   // satisfy the non-exception builds. Since there is actually no exception
   // raised from _add_ref, we just ignore the exception here.
-  ACE_TRY_NEW_ENV
+  try
   {
     servant_->_remove_ref ();
   }
-  ACE_CATCHALL
+  catch (...)
   {
   }
-  ACE_ENDTRY;
 }
 
 
@@ -45,7 +43,7 @@ Foo_C_cust_op2::result(void)
 {
   if (this->cancelled_)
     {
-      ACE_THROW (CancelledException());
+      throw CancelledException();
     }
 }
 

@@ -49,8 +49,7 @@ Test_String_Sequence::opname (void) const
 }
 
 void
-Test_String_Sequence::dii_req_invoke (CORBA::Request *req
-                                      ACE_ENV_ARG_DECL)
+Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -65,19 +64,18 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req
   this->ret_ = new CORBA::StringSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new CORBA::StringSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::StringSeq (*tmp);
 }
 
 int
-Test_String_Sequence::init_parameters (Param_Test_ptr
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+Test_String_Sequence::init_parameters (Param_Test_ptr)
 {
   const char *choiceList[] =
   {
@@ -112,27 +110,23 @@ Test_String_Sequence::reset_parameters (void)
 }
 
 int
-Test_String_Sequence::run_sii_test (Param_Test_ptr objref
-                                    ACE_ENV_ARG_DECL)
+Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::StringSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_strseq (this->in_.in (),
                                         this->inout_.inout (),
-                                        out
-                                        ACE_ENV_ARG_PARAMETER);
+                                        out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_String_Sequence::run_sii_test\n");
+      ex._tao_print_exception ("Test_String_Sequence::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

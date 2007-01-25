@@ -25,15 +25,13 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var poa_object =
-        this->corb_->resolve_initial_references("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->corb_->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -59,11 +57,10 @@ Client_Task::svc (void)
                            corb_->orb_core()->use_global_collocation ()));
 
       CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_
-                                       ACE_ENV_ARG_PARAMETER);
+        this->corb_->string_to_object (input_);
 
       Test::EventNode_var evNode=
-        Test::EventNode::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::EventNode::_narrow(tmp.in ());
 
       if (CORBA::is_nil (evNode.in ()))
         {
@@ -75,17 +72,15 @@ Client_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client starting\n"));
 
-      evNode->registerHello( hello_servant.in() ACE_ENV_ARG_PARAMETER );
+      evNode->registerHello( hello_servant.in() );
 
       evNode->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 

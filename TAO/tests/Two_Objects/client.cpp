@@ -37,13 +37,12 @@ int
 main (int argc, char *argv[])
 {
   // Used to declare the CORBA::Environment variable
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse the arguments
       if (parse_args (argc, argv) != 0)
@@ -53,12 +52,11 @@ main (int argc, char *argv[])
       // The object reference obtained is a reference to the factory
       // object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       // Narrow the object reference to the appropriate type
       Two_Objects_Test::Object_Factory_var factory =
-        Two_Objects_Test::Object_Factory::_narrow(tmp.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        Two_Objects_Test::Object_Factory::_narrow(tmp.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -88,13 +86,11 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

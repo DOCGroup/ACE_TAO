@@ -26,9 +26,8 @@ Time_Client_i::run (const char *name,
   if (client.init (name, argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // 64-bit OS's require pointers to be aligned on an
       // 8 byte boundary.  64-bit HP-UX requires a double to do this
@@ -59,12 +58,11 @@ Time_Client_i::run (const char *name,
       if (client.shutdown () == 1)
         client->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "\tException");
+      ex._tao_print_exception ("\tException");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

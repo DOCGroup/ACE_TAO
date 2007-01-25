@@ -18,8 +18,7 @@ public:
   Echo (CORBA::ORB_ptr orb,
         int abort_counter);
 
-  virtual void echo_payload (Test::Payload & data
-                             ACE_ENV_ARG_DECL)
+  virtual void echo_payload (Test::Payload & data)
     ACE_THROW_SPEC((CORBA::SystemException));
 
 private:

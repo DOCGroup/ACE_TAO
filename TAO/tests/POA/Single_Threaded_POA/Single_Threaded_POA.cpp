@@ -93,16 +93,15 @@ Worker::Worker (test_ptr t)
 int
 Worker::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->test_->method ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in thread");
+      ex._tao_print_exception ("Exception caught in thread");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -110,22 +109,19 @@ Worker::svc (void)
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
-                                                               ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
@@ -136,19 +132,16 @@ main (int argc, char **argv)
       policies.length (2);
 
       policies[0] =
-        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                     ACE_ENV_ARG_PARAMETER);
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       policies[1] =
-        root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL
-                                        ACE_ENV_ARG_PARAMETER);
+        root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL);
 
       // Creation of the child POA.
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Destroy the policies
       for (CORBA::ULong i = 0;
@@ -182,15 +175,13 @@ main (int argc, char **argv)
       ACE_UNUSED_ARG (result);
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
+                         1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

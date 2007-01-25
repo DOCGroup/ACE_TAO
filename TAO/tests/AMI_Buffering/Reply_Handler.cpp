@@ -16,20 +16,17 @@ Reply_Handler::receive_data (void)
 }
 
 void
-Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder
-                                   ACE_ENV_ARG_DECL)
+Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "receive_data: ");
+      ex._tao_print_exception ("receive_data: ");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -39,20 +36,17 @@ Reply_Handler::sync (void)
 }
 
 void
-Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder
-                           ACE_ENV_ARG_DECL)
+Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "sync: ");
+      ex._tao_print_exception ("sync: ");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -62,18 +56,15 @@ Reply_Handler::shutdown (void)
 }
 
 void
-Reply_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder
-                               ACE_ENV_ARG_DECL)
+Reply_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "shutdown: ");
+      ex._tao_print_exception ("shutdown: ");
     }
-  ACE_ENDTRY;
 }

@@ -37,11 +37,10 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_test (Test_Interceptors::Visual_ptr server
-          ACE_ENV_ARG_DECL)
+run_test (Test_Interceptors::Visual_ptr server)
 {
 
-  server->normal (10 ACE_ENV_ARG_PARAMETER);
+  server->normal (10);
 
   ACE_DEBUG ((LM_DEBUG, "\"normal\" operation done\n"));
 
@@ -49,32 +48,29 @@ run_test (Test_Interceptors::Visual_ptr server
 
   ACE_DEBUG ((LM_DEBUG, "\"nothing\" operation done\n"));
 
-  ACE_TRY
+  try
     {
       server->user ();
     }
-  ACE_CATCH (Test_Interceptors::Silly, userex)
+  catch (const Test_Interceptors::Silly& userex)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
-  ACE_ENDTRY;
 
-  ACE_TRY_EX (SYS)
+  try
     {
       server->system ();
-      ACE_TRY_CHECK_EX (SYS);
     }
-  ACE_CATCH (CORBA::INV_OBJREF, sysex)
+  catch (const CORBA::INV_OBJREF& sysex)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
-  ACE_ENDTRY;
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer;
 
@@ -84,20 +80,19 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test_Interceptors::Visual::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -107,17 +102,15 @@ main (int argc, char *argv[])
                             1);
         }
 
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
+      run_test (server.in ());
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in client:");
+      ex._tao_print_exception ("Caught exception in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

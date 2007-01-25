@@ -21,32 +21,30 @@ Checkpoint_Client_i::run (const char *name,
   ACE_Time_Value now (ACE_OS::gettimeofday ());
   ACE_OS::srand ((unsigned int) now.sec () );
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_DEBUG, "Send some random events:\n"));
 
       CORBA::Long value = 64;
       Event_var t_e (static_cast<Event*> (new Event_impl (value)));
       t_e->do_print ();
-      checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
+      checkpoint->put_event (t_e);
 
       value = 34;
       t_e = new Event_impl (value);
       t_e->do_print ();
-      checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
+      checkpoint->put_event (t_e);
 
       if (checkpoint.shutdown () == 1)
         checkpoint->shutdown ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"\n Exception in RMI");
+      ex._tao_print_exception ("\n Exception in RMI");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

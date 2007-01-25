@@ -35,12 +35,11 @@ main (int argc, char *argv[])
 {
   int n = 1024;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       ACE_Get_Opt get_opt (argc, argv, "dn:");
       int opt;
@@ -95,8 +94,7 @@ main (int argc, char *argv[])
 
           {
             CORBA::Object_var obj =
-              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
-                                     ACE_ENV_ARG_PARAMETER);
+              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
             Param_Test_var param_test =
               TAO::Narrow_Utils<Param_Test>::unchecked_narrow (
@@ -116,7 +114,7 @@ main (int argc, char *argv[])
                             "Cannot extract Param_Test (oh the horror)\n"));
               }
             CORBA::Boolean equiv =
-              param_test->_is_equivalent (o ACE_ENV_ARG_PARAMETER);
+              param_test->_is_equivalent (o);
 
             if (!equiv)
               {
@@ -341,13 +339,11 @@ main (int argc, char *argv[])
           }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "IDL Types");
+      ex._tao_print_exception ("IDL Types");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -40,18 +40,16 @@ Current_Test_Impl::test_transport_current (void)
   }
 
   CORBA::Object_var tcobject =
-    this->orb_->resolve_initial_references ("TAO::Transport::IIOP::Current"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("TAO::Transport::IIOP::Current");
 
   TAO::Transport::IIOP::Current_var tc =
-    TAO::Transport::IIOP::Current::_narrow (tcobject.in ()
-                                            ACE_ENV_SINGLE_ARG_DECL);
+    TAO::Transport::IIOP::Current::_narrow (tcobject.in ());
 
   if (CORBA::is_nil (tc.in()))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Unable to narrow down to TAO::Transport::IIOP::Current\n")));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   CORBA::String_var rhost (tc->remote_host ());
@@ -83,18 +81,16 @@ Current_Test_Impl::invoked_by_client (void)
   if (this->do_collocated_calls_)
     {
       CORBA::Object_var selfobject =
-        poa_->servant_to_reference (this
-                                    ACE_ENV_SINGLE_ARG_DECL);
+        poa_->servant_to_reference (this);
 
       Test::Transport::CurrentTest_var self =
-        Test::Transport::CurrentTest::_narrow (selfobject.in ()
-                                               ACE_ENV_SINGLE_ARG_DECL);
+        Test::Transport::CurrentTest::_narrow (selfobject.in ());
 
       if (TAO_debug_level >= 1) {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) server - Making a collocated invocation to invoked_during_upcall().\n")));
       }
-      self->invoked_during_upcall (ACE_ENV_ARG_PARAMETER);
+      self->invoked_during_upcall ();
     }
   else
     {
@@ -128,6 +124,5 @@ Current_Test_Impl::shutdown (void)
                 ACE_TEXT ("(%P|%t) server - shutting down.\n")));
   }
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

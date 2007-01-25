@@ -21,8 +21,7 @@ void
 ServantList<T>::create_and_activate(unsigned                num_servants,
                                     CORBA::ORB_ptr          orb,
                                     PortableServer::POA_ptr poa,
-                                    const char*             ior_fname_prefix
-                                    ACE_ENV_ARG_DECL)
+                                    const char*             ior_fname_prefix)
 {
   for (unsigned i = 0; i < num_servants; i++)
     {
@@ -35,16 +34,15 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
 
       CORBA::Object_var obj
         = AppHelper::activate_servant(poa,
-                                      record.safe_servant_.in()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      record.safe_servant_.in());
 
-      AppHelper::ref_to_file(orb, obj.in(), filename.c_str() ACE_ENV_ARG_PARAMETER);
+      AppHelper::ref_to_file(orb, obj.in(), filename.c_str());
 
-      record.obj_ = T_stub::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      record.obj_ = T_stub::_narrow(obj.in());
 
       if (CORBA::is_nil(record.obj_.in()))
         {
-          ACE_THROW (TestAppException());
+          throw TestAppException();
         }
 
       this->servant_records_.push_back(record);
@@ -55,8 +53,7 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
 template <typename T>
 void
 ServantList<T>::create_and_activate(unsigned                num_servants,
-                                    PortableServer::POA_ptr poa
-                                    ACE_ENV_ARG_DECL)
+                                    PortableServer::POA_ptr poa)
 {
   for (unsigned i = 0; i < num_servants; i++)
     {
@@ -66,14 +63,13 @@ ServantList<T>::create_and_activate(unsigned                num_servants,
 
       CORBA::Object_var obj
         = AppHelper::activate_servant(poa,
-                                      record.safe_servant_.in()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      record.safe_servant_.in());
 
-      record.obj_ = T_stub::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      record.obj_ = T_stub::_narrow(obj.in());
 
       if (CORBA::is_nil(record.obj_.in()))
         {
-          ACE_THROW (TestAppException());
+          throw TestAppException();
         }
 
       this->servant_records_.push_back(record);

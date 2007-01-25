@@ -181,7 +181,7 @@ public:
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) ERROR: Could not resolve PICurrent object.\n"));
 
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       }
 
     ServerRequestInterceptor_var interceptor (new ReplicaController (pi_current.in ()));

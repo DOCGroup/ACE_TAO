@@ -107,15 +107,13 @@ write_iors_to_file (const char *ior)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -123,13 +121,11 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
@@ -150,7 +146,7 @@ main (int argc, char **argv)
       servant->_remove_ref ();
 
       // Stringyfy all the object references and print them out.
-      CORBA::String_var ior = orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = orb->object_to_string (test.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
@@ -164,12 +160,11 @@ main (int argc, char **argv)
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

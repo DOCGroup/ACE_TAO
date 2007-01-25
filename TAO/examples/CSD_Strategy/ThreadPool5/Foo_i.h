@@ -19,13 +19,13 @@ class Foo_i : public virtual POA_Foo
     virtual void op1(void)
       ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op2(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void op2(CORBA::Long value)
       ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual CORBA::Long op3(void)
       ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op4(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void op4(CORBA::Long value)
       ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual void op5(void)
@@ -34,7 +34,6 @@ class Foo_i : public virtual POA_Foo
     virtual CORBA::Boolean op6 (
         const char * user_name,
         char *& message
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -42,7 +41,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_unbounded_string_arg (
         const char * message
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -50,7 +48,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_bounded_string_arg (
         const char * message
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -58,7 +55,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_fixed_array_arg (
         const ::Fixed_Array message
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -66,7 +62,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_var_array_arg (
         const ::Var_Array messages
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -74,7 +69,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_bounded_var_size_arg (
         const ::Bounded_Var_Size & message
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -82,7 +76,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_unbounded_var_size_arg (
         const ::Unbounded_Var_Size & message
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -90,7 +83,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_fixed_size_arg (
         const ::TimeOfDay & t
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -98,7 +90,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_fixed_size_arg_two_way (
         const ::TimeOfDay & t
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -106,7 +97,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_special_basic_arg (
         ::CORBA::Boolean value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -114,7 +104,6 @@ class Foo_i : public virtual POA_Foo
 
     virtual void test_objref_arg (
         ::Callback_ptr cb
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -122,14 +111,12 @@ class Foo_i : public virtual POA_Foo
 
     virtual void callback_object (
         ::Callback_ptr cb
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
     virtual void test_callback (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException, FooException

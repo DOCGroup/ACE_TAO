@@ -18,7 +18,6 @@ public:
 
   // = The skeleton methods
 	virtual ::Test::StringList * get_stringList (
-		ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 		)
 		ACE_THROW_SPEC ((
 		::CORBA::SystemException
@@ -27,7 +26,6 @@ public:
     virtual void get_stringList2 (
         ::CORBA::Boolean initialize,
         ::Test::StringList_out osl
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -35,7 +33,6 @@ public:
 
     virtual void mod_stringList (
         ::Test::StringList & iosl
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException

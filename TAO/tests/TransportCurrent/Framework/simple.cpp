@@ -19,8 +19,7 @@ testCurrentORBInitializer (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to create orb\n")), -1);
 
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("TAO::Transport::Current"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("TAO::Transport::Current");
 
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

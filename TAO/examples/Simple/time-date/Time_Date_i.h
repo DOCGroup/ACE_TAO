@@ -34,14 +34,12 @@ class Time_Date_i
 public:
   // = Initialization and termination methods.
 
-  virtual void bin_date (CORBA::Long_out time_date
-                         ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void bin_date (CORBA::Long_out time_date)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Obtain the time and date in binary format.
 
-  virtual void str_date (CORBA::String_out time_date
-                         ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void str_date (CORBA::String_out time_date)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Obtain the time and date in string format.
 

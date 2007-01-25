@@ -41,16 +41,16 @@ parse_args (int argc, char *argv[])
 }
 
 int
-test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
+test_timeout (CORBA::Object_ptr object)
 {
   // Start the timer
   profile_timer.start ();
 
-  ACE_TRY
+  try
     {
       // First connection happens here..
       Test::Hello_var hello =
-        Test::Hello::_narrow(object ACE_ENV_ARG_PARAMETER);
+        Test::Hello::_narrow(object);
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -68,7 +68,7 @@ test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
 
       hello->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Stop the timer
       profile_timer.stop ();
@@ -93,7 +93,6 @@ test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
                     "(%P|%t) Success, timeout: %F \n",
                     el.real_time));
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -103,23 +102,22 @@ main (int argc, char *argv[])
 {
   int retval = 1;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
@@ -128,12 +126,10 @@ main (int argc, char *argv[])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (TAO::CONNECTION_TIMEOUT_POLICY_TYPE,
-                            timeout_as_any
-                            ACE_ENV_ARG_PARAMETER);
+                            timeout_as_any);
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::ADD_OVERRIDE);
 
       for (CORBA::ULong l = 0;
            l != policy_list.length ();
@@ -142,17 +138,15 @@ main (int argc, char *argv[])
           policy_list[l]->destroy ();
         }
 
-      retval = test_timeout (tmp.in () ACE_ENV_ARG_PARAMETER);
+      retval = test_timeout (tmp.in ());
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return retval;
 }

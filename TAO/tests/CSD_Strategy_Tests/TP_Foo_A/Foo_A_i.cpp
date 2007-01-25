@@ -26,7 +26,7 @@ Foo_A_i::op1(void)
 
 
 void
-Foo_A_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_A_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[1].push_back (value);
@@ -35,7 +35,7 @@ Foo_A_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_A_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_A_i::op3(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[2].push_back (value);
@@ -45,7 +45,7 @@ Foo_A_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_A_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_A_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[3].push_back (value);
@@ -58,7 +58,7 @@ Foo_A_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4] ++;
-  ACE_THROW (FooException());
+  throw FooException();
 }
 
 

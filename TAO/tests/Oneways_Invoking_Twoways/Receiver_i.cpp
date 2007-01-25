@@ -31,7 +31,7 @@ Receiver_i::receive_call (void)
 }
 
 CORBA::Long
-Receiver_i::get_call_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+Receiver_i::get_call_count ( /**/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->iteration_;

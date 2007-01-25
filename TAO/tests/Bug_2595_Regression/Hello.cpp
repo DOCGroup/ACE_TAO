@@ -14,7 +14,6 @@ void
 Hello::op (
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -29,5 +28,5 @@ void
 Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

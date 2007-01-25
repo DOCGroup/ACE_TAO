@@ -27,24 +27,21 @@ main (int argc, char *argv[])
   PortableInterceptor::ORBInitializer_var initializer_var2 =
     initializer2;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      PortableInterceptor::register_orb_initializer (initializer_var1.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer_var1.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::ORB_var orb2 =
-        CORBA::ORB_init (argc, argv, "SecondORB" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "SecondORB");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in client:");
+      ex._tao_print_exception ("Caught exception in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   // The first ORBInitializer should be called twice, the second only once
   ACE_ASSERT (initializer1->pre_init_called == 2);

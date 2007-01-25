@@ -80,19 +80,19 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -105,7 +105,7 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           ACE_hrtime_t start = 0;
-          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start);
         }
 
       ACE_Sample_History history (niterations);
@@ -115,7 +115,7 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start);
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -147,12 +147,11 @@ main (int argc, char *argv[])
           roundtrip->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

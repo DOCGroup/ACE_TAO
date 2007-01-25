@@ -22,10 +22,10 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ClientApp::run(int argc, char* argv[])
 {
   CORBA::ORB_var orb
-    = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -38,7 +38,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   CORBA::Object_var obj
-    = orb->string_to_object(this->ior_.c_str() ACE_ENV_ARG_PARAMETER);
+    = orb->string_to_object(this->ior_.c_str());
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -47,7 +47,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);
     }
 
-  Foo_var foo = Foo::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+  Foo_var foo = Foo::_narrow(obj.in());
 
   if (CORBA::is_nil(foo.in()))
     {
@@ -58,7 +58,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   // Create the callback object using the child poa with the custom
   // strategy.
-  obj = orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+  obj = orb->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -68,7 +68,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
     }
 
   PortableServer::POA_var root_poa
-    = PortableServer::POA::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+    = PortableServer::POA::_narrow(obj.in());
 
   if (CORBA::is_nil(root_poa.in()))
     {
@@ -87,8 +87,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   PortableServer::POA_var child_poa
     = root_poa->create_POA("ChildPoa",
                            poa_manager.in(),
-                           policies
-                           ACE_ENV_ARG_PARAMETER);
+                           policies);
 
   if (CORBA::is_nil(child_poa.in()))
     {
@@ -105,7 +104,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
   csd_tp_strategy->set_num_threads(1);
 
   // Tell the strategy to apply itself to the child poa.
-  if (csd_tp_strategy->apply_to(child_poa.in() ACE_ENV_ARG_PARAMETER) == false)
+  if (csd_tp_strategy->apply_to(child_poa.in()) == false)
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
@@ -121,11 +120,10 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   // Activate the servant using the Child POA.
   PortableServer::ObjectId_var oid
-    = child_poa->activate_object(servant
-                                 ACE_ENV_ARG_PARAMETER);
+    = child_poa->activate_object(servant);
 
   // Obtain the object reference.
-  obj = child_poa->servant_to_reference(servant ACE_ENV_ARG_PARAMETER);
+  obj = child_poa->servant_to_reference(servant);
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -134,7 +132,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);
     }
 
-  Callback_var callback = Callback::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+  Callback_var callback = Callback::_narrow (obj.in ());
 
   ClientTask client_task(orb.in (), foo.in (), callback.in ());
 
@@ -157,7 +155,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
              "(%P|%t) ClientApp is destroying the Root POA.\n"));
 
   // Tear-down the root poa and orb.
-  root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
+  root_poa->destroy(1, 1);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ClientApp is destroying the ORB.\n"));

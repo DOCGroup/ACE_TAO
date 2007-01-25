@@ -65,8 +65,7 @@ Cubit_Task::svc (void)
                        "Create Servants failed.\n"),
                       -1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       GLOBALS::instance ()->barrier_->wait ();
 
@@ -85,11 +84,10 @@ Cubit_Task::svc (void)
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "poa->destroy()");
+      ex._tao_print_exception ("poa->destroy()");
     }
-  ACE_ENDTRY;
 
   // Need to clean up and do a CORBA::release on everything we've
   // created!
@@ -103,8 +101,7 @@ Cubit_Task::svc (void)
 int
 Cubit_Task::initialize_orb (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_ARGV args (this->orbargs_);
 
@@ -119,8 +116,7 @@ Cubit_Task::initialize_orb (void)
       int r = this->orb_manager_.init_child_poa (argc,
                                                  argv,
                                                  "persistent_poa",
-                                                 orb_name
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 orb_name);
       if (r == -1)
         return -1;
 
@@ -141,12 +137,11 @@ Cubit_Task::initialize_orb (void)
           GLOBALS::instance ()->ready_cnd_.broadcast ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "orb_init");
+      ex._tao_print_exception ("orb_init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -163,15 +158,13 @@ Cubit_Task::get_servant_ior (u_int index)
 int
 Cubit_Task::create_servants (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var manager =
         poa->the_POAManager();
@@ -229,8 +222,7 @@ Cubit_Task::create_servants (void)
 
 
           CORBA::String_var str =
-            this->orb_->object_to_string (cubit.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+            this->orb_->object_to_string (cubit.in ());
 
           this->servants_iors_[i] =
             ACE_OS::strdup (str.in ());
@@ -238,12 +230,10 @@ Cubit_Task::create_servants (void)
 
       delete [] buffer;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Cubit_Task::create_servants");
+      ex._tao_print_exception ("Cubit_Task::create_servants");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

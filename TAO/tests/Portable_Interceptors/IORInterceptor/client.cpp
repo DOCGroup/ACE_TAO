@@ -39,8 +39,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 #if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
@@ -52,21 +51,20 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_orb" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "client_orb");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       FOO::test_var server =
-        FOO::test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        FOO::test::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -78,13 +76,11 @@ main (int argc, char *argv[])
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "IORInterceptor test (client-side):");
+      ex._tao_print_exception ("IORInterceptor test (client-side):");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

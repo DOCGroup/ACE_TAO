@@ -34,7 +34,7 @@ Process_Factory::create_new_process (void)
     startup_callback_impl->_this ();
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (startup_callback.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (startup_callback.in ());
 
   const char* argv[3] = {
     "child",
@@ -65,24 +65,23 @@ Process_Factory::create_new_process (void)
   for (int i = 0; i != 500 && !process_has_started; ++i)
     {
       ACE_Time_Value interval (0, 10000);
-      this->orb_->perform_work (interval ACE_ENV_ARG_PARAMETER);
+      this->orb_->perform_work (interval);
 
       process_has_started =
         startup_callback_impl->process_has_started (the_process.out ());
     }
 
-  ACE_TRY
+  try
     {
       PortableServer::POA_var poa =
         startup_callback_impl->_default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (startup_callback_impl ACE_ENV_ARG_PARAMETER);
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+        poa->servant_to_id (startup_callback_impl);
+      poa->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   if (process_has_started == 0)
     {
@@ -107,5 +106,5 @@ Process_Factory::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown_received_ = 1;
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

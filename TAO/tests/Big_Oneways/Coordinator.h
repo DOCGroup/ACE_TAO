@@ -25,15 +25,13 @@ public:
                             CORBA::ULong payload_size,
                             CORBA::ULong thread_count,
                             CORBA::ULong message_count,
-                            Test::Session_List &session_list
-                            ACE_ENV_ARG_DECL);
+                            Test::Session_List &session_list);
 
   /// Shutdown all the peers
   void shutdown_all_peers (void);
 
   // = The skeleton methods
-  virtual void add_peer (Test::Peer_ptr peer
-                         ACE_ENV_ARG_DECL)
+  virtual void add_peer (Test::Peer_ptr peer)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

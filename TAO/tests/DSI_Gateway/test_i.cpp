@@ -13,8 +13,7 @@ CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x,
                               const Structure& the_in_structure,
                               Structure_out the_out_structure,
-                              char *&name
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              char *&name)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Structure *tmp = 0;
@@ -43,23 +42,21 @@ Simple_Server_i::raise_user_exception (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      test_exception))
 {
-  ACE_THROW (test_exception (33,
-                             "reactor meltdown",
-                             "kaput"));
+  throw test_exception (33, "reactor meltdown", "kaput");
 }
 
 void
 Simple_Server_i::raise_system_exception (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_PERMISSION ());
+  throw CORBA::NO_PERMISSION ();
 }
 
 void
 Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 CORBA::Long
@@ -70,7 +67,7 @@ Simple_Server_i::test_val (void)
 }
 
 void
-Simple_Server_i::test_val (CORBA::Long tv ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::test_val (CORBA::Long tv)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)

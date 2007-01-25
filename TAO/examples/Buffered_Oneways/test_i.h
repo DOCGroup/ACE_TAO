@@ -28,8 +28,7 @@ public:
   // ctor.
 
   // = The test interface methods.
-  void method (CORBA::ULong request_number
-               ACE_ENV_ARG_DECL_NOT_USED)
+  void method (CORBA::ULong request_number)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (void)

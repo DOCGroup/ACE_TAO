@@ -1,12 +1,10 @@
 //$Id$
-static void M302 (Demux_Test_ptr objref
-                  ACE_ENV_ARG_DECL)
+static void M302 (Demux_Test_ptr objref)
 {
   objref->M302 ();
 }
 
-static void shutdown (Demux_Test_ptr objref
-                      ACE_ENV_ARG_DECL)
+static void shutdown (Demux_Test_ptr objref)
 {
   objref->shutdown ();
 }

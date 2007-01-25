@@ -68,13 +68,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -93,10 +93,10 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -114,8 +114,7 @@ main (int argc, char *argv[])
       for (int i = 0; i != niterations; ++i)
         {
           CORBA::Long r =
-            server->test_method (0, 0, callback.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+            server->test_method (0, 0, callback.in ());
 
           if (r != 0)
             {
@@ -127,42 +126,36 @@ main (int argc, char *argv[])
 
       if (do_abort)
         {
-          ACE_TRY_EX(ABORT)
+          try
             {
-              server->shutdown_now (0 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(ABORT);
+              server->shutdown_now (0);
             }
-          ACE_CATCH (CORBA::COMM_FAILURE, comm_failure)
+          catch (const CORBA::COMM_FAILURE& comm_failure)
             {
               ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
-          ACE_ENDTRY;
         }
       else if (do_crash)
         {
-          ACE_TRY_EX(CRASH)
+          try
             {
-              server->shutdown_now (1 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(CRASH);
+              server->shutdown_now (1);
             }
-          ACE_CATCH (CORBA::COMM_FAILURE, comm_failure)
+          catch (const CORBA::COMM_FAILURE& comm_failure)
             {
               ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
-          ACE_ENDTRY;
         }
       else if (do_suicide)
         {
-          (void) server->test_method (1, 0, callback.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+          (void) server->test_method (1, 0, callback.in ());
           ACE_DEBUG ((LM_DEBUG, "ERROR: client should have aborted\n"));
         }
       else if (do_self_shutdown)
         {
-          (void) server->test_method (1, 1, callback.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+          (void) server->test_method (1, 1, callback.in ());
         }
 
       if (do_shutdown)
@@ -170,10 +163,10 @@ main (int argc, char *argv[])
           server->shutdown ();
         }
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, x)
+  catch (const CORBA::COMM_FAILURE& x)
     {
       // For other case this is expected.
       if (do_self_shutdown == 0)
@@ -181,13 +174,11 @@ main (int argc, char *argv[])
           x._tao_print_exception ("ERROR: Unexpected exception \n");
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in client:");
+      ex._tao_print_exception ("Exception caught in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -18,9 +18,8 @@ public:
   virtual int activate_task (RTScheduling::Current_ptr current,
 			     CORBA::Policy_ptr sched_param,
 			     long flags,
-			     ACE_Time_Value* base_time
-			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  
+			     ACE_Time_Value* base_time);
+
   virtual int perform_task (void);
 
   virtual void pre_activate (void);

@@ -28,8 +28,7 @@ public:
   void dump_results (void);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &payload
-                             ACE_ENV_ARG_DECL)
+  virtual void receive_data (const Test::Payload &payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Long get_event_count (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

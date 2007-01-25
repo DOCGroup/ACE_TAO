@@ -31,7 +31,7 @@ public:
 
   void shutdown (void);
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL_NOT_USED);
+  int init (int argc, char *argv[]);
   // Initializing the Collocation_Test object.
 
   int parse_args (int argc, char *argv[]);

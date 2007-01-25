@@ -17,7 +17,7 @@ private:
 int
 main (int argc, char *argv[])
 {
-	ACE_TRY_NEW_ENV
+	try
     {
 		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 		CORBA::Object_var poa_object = orb->resolve_initial_references("RootPOA");
@@ -47,12 +47,11 @@ main (int argc, char *argv[])
 
 		ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 	}
-	ACE_CATCHANY
+	catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-	ACE_ENDTRY;
 
 	return 0;
 }

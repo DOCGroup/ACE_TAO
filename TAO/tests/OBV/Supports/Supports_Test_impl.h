@@ -22,13 +22,13 @@ public:
 
   node_impl (const char * name);
 
-  virtual void add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+  virtual void add_edge (Supports_Test::Node * neighbor)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+  virtual void remove_edge (Supports_Test::Node * neighbor)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
+  void change_weight (CORBA::Long new_weight)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void print (void)
@@ -59,14 +59,12 @@ class vt_graph_impl :
 
   vt_graph_impl (void);
 
-  vt_graph_impl (int num_nodes
-                 ACE_ENV_ARG_DECL);
+  vt_graph_impl (int num_nodes);
 
   virtual CORBA::Long size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void add_node (const char * name
-                         ACE_ENV_ARG_DECL)
+  virtual void add_node (const char * name)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void print (void)
@@ -97,28 +95,22 @@ class test_impl :
 
   virtual ~test_impl (void);
 
-  virtual void pass_obj_graph_in (Supports_Test::graph * graph_param
-				  ACE_ENV_ARG_DECL)
+  virtual void pass_obj_graph_in (Supports_Test::graph * graph_param)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void pass_vt_graph_in (Supports_Test::vt_graph * vt_graph_param
-				 ACE_ENV_ARG_DECL)
+  virtual void pass_vt_graph_in (Supports_Test::vt_graph * vt_graph_param)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void pass_obj_graph_out (Supports_Test::graph_out graph_param
-				   ACE_ENV_ARG_DECL)
+  virtual void pass_obj_graph_out (Supports_Test::graph_out graph_param)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void pass_vt_graph_out (Supports_Test::vt_graph_out vt_graph_param
-				  ACE_ENV_ARG_DECL)
+  virtual void pass_vt_graph_out (Supports_Test::vt_graph_out vt_graph_param)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void pass_obj_graph_inout (Supports_Test::graph * &graph_param
-				     ACE_ENV_ARG_DECL)
+  virtual void pass_obj_graph_inout (Supports_Test::graph * &graph_param)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void pass_vt_graph_inout (Supports_Test::vt_graph * &vt_graph_param
-				    ACE_ENV_ARG_DECL)
+  virtual void pass_vt_graph_inout (Supports_Test::vt_graph * &vt_graph_param)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void start (void)

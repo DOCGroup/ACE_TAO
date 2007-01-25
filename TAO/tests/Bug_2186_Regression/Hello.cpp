@@ -22,24 +22,23 @@ void
 Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 void
-Hello::request_callback (Test::Hello_ptr call_me ACE_ENV_ARG_DECL)
+Hello::request_callback (Test::Hello_ptr call_me)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Making call back !!!\n"));
-  ACE_TRY
+  try
     {
       CORBA::String_var result = call_me->get_string ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception attempting to callback client obj ref: \n");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "Exception attempting to callback client obj ref: \n");
+      throw;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Call back succeeded !!!\n"));
 }

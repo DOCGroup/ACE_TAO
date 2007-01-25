@@ -74,12 +74,10 @@ Identity_Client::init (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
+                                        argv);
       if (result == -1)
         return result;
 
@@ -88,12 +86,11 @@ Identity_Client::init (int argc,
       if (result < 0)
         return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Client::init");
+      ex._tao_print_exception ("Identity_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -106,11 +103,9 @@ Identity_Client::run (void)
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
-    orb->string_to_object (this->group_factory_ior_
-                           ACE_ENV_ARG_PARAMETER);
+    orb->string_to_object (this->group_factory_ior_);
   Load_Balancer::Object_Group_Factory_var factory =
-    Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+    Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
   if (CORBA::is_nil (factory.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,8 +122,7 @@ Identity_Client::run (void)
               "Identity_Client: Requesting Object Group "
               "with id <%s>\n", group_name));
   Load_Balancer::Object_Group_var object_group =
-    factory->resolve (group_name
-                      ACE_ENV_ARG_PARAMETER);
+    factory->resolve (group_name);
 
   // List <Object_Group>'s id.
   CORBA::String_var id = object_group->id ();
@@ -173,15 +167,13 @@ Identity_Client::run (void)
     {
       obj = object_group->resolve ();
 
-      identity_object = Identity::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+      identity_object = Identity::_narrow (obj.in ());
       if (CORBA::is_nil (identity_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Identity_Client: cannot narrow an object received from"
                            "<Object_Group::resolve> to <Identity>\n"),
                           -1);
-      identity_object->get_name (identity.out ()
-                                 ACE_ENV_ARG_PARAMETER);
+      identity_object->get_name (identity.out ());
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -203,17 +195,15 @@ main (int argc, char *argv[])
   if (client.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = client.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Client");
+      ex._tao_print_exception ("Identity_Client");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (result == -1)
     return 1;

@@ -30,8 +30,7 @@ Client_Peer::Client_Peer (CORBA::ORB_ptr orb)
 void
 Client_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
-                    Test::Payload const &
-                    ACE_ENV_ARG_DECL)
+                    Test::Payload const &)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
@@ -42,8 +41,7 @@ Client_Peer::callme(Test::Peer_ptr callback,
 
     Test::Payload return_data;
 
-    callback->callme(me.in(), max_depth - 1, return_data
-                     ACE_ENV_ARG_PARAMETER);
+    callback->callme(me.in(), max_depth - 1, return_data);
   }
 }
 

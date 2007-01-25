@@ -19,23 +19,22 @@ main(int argc, char* argv[])
 
   ServerApp app;
 
-  ACE_TRY_NEW_ENV
+  try
   {
-    int ret = app.run(argc,argv ACE_ENV_ARG_PARAMETER);
+    int ret = app.run(argc,argv);
     return ret == 1 ? 0 : ret;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+     ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
   }
-  ACE_CATCHALL
+  catch (...)
   {
     ACE_ERROR((LM_ERROR,
                "(%P|%t) Unknown (...) exception caught in main() "
                "for ServerApp\n"));
   }
-  ACE_ENDTRY;
 
   return 1;
 }

@@ -42,22 +42,19 @@ main (int argc, char* argv [])
   test_var server;
   RTScheduling::Scheduler_var safe_scheduler;
 
-  ACE_TRY_NEW_ENV
+  try
     {
 
       orb = CORBA::ORB_init (argc,
                              argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
+                             "");
 
       if (parse_args (argc, argv) == -1)
         return (-1);
 
-      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
-                                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
-                                                                              ACE_ENV_ARG_PARAMETER);
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
       TAO_Scheduler* scheduler;
       ACE_NEW_RETURN (scheduler,
@@ -69,11 +66,9 @@ main (int argc, char* argv [])
 
 
       CORBA::Object_var object =
-        orb->string_to_object (ior.c_str ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior.c_str ());
 
-      server = test::_narrow (object.in ()
-                              ACE_ENV_ARG_PARAMETER);
+      server = test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -83,11 +78,9 @@ main (int argc, char* argv [])
                             1);
         }
 
-      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
-								       ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
 
-      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
-                                                                          ACE_ENV_ARG_PARAMETER);
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -95,8 +88,7 @@ main (int argc, char* argv [])
 
       current->begin_scheduling_segment (name,
                                          sched_param,
-                                         implicit_sched_param
-                                         ACE_ENV_ARG_PARAMETER);
+                                         implicit_sched_param);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Making a one-way request\n"));
@@ -104,27 +96,23 @@ main (int argc, char* argv [])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Making a two-way request\n"));
-      server->two_way (ior.c_str ()
-                       ACE_ENV_ARG_PARAMETER);
+      server->two_way (ior.c_str ());
 
-      current->end_scheduling_segment (name
-                                       ACE_ENV_ARG_PARAMETER);
+      current->end_scheduling_segment (name);
 
     }
-  ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)
+  catch (const CORBA::THREAD_CANCELLED& )
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "Distributable Thread Cancelled - Expected Exception\n"));
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
 
       return 0;
     }
-  ACE_ENDTRY;
 
   orb->destroy ();
 

@@ -22,15 +22,14 @@ Service::dump_results (void)
 }
 
 void
-Service::run_test (Test::Callback_ptr callback
-                   ACE_ENV_ARG_DECL)
+Service::run_test (Test::Callback_ptr callback)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int exceptions =
-    this->call_are_you_there (callback ACE_ENV_ARG_PARAMETER);
+    this->call_are_you_there (callback);
 
   exceptions +=
-    this->call_test_oneway (callback ACE_ENV_ARG_PARAMETER);
+    this->call_test_oneway (callback);
 
   if (exceptions != 0)
     {
@@ -41,24 +40,22 @@ Service::run_test (Test::Callback_ptr callback
   /// Increment the number of tests completed
   this->test_count_++;
 
-  ACE_TRY
+  try
     {
       callback->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "(%P|%t) - Service, client shutdown FAILED\n"));
     }
-  ACE_ENDTRY;
 
   // shutdown ourselves
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 
 int
-Service::call_are_you_there (Test::Callback_ptr callback
-                             ACE_ENV_ARG_DECL)
+Service::call_are_you_there (Test::Callback_ptr callback)
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
@@ -69,15 +66,14 @@ Service::call_are_you_there (Test::Callback_ptr callback
     {
       char* outstr;
       CORBA::String_out out_str (outstr);
-      ACE_TRY
+      try
         {
-          (void) callback->are_you_there (out_str ACE_ENV_ARG_PARAMETER);
+          (void) callback->are_you_there (out_str);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           exception_count++;
         }
-      ACE_ENDTRY;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, answer = %s\n", outstr));
     }
@@ -85,8 +81,7 @@ Service::call_are_you_there (Test::Callback_ptr callback
 }
 
 int
-Service::call_test_oneway (Test::Callback_ptr callback
-                           ACE_ENV_ARG_DECL)
+Service::call_test_oneway (Test::Callback_ptr callback)
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
@@ -95,15 +90,14 @@ Service::call_test_oneway (Test::Callback_ptr callback
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      ACE_TRY
+      try
         {
           (void) callback->test_oneway ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           exception_count++;
         }
-      ACE_ENDTRY;
     }
   return exception_count;
 }

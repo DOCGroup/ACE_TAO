@@ -61,8 +61,7 @@ int
 Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                               const char *my_name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Get a Scheduler.
 
@@ -70,7 +69,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
         ACE_Scheduler_Factory::server ();
 
       // Define Real-time information.
-      rt_info_ = server->create (my_name ACE_ENV_ARG_PARAMETER);
+      rt_info_ = server->create (my_name);
 
       server->set (rt_info_,
                    RtecScheduler::VERY_LOW_CRITICALITY,
@@ -81,8 +80,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
                    ORBSVCS_Time::zero (),
                    1,
-                   RtecScheduler::OPERATION
-                   ACE_ENV_ARG_PARAMETER);
+                   RtecScheduler::OPERATION);
 
 
       // Create the event that we're registering for.
@@ -116,22 +114,20 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
         this->_this ();
 
       this->suppliers_->connect_push_consumer (objref.in (),
-                                               dependencies.get_ConsumerQOS ()
-                                               ACE_ENV_ARG_PARAMETER);
+                                               dependencies.get_ConsumerQOS ());
     }
-  ACE_CATCH (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR, se)
+  catch (const RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR& )
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demo_Consumer::open: subscribe failed.\n"),
                         -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demo_Consumer::open: unexpected exception.\n"),
                         -1);
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -144,8 +140,7 @@ Demo_Consumer::disconnect_push_consumer (void)
 }
 
 void
-Demo_Consumer::push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL)
+Demo_Consumer::push (const RtecEventComm::EventSet &events)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -169,7 +164,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
         {
           ACE_DEBUG ((LM_DEBUG, "Demo Consumer: received ACE_ES_EVENT_NOTIFICATION event.\n"));
 
-          ACE_TRY
+          try
             {
               // Use a temporary int to avoid overload ambiguities with
               // the enum.
@@ -181,7 +176,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
               ACE_DEBUG ((LM_DEBUG, "TCKind: %d\n", kind));
 
               CORBA::Boolean ret =
-                _tc_Navigation->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER);
+                _tc_Navigation->equal (events[i].data.any_value.type());
 
               if (ret)
                 {
@@ -191,7 +186,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
                 }
               else
                 {
-                  ret = _tc_Weapons->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER);
+                  ret = _tc_Weapons->equal (events[i].data.any_value.type());
 
                   if (ret)
                     {
@@ -201,11 +196,10 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
                     }
                 }
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
               ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
             }
-          ACE_ENDTRY;
         }
     }
 }
@@ -213,7 +207,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
 void
 Demo_Consumer::shutdown (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Disconnect from the push supplier.
 
@@ -223,12 +217,11 @@ Demo_Consumer::shutdown (void)
 
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
                  "(%t) Demo_Consumer::shutdown: unexpected exception.\n"));
     }
-  ACE_ENDTRY;
 }
 
 // function get_options
@@ -274,16 +267,15 @@ get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize ORB.
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "internet");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA"
-                                        ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -291,14 +283,13 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -306,8 +297,7 @@ main (int argc, char *argv [])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 
@@ -321,11 +311,10 @@ main (int argc, char *argv [])
       channel_name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (channel_name
-                                 ACE_ENV_ARG_PARAMETER);
+        naming_context->resolve (channel_name);
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in() ACE_ENV_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in());
 
       if (CORBA::is_nil (ec.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -354,15 +343,13 @@ main (int argc, char *argv [])
       delete demo_consumer;
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
+                         1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -32,10 +32,10 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var obj =
-        this->corb_->string_to_object (input_ ACE_ENV_ARG_PARAMETER);
+        this->corb_->string_to_object (input_);
 
       if (CORBA::is_nil (obj.in ()))
       {
@@ -46,7 +46,7 @@ Client_Task::svc (void)
       }
 
       CORBA::Object_var simple_test_obj =
-        this->corb_->string_to_object (simple_test_input_ ACE_ENV_ARG_PARAMETER);
+        this->corb_->string_to_object (simple_test_input_);
 
       if (CORBA::is_nil (simple_test_obj.in ()))
       {
@@ -57,9 +57,9 @@ Client_Task::svc (void)
       }
 
       Test::Simple_Test_var simple_test
-        = Test::Simple_Test::_narrow (simple_test_obj.in () ACE_ENV_ARG_PARAMETER);
+        = Test::Simple_Test::_narrow (simple_test_obj.in ());
 CORBA::Long l = 200;
-      CORBA::Request_var req (obj->_request ("test_basic_arg" ACE_ENV_ARG_PARAMETER));
+      CORBA::Request_var req (obj->_request ("test_basic_arg"));
       req->add_in_arg ("basic") <<= TEST_BASIC_VALUE;
       req->add_out_arg ("x") <<= l;
       req->invoke ();
@@ -68,15 +68,13 @@ CORBA::Long l = 200;
 
       }
 
-      req = obj->_request ("test_unbounded_string_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_unbounded_string_arg");
 
       req->add_in_arg ("ub_string") <<= TEST_STR;
       req->invoke ();
 
 
-      req = obj->_request ("test_bounded_string_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_bounded_string_arg");
 
       ACE_CString bs (TEST_STR);
       bs = bs.substr (0, ::Test::BOUNDED_STRING_SIZE);
@@ -86,8 +84,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_fixed_array_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_fixed_array_arg");
 
       ::Test::Fixed_Array fixed_array;
 
@@ -100,8 +97,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_var_array_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_var_array_arg");
 
       ::Test::Var_Array var_array;
 
@@ -114,8 +110,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_bounded_var_size_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_bounded_var_size_arg");
 
       ACE_CString bvs (TEST_STR);
       bvs = bvs.substr (0, ::Test::BOUNDED_VAR_SIZE);
@@ -130,8 +125,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_unbounded_var_size_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_unbounded_var_size_arg");
 
       ::Test::Unbounded_Var_Size_Arg* ub_var_size
         = new ::Test::Unbounded_Var_Size_Arg();
@@ -143,8 +137,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_fixed_size_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_fixed_size_arg");
 
       ::Test::TimeOfDay t;
       t.hour = TEST_HOUR;
@@ -155,29 +148,25 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_special_basic_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_special_basic_arg");
 
       req->add_in_arg ("special") <<= CORBA::Any::from_char (TEST_SPECIAL_VALUE);
       req->invoke ();
 
 
-      req = obj->_request ("test_object_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_object_arg");
 
       req->add_in_arg ("object") <<= simple_test_obj.in ();
       req->invoke ();
 
 
-      req = obj->_request ("test_objref_arg"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_objref_arg");
 
       req->add_in_arg ("objref") <<= simple_test.in ();
       req->invoke ();
 
 
-      req = obj->_request ("test_args_1"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_args_1");
 
       req->add_in_arg ("arg1") <<= simple_test_obj.in ();
       req->add_in_arg ("arg2") <<= CORBA::Any::from_char (TEST_SPECIAL_VALUE);
@@ -185,8 +174,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_args_2"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_args_2");
 
       req->add_in_arg ("arg1") <<= TEST_STR;
       req->add_in_arg ("arg2") <<= ::Test::Fixed_Array_forany (fixed_array);
@@ -194,8 +182,7 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("test_args_3"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("test_args_3");
 
       bd_var_size
         = new ::Test::Bounded_Var_Size_Arg();
@@ -222,27 +209,24 @@ CORBA::Long l = 200;
       req->invoke ();
 
 
-      req = obj->_request ("shutdown"
-        ACE_ENV_ARG_PARAMETER);
+      req = obj->_request ("shutdown");
 
       req->send_oneway ();
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       error_count_ ++;
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       error_count_ ++;
       ACE_ERROR ((LM_ERROR, "(%P|%t)Client_Task::svc - caught unknown exception \n"));
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 

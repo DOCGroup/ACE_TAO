@@ -17,16 +17,15 @@
 
 int main (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
                          "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 
       if(argc < 2 )
         {
@@ -38,12 +37,11 @@ int main (int argc, char *argv [])
 
       // Get an object reference using a corbaname: style URL
       CORBA::Object_var obj =
-        orb->string_to_object (argv[1]
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (argv[1]);
 
       // Narrow
       corbaloc::Status_var factory =
-        corbaloc::Status::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        corbaloc::Status::_narrow (obj.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -66,15 +64,14 @@ int main (int argc, char *argv [])
 
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
       //
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

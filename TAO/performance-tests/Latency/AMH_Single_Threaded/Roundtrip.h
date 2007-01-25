@@ -23,12 +23,10 @@ class Roundtrip
 
     // = The skeleton methods
     void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                      Test::Timestamp send_time
-                      ACE_ENV_ARG_DECL)
+                      Test::Timestamp send_time)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
-                   ACE_ENV_ARG_DECL)
+    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:

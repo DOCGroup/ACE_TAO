@@ -40,19 +40,19 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,7 +72,7 @@ main (int argc, char *argv[])
         hello_impl->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -87,10 +87,10 @@ main (int argc, char *argv[])
       poa_manager->activate ();
 
       CORBA::Object_var tmp =
-        orb->string_to_object(server_ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(server_ior);
 
       Test::Hello_var server =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -102,20 +102,18 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Sending client obj ref to the server and requesting a callback.\n"));
 
-      server->request_callback (hello.in () ACE_ENV_ARG_PARAMETER);
+      server->request_callback (hello.in ());
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Test (client) Succeeded !!!\n"));
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "(%P|%t) - Test (client) Failed !!!\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

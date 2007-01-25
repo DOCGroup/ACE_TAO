@@ -15,25 +15,24 @@ const char *ior =
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       // First connection happens here..
-      test::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
+      test::_narrow (tmp.in ());
     }
-  ACE_CATCH (CORBA::TRANSIENT, transient_exception)
+  catch (const CORBA::TRANSIENT& )
     {
       // This exception is correct.
       ACE_DEBUG ((LM_DEBUG,
                   "_narrow() to non-existent object failed correctly.  Test succeeded.\n"));
       return 0;
     }
-  ACE_ENDTRY;
 
   // Should not reach here.
   ACE_ERROR_RETURN ((LM_ERROR,

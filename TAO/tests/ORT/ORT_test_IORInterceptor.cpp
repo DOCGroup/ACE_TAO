@@ -32,8 +32,7 @@ ORT_test_IORInterceptor::destroy (void)
 
 void
 ORT_test_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::IORInfo_ptr /* info */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->establish_count_;
@@ -45,8 +44,7 @@ ORT_test_IORInterceptor::establish_components (
 
 void
 ORT_test_IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::IORInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->components_establish_count_;
@@ -73,15 +71,13 @@ ORT_test_IORInterceptor::components_established (
 
   PortableInterceptor::ObjectReferenceFactory_var orf = tmp;
 
-  info->current_factory (orf.in ()
-                         ACE_ENV_ARG_PARAMETER);
+  info->current_factory (orf.in ());
 }
 
 void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
     const char * id,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -91,8 +87,7 @@ ORT_test_IORInterceptor::adapter_manager_state_changed (
 void
 ORT_test_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

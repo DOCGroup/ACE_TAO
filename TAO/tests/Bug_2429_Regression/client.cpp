@@ -22,18 +22,17 @@ class Reply_Handler
 
    virtual void
    childMethod_excep (Messaging::ExceptionHolder *
-                         excep_holder ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                         excep_holder)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_TRY
+      try
         {
           excep_holder->raise_exception ();
         }
-      ACE_CATCH (CORBA::SystemException, ex)
+      catch (const CORBA::SystemException& ex)
         {
-          ACE_PRINT_EXCEPTION (ex, "Reply_Handler::childMethod_excep: ");
+          ex._tao_print_exception ("Reply_Handler::childMethod_excep: ");
         }
-      ACE_ENDTRY;
     }
 
    virtual void
@@ -47,24 +46,22 @@ class Reply_Handler
     }
 
    virtual void
-   parentMethod_excep (Messaging::ExceptionHolder * excep_holder
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+   parentMethod_excep (Messaging::ExceptionHolder * excep_holder)
    ACE_THROW_SPEC ((CORBA::SystemException))
    {
-      ACE_TRY
+      try
         {
           ++parentMethod_excep_count;
           excep_holder->raise_exception ();
         }
-      ACE_CATCH (CORBA::INTERNAL, iex)
+      catch (const CORBA::INTERNAL& iex)
         {
           ACE_DEBUG ((LM_DEBUG, "Successfully received an Internal Excep*ion as expected.\n"));
         }
-      ACE_CATCH (CORBA::SystemException, ex)
+      catch (const CORBA::SystemException& ex)
         {
-          ACE_PRINT_EXCEPTION (ex, "Reply_Handler::childMethod_excep: ");
+          ex._tao_print_exception ("Reply_Handler::childMethod_excep: ");
         }
-      ACE_ENDTRY;
    }
 
    CORBA::ULong reply_count (void) { return parentMethod_count + parentMethod_excep_count; };
@@ -108,14 +105,13 @@ client_parse_args(int argc, char *argv[])
 int
 main(int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   CORBA::ORB_var orb;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
-      orb = CORBA::ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init(argc, argv, 0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = client_parse_args(argc, argv);
@@ -125,10 +121,10 @@ main(int argc, char *argv[])
         }
 
       CORBA::Object_var object =
-         orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+         orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+         PortableServer::POA::_narrow (object.in ());
 
       // Get an object reference from the nominated file
       object = orb->string_to_object (server_ior);
@@ -139,7 +135,7 @@ main(int argc, char *argv[])
 
       poa_manager->activate();
 
-      Child_var child = Child::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
+      Child_var child = Child::_narrow (object.in());
 
       Reply_Handler reply_handler_servant;
 
@@ -147,8 +143,7 @@ main(int argc, char *argv[])
          reply_handler_servant._this ();
 
       // Invoke the AMI parentMethod
-      child->sendc_parentMethod (reply_handler_object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+      child->sendc_parentMethod (reply_handler_object.in ());
 
       // Loop until all replies have been received.
       while (reply_handler_servant.reply_count () == 0)
@@ -161,13 +156,11 @@ main(int argc, char *argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
    return 0;
 }

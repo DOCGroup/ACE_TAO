@@ -12,17 +12,16 @@ Loader::Loader (void)
 CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
                        int,
-                       char * []
-                       ACE_ENV_ARG_DECL)
+                       char * [])
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr =
         poa->the_POAManager ();
@@ -38,10 +37,9 @@ Loader::create_object (CORBA::ORB_ptr orb,
 
       return obj._retn ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
   return CORBA::Object::_nil ();
 }
 

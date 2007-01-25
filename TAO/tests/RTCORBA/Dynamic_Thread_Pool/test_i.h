@@ -22,8 +22,7 @@ public:
   /// Test method.
   CORBA::Long method (CORBA::Long client_id,
                       CORBA::Long iteration,
-                      CORBA::Long_out thread_count
-                      ACE_ENV_ARG_DECL_NOT_USED)
+                      CORBA::Long_out thread_count)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the server.

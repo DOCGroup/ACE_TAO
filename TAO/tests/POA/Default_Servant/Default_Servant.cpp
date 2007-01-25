@@ -29,7 +29,7 @@ void
 test_get_servant_manager (PortableServer::POA_ptr poa)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Getting the servant manager should give a wrong policy exception
       // exception
@@ -38,14 +38,13 @@ test_get_servant_manager (PortableServer::POA_ptr poa)
 
       ACE_UNUSED_ARG (servant_manager);
     }
-  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+  catch (const PortableServer::POA::WrongPolicy& )
     {
       succeed = true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -58,20 +57,19 @@ void
 test_set_servant_manager (PortableServer::POA_ptr poa)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Setting the servant manager should give a wrong policy exception
       // exception
-      poa->set_servant_manager (PortableServer::ServantManager::_nil() ACE_ENV_ARG_PARAMETER);
+      poa->set_servant_manager (PortableServer::ServantManager::_nil());
     }
-  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
+  catch (const PortableServer::POA::WrongPolicy& )
     {
       succeed = true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -84,7 +82,7 @@ void
 test_get_servant_with_no_set (PortableServer::POA_ptr poa)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Getting the default servant without one set whould give a NoServant
       // exception
@@ -93,14 +91,13 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
 
       ACE_UNUSED_ARG (servant);
     }
-  ACE_CATCH (PortableServer::POA::NoServant, ex)
+  catch (const PortableServer::POA::NoServant& )
     {
       succeed = true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -110,24 +107,23 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
 }
 
 void
-test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa
-                                        ACE_ENV_ARG_DECL)
+test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa)
 {
   test_i test;
   CORBA::ULong expected_refcount = 1;
 
   PortableServer::ObjectId* id =
-    root_poa->activate_object (&test ACE_ENV_ARG_PARAMETER);
+    root_poa->activate_object (&test);
   expected_refcount++;
 
   CORBA::Object_var object =
-    root_poa->id_to_reference (*id ACE_ENV_ARG_PARAMETER);
+    root_poa->id_to_reference (*id);
 
   PortableServer::ServantBase_var servant =
-    root_poa->reference_to_servant (object.in () ACE_ENV_ARG_PARAMETER);
+    root_poa->reference_to_servant (object.in ());
   expected_refcount++;
 
-  root_poa->deactivate_object (*id ACE_ENV_ARG_PARAMETER);
+  root_poa->deactivate_object (*id);
   expected_refcount--;
 
   CORBA::ULong refcount =
@@ -142,25 +138,21 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       // Obtain the RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Narrow to POA.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
@@ -172,26 +164,22 @@ main (int argc, char **argv)
 
       // Request Processing Policy.
       policies[0] =
-        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
-                                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
 
       // Id Uniqueness Policy.
       policies[1] =
-        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
-                                               ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
       // Servant Retention Policy.
       policies[2] =
-        root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN
-                                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
       // Create POA to host default servant.
       ACE_CString name = "Default Servant";
       PortableServer::POA_var default_servant_poa =
         root_poa->create_POA (name.c_str (),
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Destroy policies.
       for (CORBA::ULong i = 0;
@@ -205,8 +193,7 @@ main (int argc, char **argv)
       // Activate POA manager.
       poa_manager->activate ();
 
-      test_reference_to_servant_active_object(root_poa.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+      test_reference_to_servant_active_object(root_poa.in ());
 
       // Test servant.
       test_i test;
@@ -219,8 +206,7 @@ main (int argc, char **argv)
       (void) test_set_servant_manager (default_servant_poa.in());
 
       // Register default servant.
-      default_servant_poa->set_servant (&test
-                                        ACE_ENV_ARG_PARAMETER);
+      default_servant_poa->set_servant (&test);
       expected_refcount++;
 
       // Create dummy id.
@@ -229,13 +215,11 @@ main (int argc, char **argv)
 
       // Create dummy object.
       object =
-        default_servant_poa->create_reference ("IDL:test:1.0"
-                                            ACE_ENV_ARG_PARAMETER);
+        default_servant_poa->create_reference ("IDL:test:1.0");
 
       // Invoke id_to_servant(). Should retrieve default servant.
       PortableServer::ServantBase_var servant =
-        default_servant_poa->id_to_servant (id.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+        default_servant_poa->id_to_servant (id.in ());
       expected_refcount++;
 
       // Assert correctness.
@@ -243,8 +227,7 @@ main (int argc, char **argv)
 
       // Invoke reference_to_servant(). Should retrieve default servant.
       servant =
-        default_servant_poa->reference_to_servant (object.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+        default_servant_poa->reference_to_servant (object.in ());
       expected_refcount++;
 
       // Assert correctness.
@@ -264,12 +247,11 @@ main (int argc, char **argv)
       // Destroy the ORB.
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

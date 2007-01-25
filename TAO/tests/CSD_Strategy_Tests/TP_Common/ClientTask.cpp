@@ -63,7 +63,7 @@ ClientTask::svc()
     this->engines_.pop_back();
   }
 
-  ACE_TRY_NEW_ENV
+  try
   {
     bool exec_ret = engine->execute();
     if (exec_ret == false)
@@ -72,15 +72,15 @@ ClientTask::svc()
         this->failure_count_ ++;
       }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "ClientTask::svc Caught exception from execute():");
+    ex._tao_print_exception (
+      "ClientTask::svc Caught exception from execute():");
 
     GuardType guard(this->lock_);
     this->failure_count_ ++;
   }
-  ACE_CATCHALL
+  catch (...)
   {
     ACE_ERROR((LM_ERROR,
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
@@ -88,7 +88,6 @@ ClientTask::svc()
     GuardType guard(this->lock_);
     this->failure_count_ ++;
   }
-  ACE_ENDTRY;
 
   if(this->shutdown_after_done_)
     {

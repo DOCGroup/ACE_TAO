@@ -38,8 +38,8 @@ private:
   /// workaround bug 189
   void validate_connection (void);
 
-  void do_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL);
-  void do_sync_none_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL);
+  void do_invocations(Test::Payload& payload);
+  void do_sync_none_invocations(Test::Payload& payload);
 
 private:
   /// Reference to the test interface

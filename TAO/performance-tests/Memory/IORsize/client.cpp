@@ -42,16 +42,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -67,10 +67,10 @@ main (int argc, char *argv[])
         foo_i->_this ();
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Memory_Growth_var mem =
-        Test::Memory_Growth::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Memory_Growth::_narrow(tmp.in ());
 
       if (CORBA::is_nil (mem.in ()))
         {
@@ -94,20 +94,17 @@ main (int argc, char *argv[])
       // Make a few calls to the remote object
       for (int iter = 0; iter != n; iter++)
         {
-          mem->send_objref (pl
-                            ACE_ENV_ARG_PARAMETER);
+          mem->send_objref (pl);
         }
 
       // Let us run the event loop. This way we will not exit
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

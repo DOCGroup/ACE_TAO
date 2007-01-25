@@ -13,14 +13,14 @@ vt_graph_impl::vt_graph_impl (void)
 
 // Creates a vt_graph_impl with the given number of nodes. There will be one
 // root node and the rest will be children of it.
-vt_graph_impl::vt_graph_impl (int num_nodes ACE_ENV_ARG_DECL)
+vt_graph_impl::vt_graph_impl (int num_nodes)
 {
   nodes_ ().length (0);
-  add_node ("ROOT" ACE_ENV_ARG_PARAMETER);
+  add_node ("ROOT");
   for (int i = 1; i < num_nodes; i++)
     {
-      add_node ("CHILD" ACE_ENV_ARG_PARAMETER);
-      nodes_ ()[0]->add_edge (nodes_ ()[i] ACE_ENV_ARG_PARAMETER);
+      add_node ("CHILD");
+      nodes_ ()[0]->add_edge (nodes_ ()[i]);
     }
 }
 
@@ -33,7 +33,7 @@ CORBA::Long vt_graph_impl::size (void)
 
 // Add a node to the graph with no edges.
 void
-vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL_NOT_USED)
+vt_graph_impl::add_node (const char * name)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Supports_Test::Node * new_node = 0;
@@ -91,85 +91,79 @@ test_impl::~test_impl (void)
 
 void
 test_impl::pass_obj_graph_in (
-  Supports_Test::graph * graph_param
-  ACE_ENV_ARG_DECL)
+  Supports_Test::graph * graph_param)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
   ACE_ASSERT (graph_param->size () == 3);
-  graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  graph_param->add_node ("NEW1");
   ACE_ASSERT (graph_param->size () == 4);
 }
 
 void
 test_impl::pass_vt_graph_in (
-  Supports_Test::vt_graph * vt_graph_param
-  ACE_ENV_ARG_DECL)
+  Supports_Test::vt_graph * vt_graph_param)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
   ACE_ASSERT (vt_graph_param->size () == 3);
-  vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  vt_graph_param->add_node ("NEW1");
   ACE_ASSERT (vt_graph_param->size () == 4);
 }
 
 void
 test_impl::pass_obj_graph_out (
-  Supports_Test::graph_out graph_param
-  ACE_ENV_ARG_DECL)
+  Supports_Test::graph_out graph_param)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
   vt_graph_impl * the_vt_graph = 0;
-  ACE_NEW (the_vt_graph, vt_graph_impl (4 ACE_ENV_ARG_PARAMETER));
+  ACE_NEW (the_vt_graph, vt_graph_impl (4));
   graph_param = the_vt_graph->_this ();
 
   ACE_ASSERT (graph_param->size () == 4);
-  graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  graph_param->add_node ("NEW1");
   ACE_ASSERT (graph_param->size () == 5);
 }
 
 void
 test_impl::pass_vt_graph_out (
-    Supports_Test::vt_graph_out vt_graph_param
-    ACE_ENV_ARG_DECL)
+    Supports_Test::vt_graph_out vt_graph_param)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
 
   vt_graph_impl * the_vt_graph = 0;
-  ACE_NEW (the_vt_graph, vt_graph_impl (4 ACE_ENV_ARG_PARAMETER));
+  ACE_NEW (the_vt_graph, vt_graph_impl (4));
   vt_graph_param = the_vt_graph;
 
   ACE_ASSERT (vt_graph_param->size () == 4);
-  vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  vt_graph_param->add_node ("NEW1");
   ACE_ASSERT (vt_graph_param->size () == 5);
 
 }
 
 void
 test_impl::pass_obj_graph_inout (
-    Supports_Test::graph * &graph_param
-    ACE_ENV_ARG_DECL)
+    Supports_Test::graph * &graph_param)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
 
   ACE_ASSERT (graph_param->size () == 6);
-  graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
+  graph_param->add_node ("NEW3");
   ACE_ASSERT (graph_param->size () == 7);
 }
 
 void
 test_impl::pass_vt_graph_inout (
-    Supports_Test::vt_graph * &vt_graph_param
-    ACE_ENV_ARG_DECL)
+    Supports_Test::vt_graph * &vt_graph_param)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
 
   ACE_ASSERT (vt_graph_param->size () == 6);
-  vt_graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
+  vt_graph_param->add_node ("NEW3");
   ACE_ASSERT (vt_graph_param->size () == 7);
 
 }
@@ -204,7 +198,7 @@ node_impl::node_impl (const char * name)
 
 // Add an edge from this node to neighbor.
 void
-node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL_NOT_USED)
+node_impl::add_edge (Supports_Test::Node * neighbor)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   degree_ (degree_ () + 1);
@@ -216,7 +210,7 @@ node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL_NOT_USED)
 
 // Remove the edge from this node to neighbor.
 void
-node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL_NOT_USED)
+node_impl::remove_edge (Supports_Test::Node * neighbor)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (unsigned int i = 0; i < neighbors_ ().length (); i++)
@@ -229,7 +223,7 @@ node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL_NOT_USED
 }
 
 void
-node_impl::change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL_NOT_USED)
+node_impl::change_weight (CORBA::Long new_weight)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   weight_ (new_weight);

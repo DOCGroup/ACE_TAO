@@ -30,8 +30,7 @@ public:
   ~Identity_i (void);
   // Destructor.
 
-  virtual void get_name (CORBA::String_out name
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void get_name (CORBA::String_out name)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the name of this object.
 

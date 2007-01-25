@@ -15,13 +15,12 @@ int
 main (int argc, char *argv[])
 {
   int status = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       Policy_Verifier policy_verifier;
 
-      bool retval = policy_verifier.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      bool retval = policy_verifier.init (argc, argv);
 
       if (retval)
         {
@@ -32,13 +31,12 @@ main (int argc, char *argv[])
           status++;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CORBA Exception Raised");
+      ex._tao_print_exception ("CORBA Exception Raised");
       status++;
     }
 
-  ACE_ENDTRY;
 
   return status;
 }

@@ -52,8 +52,7 @@ Job_i::init (ACE_Arg_Shifter& arg_shifter)
 
 void
 Job_i::work (CORBA::ULong work,
-       CORBA::Short importance
-       ACE_ENV_ARG_DECL)
+       CORBA::Short importance)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static CORBA::ULong prime_number = 9619;
@@ -108,8 +107,7 @@ Job_i::work (CORBA::ULong work,
       const char * name = 0;
       dt_creator_->current ()->update_scheduling_segment (name,
                 sched_param.in (),
-                sched_param.in ()
-                ACE_ENV_ARG_PARAMETER);
+                sched_param.in ());
     }
 }
 

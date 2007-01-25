@@ -38,7 +38,7 @@ public:
     WORST
   };
 
-  typedef void (*OP_PTR) (Demux_Test_ptr ACE_ENV_ARG_DECL_NOT_USED);
+  typedef void (*OP_PTR) (Demux_Test_ptr);
 
   struct Operation_DB_Entry
   {
@@ -51,7 +51,7 @@ public:
   ~Demux_Test_Client (void);
   // DTOR
 
-  int init (int argc, char *argv [] ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (int argc, char *argv []);
   // initialize the client test bed
 
   int run (void);

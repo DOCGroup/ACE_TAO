@@ -36,13 +36,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test started.\n"));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -55,8 +55,7 @@ main (int argc, char *argv[])
                       1); // supplied by mapping
 
       orb->register_value_factory (va_factory->tao_repository_id (),
-                                   va_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   va_factory);
       va_factory->_remove_ref (); // release ownership
 
 
@@ -66,8 +65,7 @@ main (int argc, char *argv[])
                       1); // supplied by mapping
 
       orb->register_value_factory (vb_factory->tao_repository_id (),
-                                   vb_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   vb_factory);
       vb_factory->_remove_ref (); // release ownership
 
       // Do local test
@@ -131,10 +129,10 @@ main (int argc, char *argv[])
       // Now do remote test
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       OBV_AnyTest::Test_var test =
-        OBV_AnyTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        OBV_AnyTest::Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -147,8 +145,7 @@ main (int argc, char *argv[])
 
       // STEP 1.
       CORBA::Any_var result = test->get_something (
-          0
-          ACE_ENV_ARG_PARAMETER);
+          0);
 
       if (!(result.inout () >>= dst) || dst->id () != magic)
         {
@@ -160,8 +157,7 @@ main (int argc, char *argv[])
       // STEP 2.
       OBV_AnyTest::VB* dst_vb = 0;
       result = test->get_something (
-          1
-          ACE_ENV_ARG_PARAMETER);
+          1);
 
       if (!(result.inout () >>= dst_vb) || dst_vb->id () != magic)
         {
@@ -190,8 +186,7 @@ main (int argc, char *argv[])
 
       // STEP 4. get a VB, but extract to a VA*.
       result = test->get_something (
-          1
-          ACE_ENV_ARG_PARAMETER);
+          1);
 
       if (!(result.inout () >>= CORBA::Any::to_value(target.out())))
         {
@@ -214,13 +209,11 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in client:");
+      ex._tao_print_exception ("Exception caught in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

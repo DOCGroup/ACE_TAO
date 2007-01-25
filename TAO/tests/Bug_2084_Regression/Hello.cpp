@@ -15,7 +15,7 @@ ACE_RCSID(Hello, Hello, "$Id$")
 }
 
 char *
-Hello::get_string (::CORBA::Long caller_threadid ACE_ENV_ARG_DECL)
+Hello::get_string (::CORBA::Long caller_threadid)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -64,5 +64,5 @@ Hello::shutdown (void)
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

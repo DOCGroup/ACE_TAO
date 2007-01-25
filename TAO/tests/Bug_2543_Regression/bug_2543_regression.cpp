@@ -9,9 +9,8 @@ ACE_RCSID (Bug_2543_Regression,
 
 int main (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
        CORBA::ORB_var orb = CORBA::ORB_init(argc,argv);
 
@@ -56,17 +55,15 @@ int main (int argc, char* argv[])
 
          orb->destroy();
      }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught a CORBA exception \n");
+      ex._tao_print_exception ("Caught a CORBA exception \n");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

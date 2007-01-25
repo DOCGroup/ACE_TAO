@@ -64,11 +64,10 @@ main (int argc, char *argv[])
   //Use Real-time Scheduling class if possible
   set_priority();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, 0);
 
       if (parse_args (argc,argv) == -1)
         return -1;
@@ -105,10 +104,9 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions..
     }
-  ACE_ENDTRY;
   return 0;
 }

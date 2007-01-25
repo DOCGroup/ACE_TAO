@@ -82,10 +82,10 @@ dump_tree (TreeController *tc)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -100,8 +100,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
@@ -111,8 +110,7 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
@@ -122,17 +120,16 @@ main (int argc, char *argv[])
                       1);
 
       orb->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory
-                                   ACE_ENV_ARG_PARAMETER);
+                                   sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
-      Test_var test = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+      Test_var test = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test.in ()))
       {
@@ -185,7 +182,7 @@ main (int argc, char *argv[])
       dump_tree (tc.in ());
 
       TreeController_var result_tc =
-        test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
+        test->reflect (tc.in ());
 
       // Dump the resulting tree.
       dump_tree (result_tc.in ());
@@ -197,13 +194,11 @@ main (int argc, char *argv[])
       orb->destroy ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

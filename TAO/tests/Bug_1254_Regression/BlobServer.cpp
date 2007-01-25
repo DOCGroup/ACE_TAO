@@ -15,7 +15,6 @@ void
 BlobServerImpl::test(
             BlobType1& blob1,
             BlobType2& blob2
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -38,5 +37,5 @@ void
 BlobServerImpl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

@@ -51,8 +51,7 @@ test_i::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 PortableServer::POA_ptr
@@ -114,16 +113,14 @@ parse_args (int argc, char **argv)
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const char *filename
-                    ACE_ENV_ARG_DECL)
+                    const char *filename)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");
   ACE_ASSERT (file != 0);
 
   CORBA::String_var ior =
-    orb->object_to_string (object
-                           ACE_ENV_ARG_PARAMETER);
+    orb->object_to_string (object);
 
   u_int result = 0;
   result =
@@ -160,23 +157,19 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -188,8 +181,7 @@ Task::svc (void)
                             bands_file,
                             rt_orb.in (),
                             policies,
-                            debug
-                            ACE_ENV_ARG_PARAMETER);
+                            debug);
       if (result != 0)
         return result;
 
@@ -205,20 +197,17 @@ Task::svc (void)
                             max_request_buffer_size,
                             allow_borrowing,
                             policies,
-                            debug
-                            ACE_ENV_ARG_PARAMETER);
+                            debug);
       if (result != 0)
         return result;
 
       CORBA::Policy_var priority_model_policy =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                              0
-                                              ACE_ENV_ARG_PARAMETER);
+                                              0);
 
       // Implicit_activation policy.
       CORBA::Policy_var implicit_activation_policy =
-        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                     ACE_ENV_ARG_PARAMETER);
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       policies.length (policies.length () + 1);
       policies[policies.length () - 1] =
@@ -231,8 +220,7 @@ Task::svc (void)
       PortableServer::POA_var poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       test_i *servant = 0;
       ACE_NEW_THROW_EX (servant,
@@ -247,8 +235,7 @@ Task::svc (void)
 
       write_iors_to_file (test.in (),
                           this->orb_.in (),
-                          ior
-                          ACE_ENV_ARG_PARAMETER);
+                          ior);
 
       poa_manager->activate ();
 
@@ -256,12 +243,11 @@ Task::svc (void)
 
       this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -269,13 +255,12 @@ Task::svc (void)
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       int result =
         parse_args (argc, argv);
@@ -324,12 +309,11 @@ main (int argc, char **argv)
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

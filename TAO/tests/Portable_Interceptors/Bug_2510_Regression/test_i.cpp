@@ -16,8 +16,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 }
 
 void
-Visual_i::normal (CORBA::Long arg
-                  ACE_ENV_ARG_DECL_NOT_USED)
+Visual_i::normal (CORBA::Long arg)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
@@ -34,16 +33,16 @@ Visual_i::normal (CORBA::Long arg
   }
 
   CORBA::Any_var retrieved_any;
-  ACE_TRY
+  try
   {
       retrieved_any = pi_current->get_slot(slotId);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-      ACE_PRINT_EXCEPTION (ex, "Visual_i::normal : get_slot() threw Exception\n");
+      ex._tao_print_exception (
+        "Visual_i::normal : get_slot() threw Exception\n");
       throw;
   }
-  ACE_ENDTRY;
 
   const char *str = 0;
   if (! (retrieved_any.in() >>= str) )
@@ -61,5 +60,5 @@ void
 Visual_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

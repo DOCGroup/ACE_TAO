@@ -115,13 +115,13 @@ main (int argc, char *argv[])
   CORBA::ORB_var orb;
   RTCORBA::PriorityMapping *pm = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       char *argv_[256];
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
         argv_[i] = argv[i];
-      orb = CORBA::ORB_init (argc_, argv_, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc_, argv_, "");
 
       // Parse the arguments.
       if (parse_args (argc_, argv_) != 0)
@@ -129,12 +129,10 @@ main (int argc, char *argv[])
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       if (CORBA::is_nil (mapping_manager.in ()))
         {
@@ -145,13 +143,12 @@ main (int argc, char *argv[])
 
       pm = mapping_manager->mapping ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in Orb per priority server:");
+      ex._tao_print_exception (
+        "Caught exception in Orb per priority server:");
       return 1;
     }
-  ACE_ENDTRY;
 
   for (int i = 0; i != nthreads; ++i)
     {
@@ -207,15 +204,15 @@ Server::svc (void)
               priority_,
               native_priority));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       char orb_name[64];
       ACE_OS::sprintf (orb_name, "%d", this->priority_);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc_, argv_, orb_name ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc_, argv_, orb_name);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -223,19 +220,19 @@ Server::svc (void)
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       PortableServer::ObjectId_var oid =
-        root_poa->activate_object (this->server_ ACE_ENV_ARG_PARAMETER);
+        root_poa->activate_object (this->server_);
 
       CORBA::Object_var obj =
-        root_poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
+        root_poa->id_to_reference (oid.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -262,15 +259,14 @@ Server::svc (void)
       orb->run ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       char message[100];
       ACE_OS::sprintf (message,
                        "ORB_per_Priority::server: Exception in thread with priority = %d",
                        this->priority_);
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
+      ex._tao_print_exception (message);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

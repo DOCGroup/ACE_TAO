@@ -26,8 +26,7 @@ Client_Task::svc (void)
 {
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PolicyCurrent");
@@ -54,28 +53,22 @@ Client_Task::svc (void)
       // Start 25 separate concurrent request streams
       for (CORBA::Short i = 0; i != 25; ++i)
       {
-        this->receiver_->sendc_short_sleep (this->handler_var_.in ()
-            ACE_ENV_ARG_PARAMETER);
+        this->receiver_->sendc_short_sleep (this->handler_var_.in ());
       }
 
       ACE_Time_Value tv(10, 0);
-      orb_->run(tv ACE_ENV_ARG_PARAMETER);
+      orb_->run(tv);
     }
-  ACE_CATCH (CORBA::TIMEOUT, ex)
+  catch (const CORBA::TIMEOUT&)
     {
-      // A CORBA::TIMEOUT exception is expected since
-      // the server aborts itself
-      ACE_UNUSED_ARG (ex);
       ACE_DEBUG ((LM_DEBUG,
                   "Client received an expected CORBA::TIMEOUT exception.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Client_Task - caught exception:");
+      ex._tao_print_exception ("(%P|%t) Client_Task - caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

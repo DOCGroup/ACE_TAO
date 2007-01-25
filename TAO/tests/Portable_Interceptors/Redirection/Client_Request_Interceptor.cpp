@@ -72,7 +72,7 @@ Client_Request_Interceptor::receive_exception (
   this->orb_->string_to_object (this->forward_str_.in ());
 
   // Notice that this is not a permanent forward.
-  ACE_THROW (PortableInterceptor::ForwardRequest (forward.in ()));
+  throw PortableInterceptor::ForwardRequest (forward.in ());
 }
 
 void

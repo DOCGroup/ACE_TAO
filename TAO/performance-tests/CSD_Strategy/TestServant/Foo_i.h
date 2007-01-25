@@ -17,13 +17,13 @@ class CSD_PT_TestServant_Export Foo_i : public virtual POA_Foo
     virtual void op1(void)
       ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op2(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void op2(CORBA::Long value)
                                  ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual CORBA::Long op3(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long op3(CORBA::Long value)
                                  ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op4(CORBA::Long value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void op4(CORBA::Long value)
                                  ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual void op5(void)

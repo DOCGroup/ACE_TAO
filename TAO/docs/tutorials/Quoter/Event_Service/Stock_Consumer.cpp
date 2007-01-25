@@ -31,8 +31,7 @@ Stock_Consumer::disconnect ()
 }
 
 void
-Stock_Consumer::push (const CORBA::Any& data
-                      ACE_ENV_ARG_DECL_NOT_USED)
+Stock_Consumer::push (const CORBA::Any& data)
   throw (CORBA::SystemException)
 {
   Quoter::Event *event;

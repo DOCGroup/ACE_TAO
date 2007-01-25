@@ -14,8 +14,7 @@ Sender_i::~Sender_i (void)
 }
 
 void
-Sender_i::active_objects (CORBA::ULong no_threads
-                          ACE_ENV_ARG_DECL_NOT_USED)
+Sender_i::active_objects (CORBA::ULong no_threads)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->active_objects_ = no_threads;

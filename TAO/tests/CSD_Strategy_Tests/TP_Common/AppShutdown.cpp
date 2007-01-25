@@ -17,17 +17,16 @@ AppShutdown::~AppShutdown()
 }
 
 
-void 
-AppShutdown::init(CORBA::ORB_ptr orb, 
-                  unsigned num_clients
-                  ACE_ENV_ARG_DECL)
+void
+AppShutdown::init(CORBA::ORB_ptr orb,
+                  unsigned num_clients)
 {
   if ((!CORBA::is_nil(this->orb_.in())) ||
       (CORBA::is_nil(orb))              ||
-      (num_clients == 0)) 
+      (num_clients == 0))
     {
       // Already init()'ed, or bad argument values.
-      ACE_THROW(TestAppException());
+      throw TestAppException();
     }
   else
     {
@@ -77,7 +76,7 @@ AppShutdown::client_done()
 }
 
 
-AppShutdown* 
+AppShutdown*
 AppShutdown::instance ()
 {
   static AppShutdown app_shutdown;

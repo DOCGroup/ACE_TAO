@@ -27,8 +27,7 @@ Content_Iterator_i::~Content_Iterator_i (void)
 
 CORBA::Boolean
 Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
-                                Web_Server::Chunk_Type_out chunk
-                                ACE_ENV_ARG_DECL)
+                                Web_Server::Chunk_Type_out chunk)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initialize/allocate the Chunk_Type sequence
@@ -127,11 +126,10 @@ Content_Iterator_i::destroy (void)
   PortableServer::POA_var poa = this->_default_POA ();
 
   // Get the object ID associated with this servant.
-  PortableServer::ObjectId_var oid = poa->servant_to_id (this
-                                                         ACE_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var oid = poa->servant_to_id (this);
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 
   // Decrease the reference count on our selves.
   this->_remove_ref ();

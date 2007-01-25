@@ -134,7 +134,7 @@ Thread_Pool::svc (void)
       // Keep calling a few times after receiving exceptions
       for(int exception_count = 50; exception_count; --exception_count)
         {
-          ACE_TRY_NEW_ENV
+          try
             {
               // keep calling until get an exception
               while (true)
@@ -145,26 +145,23 @@ Thread_Pool::svc (void)
                       Test::Payload pload (10);
                       pload.length (10);
                       ACE_OS::memset (pload.get_buffer(), pload.length(), 0);
-                      echo->echo_payload (pload
-                                          ACE_ENV_ARG_PARAMETER);
+                      echo->echo_payload (pload);
 
                     }
                   else
 #endif /*if 0*/
                     {
                       Test::Payload_var pout;
-                      echo->echo_payload_out (pout.out()
-                                              ACE_ENV_ARG_PARAMETER);
+                      echo->echo_payload_out (pout.out());
 
                       // time_t last_success = ACE_OS::time();
                     }
               }
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
 	      // Just forget the exception and continue
             }
-          ACE_ENDTRY;
         }
 
     }

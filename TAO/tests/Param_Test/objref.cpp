@@ -45,8 +45,7 @@ Test_ObjRef::opname (void) const
 }
 
 void
-Test_ObjRef::dii_req_invoke (CORBA::Request *req
-                             ACE_ENV_ARG_DECL)
+Test_ObjRef::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -61,12 +60,12 @@ Test_ObjRef::dii_req_invoke (CORBA::Request *req
   this->ret_ = Coffee::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = Coffee::_duplicate (tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = Coffee::_duplicate (tmp);
 }
@@ -81,15 +80,14 @@ static const char *Coffee_Flavor [] = {
 };
 
 int
-Test_ObjRef::init_parameters (Param_Test_ptr objref
-                              ACE_ENV_ARG_DECL)
+Test_ObjRef::init_parameters (Param_Test_ptr objref)
 {
   Coffee::Desc desc;
   Generator *gen = GENERATOR::instance (); // value generator
 
   char msg_str[256] = "";
 
-  ACE_TRY
+  try
     {
       ACE_OS::strcpy (msg_str, "make_cofee");
 
@@ -102,7 +100,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref
 
       // set the attribute of the object
       ACE_OS::strcpy (msg_str, "set coffee attribute");
-      this->in_->description (desc ACE_ENV_ARG_PARAMETER); // set the attribute for the in object
+      this->in_->description (desc); // set the attribute for the in object
 
       this->inout_ = Coffee::_nil ();
       this->out_ = Coffee::_nil ();
@@ -110,11 +108,10 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, msg_str);
+      ex._tao_print_exception (msg_str);
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -122,7 +119,6 @@ int
 Test_ObjRef::reset_parameters (void)
 {
   // Environemnt variable
-  ACE_DECLARE_NEW_CORBA_ENV;
   Coffee::Desc desc;
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -130,17 +126,16 @@ Test_ObjRef::reset_parameters (void)
   CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
   desc.name = Coffee_Flavor [index];
 
-  ACE_TRY
+  try
     {
       // set the attribute of the object
-      this->in_->description (desc ACE_ENV_ARG_PARAMETER); // set the attribute for the in object
+      this->in_->description (desc); // set the attribute for the in object
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "set coffee attribute");
+      ex._tao_print_exception ("set coffee attribute");
       return -1;
     }
-  ACE_ENDTRY;
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
@@ -150,26 +145,22 @@ Test_ObjRef::reset_parameters (void)
 }
 
 int
-Test_ObjRef::run_sii_test (Param_Test_ptr objref
-                           ACE_ENV_ARG_DECL)
+Test_ObjRef::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ =
         objref->test_objref (this->in_.in (),
                              this->inout_.inout (),
-                             this->out_.out ()
-                             ACE_ENV_ARG_PARAMETER);
+                             this->out_.out ());
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_ObjRef::run_sii_test\n");
+      ex._tao_print_exception ("Test_ObjRef::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 
@@ -177,9 +168,8 @@ CORBA::Boolean
 Test_ObjRef::check_validity (void)
 {
   // Environemnt variable
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (CORBA::is_nil (this->in_.in ())
           || CORBA::is_nil (this->inout_.in ())
@@ -214,12 +204,11 @@ Test_ObjRef::check_validity (void)
           !ACE_OS::strcmp (in, ret))
         return 1; // success
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Retrieving description");
+      ex._tao_print_exception ("Retrieving description");
       return 0;
     }
-  ACE_ENDTRY;
 
   return 1;
 }
@@ -234,7 +223,6 @@ void
 Test_ObjRef::print_values (void)
 {
   // Env. variable
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   Coffee::Desc_var in_desc;
   Coffee::Desc_var inout_desc;
@@ -244,7 +232,7 @@ Test_ObjRef::print_values (void)
   const char *out = 0;
   const char *inout = 0;
   const char *ret = 0;
-  ACE_TRY
+  try
     {
       if (!CORBA::is_nil (this->in_.in ()))
         {
@@ -274,12 +262,11 @@ Test_ObjRef::print_values (void)
           ret = ret_desc->name.in ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Retrieving Description");
+      ex._tao_print_exception ("Retrieving Description");
       return;
     }
-  ACE_ENDTRY;
 
 
 

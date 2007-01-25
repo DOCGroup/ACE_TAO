@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Server_ORBInitializer * temp_initializer = 0;
 
@@ -50,15 +50,14 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       // Now we can create the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +65,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -79,19 +78,16 @@ main (int argc, char *argv[])
       Visual_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->activate_object (&server_impl);
 
       // Create a second object to receive forwarded requests
       Visual_i forward_server_impl (orb.in ());
 
       PortableServer::ObjectId_var forward_id =
-        root_poa->activate_object (&forward_server_impl
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->activate_object (&forward_server_impl);
 
       CORBA::Object_var forward_test_obj =
-        root_poa->id_to_reference (forward_id.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->id_to_reference (forward_id.in ());
 
       Echo_Server_Request_Interceptor * server_interceptor =
         temp_initializer->server_interceptor ();
@@ -102,19 +98,16 @@ main (int argc, char *argv[])
                            "server request interceptor.\n"),
                           -1);
 
-      server_interceptor->forward_reference (forward_test_obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+      server_interceptor->forward_reference (forward_test_obj.in ());
 
       CORBA::Object_var test_obj =
-        root_poa->id_to_reference (id.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->id_to_reference (id.in ());
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (test_obj.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+        Test_Interceptors::Visual::_narrow (test_obj.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Test_Interceptors::Visual: <%s>\n",
@@ -137,15 +130,13 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in server:");
+      ex._tao_print_exception ("Caught exception in server:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

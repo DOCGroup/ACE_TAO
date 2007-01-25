@@ -24,13 +24,11 @@ class ServantList
     void create_and_activate(unsigned                num_servants,
                              CORBA::ORB_ptr          orb,
                              PortableServer::POA_ptr poa,
-                             const char*             ior_fname_prefix
-                             ACE_ENV_ARG_DECL);
+                             const char*             ior_fname_prefix);
 
     /// Activate servant and not output ior to a file.
     void create_and_activate(unsigned                num_servants,
-                             PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL);
+                             PortableServer::POA_ptr poa);
 
 
     /// Get a (copy) of one of the object references (for a specific servant).
@@ -54,7 +52,7 @@ class ServantList
     ServantRecordVector servant_records_;
 };
 
-    
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ServantList_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

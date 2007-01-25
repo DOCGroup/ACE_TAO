@@ -18,8 +18,7 @@ int debug = 0;
 int do_shutdown = 0;
 
 int
-register_factories (CORBA::ORB_ptr orb
-                    ACE_ENV_ARG_DECL)
+register_factories (CORBA::ORB_ptr orb)
 {
   // Create and register factories.
 
@@ -29,8 +28,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory1->tao_repository_id (),
-                               factory1
-                               ACE_ENV_ARG_PARAMETER);
+                               factory1);
 
   factory1->_remove_ref ();
 
@@ -40,8 +38,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory3->tao_repository_id (),
-                               factory3
-                               ACE_ENV_ARG_PARAMETER);
+                               factory3);
 
   factory3->_remove_ref ();
 
@@ -51,8 +48,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory5->tao_repository_id (),
-                               factory5
-                               ACE_ENV_ARG_PARAMETER);
+                               factory5);
 
   factory5->_remove_ref ();
 
@@ -62,8 +58,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory7->tao_repository_id (),
-                               factory7
-                               ACE_ENV_ARG_PARAMETER);
+                               factory7);
 
   factory7->_remove_ref ();
   return 0;
@@ -71,11 +66,9 @@ register_factories (CORBA::ORB_ptr orb
 
 int
 run_test (test_ptr objref,
-          CORBA::Long offset
-          ACE_ENV_ARG_DECL)
+          CORBA::Long offset)
 {
-  CORBA::Any_var result = objref->get_value (offset
-                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Any_var result = objref->get_value (offset);
 
   CORBA::Boolean status = 0;
   CORBA::Long member_value = 0;
@@ -157,12 +150,11 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       if (parse_args (argc, argv) != 0)
         {
@@ -170,11 +162,9 @@ main (int argc, char* argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior_input_file
-                               ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior_input_file);
 
-      int status = register_factories (orb.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+      int status = register_factories (orb.in ());
 
       if (status != 0)
         {
@@ -187,12 +177,11 @@ main (int argc, char* argv[])
           return -1;
         }
 
-      test_var objref = test::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+      test_var objref = test::_narrow (obj.in ());
 
       for (CORBA::Long i = 1; i < 8; i += 2)
         {
-          status = run_test (objref.in (), i ACE_ENV_ARG_PARAMETER);
+          status = run_test (objref.in (), i);
 
           if (status == 0)
             {
@@ -214,13 +203,11 @@ main (int argc, char* argv[])
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "exception:");
+      ex._tao_print_exception ("exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

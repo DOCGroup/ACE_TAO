@@ -25,15 +25,14 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Apply sync_none policy
       CORBA::Object_var object =
-        orb_->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
+        orb_->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
         {
@@ -46,10 +45,8 @@ Client_Task::svc (void)
       CORBA::PolicyList policies (1); policies.length (1);
       policies[0] =
         orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any
-                            ACE_ENV_ARG_PARAMETER);
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                            scope_as_any);
+      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
       policies[0]->destroy ();
 
@@ -64,13 +61,11 @@ Client_Task::svc (void)
           ACE_OS::sleep(ACE_Time_Value(0,250000));
          }
        }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "Caught Exception");
+      ex._tao_print_exception ("Caught Exception");
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }

@@ -24,7 +24,7 @@ public:
   // dtor
 
   // Return the Default POA of this Servant
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*env*/)
+  PortableServer::POA_ptr _default_POA (/*env*/)
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     };

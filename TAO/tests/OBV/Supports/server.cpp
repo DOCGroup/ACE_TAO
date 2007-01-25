@@ -8,14 +8,14 @@ const char * ior_output_file = "test.ior";
 int
 main (int argc, char * argv[])
 {
-	ACE_TRY_NEW_ENV
+	try
 	{
 
-		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
-		CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+		CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
 
-		PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+		PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in ());
 
 		if (CORBA::is_nil (root_poa.in ())) ACE_ERROR_RETURN ((LM_ERROR," (%P|%t) Nil RootPOA\n"), 1);
 
@@ -28,7 +28,7 @@ main (int argc, char * argv[])
 
 		ACE_NEW_RETURN (node_factory, node_init_impl, 1);
 
-		CORBA::ValueFactory returned_factory = orb->register_value_factory (node_factory->tao_repository_id (), node_factory ACE_ENV_ARG_PARAMETER);
+		CORBA::ValueFactory returned_factory = orb->register_value_factory (node_factory->tao_repository_id (), node_factory);
 
 		ACE_ASSERT (returned_factory == 0);
 
@@ -38,7 +38,7 @@ main (int argc, char * argv[])
 
 		ACE_NEW_RETURN (vt_graph_factory, vt_graph_init_impl, 1);
 
-		returned_factory = orb->register_value_factory (vt_graph_factory->tao_repository_id (), vt_graph_factory ACE_ENV_ARG_PARAMETER);
+		returned_factory = orb->register_value_factory (vt_graph_factory->tao_repository_id (), vt_graph_factory);
 
 		ACE_ASSERT (returned_factory == 0);
 
@@ -52,7 +52,7 @@ main (int argc, char * argv[])
 
       Supports_Test::test_ptr a_test = a_test_impl->_this ();
 
-      CORBA::String_var ior = orb->object_to_string (a_test ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = orb->object_to_string (a_test);
 
       FILE * output_file = ACE_OS::fopen (ior_output_file, "w");
 
@@ -68,19 +68,17 @@ main (int argc, char * argv[])
 
       orb->run ();
 
-      root_poa->destroy (0, 0 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (0, 0);
 
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Server (%P.%t) completed test successfully\n"));
 	}
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

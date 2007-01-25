@@ -163,15 +163,13 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Priority Mapping Manager.
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("PriorityMappingManager");
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
       if (check_for_nil (mapping_manager.in (), "Mapping Manager") == -1)
         return -1;
 
@@ -180,27 +178,26 @@ Task::svc (void)
 
       // RTCurrent.
       object =
-        this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent");
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        RTCORBA::Current::_narrow (object.in ());
       if (check_for_nil (current.in (), "RTCurrent") == -1)
         return -1;
 
       // Obtain Test object reference.
       object =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      Test_var server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior);
+      Test_var server = Test::_narrow (object.in ());
       if (check_for_nil (server.in (), "Test object") == -1)
         return -1;
 
       // Check that test object is configured with CLIENT_PROPAGATED
       // PriorityModelPolicy.
       CORBA::Policy_var policy =
-        server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                             ACE_ENV_ARG_PARAMETER);
+        server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
       RTCORBA::PriorityModelPolicy_var priority_policy =
-        RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (check_for_nil (priority_policy.in (), "PriorityModelPolicy") == -1)
         return -1;
@@ -265,16 +262,15 @@ Task::svc (void)
 
       // Testing over.  Shut down the server.
       ACE_DEBUG ((LM_DEBUG, "Client threads finished\n"));
-      current->the_priority (priority1 ACE_ENV_ARG_PARAMETER);
+      current->the_priority (priority1);
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception in MT_Client_Protocol_Priority test client:");
+      ex._tao_print_exception (
+        "Unexpected exception in MT_Client_Protocol_Priority test client:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -282,13 +278,13 @@ Task::svc (void)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB, resolve references and parse arguments.
 
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -336,13 +332,12 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception in MT_Client_Protocol_Priority test client:");
+      ex._tao_print_exception (
+        "Unexpected exception in MT_Client_Protocol_Priority test client:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -363,22 +358,20 @@ Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb,
 int
 Worker_Thread::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // RTORB.
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB");
+      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 0;
 
       // PolicyCurrent.
       object =
-        this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("PolicyCurrent");
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
         return 0;
@@ -395,12 +388,10 @@ Worker_Thread::svc (void)
       CORBA::PolicyList policy_list;
       policy_list.length (1);
       policy_list[0] =
-        rt_orb->create_client_protocol_policy (protocols
-                                               ACE_ENV_ARG_PARAMETER);
+        rt_orb->create_client_protocol_policy (protocols);
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::SET_OVERRIDE);
 
       // Wait for other threads.
       this->synchronizer_->wait ();
@@ -411,11 +402,9 @@ Worker_Thread::svc (void)
           this->server_->test_method ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Worker Thread exception:");
+      ex._tao_print_exception ("Worker Thread exception:");
     }
-  ACE_ENDTRY;
   return 0;
 }

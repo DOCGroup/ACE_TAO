@@ -27,8 +27,7 @@ TestImpl::TestImpl (CORBA::ORB_ptr orb)
 
 
 void
-TestImpl::get_strings (ArrayOfString_out strings
-                       ACE_ENV_ARG_DECL_NOT_USED)
+TestImpl::get_strings (ArrayOfString_out strings)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW (strings, ArrayOfString);

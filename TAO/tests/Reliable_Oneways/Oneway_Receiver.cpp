@@ -15,7 +15,7 @@ void
 Oneway_Receiver::raise_no_permission (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_PERMISSION ());
+  throw CORBA::NO_PERMISSION ();
 }
 
 void
@@ -25,9 +25,9 @@ Oneway_Receiver::destroy (void)
   PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 Test::Shutdown_Helper_ptr

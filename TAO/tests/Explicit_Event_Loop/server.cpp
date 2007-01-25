@@ -59,7 +59,7 @@ parse_args (int argc, char *argv[])
 
 TimeOfDay
 Time_impl::
-get_gmt ( ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+get_gmt ()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   time_t time_now = time (0);
@@ -85,14 +85,12 @@ void do_something_else()
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       if (parse_args (argc, argv) != 0)
         {
@@ -101,12 +99,10 @@ main (int argc, char *argv[])
 
       // Get reference to Root POA.
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+        = PortableServer::POA::_narrow (obj.in ());
 
       // Activate POA manager.
       PortableServer::POAManager_var mgr
@@ -120,8 +116,7 @@ main (int argc, char *argv[])
       // Write its stringified reference to stdout.
       Time_var tm = time_servant._this ();
 
-      CORBA::String_var str = orb->object_to_string (tm.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var str = orb->object_to_string (tm.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
@@ -165,20 +160,18 @@ main (int argc, char *argv[])
       orb->destroy ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server: a CORBA exception occured");
+      ex._tao_print_exception ("server: a CORBA exception occured");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s\n",
                          "client: an unknown exception was caught\n"),
                          1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

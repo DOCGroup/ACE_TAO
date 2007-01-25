@@ -20,28 +20,28 @@ Bottom_Impl::~Bottom_Impl (void)
 }
 
 char *
-Bottom_Impl::top_quote (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+Bottom_Impl::top_quote ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::top);
 }
 
 char *
-Bottom_Impl::left_quote (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+Bottom_Impl::left_quote ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::left);
 }
 
 char *
-Bottom_Impl::right_quote (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+Bottom_Impl::right_quote ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::right);
 }
 
 char *
-Bottom_Impl::bottom_quote (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+Bottom_Impl::bottom_quote ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::bottom);
@@ -51,7 +51,7 @@ void
 Bottom_Impl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 ///////////////////////////////////////////////////////////
@@ -124,5 +124,5 @@ Delegated_Bottom_Impl::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating Shut-Down.\n")));
   this->delegate_->shutdown ();
-  //this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  //this->orb_->shutdown (0);
 }

@@ -80,12 +80,11 @@ write_iors_to_file (const char *first_ior)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -93,12 +92,10 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       // Narrow the object reference to a POA reference
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ()
-                                                                       ACE_ENV_ARG_PARAMETER);
+      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -108,32 +105,29 @@ main (int argc, char **argv)
 
       // ID Assignment Policy
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       // Lifespan Policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                          ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
       // Request Processing Policy
       policies[2] =
-        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
-                                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
 
       // Servant Retention Policy
       policies[3] =
-        root_poa->create_servant_retention_policy (PortableServer::RETAIN ACE_ENV_ARG_PARAMETER);
+        root_poa->create_servant_retention_policy (PortableServer::RETAIN);
 
       // Id Uniqueness Policy
       policies[4] =
-        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
 
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa = root_poa->create_POA (name.c_str (),
                                                                 poa_manager.in (),
-                                                                policies
-                                                                ACE_ENV_ARG_PARAMETER);
+                                                                policies);
 
       for (CORBA::ULong i = 0;
            i < policies.length ();
@@ -145,22 +139,20 @@ main (int argc, char **argv)
 
       // Create a Database Agent Implementation object in first_poa
       DatabaseImpl::Agent database_agent_impl (orb.in (),
-                                               first_poa.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+                                               first_poa.in ());
 
       PortableServer::ObjectId_var database_agent_oid =
         PortableServer::string_to_ObjectId ("DatabaseAgent");
 
       first_poa->activate_object_with_id (database_agent_oid.in (),
-                                          &database_agent_impl
-                                          ACE_ENV_ARG_PARAMETER);
+                                          &database_agent_impl);
 
       CORBA::Object_var database_agent =
-        first_poa->id_to_reference (database_agent_oid.in () ACE_ENV_ARG_PARAMETER);
+        first_poa->id_to_reference (database_agent_oid.in ());
 
       // Get the IOR for the "DatabaseAgent" object
       CORBA::String_var database_agent_ior =
-        orb->object_to_string (database_agent.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (database_agent.in ());
 
       ACE_DEBUG ((LM_DEBUG,"%s\n",
                   database_agent_ior.in ()));
@@ -175,12 +167,11 @@ main (int argc, char **argv)
       // Run the ORB
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -21,7 +21,7 @@ Client_Task::Client_Task (Test::Roundtrip_ptr reference,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (CORBA::is_nil (this->remote_ref_.in ()))
       {
@@ -45,7 +45,7 @@ Client_Task::svc (void)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          (void) this->remote_ref_->test_method (start ACE_ENV_ARG_PARAMETER);
+          (void) this->remote_ref_->test_method (start);
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -71,13 +71,11 @@ Client_Task::svc (void)
       this->remote_ref_->shutdown ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 
