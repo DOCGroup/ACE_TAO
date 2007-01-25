@@ -13,10 +13,9 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "\n\tPaper Airplane Server\n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int retval = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int retval = server.init (argc, argv);
 
       if (retval == -1)
         return -1;
@@ -28,15 +27,14 @@ main (int argc, char *argv[])
 
       return retval;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
     }
-  ACE_ENDTRY;
 
   return 1;
 }

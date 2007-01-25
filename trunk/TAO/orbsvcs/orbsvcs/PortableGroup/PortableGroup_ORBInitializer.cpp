@@ -20,14 +20,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-                                                           ACE_ENV_ARG_PARAMETER);
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -38,7 +36,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo_ptr.\"\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // Set a new request dispatcher in the ORB.
@@ -60,8 +58,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
 
 void
 TAO_PortableGroup_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

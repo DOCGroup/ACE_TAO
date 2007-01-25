@@ -50,8 +50,7 @@ public:
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos
-                        ACE_ENV_ARG_DECL) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 
 private:
   /// Recursively build the filter tree.
@@ -59,15 +58,13 @@ private:
                                   RtecEventChannelAdmin::ConsumerQOS& qos,
                                   CORBA::ULong& pos,
                                   RtecScheduler::Scheduler_ptr scheduler,
-                                  RtecScheduler::handle_t parent_info
-                                  ACE_ENV_ARG_DECL) const;
+                                  RtecScheduler::handle_t parent_info) const;
 
   /// Build the name recursively...
   void recursive_name (RtecEventChannelAdmin::ConsumerQOS& qos,
                        CORBA::ULong& pos,
                        RtecScheduler::Scheduler_ptr scheduler,
-                       ACE_CString &name
-                       ACE_ENV_ARG_DECL) const;
+                       ACE_CString &name) const;
 
   /// Count the number of children of the current node, i.e. until a
   /// conjunction or disjunction starts.

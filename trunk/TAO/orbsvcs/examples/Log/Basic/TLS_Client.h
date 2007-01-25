@@ -31,14 +31,14 @@ class TLS_Client
   TLS_Client (void);
   ~TLS_Client ();
 
-  void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv []);
   // Init the Client.
 
   void run_tests (void);
   // Run the tests..
 
  protected:
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);

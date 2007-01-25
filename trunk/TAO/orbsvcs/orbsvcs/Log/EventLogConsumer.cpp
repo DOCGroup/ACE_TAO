@@ -27,7 +27,7 @@ TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-TAO_Event_LogConsumer::push (const CORBA::Any& data ACE_ENV_ARG_DECL)
+TAO_Event_LogConsumer::push (const CORBA::Any& data)
 ACE_THROW_SPEC ((
                 CORBA::SystemException,
                 CosEventComm::Disconnected
@@ -63,28 +63,27 @@ ACE_THROW_SPEC ((
   //
   // I have submitted a defect report to the OMG for clarification.
   //    --jtc
-  ACE_TRY
+  try
     {
       // log the RecordList.
-      this->log_->write_recordlist (recList ACE_ENV_ARG_PARAMETER);
+      this->log_->write_recordlist (recList);
     }
-  ACE_CATCH (DsLogAdmin::LogFull, ex)
+  catch (const DsLogAdmin::LogFull& )
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
-  ACE_CATCH (DsLogAdmin::LogOffDuty, ex)
+  catch (const DsLogAdmin::LogOffDuty& )
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
-  ACE_CATCH (DsLogAdmin::LogLocked, ex)
+  catch (const DsLogAdmin::LogLocked& )
     {
-      ACE_THROW (CORBA::NO_PERMISSION ());
+      throw CORBA::NO_PERMISSION ();
     }
-  ACE_CATCH (DsLogAdmin::LogDisabled, ex)
+  catch (const DsLogAdmin::LogDisabled& )
     {
-      ACE_THROW (CORBA::TRANSIENT ());
+      throw CORBA::TRANSIENT ();
     }
-  ACE_ENDTRY;
 }
 
 void

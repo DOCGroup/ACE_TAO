@@ -70,10 +70,9 @@ int main (int argc, char *argv[])
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      ORB_Holder orb (argc, argv, ""
-                      ACE_ENV_ARG_PARAMETER);
+      ORB_Holder orb (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -81,13 +80,11 @@ int main (int argc, char *argv[])
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
                                      rt_class,
-                                     nthreads
-                                     ACE_ENV_ARG_PARAMETER);
+                                     nthreads);
 
       PortableServer::POA_var root_poa =
         RIR_Narrow<PortableServer::POA>::resolve (orb,
-                                                  "RootPOA"
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  "RootPOA");
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -107,25 +104,21 @@ int main (int argc, char *argv[])
       Servant_var<TAO_EC_Event_Channel> ec_impl (
               RTEC_Initializer::create (ec_poa.in (),
                                         ec_poa.in (),
-                                        rtserver_setup.rtcorba_setup ()
-                                        ACE_ENV_ARG_PARAMETER)
+                                        rtserver_setup.rtcorba_setup ())
               );
 
       ec_impl->activate ();
 
       PortableServer::ObjectId_var ec_id =
-        ec_poa->activate_object (ec_impl.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        ec_poa->activate_object (ec_impl.in ());
       CORBA::Object_var ec_object =
-        ec_poa->id_to_reference (ec_id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+        ec_poa->id_to_reference (ec_id.in ());
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (ec.in ());
 
       // Output the ior to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
@@ -139,18 +132,16 @@ int main (int argc, char *argv[])
 
       do {
         ACE_Time_Value tv (1, 0);
-        orb->run (tv ACE_ENV_ARG_PARAMETER);
+        orb->run (tv);
       } while (ec_impl->destroyed () == 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

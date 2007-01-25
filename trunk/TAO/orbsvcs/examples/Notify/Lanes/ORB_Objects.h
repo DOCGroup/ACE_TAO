@@ -35,7 +35,7 @@ public:
   ~TAO_Notify_ORB_Objects ();
 
   /// Resolves all the references.
-  void init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL);
+  void init (CORBA::ORB_var& orb);
 
   /// Resolve Notification
   CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (void);

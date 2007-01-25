@@ -40,8 +40,7 @@ public:
   virtual void connect (void);
 
   // Send one event. Bypass sending to the Notify and send directly to taget consumer.
-  virtual void send_event (const CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
 
 protected:
   /// Target object.

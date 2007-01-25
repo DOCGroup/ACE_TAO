@@ -18,8 +18,7 @@ public:
            PortableServer::POA_ptr poa);
 
   // = The skeleton methods
-  virtual void sample (Test::Timestamp the_timestamp
-                       ACE_ENV_ARG_DECL)
+  virtual void sample (Test::Timestamp the_timestamp)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

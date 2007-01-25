@@ -18,7 +18,7 @@ TAO_Notify_SequencePushSupplier::~TAO_Notify_SequencePushSupplier ()
 }
 
 void
-TAO_Notify_SequencePushSupplier::init (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_SequencePushSupplier::init (CosNotifyComm::SequencePushSupplier_ptr push_supplier)
 {
   // TODO: verify single init call
   // push_supplier is optional
@@ -38,17 +38,15 @@ TAO_Notify_SequencePushSupplier::get_ior (void) const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
-    CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in() ACE_ENV_ARG_PARAMETER);
+    CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in());
     result = static_cast<const char*> (ior.in ());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     result.fast_clear();
   }
-  ACE_ENDTRY;
   return result;
 }
 

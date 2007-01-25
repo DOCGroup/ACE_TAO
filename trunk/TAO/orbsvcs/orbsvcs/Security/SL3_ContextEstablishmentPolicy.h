@@ -65,28 +65,22 @@ namespace TAO
        * SecurityLevel3::ContextEstablishmentPolicy interface.
        */
       //@{
-      virtual SecurityLevel3::CredsDirective creds_directive (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::CredsDirective creds_directive ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::OwnCredentialsList * creds_list (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::OwnCredentialsList * creds_list ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::FeatureDirective use_client_auth (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::FeatureDirective use_client_auth ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::FeatureDirective use_target_auth (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::FeatureDirective use_target_auth ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::FeatureDirective use_confidentiality (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::FeatureDirective use_confidentiality ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::FeatureDirective use_integrity (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::FeatureDirective use_integrity ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual CORBA::PolicyType policy_type (void)

@@ -41,30 +41,29 @@ public:
 
   /// Notification of subscriptions set at the admin.
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed
-                                    ACE_ENV_ARG_DECL);
+                                    const CosNotification::EventTypeSeq & removed);
 
   ///= POA_Notify_Internal methods
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_structured (const CosNotification::StructuredEvent & event ACE_ENV_ARG_DECL)
+  virtual void forward_structured (const CosNotification::StructuredEvent & event)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_structured_no_filtering (const CosNotification::StructuredEvent & event ACE_ENV_ARG_DECL)
+  virtual void forward_structured_no_filtering (const CosNotification::StructuredEvent & event)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_any (const CORBA::Any & event ACE_ENV_ARG_DECL)
+  virtual void forward_any (const CORBA::Any & event)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_any_no_filtering (const CORBA::Any & event ACE_ENV_ARG_DECL)
+  virtual void forward_any_no_filtering (const CORBA::Any & event)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -74,14 +73,12 @@ protected:
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual void suspend_connection (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -90,7 +87,6 @@ protected:
   ));
 
   virtual void resume_connection (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -99,7 +95,6 @@ protected:
   ));
 
   virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -107,14 +102,12 @@ protected:
 
   virtual void priority_filter (
     CosNotifyFilter::MappingFilter_ptr priority_filter
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
   virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -122,7 +115,6 @@ protected:
 
   virtual void lifetime_filter (
     CosNotifyFilter::MappingFilter_ptr lifetime_filter
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -130,7 +122,6 @@ protected:
 
   virtual CosNotification::EventTypeSeq * obtain_offered_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -139,7 +130,6 @@ protected:
   virtual void subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

@@ -37,7 +37,7 @@ TAO_Notify_ProxyPushConsumer::MyType (void)
 }
 
 void
-TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventComm::Disconnected
@@ -46,19 +46,19 @@ TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any ACE_ENV_ARG_DECL)
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
       && this->admin_properties().queue_full ())
-    ACE_THROW (CORBA::IMP_LIMIT ());
+    throw CORBA::IMP_LIMIT ();
 
   if (this->is_connected () == 0)
     {
-      ACE_THROW (CosEventComm::Disconnected ());
+      throw CosEventComm::Disconnected ();
     }
 
   TAO_Notify_AnyEvent_No_Copy event (any);
-  this->push_i (&event ACE_ENV_ARG_PARAMETER);
+  this->push_i (&event);
 }
 
 void
-TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
@@ -70,9 +70,9 @@ TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSuppl
                     TAO_Notify_PushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
+  supplier->init (push_supplier);
 
-  this->connect (supplier ACE_ENV_ARG_PARAMETER);
+  this->connect (supplier);
   this->self_change ();
 }
 
@@ -100,27 +100,25 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
   if (attrs.load("PeerIOR", ior))
     {
       CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           CosNotifyComm::PushSupplier_var ps = CosNotifyComm::PushSupplier::_nil();
           if ( ior.length() > 0 )
             {
               CORBA::Object_var obj =
-                orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-              ps = CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+                orb->string_to_object(ior.c_str());
+              ps = CosNotifyComm::PushSupplier::_unchecked_narrow(obj.in());
             }
           // minor hack: suppress generating subscription updates during reload.
           bool save_updates = this->updates_off_;
           this->updates_off_ = true;
-          this->connect_any_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
+          this->connect_any_push_supplier(ps.in());
           this->updates_off_ = save_updates;
         }
-      ACE_CATCHALL
+      catch (...)
         {
           ACE_ASSERT(0);
         }
-      ACE_ENDTRY;
     }
 }
 

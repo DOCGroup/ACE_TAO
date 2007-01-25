@@ -39,7 +39,7 @@ TAO_Notify_StructuredProxyPushConsumer::MyType (void)
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer::connect_structured_push_supplier (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushConsumer::connect_structured_push_supplier (CosNotifyComm::StructuredPushSupplier_ptr push_supplier)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
@@ -51,13 +51,13 @@ TAO_Notify_StructuredProxyPushConsumer::connect_structured_push_supplier (CosNot
                     TAO_Notify_StructuredPushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
-  this->connect (supplier ACE_ENV_ARG_PARAMETER);
+  supplier->init (push_supplier);
+  this->connect (supplier);
   this->self_change ();
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification ACE_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventComm::Disconnected
@@ -66,15 +66,15 @@ TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotifica
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
       && this->admin_properties().queue_full ())
-    ACE_THROW (CORBA::IMP_LIMIT ());
+    throw CORBA::IMP_LIMIT ();
 
   if (this->is_connected () == 0)
     {
-      ACE_THROW (CosEventComm::Disconnected ());
+      throw CosEventComm::Disconnected ();
     }
 
   TAO_Notify_StructuredEvent_No_Copy event (notification);
-  this->push_i (&event ACE_ENV_ARG_PARAMETER);
+  this->push_i (&event);
 }
 
 void
@@ -102,26 +102,24 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
   if (attrs.load("PeerIOR", ior))
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
     {
       CosNotifyComm::StructuredPushSupplier_var ps = CosNotifyComm::StructuredPushSupplier::_nil();
       if ( ior.length() > 0 )
       {
-        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ps = CosNotifyComm::StructuredPushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var obj = orb->string_to_object(ior.c_str());
+        ps = CosNotifyComm::StructuredPushSupplier::_unchecked_narrow(obj.in());
       }
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;
-      this->connect_structured_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
+      this->connect_structured_push_supplier(ps.in());
       this->updates_off_ = save_updates;
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
       // if we can't reconnect to peer, tough...
     }
-    ACE_ENDTRY;
   }
 }
 

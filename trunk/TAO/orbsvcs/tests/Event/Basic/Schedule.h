@@ -66,13 +66,11 @@ public:
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED);
+      int& shutdown_event_type);
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED);
+      int& shutdown_event_type);
 
 private:
   /// The scheduler implementation

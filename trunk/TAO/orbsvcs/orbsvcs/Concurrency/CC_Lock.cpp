@@ -91,12 +91,12 @@ CC_Lock::unlock (void)
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
   if (lock_held_ == 0)
-    ACE_THROW (CosConcurrencyControl::LockNotHeld ());
+    throw CosConcurrencyControl::LockNotHeld ();
 
   int success = 0; //semaphore_.release ();
 
   if (success == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   lock_held_--;
 
@@ -106,8 +106,7 @@ CC_Lock::unlock (void)
 }
 
 void
-CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode
-                      ACE_ENV_ARG_DECL)
+CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::change_mode\n"));
@@ -117,7 +116,7 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode
   // write lock
 
   if (lock_held_ == 0)
-    ACE_THROW (CosConcurrencyControl::LockNotHeld ());
+    throw CosConcurrencyControl::LockNotHeld ();
 
   this->mode_ = new_mode;
 }
@@ -222,9 +221,9 @@ void CC_LockModeIterator::Next (void)
       current_ = CosConcurrencyControl::write;
       break;
     case CosConcurrencyControl::write:
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     default:
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }
 

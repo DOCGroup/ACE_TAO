@@ -55,12 +55,11 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -73,11 +72,11 @@ main (int argc, char *argv[])
 
       // Get Object Reference using IOR file
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior);
 
       // Cast to Appropriate Type
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -88,11 +87,11 @@ main (int argc, char *argv[])
 
 
       object =
-        orb->string_to_object (another_ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (another_ior);
 
       // Cast to Appropriate Type
       Another_One_var another =
-        Another_One::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        Another_One::_narrow (object.in ());
 
 
       Client_Worker client (server.in (),
@@ -119,14 +118,12 @@ main (int argc, char *argv[])
       orb->destroy ();
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 
-  ACE_ENDTRY;
 
   return 0;
 }

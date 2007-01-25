@@ -15,8 +15,7 @@ Consumer::Consumer (void)
 }
 
 void
-Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                   ACE_ENV_ARG_DECL)
+Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   this->proxy_ =
     consumer_admin->obtain_push_supplier ();
@@ -40,23 +39,21 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
   h1.type   = ACE_ES_EVENT_UNDEFINED;  // first free event type
   h1.source = ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-  this->proxy_->connect_push_consumer (me.in (), qos
-                                       ACE_ENV_ARG_PARAMETER);
+  this->proxy_->connect_push_consumer (me.in (), qos);
 }
 
 void
 Consumer::disconnect (void)
 {
-  ACE_TRY
+  try
     {
       // Disconnect from the proxy
       this->proxy_->disconnect_push_supplier ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions
     }
-  ACE_ENDTRY;
   this->proxy_ = RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   // Deactivate this object
@@ -64,14 +61,13 @@ Consumer::disconnect (void)
     this->_default_POA ();
   // Get the Object Id used for the servant..
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
   // Deactivate the object
-  poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ());
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL_NOT_USED)
+Consumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)

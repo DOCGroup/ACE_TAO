@@ -55,18 +55,16 @@ TAO_EC_Kokyu_Dispatching::activate (void)
 void
 TAO_EC_Kokyu_Dispatching::setup_lanes (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   // Query the scheduler togetConfig_Infos
   RtecScheduler::Config_Info_Set_var configs;
-  ACE_TRY
+  try
     {
       this->scheduler_->get_config_infos(configs.out());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions..
     }
-  ACE_ENDTRY;
 
   //might be no Config_Infos in the set (if none passed to scheduler_)
 
@@ -113,19 +111,17 @@ void
 TAO_EC_Kokyu_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                 RtecEventComm::PushConsumer_ptr consumer,
                                 const RtecEventComm::EventSet& event,
-                                TAO_EC_QOS_Info&     qos_info
-                                ACE_ENV_ARG_DECL)
+                                TAO_EC_QOS_Info&     qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, consumer, event_copy, qos_info ACE_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info);
 }
 
 void
 TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        RtecEventComm::PushConsumer_ptr consumer,
                                        RtecEventComm::EventSet& event,
-                                       TAO_EC_QOS_Info& qos_info
-                                       ACE_ENV_ARG_DECL)
+                                       TAO_EC_QOS_Info& qos_info)
 {
     if (this->dispatcher_.get () == 0)
         this->setup_lanes ();
@@ -134,8 +130,7 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
 
     if (buf == 0)
-      ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =
@@ -185,22 +180,19 @@ TAO_EC_Kokyu_Push_Command::~TAO_EC_Kokyu_Push_Command(void)
 int
 TAO_EC_Kokyu_Push_Command::execute ()
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       //ACE_DEBUG ((LM_DEBUG,
       //            "(%t) Command object executed.\n"));
 
       this->proxy_->push_to_consumer (this->consumer_.in (),
-                                      this->event_
-                                      ACE_ENV_ARG_PARAMETER);
+                                      this->event_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

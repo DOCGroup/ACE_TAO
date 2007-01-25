@@ -45,8 +45,7 @@ public:
    * receives the timeout.
    */
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                 int period
-                 ACE_ENV_ARG_DECL);
+                 int period);
   void deactivate (void);
 
   /// Simple connect/disconnect methods..
@@ -54,16 +53,13 @@ public:
                 int published_source,
                 int published_type,
                 int event_source,
-                int event_type
-                ACE_ENV_ARG_DECL);
+                int event_type);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos
-                ACE_ENV_ARG_DECL);
+                const RtecEventChannelAdmin::SupplierQOS &qos);
   void disconnect (void);
 
   /// The Consumer side methods.
-  void push (const RtecEventComm::EventSet& events
-             ACE_ENV_ARG_DECL)
+  void push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

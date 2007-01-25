@@ -46,8 +46,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
   CORBA::ULongLong highest_time  = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       IORS::TYPE* value;
       for (IORS::ITERATOR server_iterator (this->clerk_->server_);
@@ -137,15 +136,14 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
         static_cast<ACE_UINT32> (10000000) +
         static_cast<CORBA::ULongLong> (timeofday.usec () * 10);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        ACE_PRINT_EXCEPTION (ex,
                              "Exception in handle_timeout()\n");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

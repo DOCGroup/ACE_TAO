@@ -26,7 +26,7 @@ TAO_Notify_RT_Builder::~TAO_Notify_RT_Builder ()
 
 void
 TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
-                                                       , const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
+                                                       , const NotifyExt::ThreadPoolParams& tp_params)
 {
   TAO_Notify_RT_POA_Helper* proxy_poa = 0;
 
@@ -39,7 +39,7 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
-  proxy_poa->init (default_poa.in (), tp_params ACE_ENV_ARG_PARAMETER);
+  proxy_poa->init (default_poa.in (), tp_params);
 
   // Give ownership of proxy_poa
   object.set_proxy_poa (auto_proxy_poa.release ());
@@ -47,7 +47,7 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
 
 void
 TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
-                                                , const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
+                                                , const NotifyExt::ThreadPoolLanesParams& tpl_params)
 {
   TAO_Notify_RT_POA_Helper* proxy_poa = 0;
 
@@ -60,7 +60,7 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
-  proxy_poa->init (default_poa.in (), tpl_params ACE_ENV_ARG_PARAMETER);
+  proxy_poa->init (default_poa.in (), tpl_params);
 
   // Give ownership of proxy_poa
   object.set_proxy_poa (auto_proxy_poa.release ());

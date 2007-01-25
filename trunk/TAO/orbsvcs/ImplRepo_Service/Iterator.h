@@ -39,7 +39,6 @@ public:
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

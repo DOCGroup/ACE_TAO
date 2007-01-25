@@ -31,12 +31,12 @@ namespace TAO_Notify
 
   template<class TOPOOBJ>
   void
-  Save_Persist_Worker<TOPOOBJ>::work (TOPOOBJ* o ACE_ENV_ARG_DECL)
+  Save_Persist_Worker<TOPOOBJ>::work (TOPOOBJ* o)
   {
     ACE_ASSERT(o != 0);
     if (this->want_all_children_ || o->is_changed ())
     {
-      o->save_persistent (saver_ ACE_ENV_ARG_PARAMETER);
+      o->save_persistent (saver_);
     }
   }
 } // namespace TAO_Notify

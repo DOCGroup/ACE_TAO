@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
     orb->destroy();
 
   } catch (CORBA::Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "TestServer::init()");
+    e._tao_print_exception ("TestServer::init()");
   }
   return 0;
 }

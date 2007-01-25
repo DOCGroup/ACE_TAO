@@ -22,15 +22,13 @@ public:
   virtual ~Country_i (void);
 
   virtual void update_population (const char * country,
-                                  CORBA::Long population
-                                  ACE_ENV_ARG_DECL)
+                                  CORBA::Long population)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Object_ptr get_typed_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void push (const CORBA::Any & data
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const CORBA::Any & data)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected));
 

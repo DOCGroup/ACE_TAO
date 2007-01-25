@@ -30,8 +30,7 @@ ifr_adding_visitor_operation::~ifr_adding_visitor_operation (void)
 int
 ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // If this operation is already in the repository (for example, if
       // we are processing the IDL file a second time inadvertently), we
@@ -39,8 +38,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // compiler front end would have told us.
 
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
+        be_global->repository ()->lookup_id (node->repoID ());
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
@@ -95,12 +93,10 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ex = ex_iter.item ();
 
           prev_def =
-            be_global->repository ()->lookup_id (ex->repoID ()
-                                                 ACE_ENV_ARG_PARAMETER);
+            be_global->repository ()->lookup_id (ex->repoID ());
 
           exceptions[i] =
-            CORBA::ExceptionDef::_narrow (prev_def.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+            CORBA::ExceptionDef::_narrow (prev_def.in ());
         }
 
       // Build the context list.
@@ -137,8 +133,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       AST_Type *return_type = node->return_type ();
 
       // Updates ir_current_.
-      this->get_referenced_type (return_type
-                                 ACE_ENV_ARG_PARAMETER);
+      this->get_referenced_type (return_type);
 
       // Is the operation oneway?
       CORBA::OperationMode mode = node->flags () == AST_Operation::OP_oneway
@@ -158,8 +153,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           if (nt == AST_Decl::NT_interface)
             {
               CORBA::InterfaceDef_var iface =
-                CORBA::InterfaceDef::_narrow (current_scope
-                                              ACE_ENV_ARG_PARAMETER);
+                CORBA::InterfaceDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
                 iface->create_operation (node->repoID (),
@@ -169,14 +163,12 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                          mode,
                                          this->params_,
                                          exceptions,
-                                         contexts
-                                         ACE_ENV_ARG_PARAMETER);
+                                         contexts);
             }
           else
             {
               CORBA::ValueDef_var vtype =
-                CORBA::ValueDef::_narrow (current_scope
-                                          ACE_ENV_ARG_PARAMETER);
+                CORBA::ValueDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
                 vtype->create_operation (node->repoID (),
@@ -186,8 +178,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                          mode,
                                          this->params_,
                                          exceptions,
-                                         contexts
-                                         ACE_ENV_ARG_PARAMETER);
+                                         contexts);
             }
         }
       else
@@ -202,16 +193,14 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           );
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          ACE_TEXT ("ifr_adding_visitor_operation::visit_operation")
-        );
+      ex._tao_print_exception (
+        ACE_TEXT (
+          "ifr_adding_visitor_operation::visit_operation"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -225,12 +214,10 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
   AST_Type *arg_type = node->field_type ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Updates ir_current_.
-      this->get_referenced_type (arg_type
-                                 ACE_ENV_ARG_PARAMETER);
+      this->get_referenced_type (arg_type);
 
       this->params_[this->index_].type_def =
         CORBA::IDLType::_duplicate (this->ir_current_.in ());
@@ -256,16 +243,14 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
       ++this->index_;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          ACE_TEXT ("ifr_adding_visitor_operation::visit_argument")
-        );
+      ex._tao_print_exception (
+        ACE_TEXT (
+          "ifr_adding_visitor_operation::visit_argument"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

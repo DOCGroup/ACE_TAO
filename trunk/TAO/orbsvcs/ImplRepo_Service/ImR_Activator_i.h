@@ -67,14 +67,14 @@ public:
    const char* name,
    const char* cmdline,
    const char* dir,
-   const ImplementationRepository::EnvironmentList & env ACE_ENV_ARG_DECL)
+   const ImplementationRepository::EnvironmentList & env)
    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate));
 
   void shutdown(void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Initialize the Server state - parsing arguments and waiting.
-  int init (Activator_Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (Activator_Options& opts);
 
   /// Cleans up any state created by init*.
   int fini (void);
@@ -83,11 +83,11 @@ public:
   int run (void);
 
   /// Shutdown the orb.
-  void shutdown (bool wait_for_completion ACE_ENV_ARG_DECL);
+  void shutdown (bool wait_for_completion);
 
 private:
 
-  int init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opts ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opts);
 
   void register_with_imr(ImplementationRepository::Activator_ptr activator);
 

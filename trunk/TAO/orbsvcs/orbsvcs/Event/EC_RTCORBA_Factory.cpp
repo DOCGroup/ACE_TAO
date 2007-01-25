@@ -40,33 +40,27 @@ TAO_EC_Dispatching*
 TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   TAO_EC_Dispatching *dispatching = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // @@ The ORBId could be important!!!
       int argc = 0;
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, 0, ""
-                         ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, 0, "");
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("PriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var priority_mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityMappingManager::_narrow (obj.in ());
 
       RTCORBA::PriorityMapping *priority_mapping =
         priority_mapping_manager->mapping ();
 
       obj =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        RTCORBA::Current::_narrow (obj.in ());
 
       ACE_NEW_RETURN (dispatching,
                       TAO_EC_RTCORBA_Dispatching (this->lanes_,
@@ -74,10 +68,9 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
                                                   current.in ()),
                       0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return dispatching;
 }

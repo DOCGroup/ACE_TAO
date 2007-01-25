@@ -75,8 +75,7 @@ TAO_Notify_Consumer::resume (void)
 
 void
 TAO_Notify_Consumer::enqueue_request (
-  TAO_Notify_Method_Request_Event * request
-  ACE_ENV_ARG_DECL)
+  TAO_Notify_Method_Request_Event * request)
 {
   TAO_Notify_Event::Ptr event (
     request->event ()->queueable_copy ());
@@ -97,7 +96,7 @@ TAO_Notify_Consumer::enqueue_request (
 }
 
 bool
-TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * request ACE_ENV_ARG_DECL)
+TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * request)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), false);
   if (! this->pending_events().is_empty ())
@@ -142,13 +141,12 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
 }
 
 void
-TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request
-                              ACE_ENV_ARG_DECL)
+TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
 {
   // Increment reference counts (safely) to prevent this object and its proxy
   // from being deleted while the push is in progress.
   TAO_Notify_Proxy::Ptr proxy_guard (this->proxy ());
-  bool queued = enqueue_if_necessary (request ACE_ENV_ARG_PARAMETER);
+  bool queued = enqueue_if_necessary (request);
   if (!queued)
     {
       DispatchStatus status = this->dispatch_request (request);
@@ -167,7 +165,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request
                           ACE_TEXT ("to failed dispatch.\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
-            this->enqueue_request (request ACE_ENV_ARG_PARAMETER);
+            this->enqueue_request (request);
             this->schedule_timer (true);
             break;
           }
@@ -193,17 +191,15 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request
                           request->sequence ()
                           ));
             request->complete ();
-            ACE_DECLARE_NEW_ENV;
-            ACE_TRY
+            try
               {
                 this->proxy_supplier ()->destroy ();
               }
-            ACE_CATCHANY
+            catch (const CORBA::Exception& ex)
               {
                 // todo is there something meaningful we can do here?
                 ;
               }
-            ACE_ENDTRY;
             break;
           }
         }
@@ -214,10 +210,9 @@ TAO_Notify_Consumer::DispatchStatus
 TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request)
 {
   DispatchStatus result = DISPATCH_SUCCESS;
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
-      request->event ()->push (this ACE_ENV_ARG_PARAMETER);
+      request->event ()->push (this);
       if (DEBUG_LEVEL  > 8)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Consumer %d dispatched single event %d.\n"),
@@ -225,7 +220,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                     request->sequence ()
                     ));
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch (const CORBA::OBJECT_NOT_EXIST& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -238,7 +233,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_FAIL;
     }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -278,7 +273,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
             } break;
         }
     }
-  ACE_CATCH (CORBA::TIMEOUT, ex)
+  catch (const CORBA::TIMEOUT& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -289,7 +284,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                     ));
       result = DISPATCH_FAIL;
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, ex)
+  catch (const CORBA::COMM_FAILURE& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -300,7 +295,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                     ));
       result = DISPATCH_FAIL;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -313,7 +308,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_DISCARD;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ( (LM_ERROR,
                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push "
@@ -323,7 +318,6 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                    ));
       result = DISPATCH_DISCARD;
     }
-  ACE_ENDTRY;
 
   // for persistent events that haven't timed out
   // convert "FAIL" & "DISCARD" to "RETRY"
@@ -350,12 +344,11 @@ TAO_Notify_Consumer::DispatchStatus
 TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
 {
   DispatchStatus result = DISPATCH_SUCCESS;
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
-      this->push (batch ACE_ENV_ARG_PARAMETER);
+      this->push (batch);
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch (const CORBA::OBJECT_NOT_EXIST& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -366,7 +359,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
                     ));
       result = DISPATCH_FAIL;
     }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -406,7 +399,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
             } break;
         }
     }
-  ACE_CATCH (CORBA::TIMEOUT, ex)
+  catch (const CORBA::TIMEOUT& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -417,7 +410,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
                     ));
       result = DISPATCH_FAIL;
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, ex)
+  catch (const CORBA::COMM_FAILURE& ex)
     {
       if (DEBUG_LEVEL  > 0)
         ACE_DEBUG ((LM_ERROR,
@@ -428,7 +421,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
                     ));
       result = DISPATCH_FAIL;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -441,7 +434,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_DISCARD;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
@@ -451,7 +444,6 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
                   ));
       result = DISPATCH_DISCARD;
     }
-  ACE_ENDTRY;
   return result;
 }
 
@@ -549,16 +541,14 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
                 ace_mon.acquire ();
               }
             ace_mon.release ();
-            ACE_DECLARE_NEW_ENV;
-            ACE_TRY
+            try
               {
                 this->proxy_supplier ()->destroy ();
               }
-            ACE_CATCHANY
+            catch (const CORBA::Exception& ex)
               {
                 // todo is there something reasonable to do here?
               }
-            ACE_ENDTRY;
             ace_mon.acquire ();
             result = true;
             break;
@@ -644,15 +634,13 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 {
   TAO_Notify_Consumer::Ptr grd (this);
   this->timer_id_ = -1;  // This must come first, because dispatch_pending may try to resched
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
       this->dispatch_pending ();
     }
-  ACE_CATCHALL
+  catch (...)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -668,18 +656,16 @@ TAO_Notify_Consumer::shutdown (void)
 }
 
 void
-TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
-                                         ACE_ENV_ARG_DECL)
+TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed)
 {
   if (this->have_not_yet_verified_publish_)
     {
       this->have_not_yet_verified_publish_ = false; // no need to check again
-      if (! this->publish_->_is_a ("IDL:omg.org/CosNotifyComm/NotifyPublish:1.0"
-                                   ACE_ENV_ARG_PARAMETER))
+      if (! this->publish_->_is_a ("IDL:omg.org/CosNotifyComm/NotifyPublish:1.0"))
         this->publish_ = CosNotifyComm::NotifyPublish::_nil();
     }
   if (! CORBA::is_nil (this->publish_.in ()))
-    this->publish_->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
+    this->publish_->offer_change (added, removed);
 }
 
 TAO_SYNCH_MUTEX*

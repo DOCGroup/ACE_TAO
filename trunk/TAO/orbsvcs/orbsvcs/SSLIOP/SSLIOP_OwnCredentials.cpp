@@ -29,8 +29,7 @@ TAO::SSLIOP::OwnCredentials::_duplicate (TAO::SSLIOP::OwnCredentials_ptr obj)
 }
 
 TAO::SSLIOP::OwnCredentials_ptr
-TAO::SSLIOP::OwnCredentials::_narrow (CORBA::Object_ptr obj
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO::SSLIOP::OwnCredentials::_narrow (CORBA::Object_ptr obj)
 {
   return  TAO::SSLIOP::OwnCredentials::_duplicate (
               dynamic_cast<TAO::SSLIOP::OwnCredentials *> (obj));
@@ -67,8 +66,7 @@ TAO::SSLIOP::OwnCredentials::creds_acceptor (void)
 }
 
 void
-TAO::SSLIOP::OwnCredentials::release_credentials (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::OwnCredentials::release_credentials ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->creds_state_ = SecurityLevel3::CS_PendingRelease;

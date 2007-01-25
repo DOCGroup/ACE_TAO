@@ -40,7 +40,7 @@ public:
     virtual void check_validity(void);
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
+      (const FtRtecEventChannelAdmin::ObjectId&);
 
   /**
    * Replicate a request.
@@ -51,16 +51,14 @@ public:
    */
     virtual void replicate_request(const FTRT::State& state,
                                    RollbackOperation rollback,
-                                   const FtRtecEventChannelAdmin::ObjectId& oid
-                                   ACE_ENV_ARG_DECL)=0;
+                                   const FtRtecEventChannelAdmin::ObjectId& oid)=0;
 
   /**
    * Inform the backup replicas that a new replica has joined the object
    * group.
    */
   virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version
-                          ACE_ENV_ARG_DECL)=0;
+                          CORBA::ULong object_group_ref_version)=0;
 
   virtual Replication_Strategy* make_primary_strategy();
 

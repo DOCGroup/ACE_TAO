@@ -28,14 +28,13 @@ ImR_Locator_Loader::ImR_Locator_Loader()
 int
 ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int err = this->opts_.init (argc, argv);
       if (err != 0)
         return -1;
 
-      err = this->service_.init (this->opts_ ACE_ENV_ARG_PARAMETER);
+      err = this->service_.init (this->opts_);
       if (err != 0)
         return -1;
 
@@ -44,11 +43,10 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
       this->runner_.reset(new ImR_Locator_ORB_Runner (*this));
       this->runner_->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -56,8 +54,7 @@ int
 ImR_Locator_Loader::fini (void)
 {
   ACE_ASSERT(this->runner_.get () != 0);
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int ret = this->service_.fini ();
 
@@ -65,18 +62,16 @@ ImR_Locator_Loader::fini (void)
       this->runner_.reset (0);
       return ret;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
   return -1;
 }
 
 CORBA::Object_ptr
 ImR_Locator_Loader::create_object (CORBA::ORB_ptr,
                                   int,
-                                  ACE_TCHAR**
-                                  ACE_ENV_ARG_DECL)
+                                  ACE_TCHAR**)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), CORBA::Object::_nil ());
@@ -85,17 +80,15 @@ ImR_Locator_Loader::create_object (CORBA::ORB_ptr,
 int
 ImR_Locator_Loader::run(void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       return this->service_.run ();
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR((LM_ERROR, "Exception in ImR_Locator_ORB_Runner ()\n"));
       return -1;
     }
-  ACE_ENDTRY;
 }
 
 

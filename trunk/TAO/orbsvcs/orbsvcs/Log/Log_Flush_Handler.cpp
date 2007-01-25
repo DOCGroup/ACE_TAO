@@ -43,14 +43,13 @@ TAO_Log_Flush_Handler::cancel ()
 int
 TAO_Log_Flush_Handler::handle_timeout (const ACE_Time_Value&, const void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       log_->flush ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   return 0;
 }

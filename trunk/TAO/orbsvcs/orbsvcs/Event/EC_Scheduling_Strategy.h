@@ -54,15 +54,13 @@ public:
   /// Add all the dependencies between @a supplier and @a consumer
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer
-      ACE_ENV_ARG_DECL) = 0;
+      TAO_EC_ProxyPushConsumer *consumer) = 0;
 
   /// Schedule an event set and deliver them to the filter in the
   /// desired order and grouping.
   virtual void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
-                               TAO_EC_Supplier_Filter *filter
-                               ACE_ENV_ARG_DECL) = 0;
+                               TAO_EC_Supplier_Filter *filter) = 0;
 
 };
 

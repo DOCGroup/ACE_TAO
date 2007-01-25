@@ -41,13 +41,11 @@ public:
 
   // = The CosEventComm::PushSupplier methods
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void disconnect (void);
   // Simple connect/disconnect methods..
 
-  void push (const CORBA::Any& events
-             ACE_ENV_ARG_DECL)
+  void push (const CORBA::Any& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Push an event.
 
@@ -115,16 +113,14 @@ public:
 
   // = The CosEventComm::PullSupplier methods
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void disconnect (void);
   // Simple connect/disconnect methods..
 
   // The PullSupplier methods.
   CORBA::Any* pull (void)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  CORBA::Any* try_pull (CORBA::Boolean_out has_event
-                        ACE_ENV_ARG_DECL)
+  CORBA::Any* try_pull (CORBA::Boolean_out has_event)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
   virtual void disconnect_pull_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

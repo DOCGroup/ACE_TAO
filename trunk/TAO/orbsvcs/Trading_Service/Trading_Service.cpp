@@ -49,8 +49,7 @@ Trading_Service::~Trading_Service (void)
 
 int
 Trading_Service::init (int argc,
-                       ACE_TCHAR *argv[]
-                       ACE_ENV_ARG_DECL_NOT_USED)
+                       ACE_TCHAR *argv[])
 {
   int result_trader =
     this->trading_loader_.init (argc, argv);

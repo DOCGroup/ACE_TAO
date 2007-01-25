@@ -58,8 +58,7 @@ TAO_NativeDef_i::type_i (void)
                                             name);
 
   return this->repo_->tc_factory ()->create_native_tc (id.c_str (),
-                                                       name.c_str ()
-                                                       ACE_ENV_ARG_PARAMETER);
+                                                       name.c_str ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

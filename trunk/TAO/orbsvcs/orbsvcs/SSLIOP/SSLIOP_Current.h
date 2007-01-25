@@ -69,8 +69,7 @@ namespace TAO
 
       /// Return the peer certificate associated with the current
       /// request.
-      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate ()
         ACE_THROW_SPEC ((CORBA::SystemException,
                          ::SSLIOP::Current::NoContext));
 
@@ -82,8 +81,7 @@ namespace TAO
        * certficate.  However, the certificate chain on the server
        * side does NOT contain the peer (client) certificate.
        */
-      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain ()
         ACE_THROW_SPEC ((CORBA::SystemException,
                          ::SSLIOP::Current::NoContext));
 
@@ -119,8 +117,7 @@ namespace TAO
       // The static operations.
       static Current_ptr _duplicate (Current_ptr obj);
 
-      static Current_ptr _narrow (CORBA::Object_ptr obj
-                                  ACE_ENV_ARG_DECL);
+      static Current_ptr _narrow (CORBA::Object_ptr obj);
 
       static Current_ptr _nil (void)
       {

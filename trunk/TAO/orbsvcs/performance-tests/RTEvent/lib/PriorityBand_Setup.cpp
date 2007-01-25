@@ -19,18 +19,15 @@ ACE_RCSID (TAO_PERF_RTEC,
            "$Id$")
 
 PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
-                                        const RTCORBA_Setup &rtcorba_setup
-                                        ACE_ENV_ARG_DECL)
+                                        const RTCORBA_Setup &rtcorba_setup)
 {
   CORBA::PolicyManager_var policy_manager =
     RIR_Narrow<CORBA::PolicyManager>::resolve (orb,
-                                               "ORBPolicyManager"
-                                               ACE_ENV_ARG_PARAMETER);
+                                               "ORBPolicyManager");
 
   RTCORBA::RTORB_var rtorb =
     RIR_Narrow<RTCORBA::RTORB>::resolve (orb,
-                                         "RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+                                         "RTORB");
 
   const RTCORBA::ThreadpoolLanes &lanes = rtcorba_setup.lanes ();
 
@@ -44,11 +41,9 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
   CORBA::PolicyList policy_list (1); policy_list.length (1);
 
   policy_list[0] =
-    rtorb->create_priority_banded_connection_policy (priority_bands
-                                                     ACE_ENV_ARG_PARAMETER);
+    rtorb->create_priority_banded_connection_policy (priority_bands);
   policy_manager->set_policy_overrides (policy_list,
-                                        CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
+                                        CORBA::ADD_OVERRIDE);
 
   policy_list[0]->destroy ();
 }

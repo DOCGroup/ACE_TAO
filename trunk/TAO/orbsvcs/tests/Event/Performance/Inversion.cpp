@@ -68,8 +68,7 @@ EC_Inversion::connect_consumers (void)
 
   this->consumers_[0]->connect (consumer_admin.in (),
                                 qos0.get_ConsumerQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1
-                                ACE_ENV_ARG_PARAMETER);
+                                ACE_ES_EVENT_UNDEFINED + 1);
 
   for (int i = 1; i < this->n_consumers_; ++i)
     {
@@ -84,8 +83,7 @@ EC_Inversion::connect_consumers (void)
 
       this->consumers_[i]->connect (consumer_admin.in (),
                                     qos1.get_ConsumerQOS (),
-                                    base_event + 1
-                                    ACE_ENV_ARG_PARAMETER);
+                                    base_event + 1);
     }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
@@ -103,8 +101,7 @@ EC_Inversion::connect_suppliers (void)
 
   this->suppliers_[0]->connect (supplier_admin.in (),
                                 qos0.get_SupplierQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1
-                                ACE_ENV_ARG_PARAMETER);
+                                ACE_ES_EVENT_UNDEFINED + 1);
 
   for (int j = 1; j != this->n_suppliers_; ++j)
     {
@@ -118,8 +115,7 @@ EC_Inversion::connect_suppliers (void)
 
       this->suppliers_[j]->connect (supplier_admin.in (),
                                     qos1.get_SupplierQOS (),
-                                    base_event + 1
-                                    ACE_ENV_ARG_PARAMETER);
+                                    base_event + 1);
     }
 
   if (this->verbose ())

@@ -44,7 +44,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -52,8 +52,7 @@ main (int argc, char *argv[])
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv ()
-                         ACE_ENV_ARG_PARAMETER);
+                         satc.get_TCHAR_argv ());
 
       {
         ACE_Manual_Event me;
@@ -78,13 +77,11 @@ main (int argc, char *argv[])
 
       sorb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

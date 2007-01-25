@@ -54,7 +54,7 @@ Observer_Disconnect_Command::execute (void)
   RtecEventChannelAdmin::EventChannel_var release_ec =
     this->ec_._retn ();
 
-  release_ec->remove_observer (this->handle_ ACE_ENV_ARG_PARAMETER);
+  release_ec->remove_observer (this->handle_);
 }
 
 //***************************************************************************

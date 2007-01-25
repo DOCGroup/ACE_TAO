@@ -64,18 +64,16 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
       // When the reactor is stopped it calls ORB::destroy(), which in turn
       // calls ORB::shutdown(1) *and* unbinds the ORB from the ORB table.
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
-          TAO_ORB_Core_instance ()->orb ()->shutdown (1 ACE_ENV_ARG_PARAMETER);
+          TAO_ORB_Core_instance ()->orb ()->shutdown (1);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // What should we do here? Even the log messages are not
           // showing up, since the thread that runs this is not an ACE
           // thread. It is allways spawned/controlled by Windows ...
         }
-      ACE_ENDTRY;
     }
   else
   {
@@ -167,8 +165,7 @@ TAO_NT_Naming_Service::svc (void)
                            argv_) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Just in case handle_control does not get the chance
       // to execute, or is never called by Windows. This instance's
@@ -180,14 +177,12 @@ TAO_NT_Naming_Service::svc (void)
 
       naming_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_INFO, "Exception in service - exitting\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO NT Naming Service");
+      ex._tao_print_exception ("TAO NT Naming Service");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO, "Exiting gracefully\n"));
   return 0;

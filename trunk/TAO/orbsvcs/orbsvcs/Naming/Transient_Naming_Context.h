@@ -159,8 +159,7 @@ public:
    */
   static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
                                                         const char *poa_id,
-                                                        size_t context_size
-                                                        ACE_ENV_ARG_DECL);
+                                                        size_t context_size);
 
   // = Methods not implemented in TAO_Hash_Naming_Context.
 
@@ -179,8 +178,7 @@ public:
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
-                     CosNaming::BindingIterator_out &bi
-                     ACE_ENV_ARG_DECL);
+                     CosNaming::BindingIterator_out &bi);
 
 protected:
 

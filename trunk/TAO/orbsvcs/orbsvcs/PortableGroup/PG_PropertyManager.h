@@ -65,21 +65,18 @@ public:
 
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Properties & props)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
 
   /// Get the default properties used by all object groups.
-  virtual PortableGroup::Properties * get_default_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual PortableGroup::Properties * get_default_properties ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Remove default properties.
   virtual void remove_default_properties (
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Properties & props)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
@@ -88,8 +85,7 @@ public:
   /// properties override the default properties.
   virtual void set_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & overrides
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Properties & overrides)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
@@ -100,15 +96,13 @@ public:
    * addition to the default properties that were not overridden.
    */
   virtual PortableGroup::Properties * get_type_properties (
-      const char * type_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const char * type_id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & props
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Properties & props)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));
@@ -121,8 +115,7 @@ public:
    */
   virtual void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Properties & overrides)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::InvalidProperty,
@@ -136,8 +129,7 @@ public:
    * that weren't overridden.
    */
   virtual PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      PortableGroup::ObjectGroup_ptr object_group)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
@@ -156,8 +148,7 @@ private:
   /// Remove properties "to_be_removed" from the given list of
   /// properties.
   void remove_properties (const PortableGroup::Properties & to_be_removed,
-                          PortableGroup::Properties &properties
-                          ACE_ENV_ARG_DECL)
+                          PortableGroup::Properties &properties)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::InvalidProperty,
                      PortableGroup::UnsupportedProperty));

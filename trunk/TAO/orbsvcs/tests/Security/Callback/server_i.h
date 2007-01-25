@@ -30,12 +30,10 @@ public:
   server_i (CORBA::ORB_ptr orb);
   virtual ~server_i (void);
 
-  virtual void set_client (client_ptr c
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void set_client (client_ptr c)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_request (const char *msg
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void test_request (const char *msg)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

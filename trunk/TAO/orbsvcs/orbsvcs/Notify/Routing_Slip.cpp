@@ -53,7 +53,7 @@ size_t Routing_Slip::count_enter_deleting_ = 0;
 size_t Routing_Slip::count_enter_terminal_ = 0;
 
 Routing_Slip_Ptr
-Routing_Slip::create (const TAO_Notify_Event::Ptr& event ACE_ENV_ARG_DECL)
+Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
 {
   Routing_Slip * prs;
   ACE_NEW_THROW_EX (prs, Routing_Slip (event), CORBA::NO_MEMORY ());
@@ -111,8 +111,7 @@ Routing_Slip::create (
   Routing_Slip_Ptr result;
   ACE_Message_Block * event_mb = 0;
   ACE_Message_Block * rs_mb = 0;
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
       if (rspm->reload (event_mb, rs_mb))
       {
@@ -120,7 +119,7 @@ Routing_Slip::create (
         TAO_Notify_Event::Ptr event (TAO_Notify_Event::unmarshal (cdr_event));
         if (event.isSet())
         {
-          result = create (event ACE_ENV_ARG_PARAMETER);
+          result = create (event);
           TAO_InputCDR cdr_rs (rs_mb);
           if ( result->unmarshal (ecf, cdr_rs))
           {
@@ -142,13 +141,12 @@ Routing_Slip::create (
         }
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing_Slip::create: Exception reloading event.\n")
         ));
     }
-  ACE_ENDTRY;
   delete event_mb;
   delete rs_mb;
 
@@ -227,7 +225,7 @@ Routing_Slip::wait_persist ()
 }
 
 void
-Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV_ARG_DECL)
+Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
 {
   ACE_ASSERT(pc != 0);
 
@@ -273,7 +271,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV
     }
   }
   guard.release ();
-  pc->execute_task (method ACE_ENV_ARG_PARAMETER);
+  pc->execute_task (method);
 }
 #if 0 // forward
 void
@@ -329,8 +327,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
 void
 Routing_Slip::dispatch (
   TAO_Notify_ProxySupplier* ps,
-  bool filter
-  ACE_ENV_ARG_DECL)
+  bool filter)
 {
   // cannot be the first action
   ACE_ASSERT (this->state_ != rssCREATING);
@@ -362,7 +359,7 @@ Routing_Slip::dispatch (
                     this->sequence_,
                     static_cast<int> (request_id),
                     ps->id()));
-      ps->execute_task (method ACE_ENV_ARG_PARAMETER);
+      ps->execute_task (method);
     }
   else
     {
@@ -842,8 +839,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
     ACE_CDR::Octet code = 0;
     while (cdr.read_octet(code))
     {
-      ACE_DECLARE_NEW_ENV;
-      ACE_TRY
+      try
       {
         if (code == TAO_Notify_Method_Request_Dispatch::persistence_code)
         {
@@ -857,8 +853,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
             TAO_Notify_Method_Request_Dispatch::unmarshal (
               request,
               ecf,
-              cdr
-              ACE_ENV_ARG_PARAMETER);
+              cdr);
           if (method != 0)
           {
             this->delivery_requests_.push_back (request);
@@ -872,9 +867,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
               TAO_Notify_Method_Request_Lookup::unmarshal (
                 request,
                 ecf,
-                cdr
-                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK
+                cdr);
           if (method != 0)
           {
             this->delivery_requests_.push_back (request);
@@ -882,12 +875,11 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
           }
         }
       }
-      ACE_CATCHANY;
+      catch (const CORBA::Exception&)
       {
         // @@todo should we log this?
         // just ignore failures
       }
-      ACE_ENDTRY;
     }
   }
   return this->delivery_requests_.size () > 0;

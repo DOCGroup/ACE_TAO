@@ -26,8 +26,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::release (void)
 }
 
 void
-TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer
-                                                       ACE_ENV_ARG_DECL)
+TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected,
@@ -40,9 +39,9 @@ TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushCon
                     TAO_Notify_PushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
+  consumer->init (push_consumer);
 
-  this->connect (consumer ACE_ENV_ARG_PARAMETER);
+  this->connect (consumer);
 }
 
 void

@@ -74,8 +74,7 @@ Server::~Server (void)
 
 int
 Server::init (int,
-              char **
-              ACE_ENV_ARG_DECL)
+              char **)
 {
   int result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
@@ -105,8 +104,7 @@ Server::init (int,
 
   // Register the server object with the naming server.
   this->my_naming_client_->rebind (server_mmdevice_name,
-                                   mmdevice.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   mmdevice.in ());
 
   return 0;
 }
@@ -141,14 +139,12 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
 
       int result =
         parse_args (argc,
@@ -170,13 +166,11 @@ main (int argc,
                        "File Opened Successfully\n"));
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
         = root_poa->the_POAManager ();
@@ -185,34 +179,31 @@ main (int argc,
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      root_poa.in ());
 
       Server server;
       result =
         server.init (argc,
-                     argv
-                     ACE_ENV_ARG_PARAMETER);
+                     argv);
 
       if (result != 0)
         return result;
 
       while ( !done )
       {
-        if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
+        if ( orb->work_pending( ) )
 	{
           orb->perform_work ();
 	}
       }
 
-      orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
+      orb->shutdown( 1 );
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_OS::fclose (output_file);
 

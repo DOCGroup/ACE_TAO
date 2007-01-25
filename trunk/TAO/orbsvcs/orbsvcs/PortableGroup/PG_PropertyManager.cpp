@@ -27,8 +27,7 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
 
 void
 TAO_PG_PropertyManager::set_default_properties (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Properties & props)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
@@ -46,12 +45,10 @@ TAO_PG_PropertyManager::set_default_properties (
       PortableGroup::Property property = props[i];
 
       if (property.nam == factories)
-        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                   property.val));
+        throw PortableGroup::InvalidProperty (property.nam, property.val);
     }
 
-  this->property_validator_.validate_property (props
-                                               ACE_ENV_ARG_PARAMETER);
+  this->property_validator_.validate_property (props);
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -60,8 +57,7 @@ TAO_PG_PropertyManager::set_default_properties (
 
 
 PortableGroup::Properties *
-TAO_PG_PropertyManager::get_default_properties (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO_PG_PropertyManager::get_default_properties ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
@@ -81,8 +77,7 @@ TAO_PG_PropertyManager::get_default_properties (
 
 void
 TAO_PG_PropertyManager::remove_default_properties (
-    const PortableGroup::Properties &props
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Properties &props)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
@@ -93,22 +88,19 @@ TAO_PG_PropertyManager::remove_default_properties (
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   this->remove_properties (props,
-                           this->default_properties_
-                           ACE_ENV_ARG_PARAMETER);
+                           this->default_properties_);
 }
 
 
 void
 TAO_PG_PropertyManager::set_type_properties (
     const char * type_id,
-    const PortableGroup::Properties & overrides
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Properties & overrides)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  this->property_validator_.validate_property (overrides
-                                               ACE_ENV_ARG_PARAMETER);
+  this->property_validator_.validate_property (overrides);
 
   CORBA::ULong num_overrides = overrides.length ();
 
@@ -119,7 +111,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
   Type_Prop_Table::ENTRY * entry = 0;
   if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Properties & props = entry->int_id_;
   props = overrides;
@@ -128,8 +120,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
-    const char * type_id
-    ACE_ENV_ARG_DECL)
+    const char * type_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
@@ -176,8 +167,7 @@ TAO_PG_PropertyManager::get_type_properties (
 void
 TAO_PG_PropertyManager::remove_type_properties (
     const char * type_id,
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Properties & props)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
@@ -189,21 +179,19 @@ TAO_PG_PropertyManager::remove_type_properties (
 
   Type_Prop_Table::ENTRY * entry = 0;
   if (this->type_properties_.find (type_id, entry) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Properties & type_properties = entry->int_id_;
 
   this->remove_properties (props,
-                           type_properties
-                           ACE_ENV_ARG_PARAMETER);
+                           type_properties);
 }
 
 
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Properties & /* overrides */
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Properties & /* overrides */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::InvalidProperty,
@@ -224,24 +212,21 @@ TAO_PG_PropertyManager::set_properties_dynamically (
       PortableGroup::Property property = props[i];
 
       if (property.nam == factories)
-        ACE_THROW (PortableGroup::InvalidProperty (property.nam,
-                                                   property.val));
+        throw PortableGroup::InvalidProperty (property.nam, property.val);
     }
 
-  this->property_validator_.validate_property (overrides
-                                               ACE_ENV_ARG_PARAMETER);
+  this->property_validator_.validate_property (overrides);
 
   // @todo Set the properties in the object group map entry.
 #endif  /* 0 */
 
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_properties (
-    PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
+    PortableGroup::ObjectGroup_ptr object_group)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound))
 {
@@ -251,16 +236,14 @@ TAO_PG_PropertyManager::get_properties (
 
   // @@ Race condition here!
   PortableGroup::Properties_var dynamic_properties =
-    this->object_group_manager_.get_properties (object_group
-                                                ACE_ENV_ARG_PARAMETER);
+    this->object_group_manager_.get_properties (object_group);
 
   CORBA::ULong dyn_props_len = dynamic_properties->length ();
   if (dyn_props_len > properties_len)
     properties_len = dyn_props_len;
 
   CORBA::String_var type_id =
-    this->object_group_manager_.type_id (object_group
-                                         ACE_ENV_ARG_PARAMETER);
+    this->object_group_manager_.type_id (object_group);
 
   CORBA::ULong type_props_len = 0;
   PortableGroup::Properties * type_properties = 0;
@@ -312,8 +295,7 @@ TAO_PG_PropertyManager::get_properties (
 void
 TAO_PG_PropertyManager::remove_properties (
     const PortableGroup::Properties & to_be_removed,
-    PortableGroup::Properties &properties
-    ACE_ENV_ARG_DECL)
+    PortableGroup::Properties &properties)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
@@ -345,8 +327,7 @@ TAO_PG_PropertyManager::remove_properties (
       // The property to be removed doesn't exist in the current list
       // of default properties.
       if (n == old_n)
-        ACE_THROW (PortableGroup::InvalidProperty (remove.nam,
-                                                   remove.val));
+        throw PortableGroup::InvalidProperty (remove.nam, remove.val);
     }
 
   // All properties were successfully removed, and the remaining ones

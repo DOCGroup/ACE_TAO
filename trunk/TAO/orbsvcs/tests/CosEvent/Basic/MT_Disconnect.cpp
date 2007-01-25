@@ -12,68 +12,63 @@ ACE_RCSID (CEC_Tests,
            "$Id$")
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int use_callbacks
-                      ACE_ENV_ARG_DECL);
+                      int use_callbacks);
 
 int
 main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // ****************************************************************
 
-      run_test (poa.in (), 0 ACE_ENV_ARG_PARAMETER);
+      run_test (poa.in (), 0);
 
-      run_test (poa.in (), 1 ACE_ENV_ARG_PARAMETER);
+      run_test (poa.in (), 1);
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       orb->destroy ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 // ****************************************************************
 
 void
-deactivate_servant (PortableServer::Servant servant
-                    ACE_ENV_ARG_DECL)
+deactivate_servant (PortableServer::Servant servant)
 {
   PortableServer::POA_var poa =
     servant->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (servant ACE_ENV_ARG_PARAMETER);
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (servant);
+  poa->deactivate_object (id.in ());
 }
 
 void
 run_test (PortableServer::POA_ptr poa,
-          int use_callbacks
-          ACE_ENV_ARG_DECL)
+          int use_callbacks)
 {
   TAO_CEC_EventChannel_Attributes attributes (poa, poa);
   attributes.disconnect_callbacks = use_callbacks;
@@ -96,7 +91,7 @@ run_test (PortableServer::POA_ptr poa,
 
   event_channel->destroy ();
 
-  deactivate_servant (&ec_impl ACE_ENV_ARG_PARAMETER);
+  deactivate_servant (&ec_impl);
 }
 
 MTD_Task::MTD_Task (CosEventChannelAdmin::EventChannel_ptr ec,
@@ -112,15 +107,14 @@ MTD_Task::svc ()
 {
   for (int i = 0; i < 10; ++i)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           this->run_iteration ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           return -1;
         }
-      ACE_ENDTRY;
     }
   return 0;
 }
@@ -147,16 +141,12 @@ MTD_Task::run_iteration (void)
 
   for (int i = 0; i != iterations; ++i)
     {
-      supplier_0.connect (supplier_admin.in ()
-                          ACE_ENV_ARG_PARAMETER);
-      consumer_0.connect (consumer_admin.in ()
-                          ACE_ENV_ARG_PARAMETER);
+      supplier_0.connect (supplier_admin.in ());
+      consumer_0.connect (consumer_admin.in ());
       if (i % 2 == 1)
         {
-          supplier_1.connect (supplier_admin.in ()
-                              ACE_ENV_ARG_PARAMETER);
-          consumer_1.connect (consumer_admin.in ()
-                              ACE_ENV_ARG_PARAMETER);
+          supplier_1.connect (supplier_admin.in ());
+          consumer_1.connect (consumer_admin.in ());
         }
       supplier_0.disconnect ();
       consumer_0.disconnect ();
@@ -167,9 +157,9 @@ MTD_Task::run_iteration (void)
         }
     }
 
-  deactivate_servant (&supplier_0 ACE_ENV_ARG_PARAMETER);
+  deactivate_servant (&supplier_0);
 
-  deactivate_servant (&consumer_0 ACE_ENV_ARG_PARAMETER);
+  deactivate_servant (&consumer_0);
 
   CORBA::ULong count_0 = 0;
   CORBA::ULong count_1 = 0;

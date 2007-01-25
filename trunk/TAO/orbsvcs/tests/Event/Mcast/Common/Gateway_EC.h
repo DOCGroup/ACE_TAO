@@ -37,8 +37,7 @@ private:
   int parse_args (int argc, char *argv[]);
   int check_for_nil (CORBA::Object_ptr obj, const char *message);
   void write_ior_file (CORBA::ORB_ptr orb,
-                       RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL);
+                       RtecEventChannelAdmin::EventChannel_ptr ec);
   //@}
 
   /// Event Channel ior is written to this file.

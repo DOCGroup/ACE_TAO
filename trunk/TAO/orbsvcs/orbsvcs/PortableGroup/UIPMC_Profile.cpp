@@ -73,8 +73,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
 /*
 
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
-                                      TAO_ORB_Core *orb_core
-                                      ACE_ENV_ARG_DECL)
+                                      TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
@@ -83,7 +82,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
     tagged_profile_ ()
 {
   this->add_group_component ();
-  this->parse_string (string ACE_ENV_ARG_PARAMETER);
+  this->parse_string (string);
   addressing_mode_ = default_addressing_mode_;
 }
 
@@ -190,16 +189,13 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_UIPMC_Profile::parse_string (const char *string
-                                 ACE_ENV_ARG_DECL)
+TAO_UIPMC_Profile::parse_string (const char *string)
 {
-  this->parse_string_i (string
-                        ACE_ENV_ARG_PARAMETER);
+  this->parse_string_i (string);
 }
 
 void
-TAO_UIPMC_Profile::parse_string_i (const char *string
-                                   ACE_ENV_ARG_DECL)
+TAO_UIPMC_Profile::parse_string_i (const char *string)
 {
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -213,11 +209,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
       if (string[0] != '1' ||
           string[2] != '0')
         {
-          ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            EINVAL),
-                          CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       string += 4;
@@ -247,11 +243,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
       if (major != TAO_DEF_MIOP_MAJOR ||
           minor >  TAO_DEF_MIOP_MINOR)
         {
-          ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            EINVAL),
-                          CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       // Skip over "N.n-"
@@ -260,11 +256,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
   else
     {
       // The group component version is mandatory.
-      ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        EINVAL),
-                      CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Parse the group_domain_id.
@@ -280,11 +276,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
     {
       // The group_domain_id is mandatory, so throw an
       // exception if it isn't found.
-      ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        EINVAL),
-                      CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Save the group_domain_id.
@@ -313,11 +309,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
       if (end_pos == ACE_CString::npos)
         {
           // The Group ID is mandatory, so throw an exception.
-          ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            EINVAL),
-                          CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
     }
 
@@ -340,11 +336,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
         {
           // The group version was expected but not found,
           // so throw an exception.
-          ACE_THROW (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            EINVAL),
-                          CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       ACE_CString str_group_ref_ver = ace_str.substring (pos, end_pos - pos);
@@ -362,11 +358,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
     {
       // The multicast address is mandatory, so throw an exception,
       // since it wasn't found.
-      ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        EINVAL),
-                      CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   ACE_CString mcast_addr = ace_str.substring (pos, end_pos - pos);
@@ -379,11 +375,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
     {
       // The multicast port is mandatory, so throw an exception,
       // since it wasn't found.
-      ACE_THROW (CORBA::INV_OBJREF (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        EINVAL),
-                      CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   CORBA::UShort mcast_port =
@@ -415,8 +411,7 @@ TAO_UIPMC_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_UIPMC_Profile::hash (CORBA::ULong max
-                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_UIPMC_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = this->endpoint_.hash ();
@@ -662,8 +657,7 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
 void
 TAO_UIPMC_Profile::request_target_specifier (
                       TAO_Target_Specification &target_spec,
-                      TAO_Target_Specification::TAO_Target_Address required_type
-                      ACE_ENV_ARG_DECL)
+                      TAO_Target_Specification::TAO_Target_Address required_type)
 {
   // Fill out the target specifier based on the required type.
   switch (required_type)
@@ -681,7 +675,7 @@ TAO_UIPMC_Profile::request_target_specifier (
     case TAO_Target_Specification::Reference_Addr:
     default:
       // Unsupported or unknown required type.  Throw an exception.
-      ACE_THROW (CORBA::MARSHAL ());
+      throw CORBA::MARSHAL ();
     }
 }
 
@@ -693,8 +687,7 @@ TAO_UIPMC_Profile::supports_multicast (void) const
 }
 
 void
-TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode
-                                    ACE_ENV_ARG_DECL)
+TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode)
 {
   // ** See race condition note about addressing mode in Profile.h **
   switch (addr_mode)
@@ -708,11 +701,11 @@ TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr_mode
       // There is no object key, so it is not supported.
 
     default:
-      ACE_THROW (CORBA::BAD_PARAM (
-             CORBA::SystemException::_tao_minor_code (
-               TAO::VMCID,
-               EINVAL),
-             CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 }
 

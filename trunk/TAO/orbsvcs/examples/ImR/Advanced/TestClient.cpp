@@ -252,7 +252,7 @@ int TestClient::svc()
   {
     ACE_ERROR((LM_ERROR,"CORBA client error with (%d.%d.%d.%d):%s\n",
                threadNum, i, objIter, requestIter, currentIOR.c_str()));
-    ACE_PRINT_EXCEPTION(ex, "");
+    ex._tao_print_exception ("");
   }
   return 1;
 }

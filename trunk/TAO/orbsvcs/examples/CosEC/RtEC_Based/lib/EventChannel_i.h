@@ -50,8 +50,7 @@ public:
 
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             const RtecEventChannelAdmin::SupplierQOS &supplierqos,
-            RtecEventChannelAdmin::EventChannel_ptr rtec
-            ACE_ENV_ARG_DECL);
+            RtecEventChannelAdmin::EventChannel_ptr rtec);
   // Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
   // -1 on error, 0 on success.
 

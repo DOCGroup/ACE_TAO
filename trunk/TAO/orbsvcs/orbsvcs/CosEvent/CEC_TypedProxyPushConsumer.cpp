@@ -46,28 +46,24 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
                                          this,
                                          this->typed_event_channel_);
 
-  ACE_TRY_NEW_ENV {
+  try{
     // tempporary fix, should put this into some init function.
 
     this->oid_ =
-      this->default_POA_->activate_object (this->dsi_impl_
-                                         ACE_ENV_ARG_PARAMETER);
+      this->default_POA_->activate_object (this->dsi_impl_);
   }
-  ACE_CATCHALL {
+  catch (...){
   }
-  ACE_ENDTRY;
 }
 
 // Implementation skeleton destructor
 TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer (void)
 {
-  ACE_TRY_NEW_ENV {
-    this->default_POA_->deactivate_object (this->oid_.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+  try{
+    this->default_POA_->deactivate_object (this->oid_.in ());
   }
-  ACE_CATCHALL {
+  catch (...){
   }
-  ACE_ENDTRY;
 
   delete dsi_impl_;
 
@@ -77,20 +73,18 @@ TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer (void)
 
 void
 TAO_CEC_TypedProxyPushConsumer::activate (
-    CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy
-    ACE_ENV_ARG_DECL)
+    CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTypedEventChannelAdmin::TypedProxyPushConsumer_var result;
-  ACE_TRY
+  try
     {
       result = this->_this ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       result = CosTypedEventChannelAdmin::TypedProxyPushConsumer::_nil ();
     }
-  ACE_ENDTRY;
   activated_proxy = result._retn ();
 }
 
@@ -98,28 +92,26 @@ void
 TAO_CEC_TypedProxyPushConsumer::deactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       PortableServer::POA_var poa =
         this->_default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+        poa->servant_to_id (this);
+      poa->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean
 TAO_CEC_TypedProxyPushConsumer::supplier_non_existent (
-      CORBA::Boolean_out disconnected
-      ACE_ENV_ARG_DECL)
+      CORBA::Boolean_out disconnected)
 {
   CORBA::Object_var supplier;
   {
@@ -168,16 +160,15 @@ TAO_CEC_TypedProxyPushConsumer::shutdown (void)
   if (CORBA::is_nil (supplier.in ()))
     return;
 
-  ACE_TRY
+  try
     {
       supplier->disconnect_push_supplier ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -212,8 +203,7 @@ TAO_CEC_TypedProxyPushConsumer::_decr_refcnt (void)
 
 void
 TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
-      CosEventComm::PushSupplier_ptr push_supplier
-      ACE_ENV_ARG_DECL)
+      CosEventComm::PushSupplier_ptr push_supplier)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected))
 {
@@ -226,7 +216,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
     if (this->is_connected_i ())
       {
         if (this->typed_event_channel_->supplier_reconnect () == 0)
-          ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+          throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
@@ -242,7 +232,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
               CORBA::INTERNAL ());
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-          this->typed_event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
+          this->typed_event_channel_->disconnected (this);
         }
 
         // What if a second thread connected us after this?
@@ -254,7 +244,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
   }
 
   // Notify the event channel...
-  this->typed_event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+  this->typed_event_channel_->connected (this);
 }
 
 CosEventComm::PushSupplier_ptr
@@ -284,16 +274,14 @@ TAO_CEC_TypedProxyPushConsumer::apply_policy
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::push (const CORBA::Any& /* event */
-                                      ACE_ENV_ARG_DECL)
+TAO_CEC_TypedProxyPushConsumer::push (const CORBA::Any& /* event */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer ()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PushSupplier_var supplier;
@@ -305,7 +293,7 @@ TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer (
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (this->is_connected_i () == 0)
-      ACE_THROW (CORBA::BAD_INV_ORDER ()); // @@ add user exception?
+      throw CORBA::BAD_INV_ORDER (); // @@ add user exception?
 
     supplier = this->typed_supplier_._retn ();
 
@@ -313,22 +301,21 @@ TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer (
   }
 
   // Notify the event channel...
-  this->typed_event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
+  this->typed_event_channel_->disconnected (this);
 
   if (!CORBA::is_nil (supplier.in ()))
     {
       if (this->typed_event_channel_->disconnect_callbacks ())
         {
-          ACE_TRY
+          try
             {
               supplier->disconnect_push_supplier ();
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
               // Ignore exceptions, we must isolate other clients from
               // failures on this one.
             }
-          ACE_ENDTRY;
         }
     }
 }
@@ -357,15 +344,13 @@ TAO_CEC_TypedProxyPushConsumer::get_typed_consumer (void)
 
 {
   CORBA::Object_var server =
-         default_POA_->id_to_reference (this->oid_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+         default_POA_->id_to_reference (this->oid_.in ());
 
   return CORBA::Object::_duplicate (server.in());
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::invoke (const TAO_CEC_TypedEvent& typed_event
-                                        ACE_ENV_ARG_DECL)
+TAO_CEC_TypedProxyPushConsumer::invoke (const TAO_CEC_TypedEvent& typed_event)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_CEC_TypedProxyPushConsumer_Guard ace_mon (this->lock_,
@@ -375,8 +360,7 @@ TAO_CEC_TypedProxyPushConsumer::invoke (const TAO_CEC_TypedEvent& typed_event
   if (!ace_mon.locked ())
     return;
 
-  this->typed_event_channel_->typed_consumer_admin ()->invoke (typed_event
-                                                               ACE_ENV_ARG_PARAMETER);
+  this->typed_event_channel_->typed_consumer_admin ()->invoke (typed_event);
 }
 
 // ****************************************************************

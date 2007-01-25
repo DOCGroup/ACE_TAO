@@ -12,7 +12,7 @@ ACE_RCSID (IFR_Inheritance_Test,
 
 void printContents( const CORBA::ContainedSeq& cont )
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       for( unsigned int i=0; i<cont.length(); i++ )
         {
@@ -20,7 +20,7 @@ void printContents( const CORBA::ContainedSeq& cont )
             {
               CORBA::InterfaceDef_var intDef =
                 CORBA::InterfaceDef::_narrow (cont[i]
-                ACE_ENV_ARG_PARAMETER );
+ );
 
               CORBA::InterfaceDef::FullInterfaceDescription* desc =
                 intDef->describe_interface ();
@@ -41,36 +41,32 @@ void printContents( const CORBA::ContainedSeq& cont )
             {
               CORBA::ModuleDef_var moduleDef =
                 CORBA::ModuleDef::_narrow (cont[i]
-                                           ACE_ENV_ARG_PARAMETER );
+ );
 
               CORBA::ContainedSeq_var moduleContents =
                 moduleDef->contents (CORBA::dk_all,1
-                                     ACE_ENV_ARG_PARAMETER );
+ );
               printContents (moduleContents.in ());
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "printContents");
+      ex._tao_print_exception ("printContents");
       ACE_OS::exit(-1); // the test has failed!
     }
-  ACE_ENDTRY;
 }
 
 
 int  main(int argc, char** argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var      orb = CORBA::ORB_init (argc,
                                     argv,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
+                                    0);
       CORBA::Object_var object =
-        orb->resolve_initial_references ("InterfaceRepository"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("InterfaceRepository");
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -83,8 +79,7 @@ int  main(int argc, char** argv)
         }
 
       CORBA::Repository_var  ifr =
-        CORBA::Repository::_narrow (object.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+        CORBA::Repository::_narrow (object.in ());
 
       if (CORBA::is_nil (ifr.in ()))
         {
@@ -93,21 +88,18 @@ int  main(int argc, char** argv)
                             -1);
         }
 
-     CORBA::ContainedSeq_var  cont = ifr->contents (CORBA::dk_all, 0
-                                                    ACE_ENV_ARG_PARAMETER);
+     CORBA::ContainedSeq_var  cont = ifr->contents (CORBA::dk_all, 0);
 
      printContents (cont.in ());
 
      orb->shutdown ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "main");
+      ex._tao_print_exception ("main");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

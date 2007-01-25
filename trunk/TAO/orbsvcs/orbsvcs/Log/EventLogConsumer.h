@@ -78,7 +78,7 @@ private:
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const CORBA::Any& data ACE_ENV_ARG_DECL)
+  void push (const CORBA::Any& data)
     ACE_THROW_SPEC ((
             CORBA::SystemException,
             CosEventComm::Disconnected

@@ -6,12 +6,12 @@
  *
  *  $Id$
  *
- *  
+ *
  *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *  
+ *
  */
 //=============================================================================
 
@@ -45,14 +45,13 @@ public:
 
   // = Initialization and termination methods.
 
-  /** 
+  /**
    * This constructor builds an expression tree representing the
    * constraint specified in <constraints>, and throws an Illegal
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  TAO_Log_Constraint_Interpreter (const char* constraints
-                   ACE_ENV_ARG_DECL)
+  TAO_Log_Constraint_Interpreter (const char* constraints)
     ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
                      CORBA::NO_MEMORY));
 

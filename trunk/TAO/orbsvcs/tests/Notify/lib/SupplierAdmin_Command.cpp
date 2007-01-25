@@ -94,15 +94,14 @@ TAO_Notify_Tests_SupplierAdmin_Command::handle_create (void)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str ());
 
   // create supplier admin
   CosNotifyChannelAdmin::SupplierAdmin_var sa =
     ec->new_for_suppliers (this->ifgop_,
-                           this->id_
-                           ACE_ENV_ARG_PARAMETER);
+                           this->id_);
 
-  LOOKUP_MANAGER->_register (sa.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->_register (sa.in(), this->name_.c_str ());
 }
 
 void
@@ -110,7 +109,7 @@ TAO_Notify_Tests_SupplierAdmin_Command::handle_offers (void)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var admin;
 
-  LOOKUP_MANAGER->resolve (admin, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (admin, this->name_.c_str ());
 
       // Let the user see what we're subscribed for,
   ACE_DEBUG ((LM_DEBUG, "Calling SupplierAdmin offer_change : "));
@@ -128,7 +127,7 @@ TAO_Notify_Tests_SupplierAdmin_Command::handle_offers (void)
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
-  admin->offer_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
+  admin->offer_change (this->added_, this->removed_);
 }
 
 void
@@ -141,9 +140,9 @@ TAO_Notify_Tests_SupplierAdmin_Command::handle_set_qos (void)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var admin;
 
-  LOOKUP_MANAGER->resolve (admin, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (admin, this->name_.c_str ());
 
-  admin->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
+  admin->set_qos (this->qos_);
 }
 
 void

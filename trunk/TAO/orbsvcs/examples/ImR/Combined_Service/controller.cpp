@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     Object_var obj = orb->resolve_initial_references("ServiceConfig");
     ServiceConfigurator_var sc = ServiceConfigurator::_narrow(obj.in());
     ACE_ASSERT(! is_nil(sc.in()));
- 
+
     if (directive.length() > 0) {
       ACE_DEBUG((LM_DEBUG, "Controller: sending directive <%s>...\n", directive.c_str()));
       sc->process_directive(directive.c_str());
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 
     return 0;
   } catch (CORBA::Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "Controller:");
+    e._tao_print_exception ("Controller:");
   }
   return 1;
 }

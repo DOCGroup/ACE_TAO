@@ -25,16 +25,14 @@ IFR_Service::~IFR_Service (void)
 
 int
 IFR_Service::init (int argc,
-                   char *argv[]
-                   ACE_ENV_ARG_DECL)
+                   char *argv[])
 {
   int result;
-  ACE_TRY
+  try
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
+                                    0);
 
       result = this->my_ifr_server_.init_with_orb (argc,
                                                    argv,
@@ -45,21 +43,19 @@ IFR_Service::init (int argc,
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "IFR_Service::init");
+      ex._tao_print_exception ("IFR_Service::init");
 
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 IFR_Service::run (void)
 {
-  this->orb_->run (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->run (0);
 
   return 0;
 }
@@ -67,17 +63,15 @@ IFR_Service::run (void)
 int
 IFR_Service::fini (void)
 {
-  ACE_TRY
+  try
     {
       this->my_ifr_server_.fini ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "IFR_Service::fini");
-      ACE_RE_THROW;
+      ex._tao_print_exception ("IFR_Service::fini");
+      throw;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

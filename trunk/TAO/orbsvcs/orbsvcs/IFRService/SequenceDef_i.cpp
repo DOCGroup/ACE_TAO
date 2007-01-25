@@ -84,7 +84,6 @@ TAO_SequenceDef_i::type_i (void)
   return this->repo_->tc_factory ()->create_sequence_tc (
                                          bound,
                                          element_typecode.in ()
-                                         ACE_ENV_ARG_PARAMETER
                                        );
 }
 
@@ -112,19 +111,16 @@ TAO_SequenceDef_i::bound_i (void)
 }
 
 void
-TAO_SequenceDef_i::bound (CORBA::ULong bound
-                          ACE_ENV_ARG_DECL)
+TAO_SequenceDef_i::bound (CORBA::ULong bound)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->bound_i (bound
-                 ACE_ENV_ARG_PARAMETER);
+  this->bound_i (bound);
 }
 
 void
-TAO_SequenceDef_i::bound_i (CORBA::ULong bound
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_SequenceDef_i::bound_i (CORBA::ULong bound)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -181,29 +177,24 @@ TAO_SequenceDef_i::element_type_def_i (void)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (element_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::IDLType::_narrow (obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  return CORBA::IDLType::_narrow (obj.in ());
 }
 
 void
-TAO_SequenceDef_i::element_type_def (CORBA::IDLType_ptr element_type_def
-                                     ACE_ENV_ARG_DECL)
+TAO_SequenceDef_i::element_type_def (CORBA::IDLType_ptr element_type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->element_type_def_i (element_type_def
-                            ACE_ENV_ARG_PARAMETER);
+  this->element_type_def_i (element_type_def);
 }
 
 void
-TAO_SequenceDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
-                                       ACE_ENV_ARG_DECL)
+TAO_SequenceDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_element_type ();
@@ -217,8 +208,7 @@ TAO_SequenceDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
 }
 
 void
-TAO_SequenceDef_i::destroy_element_type (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO_SequenceDef_i::destroy_element_type ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;

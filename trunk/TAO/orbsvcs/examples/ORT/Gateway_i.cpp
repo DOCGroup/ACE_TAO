@@ -29,8 +29,7 @@ Gateway_i (CORBA::ORB_ptr orb,
 }
 
 void
-Gateway_i::invoke (CORBA::ServerRequest_ptr request
-                   ACE_ENV_ARG_DECL)
+Gateway_i::invoke (CORBA::ServerRequest_ptr request)
 {
   PortableServer::ObjectId_var target_id =
     this->poa_current_->get_object_id ();
@@ -39,8 +38,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
     PortableServer::ObjectId_to_string (target_id.in ());
 
   CORBA::Object_var target_object =
-    this->orb_->string_to_object (stringified_object_id.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    this->orb_->string_to_object (stringified_object_id.in ());
 
   // Use the IfR interfaces to query the NVList for this object...
   CORBA::InterfaceDef_var target_interface =
@@ -71,8 +69,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
   // Build the NVList based on the info from the IfR
   CORBA::NVList_ptr arguments;
   this->orb_->create_list (parameters->length (),
-                           arguments
-                           ACE_ENV_ARG_PARAMETER);
+                           arguments);
 
   CORBA::Flags flags = 0;
 
@@ -103,20 +100,18 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
       arguments->add_value (parameters[i].name,
                             any,
-                            flags
-                            ACE_ENV_ARG_PARAMETER);
+                            flags);
     }
 
   // Extract the values of the arguments from the DSI ServerRequest
-  request->arguments (arguments ACE_ENV_ARG_PARAMETER);
+  request->arguments (arguments);
 
   // Use the NVList (with values) to create a DII Request...
   CORBA::Request_var dii_request;
 
   CORBA::NamedValue *named_value = 0;
 
-  this->orb_->create_named_value (named_value
-                                  ACE_ENV_ARG_PARAMETER);
+  this->orb_->create_named_value (named_value);
 
   CORBA::ContextList *context_list = 0;
   CORBA::ExceptionList *exceptions = 0;
@@ -128,13 +123,12 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
                                   exceptions,
                                   context_list, /* Context List */
                                   dii_request.inout (),
-                                  CORBA::Flags (0)
-                                  ACE_ENV_ARG_PARAMETER);
+                                  CORBA::Flags (0));
 
   // Set the return type...
   dii_request->set_return_type (result_typecode.in ());
 
-  ACE_TRY
+  try
     {
       // Make the DII request
       dii_request->invoke ();
@@ -142,13 +136,13 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
       // At this point the NVList contains all the out and inout
       // arguments, but we need to extract the return value...
     }
-  ACE_CATCH (CORBA::UnknownUserException, user_ex)
+  catch (CORBA::UnknownUserException& user_ex)
     {
       // Pass the exception back to the server request...
       request->set_exception (user_ex.exception ());
       return;
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
       CORBA::Any any;
       any <<= sys_ex;
@@ -156,8 +150,9 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
       request->set_exception (any);
       return;
     }
-  ACE_CATCHANY;
-  ACE_ENDTRY;
+  catch (const CORBA::Exception&)
+    {
+    }
 
   request->set_result (dii_request->return_value ());
   // Using the same NVList for both the DSI Server Request and the DII
@@ -166,8 +161,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
 CORBA::RepositoryId
 Gateway_i::_primary_interface (const PortableServer::ObjectId &,
-                               PortableServer::POA_ptr
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                               PortableServer::POA_ptr)
 {
   return 0;
 }

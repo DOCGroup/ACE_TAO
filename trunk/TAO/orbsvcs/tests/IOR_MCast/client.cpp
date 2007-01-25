@@ -5,27 +5,25 @@
 int main (int argc, char *argv [])
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
 
       ior_mcast_Client_i client;
 
       int init_result;
-      init_result = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      init_result = client.init (argc, argv);
 
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
       //
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

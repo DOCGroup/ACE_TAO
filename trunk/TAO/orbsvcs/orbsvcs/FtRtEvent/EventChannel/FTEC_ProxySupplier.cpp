@@ -30,30 +30,27 @@ TAO_FTEC_ProxyPushSupplier::id() const
     /// Activate in the POA
 void
 TAO_FTEC_ProxyPushSupplier::activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &result
-       ACE_ENV_ARG_DECL)
+       RtecEventChannelAdmin::ProxyPushSupplier_ptr &result)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   result =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil();
-  ACE_TRY {
+  try{
     object_id_ = Request_Context_Repository().get_object_id();
     PortableServer::POA_var poa = _default_POA();
-    activate_object_with_id(result, poa.in(), this, id() ACE_ENV_ARG_PARAMETER);
+    activate_object_with_id(result, poa.in(), this, id());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     // ignore exceptions
   }
-  ACE_ENDTRY;
 }
 
     // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL)
+                const RtecEventChannelAdmin::ConsumerQOS &qos)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError))
@@ -68,20 +65,18 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
   param.qos = qos;
   update.param.connect_consumer_param(param);
 
-  Inherited::connect_push_consumer(push_consumer, qos ACE_ENV_ARG_PARAMETER);
+  Inherited::connect_push_consumer(push_consumer, qos);
 
-  ACE_TRY {
+  try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
 
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
-      &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_supplier
-      ACE_ENV_ARG_PARAMETER);
+      &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_supplier);
   }
-  ACE_CATCHALL {
+  catch (...){
   }
-  ACE_ENDTRY;
 }
 
 
@@ -100,7 +95,7 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier (void)
 
   ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
-  svc->replicate_request(update, 0 ACE_ENV_ARG_PARAMETER);
+  svc->replicate_request(update, 0);
 }
 
 
@@ -116,20 +111,18 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection (void)
 
   Inherited::suspend_connection();
 
-  ACE_TRY
+  try
   {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
-      &FtRtecEventChannelAdmin::EventChannelFacade::resume_push_supplier
-      ACE_ENV_ARG_PARAMETER);
+      &FtRtecEventChannelAdmin::EventChannelFacade::resume_push_supplier);
   }
-  ACE_CATCHALL {
+  catch (...){
     this->resume_connection();
-    ACE_RE_THROW;
+    throw;
   }
-  ACE_ENDTRY;
 }
 
 void TAO_FTEC_ProxyPushSupplier::resume_connection (void)
@@ -138,27 +131,25 @@ void TAO_FTEC_ProxyPushSupplier::resume_connection (void)
   if (Request_Context_Repository().is_executed_request())
     return;
 
-  Request_Context_Repository().set_object_id(id() ACE_ENV_ARG_PARAMETER);
+  Request_Context_Repository().set_object_id(id());
   FtRtecEventChannelAdmin::Operation update;
   update.object_id = id();
   update.param._d(FtRtecEventChannelAdmin::RESUME_CONNECTION);
 
   Inherited::resume_connection();
 
-  ACE_TRY {
+  try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
 
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
-      &FtRtecEventChannelAdmin::EventChannelFacade::suspend_push_supplier
-      ACE_ENV_ARG_PARAMETER);
+      &FtRtecEventChannelAdmin::EventChannelFacade::suspend_push_supplier);
   }
-  ACE_CATCHALL {
+  catch (...){
     this->suspend_connection();
-    ACE_RE_THROW;
+    throw;
   }
-  ACE_ENDTRY;
 }
 
 
@@ -175,14 +166,12 @@ void TAO_FTEC_ProxyPushSupplier::get_state(FtRtecEventChannelAdmin::ProxyPushSup
 }
 
 
-void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state
-                                           ACE_ENV_ARG_DECL)
+void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state)
 {
   if (!CORBA::is_nil(state.parameter.info().push_consumer.in()))
   {
     Inherited::connect_push_consumer(state.parameter.info().push_consumer.in(),
-      state.parameter.info().qos
-      ACE_ENV_ARG_PARAMETER);
+      state.parameter.info().qos);
     if (state.suspended)
       Inherited::suspend_connection();
   }

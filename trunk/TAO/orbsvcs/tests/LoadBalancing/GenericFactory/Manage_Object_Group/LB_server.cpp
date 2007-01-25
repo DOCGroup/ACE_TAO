@@ -18,25 +18,22 @@ LB_server::LB_server (int argc, char **argv)
 int
 LB_server::destroy (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->lm_->delete_object (this->basic_fcid_.in ()
-                                ACE_ENV_ARG_PARAMETER);
+      this->lm_->delete_object (this->basic_fcid_.in ());
 
-      this->lm_->delete_object (this->simple_fcid_.in ()
-                                ACE_ENV_ARG_PARAMETER);
+      this->lm_->delete_object (this->simple_fcid_.in ());
 
-      this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      this->root_poa_->destroy (1, 1);
 
       this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught while destroying LB_server\n");
+      ex._tao_print_exception (
+        "Exception caught while destroying LB_server\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 1;
 
 }
@@ -68,25 +65,22 @@ LB_server::load_manager (void)
 int
 LB_server::start_orb_and_poa (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialise the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "" ACE_ENV_ARG_PARAMETER);
+                                    "");
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager ();
@@ -94,11 +88,10 @@ LB_server::start_orb_and_poa (void)
       poa_manager->activate ();
 
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("LoadManager" ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("LoadManager");
 
       this->lm_ =
-        CosLoadBalancing::LoadManager::_narrow (obj.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+        CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->lm_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,13 +99,11 @@ LB_server::start_orb_and_poa (void)
                           1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised initialising ORB or POA");
+      ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 
@@ -121,7 +112,7 @@ LB_server::start_orb_and_poa (void)
 int
 LB_server::create_basic_object_group (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char *repository_id = "IDL:Test/Basic:1.0";
 
@@ -140,21 +131,18 @@ LB_server::create_basic_object_group (void)
 
       this->basic_object_group_ = this->lm_->create_object (repository_id,
                                                             criteria,
-                                                            this->basic_fcid_.out ()
-                                                            ACE_ENV_ARG_PARAMETER);
+                                                            this->basic_fcid_.out ());
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (this->basic_object_group_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (this->basic_object_group_.in ());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised while creating object group");
+      ex._tao_print_exception (
+        "Exception raised while creating object group");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 
@@ -163,7 +151,7 @@ LB_server::create_basic_object_group (void)
 int
 LB_server::create_simple_object_group (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char *repository_id = "IDL:Test/Simple:1.0";
 
@@ -182,21 +170,18 @@ LB_server::create_simple_object_group (void)
 
       this->simple_object_group_ = this->lm_->create_object (repository_id,
                                                              criteria,
-                                                             this->simple_fcid_.out ()
-                                                             ACE_ENV_ARG_PARAMETER);
+                                                             this->simple_fcid_.out ());
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (this->simple_object_group_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (this->simple_object_group_.in ());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised while creating object group");
+      ex._tao_print_exception (
+        "Exception raised while creating object group");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 
@@ -205,7 +190,7 @@ LB_server::create_simple_object_group (void)
 int
 LB_server::remove_basic_member (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableGroup::Location location (1);
       location.length (1);
@@ -215,18 +200,15 @@ LB_server::remove_basic_member (void)
       const char *loc = "MyLocation 1";
 
       this->lm_->remove_member (this->basic_object_group_.in (),
-                                location
-                                ACE_ENV_ARG_PARAMETER);
+                                location);
 
       printf("Removed Basic Member at location %s\n\n", loc);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised while deleting servant");
+      ex._tao_print_exception ("Exception raised while deleting servant");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 }
@@ -234,7 +216,7 @@ LB_server::remove_basic_member (void)
 int
 LB_server::remove_simple_member (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       PortableGroup::Location location (1);
       location.length (1);
@@ -244,18 +226,15 @@ LB_server::remove_simple_member (void)
       const char *loc = "MyLocation 1";
 
       this->lm_->remove_member (this->simple_object_group_.in (),
-                                location
-                                ACE_ENV_ARG_PARAMETER);
+                                location);
 
       printf("Removed Simple Member at location %s\n\n", loc);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised while deleting servant");
+      ex._tao_print_exception ("Exception raised while deleting servant");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 }
@@ -263,7 +242,7 @@ LB_server::remove_simple_member (void)
 int
 LB_server::register_basic_servant (Basic *servant, const char *loc)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Test::Basic_var basic =
         servant->_this ();
@@ -275,21 +254,18 @@ LB_server::register_basic_servant (Basic *servant, const char *loc)
 
       this->lm_->add_member (this->basic_object_group_.in (),
                              location,
-                             basic.in ()
-                             ACE_ENV_ARG_PARAMETER);
+                             basic.in ());
 
       CORBA::Short number = 0;
       number = servant->number ();
 
       printf("Added Basic member %d at location %s\n", number, loc);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised while registering servant");
+      ex._tao_print_exception ("Exception raised while registering servant");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 }
@@ -297,7 +273,7 @@ LB_server::register_basic_servant (Basic *servant, const char *loc)
 int
 LB_server::register_simple_servant (Simple *servant, const char *loc)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Test::Simple_var simple =
         servant->_this ();
@@ -309,21 +285,18 @@ LB_server::register_simple_servant (Simple *servant, const char *loc)
 
       this->lm_->add_member (this->simple_object_group_.in (),
                              location,
-                             simple.in ()
-                             ACE_ENV_ARG_PARAMETER);
+                             simple.in ());
 
       CORBA::Short number = 0;
       number = servant->number ();
 
       printf("Added Simple member %d at location %s\n", number, loc);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised while registering servant");
+      ex._tao_print_exception ("Exception raised while registering servant");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 1;
 }

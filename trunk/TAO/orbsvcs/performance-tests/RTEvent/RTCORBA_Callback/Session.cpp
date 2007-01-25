@@ -16,20 +16,17 @@ Session::Session (Test::Callback_ptr cb,
 }
 
 void
-Session::sample (Test::Timestamp the_timestamp
-                 ACE_ENV_ARG_DECL)
+Session::sample (Test::Timestamp the_timestamp)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->cb_->sample (the_timestamp
-                     ACE_ENV_ARG_PARAMETER);
+  this->cb_->sample (the_timestamp);
 }
 
 void
 Session::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
+  Implicit_Deactivator deactivator (this);
 }
 
 PortableServer::POA_ptr

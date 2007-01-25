@@ -35,7 +35,7 @@ public:
   TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
-  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type);
 
   /// Run
   void run (void);
@@ -82,7 +82,6 @@ protected:
   virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -92,7 +91,6 @@ protected:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -100,7 +98,6 @@ protected:
        ));
 
   virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException

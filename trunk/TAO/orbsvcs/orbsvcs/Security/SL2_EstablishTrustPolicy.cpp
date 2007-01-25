@@ -23,8 +23,7 @@ TAO::Security::EstablishTrustPolicy::~EstablishTrustPolicy (void)
 }
 
 CORBA::PolicyType
-TAO::Security::EstablishTrustPolicy::policy_type (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::EstablishTrustPolicy::policy_type ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Security::SecEstablishTrustPolicy;

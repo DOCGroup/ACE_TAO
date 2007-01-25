@@ -13,28 +13,26 @@ int
 main (int argc, char* argv[])
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_obj.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // Obtain the event channel using the Naming Service.
       CORBA::Object_var nam_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER );
+        orb->resolve_initial_references ("NameService" );
 
       CosNaming::NamingContext_var root_context =
-        CosNaming::NamingContext::_narrow(nam_obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow(nam_obj.in ());
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
@@ -45,8 +43,7 @@ main (int argc, char* argv[])
 
       // Downcast the object reference to a TypedEventChannel reference
       CosTypedEventChannelAdmin::TypedEventChannel_var typed_event_channel =
-        CosTypedEventChannelAdmin::TypedEventChannel::_narrow(ec_obj.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
+        CosTypedEventChannelAdmin::TypedEventChannel::_narrow(ec_obj.in ());
 
       // Initialise the Country Impl
       Country_i country (orb.in ());
@@ -57,13 +54,12 @@ main (int argc, char* argv[])
         typed_event_channel->for_consumers ();
 
       CosEventChannelAdmin::ProxyPushSupplier_var proxy_push_supplier =
-        typed_consumer_admin->obtain_typed_push_supplier (_tc_Country->id()
-                                                          ACE_ENV_ARG_PARAMETER);
+        typed_consumer_admin->obtain_typed_push_supplier (_tc_Country->id());
 
       proxy_push_supplier->connect_push_consumer (typed_consumer.in () );
 
       CORBA::String_var str =
-         orb->object_to_string (typed_consumer.in () ACE_ENV_ARG_PARAMETER);
+         orb->object_to_string (typed_consumer.in ());
 
       const char* ior_file_name = "Consumer.ior";
       FILE *output_file=
@@ -84,17 +80,16 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "...ORB shutdown\n"));
 
       // Destroy the POA
-      poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 0);
 
       // Destroy the ORB
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "main");
+      ex._tao_print_exception ("main");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

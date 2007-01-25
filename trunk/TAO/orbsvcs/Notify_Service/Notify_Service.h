@@ -70,8 +70,7 @@ class TAO_Notify_Service_Driver
   virtual ~TAO_Notify_Service_Driver (void);
   // Destructor.
 
-  int init (int argc, ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL);
+  int init (int argc, ACE_TCHAR *argv[]);
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
@@ -87,11 +86,9 @@ class TAO_Notify_Service_Driver
   // CosNotifyChannelAdmin::EventChannelFactory_var obj;
   //
 protected:
-  int init_ORB (int& argc, ACE_TCHAR *argv []
-                ACE_ENV_ARG_DECL);
+  int init_ORB (int& argc, ACE_TCHAR *argv []);
   // initialize the ORB.
-  int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []
-                ACE_ENV_ARG_DECL);
+  int init_dispatching_ORB (int& argc, ACE_TCHAR *argv []);
   // initialize the dispatching ORB.
 
   TAO_Notify_Service* notify_service_;

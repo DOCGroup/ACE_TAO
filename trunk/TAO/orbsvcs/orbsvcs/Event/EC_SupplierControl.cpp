@@ -27,15 +27,13 @@ TAO_EC_SupplierControl::shutdown (void)
 }
 
 void
-TAO_EC_SupplierControl::supplier_not_exist (TAO_EC_ProxyPushConsumer *
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_SupplierControl::supplier_not_exist (TAO_EC_ProxyPushConsumer *)
 {
 }
 
 void
 TAO_EC_SupplierControl::system_exception (TAO_EC_ProxyPushConsumer *,
-                                          CORBA::SystemException &
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                          CORBA::SystemException &)
 {
 }
 

@@ -36,20 +36,20 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::init (void)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  factory->create (collection_ ACE_ENV_ARG_PARAMETER);
+  factory->create (collection_);
 }
 
 template <class PROXY> void
-TAO_Notify_Event_Map_Entry_T<PROXY>::connected (PROXY* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_Entry_T<PROXY>::connected (PROXY* proxy)
 {
-  this->collection_->connected (proxy ACE_ENV_ARG_PARAMETER);
+  this->collection_->connected (proxy);
   ++count_;
 }
 
 template <class PROXY> void
-TAO_Notify_Event_Map_Entry_T<PROXY>::disconnected (PROXY* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_Entry_T<PROXY>::disconnected (PROXY* proxy)
 {
-  this->collection_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
+  this->collection_->disconnected (proxy);
   --count_;
 }
 

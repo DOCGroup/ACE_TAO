@@ -53,13 +53,11 @@ public:
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -71,7 +69,6 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -83,7 +80,6 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

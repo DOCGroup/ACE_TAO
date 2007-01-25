@@ -50,8 +50,7 @@ namespace TAO
       /// Create a TAO::SSLIOP::CredentialsAcquirerFactory.
       virtual SecurityLevel3::CredentialsAcquirer_ptr make (
         TAO::SL3::CredentialsCurator_ptr curator,
-        const CORBA::Any & acquisition_arguments
-        ACE_ENV_ARG_DECL);
+        const CORBA::Any & acquisition_arguments);
 
     };
 

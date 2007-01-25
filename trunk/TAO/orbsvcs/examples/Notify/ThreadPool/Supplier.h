@@ -38,7 +38,7 @@ public:
 
   /// Init
   void init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count, int max_events,
-             int proxy_consumer_thread_count ACE_ENV_ARG_DECL);
+             int proxy_consumer_thread_count);
 
   /// Run
   void run (void);
@@ -57,7 +57,7 @@ protected:
   void deactivate (void);
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
 
   /// Destructor
   virtual ~TAO_Notify_ThreadPool_Supplier ();
@@ -66,7 +66,6 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,

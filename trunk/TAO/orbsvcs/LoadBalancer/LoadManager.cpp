@@ -40,8 +40,7 @@ usage (const ACE_TCHAR * cmd)
 void
 parse_args (int argc,
             ACE_TCHAR *argv[],
-            int & default_strategy
-            ACE_ENV_ARG_DECL)
+            int & default_strategy)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:h"));
 
@@ -77,7 +76,7 @@ parse_args (int argc,
 
         default:
           ::usage (argv[0]);
-          ACE_THROW (CORBA::BAD_PARAM ());
+          throw CORBA::BAD_PARAM ();
         }
     }
 }
@@ -97,19 +96,17 @@ TAO_LB_run_load_manager (void * orb_arg)
   //    delivered to this thread on Linux.
   ACE_Sig_Guard signal_guard;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "TAO Load Manager");
 
       return reinterpret_cast<void *> (-1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -118,23 +115,19 @@ TAO_LB_run_load_manager (void * orb_arg)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // The usual server side boilerplate code.
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -150,8 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Check the non-ORB arguments.
       ::parse_args (argc,
                     argv,
-                    default_strategy
-                    ACE_ENV_ARG_PARAMETER);
+                    default_strategy);
 
       TAO_LB_LoadManager * lm = 0;
       ACE_NEW_THROW_EX (lm,
@@ -167,8 +159,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initalize the LoadManager servant.
       lm->init (orb->orb_core ()->reactor (),
                 orb.in (),
-                root_poa.in ()
-                ACE_ENV_ARG_PARAMETER);
+                root_poa.in ());
 
       PortableGroup::Properties props (1);
       props.length (1);
@@ -198,26 +189,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       props[0].val <<= strategy_info;
 
-      lm->set_default_properties (props
-                                  ACE_ENV_ARG_PARAMETER);
+      lm->set_default_properties (props);
 
       CosLoadBalancing::LoadManager_var load_manager =
         lm->_this ();
 
       CORBA::String_var str =
-        orb->object_to_string (load_manager.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (load_manager.in ());
 
       // to support corbaloc
       // Get a reference to the IOR table.
-      CORBA::Object_var tobj = orb->resolve_initial_references ("IORTable"
-                                                               ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var tobj = orb->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var table = IORTable::Table::_narrow (tobj.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
+      IORTable::Table_var table = IORTable::Table::_narrow (tobj.in ());
 
       // bind your stringified IOR in the IOR table
-      table->bind ("LoadManager", str.in () ACE_ENV_ARG_PARAMETER);
+      table->bind ("LoadManager", str.in ());
 
       FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
       ACE_OS::fprintf (lm_ior, "%s", str.in ());
@@ -275,18 +262,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-//   ACE_CATCH (PortableGroup::InvalidProperty, ex)
+//   catch (const PortableGroup::InvalidProperty& ex)
 //     {
 //       ACE_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
 //     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "TAO Load Manager");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

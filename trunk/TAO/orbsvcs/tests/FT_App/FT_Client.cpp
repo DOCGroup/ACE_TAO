@@ -37,7 +37,7 @@ private:
     int & more,             // out
     ACE_CString & command,  // inout
     int retry               // in
-    ACE_ENV_ARG_DECL);
+    );
 
 
   int next_replica (void);
@@ -220,8 +220,7 @@ int FTClientMain::pass (
   long & counter,
   int & more,
   ACE_CString & command,
-  int retry
-  ACE_ENV_ARG_DECL)
+  int retry)
 {
   int result = 0;
 
@@ -275,7 +274,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->set(%ld);\n", operand);
           }
-          this->replica_->set(operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->set(operand);
           counter = operand;
           break;
         }
@@ -305,7 +304,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->counter(%ld);\n", operand);
           }
-          this->replica_->counter(operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->counter(operand);
           counter = operand;
           break;
         }
@@ -315,7 +314,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", operand);
           }
-          this->replica_->increment(operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->increment(operand);
           counter += operand;
           break;
         }
@@ -325,7 +324,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->increment(%ld);\n", -operand);
           }
-          this->replica_->increment(-operand ACE_ENV_ARG_PARAMETER);
+          this->replica_->increment(-operand);
           counter -= operand;
           break;
         }
@@ -356,7 +355,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->die(%ld);\n", operand);
           }
-          this->replica_->die(static_cast<FT_TEST::TestReplica::Bane> (operand) ACE_ENV_ARG_PARAMETER);
+          this->replica_->die(static_cast<FT_TEST::TestReplica::Bane> (operand));
           echo = 0;
           break;
         }
@@ -378,8 +377,7 @@ int FTClientMain::pass (
             {
               ACE_OS::fprintf (stdout, "FT Client: ->set_state(saved_state);\n");
             }
-            this->replica_->set_state (state.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+            this->replica_->set_state (state.in ());
             counter = stateValue;
           }
           else
@@ -406,7 +404,7 @@ int FTClientMain::pass (
             {
               ACE_OS::fprintf (stdout, "FT Client: ->set_update(saved_update);\n");
             }
-            this->replica_->set_update(update.in () ACE_ENV_ARG_PARAMETER);
+            this->replica_->set_update(update.in ());
             counter = updateValue;
           }
           else
@@ -434,24 +432,23 @@ int FTClientMain::pass (
         {
           if (operand != 0)
           {
-            ACE_TRY_NEW_ENV
+            try
             {
               if (this->verbose_ >= LOUD)
               {
                 ACE_OS::fprintf (stdout, "FT Client: ->shutdown();\n");
               }
-              this->replica_->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
+              this->replica_->shutdown();
               // @@ Note: this is here because the corba event loop seems to go to sleep
               // if there's nothing for it to do.
               // not quite sure why, yet.  Dale
               this->replica_->is_alive();
             }
-            ACE_CATCHANY
+            catch (const CORBA::Exception& ex)
             {
               ACE_OS::fprintf (stdout, "FT Client: Ignoring expected exception during shutdown.\n");
               ; // ignore exception during shutdown
             }
-            ACE_ENDTRY;
           }
           echo = 0;
           more = 0;
@@ -500,7 +497,7 @@ int FTClientMain::next_replica (void)
   {
     this->replica_name_ = this->replica_iors_[this->replica_pos_].c_str();
     this->replica_pos_ += 1;
-    CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_ ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_);
     this->replica_ = FT_TEST::TestReplica::_narrow (rep_obj.in ());
     if (! CORBA::is_nil (replica_.in ()))
     {
@@ -547,14 +544,14 @@ int FTClientMain::run (void)
     int more = 1;
     while (more && result == 0 &&  !feof (this->commandIn_))
     {
-      ACE_TRY_NEW_ENV
+      try
       {
-        result = pass (counter, more, command, retry ACE_ENV_ARG_PARAMETER);
+        result = pass (counter, more, command, retry);
       }
-      ACE_CATCH (CORBA::SystemException, sysex)
+      catch (const CORBA::SystemException& sysex)
       {
         ACE_OS::fprintf (stdout, "FT Client: Caught system exception: \n");
-        ACE_PRINT_EXCEPTION (sysex, "FT Client");
+        sysex._tao_print_exception ("FT Client");
 
         retry = 0;
         int handled = 0;
@@ -589,10 +586,9 @@ int FTClientMain::run (void)
         if (! handled)
         {
           ACE_OS::fprintf (stdout, "FT Client: Exception not handled.  Rethrow. ");
-          ACE_RE_THROW;
+          throw;
         }
       }
-      ACE_ENDTRY;
     }
   }
   else
@@ -610,17 +606,15 @@ main (int argc, char *argv[])
   int result = app.parse_args(argc, argv);
   if (result == 0)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
       result = app.run ();
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "FT_Client::main\t\n");
+      ex._tao_print_exception ("FT_Client::main\t\n");
       result = -1;
     }
-    ACE_ENDTRY;
   }
   return result;
 }

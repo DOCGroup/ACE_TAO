@@ -21,7 +21,7 @@ public:
   virtual ~FactoryClient (void);
   // destructor.
 
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv []);
   // Initializes the ORB.
 
   void resolve_naming_service (void);
@@ -40,20 +40,16 @@ public:
 protected:
   CosEventChannelAdmin::EventChannel_ptr
       create_channel (const char *channel_id,
-                     CosEventChannelFactory::ChannelFactory_ptr factory
-                     ACE_ENV_ARG_DECL);
+                     CosEventChannelFactory::ChannelFactory_ptr factory);
   // Create a channel.
 
-  void destroy_channel (const char *channel_id
-                       ACE_ENV_ARG_DECL);
+  void destroy_channel (const char *channel_id);
   // Destroy the channel.
 
-  void find_channel (const char* channel_id
-                    ACE_ENV_ARG_DECL);
+  void find_channel (const char* channel_id);
   // Find a channel.
 
-  void find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel
-                       ACE_ENV_ARG_DECL);
+  void find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel);
   // Find a channel.
 
   // = Protected Data members.
@@ -87,28 +83,25 @@ FactoryClient::~FactoryClient (void)
 
 void
 FactoryClient::init_ORB (int argc,
-                       char *argv []
-                       ACE_ENV_ARG_DECL)
+                       char *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
+                                "");
 }
 
 void
 FactoryClient::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 
   this->use_naming_service = 1;
 }
@@ -123,12 +116,10 @@ FactoryClient::resolve_factory (void)
   name[0].id = CORBA::string_dup (this->factory_name_);
 
   CORBA::Object_var obj =
-    this->naming_context_->resolve (name
-                                   ACE_ENV_ARG_PARAMETER);
+    this->naming_context_->resolve (name);
 
   this->factory_ =
-    CosEventChannelFactory::ChannelFactory::_narrow (obj.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+    CosEventChannelFactory::ChannelFactory::_narrow (obj.in ());
 }
 
 CosEventChannelFactory::ChannelFactory_ptr
@@ -140,8 +131,7 @@ FactoryClient::create_factory (void)
 
 CosEventChannelAdmin::EventChannel_ptr
 FactoryClient::create_channel (const char *channel_id,
-                            CosEventChannelFactory::ChannelFactory_ptr factory
-                              ACE_ENV_ARG_DECL)
+                            CosEventChannelFactory::ChannelFactory_ptr factory)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Trying to create channel %s\n", channel_id));
@@ -149,11 +139,10 @@ FactoryClient::create_channel (const char *channel_id,
   CosEventChannelAdmin::EventChannel_var ec =
     CosEventChannelAdmin::EventChannel::_nil ();
 
-  ACE_TRY
+  try
     {
       ec = factory->create (channel_id,
-                            this->use_naming_service
-                            ACE_ENV_ARG_PARAMETER);
+                            this->use_naming_service);
 
       ACE_ASSERT (!CORBA::is_nil (ec.in ()));
 
@@ -161,90 +150,75 @@ FactoryClient::create_channel (const char *channel_id,
                   "Created Cos Event Channel \"%s \"\n",
                   channel_id));
     }
- ACE_CATCH (CORBA::UserException, ue)
+ catch (const CORBA::UserException& ue)
    {
-     ACE_PRINT_EXCEPTION (ue,
-                          "User Exception in createChannel: ");
+     ue._tao_print_exception ("User Exception in createChannel: ");
      return CosEventChannelAdmin::EventChannel::_nil ();
    }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "System Exception in createChannel: ");
+      se._tao_print_exception ("System Exception in createChannel: ");
       return CosEventChannelAdmin::EventChannel::_nil ();
     }
-  ACE_ENDTRY;
 
   return ec._retn ();
 }
 
 void
-FactoryClient::destroy_channel (const char *channel_id
-                               ACE_ENV_ARG_DECL)
+FactoryClient::destroy_channel (const char *channel_id)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Destroying Cos Event Channel \"%s \"\n",
               channel_id));
 
   this->factory_->destroy (channel_id,
-                           use_naming_service
-                           ACE_ENV_ARG_PARAMETER);
+                           use_naming_service);
 }
 
 void
-FactoryClient::find_channel (const char* channel_id
-                            ACE_ENV_ARG_DECL)
+FactoryClient::find_channel (const char* channel_id)
 {
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "trying to find the Channel \"%s \"\n",
                   channel_id));
 
       CosEventChannelAdmin::EventChannel_var channel =
-        this->factory_->find (channel_id
-                              ACE_ENV_ARG_PARAMETER);
+        this->factory_->find (channel_id);
 
 
       CORBA::String_var str =
-        orb_->object_to_string (channel.in ()
-                                ACE_ENV_ARG_PARAMETER);
+        orb_->object_to_string (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG,
               "Find returned - %s \n",
                   str.in ()));
 
-      this->find_channel_id (channel.in ()
-                             ACE_ENV_ARG_PARAMETER);
+      this->find_channel_id (channel.in ());
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "User Exception in findchannel: ");
+      ue._tao_print_exception ("User Exception in findchannel: ");
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "System Exception in findchannel: ");
+      se._tao_print_exception ("System Exception in findchannel: ");
     }
-  ACE_ENDTRY;
 }
 
 void
-FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel
-                                ACE_ENV_ARG_DECL)
+FactoryClient::find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel)
 {
   CORBA::String_var str =
-    orb_->object_to_string (channel
-                            ACE_ENV_ARG_PARAMETER);
+    orb_->object_to_string (channel);
 
   ACE_DEBUG ((LM_DEBUG,
               "trying to find the Channel %s \n",
               str.in ()));
 
   char *channel_id =
-    this->factory_->find_channel_id (channel
-                                     ACE_ENV_ARG_PARAMETER);
+    this->factory_->find_channel_id (channel);
 
   ACE_DEBUG ((LM_DEBUG,
               "find returned %s\n", channel_id));
@@ -264,70 +238,53 @@ FactoryClient::run_test (void)
 
   // create the first cosec
   cosec[0] = this->create_channel (channel_id[0],
-                                   this->factory_.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   this->factory_.in ());
 
  // create the second cosec
   cosec[1] = this->create_channel (channel_id[1],
-                                   this->factory_.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   this->factory_.in ());
 
   // create the third cosec
   cosec[2] = this->create_channel (channel_id[2],
-                                   this->factory_.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   this->factory_.in ());
 
   // see it we can destroy this one..
-  this->destroy_channel (channel_id[2]
-                         ACE_ENV_ARG_PARAMETER);
+  this->destroy_channel (channel_id[2]);
 
   // see if we can find it?
-  this->find_channel_id (cosec[2].in ()
-                         ACE_ENV_ARG_PARAMETER);
+  this->find_channel_id (cosec[2].in ());
 
   // see if we can create it again?
   cosec[2] = this->create_channel (channel_id[2],
-                                   this->factory_.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   this->factory_.in ());
 
   // try and find a channel that does not exist.
-  this->find_channel ("areyouthere?"
-                      ACE_ENV_ARG_PARAMETER);
+  this->find_channel ("areyouthere?");
 
   // see if it can detect duplicates.
   this->create_channel (channel_id[2],
-                        this->factory_.in ()
-                        ACE_ENV_ARG_PARAMETER);
+                        this->factory_.in ());
 
   // see if it can give us the id?
-  this->find_channel_id (cosec[0].in ()
-                         ACE_ENV_ARG_PARAMETER);
+  this->find_channel_id (cosec[0].in ());
 
-  this->find_channel_id (cosec[1].in ()
-                         ACE_ENV_ARG_PARAMETER);
+  this->find_channel_id (cosec[1].in ());
 
-  this->find_channel_id (cosec[2].in ()
-                         ACE_ENV_ARG_PARAMETER);
+  this->find_channel_id (cosec[2].in ());
 
   // check if we can get the channels from the id.
-  this->find_channel (channel_id[0]
-                      ACE_ENV_ARG_PARAMETER);
+  this->find_channel (channel_id[0]);
 
-  this->find_channel (channel_id[1]
-                      ACE_ENV_ARG_PARAMETER);
+  this->find_channel (channel_id[1]);
 
-  this->find_channel (channel_id[2]
-                      ACE_ENV_ARG_PARAMETER);
+  this->find_channel (channel_id[2]);
 
   //destroy them all.
-  this->destroy_channel (channel_id[0]
-                         ACE_ENV_ARG_PARAMETER);
+  this->destroy_channel (channel_id[0]);
 
-  this->destroy_channel (channel_id[1]
-                         ACE_ENV_ARG_PARAMETER);
+  this->destroy_channel (channel_id[1]);
 
-  this->destroy_channel (channel_id[2]
-                         ACE_ENV_ARG_PARAMETER);
+  this->destroy_channel (channel_id[2]);
 
   // end of testing.
   ACE_DEBUG ((LM_DEBUG,
@@ -339,48 +296,42 @@ main (int argc, char *argv [])
 {
   ACE_DEBUG ((LM_DEBUG,
               "The FactoryClient will test the Cos Event Channel Factory\n"));
-  ACE_TRY_NEW_ENV
+  try
     {
       FactoryClient ft;
 
       ft.init_ORB (argc,
-                   argv
-                   ACE_ENV_ARG_PARAMETER);
+                   argv);
 
-      ACE_TRY_EX (naming)
+      try
         {
           ft.resolve_naming_service ();
-          ACE_TRY_CHECK_EX (naming);
 
           ft.resolve_factory ();
-          ACE_TRY_CHECK_EX (naming);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Failed to resolve the naming service");
+          ex._tao_print_exception ("Failed to resolve the naming service");
           ACE_DEBUG ((LM_DEBUG,
                       "Creating a local Factory\n"));
           // TBD:
           ft.create_factory ();
         }
-      ACE_ENDTRY;
 
       ft.run_test ();
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "test failed: User Exception in FactoryClient: ");
+      ue._tao_print_exception (
+        "test failed: User Exception in FactoryClient: ");
       return 1;
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "test failed: System Exception in FactoryClient: ");
+      se._tao_print_exception (
+        "test failed: System Exception in FactoryClient: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

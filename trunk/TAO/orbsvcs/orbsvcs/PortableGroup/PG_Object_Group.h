@@ -176,8 +176,7 @@ namespace TAO
      * @@TODO DOC
      */
     void set_properties_dynamically (
-        const PortableGroup::Properties & overrides
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Properties & overrides)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::InvalidProperty,
                        PortableGroup::UnsupportedProperty));
@@ -200,8 +199,7 @@ namespace TAO
      */
     void add_member (
         const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member
-        ACE_ENV_ARG_DECL)
+        CORBA::Object_ptr member)
       ACE_THROW_SPEC ( (CORBA::SystemException,
                        PortableGroup::ObjectNotAdded));
 
@@ -214,8 +212,7 @@ namespace TAO
      */
     int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL)
+      const PortableGroup::Location & the_location)
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , PortableGroup::MemberNotFound
@@ -225,8 +222,7 @@ namespace TAO
      * @@TODO DOC
      */
     void remove_member (
-        const PortableGroup::Location & the_location
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Location & the_location)
       ACE_THROW_SPEC ( (CORBA::SystemException,
                        PortableGroup::MemberNotFound));
 
@@ -237,8 +233,7 @@ namespace TAO
     void create_member (
         const PortableGroup::Location & the_location,
         const char * type_id,
-        const PortableGroup::Criteria & the_criteria
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Criteria & the_criteria)
       ACE_THROW_SPEC ( (CORBA::SystemException,
         PortableGroup::MemberAlreadyPresent,
         PortableGroup::NoFactory,
@@ -256,8 +251,7 @@ namespace TAO
      * @@TODO DOC
      */
     CORBA::Object_ptr get_member_reference (
-        const PortableGroup::Location & the_location
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Location & the_location)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableGroup::MemberNotFound));
@@ -287,10 +281,10 @@ namespace TAO
 
     void distribute_iogr (void);
 
-    PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member ACE_ENV_ARG_DECL);
+    PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
 
-    void create_members (size_t count ACE_ENV_ARG_DECL)
+    void create_members (size_t count)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableGroup::NoFactory

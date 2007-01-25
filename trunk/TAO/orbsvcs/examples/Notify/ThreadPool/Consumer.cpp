@@ -29,7 +29,7 @@ TAO_Notify_ThreadPool_Consumer::~TAO_Notify_ThreadPool_Consumer (void)
 
 void
 TAO_Notify_ThreadPool_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin,
-                       int proxy_supplier_thread_count, int max_events, long delay ACE_ENV_ARG_DECL)
+                       int proxy_supplier_thread_count, int max_events, long delay)
 {
   this->default_POA_ = poa;
   this->admin_ = admin;
@@ -65,7 +65,7 @@ TAO_Notify_ThreadPool_Consumer::connect (void)
   if (this->proxy_supplier_thread_count_ != 0)
     {
       // Narrow to the extended interface.
-      NotifyExt::ConsumerAdmin_var admin_ext = NotifyExt::ConsumerAdmin::_narrow (this->admin_.in ()ACE_ENV_ARG_PARAMETER);
+      NotifyExt::ConsumerAdmin_var admin_ext = NotifyExt::ConsumerAdmin::_narrow (this->admin_.in ());
 
       NotifyExt::ThreadPoolParams tp_params = { NotifyExt::CLIENT_PROPAGATED, 0,
                                                 0, this->proxy_supplier_thread_count_, 0, 0, 0, 0, 0 };
@@ -77,24 +77,23 @@ TAO_Notify_ThreadPool_Consumer::connect (void)
 
       // Obtain the proxy. The QoS is applied to the POA in which the Proxy is hosted.
       proxysupplier = admin_ext->obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                                   , proxy_supplier_id_, qos ACE_ENV_ARG_PARAMETER);
+                                                                                   , proxy_supplier_id_, qos);
     }
   else
     {
       proxysupplier = this->admin_->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                       , proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
+                                                                       , proxy_supplier_id_);
     }
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
   // narrow
   this->proxy_supplier_ =
-    CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxysupplier.in () ACE_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxysupplier.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
-  this->proxy_supplier_->connect_structured_push_consumer (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+  this->proxy_supplier_->connect_structured_push_consumer (objref.in ());
 
   // Call subscription_change to inform the supplier that this consumer is available.
   CosNotification::EventTypeSeq added (1);
@@ -109,7 +108,7 @@ TAO_Notify_ThreadPool_Consumer::connect (void)
 
   added[0].type_name = CORBA::string_dup (type);
 
-  this->proxy_supplier_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
+  this->proxy_supplier_->subscription_change (added, removed);
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Created Consumer %d with %d threads at the ProxySupplier\n", proxy_supplier_id_,
               this->proxy_supplier_thread_count_));
@@ -124,7 +123,7 @@ TAO_Notify_ThreadPool_Consumer::disconnect (void)
 void
 TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
                                const CosNotification::EventTypeSeq & /*removed*/
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                               )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
@@ -135,7 +134,7 @@ TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSe
 
 void
 TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
-                                            ACE_ENV_ARG_DECL)
+                                            )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -189,11 +188,9 @@ TAO_Notify_ThreadPool_Consumer::deactivate (void)
 {
   PortableServer::POA_var poa (this->_default_POA ());
 
-  PortableServer::ObjectId_var id (poa->servant_to_id (this
-                                                       ACE_ENV_ARG_PARAMETER));
+  PortableServer::ObjectId_var id (poa->servant_to_id (this));
 
-  poa->deactivate_object (id.in()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in());
 }
 
 void

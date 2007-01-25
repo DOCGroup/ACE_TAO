@@ -43,11 +43,10 @@ TAO_IMR_i::init (int argc, char **argv)
 
   const char *exception_message = "Null Message";
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_, "tao_imr_i" ACE_ENV_ARG_PARAMETER);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_, "tao_imr_i");
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -55,7 +54,7 @@ TAO_IMR_i::init (int argc, char **argv)
 
       // Get the ImplRepo object
       CORBA::Object_var obj =
-        orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
+        orb_->resolve_initial_references ("ImplRepoService");
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -66,7 +65,7 @@ TAO_IMR_i::init (int argc, char **argv)
       exception_message = "While narrowing ImR";
 
       this->imr_ =
-        ImplementationRepository::Administration::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        ImplementationRepository::Administration::_narrow (obj.in ());
 
       if (CORBA::is_nil (imr_.in ()))
         {
@@ -76,13 +75,12 @@ TAO_IMR_i::init (int argc, char **argv)
 
       this->op_->set_imr (this->imr_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, "TAO_IMR_i::init - %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
+      ex._tao_print_exception ("Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -695,36 +693,34 @@ int
 TAO_IMR_Op_Activate::run (void)
 {
   ACE_ASSERT(! CORBA::is_nil(imr_));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->imr_->activate_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
+      this->imr_->activate_server (this->server_name_.c_str ());
       ACE_DEBUG ((LM_DEBUG,
         "Successfully Activated server <%s>\n",
         this->server_name_.c_str ()));
     }
-  ACE_CATCH (ImplementationRepository::CannotActivate, ex)
+  catch (const ImplementationRepository::CannotActivate& ex)
     {
       ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
         this->server_name_.c_str (),
         ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_ACTIVATE;
     }
-  ACE_CATCH (ImplementationRepository::NotFound, ex)
+  catch (const ImplementationRepository::NotFound& ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  ACE_CATCH (PortableServer::ForwardRequest, ex)
+  catch (const PortableServer::ForwardRequest& ex)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Activating Server");
+      ex._tao_print_exception ("Activating Server");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -737,38 +733,35 @@ TAO_IMR_Op_Autostart::run (void)
   ImplementationRepository::ServerInformationList_var server_list;
   ImplementationRepository::ServerInformationIterator_var server_iter;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->imr_->list (0,
         server_list,
-        server_iter
-        ACE_ENV_ARG_PARAMETER);
+        server_iter);
 
       ACE_ASSERT(CORBA::is_nil (server_iter.in ()));
 
       CORBA::ULong len = server_list->length ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
-          ACE_TRY_EX (inside)
+          try
             {
-              this->imr_->activate_server (server_list[i].server.in () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX (inside);
+              this->imr_->activate_server (server_list[i].server.in ());
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, server_list[i].server.in ());
+              ex._tao_print_exception (
+                server_list[i].server.in (
+                  ));
               // Ignore exception
             }
-          ACE_ENDTRY;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "autostart");
+      ex._tao_print_exception ("autostart");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -780,7 +773,7 @@ TAO_IMR_Op_IOR::run (void)
 
   // Create a corbaloc string
   // Todo : Most of this logic duplicates that in the POA.cpp
-  ACE_TRY_NEW_ENV
+  try
     {
       if (CORBA::is_nil (this->imr_)
         || !this->imr_->_stubobj ()
@@ -843,12 +836,11 @@ TAO_IMR_Op_IOR::run (void)
         ACE_OS::fclose (file);
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "IOR");
+      ex._tao_print_exception ("IOR");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -861,8 +853,7 @@ TAO_IMR_Op_List::run (void)
   ImplementationRepository::ServerInformationList_var server_list;
   ImplementationRepository::ServerInformationIterator_var server_iter;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // If there is a server name, list only that server.  Otherwise, look
       // at all of them.
@@ -870,8 +861,7 @@ TAO_IMR_Op_List::run (void)
         {
           this->imr_->list (0,
             server_list.out(),
-            server_iter.out()
-            ACE_ENV_ARG_PARAMETER);
+            server_iter.out());
 
           if (server_list->length() == 0)
           {
@@ -888,24 +878,23 @@ TAO_IMR_Op_List::run (void)
         {
           ImplementationRepository::ServerInformation_var si;
 
-          this->imr_->find (this->server_name_.c_str (), si ACE_ENV_ARG_PARAMETER);
+          this->imr_->find (this->server_name_.c_str (), si);
 
           this->verbose_server_information_ = 1;
 
           this->display_server_information (si.in ());
         }
     }
-  ACE_CATCH (ImplementationRepository::NotFound, ex)
+  catch (const ImplementationRepository::NotFound& ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "List");
+      ex._tao_print_exception ("List");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -915,31 +904,29 @@ TAO_IMR_Op_Remove::run (void)
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->imr_->remove_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
+      this->imr_->remove_server (this->server_name_.c_str ());
 
       ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%s>\n",
         this->server_name_.c_str ()));
     }
-  ACE_CATCH (ImplementationRepository::NotFound, ex)
+  catch (const ImplementationRepository::NotFound& ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n",
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  ACE_CATCH (CORBA::NO_PERMISSION, ex)
+  catch (const CORBA::NO_PERMISSION& ex)
     {
       ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Removing Server");
+      ex._tao_print_exception ("Removing Server");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -949,30 +936,28 @@ TAO_IMR_Op_Shutdown::run (void)
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->imr_->shutdown_server (this->server_name_.c_str () ACE_ENV_ARG_PARAMETER);
+      this->imr_->shutdown_server (this->server_name_.c_str ());
 
       ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n",
         this->server_name_.c_str ()));
     }
-  ACE_CATCH (ImplementationRepository::NotFound, ex)
+  catch (const ImplementationRepository::NotFound& ex)
     {
       ACE_ERROR ((LM_ERROR, "Server <%s> already shut down.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  ACE_CATCH(CORBA::TIMEOUT, ex)
+  catch (const CORBA::TIMEOUT& ex)
     {
       ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%s> to shutdown.\n",
         this->server_name_.c_str ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down Server");
+      ex._tao_print_exception ("Shutting Down Server");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -982,24 +967,22 @@ TAO_IMR_Op_ShutdownRepo::run (void)
 {
   ACE_ASSERT(! CORBA::is_nil(imr_));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       bool servers = false; // not implemented yet, if ever
-      this->imr_->shutdown (activators_, servers ACE_ENV_ARG_PARAMETER);
+      this->imr_->shutdown (activators_, servers);
 
       ACE_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
     }
-  ACE_CATCH(CORBA::TIMEOUT, ex)
+  catch (const CORBA::TIMEOUT& ex)
     {
       ACE_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down ImR");
+      ex._tao_print_exception ("Shutting Down ImR");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }
@@ -1013,11 +996,10 @@ TAO_IMR_Op_Register::run (void)
   ImplementationRepository::StartupOptions  local;
   ImplementationRepository::StartupOptions* options = NULL;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->imr_->find(this->server_name_.c_str (),
-        server_information.out() ACE_ENV_ARG_PARAMETER);
+        server_information.out());
 
       if (server_name_ == server_information->server.in())
         {
@@ -1066,21 +1048,20 @@ TAO_IMR_Op_Register::run (void)
             this->server_name_.c_str (), options->activator.in ()));
         }
 
-      this->imr_->add_or_update_server (this->server_name_.c_str (), *options ACE_ENV_ARG_PARAMETER);
+      this->imr_->add_or_update_server (this->server_name_.c_str (), *options);
 
       ACE_DEBUG((LM_DEBUG, "Successfully registered <%s>.\n", this->server_name_.c_str ()));
     }
-  ACE_CATCH (CORBA::NO_PERMISSION, ex)
+  catch (const CORBA::NO_PERMISSION& ex)
     {
       ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Updating server");
+      ex._tao_print_exception ("Updating server");
       return TAO_IMR_Op::UNKNOWN;
     }
-  ACE_ENDTRY;
 
   return TAO_IMR_Op::NORMAL;
 }

@@ -63,8 +63,7 @@ TAO_AttributeDef_i::describe_i (void)
                   CORBA::AttributeDescription,
                   0);
 
-  this->make_description (*ad
-                          ACE_ENV_ARG_PARAMETER);
+  this->make_description (*ad);
 
   retval->value <<= ad;
   return retval._retn ();
@@ -119,31 +118,26 @@ TAO_AttributeDef_i::type_def_i (void)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (type_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  CORBA::IDLType_var retval = CORBA::IDLType::_narrow (obj.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+  CORBA::IDLType_var retval = CORBA::IDLType::_narrow (obj.in ());
 
   return retval._retn ();
 }
 
 void
-TAO_AttributeDef_i::type_def (CORBA::IDLType_ptr type_def
-                              ACE_ENV_ARG_DECL)
+TAO_AttributeDef_i::type_def (CORBA::IDLType_ptr type_def)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->type_def_i (type_def
-                    ACE_ENV_ARG_PARAMETER);
+  this->type_def_i (type_def);
 }
 
 void
-TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def
-                                ACE_ENV_ARG_DECL_NOT_USED)
+TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *type_path =
@@ -178,21 +172,18 @@ TAO_AttributeDef_i::mode_i (void)
 }
 
 void
-TAO_AttributeDef_i::mode (CORBA::AttributeMode mode
-                          ACE_ENV_ARG_DECL)
+TAO_AttributeDef_i::mode (CORBA::AttributeMode mode)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->mode_i (mode
-                ACE_ENV_ARG_PARAMETER);
+  this->mode_i (mode);
 }
 
 void
-TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -203,7 +194,6 @@ TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode
 void
 TAO_AttributeDef_i::make_description (
     CORBA::AttributeDescription &ad
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -289,11 +279,9 @@ TAO_AttributeDef_i::get_exceptions (void)
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
                                               path.c_str (),
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
     }
 
   return retval._retn ();
@@ -363,11 +351,9 @@ TAO_AttributeDef_i::put_exceptions (void)
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
                                               path.c_str (),
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
     }
 
   return retval._retn ();

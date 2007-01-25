@@ -48,13 +48,12 @@ public:
   virtual ~TAO_Notify_SequencePushConsumer ();
 
   /// Init the Consumer
-  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
+  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer);
 
   /// Add request to a queue if necessary.
   /// for Sequence it's always necessary.
   virtual bool enqueue_if_necessary(
-    TAO_Notify_Method_Request_Event * request
-    ACE_ENV_ARG_DECL);
+    TAO_Notify_Method_Request_Event * request);
 
   virtual bool dispatch_from_queue (
     Request_Queue & requests,
@@ -62,21 +61,20 @@ public:
 
 
   /// Push <event> to this consumer.
-  virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL);
+  virtual void push (const CORBA::Any& event);
 
   // Push event.
-  virtual void push (const CosNotification::StructuredEvent & event ACE_ENV_ARG_DECL);
+  virtual void push (const CosNotification::StructuredEvent & event);
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
+  virtual void push (const CosNotification::EventBatch& event);
 
   /// Retrieve the ior of this peer
   virtual ACE_CString get_ior (void) const;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
-  virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
-    ACE_ENV_ARG_DECL);
+  virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer);
 
 protected:
 

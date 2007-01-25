@@ -54,7 +54,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Server_ORBInitializer2 *temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
@@ -63,17 +63,16 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,19 +86,15 @@ main (int argc, char *argv[])
       policies.length (2);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                          ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
       PortableServer::POA_var my_poa =
         root_poa->create_POA ("my_poa",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
@@ -121,14 +116,13 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("server_id");
 
       my_poa->activate_object_with_id (server_id.in (),
-                                       hello_impl
-                                       ACE_ENV_ARG_PARAMETER);
+                                       hello_impl);
 
       CORBA::Object_var hello =
-        my_poa->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
+        my_poa->id_to_reference (server_id.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -144,17 +138,15 @@ main (int argc, char *argv[])
 
       orb->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

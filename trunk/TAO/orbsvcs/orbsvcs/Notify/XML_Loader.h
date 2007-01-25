@@ -49,7 +49,7 @@ public:
   ///////////////////////////////////
   // Override Topology_Loader methods
   // see Topology_Loader.h for documentation
-  virtual void load (Topology_Object *root ACE_ENV_ARG_DECL);
+  virtual void load (Topology_Object *root);
 
 
   /////////////////////////////////////////

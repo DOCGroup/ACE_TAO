@@ -79,7 +79,7 @@ TAO_Notify_EventChannelFactory::destroy (void)
 }
 
 void
-TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 {
   ACE_ASSERT (this->ec_container_.get() == 0);
 
@@ -104,7 +104,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DE
 
   ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_object_poa (object_poa);
 
-  object_poa->init (poa ACE_ENV_ARG_PARAMETER);
+  object_poa->init (poa);
 
   this->adopt_poa (auto_object_poa.release ());
 
@@ -138,9 +138,9 @@ TAO_Notify_EventChannelFactory::release (void)
 }
 
 void
-TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel)
 {
-  this->ec_container().remove (event_channel ACE_ENV_ARG_PARAMETER);
+  this->ec_container().remove (event_channel);
   this->self_change ();
 }
 
@@ -166,7 +166,7 @@ TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
-    CosNotifyChannelAdmin::ChannelID_out id ACE_ENV_ARG_DECL
+    CosNotifyChannelAdmin::ChannelID_out id
   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -178,8 +178,7 @@ TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
     TAO_Notify_PROPERTIES::instance()->builder()->build_event_channel (this
                                                                         , initial_qos
                                                                         , initial_admin
-                                                                        , id
-                                                                        ACE_ENV_ARG_PARAMETER);
+                                                                        , id);
   this->self_change ();
   return ec._retn ();
 }
@@ -192,11 +191,11 @@ TAO_Notify_EventChannelFactory::get_all_channels (void)
 {
   TAO_Notify_EventChannel_Seq_Worker seq_worker;
 
-  return seq_worker.create (this->ec_container() ACE_ENV_ARG_PARAMETER);
+  return seq_worker.create (this->ec_container());
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::ChannelID id ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::ChannelID id)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotifyChannelAdmin::ChannelNotFound
@@ -204,7 +203,7 @@ TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::Channe
 {
   TAO_Notify_EventChannel_Find_Worker find_worker;
 
-  return find_worker.resolve (id, this->ec_container() ACE_ENV_ARG_PARAMETER);
+  return find_worker.resolve (id, this->ec_container());
 }
 
 void
@@ -229,7 +228,7 @@ TAO_Notify_EventChannelFactory::load_topology (void)
     auto_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
     if (tl.get () != 0)
     {
-      tl->load (this ACE_ENV_ARG_PARAMETER);
+      tl->load (this);
     }
   }
   else
@@ -246,7 +245,7 @@ TAO_Notify_EventChannelFactory::is_persistent () const
 }
 
 void
-TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
@@ -255,20 +254,20 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& sav
   TAO_Notify::NVPList attrs; // ECF has no attributes
 
   bool want_all_children =
-    saver.begin_object(0, "channel_factory", attrs, changed ACE_ENV_ARG_PARAMETER);
+    saver.begin_object(0, "channel_factory", attrs, changed);
 
   // for each deleted child
   //  delete_child  // if the child has persistence.
 
   TAO_Notify::Save_Persist_Worker<TAO_Notify_EventChannel> wrk(saver, want_all_children);
 
-  this->ec_container().collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
+  this->ec_container().collection()->for_each(&wrk);
 
   if (want_all_children || this->reconnect_registry_.is_changed ())
   {
-    this->reconnect_registry_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
+    this->reconnect_registry_.save_persistent(saver);
   }
-  saver.end_object(0, "channel_factory" ACE_ENV_ARG_PARAMETER);
+  saver.end_object(0, "channel_factory");
 }
 
 void
@@ -309,7 +308,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence (void)
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Notify Service: Configuration error.  Event Persistence requires Topology Persistence.\n")
         ));
-      ACE_THROW (CORBA::PERSIST_STORE());
+      throw CORBA::PERSIST_STORE();
     }
   }
 }
@@ -335,7 +334,7 @@ TAO_Notify_EventChannelFactory::change_to_parent (void)
         auto_ptr<TAO_Notify::Topology_Saver> saver(this->topology_factory_->create_saver());
         if (saver.get() != 0)
         {
-          this->save_persistent(*saver ACE_ENV_ARG_PARAMETER);
+          this->save_persistent(*saver);
           saver->close ();
         }
         this->topology_save_seq_ += 1;
@@ -349,8 +348,7 @@ TAO_Notify::Topology_Object*
 TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
                                         CORBA::Long id,
                                         const TAO_Notify::
-                                        NVPList& attrs
-                                        ACE_ENV_ARG_DECL)
+                                        NVPList& attrs)
 {
   // ignore anything but our valid children (ie channel)
   TAO_Notify::Topology_Object * result = this;
@@ -364,8 +362,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
     TAO_Notify_EventChannel * ec = bld->build_event_channel(
         this ,
-        id
-        ACE_ENV_ARG_PARAMETER);
+        id);
 
     ec->load_attrs (attrs);
 
@@ -384,11 +381,11 @@ TAO_Notify_EventChannelFactory::reconnect (void)
   // Reconnect all children first
   TAO_Notify::Reconnect_Worker<TAO_Notify_EventChannel> wrk;
 
-  this->ec_container().collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
+  this->ec_container().collection()->for_each(&wrk);
 
   // Then send reconnection announcement to registered clients
   ACE_ASSERT (!CORBA::is_nil (this->channel_factory_.in ()));
-  this->reconnect_registry_.send_reconnect (this->channel_factory_.in () ACE_ENV_ARG_PARAMETER);
+  this->reconnect_registry_.send_reconnect (this->channel_factory_.in ());
 
   // reactivate events in-progress
   Routing_Slip_Set::CONST_ITERATOR iter (this->routing_slip_restart_set_);
@@ -402,24 +399,20 @@ TAO_Notify_EventChannelFactory::reconnect (void)
 
 NotifyExt::ReconnectionRegistry::ReconnectionID
 TAO_Notify_EventChannelFactory::register_callback (
-    NotifyExt::ReconnectionCallback_ptr reconnection
-    ACE_ENV_ARG_DECL)
+    NotifyExt::ReconnectionCallback_ptr reconnection)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->reconnect_registry_.register_callback (
-    reconnection
-    ACE_ENV_ARG_PARAMETER);
+    reconnection);
 }
 
 void
 TAO_Notify_EventChannelFactory::unregister_callback (
-    NotifyExt::ReconnectionRegistry::ReconnectionID id
-    ACE_ENV_ARG_DECL)
+    NotifyExt::ReconnectionRegistry::ReconnectionID id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->reconnect_registry_.unregister_callback (
-    id
-    ACE_ENV_ARG_PARAMETER);
+    id);
 }
 
 CORBA::Boolean
@@ -437,7 +430,7 @@ TAO_Notify_EventChannelFactory::save_topology (void)
 }
 
 TAO_Notify_ProxyConsumer *
-TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxyConsumer * result = 0;
   size_t path_size = id_path.size ();
@@ -452,19 +445,18 @@ TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path
   {
     TAO_Notify_EventChannel_Find_Worker find_worker;
 
-    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container() ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container());
     ++position;
     if (ec != 0)
     {
-      result = ec->find_proxy_consumer (id_path, position
-        ACE_ENV_ARG_PARAMETER);
+      result = ec->find_proxy_consumer (id_path, position);
     }
   }
   return result;
 }
 
 TAO_Notify_ProxySupplier *
-TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position)
 {
   TAO_Notify_ProxySupplier * result = 0;
   size_t path_size = id_path.size ();
@@ -478,12 +470,11 @@ TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path
   if (position < path_size)
   {
     TAO_Notify_EventChannel_Find_Worker find_worker;
-    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container() ACE_ENV_ARG_PARAMETER);
+    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], this->ec_container());
     ++position;
     if (ec != 0)
     {
-      result = ec->find_proxy_supplier (id_path, position
-        ACE_ENV_ARG_PARAMETER);
+      result = ec->find_proxy_supplier (id_path, position);
     }
   }
   return result;
@@ -492,12 +483,12 @@ TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_EventChannelFactory::activate_self (void)
 {
-  CORBA::Object_var obj = this->activate (this ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = this->activate (this);
   this->channel_factory_
-    = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-  CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+    = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
+  CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
 
-  ACE_TRY_NEW_ENV
+  try
   {
     if (DEBUG_LEVEL > 9)
     {
@@ -505,11 +496,10 @@ TAO_Notify_EventChannelFactory::activate_self (void)
     }
     this->reconnect ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     // ignore for now
   }
-  ACE_ENDTRY;
   return this->channel_factory_._retn();
 }
 

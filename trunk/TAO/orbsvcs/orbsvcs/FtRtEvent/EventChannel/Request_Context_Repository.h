@@ -54,61 +54,47 @@ public:
    * Used by ORBInitializer to allocate required slots for
    * FTEC.
    */
-  void allocate_slots(PortableInterceptor::ORBInitInfo_ptr info
-            ACE_ENV_ARG_DECL);
+  void allocate_slots(PortableInterceptor::ORBInitInfo_ptr info);
 
 
-  void generate_object_id(FtRtecEventChannelAdmin::ObjectId& object_id
-                          ACE_ENV_ARG_DECL);
-  void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id
-                     ACE_ENV_ARG_DECL);
+  void generate_object_id(FtRtecEventChannelAdmin::ObjectId& object_id);
+  void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id);
   FtRtecEventChannelAdmin::ObjectId_var get_object_id(void);
   FtRtecEventChannelAdmin::ObjectId_var
-    get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri
-                  ACE_ENV_ARG_DECL);
+    get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   void set_cached_result(PortableInterceptor::ServerRequestInfo_ptr ri,
-                         const CORBA::Any& result
-                         ACE_ENV_ARG_DECL);
+                         const CORBA::Any& result);
 
   CORBA::Any_ptr get_cached_result(void);
   bool is_executed_request();
 
   void set_sequence_number(PortableInterceptor::ServerRequestInfo_ptr ri,
-                           FTRT::SequenceNumber
-                           ACE_ENV_ARG_DECL);
+                           FTRT::SequenceNumber);
 
-  void set_sequence_number(FTRT::SequenceNumber
-                           ACE_ENV_ARG_DECL);
-  FTRT::SequenceNumber get_sequence_number(PortableInterceptor::ClientRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL);
+  void set_sequence_number(FTRT::SequenceNumber);
+  FTRT::SequenceNumber get_sequence_number(PortableInterceptor::ClientRequestInfo_ptr ri);
 
   FTRT::SequenceNumber get_sequence_number(void);
 
   void set_ft_request_service_context(
     PortableInterceptor::ServerRequestInfo_ptr ri,
-    IOP::ServiceContext_var service_context
-    ACE_ENV_ARG_DECL);
+    IOP::ServiceContext_var service_context);
 
   CORBA::Any_var get_ft_request_service_context(
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL);
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   void set_transaction_depth(
     PortableInterceptor::ServerRequestInfo_ptr ri,
-    FTRT::TransactionDepth depth
-    ACE_ENV_ARG_DECL);
+    FTRT::TransactionDepth depth);
 
  void set_transaction_depth(
-    FTRT::TransactionDepth depth
-    ACE_ENV_ARG_DECL);
+    FTRT::TransactionDepth depth);
+
+ FTRT::TransactionDepth get_transaction_depth();
 
  FTRT::TransactionDepth get_transaction_depth(
-    ACE_ENV_SINGLE_ARG_DECL);
-
- FTRT::TransactionDepth get_transaction_depth(
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL);
+    PortableInterceptor::ClientRequestInfo_ptr);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

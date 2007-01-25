@@ -30,8 +30,7 @@ TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy (void)
 }
 
 SecurityLevel3::CredsDirective
-TAO::SL3::ContextEstablishmentPolicy::creds_directive (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->creds_directive_;
@@ -51,40 +50,35 @@ TAO::SL3::ContextEstablishmentPolicy::creds_list (void)
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_client_auth (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::use_client_auth ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_client_auth_;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_target_auth (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::use_target_auth ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_target_auth_;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_confidentiality (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::use_confidentiality ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_confidentiality_;
 }
 
 SecurityLevel3::FeatureDirective
-TAO::SL3::ContextEstablishmentPolicy::use_integrity (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::use_integrity ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_integrity_;
 }
 
 CORBA::PolicyType
-TAO::SL3::ContextEstablishmentPolicy::policy_type (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::policy_type ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::ContextEstablishmentPolicyType;
@@ -109,8 +103,7 @@ TAO::SL3::ContextEstablishmentPolicy::copy (void)
 }
 
 void
-TAO::SL3::ContextEstablishmentPolicy::destroy (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SL3::ContextEstablishmentPolicy::destroy ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->creds_directive_     = SecurityLevel3::CD_Default;

@@ -10,7 +10,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     const char *constraints
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
                    CORBA::NO_MEMORY))
@@ -26,7 +25,7 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
   {
       // root_ is set in this base class call.
       if (TAO_ETCL_Interpreter::build_tree (constraints) != 0)
-          ACE_THROW (DsLogAdmin::InvalidConstraint ());
+          throw DsLogAdmin::InvalidConstraint ();
     }
 }
 

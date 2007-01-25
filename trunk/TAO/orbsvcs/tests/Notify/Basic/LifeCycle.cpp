@@ -62,17 +62,14 @@ LifeCycle::parse_args (int argc,
 
 void
 LifeCycle::init (int argc,
-                     char* argv[]
-                     ACE_ENV_ARG_DECL)
+                     char* argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
-                                        ""
-                                        ACE_ENV_ARG_PARAMETER);
+                                        "");
 
   CORBA::Object_var rootObj =
-    orb->resolve_initial_references ("NameService"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("NameService");
 
   if (CORBA::is_nil (rootObj.in ()))
     {
@@ -82,20 +79,17 @@ LifeCycle::init (int argc,
     }
 
   CosNaming::NamingContext_var rootNC =
-    CosNaming::NamingContext::_narrow (rootObj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (rootObj.in ());
 
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup ("NotifyEventChannelFactory");
 
-  CORBA::Object_var obj = rootNC->resolve (name
-                                           ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = rootNC->resolve (name);
 
   notify_factory_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
         obj.in()
-        ACE_ENV_ARG_PARAMETER
       );
 
   if (CORBA::is_nil (notify_factory_.in ()))
@@ -135,8 +129,7 @@ LifeCycle::create_ec (void)
 
   this->ec_ = notify_factory_->create_channel (initial_qos,
                                                initial_admin,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
+                                               id);
 
   if (CORBA::is_nil (ec_.in ())) {
     ACE_ERROR ((LM_ERROR,
@@ -157,8 +150,7 @@ LifeCycle::create_supplier_admin (void)
           CosNotifyChannelAdmin::OR_OP;
 
   supplier_admin_ = this->ec_->new_for_suppliers (ifgop,
-                                                  adminid
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  adminid);
 
   if (CORBA::is_nil (supplier_admin_.in ()))
     {
@@ -179,7 +171,7 @@ LifeCycle::create_consumer_admin (void)
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
-  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid ACE_ENV_ARG_PARAMETER);
+  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid);
 
   if (CORBA::is_nil (consumer_admin_.in()))
     {
@@ -227,8 +219,7 @@ LifeCycle::destroy_ec (void)
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       LifeCycle test;
 
@@ -236,17 +227,15 @@ main (int argc, char *argv[])
                        argv);
 
       test.init (argc,
-                 argv
-                 ACE_ENV_ARG_PARAMETER);
+                 argv);
 
       test.run_test ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ");
+      ex._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

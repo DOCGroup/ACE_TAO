@@ -14,8 +14,7 @@ ACE_RCSID(FaultTolerance, FT_ServerPolicy_i, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->heartbeat_enabled_value_;
@@ -23,8 +22,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value (
 
 
 CORBA::Policy_ptr
-TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val
-                                          ACE_ENV_ARG_DECL)
+TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val)
 {
   CORBA::Boolean value;
 

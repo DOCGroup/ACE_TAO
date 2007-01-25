@@ -156,8 +156,7 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
  * Register this object.
  */
 int StubFaultConsumer::init (CORBA::ORB_ptr orb,
-    ::FT::FaultNotifier_var & notifier
-    ACE_ENV_ARG_DECL)
+    ::FT::FaultNotifier_var & notifier)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -167,8 +166,7 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,8 +175,7 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
 
   // Get the POA object.
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -194,13 +191,12 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
 
   // Register with the POA.
 
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this);
 
   // find my identity as an object
 
   CORBA::Object_var this_obj =
-    this->poa_->id_to_reference (object_id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (object_id_.in ());
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
@@ -224,7 +220,7 @@ const char * StubFaultConsumer::identity () const
  */
 int StubFaultConsumer::fini (void)
 {
-  this->notifier_->disconnect_consumer(this->consumer_id_ ACE_ENV_ARG_PARAMETER);
+  this->notifier_->disconnect_consumer(this->consumer_id_);
   return 0;
 }
 
@@ -239,7 +235,6 @@ int StubFaultConsumer::idle(int & result)
 // CORBA methods
 void StubFaultConsumer::push_structured_event(
   const CosNotification::StructuredEvent &notification
-  ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
@@ -284,7 +279,6 @@ void StubFaultConsumer::push_structured_event(
 void StubFaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {

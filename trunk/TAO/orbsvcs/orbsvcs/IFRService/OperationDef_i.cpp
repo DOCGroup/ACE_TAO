@@ -36,7 +36,7 @@ TAO_OperationDef_i::def_kind (void)
 }
 
 CORBA::Contained::Description *
-TAO_OperationDef_i::describe (ACE_ENV_SINGLE_ARG_DECL )
+TAO_OperationDef_i::describe ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -47,7 +47,7 @@ TAO_OperationDef_i::describe (ACE_ENV_SINGLE_ARG_DECL )
 }
 
 CORBA::Contained::Description *
-TAO_OperationDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL )
+TAO_OperationDef_i::describe_i ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
@@ -60,8 +60,7 @@ TAO_OperationDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL )
   retval->kind = this->def_kind ();
 
   CORBA::OperationDescription od;
-  this->make_description (od
-                          ACE_ENV_ARG_PARAMETER);
+  this->make_description (od);
 
   retval->value <<= od;
 
@@ -118,29 +117,24 @@ TAO_OperationDef_i::result_def_i (void)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (result_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::IDLType::_narrow (obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+  return CORBA::IDLType::_narrow (obj.in ());
 }
 
 void
-TAO_OperationDef_i::result_def (CORBA::IDLType_ptr result_def
-                                ACE_ENV_ARG_DECL)
+TAO_OperationDef_i::result_def (CORBA::IDLType_ptr result_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->result_def_i (result_def
-                      ACE_ENV_ARG_PARAMETER);
+  this->result_def_i (result_def);
 }
 
 void
-TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *result_path =
@@ -249,32 +243,27 @@ TAO_OperationDef_i::params_i (void)
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::path_to_ir_object (type_path,
-                                                  this->repo_
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  this->repo_);
 
-      retval[i].type_def = CORBA::IDLType::_narrow (obj.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+      retval[i].type_def = CORBA::IDLType::_narrow (obj.in ());
     }
 
   return retval._retn ();
 }
 
 void
-TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params
-                            ACE_ENV_ARG_DECL)
+TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->params_i (params
-                  ACE_ENV_ARG_PARAMETER);
+  this->params_i (params);
 }
 
 void
-TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params
-                              ACE_ENV_ARG_DECL_NOT_USED)
+TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
@@ -348,21 +337,18 @@ TAO_OperationDef_i::mode_i (void)
 }
 
 void
-TAO_OperationDef_i::mode (CORBA::OperationMode mode
-                          ACE_ENV_ARG_DECL)
+TAO_OperationDef_i::mode (CORBA::OperationMode mode)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->mode_i (mode
-                ACE_ENV_ARG_PARAMETER);
+  this->mode_i (mode);
 }
 
 void
-TAO_OperationDef_i::mode_i (CORBA::OperationMode mode
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -438,21 +424,18 @@ TAO_OperationDef_i::contexts_i (void)
 }
 
 void
-TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts
-                              ACE_ENV_ARG_DECL)
+TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->contexts_i (contexts
-                    ACE_ENV_ARG_PARAMETER);
+  this->contexts_i (contexts);
 }
 
 void
-TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
-                                ACE_ENV_ARG_DECL_NOT_USED)
+TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
@@ -480,7 +463,7 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
 }
 
 CORBA::ExceptionDefSeq *
-TAO_OperationDef_i::exceptions (ACE_ENV_SINGLE_ARG_DECL )
+TAO_OperationDef_i::exceptions ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
@@ -491,7 +474,7 @@ TAO_OperationDef_i::exceptions (ACE_ENV_SINGLE_ARG_DECL )
 }
 
 CORBA::ExceptionDefSeq *
-TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
+TAO_OperationDef_i::exceptions_i ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key excepts_key;
@@ -548,32 +531,27 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
                                               path.c_str (),
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
     }
 
   return retval._retn ();
 }
 
 void
-TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions
-                                ACE_ENV_ARG_DECL)
+TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->exceptions_i (exceptions
-                      ACE_ENV_ARG_PARAMETER);
+  this->exceptions_i (exceptions);
 }
 
 void
-TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
@@ -588,8 +566,7 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
 
 void
 TAO_OperationDef_i::make_description (
-    CORBA::OperationDescription &od
-    ACE_ENV_ARG_DECL)
+    CORBA::OperationDescription &od)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   od.name = this->name_i ();

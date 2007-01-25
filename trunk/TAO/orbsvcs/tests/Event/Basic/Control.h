@@ -34,8 +34,7 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -18,7 +18,7 @@ public:
               int instance);
 
   // = The skeleton methods
-  virtual void send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL)
+  virtual void send_forty_two (CORBA::Long forty_two)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)
@@ -28,8 +28,7 @@ public:
   CORBA::Boolean get_status ();
 
   // Silence the builds
-  void send_large_octet_array (const Test::Octets &
-                               ACE_ENV_ARG_DECL_NOT_USED)
+  void send_large_octet_array (const Test::Octets &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

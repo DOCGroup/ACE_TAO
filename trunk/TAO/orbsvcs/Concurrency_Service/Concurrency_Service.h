@@ -47,16 +47,14 @@ public:
 
   /// Constructor taking the command-line arguments.
   Concurrency_Service (int argc,
-                       ACE_TCHAR **argv
-                       ACE_ENV_ARG_DECL);
+                       ACE_TCHAR **argv);
 
   /// Destructor.
   ~Concurrency_Service (void);
 
   /// Initialize the Concurrency Service with the arguments.
   int init (int argc,
-            ACE_TCHAR **argv
-            ACE_ENV_ARG_DECL);
+            ACE_TCHAR **argv);
 
   /// Run the Concurrency_Service.
   int run (void);

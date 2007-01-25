@@ -21,20 +21,18 @@ TAO_LB_Monitor_Signal_Handler::TAO_LB_Monitor_Signal_Handler (
 int
 TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Deregister the LoadMonitor from the LoadManager in the PULL
       // load monitoring case.
       if (!CORBA::is_nil (this->load_manager_.in ()))
         {
-          this->load_manager_->remove_load_monitor (this->location_
-                                                    ACE_ENV_ARG_PARAMETER);
+          this->load_manager_->remove_load_monitor (this->location_);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception");
 
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -43,7 +41,6 @@ TAO_LB_Monitor_Signal_Handler::perform_cleanup (int signum)
                          signum),
                         -1);
     }
-  ACE_ENDTRY;
 
   return this->TAO_LB_Signal_Handler::perform_cleanup (signum);
 }

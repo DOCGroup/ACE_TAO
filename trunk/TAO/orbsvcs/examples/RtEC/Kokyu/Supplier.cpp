@@ -33,7 +33,7 @@ Supplier::timeout_occured (void)
       event[0].header.ttl    = 1;
     }
 
-  consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
+  consumer_proxy_->push (event);
 }
 
 void
@@ -48,8 +48,7 @@ Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
 }
 
 void
-Timeout_Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL)
+Timeout_Consumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)

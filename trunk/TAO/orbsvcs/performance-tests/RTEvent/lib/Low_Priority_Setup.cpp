@@ -29,8 +29,7 @@ Low_Priority_Setup (int consumer_count,
                     PortableServer::POA_ptr supplier_poa,
                     PortableServer::POA_ptr consumer_poa,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
-                    ACE_Barrier *barrier
-                    ACE_ENV_ARG_DECL)
+                    ACE_Barrier *barrier)
   : consumer_count_ (consumer_count)
   , clients_ (consumer_count ? new Client_Type[consumer_count] : 0)
   , disconnect_ (consumer_count ? new Client_Auto_Disconnect[consumer_count] : 0)
@@ -57,8 +56,7 @@ Low_Priority_Setup (int consumer_count,
                               gsf,
                               supplier_poa,
                               consumer_poa);
-      this->clients_[i].connect (ec
-                                 ACE_ENV_ARG_PARAMETER);
+      this->clients_[i].connect (ec);
       // Automatically disconnect the group if the connection was
       // successful
       this->disconnect_[i] = &this->clients_[i];

@@ -69,8 +69,7 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual CORBA::Boolean request_is_local (void)

@@ -38,10 +38,9 @@ TAO_EC_Priority_Dispatching::activate (void)
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   for (int i = 0; i < this->ntasks_; ++i)
     {
-      ACE_TRY
+      try
         {
           RtecScheduler::Period_t period =
             ACE_CU64_TO_CU32 (ACE_Scheduler_Rates[i]);
@@ -49,7 +48,7 @@ TAO_EC_Priority_Dispatching::activate (void)
           ACE_OS::sprintf (buf, "Dispatching_Task-%d.us", period);
 
           RtecScheduler::handle_t rt_info =
-            this->scheduler_->create (buf ACE_ENV_ARG_PARAMETER);
+            this->scheduler_->create (buf);
 
           this->scheduler_->set (rt_info,
                                  RtecScheduler::VERY_LOW_CRITICALITY,
@@ -60,14 +59,12 @@ TAO_EC_Priority_Dispatching::activate (void)
                                  RtecScheduler::VERY_LOW_IMPORTANCE,
                                  0, // quantum
                                  1, // threads
-                                 RtecScheduler::OPERATION
-                                  ACE_ENV_ARG_PARAMETER);
+                                 RtecScheduler::OPERATION);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // Ignore exceptions..
         }
-      ACE_ENDTRY;
 
       ACE_NEW (this->tasks_[i],
                TAO_EC_Dispatching_Task (&this->thread_manager_));
@@ -108,19 +105,17 @@ void
 TAO_EC_Priority_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                    RtecEventComm::PushConsumer_ptr consumer,
                                    const RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info
-                                   ACE_ENV_ARG_DECL)
+                                   TAO_EC_QOS_Info& qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, consumer, event_copy, qos_info ACE_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info);
 }
 
 void
 TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           RtecEventComm::PushConsumer_ptr consumer,
                                           RtecEventComm::EventSet& event,
-                                          TAO_EC_QOS_Info& qos_info
-                                          ACE_ENV_ARG_DECL)
+                                          TAO_EC_QOS_Info& qos_info)
 {
   if (this->tasks_ == 0)
     this->activate ();
@@ -133,7 +128,7 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
     }
 
 
-  this->tasks_[i]->push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
+  this->tasks_[i]->push (proxy, consumer, event);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

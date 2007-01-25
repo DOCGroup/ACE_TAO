@@ -11,15 +11,15 @@ const char *ior_output_file = 0;
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       /// Our regular ORB Initialization.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       /// Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -28,7 +28,7 @@ main (int argc, char *argv[])
 
       /// Narrow down the reference to the currect interface.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       SLevel1_Server_i level1_server ();
 
@@ -36,8 +36,7 @@ main (int argc, char *argv[])
         level1_server._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -55,15 +54,14 @@ main (int argc, char *argv[])
       // Start the ORB
       orb->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
     }
-  ACE_CATCH (CORBA::SytemException, ex)
+  catch (const CORBA::SytemException& )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "System Exception raised: %s", ex));
     }
-  ACE_ENDTRY;
 
   return 0;
 }

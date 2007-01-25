@@ -66,8 +66,7 @@ EC_Shutdown::dump_results (void)
 }
 
 void
-EC_Shutdown::consumer_disconnect (void* cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+EC_Shutdown::consumer_disconnect (void* cookie)
 {
   this->consumer_disconnects_++;
   if (this->verbose ())
@@ -75,8 +74,7 @@ EC_Shutdown::consumer_disconnect (void* cookie
 }
 
 void
-EC_Shutdown::supplier_disconnect (void* cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+EC_Shutdown::supplier_disconnect (void* cookie)
 {
   this->supplier_disconnects_++;
   if (this->verbose ())

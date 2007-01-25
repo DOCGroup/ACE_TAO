@@ -4,23 +4,20 @@
 
 int main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Server_i svr_i;
 
-      const int init_result = svr_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      const int init_result = svr_i.init (argc, argv);
 
       if (init_result != 0)
         return 1;
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CORBA exception raised in server!");
+      ex._tao_print_exception ("CORBA exception raised in server!");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

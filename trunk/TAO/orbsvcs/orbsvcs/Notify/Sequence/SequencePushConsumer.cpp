@@ -34,14 +34,14 @@ TAO_Notify_SequencePushConsumer::~TAO_Notify_SequencePushConsumer ()
 }
 
 void
-TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
+TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer)
 {
   // Initialize only once
   ACE_ASSERT( CORBA::is_nil (this->push_consumer_.in()) );
 
   if (CORBA::is_nil (push_consumer))
   {
-    ACE_THROW (CORBA::BAD_PARAM());
+    throw CORBA::BAD_PARAM();
   }
 
   if (!TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb ())
@@ -58,7 +58,7 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
       CORBA::Object_var obj =
         TAO_Notify_PROPERTIES::instance()->dispatching_orb()->string_to_object(temp.in());
 
-      ACE_TRY
+      try
         {
           CosNotifyComm::SequencePushConsumer_var new_push_consumer =
             CosNotifyComm::SequencePushConsumer::_unchecked_narrow(obj.in());
@@ -75,16 +75,16 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
             }
           //--cj end
         }
-      ACE_CATCH (CORBA::TRANSIENT, ex)
+      catch (const CORBA::TRANSIENT& ex)
         {
-          ACE_PRINT_EXCEPTION (ex, "Got a TRANSIENT in NS_SequencePushConsumer::init");
+          ex._tao_print_exception (
+            "Got a TRANSIENT in NS_SequencePushConsumer::init");
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_SequencePushConsumer %@\n", this));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // _narrow failed
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -208,17 +208,15 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           }
         }
         ace_mon.release();
-        ACE_DECLARE_NEW_ENV;
-        ACE_TRY
+        try
         {
           this->proxy_supplier ()->destroy ();
         }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
         {
           // todo is there something meaningful we can do here?
           ;
         }
-        ACE_ENDTRY;
         ace_mon.acquire();
         break;
       }
@@ -261,12 +259,11 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
 
 bool
 TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
-  TAO_Notify_Method_Request_Event * request
-  ACE_ENV_ARG_DECL)
+  TAO_Notify_Method_Request_Event * request)
 {
   if (DEBUG_LEVEL > 0)
     ACE_DEBUG ( (LM_DEBUG, "SequencePushConsumer enqueing event.\n"));
-  this->enqueue_request (request ACE_ENV_ARG_PARAMETER);
+  this->enqueue_request (request);
 
   size_t mbs = static_cast<size_t>(this->max_batch_size_.value());
 
@@ -283,20 +280,20 @@ TAO_Notify_SequencePushConsumer::enqueue_if_necessary (
 
 
 void
-TAO_Notify_SequencePushConsumer::push (const CORBA::Any& /*event*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_SequencePushConsumer::push (const CORBA::Any& /*event*/)
 {
   //NOP
 }
 
 void
-TAO_Notify_SequencePushConsumer::push (const CosNotification::StructuredEvent& /*notification*/ ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_SequencePushConsumer::push (const CosNotification::StructuredEvent& /*notification*/)
 {
   //NOP
 }
 
 
 void
-TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch ACE_ENV_ARG_DECL)
+TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_batch)
 {
   //--cj verify dispatching ORB
   if (TAO_debug_level >= 10) {
@@ -305,7 +302,7 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_
   }
   //--cj end
 
-  this->push_consumer_->push_structured_events (event_batch ACE_ENV_ARG_PARAMETER);
+  this->push_consumer_->push_structured_events (event_batch);
 }
 
 ACE_CString
@@ -313,27 +310,24 @@ TAO_Notify_SequencePushConsumer::get_ior (void) const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance ()->orb ();
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
-    CORBA::String_var ior = orb->object_to_string (this->push_consumer_.in () ACE_ENV_ARG_PARAMETER);
+    CORBA::String_var ior = orb->object_to_string (this->push_consumer_.in ());
     result = static_cast<const char*> (ior.in ());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     result.fast_clear();
   }
-  ACE_ENDTRY;
   return result;
 }
 
 void
-TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
-                                                          ACE_ENV_ARG_DECL)
+TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer)
 {
   TAO_Notify_SequencePushConsumer* tmp = dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
   ACE_ASSERT(tmp != 0);
-  this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
+  this->init(tmp->push_consumer_.in());
   this->schedule_timer(false);
 }
 

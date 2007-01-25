@@ -36,16 +36,14 @@ TAO::SSLIOP::TargetCredentials::client_principal (void)
 }
 
 SecurityLevel3::StatementList *
-TAO::SSLIOP::TargetCredentials::client_supporting_statements (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::TargetCredentials::client_supporting_statements ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 SecurityLevel3::ResourceNameList *
-TAO::SSLIOP::TargetCredentials::client_restricted_resources (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::TargetCredentials::client_restricted_resources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -59,16 +57,14 @@ TAO::SSLIOP::TargetCredentials::target_principal (void)
 }
 
 SecurityLevel3::StatementList *
-TAO::SSLIOP::TargetCredentials::target_supporting_statements (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::TargetCredentials::target_supporting_statements ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 SecurityLevel3::ResourceNameList *
-TAO::SSLIOP::TargetCredentials::target_restricted_resources (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::TargetCredentials::target_restricted_resources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -128,7 +124,7 @@ void
 TAO::SSLIOP::TargetCredentials::release (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

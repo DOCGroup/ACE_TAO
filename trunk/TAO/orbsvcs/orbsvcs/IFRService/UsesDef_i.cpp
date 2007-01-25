@@ -52,7 +52,6 @@ TAO_UsesDef_i::describe_i (void)
                                          ud,
                                          this->repo_,
                                          this->section_key_
-                                         ACE_ENV_ARG_PARAMETER
                                        );
 
   ACE_TString base_type_id;
@@ -96,17 +95,14 @@ TAO_UsesDef_i::interface_type_i (void)
                                             holder);
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::InterfaceDef::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+  return CORBA::InterfaceDef::_narrow (obj.in ());
 }
 
 void
 TAO_UsesDef_i::interface_type (
     CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -114,14 +110,12 @@ TAO_UsesDef_i::interface_type (
 
   this->update_key ();
 
-  this->interface_type_i (interface_type
-                          ACE_ENV_ARG_PARAMETER);
+  this->interface_type_i (interface_type);
 }
 
 void
 TAO_UsesDef_i::interface_type_i (
     CORBA::InterfaceDef_ptr interface_type
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -179,7 +173,6 @@ TAO_UsesDef_i::is_multiple_i (void)
 void
 TAO_UsesDef_i::is_multiple (
     CORBA::Boolean is_multiple
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -187,14 +180,12 @@ TAO_UsesDef_i::is_multiple (
 
   this->update_key ();
 
-  this->is_multiple_i (is_multiple
-                       ACE_ENV_ARG_PARAMETER);
+  this->is_multiple_i (is_multiple);
 }
 
 void
 TAO_UsesDef_i::is_multiple_i (
     CORBA::Boolean is_multiple
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

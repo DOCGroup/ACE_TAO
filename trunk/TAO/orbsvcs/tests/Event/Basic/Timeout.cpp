@@ -19,17 +19,16 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -61,11 +60,10 @@ main (int argc, char* argv[])
       EC_Counting_Supplier supplier;
 
       supplier.activate (consumer_admin.in (),
-                         50 ACE_ENV_ARG_PARAMETER);
+                         50);
       supplier.connect (supplier_admin.in (),
                         0, 20,
-                        0, 20
-                        ACE_ENV_ARG_PARAMETER);
+                        0, 20);
 
       // ****************************************************************
 
@@ -90,8 +88,7 @@ main (int argc, char* argv[])
                                   0);
 
         interval_consumer.connect (consumer_admin.in (),
-                                   consumer_qos.get_ConsumerQOS ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -116,8 +113,7 @@ main (int argc, char* argv[])
                                   0);
 
         conjunction_consumer.connect (consumer_admin.in (),
-                                      consumer_qos.get_ConsumerQOS ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -138,8 +134,7 @@ main (int argc, char* argv[])
                                   0);
 
         deadline_consumer.connect (consumer_admin.in (),
-                                   consumer_qos.get_ConsumerQOS ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   consumer_qos.get_ConsumerQOS ());
       }
 
       // ****************************************************************
@@ -166,7 +161,7 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       // ****************************************************************
 
@@ -174,11 +169,10 @@ main (int argc, char* argv[])
       conjunction_consumer.dump_results (25, 5);
       deadline_consumer.dump_results (100, 5);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

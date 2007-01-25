@@ -105,7 +105,7 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 /**
  * Register this object as necessary
  */
-int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -134,14 +134,12 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   // register fault consumers
   if (result == 0)
   {
-    result = this->faultConsumer_.init (orb, this->notifier_
-                            ACE_ENV_ARG_PARAMETER);
+    result = this->faultConsumer_.init (orb, this->notifier_);
   }
 
   if (result == 0)
   {
-    result = this->batchConsumer_.init (orb, this->notifier_
-                            ACE_ENV_ARG_PARAMETER);
+    result = this->batchConsumer_.init (orb, this->notifier_);
   }
 
   /////////////////////////
@@ -217,8 +215,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
           this->factory_->create_object (
             type_id.in(),
             criteria.in(),
-            factory_creation_id
-            ACE_ENV_ARG_PARAMETER);
+            factory_creation_id);
         }
       }
     }
@@ -256,7 +253,7 @@ int StubFaultAnalyzer::fini (void)
 }
 
 
-int StubFaultAnalyzer::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
+int StubFaultAnalyzer::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
   int quit = 0;

@@ -111,13 +111,11 @@ EC_Connect::dump_results (void)
 void
 EC_Connect::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_consumer (consumer_admin,
-                                     i
-                                     ACE_ENV_ARG_PARAMETER);
+                                     i);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->consumer_connect_.sample (now - this->start_time_,
                                   now - start);
@@ -126,13 +124,11 @@ EC_Connect::connect_consumer (
 void
 EC_Connect::connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_supplier (supplier_admin,
-                                     i
-                                     ACE_ENV_ARG_PARAMETER);
+                                     i);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->supplier_connect_.sample (now - this->start_time_,
                                   now - start);
@@ -185,11 +181,11 @@ EC_Connect::connect_clients (void)
     {
       if (i < this->n_consumers_)
         {
-          this->connect_consumer (consumer_admin.in (), i ACE_ENV_ARG_PARAMETER);
+          this->connect_consumer (consumer_admin.in (), i);
         }
       if (i < this->n_suppliers_)
         {
-          this->connect_supplier (supplier_admin.in (), i ACE_ENV_ARG_PARAMETER);
+          this->connect_supplier (supplier_admin.in (), i);
         }
     }
 
@@ -308,25 +304,21 @@ void
 ECC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   this->EC_Consumer::connect (consumer_admin,
                               qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
 }
 
 void
 ECC_Consumer::connect (
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Consumer::connect (qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }
@@ -350,25 +342,21 @@ void
 ECC_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     const RtecEventChannelAdmin::SupplierQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   this->EC_Supplier::connect (supplier_admin,
                               qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
 }
 
 void
 ECC_Supplier::connect (
     const RtecEventChannelAdmin::SupplierQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Supplier::connect (qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }

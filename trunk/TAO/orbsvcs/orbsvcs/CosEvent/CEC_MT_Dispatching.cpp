@@ -63,45 +63,41 @@ TAO_CEC_MT_Dispatching::shutdown (void)
 
 void
 TAO_CEC_MT_Dispatching::push (TAO_CEC_ProxyPushSupplier* proxy,
-                              const CORBA::Any& event
-                              ACE_ENV_ARG_DECL)
+                              const CORBA::Any& event)
 {
   CORBA::Any event_copy = event;
-  this->push_nocopy (proxy, event_copy ACE_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, event_copy);
 }
 
 void
 TAO_CEC_MT_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                     CORBA::Any& event
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Any& event)
 {
   // Double checked locking....
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.push (proxy, event ACE_ENV_ARG_PARAMETER);
+  this->task_.push (proxy, event);
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
 TAO_CEC_MT_Dispatching::invoke (TAO_CEC_ProxyPushSupplier* proxy,
-                                const TAO_CEC_TypedEvent& typed_event
-                                ACE_ENV_ARG_DECL)
+                                const TAO_CEC_TypedEvent& typed_event)
 {
   TAO_CEC_TypedEvent typed_event_copy = typed_event;
-  this->invoke_nocopy (proxy, typed_event_copy ACE_ENV_ARG_PARAMETER);
+  this->invoke_nocopy (proxy, typed_event_copy);
 }
 
 void
 TAO_CEC_MT_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                       TAO_CEC_TypedEvent& typed_event
-                                       ACE_ENV_ARG_DECL)
+                                       TAO_CEC_TypedEvent& typed_event)
 {
   // Double checked locking....
   if (this->active_ == 0)
     this->activate ();
 
-  this->task_.invoke (proxy, typed_event ACE_ENV_ARG_PARAMETER);
+  this->task_.invoke (proxy, typed_event);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 

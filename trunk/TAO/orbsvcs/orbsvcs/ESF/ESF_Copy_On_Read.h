@@ -43,14 +43,10 @@ public:
   TAO_ESF_Copy_On_Read (const COLLECTION &collection);
 
   // = The TAO_ESF_Proxy_Collection methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         ACE_ENV_ARG_DECL);
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
+  virtual void connected (PROXY *proxy);
+  virtual void reconnected (PROXY *proxy);
+  virtual void disconnected (PROXY *proxy);
   virtual void shutdown (void);
 
 private:

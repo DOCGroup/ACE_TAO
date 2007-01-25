@@ -41,12 +41,10 @@ TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
 
 int
 TAO_ComponentRepository_i::create_servants_and_poas (
-    ACE_ENV_SINGLE_ARG_DECL
   )
 {
   int status =
     this->TAO_Repository_i::create_servants_and_poas (
-        ACE_ENV_SINGLE_ARG_PARAMETER
       );
 
   if (status != 0)
@@ -59,33 +57,28 @@ TAO_ComponentRepository_i::create_servants_and_poas (
 
   // ID Assignment Policy.
   policies[0] =
-    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                                  ACE_ENV_ARG_PARAMETER);
+    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
 
   // Lifespan Policy.
   policies[1] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                             ACE_ENV_ARG_PARAMETER);
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
   // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
         PortableServer::USE_DEFAULT_SERVANT
-        ACE_ENV_ARG_PARAMETER
       );
 
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
         PortableServer::NON_RETAIN
-        ACE_ENV_ARG_PARAMETER
       );
 
   // Id Uniqueness Policy.
   policies[4] =
     this->root_poa_->create_id_uniqueness_policy (
         PortableServer::MULTIPLE_ID
-        ACE_ENV_ARG_PARAMETER
       );
 
   PortableServer::POAManager_var poa_manager =
@@ -95,8 +88,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
   this-> name ## _poa_ = \
     this->root_poa_->create_POA (#name "_poa", \
                                  poa_manager.in (), \
-                                 policies \
-                                 ACE_ENV_ARG_PARAMETER); \
+                                 policies); \
 \
   TAO_ ## name ## _i * name ## _impl = 0; \
   ACE_NEW_RETURN (name ## _impl, \
@@ -112,8 +104,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
   PortableServer::ServantBase_var name ## _safety ( \
       this-> name ## _servant_ \
     ); \
-  this-> name ## _poa_->set_servant (this-> name ## _servant_ \
-                                     ACE_ENV_ARG_PARAMETER); \
+  this-> name ## _poa_->set_servant (this-> name ## _servant_);
 
   CONCRETE_IR_OBJECT_TYPES
 

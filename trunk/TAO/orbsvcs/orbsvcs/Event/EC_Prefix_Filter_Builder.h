@@ -48,8 +48,7 @@ public:
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos
-                        ACE_ENV_ARG_DECL) const;
+                        RtecEventChannelAdmin::ConsumerQOS& qos) const;
 
 private:
   /// Recursively build the filter tree.

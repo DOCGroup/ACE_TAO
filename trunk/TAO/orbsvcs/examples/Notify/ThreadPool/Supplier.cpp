@@ -23,7 +23,7 @@ TAO_Notify_ThreadPool_Supplier::~TAO_Notify_ThreadPool_Supplier ()
 
 void
 TAO_Notify_ThreadPool_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count ,int max_events,
-                       int proxy_consumer_thread_count ACE_ENV_ARG_DECL)
+                       int proxy_consumer_thread_count)
 {
   // First initialize the class members.
   this->admin_ = admin;
@@ -56,7 +56,7 @@ TAO_Notify_ThreadPool_Supplier::run (void)
       for (int j = 0; j < this->expected_consumer_count_; ++j)
         {
           // send the event
-          this->send_event (this->event_[j] ACE_ENV_ARG_PARAMETER);
+          this->send_event (this->event_[j]);
         }
     }
 
@@ -81,7 +81,7 @@ TAO_Notify_ThreadPool_Supplier::connect (void)
   if (this->proxy_consumer_thread_count_ != 0)
     {
       // Narrow to the extended interface.
-      NotifyExt::SupplierAdmin_var admin_ext = NotifyExt::SupplierAdmin::_narrow (this->admin_.in ()ACE_ENV_ARG_PARAMETER);
+      NotifyExt::SupplierAdmin_var admin_ext = NotifyExt::SupplierAdmin::_narrow (this->admin_.in ());
 
       NotifyExt::ThreadPoolParams tp_params = { NotifyExt::CLIENT_PROPAGATED, 0,
                                                 0, this->proxy_consumer_thread_count_, 0, 0, 0, 0, 0 };
@@ -93,26 +93,25 @@ TAO_Notify_ThreadPool_Supplier::connect (void)
 
       // Obtain the proxy. The QoS is applied to the POA in which the Proxy is hosted.
       proxyconsumer = admin_ext->obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                                   , proxy_consumer_id_, qos ACE_ENV_ARG_PARAMETER);
+                                                                                   , proxy_consumer_id_, qos);
     }
   else
     {
       // Obtain the proxy.
       proxyconsumer = this->admin_->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                       , proxy_consumer_id_ ACE_ENV_ARG_PARAMETER);
+                                                                       , proxy_consumer_id_);
     }
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () ACE_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
   // connect to the proxyconsumer.
-  proxy_consumer_->connect_structured_push_supplier (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+  proxy_consumer_->connect_structured_push_supplier (objref.in ());
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Created Supplier %d with %d threads at the ProxyConsumer\n", proxy_consumer_id_,
               this->proxy_consumer_thread_count_));
@@ -131,17 +130,15 @@ TAO_Notify_ThreadPool_Supplier::deactivate (void)
 {
   PortableServer::POA_var poa (this->_default_POA ());
 
-  PortableServer::ObjectId_var id (poa->servant_to_id (this
-                                                       ACE_ENV_ARG_PARAMETER));
+  PortableServer::ObjectId_var id (poa->servant_to_id (this));
 
-  poa->deactivate_object (id.in()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in());
 }
 
 void
 TAO_Notify_ThreadPool_Supplier::subscription_change (const CosNotification::EventTypeSeq & added,
                                       const CosNotification::EventTypeSeq & /*removed */
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+                                      )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
@@ -167,11 +164,11 @@ TAO_Notify_ThreadPool_Supplier::subscription_change (const CosNotification::Even
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::send_event (const CosNotification::StructuredEvent& event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
+  proxy_consumer_->push_structured_event (event);
 }
 
 void

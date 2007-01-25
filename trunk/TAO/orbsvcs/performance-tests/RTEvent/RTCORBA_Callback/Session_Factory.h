@@ -18,8 +18,7 @@ public:
                    PortableServer::POA_ptr poa);
 
   // = The skeleton methods
-  virtual Test::Session_ptr create_new_session (Test::Callback_ptr cb
-                                                ACE_ENV_ARG_DECL)
+  virtual Test::Session_ptr create_new_session (Test::Callback_ptr cb)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (void)

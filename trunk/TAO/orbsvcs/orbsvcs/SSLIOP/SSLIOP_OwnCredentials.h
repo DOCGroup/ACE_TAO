@@ -63,8 +63,7 @@ namespace TAO
 
       static OwnCredentials_ptr _duplicate (OwnCredentials_ptr obj);
       static OwnCredentials_ptr _nil (void);
-      static OwnCredentials_ptr _narrow (CORBA::Object_ptr obj
-                                         ACE_ENV_ARG_DECL);
+      static OwnCredentials_ptr _narrow (CORBA::Object_ptr obj);
 
       /**
        * @name SecurityLevel3::TargetCredentials Methods
@@ -84,12 +83,10 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual void release_credentials (void)

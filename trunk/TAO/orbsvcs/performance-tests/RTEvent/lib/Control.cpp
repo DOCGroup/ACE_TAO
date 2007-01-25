@@ -43,8 +43,7 @@ Control::~Control (void)
 }
 
 void
-Control::join (Federated_Test::Peer_ptr peer
-               ACE_ENV_ARG_DECL)
+Control::join (Federated_Test::Peer_ptr peer)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
@@ -84,8 +83,7 @@ Control::join (Federated_Test::Peer_ptr peer
         {
           if (i != j)
             {
-              this->peers_[j]->connect (this->peers_[i].in ()
-                                        ACE_ENV_ARG_PARAMETER);
+              this->peers_[j]->connect (this->peers_[i].in ());
             }
         }
     }
@@ -119,8 +117,7 @@ Control::join (Federated_Test::Peer_ptr peer
             {
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
-                                                 base_event_type
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 base_event_type);
 
               ACE_AUTO_PTR_RESET (disconnects[lcount],
                                   new Loopback_Disconnect (
@@ -131,8 +128,7 @@ Control::join (Federated_Test::Peer_ptr peer
 
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
-                                                 base_event_type + 2
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 base_event_type + 2);
 
               ACE_AUTO_PTR_RESET (disconnects[lcount],
                                   new Loopback_Disconnect (
@@ -145,8 +141,7 @@ Control::join (Federated_Test::Peer_ptr peer
 
       Federated_Test::Experiment_Results_var results =
         this->peers_[i]->run_experiment (experiment_id,
-                                         this->iterations_
-                                         ACE_ENV_ARG_PARAMETER);
+                                         this->iterations_);
 
       ACE_Sample_History history (results->length ());
       for (CORBA::ULong k = 0; k != results->length (); ++k)

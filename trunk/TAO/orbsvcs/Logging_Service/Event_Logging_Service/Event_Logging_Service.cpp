@@ -27,21 +27,17 @@ Event_Logging_Service::~Event_Logging_Service (void)
 }
 
 void
-Event_Logging_Service::init_ORB (int& argc, char *argv []
-				 ACE_ENV_ARG_DECL)
+Event_Logging_Service::init_ORB (int& argc, char *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
+                                "");
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references("RootPOA");
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager ();
@@ -98,11 +94,10 @@ Event_Logging_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
+Event_Logging_Service::init (int argc, char *argv[])
 {
   // initialize the ORB.
-  this->init_ORB (argc, argv
-                  ACE_ENV_ARG_PARAMETER);
+  this->init_ORB (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -114,18 +109,16 @@ Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 
   DsEventLogAdmin::EventLogFactory_var obj =
     this->event_log_factory_->activate (this->orb_.in (),
-                                        this->poa_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        this->poa_.in ());
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (obj.in ());
 
   if (true)
     {
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ());
@@ -170,8 +163,7 @@ Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       name[0].id = CORBA::string_dup (this->service_name_);
 
       this->naming_->rebind (name,
-                             obj.in ()
-                             ACE_ENV_ARG_PARAMETER);
+                             obj.in ());
     }
 
   return 0;
@@ -181,16 +173,14 @@ void
 Event_Logging_Service::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 
 int
@@ -213,16 +203,14 @@ Event_Logging_Service::run (void)
 int
 Event_Logging_Service::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -236,8 +224,7 @@ Event_Logging_Service::shutdown (void)
       name.length (1);
       name[0].id = CORBA::string_dup (this->service_name_);
 
-      this->naming_->unbind (name
-                             ACE_ENV_ARG_PARAMETER);
+      this->naming_->unbind (name);
     }
 
   // shutdown the ORB.

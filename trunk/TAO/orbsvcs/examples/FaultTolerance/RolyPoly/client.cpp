@@ -55,13 +55,11 @@ main (int argc, char *argv[])
 {
   int status = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "Client ORB");
 
       if (::parse_args (argc, argv) != 0) return -1;
 
@@ -98,17 +96,16 @@ main (int argc, char *argv[])
         CORBA::Object_var object_primary;
 
         object_primary =
-          orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
+          orb->string_to_object (ior->c_str());
 
 
         // Get an object reference for the ORBs IORManipultion object!
         CORBA::Object_ptr IORM =
           orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                           0
-                                           ACE_ENV_ARG_PARAMETER);
+                                           0);
 
         TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-          TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
+          TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
 
 
         // Create the list
@@ -123,13 +120,13 @@ main (int argc, char *argv[])
             ior_iter.next (ior);
             ACE_DEBUG ((LM_DEBUG, "IOR%d: %s\n",cntr, ior->c_str ()));
             iors [cntr] =
-              orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
+              orb->string_to_object (ior->c_str());
 
           }
 
         ACE_DEBUG ((LM_DEBUG, "Prepare to merge IORs.\n"));
         // Create a merged set 1;
-        object = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+        object = iorm->merge_iors (iors);
 
 
 
@@ -157,13 +154,11 @@ main (int argc, char *argv[])
 
         // Set the property
         CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                                    object.in ()
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                    object.in ());
 
         retval = iorm->set_primary (&iogr_prop,
                                     object_primary.in (),
-                                    object.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    object.in ());
 
       }
       else
@@ -173,11 +168,11 @@ main (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to extract the only IOR string\n"),
                             -1);
-        object = orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
+        object = orb->string_to_object (ior->c_str());
       }
 
       RolyPoly_var server =
-        RolyPoly::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        RolyPoly::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
       {
@@ -195,8 +190,7 @@ main (int argc, char *argv[])
 
         try
         {
-          number = server->number (str.inout ()
-                                   ACE_ENV_ARG_PARAMETER);
+          number = server->number (str.inout ());
         }
         catch (RolyPoly::E const& e)
         {
@@ -215,13 +209,12 @@ main (int argc, char *argv[])
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return status;
 }

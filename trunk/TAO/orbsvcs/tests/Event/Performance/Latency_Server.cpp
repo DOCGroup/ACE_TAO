@@ -46,19 +46,17 @@ main (int argc, char *argv [])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::Object_var manager_object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyManager::_narrow (manager_object.in ());
 
       CORBA::Any sync_scope;
       sync_scope <<= Messaging::SYNC_WITH_TARGET;
@@ -67,11 +65,9 @@ main (int argc, char *argv [])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_scope
-                            ACE_ENV_ARG_PARAMETER);
+                            sync_scope);
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
+                                            CORBA::SET_OVERRIDE);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "CORBA Messaging disabled in this configuration,"
@@ -79,7 +75,7 @@ main (int argc, char *argv [])
 #endif /* TAO_HAS_MESSAGING */
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,7 +83,7 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -106,7 +102,7 @@ main (int argc, char *argv [])
         ec_impl._this ();
 
       CORBA::String_var str =
-        orb->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (ec.in ());
 
       if (ior_file_name != 0)
         {
@@ -123,16 +119,15 @@ main (int argc, char *argv [])
       orb->run ();
 
       PortableServer::ObjectId_var id =
-        root_poa->servant_to_id (&ec_impl ACE_ENV_ARG_PARAMETER);
-      root_poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+        root_poa->servant_to_id (&ec_impl);
+      root_poa->deactivate_object (id.in ());
 
       orb->destroy ();
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, argv[0]);
+      ex._tao_print_exception (argv[0]);
     }
-  ACE_ENDTRY;
   return 0;
 }
 

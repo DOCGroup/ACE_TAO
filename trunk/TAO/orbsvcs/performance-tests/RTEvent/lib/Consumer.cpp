@@ -31,8 +31,7 @@ Consumer::Consumer (CORBA::Long experiment_id,
 }
 
 void
-Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                   ACE_ENV_ARG_DECL)
+Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
@@ -63,8 +62,7 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec
   h1.source = this->experiment_id_;
 
   this->proxy_supplier_->connect_push_consumer (consumer.in (),
-                                                consumer_qos
-                                                ACE_ENV_ARG_PARAMETER);
+                                                consumer_qos);
 }
 
 void
@@ -78,13 +76,12 @@ Consumer::disconnect (void)
     proxy = this->proxy_supplier_._retn ();
   }
 
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
+  Implicit_Deactivator deactivator (this);
 
-  ACE_TRY {
+  try{
     proxy->disconnect_push_supplier ();
-  } ACE_CATCHANY {
-  } ACE_ENDTRY;
+  } catch (const CORBA::Exception&) {
+  }
 }
 
 ACE_Sample_History &
@@ -94,8 +91,7 @@ Consumer::sample_history (void)
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet &events
-                ACE_ENV_ARG_DECL_NOT_USED)
+Consumer::push (const RtecEventComm::EventSet &events)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();

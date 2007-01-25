@@ -87,8 +87,7 @@ TAO::SSLIOP::Connector::close (void)
 TAO_Transport *
 TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                                  TAO_Transport_Descriptor_Interface *desc,
-                                 ACE_Time_Value *timeout
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_Time_Value *timeout)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -113,12 +112,10 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   // Check if the user overrode the default establishment of trust
   // policy for the current object.
   CORBA::Policy_var policy =
-    resolver->stub ()->get_policy (::Security::SecEstablishTrustPolicy
-                                   ACE_ENV_ARG_PARAMETER);
+    resolver->stub ()->get_policy (::Security::SecEstablishTrustPolicy);
 
   SecurityLevel2::EstablishTrustPolicy_var trust_policy =
-    SecurityLevel2::EstablishTrustPolicy::_narrow (policy.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+    SecurityLevel2::EstablishTrustPolicy::_narrow (policy.in ());
 
   // We use a pointer and temporary to make it obvious to determine
   // if no establishment of trust policy was set.  Specifically, if
@@ -158,12 +155,10 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 
   // Check if the user overrode the default Quality-of-Protection for
   // the current object.
-  policy = resolver->stub ()->get_policy (::Security::SecQOPPolicy
-                                          ACE_ENV_ARG_PARAMETER);
+  policy = resolver->stub ()->get_policy (::Security::SecQOPPolicy);
 
   SecurityLevel2::QOPPolicy_var qop_policy =
-    SecurityLevel2::QOPPolicy::_narrow (policy.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+    SecurityLevel2::QOPPolicy::_narrow (policy.in ());
 
   // Temporary variable used to avoid overwriting the default value
   // set when the ORB was initialized.
@@ -198,8 +193,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
     {
       return this->iiop_connect (ssl_endpoint,
                                  resolver,
-                                 timeout
-                                 ACE_ENV_ARG_PARAMETER);
+                                 timeout);
     }
 
   return this->ssliop_connect (ssl_endpoint,
@@ -207,8 +201,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                                trust,
                                resolver,
                                desc,
-                               timeout
-                               ACE_ENV_ARG_PARAMETER);
+                               timeout);
 }
 
 
@@ -277,8 +270,7 @@ TAO::SSLIOP::Connector::make_secure_profile (void)
 
 TAO_Profile *
 TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint,
-                                       size_t &len
-                                       ACE_ENV_ARG_DECL)
+                                       size_t &len)
 {
    int ssl_only = 0;
    if (this->check_prefix (endpoint) == 0)
@@ -361,8 +353,7 @@ TAO_Transport*
 TAO::SSLIOP::Connector::iiop_connect (
   TAO_SSLIOP_Endpoint *ssl_endpoint,
   TAO::Profile_Transport_Resolver *resolver,
-  ACE_Time_Value *timeout
-  ACE_ENV_ARG_DECL)
+  ACE_Time_Value *timeout)
 {
   const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
@@ -399,8 +390,7 @@ TAO::SSLIOP::Connector::iiop_connect (
     this->TAO::IIOP_SSL_Connector::connect (
       resolver,
       &iiop_desc,
-      timeout
-      ACE_ENV_ARG_PARAMETER);
+      timeout);
 }
 
 TAO_Transport *
@@ -410,8 +400,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   const ::Security::EstablishTrust &trust,
   TAO::Profile_Transport_Resolver *resolver,
   TAO_Transport_Descriptor_Interface *desc,
-  ACE_Time_Value *max_wait_time
-  ACE_ENV_ARG_DECL)
+  ACE_Time_Value *max_wait_time)
 {
   const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
@@ -497,8 +486,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
         safe_handler (svc_handler);
       TAO::SSLIOP::OwnCredentials_var credentials =
         this->retrieve_credentials (resolver->stub (),
-                                    svc_handler->peer ().ssl ()
-                                    ACE_ENV_ARG_PARAMETER);
+                                    svc_handler->peer ().ssl ());
 
       svc_handler = safe_handler.release ();
       ssl_endpoint->set_sec_attrs (qop, trust, credentials.in());
@@ -773,18 +761,15 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
 TAO::SSLIOP::OwnCredentials *
 TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
-                                              SSL *ssl
-                                              ACE_ENV_ARG_DECL)
+                                              SSL *ssl)
 {
   // Check if the user overrode the default invocation credentials.
   CORBA::Policy_var policy =
-    stub->get_policy (::SecurityLevel3::ContextEstablishmentPolicyType
-                      ACE_ENV_ARG_PARAMETER);
+    stub->get_policy (::SecurityLevel3::ContextEstablishmentPolicyType);
 
   SecurityLevel3::ContextEstablishmentPolicy_var creds_policy =
     SecurityLevel3::ContextEstablishmentPolicy::_narrow (
-      policy.in ()
-      ACE_ENV_ARG_PARAMETER);
+      policy.in ());
 
   TAO::SSLIOP::OwnCredentials_var ssliop_credentials;
 
@@ -802,8 +787,7 @@ TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
             creds_list[0u];
 
           ssliop_credentials =
-            TAO::SSLIOP::OwnCredentials::_narrow (credentials
-                                                  ACE_ENV_ARG_PARAMETER);
+            TAO::SSLIOP::OwnCredentials::_narrow (credentials);
 
           if (!CORBA::is_nil (ssliop_credentials.in ()))
             {

@@ -54,8 +54,7 @@ TAO_Hash_LogStore::list_logs (void)
     {
       iter.next (hash_entry);
       iter.advance ();
-      (*list)[i] = logmgr_i_->create_log_reference (static_cast<DsLogAdmin::LogId> (hash_entry->ext_id_)
-						    ACE_ENV_ARG_PARAMETER);
+      (*list)[i] = logmgr_i_->create_log_reference (static_cast<DsLogAdmin::LogId> (hash_entry->ext_id_));
     }
 
   return list;
@@ -102,8 +101,7 @@ TAO_Hash_LogStore::list_logs_by_id (void)
 
 
 DsLogAdmin::Log_ptr
-TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id
-                        ACE_ENV_ARG_DECL)
+TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -112,7 +110,6 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id
                            guard,
                            lock_,
                            CORBA::INTERNAL ());
-  ACE_CHECK (DsLogAdmin::Log::_nil ());
 
   if (hash_map_.find (id) != 0)
     {
@@ -120,14 +117,13 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id
     }
   else
     {
-      return logmgr_i_->create_log_reference (id ACE_ENV_ARG_PARAMETER);
+      return logmgr_i_->create_log_reference (id);
     }
 }
 
 
 bool
-TAO_Hash_LogStore::exists (DsLogAdmin::LogId id
-			   ACE_ENV_ARG_DECL)
+TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -139,8 +135,7 @@ TAO_Hash_LogStore::exists (DsLogAdmin::LogId id
 
 
 int
-TAO_Hash_LogStore::remove (DsLogAdmin::LogId id
-			   ACE_ENV_ARG_DECL)
+TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -163,8 +158,7 @@ void
 TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
                                       CORBA::ULongLong max_size,
                                       const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-                                      DsLogAdmin::LogId_out id_out
-                                      ACE_ENV_ARG_DECL)
+                                      DsLogAdmin::LogId_out id_out)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -191,7 +185,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
 
   if (this->hash_map_.bind (id, recordstore.get ()) != 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   recordstore.release ();
@@ -202,8 +196,7 @@ void
 TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
                                                DsLogAdmin::LogFullActionType full_action,
                                                CORBA::ULongLong max_size,
-                                               const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-                                               ACE_ENV_ARG_DECL)
+                                               const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                             guard,
@@ -212,7 +205,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 
   if (this->hash_map_.find (id) == 0)
     {
-      ACE_THROW (DsLogAdmin::LogIdAlreadyExists ());
+      throw DsLogAdmin::LogIdAlreadyExists ();
     }
 
   TAO_Hash_LogRecordStore* impl = 0;
@@ -229,7 +222,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 
   if (this->hash_map_.bind (id, recordstore.get ()) != 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   recordstore.release ();
@@ -237,8 +230,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 
 
 TAO_LogRecordStore*
-TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id
-                                         ACE_ENV_ARG_DECL)
+TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id)
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,

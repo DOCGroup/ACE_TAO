@@ -83,8 +83,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
+            char **argv);
   // Initialize data components.
 
 protected:

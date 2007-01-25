@@ -43,8 +43,7 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void startup (int argc, char *argv[]
-               ACE_ENV_ARG_DECL);
+  void startup (int argc, char *argv[]);
   // Initializes the COS Event Service.
   // Returns 0 on success, -1 on error.
 
@@ -68,8 +67,7 @@ protected:
   virtual void deactivate_rtec (void);
   // Deactivates the rtec.
 
-  void init_ORB (int& argc, char *argv []
-                 ACE_ENV_ARG_DECL);
+  void init_ORB (int& argc, char *argv []);
   // initialize the ORB.
 
   void resolve_naming_service (void);

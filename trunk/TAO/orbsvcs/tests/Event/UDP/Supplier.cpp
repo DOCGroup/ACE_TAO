@@ -13,8 +13,7 @@ Supplier::Supplier (bool valuetype) : valuetype_ (valuetype), event_count_ (0)
 }
 
 void
-Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                   ACE_ENV_ARG_DECL)
+Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   this->proxy_ =
     supplier_admin->obtain_push_consumer ();
@@ -33,28 +32,26 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
   h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
   h0.source = 1;                      // first free event source
 
-  this->proxy_->connect_push_supplier (me.in (), qos
-                                       ACE_ENV_ARG_PARAMETER);
+  this->proxy_->connect_push_supplier (me.in (), qos);
 }
 
 void
 Supplier::disconnect (void)
 {
   // Disconnect from the EC
-  ACE_TRY
+  try
     {
       this->proxy_->disconnect_push_consumer ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 
   PortableServer::POA_var poa =
     this->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
+  poa->deactivate_object (id.in ());
 }
 
 void
@@ -66,7 +63,7 @@ Supplier::insert_into_any (CORBA::Any& any, Components::EventBase* vb)
 void
 Supplier::perform_push (void)
 {
-  ACE_TRY
+  try
     {
       // The event type and source must match our publications
       ++event_count_;
@@ -90,12 +87,11 @@ Supplier::perform_push (void)
           event[0].data.any_value <<= CORBA::string_dup( "ACE/TAO/CIAO");
         }
 
-      this->proxy_->push (event ACE_ENV_ARG_PARAMETER);
+      this->proxy_->push (event);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
 }
 
 void

@@ -61,8 +61,7 @@ TAO_EnumDef_i::type_i (void)
 
   return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
                                                      name.c_str (),
-                                                     members.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                     members.in ());
 }
 
 CORBA::EnumMemberSeq *
@@ -113,21 +112,18 @@ TAO_EnumDef_i::members_i (void)
 }
 
 void
-TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members
-                        ACE_ENV_ARG_DECL)
+TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->members_i (members
-                   ACE_ENV_ARG_PARAMETER);
+  this->members_i (members);
 }
 
 void
-TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
-                          ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,

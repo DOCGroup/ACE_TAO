@@ -39,8 +39,7 @@ public:
   CEC_Counting_Consumer (const char* name);
   // Constructor
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   void disconnect (void);
   // Simple connect/disconnect methods..
 
@@ -50,8 +49,7 @@ public:
 
   // = The CosEventComm::PushConsumer methods
 
-  virtual void push (const CORBA::Any& events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const CORBA::Any& events)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -85,8 +83,7 @@ public:
   CEC_Pull_Counting_Consumer (const char* name);
   // Constructor
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   void disconnect (void);
   // Simple connect/disconnect methods..
 
@@ -95,8 +92,7 @@ public:
   // expected count.
 
   CORBA::Any *pull (void);
-  CORBA::Any *try_pull (CORBA::Boolean_out has_event
-                        ACE_ENV_ARG_DECL);
+  CORBA::Any *try_pull (CORBA::Boolean_out has_event);
 
   // = The CosEventComm::PullConsumer methods
   virtual void disconnect_pull_consumer (void)

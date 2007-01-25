@@ -25,9 +25,9 @@ TAO_Offer_Iterator::destroy (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 TAO_Query_Only_Offer_Iterator::
@@ -58,8 +58,7 @@ TAO_Query_Only_Offer_Iterator::max_left (void)
 
 CORBA::Boolean
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
-                                       CosTrading::OfferSeq_out offers
-                                                               ACE_ENV_ARG_DECL_NOT_USED)
+                                       CosTrading::OfferSeq_out offers)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
@@ -91,18 +90,17 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
       CosTrading::OfferIterator* offer_iter = 0;
       this->iters_.dequeue_head (offer_iter);
 
-      ACE_TRY_NEW_ENV
+      try
         {
           offer_iter->destroy ();
 
           CORBA::release (offer_iter);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // Don't let the exceptions propagate since we're in a
           // destructor!
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -116,8 +114,7 @@ add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 
 CORBA::Boolean
 TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
-                                       CosTrading::OfferSeq_out offers
-                                       ACE_ENV_ARG_DECL)
+                                       CosTrading::OfferSeq_out offers)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong offers_left = n;
@@ -141,8 +138,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
       // Retrieve the set of offers.
       any_left =
         iter->next_n (offers_left,
-                      CosTrading::OfferSeq_out (out_offers.out ())
-                      ACE_ENV_ARG_PARAMETER);
+                      CosTrading::OfferSeq_out (out_offers.out ()));
 
       // If we've exhausted this iterator, destroy it.
       if (any_left == 0)
@@ -190,9 +186,9 @@ TAO_Offer_Iterator_Collection::destroy (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 CORBA::ULong
@@ -241,16 +237,14 @@ TAO_Offer_Id_Iterator::destroy (void)
     this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
-                               CosTrading::OfferIdSeq_out _ids
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                               CosTrading::OfferIdSeq_out _ids)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.

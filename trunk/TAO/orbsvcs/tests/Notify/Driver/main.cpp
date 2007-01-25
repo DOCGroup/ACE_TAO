@@ -8,9 +8,9 @@ ACE_TMAIN (int argc, char *argv[])
 {
   TAO_Notify_Tests_Driver driver;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      int result = driver.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int result = driver.init (argc, argv);
 
       if (result == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -19,12 +19,11 @@ ACE_TMAIN (int argc, char *argv[])
 
       driver.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT("Error: \n"));
+      ex._tao_print_exception (ACE_TEXT("Error: \n"));
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

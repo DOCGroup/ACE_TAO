@@ -28,14 +28,12 @@ class StructuredPushSupplier_i : public virtual POA_CosNotifyComm::StructuredPus
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       CosNotifyComm::InvalidEventType));
 
   virtual void disconnect_structured_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
@@ -45,14 +43,12 @@ class SequencePushSupplier_i : public virtual POA_CosNotifyComm::SequencePushSup
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       CosNotifyComm::InvalidEventType));
 
   virtual void disconnect_sequence_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
@@ -62,14 +58,12 @@ class AnyPushSupplier_i : public virtual POA_CosNotifyComm::PushSupplier
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       CosNotifyComm::InvalidEventType));
 
   virtual void disconnect_push_supplier (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
@@ -83,8 +77,7 @@ public:
 
   void init (
     PortableServer::POA_ptr poa,
-    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_
-    ACE_ENV_ARG_DECL);
+    CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_);
 
   void fini (void);
 
@@ -92,7 +85,6 @@ public:
 
   virtual void reconnect (
      CORBA::Object_ptr reconnection
-      ACE_ENV_ARG_DECL
     ) ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean is_alive (void)
@@ -115,14 +107,13 @@ class Supplier_Main
   int parse_args (int argc, char *argv[]);
   int parse_single_arg (int argc, char *argv[]);
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  int init (int argc, char *argv[]);
   int run (void);
   int fini (void);
   void usage (FILE * log) const;
 
   void reconnect (
-      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
-      ACE_ENV_ARG_DECL)
+      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:

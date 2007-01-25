@@ -105,8 +105,7 @@ BE_create_holding_scope (void)
 
   // If we are multi-threaded, it may already be created.
   CORBA::Contained_var result =
-    be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                         ACE_ENV_ARG_PARAMETER);
+    be_global->repository ()->lookup_id (be_global->holding_scope_name ());
 
   // Will live until the repository goes away for good.
   if (CORBA::is_nil (result.in ()))
@@ -116,13 +115,11 @@ BE_create_holding_scope (void)
                                       be_global->holding_scope_name (),
                                       be_global->holding_scope_name (),
                                       "1.0"
-                                      ACE_ENV_ARG_PARAMETER
                                     );
     }
   else
     {
-      scope = CORBA::ModuleDef::_narrow (result.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+      scope = CORBA::ModuleDef::_narrow (result.in ());
     }
 
   be_global->holding_scope (scope);
@@ -132,8 +129,7 @@ int
 BE_ifr_repo_init (void)
 {
   CORBA::Object_var object =
-    be_global->orb ()->resolve_initial_references ("InterfaceRepository"
-                                                    ACE_ENV_ARG_PARAMETER);
+    be_global->orb ()->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (object.in ()))
     {
@@ -146,8 +142,7 @@ BE_ifr_repo_init (void)
     }
 
   CORBA::Repository_var repo =
-    CORBA::Repository::_narrow (object.in ()
-                                ACE_ENV_ARG_PARAMETER);
+    CORBA::Repository::_narrow (object.in ());
 
   if (CORBA::is_nil (repo.in ()))
     {
@@ -168,8 +163,7 @@ BE_ifr_repo_init (void)
 TAO_IFR_BE_Export void
 BE_produce (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int status = BE_ifr_repo_init ();
 
@@ -230,13 +224,11 @@ BE_produce (void)
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_produce"));
+      ex._tao_print_exception (ACE_TEXT ("BE_produce"));
 
     }
-  ACE_ENDTRY;
 
   // Clean up.
   BE_cleanup ();

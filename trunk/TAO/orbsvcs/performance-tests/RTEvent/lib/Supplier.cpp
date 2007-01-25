@@ -25,8 +25,7 @@ Supplier::Supplier (CORBA::Long experiment_id,
 }
 
 void
-Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                   ACE_ENV_ARG_DECL)
+Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     ec->for_suppliers ();
@@ -55,8 +54,7 @@ Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec
     }
 
   this->proxy_consumer_->connect_push_supplier (supplier.in (),
-                                                supplier_qos
-                                                ACE_ENV_ARG_PARAMETER);
+                                                supplier_qos);
 }
 
 void
@@ -70,19 +68,17 @@ Supplier::disconnect (void)
     proxy = this->proxy_consumer_._retn ();
   }
 
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
+  Implicit_Deactivator deactivator (this);
 
-  ACE_TRY
+  try
     {
       proxy->disconnect_push_consumer ();
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception& ex){}
 }
 
 void
-Supplier::push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL)
+Supplier::push (const RtecEventComm::EventSet &events)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Supplier pushing (%d,%d)\n",
@@ -95,7 +91,7 @@ Supplier::push (const RtecEventComm::EventSet &events
     proxy = this->proxy_consumer_;
   }
 
-  proxy->push (events ACE_ENV_ARG_PARAMETER);
+  proxy->push (events);
 }
 
 void

@@ -106,15 +106,13 @@ Supplier_Client::parse_args (int argc, char *argv[])
 
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
-create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      ACE_ENV_ARG_DECL)
+create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::SupplierAdmin_var admin =
     ec->new_for_suppliers ((use_or_operator ? CosNotifyChannelAdmin::OR_OP :
   CosNotifyChannelAdmin::AND_OP),
-    adminid
-    ACE_ENV_ARG_PARAMETER);
+    adminid);
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
@@ -141,44 +139,41 @@ send_event (int id)
   // Divide by 3 first so that the type and group aren't synched
   event.filterable_data[2].value <<= static_cast<CORBA::ULong>(id / 3 % 3);
 
-  ACE_TRY_NEW_ENV
+  try
   {
     ACE_DEBUG((LM_DEBUG, "+"));
 
-    supplier->send_event (event ACE_ENV_ARG_PARAMETER);
+    supplier->send_event (event);
   }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "\nError: Supplier: ");
+    e._tao_print_exception ("\nError: Supplier: ");
   }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                              CosNotifyChannelAdmin::EventChannel_ptr ec,
-                             PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL)
+                             PortableServer::POA_ptr poa)
 {
   ACE_NEW_THROW_EX (supplier,
     Notify_Push_Supplier (),
     CORBA::NO_MEMORY ());
 
-  supplier->init (poa ACE_ENV_ARG_PARAMETER);
+  supplier->init (poa);
 
-  supplier->_connect (admin, ec, useFilters ACE_ENV_ARG_PARAMETER);
+  supplier->_connect (admin, ec, useFilters);
 }
 
 void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
-                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel
-                 ACE_ENV_ARG_DECL)
+                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel)
 {
   CosNotifyFilter::FilterFactory_var ffact =
     notify_channel->default_filter_factory ();
 
   CosNotifyFilter::Filter_var filter =
-    ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
+    ffact->create_filter (GRAMMAR);
 
   ACE_ASSERT(!CORBA::is_nil (filter.in ()));
 
@@ -188,23 +183,23 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup ("type != 0");
 
-  filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
+  filter->add_constraints (constraint_list);
 
-  admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
+  admin->add_filter (filter.in ());
 }
 
 int main (int argc, char * argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
-  ACE_TRY_NEW_ENV;
+  try
   {
     Supplier_Client client;
-    int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    int status = client.init (argc, argv);
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);
 
     CosNotifyChannelAdmin::EventChannel_var ec =
-      client.create_event_channel ("Struct_Multi_Filter", 0 ACE_ENV_ARG_PARAMETER);
+      client.create_event_channel ("Struct_Multi_Filter", 0);
 
     ACE_ASSERT(! CORBA::is_nil(ec.in()));
 
@@ -214,22 +209,22 @@ int main (int argc, char * argv[])
     sig_var sig = sig_impl->_this ();
 
     CosNotifyChannelAdmin::SupplierAdmin_var admin =
-      create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
+      create_supplieradmin (ec.in ());
 
     if (useFilters)
     {
-      add_admin_filter (admin.in (), ec.in () ACE_ENV_ARG_PARAMETER);
+      add_admin_filter (admin.in (), ec.in ());
     }
 
     ACE_ASSERT(! CORBA::is_nil (admin.in ()));
 
-    create_supplier (admin.in(), ec.in(), client.root_poa() ACE_ENV_ARG_PARAMETER);
+    create_supplier (admin.in(), ec.in(), client.root_poa());
 
     // If the ior_file exists, output the ior to it
     if (ior_file != 0)
     {
       CORBA::String_var ior =
-        client.orb ()->object_to_string (sig.in () ACE_ENV_ARG_PARAMETER);
+        client.orb ()->object_to_string (sig.in ());
 
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       ACE_ASSERT (output_file != 0);
@@ -257,11 +252,10 @@ int main (int argc, char * argv[])
 
     return 0;
   }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
   {
-    ACE_PRINT_EXCEPTION (e, "Error: Supplier: ");
+    e._tao_print_exception ("Error: Supplier: ");
   }
-  ACE_ENDTRY;
 
   return 1;
 }

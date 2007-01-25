@@ -13,21 +13,21 @@ TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute
   if (this->proxy_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  ACE_TRY
+  try
     {
       TAO_Notify_Peer* peer = this->proxy_->peer();
 
       if (peer != 0)
         {
-          peer->dispatch_updates (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
+          peer->dispatch_updates (this->added_, this->removed_);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Notify_Method_Request_Updates::execute error sending updates\n ");
+        ex._tao_print_exception (
+          "TAO_Notify_Method_Request_Updates::execute error sending updates\n ");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

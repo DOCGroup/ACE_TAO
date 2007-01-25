@@ -53,33 +53,29 @@ TAO_LB_Random::get_properties (void)
 void
 TAO_LB_Random::push_loads (
     const PortableGroup::Location & /* the_location */,
-    const CosLoadBalancing::LoadList & /* loads */
-    ACE_ENV_ARG_DECL)
+    const CosLoadBalancing::LoadList & /* loads */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLoadBalancing::StrategyNotAdaptive))
 {
-  ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
+  throw CosLoadBalancing::StrategyNotAdaptive ();
 }
 
 CosLoadBalancing::LoadList *
 TAO_LB_Random::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                          const PortableGroup::Location & the_location
-                          ACE_ENV_ARG_DECL)
+                          const PortableGroup::Location & the_location)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-  return load_manager->get_loads (the_location
-                                  ACE_ENV_ARG_PARAMETER);
+  return load_manager->get_loads (the_location);
 }
 
 CORBA::Object_ptr
 TAO_LB_Random::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    CosLoadBalancing::LoadManager_ptr load_manager
-    ACE_ENV_ARG_DECL)
+    CosLoadBalancing::LoadManager_ptr load_manager)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberNotFound))
@@ -88,20 +84,17 @@ TAO_LB_Random::next_member (
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
 
   PortableGroup::Locations_var locations =
-    load_manager->locations_of_members (object_group
-                                        ACE_ENV_ARG_PARAMETER);
+    load_manager->locations_of_members (object_group);
 
   return TAO_LB_Random::_tao_next_member (object_group,
                                           load_manager,
-                                          locations.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                          locations.in ());
 }
 
 void
 TAO_LB_Random::analyze_loads (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    CosLoadBalancing::LoadManager_ptr /* load_manager */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CosLoadBalancing::LoadManager_ptr /* load_manager */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -116,8 +109,7 @@ CORBA::Object_ptr
 TAO_LB_Random::_tao_next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager,
-    const PortableGroup::Locations & locations
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Locations & locations)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberNotFound))
@@ -160,8 +152,7 @@ TAO_LB_Random::_tao_next_member (
 //               locations[i][0].id.in ()));
 
   return load_manager->get_member_ref (object_group,
-                                       locations[i]
-                                       ACE_ENV_ARG_PARAMETER);
+                                       locations[i]);
 }
 
 void

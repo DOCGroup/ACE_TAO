@@ -53,14 +53,12 @@ public:
   virtual ~TAO_IDLType_i (void);
   // Destructor.
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type ()
 
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Defined in concrete classes.
 
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Defined in concrete classes.

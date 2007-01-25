@@ -36,8 +36,7 @@ TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i (void)
 
 DsLogAdmin::RecordList*
 TAO_Hash_Iterator_i::get (CORBA::ULong position,
-                          CORBA::ULong how_many
-                          ACE_ENV_ARG_DECL)
+                          CORBA::ULong how_many)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
@@ -57,8 +56,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
     }
 
   // Use an Interpreter to build an expression tree.
-  TAO_Log_Constraint_Interpreter interpreter (constraint_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+  TAO_Log_Constraint_Interpreter interpreter (constraint_.in ());
 
   // Sequentially iterate over all the records and pick the ones that
   // meet the constraints.

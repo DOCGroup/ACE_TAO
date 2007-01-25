@@ -38,18 +38,17 @@ main (int argc, char* argv[])
   // and defined in $ACE_ROOT/ace/CORBA_macros.h.
   // If your platform supports native exceptions, and TAO was compiled
   // with native exception support then you can simply use try/catch
-  // and avoid the ACE_ENV_SINGLE_ARG_PARAMETER argument.
+  // and avoid the argument.
   // Unfortunately many embedded systems cannot use exceptions due to
   // the space and time overhead.
   //
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // **************** HERE STARTS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
@@ -66,9 +65,9 @@ main (int argc, char* argv[])
       // The POA starts in the holding state, if it is not activated
       // it will not process any requests.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -150,8 +149,7 @@ main (int argc, char* argv[])
       TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
       sender->init (event_channel.in (),
                     address_server.in (),
-                    endpoint
-                    ACE_ENV_ARG_PARAMETER);
+                    endpoint);
 
       // Now we connect the sender as a consumer of events, it will
       // receive any event from any source and send it to the "right"
@@ -165,7 +163,7 @@ main (int argc, char* argv[])
       sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-      sender->connect (sub ACE_ENV_ARG_PARAMETER);
+      sender->connect (sub);
 
       // To receive events we need to setup an event handler:
       TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver = TAO_ECG_UDP_Receiver::create();
@@ -181,16 +179,14 @@ main (int argc, char* argv[])
       // required by all the local consumer.
       // Then it register for the multicast groups that carry those
       // events:
-      mcast_eh.open (event_channel.in ()
-                             ACE_ENV_ARG_PARAMETER);
+      mcast_eh.open (event_channel.in ());
 
       // Again the receiver connects to the event channel as a
       // supplier of events, using the Observer features to detect
       // local consumers and their interests:
       receiver->init (event_channel.in (),
                       endpoint,
-                      address_server.in ()
-                      ACE_ENV_ARG_PARAMETER);
+                      address_server.in ());
 
       // The Receiver is also a supplier of events.  The exact type of
       // events is only known to the application, because it depends
@@ -209,7 +205,7 @@ main (int argc, char* argv[])
       pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
       pub.is_gateway = 1;
 
-      receiver->connect (pub ACE_ENV_ARG_PARAMETER);
+      receiver->connect (pub);
 
       // **************** THAT COMPLETES THE FEDERATION SETUP
 
@@ -220,15 +216,13 @@ main (int argc, char* argv[])
       Consumer consumer;
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         event_channel->for_consumers ();
-      consumer.connect (consumer_admin.in ()
-                        ACE_ENV_ARG_PARAMETER);
+      consumer.connect (consumer_admin.in ());
 
       // And now create a supplier
       Supplier supplier;
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
         event_channel->for_suppliers ();
-      supplier.connect (supplier_admin.in ()
-                        ACE_ENV_ARG_PARAMETER);
+      supplier.connect (supplier_admin.in ());
 
       // **************** THAT COMPLETES THE CLIENT SETUP
 
@@ -248,7 +242,7 @@ main (int argc, char* argv[])
               // perform_work() or work_pending(), so just calling
               // them results in a spin loop.
               ACE_Time_Value tv (0, 50000);
-              orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
+              orb->perform_work (tv);
             }
           ACE_Time_Value tv (0, 100000);
           ACE_OS::sleep (tv);
@@ -294,14 +288,14 @@ main (int argc, char* argv[])
           ec_impl._default_POA ();
         // Get the Object Id used for the servant..
         PortableServer::ObjectId_var oid =
-          poa->servant_to_id (&ec_impl ACE_ENV_ARG_PARAMETER);
+          poa->servant_to_id (&ec_impl);
         // Deactivate the object
-        poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
+        poa->deactivate_object (oid.in ());
       }
 
       // Now we can destroy the POA, the flags mean that we want to
       // wait until the POA is really destroyed
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       // Finally destroy the ORB
       orb->destroy ();
@@ -311,12 +305,11 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "MCast example terminated\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

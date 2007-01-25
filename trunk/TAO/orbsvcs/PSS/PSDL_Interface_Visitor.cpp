@@ -226,7 +226,7 @@ TAO_PSDL_Interface_Visitor::print_for_forward_dcl (void)
 
   *ps_sh << "CORBA::Object *";
   ps_sh->nl ();
-  *ps_sh << "ACE_ENV_ARG_DECL_NOT_USED";
+  *ps_sh << "";
 
   ps_sh->decr_indent (0);
   ps_sh->nl ();
@@ -382,7 +382,7 @@ TAO_PSDL_Interface_Visitor::print_for_forward_dcl (void)
   *ps_sh << "CORBA::Object *";
   ps_sh->nl ();
 
-  *ps_sh << "ACE_ENV_ARG_DECL_NOT_USED";
+  *ps_sh << "";
 
   ps_sh->decr_indent (0);
   ps_sh->nl ();
@@ -471,13 +471,13 @@ TAO_PSDL_Interface_Visitor::print_class_for_interface (void)
 
   *ps_sh << "static " << this->interface_name_ << "_ptr _narrow (";  ps_sh->nl ();
   *ps_sh << "CORBA::Object_ptr obj";  ps_sh->nl ();
-  *ps_sh << "ACE_ENV_ARG_DECL_WITH_DEFAULTS";  ps_sh->nl ();
+  *ps_sh << "";  ps_sh->nl ();
   *ps_sh << ");";  ps_sh->nl ();
 
   *ps_sh << "static " << this->interface_name_
          << "_ptr _unchecked_narrow (";  ps_sh->nl ();
   *ps_sh << "CORBA::Object_ptr obj";  ps_sh->nl ();
-  *ps_sh << "ACE_ENV_ARG_DECL_WITH_DEFAULTS";  ps_sh->nl ();
+  *ps_sh << "";  ps_sh->nl ();
   *ps_sh << ");";  ps_sh->nl ();
 
   *ps_sh << "static " << this->interface_name_ << "_ptr _nil (void)";  ps_sh->nl ();
@@ -504,7 +504,7 @@ TAO_PSDL_Interface_Visitor::print_end_for_interface (void)
 
   *ps_sh << "virtual CORBA::Boolean _is_a (";  ps_sh->nl ();
   *ps_sh << "const CORBA::Char *type_id";  ps_sh->nl ();
-  *ps_sh << "ACE_ENV_ARG_DECL_WITH_DEFAULTS";  ps_sh->nl ();
+  *ps_sh << "";  ps_sh->nl ();
   *ps_sh << ");";  ps_sh->nl ();
 
   *ps_sh << "virtual void *_tao_QueryInterface (ptrdiff_t type);";  ps_sh->nl ();
@@ -620,7 +620,7 @@ TAO_PSDL_Interface_Visitor::print_end_for_interface (void)
   *ps_sh << "virtual ~_TAO_" << this->interface_name_ << "_Proxy_Broker (void);";  ps_sh->nl ();
   *ps_sh << "virtual _TAO_" << this->interface_name_ << "_Proxy_Impl &select_proxy (";  ps_sh->nl ();
   *ps_sh << this->interface_name_ << "*object";  ps_sh->nl ();
-  *ps_sh << "ACE_ENV_ARG_DECL_WITH_DEFAULTS";  ps_sh->nl ();
+  *ps_sh << "";  ps_sh->nl ();
   *ps_sh << ") = 0;";  ps_sh->nl ();
 
   *ps_sh << "protected:";  ps_sh->nl ();
@@ -659,7 +659,7 @@ TAO_PSDL_Interface_Visitor::print_end_for_interface (void)
 
   *ps_sh << "virtual _TAO_" << this->interface_name_ << "_Proxy_Impl &select_proxy (";  ps_sh->nl ();
   *ps_sh << this->interface_name_ << "*object";  ps_sh->nl ();
-  *ps_sh << "ACE_ENV_ARG_DECL";  ps_sh->nl ();
+  *ps_sh << "";  ps_sh->nl ();
   *ps_sh << ");";  ps_sh->nl ();
 
   *ps_sh << "private:";  ps_sh->nl ();
@@ -771,7 +771,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   *ps_si << "CORBA::Object *p";
   ps_si->nl ();
 
-  *ps_si << "ACE_ENV_ARG_DECL";   ps_si->nl ();
+  *ps_si << "";   ps_si->nl ();
   *ps_si << ")";
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -781,7 +781,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "return " << this->interface_name_
-         << "::_narrow (p ACE_ENV_ARG_PARAMETER);";
+         << "::_narrow (p);";
   ps_si->decr_indent (0);
   ps_si->nl ();
   *ps_si << "}";
@@ -1126,7 +1126,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "CORBA::Object *p";   ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_DECL";   ps_si->nl ();
+  *ps_si << "";   ps_si->nl ();
   *ps_si << ")";
 
   ps_si->decr_indent (0);
@@ -1137,7 +1137,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "return ::" << this->interface_name_
-         << "::_narrow (p ACE_ENV_ARG_PARAMETER);";
+         << "::_narrow (p);";
 
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -1474,7 +1474,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0);
   ps_si->nl ();
   *ps_si << "::" << this->interface_name_ << " *";   ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_DECL_NOT_USED";   ps_si->nl ();
+  *ps_si << "";   ps_si->nl ();
   *ps_si << ")";
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -1600,7 +1600,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0);
   ps_si->nl ();
   *ps_si << "CORBA::Object_ptr obj";   ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_DECL";
+  *ps_si << "";
 
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -1629,7 +1629,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "CORBA::Boolean is_a = obj->_is_a (\"IDL:"
-         << this->interface_name_ << ":1.0\" ACE_ENV_ARG_PARAMETER);";
+         << this->interface_name_ << ":1.0\");";
   ps_si->nl ();
 
   *ps_si << "if (is_a == 0)";
@@ -1645,7 +1645,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "return " << this->interface_name_
-         << "::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);";
+         << "::_unchecked_narrow (obj);";
 
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -1660,7 +1660,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0);
   ps_si->nl ();
   *ps_si << "CORBA::Object_ptr obj";   ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_DECL_NOT_USED";   ps_si->nl ();
+  *ps_si << "";   ps_si->nl ();
   *ps_si << ")";
 
   ps_si->decr_indent (0);
@@ -1856,7 +1856,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "CORBA::Boolean " << this->interface_name_
-         << "::_is_a (const CORBA::Char *value ACE_ENV_ARG_DECL)";   ps_si->nl ();
+         << "::_is_a (const CORBA::Char *value)";   ps_si->nl ();
 
   *ps_si << "{";
   ps_si->incr_indent (0);
@@ -1879,7 +1879,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
 
   ps_si->incr_indent (0);
   ps_si->nl ();
-  *ps_si << "return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);";
+  *ps_si << "return this->Object::_is_a (value);";
   ps_si->decr_indent (0);
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -2141,7 +2141,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0);
   ps_si->nl ();
   *ps_si << "_tc_" << this->interface_name_ << "";   ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_PARAMETER";
+  *ps_si << "";
 
   ps_si->decr_indent (0);
   ps_si->nl ();
@@ -2321,7 +2321,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
 
   *ps_si << "obj.in ()";   ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_PARAMETER";
+  *ps_si << "";
 
   ps_si->decr_indent (0);
   ps_si->nl ();

@@ -31,23 +31,21 @@ TAO_Concurrency_Loader::~TAO_Concurrency_Loader (void)
 int
 TAO_Concurrency_Loader::init (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, 0);
 
       // This function call initializes the Concurrency Service
       CORBA::Object_var object =
-        this->create_object (orb.in (), argc, argv ACE_ENV_ARG_PARAMETER);
+        this->create_object (orb.in (), argc, argv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // @@ Should we log this???
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -62,14 +60,13 @@ TAO_Concurrency_Loader::fini (void)
 CORBA::Object_ptr
 TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
                                        int /* argc */,
-                                       char * /* argv */ []
-                                       ACE_ENV_ARG_DECL)
+                                       char * /* argv */ [])
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
-    orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("RootPOA");
   PortableServer::POA_var poa =
-    PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (object.in ());
   PortableServer::POAManager_var poa_manager =
     poa->the_POAManager ();
   poa_manager->activate ();

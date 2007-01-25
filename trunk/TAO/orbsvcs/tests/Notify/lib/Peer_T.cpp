@@ -43,8 +43,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::activate (void)
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
-                                               Proxy_Traits_ID proxy_id
-                                               ACE_ENV_ARG_DECL)
+                                               Proxy_Traits_ID proxy_id)
 {
   // This will decr the ref count on exit.
   // Clients of this class should use raw pointers, not vars.
@@ -53,7 +52,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
   ACE_TYPENAME Peer_Traits::VAR peer_var =
     this->activate ();
 
-  this->connect_to_peer (proxy, peer_var.in () ACE_ENV_ARG_PARAMETER);
+  this->connect_to_peer (proxy, peer_var.in ());
 
   // save the proxy
   this->proxy_ = Proxy_Traits_INTERFACE::_duplicate (proxy);
@@ -63,25 +62,21 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy,
   if (this->proxy_name_.length () != 0)
     {
       LOOKUP_MANAGER->_register (this->proxy_.in (),
-                                 this->proxy_name_.c_str ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                 this->proxy_name_.c_str ());
     }
 }
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr
-                                               ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr)
 {
   ACE_TYPENAME Proxy_Traits::VAR proxy_var =
-    this->obtain_proxy (admin_ptr
-                        ACE_ENV_ARG_PARAMETER);
+    this->obtain_proxy (admin_ptr);
 
   ACE_ASSERT (!CORBA::is_nil (proxy_var.in ()));
 
   this->connect (proxy_var.in (),
-                 this->proxy_id_
-                 ACE_ENV_ARG_PARAMETER);
+                 this->proxy_id_);
 }
 
 
@@ -92,46 +87,39 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (void)
   // Get the POA
   PortableServer::POA_var poa;
   LOOKUP_MANAGER->resolve (poa,
-                           this->poa_name_.c_str ()
-                           ACE_ENV_ARG_PARAMETER);
+                           this->poa_name_.c_str ());
 
   // set the POA
-  this->set_poa (poa.in ()
-                 ACE_ENV_ARG_PARAMETER);
+  this->set_poa (poa.in ());
 
   // Resolve the admin
   ACE_TYPENAME Admin_Traits::VAR admin_var;
 
   LOOKUP_MANAGER->resolve (admin_var,
-                           this->admin_name_.c_str ()
-                           ACE_ENV_ARG_PARAMETER);
+                           this->admin_name_.c_str ());
 
   ACE_TYPENAME Admin_Ext_Traits::VAR admin_ext_var =
-    Admin_Ext_Traits_INTERFACE::_narrow (admin_var.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+    Admin_Ext_Traits_INTERFACE::_narrow (admin_var.in ());
 
   ACE_TYPENAME Proxy_Traits::VAR proxy_var =
     this->obtain_proxy (admin_ext_var.in (),
-                        this->qos_
-                        ACE_ENV_ARG_PARAMETER);
+                        this->qos_);
 
   ACE_ASSERT (!CORBA::is_nil (proxy_var.in ()));
 
   // connect supplier to proxy,
   // also activates the servant as CORBA object in the POA specified.
   this->connect (proxy_var.in (),
-                 this->proxy_id_
-                 ACE_ENV_ARG_PARAMETER);
+                 this->proxy_id_);
 }
 
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (
     CosNotification::QoSProperties& qos
-    ACE_ENV_ARG_DECL
   )
 {
-  this->get_proxy ()->set_qos (qos ACE_ENV_ARG_PARAMETER);
+  this->get_proxy ()->set_qos (qos);
 }
 
 template <class Peer_Traits>
@@ -139,7 +127,7 @@ void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::status (void)
 {
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_TRY
+  try
     {
       CORBA::Boolean not_exist =
         this->get_proxy ()->_non_existent ();
@@ -157,23 +145,22 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (void)
                       this->name_.c_str ()));
         }
     }
-  ACE_CATCH(CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Error: ");
+      ex._tao_print_exception ("Error: ");
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s is_equivalent transient exception.",
                   this->name_.c_str ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ");
+      ex._tao_print_exception ("Error: ");
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s is_equivanent other exception.",
                   this->name_.c_str ()));
     }
-  ACE_ENDTRY;
 #else
-  ACE_ENV_ARG_NOT_USED;
+;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
@@ -183,37 +170,32 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
-  ACE_TRY_EX(TRY1)
+  try
     {
       this->disconnect_from_proxy ();
-      ACE_TRY_CHECK_EX(TRY1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to disconnect from proxy.",
                   this->name_.c_str ()));
     }
-  ACE_ENDTRY;
 
-  ACE_TRY_EX(TRY2)
+  try
     {
       this->deactivate ();
-      ACE_TRY_CHECK_EX(TRY2);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to deactivate.",
                   this->name_.c_str ()));
     }
-  ACE_ENDTRY;
 }
 
 template <class Peer_Traits>
 PortableServer::POA_ptr
 TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
@@ -226,11 +208,9 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::deactivate (void)
   PortableServer::POA_var poa = this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in ());
 }
 
 #endif /* TAO_Notify_Tests_Peer_T_CPP */

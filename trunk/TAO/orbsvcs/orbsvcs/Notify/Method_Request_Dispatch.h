@@ -72,8 +72,7 @@ public:
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
-    TAO_InputCDR & cdr
-    ACE_ENV_ARG_DECL);
+    TAO_InputCDR & cdr);
 
 
 protected:

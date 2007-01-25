@@ -22,35 +22,32 @@ TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER> void
 TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
-    peer_connected (PEER *peer
-                    ACE_ENV_ARG_DECL)
+    peer_connected (PEER *peer)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ESF_Peer_Connected<PROXY,PEER> worker (peer);
 
-  this->for_each (&worker ACE_ENV_ARG_PARAMETER);
+  this->for_each (&worker);
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER> void
 TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
-    peer_reconnected (PEER *peer
-                      ACE_ENV_ARG_DECL)
+    peer_reconnected (PEER *peer)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ESF_Peer_Reconnected<PROXY,PEER> worker (peer);
 
-  this->for_each (&worker ACE_ENV_ARG_PARAMETER);
+  this->for_each (&worker);
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER> void
 TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
-    peer_disconnected (PEER *peer
-                       ACE_ENV_ARG_DECL)
+    peer_disconnected (PEER *peer)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ESF_Peer_Disconnected<PROXY,PEER> worker (peer);
 
-  this->for_each (&worker ACE_ENV_ARG_PARAMETER);
+  this->for_each (&worker);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

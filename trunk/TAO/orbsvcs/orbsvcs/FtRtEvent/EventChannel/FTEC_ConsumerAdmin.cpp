@@ -39,12 +39,11 @@ TAO_FTEC_ConsumerAdmin::obtain_push_supplier (void)
 void
 TAO_FTEC_ConsumerAdmin::disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr obj)
 {
-  ACE_TRY_NEW_ENV {
+  try{
     obj->disconnect_push_supplier();
   }
-  ACE_CATCHALL {
+  catch (...){
   }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

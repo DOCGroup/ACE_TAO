@@ -66,14 +66,12 @@ public:
    * has been destroyed.  The strategy has to (at the very least),
    * reclaim all the resources attached to that object.
    */
-  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP * gateway
-                                        ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP * gateway);
 
   /// Some system exception was raised while trying to contact the
   /// event channel
   virtual void system_exception (TAO_EC_Gateway_IIOP * gateway,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

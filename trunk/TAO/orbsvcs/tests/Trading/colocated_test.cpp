@@ -31,10 +31,10 @@ parse_args (int argc, char *argv[],
 int
 main (int argc, char** argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      orb_manager.init (argc, argv);
 
       // Command line argument interpretation.
       CORBA::Boolean verbose = 0;
@@ -56,8 +56,7 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
-         verbose
-         ACE_ENV_ARG_PARAMETER);
+         verbose);
 
       type_exporter.remove_all_types ();
 
@@ -73,8 +72,7 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
         (CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()),
-         verbose
-         ACE_ENV_ARG_PARAMETER);
+         verbose);
 
       offer_exporter.withdraw_offers ();
 
@@ -103,11 +101,10 @@ main (int argc, char** argv)
 
       offer_importer.perform_queries ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Trader Export Tests Failed"), -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -40,11 +40,11 @@ public:
   ~TAO_RT_Notify_Service ();
 
   /// Init the service.
-  virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  virtual void init_service (CORBA::ORB_ptr orb);
 
 protected:
   /// Init the data members
-  virtual void init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  virtual void init_i (CORBA::ORB_ptr orb);
 
   /// Create the Factory for RT Notify objects.
   virtual TAO_Notify_Factory* create_factory (void);

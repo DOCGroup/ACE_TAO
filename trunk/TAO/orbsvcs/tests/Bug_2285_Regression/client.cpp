@@ -39,19 +39,19 @@ int
 main (int argc, char *argv[])
 {
   CORBA::Boolean result = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -62,10 +62,10 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -89,30 +89,28 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      ACE_TRY
+      try
         {
           hello->throw_exception ();
         }
-      ACE_CATCH (Test::MyException, my_ex)
+      catch (const Test::MyException& my_ex)
         {
           ACE_UNUSED_ARG (my_ex);
           ACE_DEBUG ((LM_DEBUG, "Client catches a MyException, as expected. No problem !\n"));
         }
-      ACE_ENDTRY;
 
-      result = ! hello->call_me_back (me.in () ACE_ENV_ARG_PARAMETER);
+      result = ! hello->call_me_back (me.in ());
 
       hello->shutdown ();
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test failed (Not regression) because unexpected exception caught:");
+      ex._tao_print_exception (
+        "Test failed (Not regression) because unexpected exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (result)
     {

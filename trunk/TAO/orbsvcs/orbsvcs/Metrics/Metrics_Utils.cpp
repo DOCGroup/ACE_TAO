@@ -58,20 +58,18 @@ TAO_Metrics_Utils::set_mission_state (int i, Metrics::QoSLogger_ptr logger)
   ACE_OS::memset (banner, 0, TAO_Metrics_Utils::METRICS_BUFSIZE);
   ACE_OS::sprintf (banner, "\n\n*** Mission State %d ***\n\n", i);
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      logger->send_banner (banner
-                           ACE_ENV_ARG_DECL);
+      logger->send_banner (banner);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
 #if defined (METRICS_UTILS_ERROR_OUTPUT_ENABLED)
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "TAO_Metrics_LocalCache::set_mission_state:"
                            " logger call failed\n");
 #endif
     }
-  ACE_ENDTRY;
 }
 
 // Sets the logger reference.
@@ -83,7 +81,7 @@ TAO_Metrics_Utils::get_logger (const char * logger_ior_str,
   Metrics::QoSLogger_var logger;
   if (logger_ior_str && orb)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           CORBA::Object_var obj =
             orb->string_to_object (logger_ior_str);
@@ -115,15 +113,14 @@ TAO_Metrics_Utils::get_logger (const char * logger_ior_str,
                 }
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
 #if defined (METRICS_UTILS_ERROR_OUTPUT_ENABLED)
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+          ACE_PRINT_EXCEPTION (ex,
                                "TAO_Metrics_LocalCache::set_logger exception");
 #endif
           return logger;
         }
-      ACE_ENDTRY;
     }
 #if defined (METRICS_UTILS_ERROR_OUTPUT_ENABLED)
   else

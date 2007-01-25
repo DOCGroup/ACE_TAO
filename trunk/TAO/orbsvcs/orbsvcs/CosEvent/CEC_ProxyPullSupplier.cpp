@@ -43,20 +43,18 @@ TAO_CEC_ProxyPullSupplier::~TAO_CEC_ProxyPullSupplier (void)
 
 void
 TAO_CEC_ProxyPullSupplier::activate (
-    CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy
-    ACE_ENV_ARG_DECL)
+    CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPullSupplier_var result;
-  ACE_TRY
+  try
     {
       result = this->_this ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       result = CosEventChannelAdmin::ProxyPullSupplier::_nil ();
     }
-  ACE_ENDTRY;
   activated_proxy = result._retn ();
 }
 
@@ -64,22 +62,21 @@ void
 TAO_CEC_ProxyPullSupplier::deactivate (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       PortableServer::POA_var poa =
         this->_default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+        poa->servant_to_id (this);
+      poa->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -103,22 +100,20 @@ TAO_CEC_ProxyPullSupplier::shutdown (void)
   if (CORBA::is_nil (consumer.in ()))
     return;
 
-  ACE_TRY
+  try
     {
       consumer->disconnect_pull_consumer ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.
     }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean
 TAO_CEC_ProxyPullSupplier::consumer_non_existent (
-      CORBA::Boolean_out disconnected
-      ACE_ENV_ARG_DECL)
+      CORBA::Boolean_out disconnected)
 {
   CORBA::Object_var consumer;
   {
@@ -147,8 +142,7 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
 }
 
 void
-TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event)
 {
   if (this->is_connected () == 0)
     return;
@@ -183,8 +177,7 @@ TAO_CEC_ProxyPullSupplier::pull (void)
 }
 
 CORBA::Any *
-TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event
-                                     ACE_ENV_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   has_event = 0;
@@ -239,8 +232,7 @@ TAO_CEC_ProxyPullSupplier::_decr_refcnt (void)
 
 void
 TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
-      CosEventComm::PullConsumer_ptr pull_consumer
-      ACE_ENV_ARG_DECL)
+      CosEventComm::PullConsumer_ptr pull_consumer)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected))
 {
@@ -253,7 +245,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
     if (this->is_connected_i ())
       {
         if (this->event_channel_->consumer_reconnect () == 0)
-          ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+          throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed....
         this->cleanup_i ();
@@ -269,7 +261,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
               CORBA::INTERNAL ());
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-          this->event_channel_->reconnected (this ACE_ENV_ARG_PARAMETER);
+          this->event_channel_->reconnected (this);
         }
         return;
       }
@@ -279,7 +271,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
   }
 
   // Notify the event channel...
-  this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->connected (this);
 }
 
 CosEventComm::PullConsumer_ptr
@@ -311,8 +303,7 @@ TAO_CEC_ProxyPullSupplier::apply_policy (CosEventComm::PullConsumer_ptr pre)
 }
 
 void
-TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PullConsumer_var consumer;
@@ -324,7 +315,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (this->is_connected_i () == 0)
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      throw CORBA::BAD_INV_ORDER ();
 
     consumer = this->consumer_._retn ();
 
@@ -332,25 +323,24 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier (
   }
 
   // Notify the event channel....
-  this->event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->disconnected (this);
 
   if (CORBA::is_nil (consumer.in ()))
     return;
 
   if (this->event_channel_->disconnect_callbacks ())
     {
-      ACE_TRY
+      try
         {
           consumer->disconnect_pull_consumer ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+          ACE_PRINT_EXCEPTION (ex,
                                "ProxySupplier::disconnect_pull_supplier");
         }
-      ACE_ENDTRY;
     }
 }
 

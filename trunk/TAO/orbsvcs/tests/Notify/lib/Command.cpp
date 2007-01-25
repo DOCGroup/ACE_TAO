@@ -41,16 +41,16 @@ TAO_Notify_Tests_Command::execute (void)
     {
       ACE_DEBUG ((LM_DEBUG, "Executing command: %s\n", this->get_name ()));
 
-      ACE_TRY
+      try
         {
           this->execute_i ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-            ACE_TEXT("Error: Exception running command\n"));
+          ex._tao_print_exception (
+            ACE_TEXT(
+              "Error: Exception running command\n"));
         }
-      ACE_ENDTRY;
     }
 
   if (this->next_)

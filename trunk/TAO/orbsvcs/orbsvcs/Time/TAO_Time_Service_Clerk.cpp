@@ -74,8 +74,7 @@ TAO_Time_Service_Clerk::secure_universal_time (void)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
-                                            TimeBase::TdfT tdf
-                                            ACE_ENV_ARG_DECL)
+                                            TimeBase::TdfT tdf)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -92,8 +91,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 // This creates a new UTO given a time in the UtcT form.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
-                                      ACE_ENV_ARG_DECL)
+TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -117,8 +115,7 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
 
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
-                                      TimeBase::TimeT upper
-                                      ACE_ENV_ARG_DECL)
+                                      TimeBase::TimeT upper)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;

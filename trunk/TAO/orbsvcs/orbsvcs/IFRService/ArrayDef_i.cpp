@@ -81,7 +81,6 @@ TAO_ArrayDef_i::type_i (void)
   return this->repo_->tc_factory ()->create_array_tc (
                                          length,
                                          element_typecode.in ()
-                                         ACE_ENV_ARG_PARAMETER
                                        );
 }
 
@@ -109,21 +108,18 @@ TAO_ArrayDef_i::length_i (void)
 }
 
 void
-TAO_ArrayDef_i::length (CORBA::ULong length
-                        ACE_ENV_ARG_DECL)
+TAO_ArrayDef_i::length (CORBA::ULong length)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->length_i (length
-                  ACE_ENV_ARG_PARAMETER);
+  this->length_i (length);
 }
 
 void
-TAO_ArrayDef_i::length_i (CORBA::ULong length
-                          ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ArrayDef_i::length_i (CORBA::ULong length)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -179,29 +175,24 @@ TAO_ArrayDef_i::element_type_def_i (void)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (element_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::IDLType::_narrow (obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  return CORBA::IDLType::_narrow (obj.in ());
 }
 
 void
-TAO_ArrayDef_i::element_type_def (CORBA::IDLType_ptr element_type_def
-                                  ACE_ENV_ARG_DECL)
+TAO_ArrayDef_i::element_type_def (CORBA::IDLType_ptr element_type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->element_type_def_i (element_type_def
-                            ACE_ENV_ARG_PARAMETER);
+  this->element_type_def_i (element_type_def);
 }
 
 void
-TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
-                                    ACE_ENV_ARG_DECL)
+TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_element_type ();
@@ -216,7 +207,6 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
 
 void
 TAO_ArrayDef_i::destroy_element_type (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

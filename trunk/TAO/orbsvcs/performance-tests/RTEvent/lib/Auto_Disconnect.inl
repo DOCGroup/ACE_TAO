@@ -10,13 +10,11 @@
 template<class Client> ACE_INLINE void
 Disconnect<Client>::operator () (Client *client)
 {
-  ACE_DECLARE_NEW_ENV;
-  ACE_TRY
+  try
     {
       client->disconnect ();
     }
-  ACE_CATCHANY { };
-  ACE_ENDTRY;
+  catch (const CORBA::Exception& ex){ };
 }
 
 template<class Client> ACE_INLINE

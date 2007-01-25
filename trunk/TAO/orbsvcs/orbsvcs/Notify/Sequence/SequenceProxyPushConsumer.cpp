@@ -38,7 +38,7 @@ TAO_Notify_SequenceProxyPushConsumer::MyType (void)
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
@@ -50,14 +50,14 @@ TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyC
                     TAO_Notify_SequencePushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier ACE_ENV_ARG_PARAMETER);
+  supplier->init (push_supplier);
 
-  this->connect (supplier ACE_ENV_ARG_PARAMETER);
+  this->connect (supplier);
   this->self_change ();
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotification::EventBatch& event_batch ACE_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotification::EventBatch& event_batch)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventComm::Disconnected
@@ -65,11 +65,11 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1 && this->admin_properties().queue_full ())
-    ACE_THROW (CORBA::IMP_LIMIT ());
+    throw CORBA::IMP_LIMIT ();
 
   if (this->is_connected () == 0)
     {
-      ACE_THROW (CosEventComm::Disconnected ());
+      throw CosEventComm::Disconnected ();
     }
 
   for (CORBA::ULong i = 0; i < event_batch.length (); ++i)
@@ -77,7 +77,7 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
       const CosNotification::StructuredEvent& notification = event_batch[i];
 
       TAO_Notify_StructuredEvent_No_Copy event (notification);
-      this->push_i (&event ACE_ENV_ARG_PARAMETER);
+      this->push_i (&event);
     }
 }
 
@@ -106,26 +106,24 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
   if (attrs.load("PeerIOR", ior))
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
     {
       CosNotifyComm::SequencePushSupplier_var ps = CosNotifyComm::SequencePushSupplier::_nil();
       if ( ior.length() > 0 )
       {
-        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var obj = orb->string_to_object(ior.c_str());
+        ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in());
       }
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;
-      this->connect_sequence_push_supplier(ps.in() ACE_ENV_ARG_PARAMETER);
+      this->connect_sequence_push_supplier(ps.in());
       this->updates_off_ = save_updates;
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
       ACE_ASSERT(0);
     }
-    ACE_ENDTRY;
   }
 }
 

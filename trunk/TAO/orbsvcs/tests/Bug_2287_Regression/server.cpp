@@ -45,7 +45,7 @@ parse_args (int argc, char *argv[])
 }
 
 CORBA::Object_ptr
-make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, CORBA::Object_ptr ref ACE_ENV_ARG_DECL)
+make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, CORBA::Object_ptr ref)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
   // Create the list
@@ -54,7 +54,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   iors [0] = CORBA::Object::_duplicate (ref);
 
   CORBA::Object_var new_ref =
-    iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
+    iorm->merge_iors (iors);
 
   // Property values
 
@@ -77,8 +77,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 
   // Set the property
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                              new_ref.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+                                              new_ref.in ());
 
   // Set the primary
   // See we are setting the second ior as the primary
@@ -86,8 +85,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
     {
       retval = iorm->set_primary (&iogr_prop,
                                   new_ref.in (),
-                                  new_ref.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+                                  new_ref.in ());
     }
 
   return new_ref._retn ();
@@ -96,7 +94,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Server_ORBInitializer2 *temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
@@ -105,17 +103,16 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -129,19 +126,15 @@ main (int argc, char *argv[])
       policies.length (2);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                          ACE_ENV_ARG_PARAMETER);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
       PortableServer::POA_var my_poa =
         root_poa->create_POA ("my_poa",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       // Creation of the new POA is over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
@@ -163,29 +156,27 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("server_id");
 
       my_poa->activate_object_with_id (server_id.in (),
-                                       hello_impl
-                                       ACE_ENV_ARG_PARAMETER);
+                                       hello_impl);
 
       CORBA::Object_var hello =
-        my_poa->id_to_reference (server_id.in () ACE_ENV_ARG_PARAMETER);
+        my_poa->id_to_reference (server_id.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (hello.in ());
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0
-                                         ACE_ENV_ARG_PARAMETER);
+                                         0);
 
       // Narrow
       iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, orb->string_to_object (ior.in ())  ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, orb->string_to_object (ior.in ()));
 
       CORBA::String_var iorgr_string =
-        orb->object_to_string (iogr.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (iogr.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -205,17 +196,15 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

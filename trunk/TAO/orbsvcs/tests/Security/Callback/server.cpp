@@ -12,8 +12,7 @@ const char *cert_file = "cacert.pem";
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
@@ -23,19 +22,16 @@ main (int argc, char *argv[])
       // Initialize the ORB
       //
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
-                         ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       //
       // Get the Root POA.
       //
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       //
       // Create the server, get object reference,
@@ -48,14 +44,11 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var theServer = tmp;
 
       PortableServer::ObjectId_var oid =
-        poa->activate_object (theServer.in ()
-                              ACE_ENV_ARG_PARAMETER);
+        poa->activate_object (theServer.in ());
       CORBA::Object_var server_obj =
-        poa->id_to_reference (oid.in ()
-                              ACE_ENV_ARG_PARAMETER);
+        poa->id_to_reference (oid.in ());
       CORBA::String_var server_IORString =
-        orb->object_to_string (server_obj.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server_obj.in ());
 
       //
       // Write the IOR to a file.
@@ -81,19 +74,16 @@ main (int argc, char *argv[])
 
       orb->run ();
 
-      poa->destroy (1, 1
-                    ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught exception\n"));
+      ex._tao_print_exception (ACE_TEXT ("Caught exception\n"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

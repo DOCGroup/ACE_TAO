@@ -28,12 +28,11 @@ int
 Latency_Query_Client::init (int argc,
                             char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
+                                    0);
 
       int retval = this->parse_args (argc,
                                      argv);
@@ -44,8 +43,7 @@ Latency_Query_Client::init (int argc,
         }
 
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("InterfaceRepository"
-                                                ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("InterfaceRepository");
 
       if (CORBA::is_nil (object.in ()))
         {
@@ -58,8 +56,7 @@ Latency_Query_Client::init (int argc,
         }
 
       this->repo_ =
-        CORBA::Repository::_narrow (object.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+        CORBA::Repository::_narrow (object.in ());
 
       if (CORBA::is_nil (this->repo_.in ()))
         {
@@ -75,13 +72,11 @@ Latency_Query_Client::init (int argc,
           return retval;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Latency_Query_Client::init:");
+      ex._tao_print_exception ("Latency_Query_Client::init:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -92,7 +87,7 @@ Latency_Query_Client::run (void)
 //  CORBA::DefinitionKind dk;
   CORBA::AttributeMode am;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       for (int j = 0; j < 100; ++j)
         {
@@ -144,13 +139,11 @@ Latency_Query_Client::run (void)
                                                  stats.samples_count ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Latency_Query_Client::run:");
+      ex._tao_print_exception ("Latency_Query_Client::run:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -200,13 +193,11 @@ Latency_Query_Client::parse_args (int argc,
 int
 Latency_Query_Client::populate_ifr (void)
 {
-  CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:dummy/attr:1.0"
-                                                       ACE_ENV_ARG_PARAMETER);
+  CORBA::Contained_var irobj = this->repo_->lookup_id ("IDL:dummy/attr:1.0");
 
   if (! CORBA::is_nil (irobj.in ()))
     {
-      this->attr_ = CORBA::AttributeDef::_narrow (irobj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+      this->attr_ = CORBA::AttributeDef::_narrow (irobj.in ());
 
       if (CORBA::is_nil (this->attr_.in ()))
         {
@@ -226,20 +217,17 @@ Latency_Query_Client::populate_ifr (void)
     this->repo_->create_interface ("IDL:dummy:1.0",
                                    "dummy",
                                    "1.0",
-                                   in_bases
-                                   ACE_ENV_ARG_PARAMETER);
+                                   in_bases);
 
   CORBA::PrimitiveDef_var p_long =
-    this->repo_->get_primitive (CORBA::pk_long
-                                ACE_ENV_ARG_PARAMETER);
+    this->repo_->get_primitive (CORBA::pk_long);
 
   this->attr_ =
     iface->create_attribute ("IDL:dummt/attr:1.0",
                              "attr",
                              "1.0",
                              p_long.in (),
-                             CORBA::ATTR_NORMAL
-                             ACE_ENV_ARG_PARAMETER);
+                             CORBA::ATTR_NORMAL);
 
   return 0;
 }

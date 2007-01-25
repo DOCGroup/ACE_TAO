@@ -40,12 +40,10 @@ class TAO_PortableGroup_Export TAO_PortableGroup_ORBInitializer :
   public virtual TAO_Local_RefCounted_Object
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };

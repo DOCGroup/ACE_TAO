@@ -23,8 +23,7 @@ public:
   ~LifeCycle (void);
 
   void init (int argc,
-             char *argv[]
-             ACE_ENV_ARG_DECL);
+             char *argv[]);
   void run_test (void);
   int parse_args (int argc,
                   char *argv[]);

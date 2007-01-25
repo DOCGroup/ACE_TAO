@@ -68,16 +68,14 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-          ACE_ENV_ARG_DECL)
+          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Deactivate from the POA
   virtual void deactivate (void);
 
   /// Disconnect this from
-  virtual void disconnect_push_consumer (
-            ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void disconnect_push_consumer () = 0;
 
   /// Return 0 if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
@@ -94,26 +92,19 @@ public:
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// Concrete implementations can use this methods to keep track of
   /// the consumers interested in this events.
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
-                             ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier);
 
   /// Usually implemented as no-ops, but some configurations may
   /// require this methods.
-  virtual void connected (TAO_EC_ProxyPushConsumer* consumer
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (TAO_EC_ProxyPushConsumer* consumer
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer
-                             ACE_ENV_ARG_DECL);
+  virtual void connected (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void reconnected (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer);
 
   /// The event channel is shutting down
   virtual void shutdown (void);

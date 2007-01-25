@@ -74,26 +74,26 @@ public:
   void shutdown (void);
 
   /// Connect ProxySupplier
-  void connect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
+  void connect (TAO_Notify_ProxySupplier* proxy_supplier);
 
   /// Disconnect ProxySupplier
-  void disconnect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
+  void disconnect (TAO_Notify_ProxySupplier* proxy_supplier);
 
   /// Connect ProxyConsumer
-  void connect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL);
+  void connect (TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Disconnect ProxyConsumer
-  void disconnect (TAO_Notify_ProxyConsumer* proxy_consumer ACE_ENV_ARG_DECL);
+  void disconnect (TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Map accessors.
   TAO_Notify_Consumer_Map& consumer_map (void);
   TAO_Notify_Supplier_Map& supplier_map (void);
 
   /// Offer change received on <proxy_consumer>.
-  void offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL);
+  void offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
   /// Subscription change received on <proxy_supplier>.
-  void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL);
+  void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
   /// What are the types being offered.
   const TAO_Notify_EventTypeSeq& offered_types (void) const;
@@ -103,16 +103,16 @@ public:
 
 protected:
   /// Subscribe <proxy_supplier> to the event type sequence list <seq>.
-  void subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq ACE_ENV_ARG_DECL);
+  void subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq);
 
   /// Unsubscribe <proxy_supplier> to the event type sequence list <seq>.
-  void un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL);
+  void un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq);
 
   /// Subscribe <proxy_consumer> to the event type sequence list <seq>.
-  void publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq ACE_ENV_ARG_DECL);
+  void publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq);
 
   /// Subscribe <proxy_consumer> to the event type sequence list <seq>.
-  void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL);
+  void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq);
 
 private:
   // Disallow copying and assignment; we don't need them

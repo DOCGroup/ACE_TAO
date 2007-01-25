@@ -74,8 +74,7 @@ public:
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        factory_creation_id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::NoFactory,
                      PortableGroup::ObjectNotCreated,
@@ -91,8 +90,7 @@ public:
    */
   virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        factory_creation_id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectNotFound));
 
@@ -110,8 +108,7 @@ public:
    * factories.
    */
   void delete_object_i (TAO_PG_Factory_Set & factory_set,
-                        CORBA::Boolean ignore_exceptions
-                        ACE_ENV_ARG_DECL);
+                        CORBA::Boolean ignore_exceptions);
 
   /// If the member corresponding to the given group ID and location
   /// was created by the infrastructure, call delete_object() on the
@@ -121,8 +118,7 @@ public:
    * when ObjectGroupManager::remove_member() is explicitly called.
    */
   void delete_member (CORBA::ULong group_id,
-                      const PortableGroup::Location & location
-                      ACE_ENV_ARG_DECL);
+                      const PortableGroup::Location & location);
 
   /// Verify that the MinimumNumberMembers criterion is satisfied.
   /**
@@ -135,8 +131,7 @@ public:
   void check_minimum_number_members (
     PortableGroup::ObjectGroup_ptr object_group,
     CORBA::ULong group_id,
-    const char * type_id
-    ACE_ENV_ARG_DECL);
+    const char * type_id);
 
   /// Create a new object group member using the supplied FactoryInfo
   /// and RepositoryId and add it to the given object group.
@@ -147,8 +142,7 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::FactoryInfo & factory_info,
       const char * type_id,
-      const CORBA::Boolean propagate_member_already_present
-      ACE_ENV_ARG_DECL)
+      const CORBA::Boolean propagate_member_already_present)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::NoFactory,
                      PortableGroup::ObjectNotCreated,
@@ -167,8 +161,7 @@ private:
          const char * type_id,
          const PortableGroup::FactoryInfos &factory_infos,
          PortableGroup::InitialNumberMembersValue initial_number_members,
-         TAO_PG_Factory_Set & factory_set
-         ACE_ENV_ARG_DECL);
+         TAO_PG_Factory_Set & factory_set);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.
   /**
@@ -197,8 +190,7 @@ private:
     PortableGroup::MembershipStyleValue & membership_style,
     PortableGroup::FactoriesValue & factory_infos,
     PortableGroup::InitialNumberMembersValue & initial_number_members,
-    PortableGroup::MinimumNumberMembersValue & minimum_number_members
-    ACE_ENV_ARG_DECL);
+    PortableGroup::MinimumNumberMembersValue & minimum_number_members);
 
 private:
 

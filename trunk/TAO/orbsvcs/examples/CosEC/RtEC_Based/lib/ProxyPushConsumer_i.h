@@ -53,8 +53,7 @@ public:
   ~TAO_CosEC_ProxyPushConsumer_i (void);
   // Destructor.
 
-  virtual void push (const CORBA::Any &data
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const CORBA::Any &data)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Suppliers call this method to pass data to connected consumers.
 
@@ -62,8 +61,7 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the supplier from the event communication.
 
-  virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier
-                                     ACE_ENV_ARG_DECL)
+  virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
   // Connects a push supplier.

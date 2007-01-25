@@ -20,8 +20,7 @@ TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
-                                            TAO_Object_Adapter *object_adapter
-                                            ACE_ENV_ARG_DECL)
+                                            TAO_Object_Adapter *object_adapter)
 {
   TAO_Root_POA *poa = 0;
 
@@ -33,8 +32,7 @@ TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                              lock,
                              thread_lock,
                              orb_core,
-                             object_adapter
-                             ACE_ENV_ARG_PARAMETER),
+                             object_adapter),
                     CORBA::NO_MEMORY ());
 
   return poa;
@@ -45,8 +43,7 @@ TAO_PG_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Root_POA &,
   CORBA::Short,
   TAO_ServerRequest &,
-  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
-  ACE_ENV_ARG_DECL_NOT_USED)
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
 
@@ -54,8 +51,7 @@ void
 TAO_PG_Servant_Dispatcher::pre_invoke_collocated_request (
   TAO_Root_POA &,
   CORBA::Short,
-  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
-  ACE_ENV_ARG_DECL_NOT_USED)
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
 

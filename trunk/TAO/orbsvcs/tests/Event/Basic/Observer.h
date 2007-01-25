@@ -41,8 +41,7 @@ public:
   virtual int run (int argc, char* argv[]);
 
   /// Obtain the orb and the poa pointers
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       ACE_ENV_ARG_DECL);
+  virtual void initialize_orb_and_poa (int& argc, char* argv[]);
 
   /// Accessors
   int channel_count (void) const;
@@ -87,8 +86,7 @@ public:
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable observerions
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       ACE_ENV_ARG_DECL);
+  virtual void initialize_orb_and_poa (int& argc, char* argv[]);
   virtual int parse_args (int& argc, char* argv[]);
   virtual void print_args (void) const;
   virtual void print_usage (void);
@@ -100,11 +98,9 @@ public:
   void dump_results (void);
   void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
   void consumer_push (void*,
-                      const RtecEventComm::EventSet&
-                      ACE_ENV_ARG_DECL);
+                      const RtecEventComm::EventSet&);
 
 private:
   EC_Master *master_;

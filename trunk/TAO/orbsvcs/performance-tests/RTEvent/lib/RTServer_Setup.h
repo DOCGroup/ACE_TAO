@@ -30,8 +30,7 @@ public:
   RTServer_Setup (int use_rt_corba,
                   CORBA::ORB_ptr orb,
                   const RT_Class &rt_class,
-                  int nthreads
-                  ACE_ENV_ARG_DECL);
+                  int nthreads);
 
   /// Return the POA configured by the RTPOA_Setup
   PortableServer::POA_ptr poa (void);

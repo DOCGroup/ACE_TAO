@@ -40,17 +40,17 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
       ACE_OS::putenv (env.c_str ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -59,7 +59,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -68,12 +68,10 @@ main (int argc, char *argv[])
         return 1;
 
       obj =
-        orb->resolve_initial_references ("SecurityLevel3:SecurityCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("SecurityLevel3:SecurityCurrent");
 
       SecurityLevel3::SecurityCurrent_var security_current =
-        SecurityLevel3::SecurityCurrent::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        SecurityLevel3::SecurityCurrent::_narrow (obj.in ());
 
       if (CORBA::is_nil (security_current.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -101,8 +99,7 @@ main (int argc, char *argv[])
         server_impl2._this ();
 
       const CORBA::Boolean equivalent =
-        server->_is_equivalent (server2.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        server->_is_equivalent (server2.in ());
 
       if (equivalent)
         {
@@ -112,7 +109,7 @@ main (int argc, char *argv[])
         }
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -137,17 +134,15 @@ main (int argc, char *argv[])
                   "\n"
                   "Event loop finished.\n"));
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

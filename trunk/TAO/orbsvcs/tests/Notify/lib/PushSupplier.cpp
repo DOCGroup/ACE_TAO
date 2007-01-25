@@ -24,18 +24,17 @@ TAO_Notify_Tests_PushSupplier::~TAO_Notify_Tests_PushSupplier ()
 }
 
 void
-TAO_Notify_Tests_PushSupplier::send_event (const CORBA::Any& any ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_PushSupplier::send_event (const CORBA::Any& any)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
-  this->proxy_->push (any ACE_ENV_ARG_PARAMETER);
+  this->proxy_->push (any);
 }
 
 void
-TAO_Notify_Tests_PushSupplier::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_PushSupplier::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)
 {
-  proxy_ptr->connect_any_push_supplier (peer_ptr
-                                        ACE_ENV_ARG_PARAMETER);
+  proxy_ptr->connect_any_push_supplier (peer_ptr);
 }
 
 void

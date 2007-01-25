@@ -33,13 +33,12 @@ Loopback_Pair::init (CORBA::Long experiment_id,
 }
 
 void
-Loopback_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL)
+Loopback_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  this->loopback_supplier_->connect (ec ACE_ENV_ARG_PARAMETER);
+  this->loopback_supplier_->connect (ec);
   Auto_Disconnect<Loopback_Supplier> loopback_supplier_disconnect (this->loopback_supplier_);
 
-  this->loopback_consumer_->connect (ec ACE_ENV_ARG_PARAMETER);
+  this->loopback_consumer_->connect (ec);
   Auto_Disconnect<Loopback_Consumer> loopback_consumer_disconnect (this->loopback_consumer_);
 
   loopback_consumer_disconnect.release ();

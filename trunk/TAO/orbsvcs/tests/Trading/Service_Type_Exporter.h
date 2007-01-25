@@ -24,8 +24,7 @@ class TAO_TTest_Export TAO_Service_Type_Exporter
 public:
 
   TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
-                             CORBA::Boolean verbose
-                             ACE_ENV_ARG_DECL)
+                             CORBA::Boolean verbose)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void remove_all_types (void)
@@ -85,8 +84,7 @@ private:
   void create_types (void);
   // Generate the service type description structures.
 
-  void add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos
-                         ACE_ENV_ARG_DECL)
+  void add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,

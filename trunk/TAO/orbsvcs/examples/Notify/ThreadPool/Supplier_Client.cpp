@@ -93,7 +93,7 @@ TAO_Notify_ThreadPool_Supplier_Client::_init (void)
   CosNotifyChannelAdmin::AdminID adminid = 0;
 
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP, adminid ACE_ENV_ARG_PARAMETER);
+    ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin.in ()));
 
@@ -101,8 +101,7 @@ TAO_Notify_ThreadPool_Supplier_Client::_init (void)
   this->supplier_ = new TAO_Notify_ThreadPool_Supplier (this->orb_objects_);
 
   // Initialize it.
-  this->supplier_->init (supplier_admin, this->consumer_count_, this->max_events_, this->proxy_consumer_thread_count_
-                         ACE_ENV_ARG_PARAMETER);
+  this->supplier_->init (supplier_admin, this->consumer_count_, this->max_events_, this->proxy_consumer_thread_count_);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
@@ -121,8 +120,7 @@ TAO_Notify_ThreadPool_Supplier_Client::create_ec (void)
 
   ec = ecf->create_channel (qos,
                             admin,
-                            id
-                            ACE_ENV_ARG_PARAMETER);
+                            id);
 
   // Set the Qos
   // See $TAO_ROOT/orbsvcs/orbsvcs/NotifyExt.idl
@@ -137,7 +135,7 @@ TAO_Notify_ThreadPool_Supplier_Client::create_ec (void)
       qos[0].value <<= tp_params;
 
       // Note that instead of <set_qos>, the <qos> can also be passed while creating the channel.
-      ec->set_qos (qos ACE_ENV_ARG_PARAMETER);
+      ec->set_qos (qos);
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Created Event Channel with %d threads\n", this->ec_thread_count_));
@@ -165,7 +163,7 @@ TAO_Notify_ThreadPool_Supplier_Client::write_ior (void)
   if (ior_output_file != 0)
     {
       CORBA::String_var str =
-        this->orb_objects_.orb_->object_to_string (objref.in () ACE_ENV_ARG_PARAMETER);
+        this->orb_objects_.orb_->object_to_string (objref.in ());
 
       ACE_OS::fprintf (ior_output_file,
                        "%s",
@@ -177,21 +175,19 @@ TAO_Notify_ThreadPool_Supplier_Client::write_ior (void)
 int
 TAO_Notify_ThreadPool_Supplier_Client::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->orb_objects_.current_->the_priority (0 ACE_ENV_ARG_PARAMETER);
+      this->orb_objects_.current_->the_priority (0);
 
       this->_init (); //Init the Client
 
       this->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          ACE_TEXT ("Supplier error "));
+      ex._tao_print_exception (ACE_TEXT ("Supplier error "));
 
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -199,18 +195,17 @@ TAO_Notify_ThreadPool_Supplier_Client::svc (void)
 int
 main (int argc, char *argv [])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize an ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       // Create a holder for the common ORB Objects.
       TAO_Notify_ORB_Objects orb_objects;
 
-      orb_objects.init (orb ACE_ENV_ARG_PARAMETER);
+      orb_objects.init (orb);
 
       /* Run the ORB in a seperate thread */
       TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
@@ -244,12 +239,10 @@ main (int argc, char *argv [])
       orb_run_task.thr_mgr ()->wait ();
       client.thr_mgr ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          ACE_TEXT ("Supplier Client error "));
+      ex._tao_print_exception (ACE_TEXT ("Supplier Client error "));
     }
-  ACE_ENDTRY;
 
   return 0;
 }

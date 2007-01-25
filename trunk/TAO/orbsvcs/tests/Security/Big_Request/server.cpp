@@ -42,20 +42,19 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char * argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
       ACE_OS::putenv (env.c_str ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poaObj =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var rootPoa =
-        PortableServer::POA::_narrow (poaObj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poaObj.in ());
 
       PortableServer::POAManager_var poa_manager =
         rootPoa->the_POAManager ();
@@ -70,7 +69,7 @@ main (int argc, char * argv[])
       TX_Object_var txObject = implObject._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (txObject.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (txObject.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -93,18 +92,16 @@ main (int argc, char * argv[])
                   "\n"
                   "Event loop finished.\n"));
 
-      rootPoa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      rootPoa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ERROR");
+      ex._tao_print_exception ("ERROR");
 
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

@@ -38,8 +38,7 @@ public:
   Supplier (void);
   // Constructor
 
-  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect to the event channel
 
   void disconnect (void);

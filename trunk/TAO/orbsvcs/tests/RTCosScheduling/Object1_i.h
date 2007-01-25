@@ -35,7 +35,6 @@ class Object1_impl : public POA_testSched::Object1
     virtual void method1(const char *activity,
                          CORBA::Long seconds,
                          char *&output
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS
                          )
       ACE_THROW_SPEC ((CORBA::SystemException, testSched::testSchedException));
 };

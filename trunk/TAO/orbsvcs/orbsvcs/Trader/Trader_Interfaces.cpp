@@ -47,8 +47,7 @@ query (const char *type,
        CORBA::ULong how_many,
        CosTrading::OfferSeq_out returned_offers,
        CosTrading::OfferIterator_out returned_offer_iterator,
-       CosTrading::PolicyNameSeq_out returned_limits_applied
-       ACE_ENV_ARG_DECL)
+       CosTrading::PolicyNameSeq_out returned_limits_applied)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -62,12 +61,12 @@ query (const char *type,
                    CosTrading::DuplicatePolicyName))
 {
   // Instantiate a class to help interpret query policies.
-  TAO_Policies policies (this->trader_, in_policies ACE_ENV_ARG_PARAMETER);
+  TAO_Policies policies (this->trader_, in_policies);
 
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
   CosTrading::Admin::OctetSeq* request_id = 0;
-  int check = this->seen_request_id (policies, request_id ACE_ENV_ARG_PARAMETER);
+  int check = this->seen_request_id (policies, request_id);
 
   if (check)
     {
@@ -100,8 +99,7 @@ query (const char *type,
                            how_many,
                            returned_offers,
                            returned_offer_iterator,
-                           returned_limits_applied
-                           ACE_ENV_ARG_PARAMETER);
+                           returned_limits_applied);
       return;
     }
 
@@ -111,7 +109,7 @@ query (const char *type,
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-    rep->fully_describe_type (type ACE_ENV_ARG_PARAMETER);
+    rep->fully_describe_type (type);
 
   // @@ Should throw a NO_MEMORY exception here...
   ACE_NEW (returned_offers,
@@ -130,15 +128,12 @@ query (const char *type,
   // meets those constraints.  TAO_Preference_Interpreter -- parses
   // the preference string and orders offers according to those
   // constraints.
-  TAO_Offer_Filter offer_filter (policies
-                                 ACE_ENV_ARG_PARAMETER);
+  TAO_Offer_Filter offer_filter (policies);
   TAO_Trader_Constraint_Validator validator (type_struct.in ());
   TAO_Constraint_Interpreter constr_inter (validator,
-                                           constraint
-                                           ACE_ENV_ARG_PARAMETER);
+                                           constraint);
   TAO_Preference_Interpreter pref_inter (validator,
-                                         preferences
-                                         ACE_ENV_ARG_PARAMETER);
+                                         preferences);
 
   // Try to find the map of offers of desired service type.
   offer_filter.configure_type (type_struct.ptr ());
@@ -164,8 +159,7 @@ query (const char *type,
                                  rep,
                                  constr_inter,
                                  pref_inter,
-                                 offer_filter
-                                 ACE_ENV_ARG_PARAMETER);
+                                 offer_filter);
     }
 
   // Take note of the limits applied in this query.
@@ -179,8 +173,7 @@ query (const char *type,
                             policies,
                             pref_inter,
                             *returned_offers.ptr (),
-                            returned_offer_iterator
-                            ACE_ENV_ARG_PARAMETER);
+                            returned_offer_iterator);
 
   // The following steps are only appropriate for a linked trader.
   if (! CORBA::is_nil (link_if))
@@ -191,8 +184,7 @@ query (const char *type,
       CORBA::Boolean should_follow =
         this->retrieve_links (policies,
                               offers_returned,
-                              CosTrading::LinkNameSeq_out (links.out ())
-                              ACE_ENV_ARG_PARAMETER);
+                              CosTrading::LinkNameSeq_out (links.out ()));
 
       if (should_follow && links->length () != 0)
         {
@@ -208,8 +200,7 @@ query (const char *type,
                                  how_many,
                                  *returned_offers.ptr (),
                                  returned_offer_iterator.ptr (),
-                                 *returned_limits_applied.ptr ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                 *returned_limits_applied.ptr ());
         }
     }
 }
@@ -275,8 +266,7 @@ lookup_all_subtypes (const char* type,
                      CosTradingRepos::ServiceTypeRepository_ptr rep,
                      TAO_Constraint_Interpreter& constr_inter,
                      TAO_Preference_Interpreter& pref_inter,
-                     TAO_Offer_Filter& offer_filter
-                     ACE_ENV_ARG_DECL)
+                     TAO_Offer_Filter& offer_filter)
 {
   // BEGIN SPEC
   // The trader may return a service offer of a subtype of the "type"
@@ -297,7 +287,7 @@ lookup_all_subtypes (const char* type,
   // types with lower incarnation numbers.
   sst.incarnation (inc_num);
 
-  all_types = rep->list_types (sst ACE_ENV_ARG_PARAMETER);
+  all_types = rep->list_types (sst);
 
   // Scan all types inserted after the super types. If the transitive
   // closure of a type's super type relation includes the super type
@@ -309,8 +299,7 @@ lookup_all_subtypes (const char* type,
        i++)
     {
       // Obtain a description of the prospective type.
-      type_struct = rep->fully_describe_type (all_types[i]
-                                              ACE_ENV_ARG_PARAMETER);
+      type_struct = rep->fully_describe_type (all_types[i]);
 
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq&
         super_types = type_struct->super_types;
@@ -343,8 +332,7 @@ fill_receptacles (const char* /* type */,
                   TAO_Policies& policies,
                   TAO_Preference_Interpreter& pref_inter,
                   CosTrading::OfferSeq& offers,
-                  CosTrading::OfferIterator_ptr& offer_itr
-                  ACE_ENV_ARG_DECL)
+                  CosTrading::OfferIterator_ptr& offer_itr)
   ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                   CosTrading::DuplicatePropertyName))
 {
@@ -359,7 +347,7 @@ fill_receptacles (const char* /* type */,
   // "offer_itr" will be nil.
   // END SPEC
 
-  TAO_Property_Filter prop_filter (desired_props ACE_ENV_ARG_PARAMETER);
+  TAO_Property_Filter prop_filter (desired_props);
 
   // RETURNING: Calculate how many offers go into the sequence
   //  Calculate how many go into the iterator
@@ -476,8 +464,7 @@ CORBA::Boolean
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 retrieve_links (TAO_Policies& policies,
                 CORBA::ULong offers_returned,
-                CosTrading::LinkNameSeq_out links
-                ACE_ENV_ARG_DECL)
+                CosTrading::LinkNameSeq_out links)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Lookup::PolicyTypeMismatch))
 {
@@ -514,11 +501,11 @@ retrieve_links (TAO_Policies& policies,
         {
           // Grab the link information.
           CosTrading::Link::LinkInfo_var
-            link_info (link_if->describe_link (links[i] ACE_ENV_ARG_PARAMETER));
+            link_info (link_if->describe_link (links[i]));
 
           // Compute the link follow rule.
           CosTrading::FollowOption link_rule =
-            policies.link_follow_rule (link_info.in () ACE_ENV_ARG_PARAMETER);
+            policies.link_follow_rule (link_info.in ());
 
           // Determine if the link follow rule applies.
           if (link_rule == CosTrading::always
@@ -553,8 +540,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
                  CORBA::ULong how_many,
                  CosTrading::OfferSeq& offers,
                  CosTrading::OfferIterator_ptr& offer_iter,
-                 CosTrading::PolicyNameSeq& limits
-                 ACE_ENV_ARG_DECL)
+                 CosTrading::PolicyNameSeq& limits)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -591,7 +577,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
   offer_iter_collection->add_offer_iterator (offer_iter);
 
   CosTrading::PolicySeq policies_to_pass;
-  policies.copy_to_pass (policies_to_pass, request_id ACE_ENV_ARG_PARAMETER);
+  policies.copy_to_pass (policies_to_pass, request_id);
 
   for (int i = links.length () - 1; i >= 0; i--)
     {
@@ -599,16 +585,15 @@ federated_query (const CosTrading::LinkNameSeq& links,
       CosTrading::OfferIterator *out_offer_iter = 0;
       CosTrading::PolicyNameSeq *out_limits = 0;
 
-      ACE_TRY
+      try
         {
           // Obtain information about the link we're traversing.
           CosTrading::Link::LinkInfo_var link_info =
-            link_interface->describe_link (links[i] ACE_ENV_ARG_PARAMETER);
+            link_interface->describe_link (links[i]);
 
           // Set the link follow policy for the query over the link.
           policies.copy_in_follow_option (policies_to_pass,
-                                          link_info.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                          link_info.in ());
 
           CosTrading::Lookup_var remote_lookup =
             CosTrading::Lookup::_duplicate (link_info->target.in ());
@@ -622,8 +607,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
                                 how_many - offers.length (),
                                 CosTrading::OfferSeq_out (out_offers),
                                 CosTrading::OfferIterator_out (out_offer_iter),
-                                CosTrading::PolicyNameSeq_out (out_limits)
-                                ACE_ENV_ARG_PARAMETER);
+                                CosTrading::PolicyNameSeq_out (out_limits));
 
           CORBA::ULong j = 0;
           CosTrading::OfferSeq_var out_offers_var (out_offers);
@@ -651,11 +635,10 @@ federated_query (const CosTrading::LinkNameSeq& links,
           for (j = 0; j < source_length; j++)
             offers[j + target_length] = out_offers_var[j];
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // Ah, well, this query failed, move on to the next one.
         }
-      ACE_ENDTRY;
     }
 
   // Sort the sequence in preference order.
@@ -716,8 +699,7 @@ forward_query (const char* next_hop,
                CORBA::ULong how_many,
                CosTrading::OfferSeq_out offers,
                CosTrading::OfferIterator_out offer_itr,
-               CosTrading::PolicyNameSeq_out limits_applied
-               ACE_ENV_ARG_DECL)
+               CosTrading::PolicyNameSeq_out limits_applied)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -734,10 +716,10 @@ forward_query (const char* next_hop,
   CosTrading::Link_ptr link_interface
     = this->trader_.trading_components ().link_if ();
 
-  ACE_TRY
+  try
     {
       CosTrading::Link::LinkInfo_var link_info =
-        link_interface->describe_link (next_hop ACE_ENV_ARG_PARAMETER);
+        link_interface->describe_link (next_hop);
 
       CosTrading::Lookup_var remote_lookup =
         CosTrading::Lookup::_duplicate (link_info->target.in ());
@@ -745,7 +727,7 @@ forward_query (const char* next_hop,
       CORBA::Object_var us = this->_this ();
 
       CORBA::Boolean self_loop =
-        remote_lookup->_is_equivalent (us.in () ACE_ENV_ARG_PARAMETER);
+        remote_lookup->_is_equivalent (us.in ());
 
       if (! self_loop)
         {
@@ -758,8 +740,7 @@ forward_query (const char* next_hop,
                                 how_many,
                                 offers,
                                 offer_itr,
-                                limits_applied
-                                ACE_ENV_ARG_PARAMETER);
+                                limits_applied);
         }
       else
         {
@@ -771,26 +752,23 @@ forward_query (const char* next_hop,
                        how_many,
                        offers,
                        offer_itr,
-                       limits_applied
-                       ACE_ENV_ARG_PARAMETER);
+                       limits_applied);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       CosTrading::Policy policy;
       policy.name = TAO_Policies::POLICY_NAMES[TAO_Policies::STARTING_TRADER];
       policy.value <<= next_hop;
-      ACE_TRY_THROW (CosTrading::Lookup::InvalidPolicyValue (policy));
+      throw CosTrading::Lookup::InvalidPolicyValue (policy);
     }
-  ACE_ENDTRY;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 seen_request_id (TAO_Policies& policies,
-                 CosTrading::Admin::OctetSeq*& seq
-                 ACE_ENV_ARG_DECL)
+                 CosTrading::Admin::OctetSeq*& seq)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Lookup::PolicyTypeMismatch))
 {
@@ -862,8 +840,7 @@ CosTrading::OfferId
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 _cxx_export (CORBA::Object_ptr reference,
              const char *type,
-             const CosTrading::PropertySeq &properties
-             ACE_ENV_ARG_DECL)
+             const CosTrading::PropertySeq &properties)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::Register::InvalidObjectRef,
                   CosTrading::IllegalServiceType,
@@ -891,7 +868,7 @@ _cxx_export (CORBA::Object_ptr reference,
   // Yank our friend, the type struct, and confirm that the given
   // properties match the type definition.
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-    rep->fully_describe_type (type ACE_ENV_ARG_PARAMETER);
+    rep->fully_describe_type (type);
 
   // Oops the type is masked, we shouldn't let exporters know the type
   // exists.
@@ -900,14 +877,14 @@ _cxx_export (CORBA::Object_ptr reference,
 
   // TAO-specific way to determine if an object is derived from or is
   // an interface type.
-  int check = (! reference->_is_a (type_struct->if_name ACE_ENV_ARG_PARAMETER));
+  int check = (! reference->_is_a (type_struct->if_name));
   if (check)
     ACE_THROW_RETURN (CosTrading::Register::
                       InterfaceTypeMismatch (type, reference), 0);
 
   // Validate that the properties defined for this offer are correct
   // to their types and strength.
-  this->validate_properties (type, type_struct.ptr (), properties ACE_ENV_ARG_PARAMETER);
+  this->validate_properties (type, type_struct.ptr (), properties);
 
   // CORBA::ULong plength = properties.length ();
   ACE_NEW_THROW_EX (offer, CosTrading::Offer, CORBA::NO_MEMORY ());
@@ -935,8 +912,7 @@ _cxx_export (CORBA::Object_ptr reference,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-withdraw (const char *id
-          ACE_ENV_ARG_DECL)
+withdraw (const char *id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalOfferId,
                    CosTrading::UnknownOfferId,
@@ -944,14 +920,13 @@ withdraw (const char *id
 {
   // Get service type map.
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
-  offer_database.remove_offer ((CosTrading::OfferId) id ACE_ENV_ARG_PARAMETER);
+  offer_database.remove_offer ((CosTrading::OfferId) id);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Register::OfferInfo *
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-describe (const char *id
-          ACE_ENV_ARG_DECL)
+describe (const char *id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId,
@@ -963,7 +938,7 @@ describe (const char *id
 
   // Perform a lookup to find the offer.
   CosTrading::Offer* offer =
-    offer_database.lookup_offer ((CosTrading::OfferId) id, type ACE_ENV_ARG_PARAMETER);
+    offer_database.lookup_offer ((CosTrading::OfferId) id, type);
 
   CosTrading::Register::OfferInfo *offer_info = 0;
   ACE_NEW_THROW_EX (offer_info, CosTrading::Register::OfferInfo, CORBA::NO_MEMORY ());
@@ -984,8 +959,7 @@ void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 modify (const char *id,
         const CosTrading::PropertyNameSeq& del_list,
-        const CosTrading::PropertySeq& modify_list
-        ACE_ENV_ARG_DECL)
+        const CosTrading::PropertySeq& modify_list)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::NotImplemented,
                   CosTrading::IllegalOfferId,
@@ -1004,7 +978,7 @@ modify (const char *id,
   int check =  (! this->supports_modifiable_properties ());
 
   if (check)
-    ACE_THROW (CosTrading::NotImplemented ());
+    throw CosTrading::NotImplemented ();
 
   char* type = 0;
   TAO_Support_Attributes_i& support_attrs =
@@ -1014,19 +988,19 @@ modify (const char *id,
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = offer_database.
-    lookup_offer (const_cast<CosTrading::OfferId> (id), type ACE_ENV_ARG_PARAMETER);
+    lookup_offer (const_cast<CosTrading::OfferId> (id), type);
 
   if (offer != 0)
     {
       // Yank our friend, the type struct.
       CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-        rep->fully_describe_type (type ACE_ENV_ARG_PARAMETER);
+        rep->fully_describe_type (type);
       TAO_Offer_Modifier offer_mod (type, type_struct.in (), offer);
 
       // Delete, add, and change properties of the offer.
-      offer_mod.delete_properties (del_list ACE_ENV_ARG_PARAMETER);
+      offer_mod.delete_properties (del_list);
 
-      offer_mod.merge_properties (modify_list ACE_ENV_ARG_PARAMETER);
+      offer_mod.merge_properties (modify_list);
 
       // Alter our reference to the offer. We do this last, since the
       // spec says: modify either suceeds completely or fails
@@ -1039,8 +1013,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 withdraw_using_constraint (const char *type,
-                           const char *constr
-                           ACE_ENV_ARG_DECL)
+                           const char *constr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -1057,7 +1030,7 @@ withdraw_using_constraint (const char *type,
 
   // Retrieve the type struct
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-    rep->fully_describe_type (type ACE_ENV_ARG_PARAMETER);
+    rep->fully_describe_type (type);
 
   // Try to find the map of offers of desired service type.
   // @@ Again, should be Offer_Database::offer_iterator
@@ -1075,7 +1048,7 @@ withdraw_using_constraint (const char *type,
 #endif /* _MSC_VER */
 
     TAO_Trader_Constraint_Validator validator (type_struct.in ());
-    TAO_Constraint_Interpreter constr_inter (validator, constr ACE_ENV_ARG_PARAMETER);
+    TAO_Constraint_Interpreter constr_inter (validator, constr);
 
     while (offer_iter.has_more_offers ())
       {
@@ -1097,19 +1070,18 @@ withdraw_using_constraint (const char *type,
           char* offer_id = 0;
 
           ids.dequeue_head (offer_id);
-          offer_database.remove_offer (offer_id ACE_ENV_ARG_PARAMETER);
+          offer_database.remove_offer (offer_id);
           CORBA::string_free (offer_id);
         }
     }
   else
-    ACE_THROW (CosTrading::Register::NoMatchingOffers (constr));
+    throw CosTrading::Register::NoMatchingOffers (constr);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Register_ptr
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-resolve (const CosTrading::TraderName &name
-         ACE_ENV_ARG_DECL)
+resolve (const CosTrading::TraderName &name)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::Register::IllegalTraderName,
                   CosTrading::Register::UnknownTraderName,
@@ -1131,19 +1103,18 @@ resolve (const CosTrading::TraderName &name
   CosTrading::Link::LinkInfo_var link_info;
   CosTrading::Register_var remote_reg;
 
-  ACE_TRY
+  try
     {
       // Ensure that the link to the next trader exists.
-      link_info = link_if->describe_link (name[0] ACE_ENV_ARG_PARAMETER);
+      link_info = link_if->describe_link (name[0]);
 
       remote_reg =
-        CosTrading::Register::_narrow (link_info->target_reg.in () ACE_ENV_ARG_PARAMETER);
+        CosTrading::Register::_narrow (link_info->target_reg.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_TRY_THROW (CosTrading::Register::UnknownTraderName (name));
+      throw CosTrading::Register::UnknownTraderName (name);
     }
-  ACE_ENDTRY;
 
   // Ensure that the register pointer isn't nil.
   if (! CORBA::is_nil (remote_reg.in ()))
@@ -1159,7 +1130,7 @@ resolve (const CosTrading::TraderName &name
       for (int i = trader_name.length () - 1; i >= 0; i--)
         trader_name[i] = name[i + 1];
 
-      return_value = remote_reg->resolve (trader_name ACE_ENV_ARG_PARAMETER);
+      return_value = remote_reg->resolve (trader_name);
     }
 
   return return_value;
@@ -1170,8 +1141,7 @@ void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 validate_properties (const char* type,
                      const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-                     const CosTrading::PropertySeq& properties
-                     ACE_ENV_ARG_DECL)
+                     const CosTrading::PropertySeq& properties)
   ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                   CosTrading::PropertyTypeMismatch,
                   CosTrading::ReadonlyDynamicProperty,
@@ -1181,7 +1151,7 @@ validate_properties (const char* type,
   CORBA::ULong length = properties.length ();
   const CosTradingRepos::ServiceTypeRepository::PropStructSeq&
     prop_types = type_struct->props;
-  TAO_Property_Evaluator_By_Name prop_eval (properties ACE_ENV_ARG_PARAMETER);
+  TAO_Property_Evaluator_By_Name prop_eval (properties);
 
   // Perform property validation
   length = prop_types.length ();
@@ -1200,24 +1170,23 @@ validate_properties (const char* type,
           // Offer cannot have a missing mandatory property.
           if (prop_types[i].mode ==
               CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
-            ACE_THROW (CosTrading::MissingMandatoryProperty (type, prop_name));
+            throw CosTrading::MissingMandatoryProperty (type, prop_name);
         }
       else
         {
           int check =
-            (! prop_type->equal (prop_struct.value_type.in ()
-                                 ACE_ENV_ARG_PARAMETER));
+            (! prop_type->equal (prop_struct.value_type.in ()));
           if (check)
             {
               // Offer cannot redefine the type of an property.
               const CosTrading::Property* prop =
                 prop_eval.get_property (prop_name);
-              ACE_THROW (CosTrading::PropertyTypeMismatch (type, *prop));
+              throw CosTrading::PropertyTypeMismatch (type, *prop);
             }
           else if (prop_struct.mode ==
                    CosTradingRepos::ServiceTypeRepository::PROP_READONLY &&
                    prop_eval.is_dynamic_property (prop_name))
-            ACE_THROW (CosTrading::ReadonlyDynamicProperty (type, prop_name));
+            throw CosTrading::ReadonlyDynamicProperty (type, prop_name);
         }
     }
 }
@@ -1310,7 +1279,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_search_card (CORBA::ULong value
-                     ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1324,7 +1293,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_search_card (CORBA::ULong value
-                     ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1338,7 +1307,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_match_card (CORBA::ULong value
-                    ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1352,7 +1321,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_match_card (CORBA::ULong value
-                    ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1366,7 +1335,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_return_card (CORBA::ULong value
-                     ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1380,7 +1349,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_return_card (CORBA::ULong value
-                     ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1394,7 +1363,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_list (CORBA::ULong value
-              ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1408,7 +1377,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_supports_modifiable_properties (CORBA::Boolean value
-                                    ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean return_value =
@@ -1422,7 +1391,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_supports_dynamic_properties (CORBA::Boolean value
-                                 ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean return_value =
@@ -1436,7 +1405,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_supports_proxy_offers (CORBA::Boolean value
-                           ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean return_value =
@@ -1450,7 +1419,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_hop_count (CORBA::ULong value
-                   ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1464,7 +1433,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::ULong
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_hop_count (CORBA::ULong value
-                   ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1478,7 +1447,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::FollowOption
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_follow_policy (CosTrading::FollowOption policy
-                       ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTrading::FollowOption return_value =
@@ -1492,7 +1461,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::FollowOption
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_follow_policy (CosTrading::FollowOption policy
-                       ACE_ENV_ARG_DECL_NOT_USED )
+ )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTrading::FollowOption return_value =
@@ -1505,8 +1474,7 @@ set_max_follow_policy (CosTrading::FollowOption policy
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::FollowOption
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_max_link_follow_policy (CosTrading::FollowOption policy
-                            ACE_ENV_ARG_DECL_NOT_USED)
+set_max_link_follow_policy (CosTrading::FollowOption policy)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTrading::FollowOption return_value =
@@ -1519,8 +1487,7 @@ set_max_link_follow_policy (CosTrading::FollowOption policy
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::TypeRepository_ptr
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_type_repos (CosTrading::TypeRepository_ptr repository
-                ACE_ENV_ARG_DECL_NOT_USED)
+set_type_repos (CosTrading::TypeRepository_ptr repository)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTrading::TypeRepository_ptr return_value =
@@ -1533,8 +1500,7 @@ set_type_repos (CosTrading::TypeRepository_ptr repository
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Admin::OctetSeq*
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_request_id_stem (const CosTrading::Admin::OctetSeq& stem
-                       ACE_ENV_ARG_DECL_NOT_USED)
+set_request_id_stem (const CosTrading::Admin::OctetSeq& stem)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_,
@@ -1548,13 +1514,12 @@ void
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_offers (CORBA::ULong how_many,
              CosTrading::OfferIdSeq_out ids,
-             CosTrading::OfferIdIterator_out id_itr
-             ACE_ENV_ARG_DECL)
+             CosTrading::OfferIdIterator_out id_itr)
   ACE_THROW_SPEC ((CORBA::SystemException, CosTrading::NotImplemented))
 {
   // This method only applies when the register interface is implemented
   if (CORBA::is_nil (this->trader_.trading_components().register_if()))
-    ACE_THROW (CosTrading::NotImplemented());
+    throw CosTrading::NotImplemented();
 
   TAO_Offer_Database<MAP_LOCK_TYPE>& type_map = this->trader_.offer_database ();
   TAO_Offer_Id_Iterator* offer_id_iter = type_map.retrieve_all_offer_ids ();
@@ -1562,7 +1527,7 @@ list_offers (CORBA::ULong how_many,
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
     {
-      int check = offer_id_iter->next_n (how_many, ids ACE_ENV_ARG_PARAMETER);
+      int check = offer_id_iter->next_n (how_many, ids);
 
       if (check == 1)
         {
@@ -1581,12 +1546,11 @@ void
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_proxies (CORBA::ULong,
               CosTrading::OfferIdSeq_out,
-              CosTrading::OfferIdIterator_out
-              ACE_ENV_ARG_DECL)
+              CosTrading::OfferIdIterator_out)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::NotImplemented))
 {
-  ACE_THROW (CosTrading::NotImplemented ());
+  throw CosTrading::NotImplemented ();
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1609,8 +1573,7 @@ TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 add_link (const char *name,
           CosTrading::Lookup_ptr target,
           CosTrading::FollowOption def_pass_on_follow_rule,
-          CosTrading::FollowOption limiting_follow_rule
-          ACE_ENV_ARG_DECL)
+          CosTrading::FollowOption limiting_follow_rule)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::Link::IllegalLinkName,
                   CosTrading::Link::DuplicateLinkName,
@@ -1620,30 +1583,32 @@ add_link (const char *name,
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    ACE_THROW (CosTrading::Link::IllegalLinkName (name));
+    throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name) == 0)
-    ACE_THROW (CosTrading::Link::DuplicateLinkName (name));
+    throw CosTrading::Link::DuplicateLinkName (name);
 
   // Ensure the lookup_ptr isn't nil.
   if (CORBA::is_nil (target))
-    ACE_THROW (CosTrading::InvalidLookupRef (target));
+    throw CosTrading::InvalidLookupRef (target);
 
   // Ensure that the default link behavior isn't stronger than the
   // limiting link behavior.
   if (def_pass_on_follow_rule > limiting_follow_rule)
-    ACE_THROW (CosTrading::Link::DefaultFollowTooPermissive
-               (def_pass_on_follow_rule, limiting_follow_rule));
+    throw CosTrading::Link::DefaultFollowTooPermissive(
+      def_pass_on_follow_rule,
+      limiting_follow_rule);
 
   // Ensure that the limiting link behavior for this link doesn't
   // exceed the maximum allowed for a link.
   CosTrading::FollowOption follow_policy =
     this->max_link_follow_policy ();
   if (limiting_follow_rule < follow_policy)
-    ACE_THROW (CosTrading::Link::LimitingFollowTooPermissive
-               (limiting_follow_rule, follow_policy));
+    throw CosTrading::Link::LimitingFollowTooPermissive(
+      limiting_follow_rule,
+      follow_policy);
 
   // Create a link info structure for this link of the federation.
   CosTrading::Link::LinkInfo link_info;
@@ -1660,20 +1625,19 @@ add_link (const char *name,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-remove_link (const char *name
-             ACE_ENV_ARG_DECL)
+remove_link (const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::Link::IllegalLinkName,
                   CosTrading::Link::UnknownLinkName))
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    ACE_THROW (CosTrading::Link::IllegalLinkName (name));
+    throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name) == -1)
-    ACE_THROW (CosTrading::Link::UnknownLinkName (name));
+    throw CosTrading::Link::UnknownLinkName (name);
 
   // Erase the link state from the map.
   this->links_.unbind (link_name);
@@ -1681,8 +1645,7 @@ remove_link (const char *name
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Link::LinkInfo *
-TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name
-                                               ACE_ENV_ARG_DECL)
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Link::IllegalLinkName,
                    CosTrading::Link::UnknownLinkName))
@@ -1747,8 +1710,7 @@ void
 TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 modify_link (const char *name,
              CosTrading::FollowOption def_pass_on_follow_rule,
-             CosTrading::FollowOption limiting_follow_rule
-             ACE_ENV_ARG_DECL)
+             CosTrading::FollowOption limiting_follow_rule)
   ACE_THROW_SPEC ((CosTrading::Link::IllegalLinkName,
                    CosTrading::Link::UnknownLinkName,
                    CosTrading::Link::DefaultFollowTooPermissive,
@@ -1756,19 +1718,20 @@ modify_link (const char *name,
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    ACE_THROW (CosTrading::Link::IllegalLinkName (name));
+    throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
   ACE_TYPENAME Links::ENTRY* link_entry = 0;
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
-    ACE_THROW (CosTrading::Link::UnknownLinkName (name));
+    throw CosTrading::Link::UnknownLinkName (name);
 
   // Ensure that the default link behavior isn't stronger than the
   // limiting link behavior.
   if (def_pass_on_follow_rule > limiting_follow_rule)
-    ACE_THROW (CosTrading::Link::DefaultFollowTooPermissive
-               (def_pass_on_follow_rule, limiting_follow_rule));
+    throw CosTrading::Link::DefaultFollowTooPermissive(
+      def_pass_on_follow_rule,
+      limiting_follow_rule);
 
   // Ensure that the limiting link behavior for this link doesn't
   // exceed the maximum allowed for a link.
@@ -1776,8 +1739,9 @@ modify_link (const char *name,
     this->max_link_follow_policy ();
 
   if (limiting_follow_rule < follow_policy)
-    ACE_THROW (CosTrading::Link::LimitingFollowTooPermissive
-               (limiting_follow_rule, follow_policy));
+    throw CosTrading::Link::LimitingFollowTooPermissive(
+      limiting_follow_rule,
+      follow_policy);
 
   // Adjust the link settings
   CosTrading::Link::LinkInfo& link_info = link_entry->int_id_;
@@ -1807,8 +1771,7 @@ export_proxy (CosTrading::Lookup_ptr,
               const CosTrading::PropertySeq&,
               CORBA::Boolean,
               const char *,
-              const CosTrading::PolicySeq&
-              ACE_ENV_ARG_DECL)
+              const CosTrading::PolicySeq&)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::IllegalServiceType,
                   CosTrading::UnknownServiceType,
@@ -1829,21 +1792,19 @@ export_proxy (CosTrading::Lookup_ptr,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-withdraw_proxy (const char *
-                ACE_ENV_ARG_DECL)
+withdraw_proxy (const char *)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId,
                   CosTrading::Proxy::NotProxyOfferId))
 {
-  ACE_THROW (CORBA::UNKNOWN ());
+  throw CORBA::UNKNOWN ();
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Proxy::ProxyInfo *
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-describe_proxy (const char *
-                ACE_ENV_ARG_DECL)
+describe_proxy (const char *)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::IllegalOfferId,
                   CosTrading::UnknownOfferId,
@@ -1859,12 +1820,11 @@ void
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_proxies (CORBA::ULong,
               CosTrading::OfferIdSeq*&,
-              CosTrading::OfferIdIterator_ptr&
-              ACE_ENV_ARG_DECL)
+              CosTrading::OfferIdIterator_ptr&)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::NotImplemented))
 {
-  ACE_THROW (CORBA::UNKNOWN ());
+  throw CORBA::UNKNOWN ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

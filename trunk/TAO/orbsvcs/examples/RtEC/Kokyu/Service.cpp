@@ -49,12 +49,11 @@ main (int argc, char* argv[])
   TAO_EC_Kokyu_Factory::init_svcs ();
 
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) == -1)
         {
@@ -64,9 +63,9 @@ main (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -110,10 +109,10 @@ main (int argc, char* argv[])
       Consumer consumer_impl1, consumer_impl2;
 
       RtecScheduler::handle_t consumer1_rt_info =
-        scheduler->create ("consumer1" ACE_ENV_ARG_PARAMETER);
+        scheduler->create ("consumer1");
 
       RtecScheduler::handle_t consumer2_rt_info =
-        scheduler->create ("consumer2" ACE_ENV_ARG_PARAMETER);
+        scheduler->create ("consumer2");
 
       //consumer's rate will get propagated from the supplier.
       //so no need to specify a period here. Specifying
@@ -129,8 +128,7 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       tmp,
                       0,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
+                      RtecScheduler::OPERATION);
 
       scheduler->set (consumer2_rt_info,
                       RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -139,8 +137,7 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_HIGH_IMPORTANCE,
                       tmp,
                       0,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
+                      RtecScheduler::OPERATION);
 
       ACE_ConsumerQOS_Factory consumer_qos1, consumer_qos2;
       //consumer_qos.start_disjunction_group ();
@@ -186,23 +183,21 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connecting consumers\n"));
       ACE_DEBUG ((LM_DEBUG, "connecting consumer1\n"));
       supplier_proxy1->connect_push_consumer (consumer1.in (),
-                                             consumer_qos1.get_ConsumerQOS ()
-                                             ACE_ENV_ARG_PARAMETER);
+                                             consumer_qos1.get_ConsumerQOS ());
 
       ACE_DEBUG ((LM_DEBUG, "connecting consumer2\n"));
       supplier_proxy2->connect_push_consumer (consumer2.in (),
-                                             consumer_qos2.get_ConsumerQOS ()
-                                             ACE_ENV_ARG_PARAMETER);
+                                             consumer_qos2.get_ConsumerQOS ());
 
       ACE_DEBUG ((LM_DEBUG, "consumers connected\n"));
 
       // ****************************************************************
 
       RtecScheduler::handle_t supplier1_rt_info =
-        scheduler->create ("supplier1" ACE_ENV_ARG_PARAMETER);
+        scheduler->create ("supplier1");
 
       RtecScheduler::handle_t supplier2_rt_info =
-        scheduler->create ("supplier2" ACE_ENV_ARG_PARAMETER);
+        scheduler->create ("supplier2");
 
       RtecEventComm::EventSourceID supplier_id1 = 1, supplier_id2 = 2;
       ACE_SupplierQOS_Factory supplier_qos1, supplier_qos2;
@@ -237,13 +232,11 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connecting suppliers\n"));
       ACE_DEBUG ((LM_DEBUG, "connecting supplier1\n"));
       consumer_proxy1->connect_push_supplier (supplier1.in (),
-                                             supplier_qos1.get_SupplierQOS ()
-                                             ACE_ENV_ARG_PARAMETER);
+                                             supplier_qos1.get_SupplierQOS ());
 
       ACE_DEBUG ((LM_DEBUG, "connecting supplier2\n"));
       consumer_proxy2->connect_push_supplier (supplier2.in (),
-                                             supplier_qos2.get_SupplierQOS ()
-                                             ACE_ENV_ARG_PARAMETER);
+                                             supplier_qos2.get_SupplierQOS ());
       ACE_DEBUG ((LM_DEBUG, "suppliers connected\n"));
 
       // ****************************************************************
@@ -255,7 +248,7 @@ main (int argc, char* argv[])
       Timeout_Consumer timeout_consumer_impl2(&supplier_impl2);
 
       RtecScheduler::handle_t supplier1_timeout_consumer_rt_info =
-        scheduler->create ("supplier1_timeout_consumer" ACE_ENV_ARG_PARAMETER);
+        scheduler->create ("supplier1_timeout_consumer");
 
       //Period = 1sec
       tv.set (1,0);
@@ -268,11 +261,10 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       tmp,
                       0,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
+                      RtecScheduler::OPERATION);
 
       RtecScheduler::handle_t supplier2_timeout_consumer_rt_info =
-        scheduler->create ("supplier2_timeout_consumer" ACE_ENV_ARG_PARAMETER);
+        scheduler->create ("supplier2_timeout_consumer");
 
       //Period = 3sec
       tv.set (3, 0);
@@ -285,8 +277,7 @@ main (int argc, char* argv[])
                       RtecScheduler::VERY_HIGH_IMPORTANCE,
                       tmp,
                       0,
-                      RtecScheduler::OPERATION
-                      ACE_ENV_ARG_PARAMETER);
+                      RtecScheduler::OPERATION);
 
       ACE_ConsumerQOS_Factory timer_qos1, timer_qos2;
       timer_qos1.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
@@ -311,13 +302,11 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG, "connecting timeout consumers\n"));
       timeout_supplier_proxy1->
         connect_push_consumer (safe_timeout_consumer1.in (),
-                               timer_qos1.get_ConsumerQOS ()
-                               ACE_ENV_ARG_PARAMETER);
+                               timer_qos1.get_ConsumerQOS ());
 
       timeout_supplier_proxy2->
         connect_push_consumer (safe_timeout_consumer2.in (),
-                               timer_qos2.get_ConsumerQOS ()
-                               ACE_ENV_ARG_PARAMETER);
+                               timer_qos2.get_ConsumerQOS ());
 
       ACE_DEBUG ((LM_DEBUG, "timeout consumers connected\n"));
 
@@ -328,14 +317,12 @@ main (int argc, char* argv[])
       scheduler->add_dependency (supplier1_timeout_consumer_rt_info,
                                  supplier1_rt_info,
                                  1,
-                                 RtecBase::TWO_WAY_CALL
-                                 ACE_ENV_ARG_PARAMETER);
+                                 RtecBase::TWO_WAY_CALL);
 
       scheduler->add_dependency (supplier2_timeout_consumer_rt_info,
                                  supplier2_rt_info,
                                  1,
-                                 RtecBase::TWO_WAY_CALL
-                                 ACE_ENV_ARG_PARAMETER);
+                                 RtecBase::TWO_WAY_CALL);
 
       // ****************************************************************
 
@@ -381,8 +368,7 @@ main (int argc, char* argv[])
                                      infos.out (),
                                      dependencies.out (),
                                      configs.out (),
-                                     anomalies.out ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                     anomalies.out ());
 
       // Dump the schedule to a file..
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
@@ -417,11 +403,11 @@ main (int argc, char* argv[])
 //         {
 //           if (i % 2 == 0)
 //             {
-//               consumer_proxy1->push (event1 ACE_ENV_ARG_PARAMETER);
+//               consumer_proxy1->push (event1);
 //             }
 //           else
 //             {
-//               consumer_proxy2->push (event2 ACE_ENV_ARG_PARAMETER);
+//               consumer_proxy2->push (event2);
 //             }
 
 //           ACE_Time_Value rate (0, 10000);
@@ -441,12 +427,11 @@ main (int argc, char* argv[])
       // just a simple demo so we are going to be lazy.
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

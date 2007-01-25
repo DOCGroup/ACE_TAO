@@ -27,10 +27,9 @@ public:
   PushSupplier_impl(CORBA::ORB_ptr orb);
   ~PushSupplier_impl();
 
-  int init(RtecEventChannelAdmin::EventChannel_ptr ACE_ENV_ARG_DECL);
+  int init(RtecEventChannelAdmin::EventChannel_ptr);
 
     virtual void  disconnect_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

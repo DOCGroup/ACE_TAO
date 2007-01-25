@@ -50,12 +50,10 @@ public:
   virtual bool begin_object (CORBA::Long id,
     const ACE_CString& type,
     const NVPList& attrs,
-    bool changed
-    ACE_ENV_ARG_DECL);
+    bool changed);
 
   virtual void end_object (CORBA::Long id,
-    const ACE_CString& type
-    ACE_ENV_ARG_DECL);
+    const ACE_CString& type);
 
   virtual void close (void);
 

@@ -190,14 +190,14 @@ main (int argc, char *argv[])
                   }
   };
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "internet");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil(poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -205,7 +205,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in() ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -233,8 +233,7 @@ main (int argc, char *argv[])
         {
           // create the RT_Info
           config_infos[i].handle =
-            ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point
-                                                      ACE_ENV_ARG_PARAMETER);
+            ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point);
 
           // initialize the RT_Info
           ACE_Scheduler_Factory::server ()->
@@ -247,8 +246,7 @@ main (int argc, char *argv[])
                  static_cast<RtecScheduler::Importance_t> (config_infos[i].importance),
                  config_infos[i].quantum,
                  config_infos[i].threads,
-                 static_cast<RtecScheduler::Info_Type_t> (config_infos[i].info_type)
-                 ACE_ENV_ARG_PARAMETER);
+                 static_cast<RtecScheduler::Info_Type_t> (config_infos[i].info_type));
         }
 
 
@@ -258,7 +256,7 @@ main (int argc, char *argv[])
                         config_infos[0].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       // register dependency of consumer that will have unresolved remote
       // dependencies on supplier with unresolved remote dependencies
@@ -267,7 +265,7 @@ main (int argc, char *argv[])
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
 
       // register dependency of consumer that will have unresolved local
@@ -277,7 +275,7 @@ main (int argc, char *argv[])
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
 
       // register dependencies on each supplier of first consumer that will
@@ -287,21 +285,21 @@ main (int argc, char *argv[])
                         config_infos[0].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[6].handle,
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       // Register dependencies on each of the other consumers by second
       // consumer that will have both unresolved local and unresolved remote
@@ -311,28 +309,28 @@ main (int argc, char *argv[])
                         config_infos[1].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[3].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[5].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       ACE_Scheduler_Factory::server ()->
         add_dependency (config_infos[7].handle,
                         config_infos[6].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        ACE_ENV_ARG_PARAMETER);
+                        );
 
       RtecScheduler::RT_Info_Set_var infos;
       RtecScheduler::Dependency_Set_var deps;
@@ -345,7 +343,7 @@ main (int argc, char *argv[])
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          infos.out (), deps.out (),
-         configs.out (), anomalies.out () ACE_ENV_ARG_PARAMETER);
+         configs.out (), anomalies.out ());
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             deps.in (),
@@ -354,11 +352,10 @@ main (int argc, char *argv[])
                                             "Sched_Conf_Anomalies_Runtime.h",
                                             format_string);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

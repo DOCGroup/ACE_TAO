@@ -53,11 +53,11 @@ public:
 
   // Activates this servant with the POA supplied in init.
   // Connects to given proxy.
-  void connect (Proxy_Traits_PTR proxy, Proxy_Traits_ID proxy_id ACE_ENV_ARG_DECL);
+  void connect (Proxy_Traits_PTR proxy, Proxy_Traits_ID proxy_id);
 
   // Activates this servant with the POA supplied in init.
   // Creates a new proxy supplier and connects to it.
-  void connect (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL);
+  void connect (Admin_Traits_PTR admin_ptr);
 
   /// Connect using options parsed and set initial QoS.
   virtual void connect (void);
@@ -66,7 +66,7 @@ public:
   void disconnect (void);
 
   /// Set Qos
-  void set_qos (CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL);
+  void set_qos (CosNotification::QoSProperties& qos);
 
   /// Dump status
   void status (void);
@@ -87,15 +87,14 @@ protected:
   ///= To be implemented by specializations.
 
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits_PTR proxy_ptr, Peer_Traits_PTR peer_ptr ACE_ENV_ARG_DECL) = 0;
+  virtual void connect_to_peer (Proxy_Traits_PTR proxy_ptr, Peer_Traits_PTR peer_ptr) = 0;
 
   /// Obtain Proxy.
-  virtual Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL) = 0;
+  virtual Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr) = 0;
 
   /// Obtain Proxy with QoS.
   virtual Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr
-                                         , CosNotification::QoSProperties& qos
-                                         ACE_ENV_ARG_DECL) = 0;
+                                         , CosNotification::QoSProperties& qos) = 0;
 
   /// Disconnect from proxy.
   virtual void disconnect_from_proxy (void) = 0;

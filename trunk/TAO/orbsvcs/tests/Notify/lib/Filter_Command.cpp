@@ -102,12 +102,12 @@ TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (void)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str ());
 
   CosNotifyFilter::FilterFactory_var ff =
     ec->default_filter_factory ();
 
-  LOOKUP_MANAGER->_register (ff.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->_register (ff.in(), this->name_.c_str ());
 }
 
 void
@@ -115,12 +115,12 @@ TAO_Notify_Tests_Filter_Command::handle_create_filter (void)
 {
   CosNotifyFilter::FilterFactory_var ff;
 
-  LOOKUP_MANAGER->resolve (ff , this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (ff , this->factory_.c_str ());
 
   CosNotifyFilter::Filter_var filter =
-    ff->create_filter ("ETCL" ACE_ENV_ARG_PARAMETER);
+    ff->create_filter ("ETCL");
 
-  LOOKUP_MANAGER->_register (filter.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->_register (filter.in(), this->name_.c_str ());
 }
 
 void
@@ -128,7 +128,7 @@ TAO_Notify_Tests_Filter_Command::handle_add_constraint (void)
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter , this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (filter , this->name_.c_str ());
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
   constraint_list.length (1);
@@ -137,7 +137,7 @@ TAO_Notify_Tests_Filter_Command::handle_add_constraint (void)
   constraint_list[0].constraint_expr = CORBA::string_dup (this->constraint_.c_str ());
 
   ACE_DEBUG ((LM_DEBUG, "Adding constraint %s\n", this->constraint_.c_str ()));
-  filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
+  filter->add_constraints (constraint_list);
 }
 
 void
@@ -145,13 +145,13 @@ TAO_Notify_Tests_Filter_Command::handle_add_filter (void)
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter , this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (filter , this->name_.c_str ());
 
   CosNotifyFilter::FilterAdmin_var filter_admin;
 
-  LOOKUP_MANAGER->resolve (filter_admin , this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (filter_admin , this->factory_.c_str ());
 
-  filter_admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
+  filter_admin->add_filter (filter.in ());
 }
 
 void
@@ -159,7 +159,7 @@ TAO_Notify_Tests_Filter_Command::handle_destroy_filter (void)
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+  LOOKUP_MANAGER->resolve (filter, this->name_.c_str ());
 
   filter->destroy ();
 }

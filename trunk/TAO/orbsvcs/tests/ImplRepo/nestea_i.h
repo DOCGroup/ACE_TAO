@@ -45,13 +45,11 @@ public:
   virtual ~Nestea_i (void);
 
   /// Add <cans> number of cans to the bookshelf.
-  virtual void drink (CORBA::Long cans
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void drink (CORBA::Long cans)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Removes <cans> number of cans from the bookshelf.
-  virtual void crush (CORBA::Long cans
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void crush (CORBA::Long cans)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the number of cans in the bookshelf.

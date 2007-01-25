@@ -39,7 +39,7 @@ public:
   ~Airplane_Server_i (void);
 
   /// Initialize the Server state - parsing arguments and waiting
-  int init (int argc, char **argv ACE_ENV_ARG_DECL);
+  int init (int argc, char **argv);
 
   /// Run the orb
   int run (void);

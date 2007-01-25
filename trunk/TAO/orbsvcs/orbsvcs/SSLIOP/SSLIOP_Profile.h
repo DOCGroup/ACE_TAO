@@ -88,8 +88,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Initialize this object using the given input string.
        * URL-style string contain only one endpoint.
        */
-      virtual void parse_string (const char * string
-                                 ACE_ENV_ARG_DECL);
+      virtual void parse_string (const char * string);
 
       /**
        * Add @a endp to this profile's list of endpoints (it is

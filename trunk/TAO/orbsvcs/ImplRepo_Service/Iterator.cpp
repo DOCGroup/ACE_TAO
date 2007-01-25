@@ -22,8 +22,7 @@ ImR_Iterator::ImR_Iterator (CORBA::ULong n, Locator_Repository& repo, PortableSe
 
 CORBA::Boolean
 ImR_Iterator::next_n (CORBA::ULong how_many,
-                      ImplementationRepository::ServerInformationList_out server_list
-                      ACE_ENV_ARG_DECL)
+                      ImplementationRepository::ServerInformationList_out server_list)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (server_list,
@@ -84,6 +83,6 @@ void
 ImR_Iterator::destroy (void)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  PortableServer::ObjectId_var oid = poa_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  poa_->deactivate_object (oid.in() ACE_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var oid = poa_->servant_to_id (this);
+  poa_->deactivate_object (oid.in());
 }

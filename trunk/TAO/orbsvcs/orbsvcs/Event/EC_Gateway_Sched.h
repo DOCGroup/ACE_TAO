@@ -49,8 +49,7 @@ public:
              RtecScheduler::Scheduler_ptr supplier_sched,
              RtecScheduler::Scheduler_ptr consumer_sched,
              const char* consumer_name,
-             const char* supplier_name
-             ACE_ENV_ARG_DECL);
+             const char* supplier_name);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

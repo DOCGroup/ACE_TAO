@@ -36,26 +36,23 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "gateway_server_orb"
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "gateway_server_orb");
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
       /// Resolve reference to RootPOA
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
 
       /// Narrow it down correctly.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       /// Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
@@ -76,23 +73,19 @@ main (int argc, char *argv[])
       policies.length (3);
 
       policies [0] =
-        root_poa->create_servant_retention_policy (PortableServer::RETAIN
-                                                   ACE_ENV_ARG_PARAMETER);
+        root_poa->create_servant_retention_policy (PortableServer::RETAIN);
 
       policies [1] =
-        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
-                                                    ACE_ENV_ARG_PARAMETER);
+        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
 
 
       policies [2] =
-        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID
-                                               ACE_ENV_ARG_PARAMETER);
+        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
       PortableServer::POA_var gateway_poa =
         root_poa->create_POA ("Gateway_POA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
+                              policies);
 
       for (CORBA::ULong i = 0; i != policies.length (); ++i) {
         policies[i]->destroy ();
@@ -100,13 +93,11 @@ main (int argc, char *argv[])
 
       // Get the POA Current object reference
       obj =
-        orb->resolve_initial_references ("POACurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("POACurrent");
 
       // Narrow the object reference to a POA Current reference
       PortableServer::Current_var poa_current =
-        PortableServer::Current::_narrow (obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+        PortableServer::Current::_narrow (obj.in ());
 
       Gateway_i *gateway;
 
@@ -115,7 +106,7 @@ main (int argc, char *argv[])
                                    poa_current.in ()),
                         CORBA::NO_MEMORY ());
 
-      gateway_poa->set_servant (gateway ACE_ENV_ARG_PARAMETER);
+      gateway_poa->set_servant (gateway);
 
       /// Get the ObjectID
       PortableServer::ObjectId_var oid =
@@ -131,8 +122,7 @@ main (int argc, char *argv[])
 
       /// Activate the Object_Factory_i Object
       gateway_poa->activate_object_with_id (oid.in (),
-                                            object_factory
-                                            ACE_ENV_ARG_PARAMETER);
+                                            object_factory);
 
       // Get the object reference.
       CORBA::Object_var gateway_object_factory =
@@ -140,8 +130,7 @@ main (int argc, char *argv[])
 
       /// Convert the object reference to a string format.
       CORBA::String_var ior =
-        orb->object_to_string (gateway_object_factory.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (gateway_object_factory.in ());
 
       /// If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != 0)
@@ -159,14 +148,12 @@ main (int argc, char *argv[])
 
       orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ORT test (gateway_server):");
+      ex._tao_print_exception ("ORT test (gateway_server):");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

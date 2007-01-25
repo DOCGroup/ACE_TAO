@@ -58,8 +58,7 @@ TAO::FT_FaultConsumer::~FT_FaultConsumer ()
 int TAO::FT_FaultConsumer::init (
   PortableServer::POA_ptr poa,
   FT::FaultNotifier_ptr fault_notifier,
-  TAO::FT_FaultAnalyzer * fault_analyzer
-  ACE_ENV_ARG_DECL)
+  TAO::FT_FaultAnalyzer * fault_analyzer)
 {
 
   if (TAO_debug_level > 1)
@@ -91,18 +90,18 @@ int TAO::FT_FaultConsumer::init (
   //@@ For now, let's try just activating it in the POA.
 
   // Activate this consumer in the POA.
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this);
   CORBA::Object_var obj =
-    this->poa_->id_to_reference (this->object_id_.in() ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (this->object_id_.in());
 
   // Narrow it to CosNotifyComm::StructuredPushConsumer.
   this->consumer_ref_ = CosNotifyComm::StructuredPushConsumer::_narrow (
-    obj.in() ACE_ENV_ARG_PARAMETER);
+    obj.in());
 
   // Subscribe to the FaultNotifier.
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil ();
   this->consumer_id_ = fault_notifier_->connect_structured_fault_consumer (
-    this->consumer_ref_.in(), filter.in () ACE_ENV_ARG_PARAMETER);
+    this->consumer_ref_.in(), filter.in ());
 
   if (TAO_debug_level > 1)
   {
@@ -133,7 +132,7 @@ int TAO::FT_FaultConsumer::fini (void)
 
   // Disconnect from the FaultNotifier.
   // Swallow any exception.
-  ACE_TRY_NEW_ENV
+  try
   {
     if (!CORBA::is_nil (this->fault_notifier_.in()))
     {
@@ -148,7 +147,7 @@ int TAO::FT_FaultConsumer::fini (void)
       }
 
       this->fault_notifier_->disconnect_consumer (
-        this->consumer_id_ ACE_ENV_ARG_PARAMETER);
+        this->consumer_id_);
 
       if (TAO_debug_level > 1)
       {
@@ -161,18 +160,15 @@ int TAO::FT_FaultConsumer::fini (void)
 
       // Deactivate ourself from the POA.
       this->poa_->deactivate_object (
-        this->object_id_.in() ACE_ENV_ARG_PARAMETER);
+        this->object_id_.in());
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       ACE_TEXT (
-        "TAO::FT_FaultConsumer::fini: "
-        "Error disconnecting from notifier (ignored).\n")
-    );
+        "TAO::FT_FaultConsumer::fini: ""Error disconnecting from notifier (ignored).\n"));
   }
-  ACE_ENDTRY;
 
   if (TAO_debug_level > 1)
   {
@@ -218,7 +214,6 @@ size_t TAO::FT_FaultConsumer::notifications () const
 // we simply log the error and drop the event.
 void TAO::FT_FaultConsumer::push_structured_event (
   const CosNotification::StructuredEvent &event
-  ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
@@ -270,7 +265,6 @@ void TAO::FT_FaultConsumer::push_structured_event (
 void TAO::FT_FaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
@@ -282,7 +276,6 @@ void TAO::FT_FaultConsumer::offer_change (
 }
 
 void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

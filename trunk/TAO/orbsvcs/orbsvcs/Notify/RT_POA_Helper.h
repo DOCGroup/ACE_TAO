@@ -37,24 +37,24 @@ public:
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr parent_poa, const char* poa_name, const NotifyExt::ThreadPoolParams& tp_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params);
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread lane policy is applied to the new POA.
   void init (PortableServer::POA_ptr parent_poa, const char* poa_name,
-             const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL);
+             const NotifyExt::ThreadPoolLanesParams& tpl_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread lane policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The CLIENT_PROPAGATED policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr parent_poa);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

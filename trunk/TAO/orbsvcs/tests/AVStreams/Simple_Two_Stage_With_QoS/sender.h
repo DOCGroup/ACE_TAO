@@ -40,7 +40,7 @@ public:
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
                              const AVStreams::flowSpec &/* the_flows */
-                             ACE_ENV_ARG_DECL)
+                             )
                             ACE_THROW_SPEC(( CORBA::SystemException,
                                              AVStreams::noSuchFlow,
                                              AVStreams::QoSRequestFailed ));
@@ -68,8 +68,7 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Method to initialize the various data components.
 
   int pace_data (void);

@@ -48,8 +48,7 @@ Receiver_StreamEndPoint::get_callback (const char *flow_name,
 }
 
 CORBA::Boolean
-Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec
-                                                      ACE_ENV_ARG_DECL_NOT_USED)
+Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &flowspec)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -166,8 +165,7 @@ Receiver::receiver_name (void)
 
 int
 Receiver::init (int,
-                char **
-                ACE_ENV_ARG_DECL)
+                char **)
 {
   /// Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -209,8 +207,7 @@ Receiver::init (int,
   /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->receiver_name_,
-                                            mmdevice.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+                                            mmdevice.in ());
 
   /// Connect to the sender.
   this->connection_manager_.connect_to_sender ();
@@ -260,7 +257,7 @@ Receiver::output_file_name (void)
 void
 Receiver::shut_down (void)
 {
-  ACE_TRY
+  try
     {
       AVStreams::MMDevice_var mmdevice_obj =
         this->mmdevice_->_this ();
@@ -272,11 +269,10 @@ Receiver::shut_down (void)
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Receiver::shut_down");
+      ex._tao_print_exception ("Receiver::shut_down");
     }
-  ACE_ENDTRY;
 
 }
 
@@ -284,24 +280,20 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       /// Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
         = root_poa->the_POAManager ();
@@ -310,8 +302,7 @@ main (int argc,
 
       /// Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                      root_poa.in ());
 
       Receiver receiver;
       int result =
@@ -336,8 +327,7 @@ main (int argc,
 
       result =
         receiver.init (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER);
+                       argv);
 
       if (result != 0)
         return result;
@@ -351,12 +341,11 @@ main (int argc,
 
       ACE_OS::fclose (output_file);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"receiver::init");
+      ex._tao_print_exception ("receiver::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

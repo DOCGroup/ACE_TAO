@@ -9,8 +9,7 @@
 ACE_RCSID(Send_File, test_i, "$Id$")
 
 void
-Simple_Server_i::send_line (const char *line
-                            ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::send_line (const char *line)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "%s\n", line));

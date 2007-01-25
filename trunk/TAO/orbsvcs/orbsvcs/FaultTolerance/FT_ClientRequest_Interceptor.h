@@ -83,26 +83,21 @@ namespace TAO
     virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
-                            ACE_ENV_ARG_DECL)
+    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL)
+    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
-    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL)
+    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr
-                                ACE_ENV_ARG_DECL)
+    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
-    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                    ACE_ENV_ARG_DECL)
+    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
@@ -113,16 +108,13 @@ namespace TAO
   private:
 
     void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                IOP::TaggedComponent* tp
-                                ACE_ENV_ARG_DECL)
+                                IOP::TaggedComponent* tp)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void request_service_context (PortableInterceptor::ClientRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL)
+    void request_service_context (PortableInterceptor::ClientRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    TimeBase::TimeT request_expiration_time (CORBA::Policy *policy
-                                             ACE_ENV_ARG_DECL)
+    TimeBase::TimeT request_expiration_time (CORBA::Policy *policy)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:

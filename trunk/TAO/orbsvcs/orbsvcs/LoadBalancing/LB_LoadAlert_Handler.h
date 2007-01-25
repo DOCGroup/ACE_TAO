@@ -47,16 +47,14 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void enable_alert_excep (
-      ::Messaging::ExceptionHolder *
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disable_alert (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disable_alert_excep (
-      ::Messaging::ExceptionHolder *
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

@@ -31,7 +31,7 @@ public:
   virtual void throw_exception (void)
     ACE_THROW_SPEC ((CORBA::SystemException, Test::MyException));
 
-  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean call_back (void)

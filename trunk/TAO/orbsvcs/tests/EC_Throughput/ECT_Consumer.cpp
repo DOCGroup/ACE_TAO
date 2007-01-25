@@ -33,11 +33,10 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                         const char* name,
                         int type_start,
                         int type_count,
-                        RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name ACE_ENV_ARG_PARAMETER);
+    scheduler->create (name);
 
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -51,8 +50,7 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
                   RtecScheduler::VERY_LOW_IMPORTANCE,
                   time,
                   0,
-                  RtecScheduler::OPERATION
-                  ACE_ENV_ARG_PARAMETER);
+                  RtecScheduler::OPERATION);
 
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -72,8 +70,7 @@ Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
   RtecEventComm::PushConsumer_var objref = this->_this ();
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
-                                                qos.get_ConsumerQOS ()
-                                                ACE_ENV_ARG_PARAMETER);
+                                                qos.get_ConsumerQOS ());
 }
 
 void
@@ -91,8 +88,8 @@ Test_Consumer::disconnect (void)
   PortableServer::POA_var poa =
     this->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this);
+  poa->deactivate_object (id.in ());
 }
 
 void
@@ -109,8 +106,7 @@ Test_Consumer::accumulate (ACE_Throughput_Stats& stats) const
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
+Test_Consumer::push (const RtecEventComm::EventSet& events)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
@@ -149,7 +145,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events
             {
               // We stop the timer as soon as we realize it is time to
               // do so.
-              this->driver_->shutdown_consumer (this->cookie_ ACE_ENV_ARG_PARAMETER);
+              this->driver_->shutdown_consumer (this->cookie_);
             }
         }
       else

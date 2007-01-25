@@ -8,7 +8,7 @@ ACE_RCSID (Application_Controlled,
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char *location1 = "MyLocation 1";
       const char *location2 = "MyLocation 2";
@@ -99,13 +99,11 @@ main (int argc, char *argv[])
         return 1;
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "lb_server exception");
+      ex._tao_print_exception ("lb_server exception");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -55,8 +55,7 @@ public:
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
   virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+                                 CosTrading::OfferSeq_out offers)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

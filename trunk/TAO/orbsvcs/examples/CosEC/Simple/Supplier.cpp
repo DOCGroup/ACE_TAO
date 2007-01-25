@@ -25,12 +25,11 @@ Supplier::Supplier (void)
 int
 Supplier::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "");
 
       if (argc <= 1)
         {
@@ -40,9 +39,9 @@ Supplier::run (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
@@ -51,11 +50,10 @@ Supplier::run (int argc, char* argv[])
       // command line argument or resolve_initial_references(), but
       // this is simpler...
       object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (argv[1]);
 
       CosEventChannelAdmin::EventChannel_var event_channel =
-        CosEventChannelAdmin::EventChannel::_narrow (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
+        CosEventChannelAdmin::EventChannel::_narrow (object.in ());
 
       // The canonical protocol to connect to the EC
       CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
@@ -67,7 +65,7 @@ Supplier::run (int argc, char* argv[])
       CosEventComm::PushSupplier_var supplier =
         this->_this ();
 
-      consumer->connect_push_supplier (supplier.in () ACE_ENV_ARG_PARAMETER);
+      consumer->connect_push_supplier (supplier.in ());
 
       // Push the events...
       ACE_Time_Value sleep_time (0, 10000); // 10 milliseconds
@@ -77,7 +75,7 @@ Supplier::run (int argc, char* argv[])
 
       for (int i = 0; i != 2000; ++i)
         {
-          consumer->push (event ACE_ENV_ARG_PARAMETER);
+          consumer->push (event);
           ACE_OS::sleep (sleep_time);
         }
 
@@ -89,18 +87,17 @@ Supplier::run (int argc, char* argv[])
 
       // Deactivate this object...
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+        poa->servant_to_id (this);
+      poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier::run");
+      ex._tao_print_exception ("Supplier::run");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

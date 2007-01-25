@@ -25,8 +25,7 @@ TAO_ECG_Simple_Address_Server::init (const char *mcast_addr)
 void
 TAO_ECG_Simple_Address_Server::get_addr (
     const RtecEventComm::EventHeader& /*header*/,
-    RtecUDPAdmin::UDP_Addr_out addr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    RtecUDPAdmin::UDP_Addr_out addr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // unsigned long

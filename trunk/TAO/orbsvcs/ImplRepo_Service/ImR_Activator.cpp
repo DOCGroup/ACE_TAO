@@ -25,16 +25,14 @@ ImR_Activator_Shutdown::ImR_Activator_Shutdown (ImR_Activator_i &act)
 void
 ImR_Activator_Shutdown::operator() (int /*which_signal*/)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
-    this->act_.shutdown (true ACE_ENV_ARG_PARAMETER);
+    this->act_.shutdown (true);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR Activator: ");
+    ex._tao_print_exception ("ImR Activator: ");
   }
-  ACE_ENDTRY;
 }
 
 int
@@ -45,10 +43,9 @@ run_standalone (Activator_Options& opts)
   ImR_Activator_Shutdown killer (server);
   Service_Shutdown kill_contractor (killer);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
+      int status = server.init (opts);
 
       if (status == -1)
         {
@@ -67,19 +64,18 @@ run_standalone (Activator_Options& opts)
         }
       return 0;
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
+      ex._tao_print_exception ("Unknown Exception");
     }
-  ACE_ENDTRY;
 
   return 1;
 }

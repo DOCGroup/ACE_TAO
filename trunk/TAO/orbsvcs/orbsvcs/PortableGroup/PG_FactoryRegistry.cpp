@@ -117,7 +117,7 @@ void TAO::PG_FactoryRegistry::_remove_ref (void)
   this->quit_state_ = GONE;
 }
 
-int TAO::PG_FactoryRegistry::idle (int & result ACE_ENV_ARG_DECL_NOT_USED)
+int TAO::PG_FactoryRegistry::idle (int & result)
 {
   result = 0;
   int quit = 0;
@@ -145,15 +145,14 @@ int TAO::PG_FactoryRegistry::fini (void)
   }
   if (this->ns_name_ != 0)
   {
-    this->naming_context_->unbind (this_name_
-                            ACE_ENV_ARG_PARAMETER);
+    this->naming_context_->unbind (this_name_);
     this->ns_name_ = 0;
   }
   return 0;
 }
 
 
-void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 {
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
   ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
@@ -163,21 +162,18 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
   ACE_ASSERT ( ! CORBA::is_nil (this->poa_.in ()));
 
   // Register with the POA.
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this);
 
   // find my identity as a corba object
   this->this_obj_ =
-    this->poa_->id_to_reference (object_id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (object_id_.in ());
 
   // and create a ior string
-  this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+  this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
 
 }
 
-int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
-                                   ACE_ENV_ARG_DECL)
+int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
 
@@ -185,8 +181,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
-                                            ACE_ENV_ARG_PARAMETER);
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -195,8 +190,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
 
   // Get the POA object.
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+    PortableServer::POA::_narrow (poa_object.in ());
 
 
   if (CORBA::is_nil (this->poa_.in()))
@@ -212,17 +206,15 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
   poa_manager->activate ();
 
   // Register with the POA.
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
+  this->object_id_ = this->poa_->activate_object (this);
 
   // find my identity as a corba object
   this->this_obj_ =
-    this->poa_->id_to_reference (object_id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+    this->poa_->id_to_reference (object_id_.in ());
 
 
   // and create a ior string
-  this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+  this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
 
 
   if (this->ior_output_file_ != 0)
@@ -239,7 +231,7 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
     this->identity_ += this->ns_name_;
 
     CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      this->orb_->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -248,13 +240,13 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
     }
 
     this->naming_context_ =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+      CosNaming::NamingContext::_narrow (naming_obj.in ());
 
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
     this->naming_context_->rebind (this->this_name_, this->this_obj_.in()  //CORBA::Object::_duplicate(this_obj)
-                            ACE_ENV_ARG_PARAMETER);
+                            );
   }
 
   return result;
@@ -292,7 +284,6 @@ void TAO::PG_FactoryRegistry::register_factory (
     const char * role,
     const char * type_id,
     const PortableGroup::FactoryInfo & factory_info
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -323,7 +314,7 @@ void TAO::PG_FactoryRegistry::register_factory (
     {
       if (role_info->type_id_ != type_id)
         {
-          ACE_THROW ( PortableGroup::TypeConflict() );
+          throw PortableGroup::TypeConflict();
         }
     }
 
@@ -339,7 +330,7 @@ void TAO::PG_FactoryRegistry::register_factory (
                       this->identity_.c_str(),
                       static_cast<const char *> (info.the_location[0].id),
           role));
-      ACE_THROW (PortableGroup::MemberAlreadyPresent() );
+      throw PortableGroup::MemberAlreadyPresent();
     }
   }
 
@@ -365,7 +356,6 @@ void TAO::PG_FactoryRegistry::register_factory (
 void TAO::PG_FactoryRegistry::unregister_factory (
     const char * role,
     const PortableGroup::Location & location
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound))
 {
@@ -431,7 +421,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
       this->identity_.c_str(),
       role
       ));
-    ACE_THROW ( PortableGroup::MemberNotFound() );
+    throw PortableGroup::MemberNotFound();
   }
 
   //////////////////////
@@ -445,8 +435,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
       ));
     if (quit_on_idle_)
     {
-        this->poa_->deactivate_object (this->object_id_.in ()
-               ACE_ENV_ARG_PARAMETER);
+        this->poa_->deactivate_object (this->object_id_.in ());
         quit_state_ = DEACTIVATED;
     }
   }
@@ -456,7 +445,6 @@ void TAO::PG_FactoryRegistry::unregister_factory (
 
 void TAO::PG_FactoryRegistry::unregister_factory_by_role (
     const char * role
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -493,8 +481,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
       ));
     if (quit_on_idle_)
     {
-        this->poa_->deactivate_object (this->object_id_.in ()
-               ACE_ENV_ARG_PARAMETER);
+        this->poa_->deactivate_object (this->object_id_.in ());
         quit_state_ = DEACTIVATED;
     }
   }
@@ -504,7 +491,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
 
 void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     const PortableGroup::Location & location
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -608,8 +594,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
       ));
     if (quit_on_idle_)
     {
-        this->poa_->deactivate_object (this->object_id_.in ()
-               ACE_ENV_ARG_PARAMETER);
+        this->poa_->deactivate_object (this->object_id_.in ());
         quit_state_ = DEACTIVATED;
     }
   }
@@ -620,7 +605,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_role (
     const char * role,
     CORBA::String_out type_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -652,7 +636,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_location (
     const PortableGroup::Location & location
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

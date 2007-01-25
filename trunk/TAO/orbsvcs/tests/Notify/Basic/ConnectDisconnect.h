@@ -73,8 +73,7 @@ public:
                   char *argv[]);
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // initialization.
 
   void run_test (void);

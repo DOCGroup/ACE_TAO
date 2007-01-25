@@ -528,8 +528,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
   CSIIOP::AssociationOptions csiv2_target_supports,
   CSIIOP::AssociationOptions csiv2_target_requires)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // @todo: This hard-coding should be fixed once SECIOP is
       // supported.
@@ -545,8 +544,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
 
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       // Register the SSLIOP ORB initializer.
       // PortableInterceptor::ORBInitializer_ptr tmp;
@@ -563,17 +561,15 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
       //PortableInterceptor::ORBInitializer_var initializer = tmp;
       initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ex,
                            "Unable to register SSLIOP ORB "
                            "initializer.");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

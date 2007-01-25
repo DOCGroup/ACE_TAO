@@ -73,8 +73,7 @@ TAO_ValueBoxDef_i::type_i (void)
 
   return this->repo_->tc_factory ()->create_value_box_tc (id.c_str (),
                                                           name.c_str (),
-                                                          tc.in ()
-                                                          ACE_ENV_ARG_PARAMETER);
+                                                          tc.in ());
 }
 
 CORBA::IDLType_ptr
@@ -99,29 +98,24 @@ TAO_ValueBoxDef_i::original_type_def_i (void)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (boxed_type_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
+                                              this->repo_);
 
-  return CORBA::IDLType::_narrow (obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  return CORBA::IDLType::_narrow (obj.in ());
 }
 
 void
-TAO_ValueBoxDef_i::original_type_def (CORBA::IDLType_ptr original_type_def
-                                      ACE_ENV_ARG_DECL)
+TAO_ValueBoxDef_i::original_type_def (CORBA::IDLType_ptr original_type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
   this->update_key ();
 
-  this->original_type_def_i (original_type_def
-                             ACE_ENV_ARG_PARAMETER);
+  this->original_type_def_i (original_type_def);
 }
 
 void
-TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *boxed_type =

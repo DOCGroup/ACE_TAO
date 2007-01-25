@@ -71,8 +71,7 @@ int
 TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task * /*task*/,
                                                     TAO_EC_ProxyPushSupplier * /*proxy*/,
                                                     RtecEventComm::PushConsumer_ptr /*consumer*/,
-                                                    RtecEventComm::EventSet& /*event*/
-                                                    ACE_ENV_ARG_DECL_NOT_USED)
+                                                    RtecEventComm::EventSet& /*event*/)
 {
   return this->queue_full_action_return_value_;
 }
@@ -103,7 +102,7 @@ TAO_EC_Dispatching_Task::svc (void)
   int done = 0;
   while (!done)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           ACE_Message_Block *mb = 0;
           if (this->getq (mb) == -1)
@@ -129,12 +128,10 @@ TAO_EC_Dispatching_Task::svc (void)
           if (result == -1)
             done = 1;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "EC (%P|%t) exception in dispatching queue");
+          ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }
-      ACE_ENDTRY;
     }
   return 0;
 }
@@ -142,15 +139,13 @@ TAO_EC_Dispatching_Task::svc (void)
 void
 TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
                                RtecEventComm::PushConsumer_ptr consumer,
-                               RtecEventComm::EventSet& event
-                               ACE_ENV_ARG_DECL)
+                               RtecEventComm::EventSet& event)
 {
   if (this->msg_queue()->is_full ())
     {
       int action =
         this->queue_full_service_object_->queue_full_action (this, proxy,
-                                                             consumer, event
-                                                             ACE_ENV_ARG_PARAMETER);
+                                                             consumer, event);
 
       if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
         return;
@@ -163,8 +158,7 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
   void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
-                                 CORBA::COMPLETED_NO));
+    throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   ACE_Message_Block *mb =
     new (buf) TAO_EC_Push_Command (proxy,
@@ -200,8 +194,7 @@ int
 TAO_EC_Push_Command::execute (void)
 {
   this->proxy_->push_to_consumer (this->consumer_.in (),
-                                  this->event_
-                                   ACE_ENV_ARG_PARAMETER);
+                                  this->event_);
   return 0;
 }
 

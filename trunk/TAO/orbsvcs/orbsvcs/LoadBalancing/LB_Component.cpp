@@ -99,8 +99,7 @@ TAO_LB_Component::register_orb_initializer (
   const CORBA::StringSeq & repository_ids,
   const char * location)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Register the LB_Component ORB initializer.
       PortableInterceptor::ORBInitializer_ptr tmp;
@@ -116,17 +115,14 @@ TAO_LB_Component::register_orb_initializer (
 
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (initializer.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to register LB_Component ORB "
-                           "initializer.");
+      ex._tao_print_exception (
+        "Unable to register LB_Component ORB ""initializer.");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

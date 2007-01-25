@@ -39,7 +39,7 @@ class Basic_Logging_Service
   virtual ~Basic_Logging_Service (void);
   // Destructor.
 
-  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  int init (int argc, char *argv[]);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -52,8 +52,7 @@ class Basic_Logging_Service
   // Returns 0 on success, -1 on error.
 
 protected:
-  void init_ORB (int& argc, char *argv []
-                 ACE_ENV_ARG_DECL);
+  void init_ORB (int& argc, char *argv []);
   // initialize the ORB.
 
   int parse_args (int argc, char *argv []);

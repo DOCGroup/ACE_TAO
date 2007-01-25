@@ -67,7 +67,6 @@ AdminProperties_Task::svc (void)
 
  ACE_DEBUG ((LM_DEBUG, "\n1 supplier sending %d events...\n", event_count));
 
- ACE_DECLARE_NEW_CORBA_ENV;
 
  for (int i = 0 ; i < event_count; ++i)
    {
@@ -75,24 +74,24 @@ AdminProperties_Task::svc (void)
 
      event.remainder_of_body <<= (CORBA::Long)i;
 
-     ACE_TRY
+     try
         {
           ACE_DEBUG((LM_DEBUG, "+"));
-          this->supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
+          this->supplier_->send_event (event);
         }
-      ACE_CATCH (CORBA::IMP_LIMIT, impl_limit)
+      catch (const CORBA::IMP_LIMIT& impl_limit)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "\nEvent %d was not send due to Impl Limit reached\n", i));
 
           ++ this->client_->rejections_;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: Exception sending event\n");
+          ex._tao_print_exception (
+            "Error: Exception sending event\n");
           return 1;
         }
-      ACE_ENDTRY;
    }
 
 return 0;
@@ -108,7 +107,7 @@ AdminProperties_StructuredPushConsumer::AdminProperties_StructuredPushConsumer (
 
 void
 AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
-                                                               ACE_ENV_ARG_DECL_NOT_USED)
+                                                               )
   ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   ++events_received_;
@@ -214,7 +213,7 @@ AdminProperties::parse_args(int argc, char *argv[])
 }
 
 void
-AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
+AdminProperties::create_channel(bool reject)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -240,8 +239,7 @@ AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
 
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
+                                               id);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 
@@ -249,14 +247,12 @@ AdminProperties::create_channel(bool reject ACE_ENV_ARG_DECL)
   CosNotifyChannelAdmin::AdminID adminid;
 
   this->supplier_admin_ = ec_->new_for_suppliers (this->ifgop_,
-                                                  adminid
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ = ec_->new_for_consumers (this->ifgop_,
-                                                  adminid
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                  adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }
@@ -265,14 +261,14 @@ void
 AdminProperties::run_test (void)
 {
   bool reject = true;
-  this->create_channel(reject ACE_ENV_ARG_PARAMETER);
-  this->test_max_queue_length (reject ACE_ENV_ARG_PARAMETER);
+  this->create_channel(reject);
+  this->test_max_queue_length (reject);
 
   this->ec_->destroy();
 
   reject = false;
-  this->create_channel(reject ACE_ENV_ARG_PARAMETER);
-  this->test_max_queue_length (reject ACE_ENV_ARG_PARAMETER);
+  this->create_channel(reject);
+  this->test_max_queue_length (reject);
 
    this->test_max_clients ();
 
@@ -280,19 +276,19 @@ AdminProperties::run_test (void)
 }
 
 void
-AdminProperties::test_max_queue_length (bool reject ACE_ENV_ARG_DECL)
+AdminProperties::test_max_queue_length (bool reject)
 {
   // Create the consumer
   AdminProperties_StructuredPushConsumer *consumer;
   ACE_NEW (consumer, AdminProperties_StructuredPushConsumer (this));
-  consumer->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  consumer->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
+  consumer->init (root_poa_.in ());
+  consumer->connect (this->consumer_admin_.in ());
 
   // Create the supplier
   TAO_Notify_Tests_StructuredPushSupplier *supplier = 0;
   ACE_NEW (supplier, TAO_Notify_Tests_StructuredPushSupplier ());
-  supplier->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  supplier->connect (this->supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
+  supplier->init (root_poa_.in ());
+  supplier->connect (this->supplier_admin_.in ());
 
   AdminProperties_Task supplier_task;
 
@@ -376,7 +372,7 @@ AdminProperties::create_suppliers (void)
 
   int index = 0;
 
-  ACE_TRY
+  try
     {
       TAO_Notify_Tests_StructuredPushSupplier *supplier;
 
@@ -384,25 +380,22 @@ AdminProperties::create_suppliers (void)
         {
           ACE_NEW (supplier,
                    TAO_Notify_Tests_StructuredPushSupplier ());
-          supplier->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
+          supplier->init (root_poa_.in ());
 
-          supplier->connect (this->supplier_admin_.in ()
-                             ACE_ENV_ARG_PARAMETER);
+          supplier->connect (this->supplier_admin_.in ());
 
           this->suppliers_connected_count_++;
         }
     }
-  ACE_CATCH (CORBA::IMP_LIMIT, impl_limit)
+  catch (const CORBA::IMP_LIMIT& impl_limit)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit excpetion when connecting supplier\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "\nError: Exception in connecting supplier\n");
+      ex._tao_print_exception ("\nError: Exception in connecting supplier\n");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -415,31 +408,30 @@ AdminProperties::create_consumers (void)
 
   int index = 0;
 
-  ACE_TRY
+  try
     {
       TAO_Notify_Tests_StructuredPushConsumer *consumer;
 
       for (index = 0; index < this->consumers_; ++index)
         {
           ACE_NEW (consumer, TAO_Notify_Tests_StructuredPushConsumer ());
-          consumer->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
+          consumer->init (root_poa_.in ());
 
-          consumer->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
+          consumer->connect (this->consumer_admin_.in ());
 
           this->consumers_connected_count_++;
         }
     }
-  ACE_CATCH (CORBA::IMP_LIMIT, impl_limit)
+  catch (const CORBA::IMP_LIMIT& impl_limit)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit exception when connecting consumer\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "\nError: Exception in connecting consumer \n");
+        ex._tao_print_exception (
+          "\nError: Exception in connecting consumer \n");
     }
-  ACE_ENDTRY;
 }
 
 /***************************************************************************/
@@ -449,17 +441,16 @@ main (int argc, char* argv[])
 {
   AdminProperties test;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      test.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      test.init (argc, argv);
 
       test.run_test ();
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -42,7 +42,7 @@ public:
   INS_Locator (ImR_Locator_i& loc);
 
   /// Locate the appropriate IOR.
-  char* locate (const char *object_key ACE_ENV_ARG_DECL)
+  char* locate (const char *object_key)
     ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
 
 private:

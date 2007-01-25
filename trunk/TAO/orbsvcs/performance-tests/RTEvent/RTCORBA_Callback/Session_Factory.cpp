@@ -17,8 +17,7 @@ Session_Factory::Session_Factory (CORBA::ORB_ptr orb,
 }
 
 Test::Session_ptr
-Session_Factory::create_new_session (Test::Callback_ptr cb
-                                     ACE_ENV_ARG_DECL)
+Session_Factory::create_new_session (Test::Callback_ptr cb)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Servant_var<Session> session_impl (new Session (cb,
@@ -31,7 +30,7 @@ void
 Session_Factory::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 PortableServer::POA_ptr

@@ -20,7 +20,6 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
     poa_(PortableServer::POA::_duplicate(poa)),
     log_poa_(PortableServer::POA::_duplicate(log_poa))
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Create an instance of the event channel.
   TAO_CEC_EventChannel_Attributes attr (this->poa_.in(),
@@ -40,38 +39,34 @@ TAO_EventLog_i::~TAO_EventLog_i ()
 
 
 DsLogAdmin::Log_ptr
-TAO_EventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
+TAO_EventLog_i::copy (DsLogAdmin::LogId &id)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the log.
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
-    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   DsEventLogAdmin::EventLog_var log =
-    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id
-                             ACE_ENV_ARG_PARAMETER);
+    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id);
 
-  this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  this->copy_attributes (log.in ());
 
   return log._retn ();
 
 }
 
 DsLogAdmin::Log_ptr
-TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
+TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the log supplying the log id.
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
-    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   DsEventLogAdmin::EventLog_var log =
-    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_
-                                     ACE_ENV_ARG_PARAMETER);
+    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_);
 
-  this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  this->copy_attributes (log.in ());
 
   return log._retn ();
 
@@ -83,19 +78,16 @@ TAO_EventLog_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Send event to indicate the log has been deleted.
-  notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
+  notifier_->object_deletion (logid_);
 
   // Remove ourselves from the list of logs.
-  this->logmgr_i_.remove (this->logid_
-			  ACE_ENV_ARG_PARAMETER);
+  this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
   PortableServer::ObjectId_var id =
-    this->log_poa_->servant_to_id (this
-                                   ACE_ENV_ARG_PARAMETER);
+    this->log_poa_->servant_to_id (this);
 
-  this->log_poa_->deactivate_object (id.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+  this->log_poa_->deactivate_object (id.in ());
 }
 
 void

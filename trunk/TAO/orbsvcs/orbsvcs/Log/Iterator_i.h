@@ -59,8 +59,7 @@ public:
 
   /// Gets a list of LogRecords.
   virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
-				       CORBA::ULong how_many
-				       ACE_ENV_ARG_DECL)
+				       CORBA::ULong how_many)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidParam))			= 0;
 
