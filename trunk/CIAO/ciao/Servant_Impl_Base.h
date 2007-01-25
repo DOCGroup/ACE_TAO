@@ -61,114 +61,103 @@ namespace CIAO
     /// Operations for CCMObject interface.
 
     virtual ::Components::PrimaryKeyBase *
-    get_primary_key (void)
+    get_primary_key ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::NoKeyAvailable));
 
     virtual CORBA::IRObject_ptr
-    get_component_def (void)
+    get_component_def ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Components::SessionComponent_ptr
-    get_executor (void)
+    get_executor ()
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     virtual void
-    configuration_complete (void)
+    configuration_complete ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidConfiguration));
 
     virtual void
-    remove (void)
+    remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
     virtual ::Components::ConnectionDescriptions *
-    get_connections (const char *name
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_connections (const char *name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::ComponentPortDescription *
-    get_all_ports (void)
+    get_all_ports ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr
-    provide_facet (const char *name
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    provide_facet (const char *name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::FacetDescriptions *
-    get_named_facets (const ::Components::NameList & names
-                        ACE_ENV_ARG_DECL)
+    get_named_facets (const ::Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::FacetDescriptions *
-    get_all_facets (void)
+    get_all_facets ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual ::Components::ConsumerDescriptions *
-    get_all_consumers (void)
+    get_all_consumers ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual ::Components::EventConsumerBase_ptr
-    get_consumer (const char *sink_name
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_consumer (const char *sink_name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::ConsumerDescriptions *
-    get_named_consumers (const ::Components::NameList & names
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_consumers (const ::Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::EmitterDescriptions *
-    get_named_emitters (const ::Components::NameList & names
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_emitters (const ::Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_named_receptacles (const ::Components::NameList & names
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_receptacles (const ::Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (void)
+    get_all_receptacles ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::PublisherDescriptions *
-    get_named_publishers (const ::Components::NameList & names
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_publishers (const ::Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     /// Operation to set attributes on the component.
-    virtual void set_attributes (const Components::ConfigValues &descr
-                                 ACE_ENV_ARG_DECL) = 0;
+    virtual void set_attributes (const Components::ConfigValues &descr) = 0;
 
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
-    get_standard_configurator (void)
+    get_standard_configurator ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered
     /// to that POA when _this() is called.
     virtual PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL
       );
 
   protected:
     void add_facet (const char *port_name,
-                    ::CORBA::Object_ptr port_ref
-                    ACE_ENV_ARG_DECL)
+                    ::CORBA::Object_ptr port_ref)
       ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     CORBA::Object_ptr lookup_facet (const char *port_name);
@@ -182,8 +171,7 @@ namespace CIAO
                          ::Components::Cookie * cookie);
 
     void add_consumer (const char *port_name,
-                       ::Components::EventConsumerBase_ptr port_ref
-                       ACE_ENV_ARG_DECL)
+                       ::Components::EventConsumerBase_ptr port_ref)
       ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     ::Components::EventConsumerBase_ptr lookup_consumer (

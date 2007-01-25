@@ -47,8 +47,7 @@ namespace
     virtual void
     receives_none (Type&)
     {
-      os << " (" << endl
-         << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
@@ -229,8 +228,7 @@ namespace
 
       os << "_ptr" << endl
          << scope_.name () << "_exec_i::get_"
-         << p.name () << " (" << endl
-         << ")" << endl
+         << p.name () << " ()" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl
@@ -461,8 +459,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ciao_preactivate (" << endl
-         << ")" << endl
+         << t.name () << "_exec_i::ciao_preactivate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -471,8 +468,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ciao_postactivate (" << endl
-         << ")" << endl
+         << t.name () << "_exec_i::ciao_postactivate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -481,8 +477,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_activate (" << endl
-         << ")" << endl
+         << t.name () << "_exec_i::ccm_activate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -491,8 +486,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_passivate (" << endl
-         << ")" << endl
+         << t.name () << "_exec_i::ccm_passivate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -501,8 +495,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_remove (" << endl
-         << ")" << endl
+         << t.name () << "_exec_i::ccm_remove ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -571,8 +564,7 @@ namespace
     virtual void
     receives_none (SemanticGraph::HomeFactory&)
     {
-      os << " (" << endl
-         << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
@@ -665,8 +657,7 @@ namespace
     virtual void
     receives_none (SemanticGraph::HomeFinder&)
     {
-      os << " (" << endl
-         << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
@@ -982,8 +973,7 @@ namespace
 
       os << "// Implicit operations." << endl << endl
          << STRS[COMP_EC] << "_ptr" << endl
-         << t.name () << "_exec_i::create (" << endl
-         << ")" << endl
+         << t.name () << "_exec_i::create ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl

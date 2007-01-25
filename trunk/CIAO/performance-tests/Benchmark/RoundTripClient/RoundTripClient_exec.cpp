@@ -23,8 +23,7 @@ MyImpl::RoundTripClient_exec_i::~RoundTripClient_exec_i ()
 // Operations from Components::SessionComponent
 void
 MyImpl::RoundTripClient_exec_i::set_session_context (
-    Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL)
+    Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -36,25 +35,24 @@ MyImpl::RoundTripClient_exec_i::set_session_context (
   //scheduling strategy to real-time scheduling
 
   this->context_ =
-    Benchmark::CCM_RoundTripClient_Context::_narrow (ctx
-						     ACE_ENV_ARG_PARAMETER);
+    Benchmark::CCM_RoundTripClient_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   // Urm, we actually discard exceptions thrown from this operation.
 }
 
 //Start the collocated test here
 void
-MyImpl::RoundTripClient_exec_i::ciao_preactivate (void)
+MyImpl::RoundTripClient_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RoundTripClient_exec_i::ccm_activate (void)
+MyImpl::RoundTripClient_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -63,14 +61,14 @@ MyImpl::RoundTripClient_exec_i::ccm_activate (void)
 }
 
 void
-MyImpl::RoundTripClient_exec_i::ciao_postactivate (void)
+MyImpl::RoundTripClient_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RoundTripClient_exec_i::start (void)
+MyImpl::RoundTripClient_exec_i::start ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ///////////// Start test /////////////////////////////////////////
@@ -102,7 +100,7 @@ MyImpl::RoundTripClient_exec_i::start (void)
       //Test value to be sent to the server
       long test = 0;
 
-      (void) lt->makeCall (test ACE_ENV_ARG_PARAMETER);
+      (void) lt->makeCall (test);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
@@ -133,8 +131,7 @@ MyImpl::RoundTripClient_exec_i::start (void)
 }
 
 ::Benchmark::CCM_Controller_ptr
-MyImpl::RoundTripClient_exec_i::get_controller (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTripClient_exec_i::get_controller ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Benchmark::CCM_Controller::_duplicate (this);
@@ -142,8 +139,7 @@ MyImpl::RoundTripClient_exec_i::get_controller (
 
 
 void
-MyImpl::RoundTripClient_exec_i::ccm_passivate (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::RoundTripClient_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -152,7 +148,7 @@ MyImpl::RoundTripClient_exec_i::ccm_passivate (
 }
 
 void
-MyImpl::RoundTripClient_exec_i::ccm_remove (void)
+MyImpl::RoundTripClient_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -170,7 +166,7 @@ MyImpl::RoundTripClientHome_exec_i::~RoundTripClientHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RoundTripClientHome_exec_i::create (void)
+MyImpl::RoundTripClientHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

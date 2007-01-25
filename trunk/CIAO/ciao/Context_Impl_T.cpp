@@ -36,7 +36,6 @@ namespace CIAO
             typename COMP_VAR>
   CORBA::Object_ptr
   Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::get_CCM_object (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState))
@@ -45,23 +44,19 @@ namespace CIAO
     {
       CORBA::Object_var obj;
 
-      ACE_TRY
+      try
         {
           obj =
-            this->container_->get_objref (this->servant_
-                                          ACE_ENV_ARG_PARAMETER);
+            this->container_->get_objref (this->servant_);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught Exception \n");
+          ex._tao_print_exception ("Caught Exception \n");
           return CORBA::Object::_nil ();
         }
-      ACE_ENDTRY;
 
 
-      this->component_ = COMP::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+      this->component_ = COMP::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->component_.in ()))
       {

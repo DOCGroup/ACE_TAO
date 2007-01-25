@@ -46,7 +46,7 @@ MyImpl::RoundTrip_exec_i::~RoundTrip_exec_i ()
 }
 
 ::Benchmark::CCM_LatencyTest *
-MyImpl::RoundTrip_exec_i::get_latency (void)
+MyImpl::RoundTrip_exec_i::get_latency ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Benchmark::CCM_LatencyTest::_duplicate (this);
@@ -54,8 +54,7 @@ MyImpl::RoundTrip_exec_i::get_latency (void)
 
 /* Main method that invokes the octet_sequence */
 CORBA::Long
-MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return data * data * data;
@@ -64,8 +63,7 @@ MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data
 // Operations from Components::SessionComponent
 void
 MyImpl::RoundTrip_exec_i::set_session_context (
-    Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL)
+    Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -74,23 +72,22 @@ MyImpl::RoundTrip_exec_i::set_session_context (
   //cout << "MyImpl::RoundTrip_exec_i::set_session_context\n" << endl;
 
   this->context_ =
-    Benchmark::CCM_RoundTrip_Context::_narrow (ctx
-                                               ACE_ENV_ARG_PARAMETER);
+    Benchmark::CCM_RoundTrip_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::RoundTrip_exec_i::ciao_preactivate (void)
+MyImpl::RoundTrip_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::RoundTrip_exec_i::ccm_activate (void)
+MyImpl::RoundTrip_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -103,7 +100,7 @@ MyImpl::RoundTrip_exec_i::ccm_activate (void)
 }
 
 void
-MyImpl::RoundTrip_exec_i::ciao_postactivate (void)
+MyImpl::RoundTrip_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -111,7 +108,7 @@ MyImpl::RoundTrip_exec_i::ciao_postactivate (void)
 }
 
 void
-MyImpl::RoundTrip_exec_i::ccm_passivate (void)
+MyImpl::RoundTrip_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -120,7 +117,7 @@ MyImpl::RoundTrip_exec_i::ccm_passivate (void)
 }
 
 void
-MyImpl::RoundTrip_exec_i::ccm_remove (void)
+MyImpl::RoundTrip_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -138,7 +135,7 @@ MyImpl::RoundTripHome_exec_i::~RoundTripHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::RoundTripHome_exec_i::create (void)
+MyImpl::RoundTripHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

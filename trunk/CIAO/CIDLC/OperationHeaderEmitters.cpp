@@ -33,8 +33,7 @@ OperationEmitter::receives_pre (Type&)
 void
 OperationEmitter::receives_none (Type&)
 {
-  os << " (" << endl
-      << ")" << endl;
+  os << " ()" << endl;
 }
 
 void
@@ -131,8 +130,7 @@ FactoryOperationEmitter::name (SemanticGraph::HomeFactory& t)
 void
 FactoryOperationEmitter::receives_none (SemanticGraph::HomeFactory&)
 {
-  os << " (" << endl
-      << ")" << endl;
+  os << " ()" << endl;
 }
 
 void
@@ -218,8 +216,7 @@ FinderOperationEmitter::name (SemanticGraph::HomeFinder& t)
 void
 FinderOperationEmitter::receives_none (SemanticGraph::HomeFinder&)
 {
-  os << " (" << endl
-      << ")" << endl;
+  os << " ()" << endl;
 }
 
 void

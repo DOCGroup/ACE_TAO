@@ -99,8 +99,7 @@ namespace
     virtual void
     receives_none (Type&)
     {
-      os << " (" << endl
-         << ");";
+      os << " ();";
     }
 
     virtual void
@@ -180,14 +179,14 @@ namespace
 
     // Overridden by facet and home operation emitters to do nothing.
     virtual void
-    gen_swap_related (Type&)
+    gen_swap_related (Type& o)
     {
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
         {
-          os << "this->activate_component (" << ");" << endl;
+          os << "this->activate_component ();" << endl;
         }
     }
 
@@ -207,8 +206,7 @@ namespace
     virtual void
     receives_none (Type&)
     {
-      os << " (" << endl
-         << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
@@ -506,6 +504,7 @@ namespace
          << "  " << STRS[COMP_SC] << "::_narrow (" << endl
          << "  this->ctx_.in ()" << endl
          << "  " << ");"
+         << endl
          << "if (! ::CORBA::is_nil (sc.in ()))" << endl
          << "{"
          << "return sc->get_CCM_object (" << endl
@@ -515,6 +514,7 @@ namespace
          << "::Components::EntityContext::_narrow (" << endl
          << "this->ctx_.in ()" << endl
          << ");"
+         << endl
          << "if (! ::CORBA::is_nil (ec.in ()))" << endl
          << "{"
          << "return ec->get_CCM_object (" << endl
@@ -582,8 +582,7 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "_ptr c" << endl
-           << ")" << endl
+        os << "_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "," << endl
@@ -592,11 +591,11 @@ namespace
            << "if (! ::CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
            << "{"
-           << "ACE_THROW ( " << STRS[EXCP_AC] << " ());"
+           << "throw " << STRS[EXCP_AC] << " ();"
            << "}"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
-           << "ACE_THROW ( " << STRS[EXCP_IC] << " ());"
+           << "throw " << STRS[EXCP_IC] << " ();"
            << "}"
            << "this->ciao_uses_" << u.name () << "_ =" << endl
            << "  ";
@@ -610,8 +609,7 @@ namespace
 
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
-           << u.name () << " (" << endl
-           << ")" << endl
+           << u.name () << " ()" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
@@ -695,8 +693,7 @@ namespace
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
-        os << "_ptr c" << endl
-           << ")" << endl
+        os << "_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "," << endl
@@ -741,8 +738,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
-           << STRS[COMP_CK] << " * ck" << endl
-           << ")" << endl
+           << STRS[COMP_CK] << " * ck)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -810,8 +806,7 @@ namespace
 
         os << " (" << endl
            << "ev" << endl
-           << ");"
-           << endl
+           << ");" << endl
            << "}";
 
         // @@ GD Modified Code Below
@@ -840,8 +835,7 @@ namespace
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
         os << endl
-           << ");"
-           << endl
+           << ");" << endl
            << "}"
            << "}";
 
@@ -851,8 +845,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_ptr c" << endl
-           << ")" << endl
+        os << "Consumer_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -885,8 +878,7 @@ namespace
         os << STRS[COMP_CK] << " *" << endl
            << scope_.name () << "_Context::subscribe_"
            << p.name () << "_generic (" << endl
-           << STRS[COMP_ECB] << "_ptr c" << endl
-           << ")" << endl
+           << STRS[COMP_ECB] << "_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -915,8 +907,7 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Context::unsubscribe_"
            << p.name () << " (" << endl
-           << STRS[COMP_CK] << " *ck" << endl
-           << ")" << endl
+           << STRS[COMP_CK] << " *ck)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -991,20 +982,19 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << "Consumer_ptr c" << endl
-           << ")" << endl
+        os << "Consumer_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
-           << "ACE_THROW ( ::CORBA::BAD_PARAM ());" << endl
+           << "throw ::CORBA::BAD_PARAM ();" << endl
            << "}"
            << "if (! ::CORBA::is_nil (this->ciao_emits_" << e.name ()
            << "_consumer_.in ()))" << endl
            << "{"
-           << "ACE_THROW ( " << STRS[EXCP_AC] << " ());" << endl
+           << "throw " << STRS[EXCP_AC] << " ();" << endl
            << "}"
            << "this->ciao_emits_" << e.name ()
            << "_consumer_ = " << endl;
@@ -1018,8 +1008,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
-           << e.name () << " (" << endl
-           << ")" << endl
+           << e.name () << " ()" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
@@ -1216,8 +1205,7 @@ namespace
 
         os << STRS[COMP_CD] << " *" << endl
            << t.name () << "_Context::get_registered_consumers (" << endl
-           << "const char *publisher_name" << endl
-           << ")" << endl
+           << "const char *publisher_name)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IN] << "," << endl
@@ -1305,11 +1293,10 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "  consumer" << endl
-           << "  " << ");"
- << endl
+           << "  " << ");" << endl
            << "if ( ::CORBA::is_nil (_ciao_consumer.in ()))" << endl
            << "{"
-           << "ACE_THROW ( " << STRS[EXCP_IC] << " ());"
+           << "throw " << STRS[EXCP_IC] << " ();"
            << endl
            << "}"
            << "this->connect_" << t.name ()
@@ -1340,7 +1327,7 @@ namespace
            << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->disconnect_" << t.name ()
-           << " (" << ");" << endl
+           << " ();" << endl
            << "}";
       }
     };
@@ -1359,7 +1346,7 @@ namespace
            << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->executor_->get_" << t.name ()
-           << " (" << ");" << endl
+           << " ();" << endl
            << "}";
       }
     };
@@ -1385,8 +1372,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_ptr c" << endl
-           << ")" << endl
+        os << "Consumer_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -1397,7 +1383,8 @@ namespace
 
         if (swapping)
           {
-            os << "this->activate_component (" << ");" << endl;
+            os << "this->activate_component ();"
+               << endl;
           }
 
         os << "return this->context_->subscribe_" << p.name ()
@@ -1409,8 +1396,7 @@ namespace
         os << STRS[COMP_CK] << " *" << endl
            << scope_.name ()
            << "_Servant::subscribe_" << p.name () << "_generic (" << endl
-           << STRS[COMP_ECB] << "_ptr c" << endl
-           << ")" << endl
+           << STRS[COMP_ECB] << "_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "))" << endl
@@ -1418,7 +1404,8 @@ namespace
 
         if (swapping)
           {
-            os << "this->activate_component (" << ");" << endl;
+            os << "this->activate_component ();"
+               << endl;
           }
 
         os << "return this->context_->subscribe_" << p.name ()
@@ -1432,8 +1419,7 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name ()
            << "_Servant::unsubscribe_" << p.name () << " (" << endl
-           << STRS[COMP_CK] << " *ck" << endl
-           << ")" << endl
+           << STRS[COMP_CK] << " *ck)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -1441,7 +1427,8 @@ namespace
 
         if (swapping)
         {
-          os << "this->activate_component (" << ");" << endl;
+          os << "this->activate_component ();"
+             << endl;
           }
 
         os << "return this->context_->unsubscribe_"
@@ -1550,7 +1537,7 @@ namespace
            << "{"
            << "// Simplex disconnect." << endl
            << "return this->disconnect_" << u.name ()
-           << " (" << ");" << endl
+           << " ();" << endl
            << "}";
       }
 
@@ -1595,8 +1582,7 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "_ptr c" << endl
-           << ")" << endl
+        os << "_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "," << endl
@@ -1614,8 +1600,7 @@ namespace
 
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
-           << u.name () << " (" << endl
-           << ")" << endl
+           << u.name () << " ()" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
@@ -1649,8 +1634,7 @@ namespace
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
-        os << "_ptr c" << endl
-           << ")" << endl
+        os << "_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_ECL] << "," << endl
@@ -1671,8 +1655,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " (" << endl
-           << STRS[COMP_CK] << " * ck" << endl
-           << ")" << endl
+           << STRS[COMP_CK] << " * ck)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
@@ -1809,8 +1792,7 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << "Consumer_ptr c" << endl
-           << ")" << endl
+        os << "Consumer_ptr c)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_AC] << "))" << endl
@@ -1825,8 +1807,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
-           << e.name () << " (" << endl
-           << ")" << endl
+           << e.name () << " ()" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_NC] << "))" << endl
@@ -1899,8 +1880,9 @@ namespace
 
         if (swapping)
 
-          {
-            os << "this->activate_component (" << ");" << endl;
+        {
+          os << "this->activate_component ();"
+             << endl;
           }
 
         os << "if (! ::CORBA::is_nil (this->provide_"
@@ -1915,7 +1897,8 @@ namespace
 
         os << "::CORBA::Object_var obj =" << endl
            << "  this->provide_" << p.name () << "_i ("
-           << ");" << endl;
+           << ");"
+           << endl;
 
         ScopedName scoped (scope_.scoped_name ());
         Name stripped (scoped.begin () + 1, scoped.end ());
@@ -1929,7 +1912,8 @@ namespace
 
         os << "::_narrow ("
            << "obj.in ()" << endl
-           << ");" << endl
+           << ");"
+           << endl
            << "this->provide_" << p.name () << "_ = fo;"
            << "return ";
 
@@ -2036,11 +2020,13 @@ namespace
 
         os << "," << endl
            << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << ");" << endl
+           << "  " << ");"
+           << endl
            << "this->add_facet (\""
            << p.name ().unescaped_str () << "\"," << endl
            << "obj.in ()" << endl
-           << ");" << endl;
+           << ");"
+           << endl;
 
         os << "return obj._retn ();" << endl
            << "}";
@@ -2132,7 +2118,7 @@ namespace
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return this->ctx_->get_CCM_object "
-           << "(" << ");" << endl
+           << "();" << endl
            << "}";
 
         os << "void" << endl
@@ -2167,8 +2153,7 @@ namespace
 
         os << "Consumer_" << c.name ()
            << "_Servant::push_event (" << endl
-           << "::Components::EventBase *ev" << endl
-           << ")" << endl
+           << "::Components::EventBase *ev)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "))" << endl
@@ -2193,7 +2178,7 @@ namespace
            << ");" << endl
            << "return;" << endl
            << "}"
-           << "ACE_THROW ( " << STRS[EXCP_BET] << " ());" << endl
+           << "throw " << STRS[EXCP_BET] << " ();" << endl
            << "}";
 
         // GD Added below code
@@ -2209,8 +2194,7 @@ namespace
            << "_Servant::ciao_push_event (" << endl
            << "::Components::EventBase *ev," << endl
            << "const char * /* source_id */," << endl
-           << "::CORBA::TypeCode_ptr /* tc */" << endl
-           << ")" << endl
+           << "::CORBA::TypeCode_ptr /* tc */)" << endl
            << STRS[EXCP_START] << " "
            << STRS[EXCP_SYS] << "," << endl
            << STRS[EXCP_BET] << "))" << endl
@@ -2238,7 +2222,8 @@ namespace
            << scope_.name () << "_Context *ctx =" << endl
            << "  " << scope_.name () << "_Context::_narrow (" << endl
            << "  this->ctx_.in ()" << endl
-           << "  " << ");" << endl;
+           << "  " << ");"
+           << endl;
 
         os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
            << endl;
@@ -2246,14 +2231,16 @@ namespace
         os << "CORBA::ValueFactory f =" << endl
            << "  orb->lookup_value_factory (" << endl
            << "  event_repo_id" << endl
-           << "  " << ");" << endl;
+           << "  " << ");"
+           << endl;
 
         os << "if (f == 0)" << endl
            << "{"
            << "return false;" << endl
            << "}"
            << "CORBA::ValueBase_var v =" << endl
-           << "  f->create_for_unmarshal (" << ");" << endl;
+           << "  f->create_for_unmarshal ();"
+           << endl;
 
         os << "f->_remove_ref ();" << endl;
 
@@ -2290,7 +2277,8 @@ namespace
 
         os << "::Components::EventConsumerBase_var obj =" << endl
            << "  this->get_consumer_" << c.name () << "_i (" << endl
-           << "  " << ");" << endl;
+           << "  " << ");"
+           << endl;
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2301,9 +2289,9 @@ namespace
 
         os << "Consumer::_narrow (" << endl
            << "  obj.in ()" << endl
-           << "  " << ");" << endl;
-
-        os << "this->consumes_" << c.name () << "_ = eco;"
+           << "  " << ");"
+           << endl
+           << "this->consumes_" << c.name () << "_ = eco;"
            << "return ";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2399,17 +2387,20 @@ namespace
 
         os << "," << endl
            << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << ");" << endl;
+           << "  " << ");"
+           << endl;
 
         os << "::Components::EventConsumerBase_var ecb =" << endl
            << "  ::Components::EventConsumerBase::_narrow (" << endl
            << "  obj.in ()" << endl
-           << "  " << ");" << endl;
+           << "  " << ");"
+           << endl;
 
         os << "this->add_consumer (\""
            << c.name ().unescaped_str () << "\"," << endl
            << "ecb.in ()" << endl
-           << ");" << endl;
+           << ");"
+           << endl;
 
         os << "return ecb._retn ();" << endl
            << "}";
@@ -2624,8 +2615,7 @@ namespace
       {
         os << "obj_var =" << endl
            << "  this->provide_" << p.name () << "_i (" << endl
-           << "  " << ");"
- << endl;
+           << "  " << ");" << endl;
       }
 
       virtual void
@@ -2648,8 +2638,7 @@ namespace
       {
         os << "ecb_var =" << endl
            << "  this->get_consumer_" << p.name () << "_i (" << endl
-           <<  "  " << ");"
- << endl;
+           <<  "  " << ");" << endl;
       }
     };
 
@@ -2946,28 +2935,25 @@ namespace
           component_emitter.traverse (t);
         }
 
-      os << "ACE_TRY_NEW_ENV" << endl
+      os << "try" << endl
          << "{"
          << "::Components::SessionComponent_var scom =" << endl
          << "  ::Components::SessionComponent::_narrow (" << endl
          << "  exe" << endl
-         << "  " << ");"
- << endl
+         << "  " << ");" << endl
          << "if (! ::CORBA::is_nil (scom.in ()))" << endl
          << "{"
          << "scom->set_session_context (" << endl
          << "this->context_" << endl
          << ");"
-
          << "}"
          << "this->populate_port_tables (" << endl
          << ");"
-
          << "}"
-         << "ACE_CATCHANY" << endl
+         << "catch (const CORBA::Exception&)" << endl
          << "{"
          << "}"
-         << "ACE_ENDTRY;" << endl
+         << endl
          << "}";
 
       // Servant Destructor
@@ -2981,16 +2967,15 @@ namespace
          << t.name () << "_Servant::set_attributes (" << endl
          << "const ::Components::ConfigValues &descr" << endl
          << ")" << endl
-         << "{"
-         << endl;
+         << "{" << endl;
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
 
       if (swapping)
         {
-          os << "this->activate_component (" << ");"
- << endl;
+          os << "this->activate_component ();"
+             << endl;
         }
 
       os << "for ( ::CORBA::ULong i = 0; i < descr.length (); ++i)" << endl
@@ -3088,7 +3073,7 @@ namespace
 
       if (swapping)
         {
-          os << "this->activate_component (" << ");"
+          os << "this->activate_component ();"
              << endl;
         }
 
@@ -3136,7 +3121,8 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");" << endl;
+        os << "this->activate_component ();"
+           << endl;
       }
 
       os << "if (name == 0)" << endl
@@ -3252,13 +3238,13 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");"
+        os << "this->activate_component ();"
            << endl;
       }
 
       os << "if (emitter_name == 0)" << endl
          << "{"
-         << STRS[ACE_TH] << " ( " << STRS[EXCP_BP] << ");" << endl
+         << "throw " << STRS[EXCP_BP] << ";" << endl
          << "}";
 
       // Generate an IF block for each 'emits' declaration.
@@ -3279,8 +3265,8 @@ namespace
       }
 
       os << STRS[ACE_UA] << " (consumer);"
-         << STRS[ACE_TH] << " ( "
-         << STRS[EXCP_IN] << " ());" << endl
+         << "throw "
+         << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       os << STRS[COMP_ECB] << "_ptr" << endl
@@ -3295,7 +3281,8 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");" << endl;
+        os << "this->activate_component ();"
+           << endl;
       }
 
       os << "if (source_name == 0)" << endl
@@ -3440,7 +3427,8 @@ namespace
 
       if (swapping)
         {
-          os << "this->activate_component (" << ");" << endl;
+          os << "this->activate_component ();"
+             << endl;
         }
 
       os << "// Just in case there are no if blocks" << endl
@@ -3485,7 +3473,8 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");" << endl;
+        os << "this->activate_component ();"
+           << endl;
       }
 
       os << "// Just in case there are no if blocks" << endl
@@ -3547,7 +3536,8 @@ namespace
 
       if (swapping)
       {
-        os << "this->activate_component (" << ");" << endl;
+        os << "this->activate_component ();"
+           << endl;
       }
 
       os << "if (name == 0)" << endl
@@ -3666,6 +3656,7 @@ namespace
          << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
+         << ";"
          << "::CORBA::Object_var obj_var;"
          << "::Components::EventConsumerBase_var ecb_var;" << endl;
 
@@ -3850,8 +3841,6 @@ namespace
 
           operation_emitter.traverse (hf);
         }
-
-        os << endl;
 
         Traversal::Home::manages (scope_, enclosing_manages_);
 

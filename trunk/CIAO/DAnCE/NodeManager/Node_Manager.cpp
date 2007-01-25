@@ -128,13 +128,11 @@ write_pid (void)
 bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::NodeManagerDaemon_ptr obj
-                  ACE_ENV_ARG_DECL)
+                  CIAO::NodeManagerDaemon_ptr obj)
 {
   // Naming Service related operations
   CORBA::Object_var naming_context_object =
-    orb->resolve_initial_references ("NameService"
-                                     ACE_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("NameService");
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -161,14 +159,13 @@ register_with_ns (const char * name_context,
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize orb
       // @@TODO: Add error checking. There is absoluteley none.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
+                                            "");
 
       CIAO::Server_init (orb.in ());
 
@@ -186,19 +183,16 @@ main (int argc, char *argv[])
 
       // Get reference to Root POA.
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+        = PortableServer::POA::_narrow (obj.in ());
 
       CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable"
-                                         ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in ());
 
       if (CORBA::is_nil (adapter.in ()))
         {
@@ -225,12 +219,10 @@ main (int argc, char *argv[])
         node_manager_servant->_this ();
 
       CORBA::String_var str =
-        orb->object_to_string (node_manager.in ()
-                               ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (node_manager.in ());
 
       adapter->bind ("NodeManager",
-                     str.in ()
-                     ACE_ENV_ARG_PARAMETER);
+                     str.in ());
 
       if (write_to_ior_)
         {
@@ -250,8 +242,7 @@ main (int argc, char *argv[])
           // Register this name with the Naming Service
           (void) register_with_ns (name,
                                    orb.in (),
-                                   node_manager.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                   node_manager.in ());
         }
 
       ACE_DEBUG ((LM_INFO, "CIAO_NodeManager IOR: %s\n", str.in ()));
@@ -281,17 +272,15 @@ main (int argc, char *argv[])
       // Run the main event loop for the ORB.
       orb->run ();
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+      poa->destroy (1, 1);
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CIAO_NodeManager::main\t\n");
+      ex._tao_print_exception ("CIAO_NodeManager::main\t\n");
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "CIAO_NodeManager has closed\n"));

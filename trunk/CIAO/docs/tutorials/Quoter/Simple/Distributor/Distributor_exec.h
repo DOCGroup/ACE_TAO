@@ -52,8 +52,7 @@ namespace CIDL_StockDistributor_Impl
 
     virtual ::Stock::StockInfo *
     get_stock_info (
-    const char * stock_name
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    const char * stock_name)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Stock::Invalid_Stock));
@@ -135,76 +134,65 @@ namespace CIDL_StockDistributor_Impl
     // Supported or inherited operations.
 
     virtual void
-    start (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    start ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    stop (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    stop ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Attribute operations.
 
     virtual ::CORBA::Long
-    rate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    rate ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
     rate (
-    ::CORBA::Long
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ::CORBA::Long)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Port operations.
 
     virtual ::Stock::CCM_StockQuoter_ptr
-    get_push_quoter (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_push_quoter ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ::Components::SessionContext_ptr ctx)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ciao_preactivate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_preactivate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ciao_postactivate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ciao_postactivate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ccm_activate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ccm_activate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ccm_passivate (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ccm_passivate ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
 
     virtual void
-    ccm_remove (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ccm_remove ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));
@@ -254,8 +242,7 @@ namespace CIDL_StockDistributor_Impl
     virtual ~StockDistributorHome_exec_i (void);
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create ()
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
     ::Components::CCMException));

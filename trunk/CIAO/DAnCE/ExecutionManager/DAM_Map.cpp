@@ -74,7 +74,7 @@ namespace CIAO
 
 
     Deployment::DomainApplicationManagers *
-    DAM_Map::get_dams (void)
+    DAM_Map::get_dams ()
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::get_dams");
       CORBA::ULong const sz =

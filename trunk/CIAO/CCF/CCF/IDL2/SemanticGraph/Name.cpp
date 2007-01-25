@@ -202,6 +202,10 @@ namespace CCF
       //
       int const name_printer_index = std::ios_base::xalloc ();
 
+      NamePrinter::~NamePrinter ()
+      {
+      }
+
       void NamePrinter::
       print (std::ostream& os, Name const& n)
       {

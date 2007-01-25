@@ -22,15 +22,14 @@ MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 // Operations from HUDisplay::BMClosedED
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMClosedED_exec_i::get_dataout (void)
+MyImpl::BMClosedED_exec_i::get_dataout ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
 }
 
 void
-MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
-                                          ACE_ENV_ARG_DECL)
+MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -52,7 +51,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
       ACE_DEBUG ((LM_DEBUG,
                   "BMClosedED - got nil from get_connection \n"));
 
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      throw CORBA::BAD_INV_ORDER ();
     }
 
   CORBA::String_var str =
@@ -74,14 +73,13 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
   BasicSP::DataAvailable_var event =
     new OBV_BasicSP::DataAvailable;
 
-  this->context_->push_out_avail (event
-                                  ACE_ENV_ARG_PARAMETER);
+  this->context_->push_out_avail (event);
 }
 
 // Operations from HUDisplay::position
 
 char *
-MyImpl::BMClosedED_exec_i::get_data (void)
+MyImpl::BMClosedED_exec_i::get_data ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_.inout ());
@@ -91,7 +89,6 @@ MyImpl::BMClosedED_exec_i::get_data (void)
 void
 MyImpl::BMClosedED_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
@@ -103,26 +100,24 @@ MyImpl::BMClosedED_exec_i::set_session_context (
     }
 
   this->context_ =
-    BasicSP::CCM_BMClosedED_Context::_narrow (ctx
-                                              ACE_ENV_ARG_PARAMETER);
+    BasicSP::CCM_BMClosedED_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::BMClosedED_exec_i::ciao_preactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_activate (void)
+MyImpl::BMClosedED_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -135,15 +130,14 @@ MyImpl::BMClosedED_exec_i::ccm_activate (void)
 }
 
 void
-MyImpl::BMClosedED_exec_i::ciao_postactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMClosedED_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_passivate (void)
+MyImpl::BMClosedED_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -153,7 +147,7 @@ MyImpl::BMClosedED_exec_i::ccm_passivate (void)
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_remove (void)
+MyImpl::BMClosedED_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -177,7 +171,7 @@ MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMClosedEDHome_exec_i::create (void)
+MyImpl::BMClosedEDHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

@@ -36,42 +36,41 @@ namespace MyImpl
     ~GPS_exec_i ();
 
     // Operations from HUDisplay::GPS
-    HUDisplay::CCM_position_ptr get_MyLocation (void)
+    HUDisplay::CCM_position_ptr get_MyLocation ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void push_Refresh (HUDisplay::tick * ACE_ENV_ARG_DECL)
+    void push_Refresh (HUDisplay::tick *)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from HUDisplay::position
-    CORBA::Long posx (void)
+    CORBA::Long posx ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long posy (void)
+    CORBA::Long posy ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    void set_session_context (Components::SessionContext_ptr ctx
-			      ACE_ENV_ARG_DECL)
+    void set_session_context (Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ciao_preactivate (void)
+    void ciao_preactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ccm_activate (void)
+    void ccm_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ciao_postactivate (void)
+    void ciao_postactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ccm_passivate (void)
+    void ccm_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ccm_remove (void)
+    void ccm_remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
@@ -102,12 +101,12 @@ namespace MyImpl
 
     // Explicit home operations
 /*     virtual ::Components::EnterpriseComponent_ptr */
-/*       new_GPS (void) */
+/*       new_GPS () */
 /*       ACE_THROW_SPEC ((CORBA::SystemException)); */
 
     // Implicit home operations
     virtual ::Components::EnterpriseComponent_ptr
-      create (void)
+      create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
   };
@@ -123,10 +122,10 @@ namespace MyImpl
     }
 
     // Operations from HUDisplay::position
-    CORBA::Long posx (void)
+    CORBA::Long posx ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long posy (void)
+    CORBA::Long posy ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:

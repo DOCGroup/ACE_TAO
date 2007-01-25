@@ -43,8 +43,7 @@ namespace CIAO
 
       void
       PlanIngress_exec_i::analyze_plan (
-      const ::Deployment::DeploymentPlan & /* plan */
-      ACE_ENV_ARG_DECL_NOT_USED)
+      const ::Deployment::DeploymentPlan & /* plan */)
       ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
@@ -67,8 +66,7 @@ namespace CIAO
       // Attribute operations.
 
       ::CIAO::RACE::RACE_Classifications *
-      Plan_Analyzer_exec_i::classes (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::classes ()
       ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
@@ -78,8 +76,7 @@ namespace CIAO
       // Port operations.
 
       ::CIAO::RACE::CCM_PlanIngress_ptr
-      Plan_Analyzer_exec_i::get_plan_ingress (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::get_plan_ingress ()
       ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
@@ -90,26 +87,23 @@ namespace CIAO
 
       void
       Plan_Analyzer_exec_i::set_session_context (
-      ::Components::SessionContext_ptr ctx
-      ACE_ENV_ARG_DECL)
+      ::Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
       {
         this->context_ =
         Plan_Analyzer_Context::_narrow (
-        ctx
-        ACE_ENV_ARG_PARAMETER);
+        ctx);
 
         if (this->context_ == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
       }
 
       void
-      Plan_Analyzer_exec_i::ciao_preactivate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::ciao_preactivate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -118,8 +112,7 @@ namespace CIAO
       }
 
       void
-      Plan_Analyzer_exec_i::ciao_postactivate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::ciao_postactivate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -128,8 +121,7 @@ namespace CIAO
       }
 
       void
-      Plan_Analyzer_exec_i::ccm_activate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::ccm_activate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -138,8 +130,7 @@ namespace CIAO
       }
 
       void
-      Plan_Analyzer_exec_i::ccm_passivate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::ccm_passivate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -148,8 +139,7 @@ namespace CIAO
       }
 
       void
-      Plan_Analyzer_exec_i::ccm_remove (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Plan_Analyzer_exec_i::ccm_remove ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -180,8 +170,7 @@ namespace CIAO
       // Implicit operations.
 
       ::Components::EnterpriseComponent_ptr
-      Plan_Analyzer_Home_exec_i::create (
-      ACE_ENV_SINGLE_ARG_DECL)
+      Plan_Analyzer_Home_exec_i::create ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))

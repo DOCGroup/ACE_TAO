@@ -43,8 +43,7 @@ namespace CIAO
                  CORBA::ORB_ptr orb,
                  bool use_repoman = false,
                  bool rm_use_naming = false,
-                 const char *rm_name = 0
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                 const char *rm_name = 0);
 
       /**
        * @brief Launch a plan, given a deployment plan URI
@@ -54,15 +53,13 @@ namespace CIAO
       const char * launch_plan (const char *deployment_plan_uri,
                                 const char *package_uri = 0,
                                 bool use_package_name = true,
-                                bool use_repoman = false
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                bool use_repoman = false)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       const char * re_launch_plan (const char *deployment_plan_uri,
                                    const char *package_uri = 0,
                                    bool use_package_name = true,
-                                   bool use_repoman = false
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   bool use_repoman = false)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       /**
@@ -70,29 +67,23 @@ namespace CIAO
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      const char * launch_plan (const ::Deployment::DeploymentPlan &plan
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const char * launch_plan (const ::Deployment::DeploymentPlan &plan)
         ACE_THROW_SPEC ((Deployment_Failure));
 
-      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan)
         ACE_THROW_SPEC ((Deployment_Failure));
 
       /// Returns the DAM associated with a given plan URI
-      ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid);
 
       /// Tears down a plan given the UUID
-      bool teardown_plan (const char *uuid ACE_ENV_ARG_DECL);
+      bool teardown_plan (const char *uuid);
 
-      bool teardown_plan (::Deployment::DomainApplicationManager_ptr dam
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      bool teardown_plan (::Deployment::DomainApplicationManager_ptr dam);
 
-      void destroy_dam (::Deployment::DomainApplicationManager_ptr dam
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      void destroy_dam (::Deployment::DomainApplicationManager_ptr dam);
 
-      void destroy_dam_by_plan (const char * plan_uuid
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      void destroy_dam_by_plan (const char * plan_uuid);
 
     private:
       ::CIAO::ExecutionManagerDaemon_var em_;

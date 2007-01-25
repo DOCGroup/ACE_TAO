@@ -82,7 +82,7 @@ namespace CIAO
     // Operations from ::Components::SessionContext.
 
     virtual CORBA::Object_ptr
-    get_CCM_object (void)
+    get_CCM_object ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 

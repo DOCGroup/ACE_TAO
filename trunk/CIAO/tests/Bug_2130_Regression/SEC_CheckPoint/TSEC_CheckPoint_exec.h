@@ -82,7 +82,6 @@ namespace Impl
     CORBA::ULong hash
     (
       CORBA::ULong Maximum
-      ACE_ENV_ARG_DECL_NOT_USED
     );
 
     TSEC_CheckPoint_exec_i& getParent() { return _parent; }
@@ -122,25 +121,21 @@ namespace Impl
 
     virtual ENW::CCM_ISessionService_ptr get_sessionService
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
 
     virtual ENW::TSession_ptr createSession
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
     virtual CORBA::Boolean destroySession
     (
       ENW::TSession_ptr Session
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
     virtual ENW::TSession_ptr acquireSession
     (
       CORBA::Long Ident
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         ENW::EUnknownIdent ) );
 
@@ -148,7 +143,6 @@ namespace Impl
     (
       CORBA::Long       Ident,
       ENW::TSession_ptr Session
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         ENW::EUnknownSession ) );
 
@@ -159,7 +153,6 @@ namespace Impl
     virtual void push_lifeTokenIn
     (
       ENW::ET_LifeToken* Event
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
 
@@ -169,60 +162,51 @@ namespace Impl
     virtual void set_session_context
     (
       Components::SessionContext_ptr ctx
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
 
     virtual void ciao_preactivate
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
 
     virtual void ccm_activate
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
 
     virtual void ciao_postactivate
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
 
 
     virtual void ccm_passivate
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
 
     virtual void ccm_remove
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
 
     CORBA::Object_ptr getObjRef
     (
       PortableServer::Servant Servant
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
-    int init( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    int init(
     )ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
     CORBA::Object_ptr installServant
     (
       PortableServer::Servant Servant
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
     void uninstallServant
     (
       CORBA::Object_ptr ObjRef
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
 
     TMutex& getMutex() { return _mutex; }
@@ -260,13 +244,11 @@ namespace Impl
     virtual ::Components::EnterpriseComponent_ptr new_TSEC_CheckPoint
     (
       const char* Version
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
       ) ACE_THROW_SPEC(( CORBA::SystemException));
 
     // Implicit home operations.
     virtual ::Components::EnterpriseComponent_ptr create
     (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC( ( CORBA::SystemException,
                         Components::CCMException ) );
   };

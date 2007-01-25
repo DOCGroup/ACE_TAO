@@ -75,8 +75,7 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      const CORBA::PolicyList *more_policies = 0)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     /// Install a new home
@@ -86,7 +85,6 @@ namespace CIAO
         const char *sv_dll_name,
         const char *sv_entrypt,
         const char *ins_name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::UnknownImplId,
@@ -94,27 +92,22 @@ namespace CIAO
                        Deployment::InstallationFailure)) = 0;
 
     // Uninstall a servant for component or home.
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     // Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                                      PortableServer::ObjectId_out oid
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                      PortableServer::ObjectId_out oid)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     // @@Jai, please see the Session Container class for comments.
     // @@ Jai, do you really need the environment variable?
     virtual void add_servant_map (PortableServer::ObjectId &oid,
-                                  Dynamic_Component_Servant_Base* servant
-                                  ACE_ENV_ARG_DECL) = 0;
+                                  Dynamic_Component_Servant_Base* servant) = 0;
 
-    virtual void delete_servant_map (PortableServer::ObjectId &oid
-                                     ACE_ENV_ARG_DECL) = 0;
+    virtual void delete_servant_map (PortableServer::ObjectId &oid) = 0;
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   protected:
@@ -185,8 +178,7 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      const CORBA::PolicyList *more_policies = 0)
 
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -207,7 +199,6 @@ namespace CIAO
         const char *sv_dll_name,
         const char *sv_entrypt,
         const char *ins_name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::UnknownImplId,
@@ -215,55 +206,46 @@ namespace CIAO
                        Deployment::InstallationFailure));
 
     /// Uninstall a servant for component or home.
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                                      PortableServer::ObjectId_out oid
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                      PortableServer::ObjectId_out oid)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                       Container::OA_Type t
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       Container::OA_Type t)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Install a component servant.
     CORBA::Object_ptr install_component (PortableServer::Servant p,
-                                         PortableServer::ObjectId_out oid
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                         PortableServer::ObjectId_out oid)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Get an object reference to a component or home from the servant.
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref,
-                    Container::OA_Type t
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                    Container::OA_Type t)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Uninstall a servant for component or home.
     void uninstall (PortableServer::Servant svt,
-                    Container::OA_Type t
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                    Container::OA_Type t)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // @@Jai, please consider naming this method as
     // "add_servant_to_map ()" to be more descriptive.
     virtual void add_servant_map (PortableServer::ObjectId &oid,
-                                  Dynamic_Component_Servant_Base* servant
-                                  ACE_ENV_ARG_DECL);
+                                  Dynamic_Component_Servant_Base* servant);
 
     // @@Jai, please consider naming this method as
     // "delete_servant_from_map ()" to be more descriptive.
-    virtual void delete_servant_map (PortableServer::ObjectId &oid
-                                     ACE_ENV_ARG_DECL);
+    virtual void delete_servant_map (PortableServer::ObjectId &oid);
 
     // @@Jai, could yo please add documentation?
     /*
@@ -274,20 +256,17 @@ namespace CIAO
      * deactivate_facet from the Swapping_Conatiner's interface. It
      * would make the base container interface much cleaner.
      */
-    virtual void deactivate_facet (const PortableServer::ObjectId &oid
-                                   ACE_ENV_ARG_DECL)
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Analog of the POA method that creates an object reference from
     /// an object id string.
     CORBA::Object_ptr generate_reference (const char *obj_id,
                                           const char *repo_id,
-                                          Container::OA_Type t
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                          Container::OA_Type t);
 
     /// Return the servant activator factory that activates the
     /// servants for facets and consumers.
@@ -302,14 +281,12 @@ namespace CIAO
      */
     void create_component_POA (const char *name,
                                const CORBA::PolicyList *p,
-                               PortableServer::POA_ptr root
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                               PortableServer::POA_ptr root);
 
     /// Create POA for the facets and consumers alone.
     void create_facet_consumer_POA (const char *name,
                                     const CORBA::PolicyList *p,
-                                    PortableServer::POA_ptr root
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                    PortableServer::POA_ptr root);
 
     /// Not allowed to be
     Session_Container (void);

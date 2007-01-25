@@ -75,7 +75,6 @@ namespace StringLiterals
     "_ciao_extract_val",                                  // EXTRACT
     "_ciao_extract_tmp",                                  // EXTRACT_TMP
     "ACE_UNUSED_ARG",                                     // ACE_UA
-    "throw",                                              // ACE_TH
     "ACE_THROW_RETURN"                                    // ACE_TR
   };
 }
