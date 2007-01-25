@@ -89,7 +89,7 @@ foreach my $test_lst (@file_list) {
       $config_list->load ($ACE_ROOT.$test_lst);
     }
     elsif (-r "$startdir/$test_list") {
-      $config_list->load ("$stardir/$test_lst");
+      $config_list->load ("$startdir/$test_lst");
     }
     else {
       $config_list->load ($test_list);
@@ -118,21 +118,20 @@ foreach my $test_lst (@file_list) {
             print "auto_run_tests: $test\n";
         }
 
+        my($orig_dir) = $directory;
         if ($directory =~ m:^TAO/(.*):) {
           $directory = $1;
         }
 
         $status = undef;
         foreach my $path ($ACE_ROOT."/$directory",
+                          $TAO_ROOT."/$directory",
                           $startdir."/$directory",
-                          $TAO_ROOT."/$directory" )
-          {
-          if (-d $path) {
-            $status = chdir ($path);
+                          $startdir."/$orig_dir") {
+          if (-d $path && ($status = chdir ($path))) {
             last;
           }
         }
-        $status = chdir ($directory) if (! defined($status));
 
         if (!$status) {
           print STDERR "ERROR: Cannot chdir to $ACE_ROOT/$directory\n";
