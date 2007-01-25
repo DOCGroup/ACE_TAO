@@ -532,8 +532,7 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
         }
       catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "TAO_PropertySet::is_type_allowed failed");
+          ex._tao_print_exception ("TAO_PropertySet::is_type_allowed failed");
           return ret_val;
         }
     }

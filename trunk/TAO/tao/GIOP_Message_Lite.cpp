@@ -839,9 +839,8 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (
-                      ex,
-                      "TAO_GIOP_Message_Lite::process_request[2]");
+                  ex._tao_print_exception (
+                    "TAO_GIOP_Message_Lite::process_request[2]");
                 }
             }
 
@@ -858,8 +857,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (ex,
-                               "TAO: ");
+          ex._tao_print_exception ("TAO: ");
         }
 
       return result;
@@ -899,9 +897,8 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("%p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (
-                      exception,
-                      "TAO_GIOP_Message_Lite::process_request[3]");
+                  exception._tao_print_exception (
+                    "TAO_GIOP_Message_Lite::process_request[3]");
                 }
             }
         }

@@ -150,8 +150,7 @@ main (int argc, char *argv[])
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 

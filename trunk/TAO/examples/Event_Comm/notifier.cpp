@@ -38,8 +38,7 @@ Notifier::Notifier (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Notifier_Server.init failed\n ");
+      ex._tao_print_exception ("Notifier_Server.init failed\n ");
     }
 
   // Register with the ORB's Reactor to receive a signal to shut us

@@ -254,8 +254,8 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ex,
-                "ERROR: Could not create a Scheduling Service POA\n");
+      ex._tao_print_exception (
+        "ERROR: Could not create a Scheduling Service POA\n");
       return parent;
     }
   return parent;
@@ -363,8 +363,8 @@ RTCosScheduling_ServerScheduler_Interceptor::RTCosScheduling_ServerScheduler_Int
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ex,
-                          "Error in installing the interceptor for the ServerScheduler\n");
+      ex._tao_print_exception (
+        "Error in installing the interceptor for the ServerScheduler\n");
     }
 }
 
@@ -518,8 +518,7 @@ ACE_THROW_SPEC((
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ex,
-                          "Unknown exception in the receive request\n");
+      ex._tao_print_exception ("Unknown exception in the receive request\n");
       ACE_OS::exit(1);
     }
 }

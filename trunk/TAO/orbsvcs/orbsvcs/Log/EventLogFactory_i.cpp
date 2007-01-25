@@ -29,9 +29,9 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception in "
-                           "EventLogFactory_i constructor.");
+      ex._tao_print_exception (
+        "Caught exception in "
+        "EventLogFactory_i constructor.");
     }
 }
 

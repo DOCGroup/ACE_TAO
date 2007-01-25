@@ -56,8 +56,7 @@ Cubit_Server::parse_args (void)
 
 int
 Cubit_Server::init (int argc,
-                    char** argv
- ACE_ENV_SINGLE_ARG_PARAMETER)
+                    char** argv)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.

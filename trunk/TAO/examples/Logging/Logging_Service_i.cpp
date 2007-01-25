@@ -93,7 +93,7 @@ Logger_Server::init (int argc,
 // and logger_factory object.
 
 int
-Logger_Server::init_naming_service ( ACE_ENV_SINGLE_ARG_PARAMETER)
+Logger_Server::init_naming_service ()
 {
   // Get pointers to the ORB and child POA
   CORBA::ORB_var orb = this->orb_manager_.orb ();

@@ -2439,9 +2439,9 @@ TAO_Root_POA::ORT_adapter_i (void)
     }
   catch ( ::CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "(%P|%t) Cannot initialize the "
-                           "object_reference_template_adapter\n");
+      ex._tao_print_exception (
+        "(%P|%t) Cannot initialize the "
+        "object_reference_template_adapter\n");
     }
 
   return this->ort_adapter_;

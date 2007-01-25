@@ -57,8 +57,7 @@ main (int argc, char **argv)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception raised");
+      ex._tao_print_exception ("Exception raised");
     }
 
   return 0;

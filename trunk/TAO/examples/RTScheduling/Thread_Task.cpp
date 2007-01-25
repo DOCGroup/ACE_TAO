@@ -63,8 +63,7 @@ Thread_Task::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
   return 0;
 }

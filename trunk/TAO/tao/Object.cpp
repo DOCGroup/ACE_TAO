@@ -784,10 +784,10 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             ACE_TEXT ("TAO - ERROR creating stub ")
-                             ACE_TEXT ("object when demarshaling object ")
-                             ACE_TEXT ("reference."));
+        ex._tao_print_exception (
+          ACE_TEXT ("TAO - ERROR creating stub ")
+          ACE_TEXT ("object when demarshaling object ")
+          ACE_TEXT ("reference."));
 
       return;
     }
@@ -906,10 +906,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       catch ( ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
-            ACE_PRINT_EXCEPTION (ex,
-                                 ACE_TEXT ("TAO - ERROR creating stub ")
-                                 ACE_TEXT ("object when demarshaling object ")
-                                 ACE_TEXT ("reference.\n"));
+            ex._tao_print_exception (
+              ACE_TEXT ("TAO - ERROR creating stub ")
+              ACE_TEXT ("object when demarshaling object ")
+              ACE_TEXT ("reference.\n"));
 
           return 0;
         }

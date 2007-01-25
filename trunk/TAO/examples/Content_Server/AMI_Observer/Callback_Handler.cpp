@@ -96,9 +96,9 @@ Callback_Handler::next_chunk_excep
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT ("Exception occured during ")
-                           ACE_TEXT ("sendc_next_chunk() call:"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception occured during ")
+        ACE_TEXT ("sendc_next_chunk() call:"));
     }
 }
 

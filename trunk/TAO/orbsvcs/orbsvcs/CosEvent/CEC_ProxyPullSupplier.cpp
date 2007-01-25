@@ -338,8 +338,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
-          ACE_PRINT_EXCEPTION (ex,
-                               "ProxySupplier::disconnect_pull_supplier");
+          ex._tao_print_exception ("ProxySupplier::disconnect_pull_supplier");
         }
     }
 }

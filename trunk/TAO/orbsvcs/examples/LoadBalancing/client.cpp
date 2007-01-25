@@ -95,8 +95,7 @@ main (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception caught in client.cpp:");
+      ex._tao_print_exception ("Exception caught in client.cpp:");
       return 1;
     }
 

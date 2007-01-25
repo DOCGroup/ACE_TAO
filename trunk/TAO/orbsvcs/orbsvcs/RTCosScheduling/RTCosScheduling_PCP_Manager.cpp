@@ -69,8 +69,7 @@ CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
                  "Error in %s: Line %d - Could not generate a Locklist in shared memory\n",
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ex,
-                          "Exception: CosSchedulingLockList()");
+      ex._tao_print_exception ("Exception: CosSchedulingLockList()");
     }
 }
 
@@ -336,8 +335,7 @@ PCP_Manager::lock(const int priority_ceiling, const int priority)
                  "Error in %s: Line %d - Could lock resource\n"
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ex,
-                          "Exception: PCP_Manager::lock");
+      ex._tao_print_exception ("Exception: PCP_Manager::lock");
     }
 }
 
@@ -376,8 +374,7 @@ void PCP_Manager::release_lock()
                  "Error in %s: Line %d - Could not release lock\n"
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ex,
-                          "Exception: PCP_Manager::release_lock");
+      ex._tao_print_exception ("Exception: PCP_Manager::release_lock");
     }
 }
 
@@ -484,8 +481,7 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
                  "PCP_Manager_Factory to create new PCP_Managers\n"
                  __FILE__,
                  __LINE__));
-      ACE_PRINT_EXCEPTION(ex,
-                         "PCP_Manager_Factory::PCP_Manager_Factory\n");
+      ex._tao_print_exception ("PCP_Manager_Factory::PCP_Manager_Factory\n");
     }
 }
 

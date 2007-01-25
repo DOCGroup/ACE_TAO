@@ -517,9 +517,9 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                   // just ignore these un-understood policies.
 
                   if (TAO_debug_level >= 5)
-                    ACE_PRINT_EXCEPTION(ex,
-                                        ACE_TEXT ("IOR contains ")
-                                        ACE_TEXT ("unsupported policies."));
+                    ex._tao_print_exception (
+                      ACE_TEXT ("IOR contains ")
+                      ACE_TEXT ("unsupported policies."));
                 }
             }
         }

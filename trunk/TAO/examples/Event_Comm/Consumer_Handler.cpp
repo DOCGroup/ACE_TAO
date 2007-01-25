@@ -74,8 +74,7 @@ Consumer_Handler::init (int argc,
     }
   catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ex,
-                          "Consumer_Handler::init\n");
+     ex._tao_print_exception ("Consumer_Handler::init\n");
      return -1;
    }
 
@@ -108,8 +107,7 @@ Consumer_Handler::get_notifier (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Consumer_Handler::get_notifier\n");
+      ex._tao_print_exception ("Consumer_Handler::get_notifier\n");
       return -1;
     }
 

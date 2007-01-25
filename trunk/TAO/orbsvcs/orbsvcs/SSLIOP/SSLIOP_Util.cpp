@@ -40,9 +40,8 @@ TAO::SSLIOP::Util::current (
   catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "Could not resolve "
-                             "\"SSLIOPCurrent\" object");
+        ex._tao_print_exception (
+          "Could not resolve \"SSLIOPCurrent\" object");
 
       return 0;
     }

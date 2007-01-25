@@ -125,8 +125,7 @@ TAO_LB_run_load_monitor (void * orb_arg)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "TAO Load Monitor");
+      ex._tao_print_exception ("TAO Load Monitor");
 
       return reinterpret_cast<void *> (-1);
     }
@@ -368,8 +367,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "TAO Load Monitor");
+      ex._tao_print_exception ("TAO Load Monitor");
 
       return -1;
     }

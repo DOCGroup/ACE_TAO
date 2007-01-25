@@ -215,8 +215,8 @@ TAO_GIOP_Message_Base::generate_reply_header (
   catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 4)
-        ACE_PRINT_EXCEPTION (ex,
-                             ACE_TEXT ("TAO_GIOP_Message_Base::generate_reply_header"));
+        ex._tao_print_exception (
+          ACE_TEXT ("TAO_GIOP_Message_Base::generate_reply_header"));
 
       return -1;
     }
@@ -1068,9 +1068,8 @@ TAO_GIOP_Message_Base::process_request (
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_connector_request ()")));
 
-                  ACE_PRINT_EXCEPTION (
-                      ex,
-                      "TAO_GIOP_Message_Base::process_request[1]");
+                  ex._tao_print_exception (
+                    "TAO_GIOP_Message_Base::process_request[1]");
                 }
             }
 
@@ -1087,9 +1086,8 @@ TAO_GIOP_Message_Base::process_request (
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (
-              ex,
-              "TAO_GIOP_Message_Base::process_request[2]");
+          ex._tao_print_exception (
+            "TAO_GIOP_Message_Base::process_request[2]");
         }
 
       return result;
@@ -1125,9 +1123,8 @@ TAO_GIOP_Message_Base::process_request (
                               ACE_TEXT ("%p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (
-                      exception,
-                      "TAO_GIOP_Message_Base::process_request[3]");
+                  exception._tao_print_exception (
+                    "TAO_GIOP_Message_Base::process_request[3]");
                 }
             }
         }

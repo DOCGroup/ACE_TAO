@@ -126,8 +126,7 @@ Notifier_Handler::init (int argc,
   }
  catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ex,
-                          "Notifier_Handler::init\n");
+     ex._tao_print_exception ("Notifier_Handler::init\n");
      return -1;
    }
 

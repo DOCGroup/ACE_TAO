@@ -75,8 +75,7 @@ Notify_Structured_Push_Consumer::_connect (
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event
- /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+  const CosNotification::StructuredEvent& event)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG, "-"));

@@ -53,8 +53,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
 }
 

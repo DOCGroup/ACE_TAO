@@ -135,9 +135,9 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT ("Caught unexpected exception ")
-                           ACE_TEXT ("in Callback_i::metdata(...):"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Caught unexpected exception ")
+        ACE_TEXT ("in Callback_i::metdata(...):"));
     }
 }
 

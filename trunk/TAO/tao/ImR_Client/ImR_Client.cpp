@@ -192,8 +192,8 @@ namespace TAO
         }
       catch ( ::CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "ImR_Client_Adapter_Impl::imr_notify_shutdown()");
+          ex._tao_print_exception (
+            "ImR_Client_Adapter_Impl::imr_notify_shutdown()");
           // Ignore exceptions
         }
 

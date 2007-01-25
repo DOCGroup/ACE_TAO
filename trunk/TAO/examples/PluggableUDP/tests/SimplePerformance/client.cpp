@@ -101,8 +101,7 @@ int main (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 
@@ -177,8 +176,7 @@ Client::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "MT_Client: exception raised");
+      ex._tao_print_exception ("MT_Client: exception raised");
     }
   return 0;
 }

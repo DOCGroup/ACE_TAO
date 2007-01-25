@@ -315,8 +315,8 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT ("Reactive_ConsumerControl::consumer_not_exist"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Reactive_ConsumerControl::consumer_not_exist"));
       // Ignore all exceptions..
     }
 }
@@ -331,8 +331,8 @@ TAO_CEC_Reactive_ConsumerControl::consumer_not_exist (
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT ("Reactive_ConsumerControl::consumer_not_exist"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Reactive_ConsumerControl::consumer_not_exist"));
       // Ignore all exceptions..
     }
 }

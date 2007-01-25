@@ -279,8 +279,8 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("Unexpected exception in next_n_IORs\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Unexpected exception in next_n_IORs\n"));
       return -1;
     }
 
@@ -390,8 +390,8 @@ Clerk_i::register_clerk (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("(%P|%t) Exception from init_naming_service ()\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("(%P|%t) Exception from init_naming_service ()\n"));
     }
 
   return 0;
@@ -471,8 +471,8 @@ Clerk_i::init (int argc,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("(%P|%t) Exception in Clerk_i::init ()\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("(%P|%t) Exception in Clerk_i::init ()\n"));
       return -1;
     }
 
@@ -494,8 +494,8 @@ Clerk_i::run (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("(%P|%t) Exception in Clerk_i::run ()\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("(%P|%t) Exception in Clerk_i::run ()\n"));
     }
 
   return 0;

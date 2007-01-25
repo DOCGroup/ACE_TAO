@@ -101,8 +101,7 @@ DOVE_Supplier::init (void)
   }
   catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         "DOVE_Supplier::init");
+    ex._tao_print_exception ("DOVE_Supplier::init");
     return -1;
   }
 
@@ -375,8 +374,7 @@ DOVE_Supplier::get_EventChannel ()
   }
   catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         "DOVE_Supplier::get_EventChannel");
+    ex._tao_print_exception ("DOVE_Supplier::get_EventChannel");
     return -1;
   }
 
@@ -446,8 +444,7 @@ DOVE_Supplier::connect_Supplier ()
   }
   catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ex,
-                         "DOVE_Supplier::connect_supplier");
+    ex._tao_print_exception ("DOVE_Supplier::connect_supplier");
     return -1;
   }
 

@@ -22,7 +22,7 @@ Callback_i::shutdown (void)
 }
 
 void
-Callback_i::callback_method ( /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+Callback_i::callback_method ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)

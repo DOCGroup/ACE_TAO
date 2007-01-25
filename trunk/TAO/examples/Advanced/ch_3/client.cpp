@@ -29,10 +29,10 @@
 int
 main (int argc, char *argv[])
 {
-  try 
+  try
     {
       // Check arguments
-      if  (argc != 2) 
+      if  (argc != 2)
         {
           cerr << "Usage: client IOR_string" << endl;
           throw 0;
@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 
       // Destringify argv[1]
       CORBA::Object_var obj = orb->string_to_object (argv[1]);
-      if  (CORBA::is_nil (obj.in ())) 
+      if  (CORBA::is_nil (obj.in ()))
         {
           cerr << "Nil Time reference" << endl;
           throw 0;
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
       // Narrow
       Time_var tm = Time::_narrow (obj.in ());
 
-      if  (CORBA::is_nil (tm.in ())) 
+      if  (CORBA::is_nil (tm.in ()))
         {
           cerr << "Argument is not a Time reference" << endl;
           throw 0;
@@ -71,14 +71,13 @@ main (int argc, char *argv[])
            << setw (2) << setfill ('0') << tod.minute << ":"
            << setw (2) << setfill ('0') << tod.second << endl;
     }
-  catch  (const CORBA::Exception &x) 
+  catch  (const CORBA::Exception &x)
     {
-      ACE_PRINT_EXCEPTION (x,
-                           "Who is the culprit \n");
+      x._tao_print_exception ("Who is the culprit \n");
       cerr << "Uncaught CORBA exception" << endl;
       return 1;
     }
-  catch  (...) 
+  catch  (...)
     {
       return 1;
     }
