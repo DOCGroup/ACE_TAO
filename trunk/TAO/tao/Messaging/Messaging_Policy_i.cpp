@@ -94,8 +94,8 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
       TimeBase::TimeT t = p->relative_expiry ();
       TimeBase::TimeT seconds = t / 10000000u;
       TimeBase::TimeT microseconds = (t % 10000000u) / 10;
-      time_value.set (seconds,
-                      microseconds);
+      time_value.set (ACE_U64_TO_U32 (seconds),
+                      ACE_U64_TO_U32 (microseconds));
 
       // Set the flag once all operations complete successfully
       has_timeout = true;
