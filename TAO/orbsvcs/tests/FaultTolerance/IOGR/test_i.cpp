@@ -20,7 +20,7 @@ Simple_Server_i::Simple_Server_i (void)
 }
 
 void
-Simple_Server_i::remote_call ( /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+Simple_Server_i::remote_call (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

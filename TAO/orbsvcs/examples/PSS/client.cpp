@@ -80,8 +80,7 @@ int main (int argc, char *argv [])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Client raised an exception:\n");
+      ex._tao_print_exception ("Client raised an exception:\n");
     }
 
   return 0;

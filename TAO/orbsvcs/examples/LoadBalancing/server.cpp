@@ -308,8 +308,7 @@ main (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "lb_server exception");
+      ex._tao_print_exception ("lb_server exception");
       return 1;
     }
 

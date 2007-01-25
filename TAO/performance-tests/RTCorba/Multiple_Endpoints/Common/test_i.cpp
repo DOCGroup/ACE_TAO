@@ -21,8 +21,7 @@ Test_i::test_method (CORBA::Long id)
 }
 
 void
-Test_i::shutdown (const char *orb_id
- ACE_ENV_SINGLE_ARG_PARAMETER)
+Test_i::shutdown (const char *orb_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int argc = 0;

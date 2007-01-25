@@ -454,8 +454,8 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "TAO_RT_Protocols_Hooks::get_dscp_codepoint");
+          ex._tao_print_exception (
+            "TAO_RT_Protocols_Hooks::get_dscp_codepoint");
         }
 
       return -1;

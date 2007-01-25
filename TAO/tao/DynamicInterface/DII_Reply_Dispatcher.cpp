@@ -90,8 +90,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "Exception during reply handler");
+          ex._tao_print_exception ("Exception during reply handler");
         }
     }
 
@@ -127,10 +126,8 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (
-              ex,
-              "DII_Deferred_Reply_Dispacher::connection_closed"
-            );
+          ex._tao_print_exception (
+            "DII_Deferred_Reply_Dispacher::connection_closed");
         }
     }
 

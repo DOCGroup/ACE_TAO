@@ -75,7 +75,7 @@ TAO_FixedDef_i::digits (void)
 }
 
 CORBA::UShort
-TAO_FixedDef_i::digits_i ( /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_FixedDef_i::digits_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO

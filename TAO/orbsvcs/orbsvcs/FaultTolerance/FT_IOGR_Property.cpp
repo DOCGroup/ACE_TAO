@@ -23,8 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
-    CORBA::Object_ptr &ior
- /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+    CORBA::Object_ptr &ior)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::Invalid_IOR))
 {
@@ -77,8 +76,7 @@ TAO_FT_IOGR_Property::set_property (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
-    CORBA::Object_ptr ior
- /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+    CORBA::Object_ptr ior)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))

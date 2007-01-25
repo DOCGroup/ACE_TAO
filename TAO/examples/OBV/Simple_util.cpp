@@ -120,8 +120,7 @@ Server<Servant>::init (const char *servant_name,
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception in activation of POA");
+      ex._tao_print_exception ("Exception in activation of POA");
       return -1;
     }
 

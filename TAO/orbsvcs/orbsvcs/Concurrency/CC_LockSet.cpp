@@ -33,8 +33,7 @@ CC_LockSet::CC_LockSet (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "CC_LockSet::CC_LockSet (void)");
+      ex._tao_print_exception ("CC_LockSet::CC_LockSet (void)");
     }
 }
 
@@ -49,8 +48,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "CC_LockSet::CC_LockSet (...)");
+      ex._tao_print_exception ("CC_LockSet::CC_LockSet (...)");
     }
 }
 

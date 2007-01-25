@@ -129,8 +129,8 @@ Server_i::create_server (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("Exception in Server_i::create_server ()"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception in Server_i::create_server ()"));
       return -1;
     }
   return 0;
@@ -182,8 +182,8 @@ Server_i::register_server (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           ACE_TEXT("(%P|%t) Exception from Register Server ()\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("(%P|%t) Exception from Register Server ()\n"));
       return -1;
     }
 

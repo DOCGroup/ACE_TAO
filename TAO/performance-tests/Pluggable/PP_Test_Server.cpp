@@ -49,8 +49,7 @@ PP_Test_Server::parse_args (void)
 
 int
 PP_Test_Server::init (int argc,
-                      char** argv
- ACE_ENV_SINGLE_ARG_PARAMETER)
+                      char** argv)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -96,7 +95,7 @@ PP_Test_Server::init (int argc,
 }
 
 int
-PP_Test_Server::run ( ACE_ENV_SINGLE_ARG_PARAMETER)
+PP_Test_Server::run ()
 {
   int result = this->orb_manager_.run ();
 

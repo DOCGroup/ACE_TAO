@@ -81,8 +81,7 @@ Notifier_Server::init_naming_service (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Notifier_Server::init_naming_service\n");
+      ex._tao_print_exception ("Notifier_Server::init_naming_service\n");
       return -1;
     }
 

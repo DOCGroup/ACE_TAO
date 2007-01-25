@@ -372,8 +372,7 @@ Notifier_i::push (const Event_Comm::Event &event)
             }
           catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ex,
-                                   "Unexpected exception\n");
+              ex._tao_print_exception ("Unexpected exception\n");
               continue;
             }
           count++;

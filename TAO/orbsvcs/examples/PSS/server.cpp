@@ -79,8 +79,7 @@ main (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Unexpected excpeption in PSS Test");
+      ex._tao_print_exception ("Unexpected excpeption in PSS Test");
       return -1;
     }
 

@@ -565,9 +565,8 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Unable to register SSLIOP ORB "
-                           "initializer.");
+      ex._tao_print_exception (
+        "Unable to register SSLIOP ORB initializer.");
       return -1;
     }
 
