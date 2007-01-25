@@ -1,3 +1,8 @@
+Thu Jan 25 19:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Removed ACE_ENV macros
+
 Thu Jan 25 11:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.h:
