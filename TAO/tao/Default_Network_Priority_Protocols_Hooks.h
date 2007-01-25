@@ -49,10 +49,6 @@ public:
     TAO_Service_Context &service_context,
     CORBA::Long &dscp_codepoint
     ACE_ENV_ARG_DECL);
-
-protected:
-
-  CORBA::Long dscp_codepoint_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
