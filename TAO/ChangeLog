@@ -1,3 +1,27 @@
+Fri Jan 26 16:59:47 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_check.cpp:
+
+          Fixed incorrect error reporting of undefined struct when
+          it is forward declared multiple times.
+
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+
+          Fixed incomplete initialization of AST_Expression class
+          that hold the value of a union case label when the
+          discriminator is an enum type, which was causing the
+          calculation of the union's default index to be
+          incorrect. Thanks to Martin Corino <mcorino@remedy.nl>
+          for reporting both the above IDL compiler bugs.
+
+        * tests/IDL_Test/IDL_Test.mpc:
+
+          Uncommented the struct.idl file in the IDL_Files list,
+          so it can now be included in the test. The bug it
+          covers is the first one described above.
+
 Fri Jan 26 13:46:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * *.{h,inl,cpp}:

@@ -156,10 +156,27 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
     {
       d = i.item ();
       item = AST_EnumVal::narrow_from_decl (d);
+      AST_Expression *cv = item->constant_value ();
 
-      if (item->constant_value () == v)
+      if (cv == v)
         {
           return item;
+        }
+
+      // Enum union label expressions don't get evaluated upon
+      // creation, to evaluate them later, we have only the
+      // string name to look up the enum value with.
+      UTL_ScopedName *v_n = const_cast<AST_Expression *> (v)->n ();
+
+      if (v_n != 0)
+        {
+          Identifier *cv_i = item->local_name ();
+          Identifier *v_i = v_n->last_component ();
+
+          if (cv_i->compare (v_i))
+            {
+              return item;
+            }
         }
     }
 
@@ -246,7 +263,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
       t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
                                                 t->name ());
-                                                
+
       delete ev;
       ev = 0;
 
