@@ -70,17 +70,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "utl_err.h"
 
-ACE_RCSID (ast, 
-           ast_check, 
+ACE_RCSID (ast,
+           ast_check,
            "$Id$")
 
 // Static storage for remembering nodes.
-static AST_Type	**ast_fwds = 0;
-static long	ast_n_fwds_used = 0;
-static long	ast_n_fwds_alloc = 0;
+static AST_Type  **ast_fwds = 0;
+static long  ast_n_fwds_used = 0;
+static long  ast_n_fwds_alloc = 0;
 
-#undef	INCREMENT
-#define	INCREMENT	64
+#undef  INCREMENT
+#define  INCREMENT  64
 
 // Store a node representing a forward declared struct or union.
 void
@@ -132,13 +132,26 @@ AST_check_fwd_decls (void)
 
       if (!d->is_defined ())
         {
-          idl_global->err ()->fwd_decl_not_defined (d);
+          // The member pd_full_definition is no longer set for
+          // every fwd decl, if there is more than one. So if
+          // is_defined() fails, we try to look up the fwd decl
+          // that has the full def, and emit an error only if
+          // this lookup fails.
+          AST_Decl *f =
+            d->defined_in ()->lookup_by_name_local (d->local_name (),
+                                                    0,
+                                                    true);
+
+          if (f == 0)
+            {
+              idl_global->err ()->fwd_decl_not_defined (d);
+            }
         }
     }
-    
+
   // This method is called once per file in the command line,
   // in between which the elements of ast_fwds are destroyed,
-  // so we have to clean up.  
+  // so we have to clean up.
   delete [] ast_fwds;
   ast_fwds = 0;
   ast_n_fwds_alloc = 0;

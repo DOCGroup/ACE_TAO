@@ -72,6 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union_branch.h"
 #include "ast_union_label.h"
 #include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_enum_val.h"
 #include "ast_visitor.h"
 #include "utl_labellist.h"
 
@@ -80,21 +82,21 @@ ACE_RCSID(ast, ast_union_branch, "$Id$")
 AST_UnionBranch::AST_UnionBranch (void)
   : COMMON_Base (),
     AST_Decl (),
-	  AST_Field (),
-	  pd_ll (0)
+    AST_Field (),
+    pd_ll (0)
 {
 }
 
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
-				                          UTL_ScopedName *n)
+                                  UTL_ScopedName *n)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_union_branch,
               n),
-	  AST_Field (AST_Decl::NT_union_branch,
+    AST_Field (AST_Decl::NT_union_branch,
                ft,
                n),
-	  pd_ll (ll)
+    pd_ll (ll)
 {
 }
 
@@ -133,7 +135,7 @@ AST_UnionBranch::destroy (void)
   this->pd_ll->destroy ();
   delete this->pd_ll;
   this->pd_ll = 0;
-  
+
   this->AST_Field::destroy ();
 }
 
@@ -144,8 +146,8 @@ AST_UnionBranch::label (unsigned long index)
 {
   unsigned long i = 0;
 
-  for (UTL_LabellistActiveIterator iter (this->pd_ll); 
-       !iter.is_done (); 
+  for (UTL_LabellistActiveIterator iter (this->pd_ll);
+       !iter.is_done ();
        iter.next ())
     {
       if (i == index)
@@ -178,19 +180,37 @@ AST_UnionBranch::add_labels (AST_Union *u)
   AST_UnionLabel *ul = 0;
   AST_Expression *ex = 0;
 
+  bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
+
   for (UTL_LabellistActiveIterator i (this->pd_ll);
        !i.is_done ();
        i.next ())
     {
       ul = i.item ();
-      
+
       if (ul->label_kind () == AST_UnionLabel::UL_default)
         {
           return;
         }
-        
+
       ex = ul->label_val ();
-      u->add_to_name_referenced (ex->n ()->first_component ());
+      UTL_ScopedName *n = ex->n ();
+
+      if (n != 0)
+        {
+          u->add_to_name_referenced (ex->n ()->first_component ());
+        }
+
+      // If we have enum val labels, we need to set the type and
+      // evaluate here, so the value will be available when the
+      // default index in calculated.
+      if (enum_labels)
+        {
+          ex->ev ()->et = AST_Expression::EV_enum;
+          AST_Enum *disc = AST_Enum::narrow_from_decl (u->disc_type ());
+          AST_EnumVal *dval = disc->lookup_by_value (ex);
+          ex->ev ()->u.eval = dval->constant_value ()->ev ()->u.ulval;
+        }
     }
 }
 
