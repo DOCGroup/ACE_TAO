@@ -1,3 +1,9 @@
+Fri Jan 26 16:15:57 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMH/DSI_AMH.mpc:
+
+          Added a verbatim to remove TestS.cpp when doing make realclean.
+
 Fri Jan 26 15:43:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMH:
