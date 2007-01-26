@@ -474,7 +474,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
                                         1
                                        );
         }
-      catch ( ::PortableServer::POA::AdapterNonExistent&)
+      catch (const PortableServer::POA::AdapterNonExistent&)
         {
           return -1;
         }
