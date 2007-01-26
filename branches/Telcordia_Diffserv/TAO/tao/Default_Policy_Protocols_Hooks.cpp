@@ -29,6 +29,14 @@ TAO_Default_Policy_Protocols_Hooks::~TAO_Default_Policy_Protocols_Hooks (void)
 }
 
 void
+TAO_Default_Policy_Protocols_Hooks::init_hooks (
+  TAO_ORB_Core *
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+
+void
 TAO_Default_Policy_Protocols_Hooks::add_rt_service_context_hook (
   TAO_Service_Context &,
   CORBA::Policy *,

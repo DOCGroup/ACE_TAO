@@ -30,6 +30,14 @@ TAO_Default_Network_Priority_Protocols_Hooks::
 }
 
 void
+TAO_Default_Network_Priority_Protocols_Hooks::init_hooks (
+  TAO_ORB_Core *
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+
+void
 TAO_Default_Network_Priority_Protocols_Hooks::add_rep_np_service_context_hook (
    TAO_Service_Context &,
    CORBA::Long &
