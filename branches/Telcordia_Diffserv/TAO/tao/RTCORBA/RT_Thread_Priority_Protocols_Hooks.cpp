@@ -1,4 +1,4 @@
-#include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "tao/RTCORBA/RT_Thread_Priority_Protocols_Hooks.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -24,24 +24,26 @@
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (RTCORBA,
-           RT_Protocols_Hooks,
+           RT_Thread_Priority_Protocols_Hooks,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks (void)
+TAO_RT_Thread_Priority_Protocols_Hooks::
+TAO_RT_Thread_Priority_Protocols_Hooks (void)
   : orb_core_ (0)
   , current_ ()
 {
 }
 
 
-TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
+TAO_RT_Thread_Priority_Protocols_Hooks::
+~TAO_RT_Thread_Priority_Protocols_Hooks (void)
 {
 }
 
 void
-TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
+TAO_RT_Thread_Priority_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
                                     ACE_ENV_ARG_DECL)
 {
   this->orb_core_ = orb_core;
@@ -78,8 +80,8 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 }
 
 int
-TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority
-                                                   ACE_ENV_ARG_DECL)
+TAO_RT_Thread_Priority_Protocols_Hooks::get_thread_CORBA_priority (
+  CORBA::Short &priority ACE_ENV_ARG_DECL)
 {
   CORBA::Short native_priority = 0;
   int const result =
@@ -97,7 +99,7 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority
 }
 
 int
-TAO_RT_Protocols_Hooks::get_thread_native_priority (
+TAO_RT_Thread_Priority_Protocols_Hooks::get_thread_native_priority (
     CORBA::Short &native_priority
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -122,7 +124,7 @@ TAO_RT_Protocols_Hooks::get_thread_native_priority (
 }
 
 int
-TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (
+TAO_RT_Thread_Priority_Protocols_Hooks::get_thread_CORBA_and_native_priority (
     CORBA::Short &priority,
     CORBA::Short &native_priority
     ACE_ENV_ARG_DECL
@@ -154,8 +156,8 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (
 }
 
 int
-TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority
-                                                   ACE_ENV_ARG_DECL)
+TAO_RT_Thread_Priority_Protocols_Hooks::set_thread_CORBA_priority (
+  CORBA::Short priority ACE_ENV_ARG_DECL)
 {
   TAO_Priority_Mapping *priority_mapping =
     this->mapping_manager_.in ()->mapping ();
@@ -172,7 +174,7 @@ TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority
 }
 
 int
-TAO_RT_Protocols_Hooks::set_thread_native_priority (
+TAO_RT_Thread_Priority_Protocols_Hooks::set_thread_native_priority (
     CORBA::Short native_priority
     ACE_ENV_ARG_DECL_NOT_USED
    )
@@ -195,13 +197,13 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
-                       ACE_TEXT ("RT_Protocols_Hooks"),
+ACE_STATIC_SVC_DEFINE (TAO_RT_Thread_Priority_Protocols_Hooks,
+                       ACE_TEXT ("RT_Thread_Priority_Protocols_Hooks"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_RT_Protocols_Hooks),
+                       &ACE_SVC_NAME (TAO_RT_Thread_Priority_Protocols_Hooks),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
+ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Thread_Priority_Protocols_Hooks)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
