@@ -1,3 +1,10 @@
+Fri Jan 26 18:56:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+
+          Removed the global scope on the type used in a catch to help vc8
+          figure out what to do.
+
 Fri Jan 26 18:45:53 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
