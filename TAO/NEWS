@@ -6,7 +6,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (JTC) autoconf support for tests and examples subdirectories.
 
-PLANNED CHANGES FOR "TAO-5.5.6"
+PLANNED CHANGES FOR "TAO-5.5.7"
 ===============================
 
 . (OO) Coverity error fixes for TAO.
@@ -14,6 +14,12 @@ PLANNED CHANGES FOR "TAO-5.5.6"
        mapping requirement).
 . (OO) Various other fixes that have been piling up.
 . (Remedy) Add ZIOP support
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.5 and TAO-1.5.6
+====================================================
+
+. Removed all exception environment macros except ACE_THROW_RETURN
+  and ACE_THROW_SPEC
 
 USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
 ====================================================
