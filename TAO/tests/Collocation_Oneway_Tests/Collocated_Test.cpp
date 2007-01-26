@@ -118,7 +118,7 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }

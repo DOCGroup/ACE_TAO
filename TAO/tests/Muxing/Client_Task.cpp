@@ -34,7 +34,7 @@ Client_Task::svc (void)
           this->receiver_->receive_data (payload);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

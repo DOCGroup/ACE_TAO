@@ -218,7 +218,7 @@ main (int argc, char **argv)
       {
         testObject->exceptional();
       }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
       {
         ACE_DEBUG ((LM_DEBUG, "exceptional() yielded exception\n"));
         caught = true;
@@ -230,7 +230,7 @@ main (int argc, char **argv)
       {
         testObject->notexisting();
       }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
       {
         ACE_DEBUG ((LM_DEBUG, "notexisting() yielded exception\n"));
         caught = true;

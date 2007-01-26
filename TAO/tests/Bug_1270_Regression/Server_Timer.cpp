@@ -47,7 +47,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 
       echo->echo_payload (pload);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       this->echo_ = Test::Echo::_nil ();
 

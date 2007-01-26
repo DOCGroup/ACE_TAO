@@ -49,7 +49,7 @@ single_iteration (Test::Oneway_Receiver_ptr oneway_receiver)
       ACE_Time_Value tv (0, 40000);
       ACE_OS::sleep (tv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return 1;
     }

@@ -100,7 +100,7 @@ main (int argc, char *argv[])
 
               retrieved_load = 1;
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               ACE_DEBUG ((LM_DEBUG, ".")); // Show some progress.
 

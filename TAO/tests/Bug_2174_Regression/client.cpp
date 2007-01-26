@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
       ex._tao_print_exception ("ERROR: Exception caught:");
       result = 4;
   }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (const CORBA::TRANSIENT&)
   {
       result = 5;
   }

@@ -30,7 +30,7 @@ Client_Task::svc (void)
           this->latency_.sample (now - start);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return 0;
     }
@@ -56,6 +56,6 @@ Client_Task::validate_connection (void)
         {
           (void) this->roundtrip_->test_method (dummy);
         }
-      catch (const CORBA::Exception& ex){}
+      catch (const CORBA::Exception&){}
     }
 }

@@ -121,7 +121,7 @@ main (int argc, char *argv[])
                   " properly\n"));
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }

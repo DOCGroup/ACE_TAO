@@ -123,7 +123,7 @@ Middle_i::shutdown (void)
     {
       this->server_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // ignore them
     }

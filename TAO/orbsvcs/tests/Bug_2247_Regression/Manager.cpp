@@ -237,7 +237,7 @@ Manager::run (void)
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "Error in run \n"),
@@ -312,11 +312,11 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
           ACE_OS::strcpy (received, s.in());
         }
     }
-  catch (const CORBA::TRANSIENT& et)
+  catch (const CORBA::TRANSIENT&)
     {
       ACE_OS::strcpy (received, "CORBA::TRANSIENT");
     }
-  catch (const CORBA::COMM_FAILURE& ec)
+  catch (const CORBA::COMM_FAILURE&)
     {
       ACE_OS::strcpy (received, "CORBA::COMM_FAILURE");
     }
@@ -370,11 +370,11 @@ int run_abort_test (Simple_Server_ptr server,
           ACE_OS::strcpy (received, s.in());
         }
     }
-  catch (const CORBA::TRANSIENT& et)
+  catch (const CORBA::TRANSIENT&)
     {
       ACE_OS::strcpy (received, "CORBA::TRANSIENT");
     }
-  catch (const CORBA::COMM_FAILURE& ec)
+  catch (const CORBA::COMM_FAILURE&)
     {
       ACE_OS::strcpy (received, "CORBA::COMM_FAILURE");
     }
@@ -423,7 +423,7 @@ int run_shutdown_test (Simple_Server_ptr server,
           ACE_OS::strcpy (received, s.in());
         }
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (const CORBA::TRANSIENT&)
     {
       ACE_OS::strcpy (received, "CORBA::TRANSIENT");
     }

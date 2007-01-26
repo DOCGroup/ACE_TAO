@@ -200,7 +200,7 @@ run_one_iteration (int i,
           shutdown_helper->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

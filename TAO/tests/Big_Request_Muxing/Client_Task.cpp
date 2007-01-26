@@ -117,5 +117,5 @@ Client_Task::validate_connection (void)
           (void) this->payload_receiver_->more_data (payload);
         }
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
 }

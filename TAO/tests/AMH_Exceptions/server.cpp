@@ -189,7 +189,7 @@ ST_AMH_Server::run_event_loop ()
               this->orb_->perform_work (&period);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {}
 }
 

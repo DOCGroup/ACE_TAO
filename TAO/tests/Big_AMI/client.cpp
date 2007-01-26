@@ -109,7 +109,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));

@@ -187,7 +187,7 @@ Worker_Thread::validate_connection (void)
             throw;
           // Otherwise, ignore...
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Rethrow any other exceptions.
           throw;

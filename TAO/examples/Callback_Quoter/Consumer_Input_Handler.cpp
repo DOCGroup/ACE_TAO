@@ -190,7 +190,7 @@ Consumer_Input_Handler::quit_consumer_process ()
         {
           this->consumer_handler_->consumer_servant_->shutdown ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
 

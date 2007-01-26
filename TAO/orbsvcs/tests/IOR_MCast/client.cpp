@@ -16,7 +16,7 @@ int main (int argc, char *argv [])
 
       return 0;
     }
-  catch (const CORBA::SystemException& ex)
+  catch (const CORBA::SystemException&)
     {
       //
     }

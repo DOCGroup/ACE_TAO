@@ -148,7 +148,7 @@ Client::svc (void)
                         i));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Expected exceptions \n"));

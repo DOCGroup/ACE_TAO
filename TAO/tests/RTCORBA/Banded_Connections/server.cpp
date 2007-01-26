@@ -270,13 +270,13 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
       // should have been raised.
       ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (const CORBA::BAD_PARAM&)
     {
       // Expected exception.
       ACE_DEBUG ((LM_DEBUG,
                   "BAD_PARAM exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception caught\n"));
@@ -301,13 +301,13 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
       // should have been raised.
       ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
-  catch (const PortableServer::POA::InvalidPolicy& ex)
+  catch (const PortableServer::POA::InvalidPolicy&)
     {
       // Expected exception.
       ACE_DEBUG ((LM_DEBUG,
                   "InvalidPolicy exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception\n"));

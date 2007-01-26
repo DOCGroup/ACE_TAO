@@ -111,7 +111,7 @@ MTD_Task::svc ()
         {
           this->run_iteration ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           return -1;
         }
