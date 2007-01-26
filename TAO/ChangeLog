@@ -1,3 +1,9 @@
+Fri Jan 26 12:05:12 UTC 2007  Johnny Willemsen  <jwillmesen@remedy.nl>
+
+        * tao/Makefile.am:
+          Removed CSD_ORBInitializer.{h,cpp}, files where removed from the
+          distribution
+
 Thu Jan 25 23:47:24 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp(destroy):
