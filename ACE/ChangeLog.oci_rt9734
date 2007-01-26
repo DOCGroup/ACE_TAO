@@ -1,0 +1,5 @@
+Fri Jan 26 16:20:03 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added the new test TAO/tests/DSI_AMH
