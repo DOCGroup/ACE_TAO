@@ -1,0 +1,70 @@
+ORB_Core.cpp:
+============
+
+1. TAO_ORB_Core_Static_Resources class constructor (ORB_Core.cpp:148)
+
+create new private variables:
+
+protocols_properties_protocols_hooks_name_ ("Protocols_Properties_Protocols_Hooks")
+
+policy_protocols_hooks_name_ ("Policy_Protocols_Hooks")
+
+thread_priority_protocols_hooks_name_ ("Thread_Priority_Protocols_Hooks")
+
+network_priority_protocols_hooks_name_ ("Network_Priority_Protocols_Hooks")
+
+2. ORB_Core::init () (ORB_Core.cpp:1315)
+
+get the different protocols_hooks name and create their nstances using the
+ACE Service Configurator.
+
+Right now only protocols_hooks_name_ is used, but we need to do a similar
+functionality for all the protocols_hooks_name_ defined above.
+
+3. TAO_ORB_Core::set_protocols_hooks (ORB_Core.cpp:1709)
+
+We need to set the names of the different protocols_hooks_names just like
+it is done for the default protocols hooks here.
+
+ORB_Core.inl:
+============
+
+1. TAO_ORB_Core::get_protocols_hooks (ORB_Core.inl:73)
+
+we need to have similar functions to return the different protocols hooks.
+
+ORB_Core.h:
+===========
+
+Forward declarations of the different protocols hooks classes.
+
+Use of the different protocols hooks classes as private variables.
+
+Declaration of different get protocols hooks function to return the different
+types of protocols hooks.
+
+TAO_Internal.cpp:
+=================
+
+ pcfg->process_directive (ace_svc_desc_TAO_Default_Protocols_Hooks);
+
+Definition of process directives (service configurators) for the different
+protocols hooks pieces.
+
+RTCORBA/RT_Protocols_Hooks.cpp:
+===============================
+
+Split this function to :
+
+RT_Thread_Priority_Protocols_Hooks.cpp
+RT_Policy_Protocols_Hooks.cpp
+RT_Protocols_Properties_Hooks.cpp
+
+RTCORBA/RT_ORBInitializer.cpp:
+==============================
+
+Register the Different Protocols Hooks just like they register the
+RT_Protocols_Hooks class.
+
+There are more changes in the way the Protocols_Hooks are used, but we can get
+to that once this work is done.
