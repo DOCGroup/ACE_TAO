@@ -1,3 +1,17 @@
+Fri Jan 26 15:43:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMH:
+        * tests/DSI_AMH/DSI_AMH.mpc:
+        * tests/DSI_AMH/README:
+        * tests/DSI_AMH/Roundtrip.h:
+        * tests/DSI_AMH/Roundtrip.cpp:
+        * tests/DSI_AMH/Test.idl:
+        * tests/DSI_AMH/client.cpp:
+        * tests/DSI_AMH/run_test.pl:
+        * tests/DSI_AMH/server.cpp:
+
+          Adding a simple test of the DSI+AMH feature in TAO.
+
 Tue Jan 23 17:04:06 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
