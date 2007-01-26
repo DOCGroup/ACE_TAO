@@ -3293,7 +3293,6 @@ libTAO_CSD_Framework_la_SOURCES = \
   CSD_Framework/CSD_FrameworkA.cpp \
   CSD_Framework/CSD_FrameworkC.cpp \
   CSD_Framework/CSD_Framework_Loader.cpp \
-  CSD_Framework/CSD_ORBInitializer.cpp \
   CSD_Framework/CSD_Object_Adapter.cpp \
   CSD_Framework/CSD_Object_Adapter_Factory.cpp \
   CSD_Framework/CSD_POA.cpp \
@@ -3323,7 +3322,6 @@ nobase_include_HEADERS += \
   CSD_Framework/CSD_FrameworkC.h \
   CSD_Framework/CSD_FrameworkS.h \
   CSD_Framework/CSD_Framework_Loader.h \
-  CSD_Framework/CSD_ORBInitializer.h \
   CSD_Framework/CSD_Object_Adapter.h \
   CSD_Framework/CSD_Object_Adapter_Factory.h \
   CSD_Framework/CSD_POA.h \
