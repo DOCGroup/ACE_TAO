@@ -82,6 +82,17 @@ public:
 
 protected:
 
+  RTCORBA::ProtocolProperties_ptr server_protocol_properties (
+    IOP::ProfileId protocol_tag,
+    CORBA::Policy_ptr policy ACE_ENV_ARG_DECL);
+
+  RTCORBA::ProtocolProperties_ptr client_protocol_properties (
+     IOP::ProfileId protocol_tag, CORBA::Policy_ptr policy
+     ACE_ENV_ARG_DECL);
+
+  RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_orb_level (
+    IOP::ProfileId protocol_tag ACE_ENV_ARG_DECL);
+
   CORBA::Boolean set_network_priority (
     IOP::ProfileId protocol_tag,
     RTCORBA::ProtocolProperties_ptr protocol_properties
