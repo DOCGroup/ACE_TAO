@@ -1038,7 +1038,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%N,%l) Negotiator Not Found \n"));
@@ -1324,7 +1324,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
       *negotiator_any >>= negotiator;
       handler->negotiator (negotiator);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Negotiator not found for flow %s\n",

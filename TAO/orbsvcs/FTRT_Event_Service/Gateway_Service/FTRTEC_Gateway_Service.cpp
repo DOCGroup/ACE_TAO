@@ -62,7 +62,7 @@ int parse_args(int argc, ACE_TCHAR** argv)
         ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
     }
   }
-  catch (const CORBA::Exception& ex){
+  catch (const CORBA::Exception&){
     ACE_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
   }
   return 0;
@@ -110,7 +110,7 @@ int main(int argc,  ACE_TCHAR** argv)
 
     orb->run();
   }
-  catch (const CORBA::Exception& ex){
+  catch (const CORBA::Exception&){
     return 1;
   }
   return 0;

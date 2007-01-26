@@ -69,7 +69,7 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Do not print error messages, they only make the test output
       // confusing.

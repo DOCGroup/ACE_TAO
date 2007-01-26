@@ -525,7 +525,7 @@ sequence_does_contain (CORBA::Any* sequence,
       sequence_type =
         TAO_Sequence_Extracter_Base::sequence_type (type.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return return_value;
     }
@@ -615,7 +615,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::Short value = dyn_any.get_short ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return return_value;
@@ -632,7 +632,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::UShort value = dyn_any.get_ushort ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return return_value;
@@ -649,7 +649,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::Long value = dyn_any.get_long ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return return_value;
@@ -666,7 +666,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::ULong value = dyn_any.get_ulong ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return return_value;
@@ -683,7 +683,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::LongLong value = dyn_any.get_longlong ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return return_value;
@@ -700,7 +700,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::ULongLong value = dyn_any.get_ulonglong ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return return_value;
@@ -717,7 +717,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::Float value = dyn_any.get_float ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -732,7 +732,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       CORBA::Double value = dyn_any.get_short ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -747,7 +747,7 @@ operator () (TAO_DynSequence_i& dyn_any,
     CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short ();
       return_value = (value == element);
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -762,7 +762,7 @@ operator () (TAO_DynSequence_i& dyn_any,
       const char* value = dyn_any.get_string ();
       return_value = (ACE_OS::strcmp (value, element) == 0);
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
   return return_value;
 }
 
@@ -1049,7 +1049,7 @@ visit_in (TAO_Binary_Constraint* binary_in)
           seq_type =
             TAO_Sequence_Extracter_Base::sequence_type (prop_type);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           return return_value;
         }

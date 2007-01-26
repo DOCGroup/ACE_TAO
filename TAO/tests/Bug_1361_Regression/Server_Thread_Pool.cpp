@@ -158,7 +158,7 @@ Thread_Pool::svc (void)
                     }
               }
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
 	      // Just forget the exception and continue
             }

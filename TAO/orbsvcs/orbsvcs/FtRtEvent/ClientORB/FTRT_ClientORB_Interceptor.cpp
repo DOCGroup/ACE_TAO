@@ -89,7 +89,7 @@ FTRT_ClientORB_Interceptor::send_request (
 
     ri->add_request_service_context (sc, 0);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     // Not much can be done anyway. Just keep quiet
   }
@@ -108,7 +108,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
     service_context =
       ri->get_reply_service_context(FTRT::FT_FORWARD);
   }
-  catch (const CORBA::Exception& ex){
+  catch (const CORBA::Exception&){
     return;
   }
 

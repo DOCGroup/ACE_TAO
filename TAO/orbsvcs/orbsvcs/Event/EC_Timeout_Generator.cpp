@@ -47,7 +47,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       filter->push_to_proxy (single_event,
                              qos_info);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

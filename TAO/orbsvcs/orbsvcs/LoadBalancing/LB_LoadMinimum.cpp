@@ -289,7 +289,7 @@ TAO_LB_LoadMinimum::analyze_loads (
           */
 
         }
-      catch (const CosLoadBalancing::LocationNotFound& ex)
+      catch (const CosLoadBalancing::LocationNotFound&)
         {
           // no location found
           //
@@ -363,7 +363,7 @@ TAO_LB_LoadMinimum::analyze_loads (
               }
             }
         }
-      catch (const CosLoadBalancing::LocationNotFound& ex)
+      catch (const CosLoadBalancing::LocationNotFound&)
         {
           // no location found
           //
@@ -511,7 +511,7 @@ TAO_LB_LoadMinimum::get_location (
 
           // ACE_DEBUG ((LM_DEBUG, "NEW MIN_LOAD == %f\n", min_load));
         }
-      catch (const CosLoadBalancing::LocationNotFound& ex)
+      catch (const CosLoadBalancing::LocationNotFound&)
         {
           // No load available for the requested location.  Try the
           // next location.

@@ -266,7 +266,7 @@ DOVE_Supplier::notify (CORBA::Any &message)
     // Now we invoke a RPC
     this->current_connection_params_->proxyPushConsumer_var_->push (events);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR ((LM_ERROR,
                 "DOVE_Supplier::notify: "
@@ -336,7 +336,7 @@ DOVE_Supplier::get_Scheduler ()
       this->current_connection_params_->scheduler_var_ =
         RtecScheduler::Scheduler::_narrow(objref.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       current_connection_params_->scheduler_var_ = 0;
       ACE_ERROR_RETURN ((LM_ERROR,

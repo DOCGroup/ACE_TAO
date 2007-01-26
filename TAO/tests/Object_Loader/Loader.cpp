@@ -37,7 +37,7 @@ Loader::create_object (CORBA::ORB_ptr orb,
 
       return obj._retn ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return CORBA::Object::_nil ();

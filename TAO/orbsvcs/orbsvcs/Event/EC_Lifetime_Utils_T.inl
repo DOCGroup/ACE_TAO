@@ -59,7 +59,7 @@ TAO_EC_Auto_Command<T>::execute (void)
         {
           this->command_.execute ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // ignore.
         }

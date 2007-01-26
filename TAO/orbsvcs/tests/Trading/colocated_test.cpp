@@ -101,7 +101,7 @@ main (int argc, char** argv)
 
       offer_importer.perform_queries ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Trader Export Tests Failed"), -1);
     }

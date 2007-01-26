@@ -365,7 +365,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
     if (schedule_iter.done ())
       schedule_iter.first ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR ((LM_ERROR,
                 "(%t)Error in Event_Supplier::insert_event_data.\n"));

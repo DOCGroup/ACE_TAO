@@ -24,7 +24,7 @@ Notifier::run (void)
     {
       ns_.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return;
     }

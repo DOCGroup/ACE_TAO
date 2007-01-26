@@ -22,7 +22,7 @@ validate_connection (Test::Controller_ptr controller)
       controller->_is_a ("Not_an_IDL_Type");
 #endif
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 }

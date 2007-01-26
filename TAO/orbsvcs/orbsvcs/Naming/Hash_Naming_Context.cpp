@@ -143,7 +143,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
         {
           context->bind (simple_name, obj);
         }
-      catch (const CORBA::TIMEOUT& timeoutEx)
+      catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (
@@ -203,7 +203,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
         {
           context->rebind (simple_name, obj);
         }
-      catch (const CORBA::TIMEOUT& timeoutEx)
+      catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (
@@ -269,7 +269,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
         {
           context->bind_context (simple_name, nc);
         }
-      catch (const CORBA::TIMEOUT& timeoutEx)
+      catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (
@@ -329,7 +329,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
         {
           context->rebind_context (simple_name, nc);
         }
-      catch (const CORBA::TIMEOUT& timeoutEx)
+      catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (
@@ -440,7 +440,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
               resolved_ref = context->resolve (rest_of_name);
               return resolved_ref;
             }
-          catch (const CORBA::TIMEOUT& timeoutEx)
+          catch (const CORBA::TIMEOUT&)
             {
               throw CosNaming::NamingContext::CannotProceed(
                 context.in (
@@ -488,7 +488,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
         {
           context->unbind (simple_name);
         }
-      catch (const CORBA::TIMEOUT& timeoutEx)
+      catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (
@@ -557,7 +557,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
       bind_context (n,
                     result.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // If the bind() operation fails we must destroy the recently
       // created context, should any exceptions be raised by the
@@ -567,7 +567,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
           {
             result->destroy ();
           }
-        catch (const CORBA::Exception& ex)
+        catch (const CORBA::Exception&)
           {
           }
       }

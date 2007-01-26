@@ -77,7 +77,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
       quoterNamingContext_var =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key),
                         CosNaming::NamingContext::_nil ());
@@ -150,7 +150,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Return an object reference to a new object.\n"));
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key),
                         CORBA::Object::_nil ());

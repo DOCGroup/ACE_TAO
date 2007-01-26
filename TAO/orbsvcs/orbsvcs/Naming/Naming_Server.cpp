@@ -674,7 +674,7 @@ TAO_Naming_Server::fini (void)
           adapter->unbind ("NameService");
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore
     }

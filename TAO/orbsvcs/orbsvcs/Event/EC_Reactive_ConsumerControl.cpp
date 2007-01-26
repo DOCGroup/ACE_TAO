@@ -83,7 +83,7 @@ TAO_EC_Reactive_ConsumerControl::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -127,7 +127,7 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
           return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
@@ -185,7 +185,7 @@ TAO_EC_Reactive_ConsumerControl::system_exception (
       // Anything else is serious, including timeouts...
       proxy->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }
@@ -223,18 +223,18 @@ TAO_EC_Ping_Consumer::work (TAO_EC_ProxyPushSupplier *supplier)
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       this->control_->consumer_not_exist (supplier);
     }
-  catch (const CORBA::TRANSIENT& transient)
+  catch (const CORBA::TRANSIENT&)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->control_->consumer_not_exist (supplier);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }

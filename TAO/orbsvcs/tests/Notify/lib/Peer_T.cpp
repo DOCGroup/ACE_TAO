@@ -174,7 +174,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (void)
     {
       this->disconnect_from_proxy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to disconnect from proxy.",
@@ -185,7 +185,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (void)
     {
       this->deactivate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to deactivate.",

@@ -1110,7 +1110,7 @@ TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyTypes 
     {
       this->define_properties_with_modes (allowed_property_defs);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       throw;
     }
@@ -1402,7 +1402,7 @@ TAO_PropertySetDef::get_property_modes (const CosPropertyService::PropertyNames 
           property_modes[i].property_name = property_names[i];
           property_modes[i].property_mode = mode;
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Return value becomes false.
           ret = 1;

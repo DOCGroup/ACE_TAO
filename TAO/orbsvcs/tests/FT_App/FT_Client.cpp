@@ -444,7 +444,7 @@ int FTClientMain::pass (
               // not quite sure why, yet.  Dale
               this->replica_->is_alive();
             }
-            catch (const CORBA::Exception& ex)
+            catch (const CORBA::Exception&)
             {
               ACE_OS::fprintf (stdout, "FT Client: Ignoring expected exception during shutdown.\n");
               ; // ignore exception during shutdown

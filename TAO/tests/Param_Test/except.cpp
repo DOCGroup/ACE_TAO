@@ -128,7 +128,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   // Catch the SystemException type CORBA::NO_MEMORY thrown by the
   // server to test the system exception.
-  catch (const CORBA::NO_MEMORY& ex)
+  catch (const CORBA::NO_MEMORY&)
     {
       // 'NO_MEMORY' system exception should be caught here. This
       // happens when the IN arg == 2.
@@ -180,7 +180,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
             }
         }
     }
-  catch (const CORBA::UNKNOWN& ex)
+  catch (const CORBA::UNKNOWN&)
     {
       // 'BadBoy' should be caught here. This happens when the IN arg == 3.
       // Otherwise we don't set the other arg values so the validity

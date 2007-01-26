@@ -116,7 +116,7 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
       this->connect_structured_push_supplier(ps.in());
       this->updates_off_ = save_updates;
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       // if we can't reconnect to peer, tough...
     }

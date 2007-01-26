@@ -743,7 +743,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                     }
                 }
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               // Since the full profile failed try setting the source id
               // for the sep instead.
@@ -792,7 +792,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                                                                  the_flows);
               connect_leaf_success = 1;
             }
-          catch (const AVStreams::notSupported& ex)
+          catch (const AVStreams::notSupported&)
             {
               if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "connect_leaf failed\n"));
               connect_leaf_success = 0;
@@ -1052,7 +1052,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                           flow_connection =
                             AVStreams::FlowConnection::_narrow (flow_connection_obj.in ());
                         }
-                      catch (const CORBA::Exception& ex)
+                      catch (const CORBA::Exception&)
                         {
                           TAO_FlowConnection *flowConnection;
                           ACE_NEW_RETURN (flowConnection,
@@ -1095,7 +1095,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                           ACE_ASSERT (!CORBA::is_nil (producer.in ()));
                           ACE_ASSERT (!CORBA::is_nil (consumer.in ()));
                         }
-                      catch (const CORBA::Exception& ex)
+                      catch (const CORBA::Exception&)
                         {
                           //Yamuna : Recheck this
                           throw;//_EX (producer_check);
@@ -1134,7 +1134,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           return 0;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // error was thrown because one of the streamendpoints is light profile.
       // Now connect the streams together
@@ -1656,7 +1656,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Availableprotocols property not defined\n"));
     }
@@ -2306,7 +2306,7 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep)
       flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       flow_name =
         this->add_fep_i_add_property (fep);
@@ -2549,7 +2549,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                             this->streamctrl_->get_flow_connection (forward_entry->flowname ());
                           flow_connection = AVStreams::FlowConnection::_narrow (flow_connection_obj.in ());
                         }
-                      catch (const CORBA::Exception& ex)
+                      catch (const CORBA::Exception&)
                         {
                           TAO_FlowConnection *flowConnection;
                           ACE_NEW_RETURN (flowConnection,
@@ -3155,7 +3155,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                       flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj.in ());
                     }
                 }
-              catch (const AVStreams::noSuchFlow& nsf)
+              catch (const AVStreams::noSuchFlow&)
                 {
                           TAO_FlowConnection *flowConnection;
                           ACE_NEW_RETURN (flowConnection,
@@ -3395,7 +3395,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
       *flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       flow_name =
         this->add_fdev_i (fdev.in ());

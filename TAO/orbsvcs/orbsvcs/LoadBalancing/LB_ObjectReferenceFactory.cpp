@@ -67,7 +67,7 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
               // Clean up all object groups we created.
               this->lm_->delete_object (this->fcids_[i].in ());
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               // Ignore all exceptions.
             }

@@ -91,7 +91,7 @@ void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerR
     IOP::ServiceContext_var service_context =
       ri->get_request_service_context(IOP::FT_GROUP_VERSION);
   }
-  catch (const CORBA::Exception& ex){
+  catch (const CORBA::Exception&){
     // not an FT call , continue to process the request
     return;
   }

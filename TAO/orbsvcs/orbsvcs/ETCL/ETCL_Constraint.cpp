@@ -50,7 +50,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     {
       corba_type = type->kind ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ Seth: Don't know what else to do. Make sure we can tell
       // when this constructor fails.
@@ -340,7 +340,7 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
           kind = tmp->kind ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return return_value;
     }

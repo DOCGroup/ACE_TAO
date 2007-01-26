@@ -84,14 +84,14 @@ run_client (CORBA::ORB_ptr orb,
               server->shutdown ();
             }
         }
-      catch (const CORBA::TRANSIENT& t)
+      catch (const CORBA::TRANSIENT&)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "Ignoring transient exception\n"));
           // ACE_PRINT_EXCEPTION (t, reason);
           ACE_OS::sleep (tv);
         }
-      catch (const CORBA::COMM_FAILURE& f)
+      catch (const CORBA::COMM_FAILURE&)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring comm failure exception\n"));
           // ACE_PRINT_EXCEPTION (f, reason);

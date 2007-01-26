@@ -538,7 +538,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       reason),
                                      -1);
                   }
-                catch (const CosNaming::NamingContext::InvalidName& in)
+                catch (const CosNaming::NamingContext::InvalidName&)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -547,7 +547,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       get_opt.opt_arg ()),
                                      -1);
                   }
-                catch (const CosNaming::NamingContext::CannotProceed& cp)
+                catch (const CosNaming::NamingContext::CannotProceed&)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -556,7 +556,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       get_opt.opt_arg ()),
                                      -1);
                   }
-                catch (const CORBA::Exception& ex)
+                catch (const CORBA::Exception&)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -620,7 +620,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 delete [] str;
               }
-            catch (const CORBA::Exception& ex)
+            catch (const CORBA::Exception&)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "

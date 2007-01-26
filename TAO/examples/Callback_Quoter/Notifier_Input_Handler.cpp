@@ -78,7 +78,7 @@ Notifier_Input_Handler::init_naming_service (void)
                               notifier_obj.in());
 
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",

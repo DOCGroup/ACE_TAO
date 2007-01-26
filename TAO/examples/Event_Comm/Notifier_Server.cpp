@@ -40,7 +40,7 @@ Notifier_Server::close (void)
       // Instruct the ORB to shutdown.
       this->orb_manager_.orb ()->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

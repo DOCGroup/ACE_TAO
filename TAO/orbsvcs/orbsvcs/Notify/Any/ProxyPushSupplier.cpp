@@ -91,7 +91,7 @@ TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
             }
           this->connect_any_push_consumer(pc.in());
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // if we can't reconnect, tough...
         }

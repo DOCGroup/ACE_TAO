@@ -249,7 +249,7 @@ TAO_LB_LoadAverage::analyze_loads (
                        total_load.value));
           */
         }
-      catch (const CosLoadBalancing::LocationNotFound& ex)
+      catch (const CosLoadBalancing::LocationNotFound&)
         {
           // no location found
           //
@@ -326,7 +326,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
             }
         }
-      catch (const CosLoadBalancing::LocationNotFound& ex)
+      catch (const CosLoadBalancing::LocationNotFound&)
         {
           // no location found
           //

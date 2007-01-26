@@ -168,7 +168,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
               ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // @@ Seth, don't pass the exceptions back?
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));

@@ -195,7 +195,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
               {
                 this->proxy_supplier ()->destroy ();
               }
-            catch (const CORBA::Exception& ex)
+            catch (const CORBA::Exception&)
               {
                 // todo is there something meaningful we can do here?
                 ;
@@ -308,7 +308,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_DISCARD;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ( (LM_ERROR,
                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push "
@@ -434,7 +434,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_DISCARD;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Notify_Consumer "
@@ -545,7 +545,7 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
               {
                 this->proxy_supplier ()->destroy ();
               }
-            catch (const CORBA::Exception& ex)
+            catch (const CORBA::Exception&)
               {
                 // todo is there something reasonable to do here?
               }

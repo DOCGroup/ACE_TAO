@@ -26,7 +26,7 @@ EC_Wrapper::~EC_Wrapper (void)
     {
       this->destroy_ec ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // ignore
     }
@@ -116,7 +116,7 @@ EC_Wrapper::destroy (void)
     {
       this->destroy_ec ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       this->orb_->shutdown ();
       throw;

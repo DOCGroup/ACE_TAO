@@ -127,7 +127,7 @@ Identity_Server::register_groups (void)
     {
       factory->unbind_random ("Random group");
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%N | %l) <Unbind> harmless here \n"));
@@ -138,7 +138,7 @@ Identity_Server::register_groups (void)
     {
       factory->unbind_round_robin ("Round Robin group");
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%N | %l) <Unbind> harmless here \n"));
@@ -201,7 +201,7 @@ Identity_Server::create_objects (size_t number_of_objects,
         {
           group->unbind (id);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%N | %l) Harmless here \n"));

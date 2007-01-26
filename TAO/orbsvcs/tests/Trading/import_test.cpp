@@ -45,7 +45,7 @@ main (int argc, char** argv)
           offer_importer.perform_directed_queries ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trader Import Tests Failed."), -1);
     }

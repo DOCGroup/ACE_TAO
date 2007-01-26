@@ -91,7 +91,7 @@ namespace TAO
         tp =
           ri->get_effective_component (IOP::TAG_FT_GROUP);
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         return;
       }
@@ -136,7 +136,7 @@ namespace TAO
     {
        status = ri->reply_status();
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
        // No reply status => Not a location forward.
        return;
@@ -286,7 +286,7 @@ namespace TAO
         0);
 
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       // Not much can be done anyway. Just keep quiet
       // ACE_RE_THROW;
@@ -365,7 +365,7 @@ namespace TAO
       ri->add_request_service_context (sc,
         0);
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       // ACE_RE_THROW;
     }

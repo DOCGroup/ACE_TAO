@@ -41,7 +41,7 @@ TAO_FTEC_ProxyPushSupplier::activate (
     PortableServer::POA_var poa = _default_POA();
     activate_object_with_id(result, poa.in(), this, id());
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     // ignore exceptions
   }

@@ -450,17 +450,17 @@ Test_Supplier::disconnect (void)
     {
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       // Ignore, the EC can shutdown before we get a chance to
       // disconnect
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (const CORBA::TRANSIENT&)
     {
       // Ignore, the EC can shutdown before we get a chance to
       // disconnect
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       throw;
     }

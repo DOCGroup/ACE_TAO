@@ -105,7 +105,7 @@ void TAO::Fault_Detector_i::run()
         this->quit_requested_ = 1;
       }
     }
-    catch (const CORBA::Exception& ex)// todo refine this
+    catch (const CORBA::Exception&)// todo refine this
     {
       ACE_ERROR ((LM_ERROR,
         "FaultDetector FAULT: exception.\n"

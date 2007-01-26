@@ -81,7 +81,7 @@ TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr p
             "Got a TRANSIENT in NS_SequencePushConsumer::init");
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_SequencePushConsumer %@\n", this));
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // _narrow failed
         }
@@ -212,7 +212,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
         {
           this->proxy_supplier ()->destroy ();
         }
-        catch (const CORBA::Exception& ex)
+        catch (const CORBA::Exception&)
         {
           // todo is there something meaningful we can do here?
           ;
@@ -315,7 +315,7 @@ TAO_Notify_SequencePushConsumer::get_ior (void) const
     CORBA::String_var ior = orb->object_to_string (this->push_consumer_.in ());
     result = static_cast<const char*> (ior.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     result.fast_clear();
   }

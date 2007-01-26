@@ -112,7 +112,7 @@ get_transaction_depth_context(
   try{
     service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH);
   }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (const CORBA::BAD_PARAM&)
   {
     ACE_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
     return -1;
@@ -243,7 +243,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
       Request_Context_Repository().set_transaction_depth(ri, transaction_depth);
     }
-    catch (const CORBA::BAD_PARAM& ex){
+    catch (const CORBA::BAD_PARAM&){
     }
 
     FTRT::SequenceNumber sequence_no =
@@ -251,7 +251,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
     Request_Context_Repository().set_sequence_number(ri, sequence_no);
   }
-  catch (const CORBA::BAD_PARAM& ex){
+  catch (const CORBA::BAD_PARAM&){
   }
 }
 
@@ -267,7 +267,7 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
       service_context,
       ft_request_service_context);
   }
-  catch (const CORBA::BAD_PARAM& ex){
+  catch (const CORBA::BAD_PARAM&){
     return;
   }
 

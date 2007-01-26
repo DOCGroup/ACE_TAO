@@ -52,7 +52,7 @@ TAO_IFR_Service_Loader::init (int argc,
                              command_line.get_argc (),
                              command_line.get_TCHAR_argv ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ Should we log this???
       return -1;

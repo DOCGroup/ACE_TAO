@@ -35,7 +35,7 @@ Bank_Client_i::run (const char *name,
       if (client.shutdown () == 1)
         client->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\nException caught in run\n"));
@@ -61,7 +61,7 @@ Bank_Client_i::check_accounts (void )
                   "\nTests for overdrafts\n"));
       this->test_for_overdraft ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "From Bank_Client_i::check_accounts()"));

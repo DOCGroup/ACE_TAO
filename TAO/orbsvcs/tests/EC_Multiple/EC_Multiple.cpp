@@ -703,7 +703,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
                                          local_ec);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       throw;
     }

@@ -47,7 +47,7 @@ TAO_Log_Flush_Handler::handle_timeout (const ACE_Time_Value&, const void *)
     {
       log_->flush ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

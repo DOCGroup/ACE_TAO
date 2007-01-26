@@ -33,7 +33,7 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
           dyn_seq.next( );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return 0;
     }

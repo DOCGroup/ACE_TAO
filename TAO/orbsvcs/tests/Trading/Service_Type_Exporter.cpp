@@ -116,7 +116,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (void)
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in ());
 
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // @@ Seth, Ignore all these exceptions?
         }

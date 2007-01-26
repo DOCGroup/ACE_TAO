@@ -364,7 +364,7 @@ RND_Timer::push (const RtecEventComm::EventSet &event)
     {
       this->driver_->timer (event[0]);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 }
@@ -502,7 +502,7 @@ RND_Supplier::svc (void)
 
           this->push_new_event ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
       if (this->verbose_

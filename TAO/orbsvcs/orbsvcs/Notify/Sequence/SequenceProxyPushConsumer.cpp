@@ -120,7 +120,7 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
       this->connect_sequence_push_supplier(ps.in());
       this->updates_off_ = save_updates;
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       ACE_ASSERT(0);
     }

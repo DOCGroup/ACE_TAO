@@ -122,7 +122,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                          "Demo_Consumer::open: subscribe failed.\n"),
                         -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demo_Consumer::open: unexpected exception.\n"),
@@ -196,7 +196,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events)
                     }
                 }
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
             }
@@ -217,7 +217,7 @@ Demo_Consumer::shutdown (void)
 
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR,
                  "(%t) Demo_Consumer::shutdown: unexpected exception.\n"));

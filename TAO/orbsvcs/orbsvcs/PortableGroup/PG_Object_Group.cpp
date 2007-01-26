@@ -488,7 +488,7 @@ TAO::PG_Object_Group::distribute_iogr (void)
                                             this->tagged_component_.object_group_ref_version,
                                             info->is_primary_);
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               // we expect an exception
               // tao_update_object_group is not a real method
@@ -763,7 +763,7 @@ TAO::PG_Object_Group::create_members (size_t count)
                     new_reference; // note var-to-var assignment does
                                    // a duplicate
                 }
-              catch (const CORBA::Exception& ex)
+              catch (const CORBA::Exception&)
                 {
                   // log, but otherwise ignore the errorf
                   if (TAO_debug_level > 0)

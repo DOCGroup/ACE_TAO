@@ -801,7 +801,7 @@ ECM_Consumer::close (void)
       this->consumer_admin_ =
         RtecEventChannelAdmin::ConsumerAdmin::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       this->consumer_admin_ =
         RtecEventChannelAdmin::ConsumerAdmin::_nil ();

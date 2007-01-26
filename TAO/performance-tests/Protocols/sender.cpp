@@ -475,7 +475,7 @@ Worker::setup (void)
 
           goto test_protocol_success;
         }
-      catch (const CORBA::TRANSIENT& exception)
+      catch (const CORBA::TRANSIENT&)
         {
           ++j;
 
@@ -517,7 +517,7 @@ Worker::setup (void)
 
           goto base_protocol_success;
         }
-      catch (const CORBA::TRANSIENT& exception)
+      catch (const CORBA::TRANSIENT&)
         {
           ACE_OS::sleep (1);
 

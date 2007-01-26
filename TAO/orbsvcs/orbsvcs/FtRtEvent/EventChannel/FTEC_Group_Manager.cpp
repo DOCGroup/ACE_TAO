@@ -150,7 +150,7 @@ void TAO_FTEC_Group_Manager::add_member (
     try{
       FTRTEC::Replication_Service::instance()->add_member(info, object_group_ref_version);
     }
-    catch (const CORBA::Exception& ex){
+    catch (const CORBA::Exception&){
       // Unable to send request to all the successors.
       // Now this node become the last replica of the object group.
       // update the info list again
@@ -323,7 +323,7 @@ void TAO_FTEC_Group_Manager::connection_closed()
 
       return;
     }
-    catch (const CORBA::Exception& ex){
+    catch (const CORBA::Exception&){
     }
   }
 
@@ -331,7 +331,7 @@ void TAO_FTEC_Group_Manager::connection_closed()
     remove_member(crashed_location,
                   IOGR_Maker::instance()->increment_ref_version());
   }
-  catch (const CORBA::Exception& ex){
+  catch (const CORBA::Exception&){
   }
 
 }

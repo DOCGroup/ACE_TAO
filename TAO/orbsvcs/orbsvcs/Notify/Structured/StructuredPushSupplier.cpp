@@ -42,7 +42,7 @@ TAO_Notify_StructuredPushSupplier::get_ior (void) const
     CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in());
     result = static_cast<const char*> (ior.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     result.fast_clear();
   }

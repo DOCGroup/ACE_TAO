@@ -214,7 +214,7 @@ namespace TAO_Notify
           bad_ids.push_back (entry->ext_id_);
         }
       }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnection Registry: Exception sending reconnection to client -- discarding registry entry\n")

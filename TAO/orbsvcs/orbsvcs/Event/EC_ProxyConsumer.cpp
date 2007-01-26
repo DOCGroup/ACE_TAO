@@ -163,7 +163,7 @@ TAO_EC_ProxyPushConsumer::shutdown (void)
     {
       supplier->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
@@ -194,7 +194,7 @@ TAO_EC_ProxyPushConsumer::deactivate (void)
           this->object_id ();
       this->default_POA_->deactivate_object (id);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some

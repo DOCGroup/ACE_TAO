@@ -78,7 +78,7 @@ Loopback_Consumer::disconnect (void)
     {
       proxy->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
 }
 
 void

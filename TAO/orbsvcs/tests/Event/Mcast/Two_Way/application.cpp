@@ -251,7 +251,7 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
     {
       this->connect_as_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       this->consumer_proxy_disconnect_.execute ();
       throw;

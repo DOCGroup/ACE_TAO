@@ -451,7 +451,7 @@ TAO_CEC_Event_Loader::fini (void)
       poa->deactivate_object (id.in ());
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Do Nothing
     }
@@ -472,7 +472,7 @@ TAO_CEC_Event_Loader::fini (void)
       delete this->attributes_;
       delete this->ec_impl_;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Do Nothing
       return -1;

@@ -97,7 +97,7 @@ Basic_Replication_Strategy::replicate_request(
       try{
         successor->oneway_set_update(state);
       }
-      catch (const CORBA::Exception& ex){
+      catch (const CORBA::Exception&){
       }
     }
   }

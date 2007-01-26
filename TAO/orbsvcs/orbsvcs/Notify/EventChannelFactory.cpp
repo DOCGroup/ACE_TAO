@@ -496,7 +496,7 @@ TAO_Notify_EventChannelFactory::activate_self (void)
     }
     this->reconnect ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     // ignore for now
   }

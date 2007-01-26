@@ -27,7 +27,7 @@ TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier)
     {
       this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // _narrow failed which probably means the interface is CosEventComm type.
     }
@@ -50,7 +50,7 @@ TAO_Notify_PushSupplier::get_ior (void) const
     CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in());
     result = static_cast<const char*> (ior.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     result.fast_clear();
   }
