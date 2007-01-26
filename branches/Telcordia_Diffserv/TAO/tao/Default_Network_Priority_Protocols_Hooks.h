@@ -35,6 +35,9 @@ public:
   /// destructor
   virtual ~TAO_Default_Network_Priority_Protocols_Hooks (void);
 
+  void init_hooks (TAO_ORB_Core *orb_core
+                   ACE_ENV_ARG_DECL);
+
   CORBA::Long get_dscp_codepoint (void);
 
   void set_dscp_codepoint (CORBA::Long &dscp_codepoint

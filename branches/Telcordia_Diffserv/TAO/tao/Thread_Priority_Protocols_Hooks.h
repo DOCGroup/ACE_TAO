@@ -47,6 +47,9 @@ class TAO_Export TAO_Thread_Priority_Protocols_Hooks
 public:
   /// destructor
   virtual ~TAO_Thread_Priority_Protocols_Hooks (void);
+
+  virtual void init_hooks (TAO_ORB_Core *orb_core
+                           ACE_ENV_ARG_DECL) = 0;
   
   virtual int get_thread_CORBA_priority (CORBA::Short &
                                          ACE_ENV_ARG_DECL) = 0;

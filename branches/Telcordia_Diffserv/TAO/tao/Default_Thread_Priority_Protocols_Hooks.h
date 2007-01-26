@@ -35,6 +35,9 @@ public:
   /// destructor
   virtual ~TAO_Default_Thread_Priority_Protocols_Hooks (void);
 
+  void init_hooks (TAO_ORB_Core *orb_core
+                   ACE_ENV_ARG_DECL);
+
   int get_thread_CORBA_priority (CORBA::Short &
                                  ACE_ENV_ARG_DECL);
 

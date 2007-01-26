@@ -35,6 +35,9 @@ public:
   /// destructor
   virtual ~TAO_Default_Policy_Protocols_Hooks (void);
 
+  void init_hooks (TAO_ORB_Core *orb_core
+                   ACE_ENV_ARG_DECL);
+
   CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
                                               TAO_Stub *stub
                                               ACE_ENV_ARG_DECL);

@@ -35,6 +35,9 @@ public:
   /// destructor
   virtual ~TAO_Default_Protocols_Properties_Protocols_Hooks (void);
 
+  void init_hooks (TAO_ORB_Core *orb_core
+                   ACE_ENV_ARG_DECL);
+
   void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
                                                 ACE_ENV_ARG_DECL);
 
