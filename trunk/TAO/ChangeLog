@@ -1,3 +1,8 @@
+Fri Jan 26 12:12:12 UTC 2007  Johnny Willemsen  <jwillmesen@remedy.nl>
+
+        * tao/Wait_Strategy.cpp:
+          Fixed vc warning
+
 Fri Jan 26 12:05:12 UTC 2007  Johnny Willemsen  <jwillmesen@remedy.nl>
 
         * tao/Makefile.am:
