@@ -219,7 +219,7 @@ Worker::svc (void)
       ACE_Time_Value tv (140, 0);
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return 0;
@@ -249,7 +249,7 @@ SelfClient::validate_connection (void)
         {
           this->server_->test_method (j);
         }
-      catch (const CORBA::Exception& ex){}
+      catch (const CORBA::Exception&){}
     }
 }
 

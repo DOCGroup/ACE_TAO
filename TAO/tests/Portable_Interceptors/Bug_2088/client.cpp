@@ -37,7 +37,7 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc, argv, "");
 
     }
-  catch (const CORBA::NO_MEMORY& ex)
+  catch (const CORBA::NO_MEMORY&)
     {
       // Initializer1 throws this exception and we should get it here
       caught_exception = true;

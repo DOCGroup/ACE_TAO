@@ -155,7 +155,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
       this->orb_->run ();
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   return 0;

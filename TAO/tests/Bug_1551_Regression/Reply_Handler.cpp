@@ -47,7 +47,7 @@ Reply_Handler::short_sleep_excep (
           ACE_ERROR ((LM_ERROR, "ERROR: Got nill exceptionholder\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Exceptions are expected and thus ignored in normal runs:
 #if 0

@@ -1,3 +1,9 @@
+Fri Jan 26 18:21:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * *.cpp:
+
+          Removed unused variable warnings from 120 files.
+
 Fri Jan 26 16:59:47 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_structure_fwd.cpp:

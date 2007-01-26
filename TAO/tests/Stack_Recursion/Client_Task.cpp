@@ -42,7 +42,7 @@ Client_Task::svc (void)
                                    payload);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
@@ -61,6 +61,6 @@ Client_Task::validate_connections (void)
           this->sender_->ping ();
 
         }
-      catch (const CORBA::Exception& ex){}
+      catch (const CORBA::Exception&){}
     }
 }

@@ -68,7 +68,7 @@ main (int argc, char *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       result =1;
     }

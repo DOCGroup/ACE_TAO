@@ -178,7 +178,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       this->receiver_context_ =
         this->sender_context_->bind_new_context (name);
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& al_ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       //
       // The sender context already exists, probably created by the
@@ -413,7 +413,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       this->receiver_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
     }
-  catch (const CosNaming::NamingContext::NotFound& al_ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
       name [0].id =
         CORBA::string_dup (this->sender_name_.c_str ());
@@ -459,7 +459,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
           this->sender_ =
             AVStreams::MMDevice::_narrow (object.in ());
         }
-      catch (const CosNaming::NamingContext::NotFound& al_ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           // No problem if the sender was not there.
         }

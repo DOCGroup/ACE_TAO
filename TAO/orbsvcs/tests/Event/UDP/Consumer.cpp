@@ -58,7 +58,7 @@ Consumer::disconnect (void)
       // Disconnect from the proxy
       this->proxy_->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions
     }

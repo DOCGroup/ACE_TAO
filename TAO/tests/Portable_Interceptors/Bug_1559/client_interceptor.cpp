@@ -84,7 +84,7 @@ Echo_Client_Request_Interceptor::send_request (
     {
       ri->get_request_service_context (::service_id);
     }
-  catch (const CORBA::BAD_PARAM& error)
+  catch (const CORBA::BAD_PARAM&)
     {
       // This is supposed to happen
       exception_count++;

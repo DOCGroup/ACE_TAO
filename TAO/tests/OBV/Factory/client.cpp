@@ -52,7 +52,7 @@ no_factory (OBV_FactoryTest::Test_ptr test)
           succeed = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

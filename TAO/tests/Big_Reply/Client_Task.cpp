@@ -63,6 +63,6 @@ Client_Task::validate_connection (void)
 
           this->reply_gen_->ping ();
         }
-      catch (const CORBA::Exception& ex){}
+      catch (const CORBA::Exception&){}
     }
 }

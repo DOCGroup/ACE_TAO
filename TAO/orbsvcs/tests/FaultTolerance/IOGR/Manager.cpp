@@ -211,7 +211,7 @@ Manager::run (void)
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "Error in run \n"),

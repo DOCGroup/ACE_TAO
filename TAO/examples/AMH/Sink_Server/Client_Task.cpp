@@ -130,7 +130,7 @@ Client_Task::run_test (void)
       test_end = ACE_OS::gethrtime ();
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return 0;
     }
@@ -167,7 +167,7 @@ Client_Task::svc (void)
           this->latency_.sample (now - start);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return 0;
     }

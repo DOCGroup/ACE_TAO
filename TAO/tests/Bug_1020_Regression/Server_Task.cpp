@@ -28,7 +28,7 @@ Server_Task::svc (void)
           Test::Payload_var result =
             this->echo_->echo_payload (pload);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           stop_loop = 1;
         }

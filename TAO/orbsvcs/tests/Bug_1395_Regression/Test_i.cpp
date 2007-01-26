@@ -46,7 +46,7 @@ Test_i::try_and_create_POA (void)
                                poa_mgr_.in (),
                                this->policies_);
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (const CORBA::TRANSIENT&)
     {
       // A transient exception exception may be expected,
       // so we won't print out the word exception but we

@@ -78,12 +78,12 @@ Current_Test_Impl::invoked_by_client (void)
     {
       this->invoked_by_client_i ();
     }
-  catch (const TAO::Transport::NoContext& ex)
+  catch (const TAO::Transport::NoContext&)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a Transport::NoContext exception\n")));
     }
-  catch (const CORBA::SystemException& ex1)
+  catch (const CORBA::SystemException&)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a CORBA::SystemException exception\n")));

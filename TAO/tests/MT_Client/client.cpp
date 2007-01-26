@@ -148,7 +148,7 @@ Client::validate_connection (void)
         {
           this->server_->test_method ();
         }
-      catch (const CORBA::Exception& ex){}
+      catch (const CORBA::Exception&){}
     }
 }
 

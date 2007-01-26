@@ -102,7 +102,7 @@ Server::init (int argc,
           this->my_naming_client_->bind (server_mmdevice_name,
                                          mmdevice.in ());
         }
-      catch (const CosNaming::NamingContext::AlreadyBound& al_ex)
+      catch (const CosNaming::NamingContext::AlreadyBound&)
         {
           server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice2");
           this->my_naming_client_->bind (server_mmdevice_name,

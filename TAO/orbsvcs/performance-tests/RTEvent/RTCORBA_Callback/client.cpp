@@ -49,7 +49,7 @@ public:
       {
         this->run_test ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
       }
 
