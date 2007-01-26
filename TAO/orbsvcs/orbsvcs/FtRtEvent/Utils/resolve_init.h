@@ -30,7 +30,7 @@ resolve_init (CORBA::ORB_ptr orb,
       ref = T::_narrow(obj.in());
     }
 
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       ACE_ERROR((
                   LM_ERROR,

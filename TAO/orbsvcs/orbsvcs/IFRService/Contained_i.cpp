@@ -897,7 +897,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           break;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // If the move was not successful, we must restore this.
       this->repo_->config ()->set_string_value (

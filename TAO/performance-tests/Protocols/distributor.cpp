@@ -188,7 +188,7 @@ test_i::start_test (CORBA::Long session_id,
 
           goto test_protocol_success;
         }
-      catch (const CORBA::TRANSIENT& exception)
+      catch (const CORBA::TRANSIENT&)
         {
           ++j;
 
@@ -230,7 +230,7 @@ test_i::start_test (CORBA::Long session_id,
 
           goto base_protocol_success;
         }
-      catch (const CORBA::TRANSIENT& exception)
+      catch (const CORBA::TRANSIENT&)
         {
           ACE_OS::sleep (1);
 

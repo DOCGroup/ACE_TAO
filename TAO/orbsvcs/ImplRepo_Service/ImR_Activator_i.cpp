@@ -216,12 +216,12 @@ ImR_Activator_i::fini (void)
             this->registration_token_);
         }
     }
-  catch (const CORBA::COMM_FAILURE& ex)
+  catch (const CORBA::COMM_FAILURE&)
     {
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR Activator: Unable to unregister from ImR.\n"));
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (const CORBA::TRANSIENT&)
     {
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR Activator: Unable to unregister from ImR.\n"));

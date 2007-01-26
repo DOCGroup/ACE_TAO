@@ -323,7 +323,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
     else
       return -1;
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
@@ -400,7 +400,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
       return comp->accept (this);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
@@ -530,7 +530,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *
       return comp->accept (this);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
@@ -614,7 +614,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       return -1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
@@ -761,7 +761,7 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
     TAO_ETCL_Literal_Constraint default_index_value (default_index);
     return (disc == default_index_value);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
@@ -1095,7 +1095,7 @@ TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
           CORBA::TypeCode_var tc = component->type ();
           kind = TAO_DynAnyFactory::unalias (tc.in ());
         }
-        catch (const CORBA::Exception& ex)
+        catch (const CORBA::Exception&)
         {
           return return_value;
         }
@@ -1185,7 +1185,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
         return 1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
@@ -1226,7 +1226,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (const CORBA::Any *any,
         return 1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
@@ -1269,7 +1269,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (const CORBA::Any *any,
         return 1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
@@ -1306,7 +1306,7 @@ TAO_Notify_Constraint_Visitor::union_does_contain (const CORBA::Any *any,
 
     return (item == element);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     return 0;
   }

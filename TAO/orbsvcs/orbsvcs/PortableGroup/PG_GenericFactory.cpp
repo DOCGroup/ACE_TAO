@@ -44,7 +44,7 @@ TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
           this->delete_object_i (factory_set,
                                  1 /* Ignore exceptions */);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions.
         }
@@ -163,7 +163,7 @@ TAO_PG_GenericFactory::create_object (
 
       *tmp <<= fcid;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       this->delete_object_i (factory_set,
                              1 /* Ignore exceptions */);
@@ -257,7 +257,7 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
         {
           factory->delete_object (member_fcid);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Exceptions are generally only ignored when this
           // GenericFactory (not the one being invoked above) is
@@ -637,7 +637,7 @@ TAO_PG_GenericFactory::check_minimum_number_members (
               if (gap == creation_count)
                 return;
             }
-          catch (const PortableGroup::MemberAlreadyPresent& ex)
+          catch (const PortableGroup::MemberAlreadyPresent&)
             {
               // Ignore this exception and continue.
             }
@@ -700,7 +700,7 @@ TAO_PG_GenericFactory::create_member (
         type_id,
         propagate_member_already_present);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // If the member reference is not nil, then the factory
       // was successfully invoked.  Since an exception was

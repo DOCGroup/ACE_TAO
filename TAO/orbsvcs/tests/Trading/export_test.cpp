@@ -122,7 +122,7 @@ main (int argc, char** argv)
 
       orb_manager.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trader Export Tests Failed"), -1);
     }

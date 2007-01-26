@@ -61,7 +61,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes (void)
     {
       this->scheduler_->get_config_infos(configs.out());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }
@@ -189,7 +189,7 @@ TAO_EC_Kokyu_Push_Command::execute ()
       this->proxy_->push_to_consumer (this->consumer_.in (),
                                       this->event_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

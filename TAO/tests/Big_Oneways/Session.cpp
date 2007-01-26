@@ -105,7 +105,7 @@ Session::validate_connections (void)
             {
               this->other_sessions_[j]->ping ();
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
             }
         }

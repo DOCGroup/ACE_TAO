@@ -139,7 +139,7 @@ Peer_Task::svc (void)
 
               this->progress_->sent_request (this->id_);
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               // Ignore exceptions;
             }

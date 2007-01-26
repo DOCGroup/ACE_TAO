@@ -55,12 +55,12 @@ namespace TAO
 
         this->check_iogr_version (sc.in ());
       }
-    catch (const CORBA::BAD_PARAM& ex)
+    catch (const CORBA::BAD_PARAM&)
       {
         // No group version context, no problem just return.
         return;
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         throw;
       }

@@ -71,7 +71,7 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set)
         {
           this->consumer_->push (set[i].data.any_value);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore the exception...
         }

@@ -47,7 +47,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
     ACE_Time_Value tv (0, 20000);
     this->reactor()->schedule_timer (this, 0, tv);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     this->echo_ = Test::Echo::_nil ();
 

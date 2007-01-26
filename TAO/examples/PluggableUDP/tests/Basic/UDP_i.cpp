@@ -64,7 +64,7 @@ UDP_i::invoke (const char * client_name,
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
        ACE_DEBUG ((LM_DEBUG,
                    "UDP_i::svc: Received exception\n"));

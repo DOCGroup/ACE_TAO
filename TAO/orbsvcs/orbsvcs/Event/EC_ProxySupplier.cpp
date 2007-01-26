@@ -114,7 +114,7 @@ TAO_EC_ProxyPushSupplier::shutdown (void)
     {
       consumer->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.
@@ -142,7 +142,7 @@ TAO_EC_ProxyPushSupplier::deactivate (void) ACE_THROW_SPEC (())
         this->object_id ();
       this->default_POA_->deactivate_object (id);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
@@ -342,7 +342,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
     {
       consumer->push (event);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       // Do not report errors for old consumers
       // NOTE: The comparison below is not completely correct, it
@@ -377,7 +377,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
                                      sysex);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Shouldn't happen, but does not hurt
     }
@@ -392,7 +392,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     {
       consumer->push (event);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       TAO_EC_ConsumerControl *control =
         this->event_channel_->consumer_control ();
@@ -407,7 +407,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
       control->system_exception (this,
                                  sysex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Shouldn't happen
     }

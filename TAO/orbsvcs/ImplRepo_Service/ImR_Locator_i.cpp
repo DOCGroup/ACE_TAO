@@ -678,7 +678,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
           info.starting = false;
         }
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (const CORBA::TIMEOUT&)
     {
       --waiting_clients;
       info.starting = false;
@@ -692,7 +692,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
           info.reset ();
         }
     }
-  catch (const ImplementationRepository::CannotActivate& ex)
+  catch (const ImplementationRepository::CannotActivate&)
     {
       --waiting_clients;
       info.starting = false;
@@ -894,7 +894,7 @@ ImR_Locator_i::findPOA (const char* name)
       bool activate_it = false;
       return root_poa_->find_POA (name, activate_it);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {// Ignore
     }
   return PortableServer::POA::_nil ();
@@ -933,7 +933,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (const CORBA::TIMEOUT&)
     {
       info->reset ();
       int err = this->repository_.update_server (*info);
@@ -947,7 +947,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
         }
       throw;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       if (this->debug_ > 1)
         {
@@ -1143,7 +1143,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
           server_iterator = ImplementationRepository::
             ServerInformationIterator::_unchecked_narrow (obj.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           throw;
         }
@@ -1195,7 +1195,7 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Connected to activator <%s>\n", info.name.c_str ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       info.reset ();
     }
@@ -1278,7 +1278,7 @@ ImR_Locator_i::connect_server (Server_Info& info)
       if (debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR: Connected to server <%s>\n", info.name.c_str ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       info.reset ();
     }
@@ -1445,7 +1445,7 @@ ImR_Locator_i::is_alive_i (Server_Info& info)
         return 0;
         }
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (const CORBA::TIMEOUT&)
     {
       if (debug_ > 1)
         {

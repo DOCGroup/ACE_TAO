@@ -79,7 +79,7 @@ AdminProperties_Task::svc (void)
           ACE_DEBUG((LM_DEBUG, "+"));
           this->supplier_->send_event (event);
         }
-      catch (const CORBA::IMP_LIMIT& impl_limit)
+      catch (const CORBA::IMP_LIMIT&)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "\nEvent %d was not send due to Impl Limit reached\n", i));
@@ -387,7 +387,7 @@ AdminProperties::create_suppliers (void)
           this->suppliers_connected_count_++;
         }
     }
-  catch (const CORBA::IMP_LIMIT& impl_limit)
+  catch (const CORBA::IMP_LIMIT&)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit excpetion when connecting supplier\n"));
@@ -422,7 +422,7 @@ AdminProperties::create_consumers (void)
           this->consumers_connected_count_++;
         }
     }
-  catch (const CORBA::IMP_LIMIT& impl_limit)
+  catch (const CORBA::IMP_LIMIT&)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "\nImpl Limit exception when connecting consumer\n"));

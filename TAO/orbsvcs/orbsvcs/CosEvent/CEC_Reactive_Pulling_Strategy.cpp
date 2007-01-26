@@ -69,7 +69,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
 
           this->event_channel_->supplier_admin ()->for_each (&worker);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions
         }
@@ -81,7 +81,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -122,7 +122,7 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 #endif /* TAO_HAS_CORBA_MESSAGING */
@@ -166,7 +166,7 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer)
     {
       any = consumer->try_pull_from_supplier (has_event);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
       return;

@@ -656,7 +656,7 @@ TAO_Storable_Naming_Context::make_new_context (
       poa->activate_object_with_id (id.in (),
                                     context);
     }
-  catch (const PortableServer::POA::ObjectAlreadyActive& ex)
+  catch (const PortableServer::POA::ObjectAlreadyActive&)
     {
       ACE_THROW_RETURN (CosNaming::NamingContext::AlreadyBound(),
                         CosNaming::NamingContext::_nil ());
@@ -1156,14 +1156,14 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
       bind_context (n,
                     result.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       {
         try
           {
             result->destroy ();
           }
-        catch (const CORBA::Exception& ex)
+        catch (const CORBA::Exception&)
           {
             // Do nothing?
           }

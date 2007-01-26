@@ -41,7 +41,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
     {
       callback->crash();
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
     }
 

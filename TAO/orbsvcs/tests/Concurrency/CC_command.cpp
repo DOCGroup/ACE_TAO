@@ -72,7 +72,7 @@ CC_Command::GetLockSet (const char *lock_set_name)
             ccls_ret = cc_lockset_.in ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       throw;
     }

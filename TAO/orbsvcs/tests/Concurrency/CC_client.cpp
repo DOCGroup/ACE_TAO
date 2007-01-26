@@ -370,7 +370,7 @@ CC_Client::init_naming_service (void)
 
       this->naming_service_->Init (this->orb_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

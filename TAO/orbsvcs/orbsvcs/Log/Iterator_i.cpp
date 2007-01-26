@@ -55,7 +55,7 @@ TAO_Iterator_i::handle_timeout(const ACE_Time_Value&, const void*)
     {
       this->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

@@ -22,7 +22,7 @@ TAO_Notify_ORB_Run_Task::svc (void)
 
       this->orb_objects_.orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

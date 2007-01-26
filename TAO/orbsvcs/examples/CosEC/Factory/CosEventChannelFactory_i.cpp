@@ -122,42 +122,42 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
 
       ec_return = CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
     }
-  catch (const PortableServer::POA::ServantAlreadyActive& sa_ex)
+  catch (const PortableServer::POA::ServantAlreadyActive&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
                         ec_return._retn ());
     }
-  catch (const PortableServer::POA::ObjectAlreadyActive& oaa_ex)
+  catch (const PortableServer::POA::ObjectAlreadyActive&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel (),
                         ec_return._retn ());
     }
-  catch (const PortableServer::POA::WrongPolicy& wp_ex)
+  catch (const PortableServer::POA::WrongPolicy&)
     {
       ACE_THROW_RETURN (CORBA::UNKNOWN (),
                         ec_return._retn ());
     }
-  catch (const PortableServer::POA::ObjectNotActive& ona_ex)
+  catch (const PortableServer::POA::ObjectNotActive&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
                         ec_return._retn ());
     }
-  catch (const CosNaming::NamingContext::NotFound& nf_ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
                         ec_return._retn ());
     }
-  catch (const CosNaming::NamingContext::CannotProceed& cp_ex)
+  catch (const CosNaming::NamingContext::CannotProceed&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
                         ec_return._retn ());
     }
-  catch (const CosNaming::NamingContext::InvalidName& in_ex)
+  catch (const CosNaming::NamingContext::InvalidName&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
                         ec_return._retn ());
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& ab)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_THROW_RETURN (CosEventChannelFactory::BindFailed (),
                         ec_return._retn ());
@@ -204,19 +204,19 @@ TAO_CosEventChannelFactory_i::destroy
           this->naming_->unbind (name);
         }
     }
-  catch (const CosNaming::NamingContext::NotFound& nf_ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
       return; // don't bother the user with exceptions if unbind fails.
     }
-  catch (const CosNaming::NamingContext::CannotProceed& cp_ex)
+  catch (const CosNaming::NamingContext::CannotProceed&)
     {
       return; // don't bother the user with exceptions if unbind fails.
     }
-  catch (const CosNaming::NamingContext::InvalidName& in_ex)
+  catch (const CosNaming::NamingContext::InvalidName&)
     {
       return; // don't bother the user with exceptions if unbind fails.
     }
-  catch (const CORBA::UserException& ue)// Translate any other user exception.
+  catch (const CORBA::UserException&)// Translate any other user exception.
     {
       throw CosEventChannelFactory::NoSuchChannel ();
     }
@@ -246,7 +246,7 @@ TAO_CosEventChannelFactory_i::find
 
       ec_return = CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
     }
-  catch (const CORBA::UserException& ue)// Translate any user exception.
+  catch (const CORBA::UserException&)// Translate any user exception.
     {
       ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel (),
                         ec_return._retn ());
@@ -275,7 +275,7 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
       str_return = PortableServer::ObjectId_to_string (oid.in ());
     }
-  catch (const CORBA::UserException& ue)// Translate any user exception.
+  catch (const CORBA::UserException&)// Translate any user exception.
     {
       ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel (),
                         str_return._retn ());

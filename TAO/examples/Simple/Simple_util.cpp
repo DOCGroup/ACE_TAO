@@ -105,7 +105,7 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
 
       adapter->bind (this->ins_, ior.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -242,7 +242,7 @@ Server<Servant>::register_name (void)
                               -1);
         }
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",

@@ -23,7 +23,7 @@ TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
     {
       this->remove_all_constraints ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG, "Error in Filter dtor\n"));
@@ -181,7 +181,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDS
     {
       this->add_constraints_i (modify_list);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Restore,
       for (index = 0; index < modify_list.length (); ++index)

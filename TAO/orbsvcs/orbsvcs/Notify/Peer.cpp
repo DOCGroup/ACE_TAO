@@ -86,20 +86,20 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
           this->dispatch_updates_i (cos_added, cos_removed);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_exist)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       this->handle_dispatch_exception ();
     }
-  catch (const CORBA::NO_IMPLEMENT& no_impl)
+  catch (const CORBA::NO_IMPLEMENT&)
     {
       // The peer does not implement the offer/subscription_change method
       // Do nothing. Later, perhaps set a flag that helps us decide if we should dispatch_updates_i.
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (const CORBA::SystemException&)
     {
       this->handle_dispatch_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Do nothing
     }

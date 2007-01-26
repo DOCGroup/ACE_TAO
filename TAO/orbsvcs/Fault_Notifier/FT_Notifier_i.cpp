@@ -232,7 +232,7 @@ int TAO::FT_FaultNotifier_i::fini (void)
         "FaultNotifier unregistered from ReplicationManager.\n"
         ));
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
         "FaultNotifier Can't unregister from ReplicationManager.\n"

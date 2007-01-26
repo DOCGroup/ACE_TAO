@@ -88,7 +88,7 @@ Foo_C_Custom_ClientEngine::execute(void)
     {
       this->proxy_.cust_op5();
     }
-  catch (const CORBA::Exception& ex)//(CustomException, ex)
+  catch (const CORBA::Exception&)//(CustomException, ex)
     {
       // Expected
       caught_exception = true;

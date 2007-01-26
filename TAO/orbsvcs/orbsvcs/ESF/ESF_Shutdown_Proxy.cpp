@@ -19,7 +19,7 @@ TAO_ESF_Shutdown_Proxy<PROXY>::work (PROXY *proxy)
     {
       proxy->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Do not propagate any exceptions
     }

@@ -136,7 +136,7 @@ EC_Reconnect::execute_consumer_test (void)
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      catch (const RtecEventChannelAdmin::AlreadyConnected& ex)
+      catch (const RtecEventChannelAdmin::AlreadyConnected&)
         {
           /* do nothing */
         }
@@ -190,7 +190,7 @@ EC_Reconnect::execute_supplier_test (void)
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      catch (const RtecEventChannelAdmin::AlreadyConnected& ex)
+      catch (const RtecEventChannelAdmin::AlreadyConnected&)
         {
           /* do nothing */
         }

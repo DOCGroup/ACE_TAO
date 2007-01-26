@@ -84,7 +84,7 @@ RedGreen_Test::destroy_ec ()
         {
           this->ec_->destroy ();
         }
-      catch (const CORBA::COMM_FAILURE& ex)
+      catch (const CORBA::COMM_FAILURE&)
         {
           // Silently swallow this b/c this could mean the EC is gone
           // or that the network is hosed.  Either way, we're not waiting

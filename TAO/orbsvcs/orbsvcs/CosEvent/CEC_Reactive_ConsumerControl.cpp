@@ -218,7 +218,7 @@ TAO_CEC_Reactive_ConsumerControl::handle_timeout (
           // Query the state of the consumers...
           this->query_consumers ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions
         }
@@ -230,7 +230,7 @@ TAO_CEC_Reactive_ConsumerControl::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -278,7 +278,7 @@ TAO_CEC_Reactive_ConsumerControl::activate (void)
          return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
@@ -355,7 +355,7 @@ TAO_CEC_Reactive_ConsumerControl::system_exception (
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }
@@ -404,7 +404,7 @@ TAO_CEC_Ping_Push_Consumer::work (TAO_CEC_ProxyPushSupplier *supplier)
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -436,7 +436,7 @@ TAO_CEC_Ping_Pull_Consumer::work (TAO_CEC_ProxyPullSupplier *supplier)
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }

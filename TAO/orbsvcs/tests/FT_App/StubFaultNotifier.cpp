@@ -450,7 +450,7 @@ int StubFaultNotifier::idle(int & result)
       }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     quit = 1;
   }

@@ -52,7 +52,7 @@ TAO_CEC_ProxyPullConsumer::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       result = CosEventChannelAdmin::ProxyPullConsumer::_nil ();
     }
@@ -71,7 +71,7 @@ TAO_CEC_ProxyPullConsumer::deactivate (void)
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
@@ -118,7 +118,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
       // Inform the control that we got something from the supplier
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       control->supplier_not_exist (this);
     }
@@ -127,7 +127,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
       control->system_exception (this,
                                  sysex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ Should not happen
     }
@@ -159,7 +159,7 @@ TAO_CEC_ProxyPullConsumer::pull_from_supplier ()
     {
       any = supplier->pull ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ This is where the policies for misbehaving suppliers
       //    should kick in.... for the moment just ignore them.
@@ -220,7 +220,7 @@ TAO_CEC_ProxyPullConsumer::shutdown (void)
     {
       supplier->disconnect_pull_supplier ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
@@ -361,7 +361,7 @@ TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer ()
         {
           supplier->disconnect_pull_supplier ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore exceptions, we must isolate other clients from
           // failures on this one.

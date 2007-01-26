@@ -37,7 +37,7 @@ AMI_Buffering::receive_data (const Test::Payload &the_payload)
       AMI_Buffering::Nest_Guard ng(*this);
       this->admin_->request_received (the_payload.length ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) DEBUG: AMI_Buffering::receive_data"));
     }

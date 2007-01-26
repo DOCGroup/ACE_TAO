@@ -168,7 +168,7 @@ test_no_implicit_activation (
       // an issue 10522 about this
       succeed = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

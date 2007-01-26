@@ -105,7 +105,7 @@ TAO_CEC_ProxyPushSupplier::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       result = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
     }
@@ -124,7 +124,7 @@ TAO_CEC_ProxyPushSupplier::deactivate (void)
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
@@ -160,7 +160,7 @@ TAO_CEC_ProxyPushSupplier::shutdown (void)
         {
           typed_consumer->disconnect_push_consumer ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
@@ -192,7 +192,7 @@ TAO_CEC_ProxyPushSupplier::shutdown (void)
     {
       consumer->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.
@@ -626,7 +626,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
       // Inform the control that we were able to push something
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& not_used)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       control->consumer_not_exist (this);
     }
@@ -635,7 +635,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
       control->system_exception (this,
                                  sysex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Shouldn't happen, but does not hurt
     }
@@ -685,7 +685,7 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
       control->system_exception (this,
                                  sysex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Shouldn't happen, but does not hurt
     }

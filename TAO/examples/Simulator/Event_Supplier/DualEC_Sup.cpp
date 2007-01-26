@@ -366,7 +366,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
       while (++total_sent < sup->total_messages_);
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -435,7 +435,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
       while (++total_sent < sup->total_messages_);
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

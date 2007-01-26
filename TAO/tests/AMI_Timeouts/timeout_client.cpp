@@ -181,7 +181,7 @@ TimeoutClient::send (CORBA::Boolean async,
           policy_list[0]->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Error: Unexpected exception\n\n"));
