@@ -81,7 +81,7 @@ UDP_i::invoke (const char * client_name,
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
        ACE_DEBUG ((LM_DEBUG,
                    "UDP_i::invoke: Received exception\n"));
@@ -105,7 +105,7 @@ UDP_i::reset (const char * client_name)
           responseHandler_->reset (client_name);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
        ACE_DEBUG ((LM_DEBUG,
                    "UDP_i::reset: Received exception\n"));

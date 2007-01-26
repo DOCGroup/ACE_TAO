@@ -260,7 +260,7 @@ main (int argc, char *argv[])
                           ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
             test->op1 ("case4", &v3, ov3.out (), desc.inout ());
           }
-        catch (const CORBA::MARSHAL& v3ex)
+        catch (const CORBA::MARSHAL&)
           {
             if (verbose)
               ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("passed\n")));

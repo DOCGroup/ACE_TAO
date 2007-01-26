@@ -120,7 +120,7 @@ main (int argc, char *argv[])
           return 1;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR: Some exception was caught in main().\n"));

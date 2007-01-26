@@ -232,7 +232,7 @@ Session::validate_connections (void)
           (void) this->other_sessions_[j]->_is_a ("Not_An_IDL_Type");
 #endif /* TAO_HAS_MESSAGING == 1 */
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
     }

@@ -270,7 +270,7 @@ MT_Test::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Bound name OK in thread %t\n"));
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to bind in thread %t\n"));
@@ -305,7 +305,7 @@ MT_Test::svc (void)
                         "Resolved name OK in thread %t\n"));
         }
     }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to resolve in thread %t\n"));
@@ -324,7 +324,7 @@ MT_Test::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Unbound name OK in thread %t\n"));
     }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (const CosNaming::NamingContext::NotFound&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to unbind in thread %t\n"));
@@ -621,12 +621,12 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context)
       root_context->resolve (test_name);
       ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
     }
-  catch (const CosNaming::NamingContext::InvalidName& ex)
+  catch (const CosNaming::NamingContext::InvalidName&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "InvalidName exception works properly\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
       throw;
@@ -649,12 +649,12 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context)
                           obj.in ());
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "AlreadyBound exception (case 1) works properly\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
       throw;
@@ -679,12 +679,12 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context)
                           obj.in ());
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "AlreadyBound  exception (case 2) works properly\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
       throw;
@@ -718,7 +718,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context)
                     "NotFound  exception (case 1)"
                     " - parameters aren't set correctly\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Not found test failed\n"));
       throw;
@@ -754,7 +754,7 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context)
                     "NotFound  exception (case 2)"
                     " - parameters aren't set correctly\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Unbind test failed\n"));
       throw;
@@ -791,7 +791,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context)
                     "NotFound  exception (case 3)"
                     " - parameters aren't set correctly\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
       throw;
@@ -937,7 +937,7 @@ Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref)
       ref->destroy ();
     }
 
-  catch (const CosNaming::NamingContext::NotEmpty& ex)
+  catch (const CosNaming::NamingContext::NotEmpty&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "NotEmpty exception works properly\n"));
@@ -952,7 +952,7 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref)
       ref->destroy ();
     }
 
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Destroy works properly\n"));

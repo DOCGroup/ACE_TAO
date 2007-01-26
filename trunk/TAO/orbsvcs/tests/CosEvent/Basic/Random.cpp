@@ -443,7 +443,7 @@ RND_Supplier::svc (void)
 
           this->push_new_event ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
       if (i * 100 / niterations >= percent)

@@ -81,7 +81,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       // No group version context
       has_ft_request_sc_ = false;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       throw;
     }

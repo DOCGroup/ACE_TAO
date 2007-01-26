@@ -37,11 +37,11 @@ Server_ORBInitializer::pre_init (
       orbinitinfo->register_initial_reference ("",
                                                object);
     }
-  catch (const PortableInterceptor::ORBInitInfo::InvalidName& ex)
+  catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
     {
       invalid_name = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -56,11 +56,11 @@ Server_ORBInitializer::pre_init (
       orbinitinfo->register_initial_reference ("MyService",
                                                object);
     }
-  catch (const PortableInterceptor::ORBInitInfo::InvalidName& ex)
+  catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
     {
       duplicate_name = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -82,7 +82,7 @@ Server_ORBInitializer::pre_init (
           invalid_object = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

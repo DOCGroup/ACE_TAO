@@ -148,7 +148,7 @@ main (int argc, char *argv[])
                         }
                     }
                 }
-              catch (const CORBA::Exception& ex)
+              catch (const CORBA::Exception&)
                 {
                   // ACE_DEBUG ((LM_DEBUG, "caught exception\n", corbaloc_arg));
                 }
@@ -199,7 +199,7 @@ Client::validate_connection (void)
         {
           this->server_->test_method (j);
         }
-      catch (const CORBA::Exception& ex){}
+      catch (const CORBA::Exception&){}
     }
 }
 

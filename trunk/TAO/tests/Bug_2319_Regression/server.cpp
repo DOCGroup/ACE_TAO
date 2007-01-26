@@ -232,7 +232,7 @@ void ST_AMH_Server::run_event_loop ()
             return;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {}
 }
 

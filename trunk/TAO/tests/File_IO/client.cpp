@@ -95,7 +95,7 @@ validate_connection (CORBA::Object_ptr object)
         {
           // Ignore...
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Rethrow any other exceptions.
           throw;

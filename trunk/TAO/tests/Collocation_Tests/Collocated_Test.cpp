@@ -98,7 +98,7 @@ main (int argc, char *argv[])
           corb->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }

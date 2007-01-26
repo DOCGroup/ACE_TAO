@@ -29,7 +29,7 @@ Server_Task::svc (void)
           this->echo_->echo_payload (payload);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

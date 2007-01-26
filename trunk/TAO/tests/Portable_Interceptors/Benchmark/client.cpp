@@ -110,7 +110,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server)
         }
       marker.dump_stats ("Authenticate method  ", gsf, 2);
     }
-  catch (const Test_Interceptors::Invalid& userex)
+  catch (const Test_Interceptors::Invalid&)
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid user\n"));
     }

@@ -67,11 +67,11 @@ client_test (Test_ptr server)
               "operation.\n"));
             }
         }
-      catch (const Test::X& ex)
+      catch (const Test::X&)
         {
           // Expected exception.  Ignore it.
         }
-      catch (const CORBA::NO_PERMISSION& ex)
+      catch (const CORBA::NO_PERMISSION&)
         {
           // Expected exception.  Ignore it.
         }
@@ -84,7 +84,7 @@ client_test (Test_ptr server)
                       ex.scenario));
           throw;
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Exception thrown from client_test() "
@@ -120,11 +120,11 @@ server_test (Test_ptr server)
                           "operation.\n"));
             }
         }
-      catch (const Test::X& ex)
+      catch (const Test::X&)
         {
           // Expected exception.  Ignore it.
         }
-      catch (const CORBA::NO_PERMISSION& ex)
+      catch (const CORBA::NO_PERMISSION&)
         {
           // Expected exception.  Ignore it.
         }
@@ -137,7 +137,7 @@ server_test (Test_ptr server)
                       ex.scenario));
           throw;
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Exception thrown from server_test() "

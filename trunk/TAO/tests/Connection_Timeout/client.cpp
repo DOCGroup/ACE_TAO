@@ -68,7 +68,7 @@ test_timeout (CORBA::Object_ptr object)
 
       hello->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Stop the timer
       profile_timer.stop ();

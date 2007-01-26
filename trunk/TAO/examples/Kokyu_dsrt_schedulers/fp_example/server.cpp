@@ -234,7 +234,7 @@ Worker::svc (void)
     {
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): Worker thread exiting...\n"));

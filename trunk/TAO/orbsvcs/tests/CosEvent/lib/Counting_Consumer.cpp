@@ -213,7 +213,7 @@ CEC_Counting_Consumer_Task::svc ()
     {
       this->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

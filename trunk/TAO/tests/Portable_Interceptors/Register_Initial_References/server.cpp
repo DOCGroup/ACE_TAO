@@ -29,11 +29,11 @@ int test_orb (CORBA::ORB_ptr orb)
       orb->register_initial_reference ("",
                                        object);
     }
-  catch (const CORBA::ORB::InvalidName& ex)
+  catch (const CORBA::ORB::InvalidName&)
     {
       invalid_name = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -51,11 +51,11 @@ int test_orb (CORBA::ORB_ptr orb)
       orb->register_initial_reference ("ORBMyService",
                                         object);
     }
-  catch (const CORBA::ORB::InvalidName& ex)
+  catch (const CORBA::ORB::InvalidName&)
     {
       duplicate_name = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -80,7 +80,7 @@ int test_orb (CORBA::ORB_ptr orb)
           invalid_object = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

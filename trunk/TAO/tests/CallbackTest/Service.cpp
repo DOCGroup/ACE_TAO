@@ -44,7 +44,7 @@ Service::run_test (Test::Callback_ptr callback)
     {
       callback->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_ERROR, "(%P|%t) - Service, client shutdown FAILED\n"));
     }
@@ -70,7 +70,7 @@ Service::call_are_you_there (Test::Callback_ptr callback)
         {
           (void) callback->are_you_there (out_str);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           exception_count++;
         }
@@ -94,7 +94,7 @@ Service::call_test_oneway (Test::Callback_ptr callback)
         {
           (void) callback->test_oneway ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           exception_count++;
         }

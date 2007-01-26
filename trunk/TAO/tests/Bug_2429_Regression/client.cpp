@@ -54,7 +54,7 @@ class Reply_Handler
           ++parentMethod_excep_count;
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::INTERNAL& iex)
+      catch (const CORBA::INTERNAL&)
         {
           ACE_DEBUG ((LM_DEBUG, "Successfully received an Internal Excep*ion as expected.\n"));
         }

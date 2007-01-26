@@ -355,7 +355,7 @@ Client::test_delete_property (const char *property_name)
 
       this->propsetdef_->delete_property (property_name_var.in ());
     }
-  catch (const CORBA::UserException& ex)
+  catch (const CORBA::UserException&)
     {
       // For no property, it is ok to get the user exception.
       return 0;

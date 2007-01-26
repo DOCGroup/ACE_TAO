@@ -171,7 +171,7 @@ Echo_Client_Request_Interceptor::receive_reply (
                       buf2));
         }
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (const CORBA::BAD_PARAM&)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Service Context Error \n"));
@@ -251,7 +251,7 @@ Echo_Client_Request_Interceptor::receive_exception (
                       buf2));
         }
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (const CORBA::BAD_PARAM&)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Service Context Error \n"));

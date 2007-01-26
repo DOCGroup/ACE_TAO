@@ -225,7 +225,7 @@ ClientTask::validate_connection ()
 #endif /* TAO_HAS_MESSAGING == 1 */
           return true;
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
     }

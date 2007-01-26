@@ -63,7 +63,7 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server)
     {
       server->user ();
     }
-  catch (const Test_Interceptors::Silly& userex)
+  catch (const Test_Interceptors::Silly&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
@@ -72,7 +72,7 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server)
     {
       server->system ();
     }
-  catch (const CORBA::INV_OBJREF& sysex)
+  catch (const CORBA::INV_OBJREF&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }

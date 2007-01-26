@@ -102,12 +102,12 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing& ex)
+      catch (const A::DidTheRightThing&)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
                     }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));

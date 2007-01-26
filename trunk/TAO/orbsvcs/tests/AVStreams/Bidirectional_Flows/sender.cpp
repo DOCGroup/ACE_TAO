@@ -395,7 +395,7 @@ Sender::pace_data (void)
         //TAO_AV_CORE::instance ()->orb ()->shutdown (1,
         //);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       //ACE_PRINT_EXCEPTION (ex,
        //                    "Sender::pace_data Failed\n");

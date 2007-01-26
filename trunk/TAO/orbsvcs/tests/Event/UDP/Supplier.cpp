@@ -43,7 +43,7 @@ Supplier::disconnect (void)
     {
       this->proxy_->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -89,7 +89,7 @@ Supplier::perform_push (void)
 
       this->proxy_->push (event);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 }

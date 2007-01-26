@@ -362,7 +362,7 @@ main (int argc, ACE_TCHAR **argv)
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     //expect exception since the context was deleted
   }
@@ -406,7 +406,7 @@ main (int argc, ACE_TCHAR **argv)
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     //expect exception since the context was deleted
   }
@@ -428,7 +428,7 @@ main (int argc, ACE_TCHAR **argv)
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     //expect exception since the context was deleted
   }

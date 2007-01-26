@@ -34,7 +34,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
       this->work_iterations_in_one_sec_ =
         this->estimate_iterations ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       throw;
     }

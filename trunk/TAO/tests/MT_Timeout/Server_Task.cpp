@@ -22,7 +22,7 @@ Server_Task::svc (void)
     {
       this->orb_->run (this->running_time_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

@@ -85,7 +85,7 @@ invocation_exception_test (Test_ptr obj,
       ACE_DEBUG ((LM_DEBUG,
                   "INV_POLICY exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "Error: unexpected exception caught\n"));
