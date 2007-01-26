@@ -529,7 +529,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
   ACE_GUARD (MUTEX, ace_mon, *this->lock_);
 
   // Close down all cached service handlers.
-  ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter =
+  typename CONNECTION_CACHE::ITERATOR iter =
     this->connection_cache_.begin ();
   while (iter != this->connection_cache_.end ())
     {
@@ -544,7 +544,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
           (*iter).second ()->close ();
 
           // remember next iter
-          ACE_TYPENAME CONNECTION_CACHE::ITERATOR next_iter = iter;
+          typename CONNECTION_CACHE::ITERATOR next_iter = iter;
           ++next_iter;
 
           // purge the item from the hash

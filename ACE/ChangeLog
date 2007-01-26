@@ -1,10 +1,19 @@
+Fri Jan 26 10:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cached_Connect_Strategy_T.cpp
+        * ace/Event_Handler_T.inl
+        * ace/Future.cpp
+        * ace/Future_Set.cpp
+        * examples/C++NPv2/Reactor_Logging_Server_T.cpp
+          Use typename
+
 Thu Jan 25 19:59:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
-            The include of rules.cia.GNU must come before the include of
-            rules.tao.GNU in order for CIAO libraries to have the correct
-            version numbers.
+          The include of rules.cia.GNU must come before the include of
+          rules.tao.GNU in order for CIAO libraries to have the correct
+          version numbers.
 
         * bin/auto_run_tests.pl:
 
