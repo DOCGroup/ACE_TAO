@@ -61,6 +61,12 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.5 and CIAO-0.5.6
+======================================================
+
+. Removed all exception environment macros except ACE_THROW_RETURN
+  and ACE_THROW_SPEC
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.4 and CIAO-0.5.5
 ======================================================
 
