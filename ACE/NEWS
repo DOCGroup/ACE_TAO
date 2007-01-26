@@ -3,7 +3,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) OpenVMS 8.3 on IA64 port
 
-PLANNED CHANGES FOR "ACE-5.5.6"
+PLANNED CHANGES FOR "ACE-5.5.7"
 ===============================
 
 . (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
@@ -12,10 +12,15 @@ PLANNED CHANGES FOR "ACE-5.5.6"
 
 . (Riverace) Pharlap ETS 13 qualification.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5.5 and ACE-5.5.6
+====================================================
+
+. Deprecated ACE_TYPENAME, use typename directly
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
 
-. The prebuild MPC keyword is now supported by the gnuace project type. 
+. The prebuild MPC keyword is now supported by the gnuace project type.
   This fixes Bugzilla #2713.
 
 . Support for Windows earlier than NT 4 SP2 was removed. ACE will not build
