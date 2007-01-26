@@ -30,62 +30,72 @@ TAO_Default_Protocols_Properties_Protocols_Hooks::
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Properties_Protocols_Hooks::
+client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
