@@ -193,7 +193,7 @@ namespace Test {
 
         this->push_request_info (requestID);
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s (%P|%t) Service context")
@@ -235,7 +235,7 @@ namespace Test {
       {
         inbound_process_context (ri);
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -258,7 +258,7 @@ namespace Test {
         outbound_process_context (ri);
 
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -282,7 +282,7 @@ namespace Test {
 
 
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -304,7 +304,7 @@ namespace Test {
       {
         outbound_process_context (ri);
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,

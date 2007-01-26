@@ -36,7 +36,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
                   "(%P|%t) - Service, calling crash_now_please\n"));
       callback->crash_now_please ();
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
 
   int pos_crash_exceptions =
     this->call_test_oneway (callback);
@@ -77,7 +77,7 @@ Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
         {
           (void) callback->are_you_there ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           exception_count++;
         }
@@ -99,7 +99,7 @@ Service::call_test_oneway (Test::Crashed_Callback_ptr callback)
         {
           (void) callback->test_oneway ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           exception_count++;
         }

@@ -14,7 +14,7 @@ Disconnect<Client>::operator () (Client *client)
     {
       client->disconnect ();
     }
-  catch (const CORBA::Exception& ex){ };
+  catch (const CORBA::Exception&){ };
 }
 
 template<class Client> ACE_INLINE

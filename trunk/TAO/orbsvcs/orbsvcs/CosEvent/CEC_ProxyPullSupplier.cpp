@@ -51,7 +51,7 @@ TAO_CEC_ProxyPullSupplier::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       result = CosEventChannelAdmin::ProxyPullSupplier::_nil ();
     }
@@ -70,7 +70,7 @@ TAO_CEC_ProxyPullSupplier::deactivate (void)
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is beign disconnected twice, or some
@@ -104,7 +104,7 @@ TAO_CEC_ProxyPullSupplier::shutdown (void)
     {
       consumer->disconnect_pull_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.

@@ -212,7 +212,7 @@ RTEvent_Logging_Service::svc (void)
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

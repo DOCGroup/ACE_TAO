@@ -90,7 +90,7 @@ TAO_Notify_SequenceProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& att
       }
       this->connect_sequence_push_consumer(pc.in());
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       // if we can't reconnect, tough
     }

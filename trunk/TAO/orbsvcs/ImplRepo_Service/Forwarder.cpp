@@ -45,7 +45,7 @@ ImR_Forwarder::init (CORBA::ORB_ptr orb)
       this->poa_current_var_ =
         PortableServer::Current::_narrow (tmp.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "ImR_Forwarder::init() Exception ignored.\n"));
     }
@@ -113,7 +113,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       forward_obj =
         this->orb_->string_to_object (ior.c_str ());
     }
-  catch (const ImplementationRepository::CannotActivate& ex)
+  catch (const ImplementationRepository::CannotActivate&)
     {
       throw CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
@@ -121,7 +121,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
           0),
         CORBA::COMPLETED_NO);
     }
-  catch (const ImplementationRepository::NotFound& ex)
+  catch (const ImplementationRepository::NotFound&)
     {
       throw CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (

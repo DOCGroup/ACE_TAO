@@ -141,7 +141,7 @@ Routing_Slip::create (
         }
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing_Slip::create: Exception reloading event.\n")

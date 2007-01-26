@@ -159,7 +159,7 @@ EC_Counting_Supplier_Task::svc ()
     {
       this->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

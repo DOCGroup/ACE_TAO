@@ -38,7 +38,7 @@ TAO_PG_Group_Guard::~TAO_PG_Group_Guard (void)
           // used properly.
           this->group_manager_.destroy_object_group (this->oid_);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions.
         }

@@ -122,7 +122,7 @@ TAO_LB_LoadManager::push_loads (
                                        this->lm_ref_.in ());
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions.
         }

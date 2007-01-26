@@ -307,7 +307,7 @@ Test_Big_Union::check_validity (void)
                                    ret_desc->name.in ()))
               return 0;
           }
-        catch (const CORBA::Exception& ex)
+        catch (const CORBA::Exception&)
           {
             return 0;
           }

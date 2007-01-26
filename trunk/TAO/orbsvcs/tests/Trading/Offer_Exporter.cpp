@@ -179,7 +179,7 @@ TAO_Offer_Exporter::export_offers_to_all (void)
 
           this->export_to (link_info->target_reg.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // @@ IGNORE??
         }

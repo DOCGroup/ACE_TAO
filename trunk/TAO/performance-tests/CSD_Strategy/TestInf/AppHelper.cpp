@@ -81,7 +81,7 @@ AppHelper::validate_connection (CORBA::Object_ptr obj)
 #endif /* TAO_HAS_MESSAGING == 1 */
           return true;
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
     }

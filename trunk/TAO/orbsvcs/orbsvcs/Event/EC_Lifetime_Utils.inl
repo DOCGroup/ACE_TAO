@@ -32,7 +32,7 @@ TAO_EC_Object_Deactivator::deactivate (void)
       this->deactivate_ = 0;
       this->poa_->deactivate_object (id_);
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       // The deactivation can throw...
     }
@@ -123,7 +123,7 @@ TAO_EC_ORB_Holder::~TAO_EC_ORB_Holder (void)
       {
         this->orb_->destroy ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         // Ignore.
       }
@@ -153,7 +153,7 @@ TAO_EC_Event_Channel_Holder::~TAO_EC_Event_Channel_Holder (void)
       {
         this->ec_->destroy ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
       {
         // Ignore.
       }

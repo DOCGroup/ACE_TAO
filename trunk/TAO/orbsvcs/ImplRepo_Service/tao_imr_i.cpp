@@ -707,12 +707,12 @@ TAO_IMR_Op_Activate::run (void)
         ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_ACTIVATE;
     }
-  catch (const ImplementationRepository::NotFound& ex)
+  catch (const ImplementationRepository::NotFound&)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const PortableServer::ForwardRequest& ex)
+  catch (const PortableServer::ForwardRequest&)
     {
       throw;
     }
@@ -885,7 +885,7 @@ TAO_IMR_Op_List::run (void)
           this->display_server_information (si.in ());
         }
     }
-  catch (const ImplementationRepository::NotFound& ex)
+  catch (const ImplementationRepository::NotFound&)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
@@ -911,13 +911,13 @@ TAO_IMR_Op_Remove::run (void)
       ACE_DEBUG ((LM_DEBUG, "Successfully removed server <%s>\n",
         this->server_name_.c_str ()));
     }
-  catch (const ImplementationRepository::NotFound& ex)
+  catch (const ImplementationRepository::NotFound&)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>.\n",
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const CORBA::NO_PERMISSION& ex)
+  catch (const CORBA::NO_PERMISSION&)
     {
       ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
@@ -943,12 +943,12 @@ TAO_IMR_Op_Shutdown::run (void)
       ACE_DEBUG ((LM_DEBUG, "Successfully shut down server <%s>\n",
         this->server_name_.c_str ()));
     }
-  catch (const ImplementationRepository::NotFound& ex)
+  catch (const ImplementationRepository::NotFound&)
     {
       ACE_ERROR ((LM_ERROR, "Server <%s> already shut down.\n", this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (const CORBA::TIMEOUT&)
     {
       ACE_DEBUG ((LM_DEBUG, "Timeout waiting for <%s> to shutdown.\n",
         this->server_name_.c_str ()));
@@ -974,7 +974,7 @@ TAO_IMR_Op_ShutdownRepo::run (void)
 
       ACE_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (const CORBA::TIMEOUT&)
     {
       ACE_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
     }
@@ -1052,7 +1052,7 @@ TAO_IMR_Op_Register::run (void)
 
       ACE_DEBUG((LM_DEBUG, "Successfully registered <%s>.\n", this->server_name_.c_str ()));
     }
-  catch (const CORBA::NO_PERMISSION& ex)
+  catch (const CORBA::NO_PERMISSION&)
     {
       ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;

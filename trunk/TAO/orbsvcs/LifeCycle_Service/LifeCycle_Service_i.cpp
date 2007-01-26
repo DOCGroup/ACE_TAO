@@ -98,7 +98,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
               genericFactory_var =
                 CosLifeCycle::GenericFactory::_narrow (genericFactoryObj_ptr);
             }
-          catch (const CORBA::Exception& ex)
+          catch (const CORBA::Exception&)
             {
               // see if there is an exception, if yes then throw the
               // NoFactory exception throw a NoFactory exception

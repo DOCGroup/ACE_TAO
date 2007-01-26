@@ -190,7 +190,7 @@ set_nil_servant_manager (PortableServer::POA_ptr poa)
           succeed = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -222,7 +222,7 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
           succeed = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

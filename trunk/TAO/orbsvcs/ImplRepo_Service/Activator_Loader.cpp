@@ -49,7 +49,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
       this->runner_.reset (new ImR_Activator_ORB_Runner (*this));
       this->runner_->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
@@ -68,7 +68,7 @@ ImR_Activator_Loader::fini (void)
       this->runner_.reset (0);
       return ret;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

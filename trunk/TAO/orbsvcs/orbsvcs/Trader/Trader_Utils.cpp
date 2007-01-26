@@ -297,7 +297,7 @@ TAO_Property_Evaluator::property_value (int index)
               if (this->dp_cache_ != 0)
                 this->dp_cache_[index] = prop_val;
             }
-          catch (const CORBA::SystemException& excp)
+          catch (const CORBA::SystemException&)
             {
               throw
                 (CosTradingDynamic::DPEvalFailure (name, type, info));

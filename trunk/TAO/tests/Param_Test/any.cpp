@@ -273,7 +273,7 @@ Test_Any::run_sii_test (Param_Test_ptr objref)
                                      this->inout_,
                                      this->out_.out ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }

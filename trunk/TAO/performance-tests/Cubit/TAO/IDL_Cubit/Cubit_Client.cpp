@@ -1535,7 +1535,7 @@ Cubit_Client::run ()
         {
           this->cubit_->ping ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Dont do anything..
         }

@@ -96,7 +96,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
       ACE_DEBUG ((LM_DEBUG,
                   "Factory Finder: Have reference to a Quoter Factory.\n"));
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %s\n", exception_message));
       ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);

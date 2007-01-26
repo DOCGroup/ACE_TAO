@@ -42,7 +42,7 @@ test_get_servant_manager (PortableServer::POA_ptr poa)
     {
       succeed = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -67,7 +67,7 @@ test_set_servant_manager (PortableServer::POA_ptr poa)
     {
       succeed = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -95,7 +95,7 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
     {
       succeed = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

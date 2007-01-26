@@ -127,18 +127,18 @@ TAO_PG_ObjectGroupManager::_tao_add_member (
                                       member,
                                       check_type_id);
     }
-  catch (const PortableGroup::ObjectGroupNotFound& ex)
+  catch (const PortableGroup::ObjectGroupNotFound&)
     {
       throw CORBA::INTERNAL ();
     }
-  catch (const PortableGroup::MemberAlreadyPresent& ex)
+  catch (const PortableGroup::MemberAlreadyPresent&)
     {
       if (propagate_member_already_present)
         throw;
       else
         throw CORBA::INTERNAL ();
     }
-  catch (const PortableGroup::ObjectNotAdded& ex)
+  catch (const PortableGroup::ObjectNotAdded&)
     {
       throw PortableGroup::NoFactory (the_location, type_id);
     }

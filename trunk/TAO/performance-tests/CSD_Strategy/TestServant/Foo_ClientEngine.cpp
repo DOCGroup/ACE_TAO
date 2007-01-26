@@ -55,7 +55,7 @@ Foo_ClientEngine::execute(unsigned num_loops)
       {
         this->obj_->op5();
       }
-      catch (const FooException& ex)
+      catch (const FooException&)
       {
         // Expected
         caught_exception = true;

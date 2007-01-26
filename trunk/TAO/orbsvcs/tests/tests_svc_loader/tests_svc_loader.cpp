@@ -78,7 +78,7 @@ int main (int argc, char *argv [])
         }
 
     }
-  catch (const CORBA::SystemException& e)
+  catch (const CORBA::SystemException&)
     {
       ACE_DEBUG ((LM_ERROR,
                   "CORBA System Exception Raised!\n"));

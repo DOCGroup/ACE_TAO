@@ -46,7 +46,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::try_reconnect ()
           this->reconnect();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -61,7 +61,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::reconnect ()
 
       gateway_->reconnect_consumer_ec();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -87,18 +87,18 @@ TAO_ECG_Reconnect_ConsumerEC_Control::query_eventchannel ()
            this->try_reconnect();
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       this->event_channel_not_exist (gateway_);
     }
-  catch (const CORBA::TRANSIENT& transient)
+  catch (const CORBA::TRANSIENT&)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->event_channel_not_exist (gateway_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -138,7 +138,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -182,7 +182,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
           return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
@@ -253,7 +253,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::system_exception (
 
       gateway->cleanup_consumer_proxies ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }

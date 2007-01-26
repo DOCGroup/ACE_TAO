@@ -58,7 +58,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
         }
       delete[] proxies;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {

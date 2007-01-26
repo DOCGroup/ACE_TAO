@@ -79,7 +79,7 @@ Process_Factory::create_new_process (void)
         poa->servant_to_id (startup_callback_impl);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 

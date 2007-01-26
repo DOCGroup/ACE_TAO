@@ -86,7 +86,7 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     {
       this->collection_->disconnected (proxy);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ In the future the collections may raise exceptions to
       // report errors (such as out of memory or things like that).

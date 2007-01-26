@@ -91,5 +91,5 @@ Receiver::done (void)
         poa->servant_to_id (this);
       poa->deactivate_object (oid.in ());
     }
-  catch (const CORBA::Exception& ex){}
+  catch (const CORBA::Exception&){}
 }

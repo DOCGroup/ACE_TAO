@@ -714,7 +714,7 @@ TAO_ComponentDef_i::name_clash (const char *name)
                                           TAO_IFR_Service_Utils::repo_,
                                           CORBA::dk_Component);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return 1;
     }

@@ -93,7 +93,7 @@ TAO_Notify_StructuredProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& a
       }
       this->connect_structured_push_consumer(pc.in());
     }
-    catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception&)
     {
       // if we can't connect... tough
     }

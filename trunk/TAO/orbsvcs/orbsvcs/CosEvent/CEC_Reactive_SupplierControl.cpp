@@ -219,7 +219,7 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
           // Query the state of the suppliers...
           this->query_suppliers ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions
         }
@@ -231,7 +231,7 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -279,7 +279,7 @@ TAO_CEC_Reactive_SupplierControl::activate (void)
           return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
@@ -308,7 +308,7 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
     {
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }
@@ -323,7 +323,7 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
     {
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }
@@ -338,7 +338,7 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
     {
       proxy->disconnect_pull_consumer ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }
@@ -356,7 +356,7 @@ TAO_CEC_Reactive_SupplierControl::system_exception (
           proxy->disconnect_pull_consumer ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions..
     }
@@ -405,7 +405,7 @@ TAO_CEC_Ping_Push_Supplier::work (TAO_CEC_ProxyPushConsumer *consumer)
           this->control_->supplier_not_exist (consumer);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -438,7 +438,7 @@ TAO_CEC_Ping_Typed_Push_Supplier::work (TAO_CEC_TypedProxyPushConsumer *consumer
           this->control_->supplier_not_exist (consumer);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
@@ -471,7 +471,7 @@ TAO_CEC_Ping_Pull_Supplier::work (TAO_CEC_ProxyPullConsumer *consumer)
           this->control_->supplier_not_exist (consumer);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }

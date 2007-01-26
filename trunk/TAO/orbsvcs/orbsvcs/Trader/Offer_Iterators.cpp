@@ -96,7 +96,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection (void)
 
           CORBA::release (offer_iter);
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // Don't let the exceptions propagate since we're in a
           // destructor!

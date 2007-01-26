@@ -268,7 +268,7 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }

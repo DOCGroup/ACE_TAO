@@ -173,7 +173,7 @@ NContextExt_Client_i::run (void)
           factory_object =
             this->naming_context_->resolve_str (str_name.in ());
         }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
         }
 

@@ -41,7 +41,7 @@ TAO_Concurrency_Loader::init (int argc, char *argv[])
       CORBA::Object_var object =
         this->create_object (orb.in (), argc, argv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ Should we log this???
       return -1;

@@ -67,7 +67,7 @@ TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_p
             "Got a TRANSIENT in NS_StructuredPushConsumer::init");
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_StructuredPushConsumer %@\n", this));
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // _narrow failed
         }
@@ -132,7 +132,7 @@ TAO_Notify_StructuredPushConsumer::get_ior (void) const
     CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in());
     result = static_cast<const char*> (ior.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     result.fast_clear();
   }

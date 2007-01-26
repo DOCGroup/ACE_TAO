@@ -138,7 +138,7 @@ BasicLog_Test::test_CreateLog (CORBA::ULongLong maxSize)
                         -1);
     }
 */
-  catch (const DsLogAdmin::InvalidThreshold& threshold)
+  catch (const DsLogAdmin::InvalidThreshold&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "invalid threshold creating basic log.\n"),
@@ -199,7 +199,7 @@ BasicLog_Test::test_LogAction ()
       basicLog_->set_log_full_action (DsLogAdmin::wrap);
       ACE_ERROR_RETURN((LM_ERROR,"Testing log action halt failed\n"),-1);
     }
-  catch (const DsLogAdmin::LogFull& xLogFull)
+  catch (const DsLogAdmin::LogFull&)
     {
       ACE_DEBUG ((LM_DEBUG,"Correctly caught exception LogFull\n"));
 
@@ -234,7 +234,7 @@ BasicLog_Test::test_LogAction ()
 
           ACE_DEBUG ((LM_DEBUG,"Test to wrap worked. %d written.\n",i));
         }
-      catch (const DsLogAdmin::LogFull& xLogFull)
+      catch (const DsLogAdmin::LogFull&)
         {
           ACE_DEBUG ((LM_ERROR,"Caught exception LogFull.  Fail testing wrapping of the log.\n"));
           return -1;
@@ -356,7 +356,7 @@ BasicLog_Test::test_adminState()
       ACE_ERROR_RETURN((LM_ERROR,"Setting administrative state to lock failed.  DsLogAdmin::LogLocked not thrown.\n"),-1);
 
     }
-  catch (const DsLogAdmin::LogLocked& xLocked)
+  catch (const DsLogAdmin::LogLocked&)
     {
       ACE_DEBUG ((LM_DEBUG,"Setting administrative state to lock succeeded.  DsLogAdmin::LogLocked was caught.\n"));
     }
@@ -375,7 +375,7 @@ BasicLog_Test::test_adminState()
       ACE_RETURN(0);
 
     }
-  catch (const DsLogAdmin::LogLocked& xLocked)
+  catch (const DsLogAdmin::LogLocked&)
     {
       ACE_DEBUG ((LM_DEBUG,"Setting administrative state to lock faild.  DsLogAdmin::LogLocked was caught.\n"));
     }
@@ -396,7 +396,7 @@ BasicLog_Test::test_logSize (void)
                          "DsLogAdmin::InvalidParam not thrown.\n"),
                        -1);
     }
-  catch (const DsLogAdmin::InvalidParam& xParam)
+  catch (const DsLogAdmin::InvalidParam&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Setting max size less than current size succeeded.\n"
@@ -593,7 +593,7 @@ BasicLog_Test::test_log_destroy (void)
       this->write_records (1);
       ACE_DEBUG ((LM_INFO, "Wrote to log\n"));
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       ACE_DEBUG ((LM_ERROR,
                   "Test of destroy log succeeded: "
@@ -712,7 +712,7 @@ BasicLog_Test::test_capacity_alarm_threshold (void)
                          "DsLogAdmin::InvalidThreshold not thrown.\n"),
                         -1);
     }
-  catch (const DsLogAdmin::InvalidThreshold& xParam)
+  catch (const DsLogAdmin::InvalidThreshold&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Setting an invalid alarm threshold succeeded.  "
@@ -731,7 +731,7 @@ BasicLog_Test::test_capacity_alarm_threshold (void)
                          "DsLogAdmin::InvalidThreshold not thrown.\n"),
                        -1);
     }
-  catch (const DsLogAdmin::InvalidThreshold& xParam)
+  catch (const DsLogAdmin::InvalidThreshold&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Setting an invalid alarm threshold succeeded.  "

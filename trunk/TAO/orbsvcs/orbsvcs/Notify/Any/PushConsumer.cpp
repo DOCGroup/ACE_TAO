@@ -87,7 +87,7 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
       ex._tao_print_exception ("Got a TRANSIENT in NS_PushConsumer::init");
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) got it for NS_PushConsumer %@\n", this));
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // _narrow failed which probably means the interface is CosEventComm type.
     }
@@ -142,7 +142,7 @@ TAO_Notify_PushConsumer::get_ior (void) const
       CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in());
       result = static_cast<const char*> (ior.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       result.fast_clear();
     }

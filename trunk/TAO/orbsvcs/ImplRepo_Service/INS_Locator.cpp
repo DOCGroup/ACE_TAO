@@ -47,7 +47,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 
       return CORBA::string_dup (tmp.c_str ());
     }
-  catch (const ImplementationRepository::CannotActivate& ex)
+  catch (const ImplementationRepository::CannotActivate&)
     {
       throw CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
@@ -55,7 +55,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
           0),
         CORBA::COMPLETED_NO);
     }
-  catch (const ImplementationRepository::NotFound& ex)
+  catch (const ImplementationRepository::NotFound&)
     {
       throw CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
