@@ -866,7 +866,7 @@ namespace TAO
     // in the Active Object Map, the ServantAlreadyActive exception is raised.
       if (result)
         {
-          throw (PortableServer::POA::ObjectAlreadyActive ());
+          throw PortableServer::POA::ObjectAlreadyActive ();
         }
       else if (wait_occurred_restart_call)
         {
