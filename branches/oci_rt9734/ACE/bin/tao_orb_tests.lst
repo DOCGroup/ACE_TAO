@@ -176,6 +176,7 @@ TAO/tests/ORB_init/run_test.pl:
 TAO/tests/ORB_destroy/run_test.pl:
 TAO/tests/ORB_shutdown/run_test.pl:
 TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/DSI_AMH/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Connection_Purging/run_test.pl: !VxWorks !ST !ACE_FOR_TAO
 TAO/tests/Server_Connection_Purging/run_test.pl: !VxWorks !Win32
