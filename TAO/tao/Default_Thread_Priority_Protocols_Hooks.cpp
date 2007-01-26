@@ -29,6 +29,14 @@ TAO_Default_Thread_Priority_Protocols_Hooks::
 {
 }
 
+void
+TAO_Default_Thread_Priority_Protocols_Hooks::init_hooks (
+  TAO_ORB_Core *
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+
 int
 TAO_Default_Thread_Priority_Protocols_Hooks::get_thread_CORBA_priority (
   CORBA::Short &
