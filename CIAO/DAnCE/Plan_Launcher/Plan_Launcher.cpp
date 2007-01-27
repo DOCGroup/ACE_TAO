@@ -294,7 +294,7 @@ namespace CIAO
 
           orb->destroy ();
         }
-      catch (const Plan_Launcher_i::Deployment_Failure& ex)
+      catch (const Plan_Launcher_i::Deployment_Failure&)
         {
           ACE_ERROR ((LM_ERROR,
                       "Deployment failed. Plan_Launcher exiting.\n"));
