@@ -255,7 +255,7 @@ MyImpl::EC_exec_i::pulse (void)
 
       this->context_->push_timeout (ev.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       // @@ do nothing?
     }
