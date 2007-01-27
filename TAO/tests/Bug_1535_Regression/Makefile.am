@@ -54,6 +54,8 @@ bug_1535_regression_CPPFLAGS = \
 
 bug_1535_regression_SOURCES = \
   TestC.cpp \
+  Test.cpp \
+  Test.h \
   TestS.cpp \
   bug_1535_regression.cpp \
   TestC.h \
