@@ -116,7 +116,7 @@ CServerApp::~CServerApp()
                          argv,
                          orb_name);
 
-      the_shutdown_orb->shutdown (0 // wait_for_completion);
+      the_shutdown_orb->shutdown (0);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
