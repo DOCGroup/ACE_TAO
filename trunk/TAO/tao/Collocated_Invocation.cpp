@@ -114,7 +114,7 @@ namespace TAO
           return s;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
-    catch (const ::CORBA::Exception& ex)
+    catch ( ::CORBA::Exception& ex)
       {
         // Ignore exceptions for oneways
         if (this->response_expected_ == false)
