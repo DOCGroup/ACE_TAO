@@ -18,8 +18,7 @@ TAO::CSD::TP_Servant_State_Map::~TP_Servant_State_Map()
 
 ACE_INLINE
 TAO::CSD::TP_Servant_State*
-TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant
-                                     )
+TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant)
 {
   void* key = servant;
 
@@ -36,8 +35,7 @@ TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant
 
 ACE_INLINE
 void
-TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant
-                                       )
+TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant)
 {
   void* key = servant;
 
@@ -56,14 +54,13 @@ TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant
 
 ACE_INLINE
 void
-TAO::CSD::TP_Servant_State_Map::remove(PortableServer::Servant servant
-                                       )
+TAO::CSD::TP_Servant_State_Map::remove(PortableServer::Servant servant)
 {
   void* key = servant;
 
   if (this->map_.unbind(key) == -1)
     {
-      throw (PortableServer::POA::ServantNotActive ());
+      throw PortableServer::POA::ServantNotActive ();
     }
 }
 
