@@ -39,11 +39,9 @@ namespace CIAO
 
   namespace Utility
   {
-    int write_IOR (const char *pathname,
-                   const char *ior)
+    int write_IOR (const char *pathname, const char *ior)
     {
-      FILE* ior_output_file_ =
-        ACE_OS::fopen (pathname, "w");
+      FILE* ior_output_file_ = ACE_OS::fopen (pathname, "w");
 
       if (ior_output_file_)
         {
@@ -68,7 +66,6 @@ namespace CIAO
       CORBA::ULong lengthMissing = 0;
       CORBA::ULong OriginalLength = name.length();
       CosNaming::Name tmpName;
-
       CosNaming::NamingContext_var tmpCtxVar;
 
       try
@@ -76,7 +73,7 @@ namespace CIAO
           tmpCtxVar = nc->bind_new_context(name);
           ACE_DEBUG ((LM_DEBUG, "Bound Context.\n\n"));
         }
-      catch (const CosNaming::NamingContext::AlreadyBound& ex)
+      catch (const CosNaming::NamingContext::AlreadyBound&)
         {
           ACE_DEBUG ((LM_DEBUG, "Context Already Bound.\n\n"));
         }
@@ -120,7 +117,7 @@ namespace CIAO
                                       const CORBA::Object_var obj)
     {
       CosNaming::Name tmpName;
-      CORBA::String_var  newSCName = nc->to_string(name);
+      CORBA::String_var newSCName = nc->to_string(name);
       ACE_DEBUG ((LM_DEBUG, "The name is: %s\n", newSCName.in ()));
 
       try
@@ -128,7 +125,7 @@ namespace CIAO
           nc->rebind(name, obj);
         }
 
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           ACE_DEBUG ((LM_DEBUG, "Name not found, doing new bind.\n"));
           nc->bind(name, obj);
@@ -147,7 +144,7 @@ namespace CIAO
       CORBA::Object_var objV;
       CosNaming::NamingContext_var tmpContextV;
 
-      if (name.length()==0)
+      if (name.length() == 0)
         {
           tmpContextV = CosNaming::NamingContext::_duplicate(nc);
         }
@@ -156,7 +153,7 @@ namespace CIAO
           objV = nc->resolve(name);
           tmpContextV = CosNaming::NamingContext::_narrow(objV.in ());
         }
-      if (CORBA::is_nil(tmpContextV.in ()))
+      if (CORBA::is_nil (tmpContextV.in ()))
         {
           ACE_ERROR ((LM_ERROR, "listBindings: Nil context.\n"));
           return 0;
@@ -164,7 +161,7 @@ namespace CIAO
 
       tmpContextV->list(max_list_size, basicListV.out(), bIterV.out());
 
-      CORBA::Long   max_remaining = max_list_size - basicListV->length();
+      CORBA::Long max_remaining = max_list_size - basicListV->length();
       CORBA::Boolean moreBindings = !CORBA::is_nil(bIterV.in ());
 
       if (moreBindings)
