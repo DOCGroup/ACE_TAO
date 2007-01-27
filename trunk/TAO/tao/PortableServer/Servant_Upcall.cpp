@@ -144,14 +144,14 @@ namespace TAO
             return TAO_Adapter::DS_FAILED;
         }
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-      catch ( ::PortableServer::ForwardRequest& forward_request)
+      catch (const ::PortableServer::ForwardRequest& forward_request)
         {
           forward_to =
             CORBA::Object::_duplicate (forward_request.forward_reference.in ());
           return TAO_Adapter::DS_FORWARD;
         }
 #else
-      catch ( ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception&)
         {
           ACE_UNUSED_ARG (forward_to);
           throw;
@@ -436,7 +436,7 @@ namespace TAO
                 {
                   this->poa_->complete_destruction_i ();
                 }
-              catch ( ::CORBA::Exception& ex)
+              catch (const ::CORBA::Exception& ex)
                 {
                   // Ignore exceptions
                   ex._tao_print_exception (
