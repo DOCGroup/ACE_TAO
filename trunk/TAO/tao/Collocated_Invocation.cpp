@@ -114,7 +114,7 @@ namespace TAO
           return s;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
-    catch ( ::CORBA::Exception& ex)
+    catch (const ::CORBA::Exception& ex)
       {
         // Ignore exceptions for oneways
         if (this->response_expected_ == false)
@@ -122,13 +122,14 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex
-                                     );
+          this->handle_any_exception (&ex);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
+#else
+        ACE_UNUSED_ARG (ex);
 #endif /*TAO_HAS_INTERCEPTORS*/
           throw;
       }
