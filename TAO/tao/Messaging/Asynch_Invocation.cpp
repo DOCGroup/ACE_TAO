@@ -157,6 +157,8 @@ namespace TAO
           s = TAO_INVOKE_RESTART;
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
+#else
+        ACE_UNUSED_ARG (ex);
 #endif /*TAO_HAS_INTERCEPTORS*/
           throw;
       }
