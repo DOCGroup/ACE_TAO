@@ -346,7 +346,7 @@ preparePlan (const Deployment::DeploymentPlan &plan)
           return nam._retn ();
         }
     }
-  catch (const PortableServer::POA::ObjectNotActive& ex)
+  catch (const PortableServer::POA::ObjectNotActive&)
     {
       ACE_THROW_RETURN (Deployment::StartError (),
                         Deployment::NodeApplicationManager::_nil ());
@@ -383,7 +383,7 @@ CIAO::NodeManager_Impl_Base::destroyManager
 
       this->poa_->deactivate_object (id.in ());
     }
-  catch (const PortableServer::POA::WrongAdapter& ex)
+  catch (const PortableServer::POA::WrongAdapter&)
     {
       ACE_ERROR ((LM_ERROR,
                   "NodeManager_Impl::destroyManager: EXCEPTION -  "
@@ -391,7 +391,7 @@ CIAO::NodeManager_Impl_Base::destroyManager
 
       throw ::Deployment::InvalidReference ();
     }
-  catch (const PortableServer::POA::ObjectNotActive& ex)
+  catch (const PortableServer::POA::ObjectNotActive&)
     {
       ACE_ERROR ((LM_ERROR,
                   "NodeManager_Impl::destroyManager: EXCEPTION - "
