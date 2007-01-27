@@ -25,7 +25,7 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
       ACE_UNUSED_ARG (ex);
       succeed = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -55,7 +55,7 @@ test_duplicate_compression_factory (
       ACE_UNUSED_ARG (ex);
       succeed = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -85,7 +85,7 @@ test_register_nil_compression_factory (
           succeed = true;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
     }
 
