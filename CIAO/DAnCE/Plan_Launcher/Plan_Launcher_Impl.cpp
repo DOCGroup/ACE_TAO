@@ -301,7 +301,7 @@ namespace CIAO
               this->destroy_dam_by_plan (uuid);
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           // @todo the destroy_dam_by_plan could give a stoperror exception
           // we should handle
