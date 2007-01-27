@@ -142,7 +142,7 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name)
           entry->int_id_.node_manager_ =
             ::Deployment::NodeManager::_narrow (temp.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR, "DANCE (%P|%t) Deployment_Configuration.cpp: "
                       "Error while contacting NodeManager %s\n", name));
