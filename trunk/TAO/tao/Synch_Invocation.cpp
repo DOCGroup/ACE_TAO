@@ -211,7 +211,7 @@ namespace TAO
         if (s != TAO_INVOKE_SUCCESS)
           return s;
       }
-    catch (const ::CORBA::Exception& ex)
+    catch ( ::CORBA::Exception& ex)
       {
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
@@ -713,7 +713,7 @@ namespace TAO
           this->receive_other_interception ();
 #endif /*TAO_HAS_INTERCEPTORS */
       }
-    catch (const ::CORBA::Exception& ex)
+    catch ( ::CORBA::Exception& ex)
       {
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
