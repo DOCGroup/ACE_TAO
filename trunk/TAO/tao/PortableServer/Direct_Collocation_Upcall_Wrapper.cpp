@@ -49,14 +49,14 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
                        num_args);
     }
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  catch ( ::PortableServer::ForwardRequest& forward_request)
+  catch (const ::PortableServer::ForwardRequest& forward_request)
     {
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
       return;
     }
 #else
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception&)
     {
       ACE_UNUSED_ARG (forward_obj);
       throw;
