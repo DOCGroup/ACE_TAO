@@ -606,7 +606,7 @@ add_new_components ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
                   "add_new_components () exception caught.\n"));
@@ -645,7 +645,7 @@ remove_existing_components ()
         for (size_t i = 0; i < gone_component_list.size (); ++i)
           this->component_map_.unbind (gone_component_list[i]);
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
                   "remove_existing_components () exception caught.\n"));
@@ -1002,7 +1002,7 @@ create_node_application (const ACE_CString & options)
           Deployment::NodeApplication::_duplicate (retval.in ());
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
       this->callback_poa_->deactivate_object (cb_id.in ());
 
