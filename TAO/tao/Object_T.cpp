@@ -46,7 +46,7 @@ namespace TAO
                                                   0,
                                                   pbf);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         // Swallow the exception
         return T::_nil ();

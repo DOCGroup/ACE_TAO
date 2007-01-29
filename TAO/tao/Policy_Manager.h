@@ -47,24 +47,19 @@ public:
   TAO_Policy_Manager (void);
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                               );
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                      );
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   // = The CORBA::PolicyManager operations
 
   virtual CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts
-
-      )
+        const CORBA::PolicyTypeSeq & ts)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
-                                     CORBA::SetOverrideType set_add
-                                     )
+                                     CORBA::SetOverrideType set_add)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::InvalidPolicies));
 

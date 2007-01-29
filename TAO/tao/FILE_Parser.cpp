@@ -65,7 +65,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
 
       reader.alloc ()->free (string);
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       reader.alloc ()->free (string);
       throw;

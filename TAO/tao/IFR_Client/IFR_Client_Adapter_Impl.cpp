@@ -130,11 +130,11 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     {
       _tao_call.invoke (0, 0);
     }
-  catch ( ::CORBA::OBJECT_NOT_EXIST&)
+  catch (const ::CORBA::OBJECT_NOT_EXIST&)
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       throw;
     }

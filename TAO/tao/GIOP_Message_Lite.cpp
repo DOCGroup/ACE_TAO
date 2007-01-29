@@ -676,8 +676,7 @@ int
 TAO_GIOP_Message_Lite::generate_exception_reply (
     TAO_OutputCDR &cdr,
     TAO_Pluggable_Reply_Params_Base &params,
-    CORBA::Exception &x
-  )
+    const CORBA::Exception &x)
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
@@ -689,7 +688,7 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
                                 params);
       x._tao_encode (cdr);
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
@@ -1029,7 +1028,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
         }
     }
 
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Normal exception, so the object is not here
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
@@ -1485,7 +1484,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
 
       x->_tao_encode (output);
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.

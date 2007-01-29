@@ -35,7 +35,7 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     {
       this->_tao_decode (cdr);
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 }
@@ -71,7 +71,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
           return false;
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       return false;
     }
@@ -190,7 +190,7 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 
       return for_reading >> obj;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 
@@ -234,7 +234,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
       TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
       return adapter->stream_to_value (this->cdr_, val);
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 
@@ -278,7 +278,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
       TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
       return adapter->stream_to_abstract_base (this->cdr_, obj);
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 

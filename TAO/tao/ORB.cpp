@@ -120,14 +120,12 @@ void CORBA::ORB::InvalidName::_raise (void) const
   TAO_RAISE (*this);
 }
 
-void CORBA::ORB::InvalidName::_tao_encode (
-    TAO_OutputCDR &) const
+void CORBA::ORB::InvalidName::_tao_encode (TAO_OutputCDR &) const
 {
   throw ::CORBA::MARSHAL ();
 }
 
-void CORBA::ORB::InvalidName::_tao_decode (
-    TAO_InputCDR &)
+void CORBA::ORB::InvalidName::_tao_decode (TAO_InputCDR &)
 {
   throw ::CORBA::MARSHAL ();
 }
@@ -304,9 +302,7 @@ CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
       throw ::CORBA::INTF_REPOS ();
     }
 
-  adapter->create_operation_list (this,
-                                  opDef,
-                                  result);
+  adapter->create_operation_list (this, opDef, result);
 }
 
 
@@ -437,9 +433,7 @@ CORBA::ORB::create_struct_tc (
                         0);
     }
 
-  return adapter->create_struct_tc (id,
-                                    name,
-                                    members);
+  return adapter->create_struct_tc (id, name, members);
 }
 
 CORBA::TypeCode_ptr
@@ -1476,13 +1470,13 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);
-      if ((cdr << obj) == 0)
+      if (!(cdr << obj))
         ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
 
-      const size_t total_len = cdr.total_length ();
+      size_t const total_len = cdr.total_length ();
 
       char *cp = 0;
       ACE_ALLOCATOR_RETURN (cp,
@@ -1585,8 +1579,7 @@ CORBA::ORB::string_to_object (const char *str)
 
   if (ior_parser != 0)
     {
-      return ior_parser->parse_string (str,
-                                       this);
+      return ior_parser->parse_string (str, this);
     }
 
   if (ACE_OS::strncmp (str,
@@ -1609,8 +1602,7 @@ CORBA::ORB::id (void)
 
 #if !defined(CORBA_E_MICRO)
 CORBA::Policy_ptr
-CORBA::ORB::create_policy (CORBA::PolicyType type,
-                           const CORBA::Any& val)
+CORBA::ORB::create_policy (CORBA::PolicyType type, const CORBA::Any& val)
 {
   this->check_shutdown ();
 
@@ -1724,9 +1716,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
   TAO_Connector_Registry *conn_reg =
     this->orb_core_->connector_registry ();
 
-  int const retv =
-    conn_reg->make_mprofile (str,
-                             mprofile);
+  int const retv = conn_reg->make_mprofile (str, mprofile);
   // Return nil.
 
   if (retv != 0)
@@ -1740,14 +1730,13 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
     }
 
   // Now make the TAO_Stub.
-  TAO_Stub *data = this->orb_core_->create_stub ((char *) 0,
-                                                 mprofile);
+  TAO_Stub *data = this->orb_core_->create_stub ((char *) 0, mprofile);
 
   TAO_Stub_Auto_Ptr safe_objdata (data);
 
   // Figure out if the servant is collocated.
-  CORBA::Object_ptr obj =
-    this->orb_core_->create_object (safe_objdata.get ());
+  CORBA::Object_ptr obj = this->orb_core_->create_object (safe_objdata.get ());
+  
   if (CORBA::is_nil (obj))
     return CORBA::Object::_nil ();
 
@@ -1784,8 +1773,7 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 
   if (vta)
     {
-      int const result = vta->vf_map_rebind (repository_id,
-                                             factory);
+      int const result = vta->vf_map_rebind (repository_id, factory);
 
       if (result == 0)              // No previous factory found
         {

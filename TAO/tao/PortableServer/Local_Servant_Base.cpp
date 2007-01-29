@@ -14,9 +14,7 @@ ACE_RCSID (PortableServer,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
-                                  void *
-                                  )
+TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &, void *)
 {
   throw ::CORBA::BAD_OPERATION ();
 }

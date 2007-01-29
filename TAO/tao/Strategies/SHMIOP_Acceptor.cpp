@@ -237,8 +237,7 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
-                                       ACE_OFF_T size)
+TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix, ACE_OFF_T size)
 {
   this->mmap_file_prefix_ = prefix;
   this->mmap_size_ = size;
@@ -247,8 +246,7 @@ TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix,
 }
 
 int
-TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
-                             ACE_Reactor *reactor)
+TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 

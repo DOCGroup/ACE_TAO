@@ -419,24 +419,20 @@ public:
 
   /// Get a policy.  First, check the ORB-level Policy Manager, then
   /// check the ORB defaults.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                               );
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
 
   /// Get a policy.  First, check the thread current, then check the
   /// ORB-level Policy Manager, then check the ORB defaults.
-  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type
-                                                 );
+  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type);
 
   /// Get a cached policy.  First, check the ORB-level Policy Manager,
   /// then check the ORB defaults.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                      );
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   /// Get a cached policy.  First, check the thread current, then
   /// check the ORB-level Policy Manager, then check the ORB defaults.
   CORBA::Policy_ptr get_cached_policy_including_current (
-      TAO_Cached_Policy_Type type
-     );
+      TAO_Cached_Policy_Type type);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -571,8 +567,7 @@ public:
   /// Register a TSS cleanup function.  The slot ID for the
   /// corresponding ORB core TSS resource is returned by the reference
   /// argument.  This method return 0 on success, and -1 on failure.
-  int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
-                            size_t &slot_id);
+  int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id);
 
   /// Return the underlying TSS cleanup function registry.
   TAO_Cleanup_Func_Registry *tss_cleanup_funcs (void);
@@ -587,13 +582,10 @@ public:
   TAO_Thread_Lane_Resources &lane_resources (void);
 
   /// Run the event loop.
-  int run (ACE_Time_Value *tv,
-           int perform_work
-          );
+  int run (ACE_Time_Value *tv, int perform_work);
 
   /// End the event loop
-  void shutdown (CORBA::Boolean wait_for_completion
-                );
+  void shutdown (CORBA::Boolean wait_for_completion);
 
   /// Get the shutdown flag value
   bool has_shutdown (void) const;
@@ -613,16 +605,14 @@ public:
   /// based on the endpoint.
   TAO_Stub *create_stub_object (TAO_MProfile &mprofile,
                                 const char *type_id,
-                                CORBA::PolicyList *policy_list
-                               );
+                                CORBA::PolicyList *policy_list);
 
   /// Factory method that create the "right" Stub depending on
   /// wheather RTCORBA is loaded or not. The factory used to create
   /// the stub, is loaded at ORB initialization, and its type depends
   /// on the fact that RTCORBA is being used or not.
   TAO_Stub *create_stub (const char *repository_id,
-                         const TAO_MProfile &profiles
-                        );
+                         const TAO_MProfile &profiles);
 
   /// Create a new object, use the adapter registry to create a
   /// collocated object, if not possible then create a regular
@@ -636,8 +626,7 @@ public:
   /// user decides to use lazy initialization of CORBA object, then
   /// this is the route that we have to take to do the
   /// initialization.
-  CORBA::Long initialize_object (TAO_Stub *the_stub,
-                                 CORBA::Object_ptr obj);
+  CORBA::Long initialize_object (TAO_Stub *the_stub, CORBA::Object_ptr obj);
 
   /// Reinitialise a stub after the effective profile has changed.
   /// This will happen after a location forward has been received
@@ -687,8 +676,7 @@ public:
 
   /// Resolve an initial reference via the -ORBInitRef and
   // -ORBDefaultInitRef options.
-  CORBA::Object_ptr resolve_rir (const char *name
-                                );
+  CORBA::Object_ptr resolve_rir (const char *name);
 
   /// Resolve the RT ORB reference for this ORB.
   CORBA::Object_ptr resolve_rt_orb (void);
@@ -698,9 +686,7 @@ public:
   const char *server_id (void) const;
 
   /// List all the service known by the ORB
-  CORBA::ORB_ObjectIdList *list_initial_references (
-
-    );
+  CORBA::ORB_ObjectIdList *list_initial_references (void);
 
   /// Reference counting...
   unsigned long _incr_refcnt (void);
@@ -754,15 +740,13 @@ public:
   /**
    * For details on how this is used please see the FT service
    */
-  CORBA::ULong hash_service (TAO_Profile *this_p,
-                             CORBA::ULong max);
+  CORBA::ULong hash_service (TAO_Profile *this_p, CORBA::ULong max);
 
   /// Call the service layers with the Service Context to check
   /// whether they would like to add something to the list.
   void service_context_list (TAO_Stub *stub,
                              TAO_Service_Context &service_context,
-                             CORBA::Boolean retstart
-                            );
+                             CORBA::Boolean retstart);
 
   /// Return a reference to the Fault Tolerant service object.
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
@@ -772,16 +756,14 @@ public:
   /// this case.
   TAO::Invocation_Status service_raise_comm_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-     );
+      TAO_Profile *profile);
 
   /// Raise a transient failure exception if a service is not loaded,
   /// else delegate to the service to see what the service has to do
   /// for this case.
   TAO::Invocation_Status service_raise_transient_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-     );
+      TAO_Profile *profile);
 
   //@}
 
@@ -803,25 +785,21 @@ public:
 
   /// Register a client request interceptor.
   void add_interceptor (
-    PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-   );
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
 
   /// Register a server request interceptor.
   void add_interceptor (
-    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-   );
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
 
   /// Register a client request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-   );
+    const CORBA::PolicyList& policies);
 
   /// Register a server request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-   );
+    const CORBA::PolicyList& policies);
 
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.
@@ -834,9 +812,7 @@ public:
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// Register an IOR interceptor.
-  void add_interceptor (
-    PortableInterceptor::IORInterceptor_ptr interceptor
-   );
+  void add_interceptor (PortableInterceptor::IORInterceptor_ptr interceptor);
   //@}
 
   /// Return the valuetype adapter
@@ -871,8 +847,7 @@ public:
 
   /// Call the libraries to handover the validators if they havent
   /// registered yet with the list of validators.
-  void load_policy_validators (TAO_Policy_Validator &validator
-                              );
+  void load_policy_validators (TAO_Policy_Validator &validator);
 
   /// Return the flushing strategy
   /**
@@ -981,8 +956,7 @@ protected:
   /// Helper method to hold the common code part for -ORBEndpoint and
   /// -ORBListenEndpoint options.
   int set_endpoint_helper (const ACE_CString &lane,
-                           const ACE_CString &endpoints
-                          );
+                           const ACE_CString &endpoints);
 
   /// Return pointer to the policy factory registry associated with
   /// this ORB core.

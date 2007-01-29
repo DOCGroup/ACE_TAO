@@ -91,13 +91,9 @@ TAO_IIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY &&
       this->orb_core_->orb_params ()->shared_profile () == 0)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    return this->create_new_profile (object_key, mprofile, priority);
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    return this->create_shared_profile (object_key, mprofile, priority);
 }
 
 int

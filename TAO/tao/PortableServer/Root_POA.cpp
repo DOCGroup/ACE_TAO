@@ -297,7 +297,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     {
       this->active_policy_strategies_.lifespan_strategy()->notify_startup ();
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       this->poa_manager_.remove_poa (this);
       this->object_adapter ().unbind_poa (this,
@@ -608,7 +608,7 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
                       this,
                       child_name.c_str ());
                 }
-              catch ( ::CORBA::SystemException&)
+              catch (const ::CORBA::SystemException&)
                 {
                   throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 1,
                                               CORBA::COMPLETED_NO);
@@ -2437,7 +2437,7 @@ TAO_Root_POA::ORT_adapter_i (void)
                                     this
                                    );
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception (
         "(%P|%t) Cannot initialize the "

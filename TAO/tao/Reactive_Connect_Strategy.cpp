@@ -79,7 +79,7 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
             break;
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       result = -1;
     }

@@ -44,10 +44,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
       if (dii_arguments_converter != 0)
         {
-          dii_arguments_converter->convert (server_request,
-                                            args,
-                                            nargs
-                                           );
+          dii_arguments_converter->convert (server_request, args, nargs);
         }
       else
         throw ::CORBA::NO_IMPLEMENT ();
@@ -55,10 +52,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
   if (server_request.incoming ())
     {
-      this->pre_upcall (*server_request.incoming (),
-                        args,
-                        nargs
-                       );
+      this->pre_upcall (*server_request.incoming (), args, nargs);
     }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -103,8 +97,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                   the_nargs,
                                                   servant_upcall,
                                                   exceptions,
-                                                  nexceptions
-                                                 );
+                                                  nexceptions);
           }
 
         // Don't bother performing the upcall if an interceptor caused a
@@ -114,9 +107,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           {
             if (interceptor_adapter != 0)
               {
-                interceptor_adapter->execute_command (server_request,
-                                                      command
-                                                     );
+                interceptor_adapter->execute_command (server_request, command);
               }
             else
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -155,8 +146,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                the_nargs,
                                                servant_upcall,
                                                exceptions,
-                                               nexceptions
-                                              );
+                                               nexceptions);
             }
         }
     }
@@ -178,11 +168,9 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                the_nargs,
                                                servant_upcall,
                                                exceptions,
-                                               nexceptions
-                                              );
+                                               nexceptions);
 
-          status =
-            server_request.reply_status ();
+          status = server_request.reply_status ();
         }
 
       if (status == PortableInterceptor::SYSTEM_EXCEPTION
@@ -208,10 +196,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
     {
       if (server_request.outgoing ())
         {
-          this->post_upcall (*server_request.outgoing (),
-                             args,
-                             nargs
-                            );
+          this->post_upcall (*server_request.outgoing (), args, nargs);
         }
     }
 }
@@ -219,8 +204,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 void
 TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
                                  TAO::Argument * const * args,
-                                 size_t nargs
-                                 )
+                                 size_t nargs)
 {
   // Demarshal the operation "in" and "inout" arguments, if any.
 
@@ -237,8 +221,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
     {
       if (!(*i)->demarshal (cdr))
         {
-          TAO_InputCDR::throw_skel_exception (errno
-                                             );
+          TAO_InputCDR::throw_skel_exception (errno);
         }
     }
 }
@@ -246,8 +229,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
 void
 TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
                                   TAO::Argument * const * args,
-                                  size_t nargs
-                                  )
+                                  size_t nargs)
 {
   // Marshal the operation "inout" and "out" arguments and return
   // value, if any.
@@ -259,8 +241,7 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
     {
       if (!(*i)->marshal (cdr))
         {
-          TAO_OutputCDR::throw_skel_exception (errno
-                                              );
+          TAO_OutputCDR::throw_skel_exception (errno);
         }
     }
 

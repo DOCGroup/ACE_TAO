@@ -170,8 +170,7 @@ CORBA::Object::can_convert_to_ior (void) const
 }
 
 char*
-CORBA::Object::convert_to_ior (bool,
-                               const char*) const
+CORBA::Object::convert_to_ior (bool, const char*) const
 {
   return 0;
 }
@@ -475,11 +474,11 @@ CORBA::Object::_non_existent (void)
     {
       retval = this->proxy_broker ()->_non_existent (this);
     }
-  catch ( ::CORBA::OBJECT_NOT_EXIST&)
+  catch (const ::CORBA::OBJECT_NOT_EXIST&)
     {
       retval = true;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       throw;
     }
@@ -619,13 +618,13 @@ CORBA::Object::_validate_connection (
     {
       tao_call.invoke ();
     }
-  catch ( ::CORBA::INV_POLICY&)
+  catch (const ::CORBA::INV_POLICY&)
     {
       inconsistent_policies =
         tao_call.get_inconsistent_policies ();
       retval = false;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       throw;
     }
@@ -781,7 +780,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
         orb_core->create_stub (obj->ior_->type_id.in (),
                                mp);
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception (
@@ -903,7 +902,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
           objdata = orb_core->create_stub (type_hint.in (),
                                            mp);
         }
-      catch ( ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
             ex._tao_print_exception (

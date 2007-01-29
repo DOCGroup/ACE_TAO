@@ -32,7 +32,7 @@ TAO_MProfile::~TAO_MProfile (void)
               CORBA::Policy_ptr policy = (*this->policy_list_)[i];
               policy->destroy ();
             }
-          catch ( ::CORBA::Exception&)
+          catch (const ::CORBA::Exception&)
             {
               // Ignore all exceptions to allow other policies to be
               // destroyed.

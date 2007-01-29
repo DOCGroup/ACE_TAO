@@ -111,10 +111,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
               r.profile (profile);
 
-              int const status =
-                this->endpoint_from_profile (r,
-                                             val
-                                            );
+              int const status = this->endpoint_from_profile (r, val);
 
               if (status == 1)
                 return;
@@ -129,8 +126,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     {
       if (r.inconsistent_policies ())
         {
-          CORBA::PolicyList *p =
-            r.inconsistent_policies ();
+          CORBA::PolicyList *p = r.inconsistent_policies ();
 
           p->length (1);
           (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
@@ -150,8 +146,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     ACE_Time_Value *val)
 {
   // Narrow to the RT Stub.
-  TAO_RT_Stub *rt_stub =
-    dynamic_cast <TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub *rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =

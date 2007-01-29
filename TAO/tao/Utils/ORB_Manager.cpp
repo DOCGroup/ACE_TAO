@@ -322,7 +322,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
                               );
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // ignore any exceptions..
     }

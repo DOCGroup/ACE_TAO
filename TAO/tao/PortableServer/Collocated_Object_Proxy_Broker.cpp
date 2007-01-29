@@ -86,11 +86,11 @@ namespace TAO
             _tao_retval = target->_servant ()->_repository_id ();
           }
       }
-    catch ( ::CORBA::OBJECT_NOT_EXIST&)
+    catch (const ::CORBA::OBJECT_NOT_EXIST&)
       {
         // Ignore this exception.
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         throw;
       }
@@ -164,11 +164,11 @@ namespace TAO
             _tao_retval = target->_servant ()->_get_component ();
           }
       }
-    catch ( ::CORBA::OBJECT_NOT_EXIST&)
+    catch (const ::CORBA::OBJECT_NOT_EXIST&)
       {
         // Ignore this exception.
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         throw;
       }
@@ -211,11 +211,11 @@ namespace TAO
             _tao_retval = target->_servant ()->_get_interface ();
           }
       }
-    catch ( ::CORBA::OBJECT_NOT_EXIST&)
+    catch (const ::CORBA::OBJECT_NOT_EXIST&)
       {
         // Ignore this exception.
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         throw;
       }

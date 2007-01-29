@@ -639,7 +639,7 @@ DTTask::svc (void)
       this->current_->end_scheduling_segment (this->name_.in ()
                                             );
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

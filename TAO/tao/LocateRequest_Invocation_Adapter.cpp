@@ -84,13 +84,13 @@ namespace TAO
             s = synch.invoke (max_wait_time
                              );
           }
-        catch ( ::CORBA::INV_POLICY&)
+        catch (const ::CORBA::INV_POLICY&)
           {
             this->list_ =
               resolver.steal_inconsistent_policies ();
             throw;
           }
-        catch ( ::CORBA::Exception&)
+        catch (const ::CORBA::Exception&)
           {
             throw;
           }

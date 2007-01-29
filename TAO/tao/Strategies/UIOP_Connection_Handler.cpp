@@ -104,7 +104,7 @@ TAO_UIOP_Connection_Handler::open (void*)
           tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       return -1;
     }

@@ -1356,7 +1356,7 @@ TAO_ORB_Core::fini (void)
       // Shutdown the ORB and block until the shutdown is complete.
       this->shutdown (1);
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ACE_CString message =
         "Exception caught in trying to shutdown ";
@@ -2937,7 +2937,7 @@ TAO_ORB_Core::implrepo_service (void)
           // @@ Worry about assigning a different IOR? (brunsch)
           this->implrepo_service_ = temp._retn ();
         }
-      catch ( ::CORBA::Exception&)
+      catch (const ::CORBA::Exception&)
         {
           // Just make sure that we have a null pointer.  Ignore the exception
           // anyway.
@@ -3285,7 +3285,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                     ior_ap_factory->create ();
                 }
             }
-          catch ( ::CORBA::Exception& ex)
+          catch (const ::CORBA::Exception& ex)
             {
               ex._tao_print_exception (
                 "Cannot initialize the "
@@ -3478,7 +3478,7 @@ TAO_ORB_Core::valuetype_adapter (void)
                     vt_ap_factory->create ();
                 }
             }
-          catch ( ::CORBA::Exception& ex)
+          catch (const ::CORBA::Exception& ex)
             {
               ex._tao_print_exception (
                 "Cannot initialize the "
@@ -3525,7 +3525,7 @@ TAO_ORB_Core_instance (void)
               CORBA::ORB_var orb =
                 CORBA::ORB_init (argc, 0, 0);
             }
-          catch ( ::CORBA::Exception&)
+          catch (const ::CORBA::Exception&)
             {
               // @@ What should we do here?
             }

@@ -82,7 +82,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
           ++server_request.interceptor_count ();
         }
     }
-  catch ( ::PortableInterceptor::ForwardRequest& exc)
+  catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -152,7 +152,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
             }
         }
     }
-  catch ( ::PortableInterceptor::ForwardRequest& exc)
+  catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -219,7 +219,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           ++server_request.interceptor_count ();
         }
     }
-  catch ( ::PortableInterceptor::ForwardRequest& exc)
+  catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -290,7 +290,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
           // an intermediate interception point.
         }
     }
-  catch ( ::PortableInterceptor::ForwardRequest& exc)
+  catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -408,7 +408,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
             }
         }
     }
-  catch ( ::PortableInterceptor::ForwardRequest& exc)
+  catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -439,8 +439,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                             nargs,
                             servant_upcall,
                             exceptions,
-                            nexceptions
-                           );
+                            nexceptions);
 
       PortableInterceptor::ReplyStatus status =
         server_request.reply_status ();
@@ -498,13 +497,11 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->
-                send_other (&request_info
-                           );
+              registered.interceptor_->send_other (&request_info);
             }
         }
     }
-  catch ( ::PortableInterceptor::ForwardRequest& exc)
+  catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -529,17 +526,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-  const CORBA::PolicyList& policies
-  )
+  const CORBA::PolicyList& policies)
 {
-  this->interceptor_list_.add_interceptor (interceptor,
-                                           policies
-                                          );
+  this->interceptor_list_.add_interceptor (interceptor, policies);
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (
-  void)
+TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (void)
 {
   this->interceptor_list_.destroy_interceptors ();
 }
@@ -564,8 +557,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current (
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
   TAO_ServerRequest & server_request,
-  TAO::Upcall_Command & command
-  )
+  TAO::Upcall_Command & command)
 {
   TAO::PICurrent_Guard const pi_guard (server_request,
                                        true  /* Copy TSC to RSC */);

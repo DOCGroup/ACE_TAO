@@ -84,7 +84,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
       poa_impl->set_csd_strategy (this);
       strategy_set = true;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 

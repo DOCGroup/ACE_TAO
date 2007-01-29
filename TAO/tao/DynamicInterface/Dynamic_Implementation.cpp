@@ -169,7 +169,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
           dsi_request->dsi_marshal ();
         }
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())

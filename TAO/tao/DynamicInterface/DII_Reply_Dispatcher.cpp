@@ -86,7 +86,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
                                    this->reply_status_
                                   );
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -122,7 +122,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
                                    TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION
                                   );
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {

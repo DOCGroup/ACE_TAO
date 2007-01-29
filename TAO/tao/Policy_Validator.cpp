@@ -65,8 +65,7 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
 
 
 void
-TAO_Policy_Validator::validate (TAO_Policy_Set &policies
-                                )
+TAO_Policy_Validator::validate (TAO_Policy_Set &policies)
 {
   this->validate_impl (policies);
 
@@ -77,8 +76,7 @@ TAO_Policy_Validator::validate (TAO_Policy_Set &policies
 }
 
 void
-TAO_Policy_Validator::merge_policies (TAO_Policy_Set &policies
-                                      )
+TAO_Policy_Validator::merge_policies (TAO_Policy_Set &policies)
 {
   this->merge_policies_impl (policies);
 

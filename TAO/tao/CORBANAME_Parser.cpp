@@ -137,7 +137,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
           obj = name_context._retn ();
         }
     }
-  catch ( ::CORBA::SystemException& ex)
+  catch (const ::CORBA::SystemException& ex)
     {
       if (TAO_debug_level >= 4)
         {

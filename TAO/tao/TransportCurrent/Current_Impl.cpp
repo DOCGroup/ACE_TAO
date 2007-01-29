@@ -60,8 +60,7 @@ namespace TAO
     {
       static const TAO::Transport::Stats dummy;
 
-      const TAO_Transport* t =
-        this->transport ();
+      const TAO_Transport* t = this->transport ();
 
       return (t==0 || t->stats () == 0) ? &dummy : t->stats ();
     }
@@ -69,8 +68,7 @@ namespace TAO
     CORBA::Long Current_Impl::id (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
-      const TAO_Transport* t =
-        this->transport ();
+      const TAO_Transport* t = this->transport ();
 
       return (t==0) ? 0 : t->id ();
     }

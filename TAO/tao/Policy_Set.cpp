@@ -29,7 +29,7 @@ TAO_Policy_Set::~TAO_Policy_Set (void)
     {
       this->cleanup_i ();
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Ignore exceptions...
     }
@@ -72,7 +72,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
         }
 
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 4)
         ex._tao_print_exception ("TAO_Policy_Set::TAO_Policy_Set");
