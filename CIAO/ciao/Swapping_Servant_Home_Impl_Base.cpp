@@ -17,8 +17,7 @@ namespace CIAO
   // Operations for CCMHome interface.
 
   CORBA::IRObject_ptr
-  Swapping_Home_Servant_Impl_Base::get_component_def (
-    )
+  Swapping_Home_Servant_Impl_Base::get_component_def (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
@@ -26,8 +25,7 @@ namespace CIAO
   }
 
   CORBA::IRObject_ptr
-  Swapping_Home_Servant_Impl_Base::get_home_def (
-    )
+  Swapping_Home_Servant_Impl_Base::get_home_def (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),

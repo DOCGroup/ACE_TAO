@@ -1,3 +1,19 @@
+Mon Jan 29 19:23:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Swapping_Servant_Home_Impl_Base.{h,cpp}:
+        * ciao/Upgradeable_Context_Impl_T.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+          Layout changes
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Fixed parsing of node manager file
+
+        * examples/BasicSP/descriptors/run_test.pl:
+          New script to run this example automatically
+
+        * exampls/BasicSP/README.html:
+          Fixed incorrect path and mpc generation command
+
 Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO version 0.5.6 released.
