@@ -1,0 +1,9 @@
+// $Id$
+
+project (TypeCode_Creation_Test) : taoclient, typecodefactory {
+  exename  = create_tc
+  Source_Files {
+    testC.cpp
+    main.cpp
+  }
+}

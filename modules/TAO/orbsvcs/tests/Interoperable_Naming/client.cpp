@@ -1,0 +1,44 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/tests/Interoperable_Naming/
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//     This implements a simple CORBA client for the
+//     CosNaming::NamingContextExt example
+//
+// = AUTHORS
+//     Priyanka Gontla <pgontla@ece.uci.edu>
+//
+//
+// ============================================================================
+
+#include "ncontextext_client_i.h"
+
+int main (int argc, char *argv [])
+{
+  int result = 0;
+
+  try
+    {
+
+      NContextExt_Client_i client;
+
+      if (client.init (argc, argv) != 0)
+        return 1;
+
+      result = client.run ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("client");
+      return 1;
+    }
+
+  return result;
+}
