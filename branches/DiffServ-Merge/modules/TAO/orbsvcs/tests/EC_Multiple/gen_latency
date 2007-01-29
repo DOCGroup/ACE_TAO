@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+HP_SUPPLIERS="1 2 10"
+HP_CONSUMERS="1 5 10 20"
+
+for s in $HP_SUPPLIERS; do
+  echo Supplier = $s
+  ./histo.pl -k 'Latency\[LCL' LTC.ECM1.S${s}.*.log LTC.ECM2.S${s}.*.log >LTC.LCL.S${s}.histo
+  ./histo.pl -k 'Latency\[RMT' LTC.ECM1.S${s}.*.log LTC.ECM2.S${s}.*.log >LTC.RMT.S${s}.histo
+
+  for c in $HP_CONSUMERS; do
+     x=`expr $c - 1`
+     l=`printf %02.2d $x`
+     echo Consumer = $c, LAST = $l
+    ./histo.pl -k 'Latency\[LCL,HP00' LTC.ECM1.S${s}.C${c}.log LTC.ECM2.S${s}.C${c}.log >LTC.LCL.S${s}.C${c}.FIRST.histo
+    ./histo.pl -k 'Latency\[RMT,HP00' LTC.ECM1.S${s}.C${c}.log LTC.ECM2.S${s}.C${c}.log >LTC.RMT.S${s}.C${c}.FIRST.histo
+    ./histo.pl -k "Latency\[LCL,HP${l}" LTC.ECM1.S${s}.C${c}.log LTC.ECM2.S${s}.C${c}.log >LTC.LCL.S${s}.C${c}.LAST.histo
+    ./histo.pl -k "Latency\[RMT,HP${l}" LTC.ECM1.S${s}.C${c}.log LTC.ECM2.S${s}.C${c}.log >LTC.RMT.S${s}.C${c}.LAST.histo
+
+    ./histo.pl -k "Latency\[LCL,HP" LTC.ECM1.S${s}.C${c}.log LTC.ECM2.S${s}.C${c}.log >LTC.LCL.S${s}.C${c}.histo
+    ./histo.pl -k "Latency\[RMT,HP" LTC.ECM1.S${s}.C${c}.log LTC.ECM2.S${s}.C${c}.log >LTC.RMT.S${s}.C${c}.histo
+
+    ./histo.pl -k 'Latency\[LCL,HP00' LTC.LCL.S${s}.C${c}.log >LTC.XLCL.S${s}.C${c}.FIRST.histo
+    ./histo.pl -k "Latency\[LCL,HP${l}" LTC.LCL.S${s}.C${c}.log >LTC.XLCL.S${s}.C${c}.LAST.histo
+    ./histo.pl -k "Latency\[LCL,HP" LTC.LCL.S${s}.C${c}.log >LTC.XLCL.S${s}.C${c}.histo
+  done
+done
+
+for f in LTC.*.histo; do
+  b=`basename $f .histo`
+  tail +3 $f | sort -n > ${b}.data
+done
+
+for i in XLCL; do
+  grep Min LTC.${i}.*.FIRST.histo |
+    sed -e "s/LTC.$i.S//" -e 's/\.C/ /' -e 's/.FIRST.histo:/ /' -e 's/\,/ /g' |
+    awk '{print $1, $2, $4, $6, $8, $10}' |
+    sort -k 1n -k 2n > LTC.${i}.FIRST.tbl
+  grep Min LTC.${i}.*.LAST.histo |
+    sed -e "s/LTC.$i.S//" -e 's/\.C/ /' -e 's/.LAST.histo:/ /' -e 's/\,/ /g' |
+    awk '{print $1, $2, $4, $6, $8, $10}' |
+    sort -k 1n -k 2n > LTC.${i}.LAST.tbl
+  paste LTC.${i}.FIRST.tbl LTC.${i}.LAST.tbl |
+    awk '{print $1, $2, $3, $4, $5, $6, $9, $10, $11, $12}' > LTC.${i}.tbl
+done
+
+for i in LCL RMT; do
+  grep Min `ls LTC.${i}.*.histo | grep -v FIRST | grep -v LAST` |
+    sed -e "s/LTC.$i.S//" -e 's/\.C/ /' -e 's/.histo:/ /' -e 's/\,/ /g' |
+    awk '{print $1, $2, $4, $6, $8, $10}' |
+    sort -k 1n -k 2n > LTC.${i}.tbl
+done
+
+paste LTC.LCL.tbl LTC.RMT.tbl |
+    awk '{print $1, $2, $3, $4, $5, $6, $9, $10, $11, $12}' > LTC.LCLRMT.tbl
+
+exit 0
+
+for s in $HP_SUPPLIERS; do
+  gnuplot <<_EOF_
+set grid xtics ytics
+set ylabel "Relative frequency"
+
+set xlabel "Latency (usecs) [$s suppliers, local events]"
+set terminal postscript eps color
+set output "LTC.LCL.S${s}.eps"
+plot 'LTC.LCL.S${s}.data' w i
+#set terminal x11
+#plot 'LTC.LCL.S${s}.data' w i
+#pause 2
+
+set xlabel "Time (usecs) [$s suppliers, remote events]"
+set terminal postscript eps
+set output "LTC.RMT.S${s}.eps"
+plot 'LTC.RMT.S${s}.data' w i
+#set terminal x11
+#plot 'LTC.RMT.S${s}.data' w i
+#pause 2
+
+_EOF_
+done
+
+for i in LTC.*.eps; do
+  b=`basename $i .eps`
+  gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE \
+      -sOutputFile="${b}.jpg" ${b}.eps quit.ps
+done

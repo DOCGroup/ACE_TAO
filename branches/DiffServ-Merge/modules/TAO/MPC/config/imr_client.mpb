@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : taolib {
+  libs    += TAO_ImR_Client
+  after   += ImR_Client
+}
