@@ -1,3 +1,11 @@
+Mon Jan 29 17:57:17 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+          tao/IIOP_Connection_Handler.cpp:
+        
+          Made changes to use the right "get" protocols hooks function
+          to obtain the right protocols hooks piece to use.
+
 Mon Jan 29 17:32:32 UTC 2007  Jaiganesh B<jai.dre.vanderbilt.edu>
 
         * tao/ORB_Core.cpp:
