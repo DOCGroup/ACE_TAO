@@ -1,0 +1,25 @@
+/**
+
+@page Thread Pool Latency Test README File
+
+	This test tries to estimate the minimum latency for the
+Thread-Pool concurrency model.  The test uses a multi-threaded client
+and server.
+
+	Please do not extend this test to deal with other data types,
+configurations, etc.  If you need to just create a new test.  In the
+past we had multi-purpose tests like that, they were hard to maintain,
+and the results were hard to interpret.  Furthermore, the test is
+purposely simple so its output can be parsed via nightly scripts and
+plotted in a graph.   More importantly, the overhead of marshaling is
+better measures using an isolated test, that does not involve the
+network.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful, and prints
+out the performance numbers.
+
+*/
