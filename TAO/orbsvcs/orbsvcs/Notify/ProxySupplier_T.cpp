@@ -182,8 +182,6 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     CosNotifyFilter::MappingFilter::_nil ());
-
-  return CosNotifyFilter::MappingFilter::_nil ();
 }
 
 template <class SERVANT_TYPE> void
@@ -203,8 +201,6 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     CosNotifyFilter::MappingFilter::_nil ());
-
-  return CosNotifyFilter::MappingFilter::_nil ();
 }
 
 template <class SERVANT_TYPE> void
