@@ -74,16 +74,13 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 }
 
 Deployment::NodeApplication_ptr
-CIAO::DomainApplicationManager_Impl::
-get_node_app (const char * node_name)
-  ACE_THROW_SPEC ((::CORBA::SystemException,
-                   ::Deployment::NoSuchName))
+CIAO::DomainApplicationManager_Impl::get_node_app (const char * node_name)
+  ACE_THROW_SPEC ((::CORBA::SystemException, ::Deployment::NoSuchName))
 {
   // Get the NodeApplication object reference.
   ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
-  if (this->artifact_map_.find (node_name,
-                                entry) != 0)
+  if (this->artifact_map_.find (node_name, entry) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
@@ -100,8 +97,7 @@ get_node_app (const char * node_name)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
-init ()
+CIAO::DomainApplicationManager_Impl::init ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,
                    Deployment::StartError,
@@ -221,8 +217,7 @@ init ()
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
-get_plan_info (void)
+CIAO::DomainApplicationManager_Impl::get_plan_info (void)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_plan_info");
 
@@ -317,8 +312,7 @@ get_plan_info (void)
 //@@ We should ask those spec writers to look at the code below, hopefully
 //   They will realize some thing.
 int
-CIAO::DomainApplicationManager_Impl::
-split_plan (void)
+CIAO::DomainApplicationManager_Impl::split_plan (void)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::split_plan");
 
@@ -643,8 +637,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
 
 void
-CIAO::DomainApplicationManager_Impl::
-install_all_es (void)
+CIAO::DomainApplicationManager_Impl::install_all_es (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -738,7 +731,7 @@ finishLaunch (CORBA::Boolean start,
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object reference.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
