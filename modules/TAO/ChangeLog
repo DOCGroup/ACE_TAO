@@ -1,4 +1,19 @@
-Mon Jan 29 22:35:04 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Mon Jan 29 22:48:41 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        
+          Added a new protocols hooks to handle capabilities related
+          to TAO DiffServ policy support.
+        
+          The TAO DiffServ policy library provides a protocols hooks that
+          specializes this protocols hook.
+        
+          Default implementations are provided in the ase where the DiffServ
+          policy is not used by the application.
+
+Mon Jan 29 22:35:04 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy:
           tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
