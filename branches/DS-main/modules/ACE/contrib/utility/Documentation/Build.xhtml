@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<!--
+
+file      : Documentation/Build.xhtml
+author    : Boris Kolpackov <boris@kolpackov.net>
+copyright : Copyright (c) 2002-2003 Boris Kolpackov
+license   : http://kolpackov.net/license.html
+
+-->
+
+<head>
+
+  <title>Building Utility Library</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="copyright" content="&copy; 2001-2003 Boris Kolpackov"/>
+  <meta name="keywords" content="build,utility,library"/>
+  <meta name="description" content="Building Utility Library"/>
+
+  <link rel="stylesheet" type="text/css" href="Style/Default.css"/>
+
+</head>
+
+<body>
+
+<h1>Introduction</h1>
+
+<p>Utility Library mostly consists of a header-only sub-libraries
+(the only exception is Introspection Library) so you don't need to
+build anything to start using it. However you may want to build
+examples or libraries that require compilation. This section describes
+how to do that.</p>
+
+<h1>Prerequisites</h1>
+
+<p>To build libraries or examples you will need GNU make and a C++
+compiler with good support of ISO C++ standard.</p>
+
+<p>Utility Library building environment requires latest features of
+GNU make so you have the following options (in the order of increasing
+complexity):</p>
+
+<ul>
+<li>Use GNU make 3.81 or later (not available at the time this is written).</li>
+<li>Use GNU make 3.80 with patches for bug
+<a href="http://savannah.gnu.org/bugs/?func=detailbug&amp;bug_id=1516&amp;group_id=71">1516</a>
+and
+<a href="http://savannah.gnu.org/bugs/?func=detailbug&amp;bug_id=1517&amp;group_id=71">1517</a>.
+</li>
+<li>Use GNU make from CVS.</li>
+</ul>
+
+</body>
+</html>
+<!-- $Id$ -->

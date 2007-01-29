@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : aceexe, winregistry {
+  avoids += wince
+  exename = main
+}
