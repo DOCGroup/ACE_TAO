@@ -8,6 +8,7 @@
 #include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 #include "tao/RTCORBA/RT_Endpoint_Utils.h"
 #include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "tao/RTCORBA/RT_Policy_Protocols_Hooks.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -217,8 +218,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   else
     {
       // Get the protocol hooks.
-      TAO_Protocols_Hooks *protocol_hooks =
-        r.stub ()->orb_core ()->get_protocols_hooks ();
+      TAO_Policy_Protocols_Hooks *protocol_hooks =
+        r.stub ()->orb_core ()->get_policy_protocols_hooks ();
 
       CORBA::Short server_priority = 0;
       CORBA::Boolean is_client_propagated = 0;

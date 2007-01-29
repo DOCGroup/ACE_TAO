@@ -11,6 +11,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Thread_Priority_Protocols_Hooks.h"
 
 #include "ace/Thread.h"
 
@@ -33,8 +34,8 @@ RTCORBA::Priority
 TAO_RT_Current::the_priority (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_Protocols_Hooks *tph =
-    this->orb_core_->get_protocols_hooks ();
+  TAO_Thread_Priority_Protocols_Hooks *tph =
+    this->orb_core_->get_thread_priority_protocols_hooks ();
 
   RTCORBA::Priority priority;
 
@@ -55,8 +56,8 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core_->get_protocols_hooks ();
+  TAO_Thread_Priority_Protocols_Hooks *tph =
+    this->orb_core_->get_thread_priority_protocols_hooks ();
 
   int result =
     tph->set_thread_CORBA_priority (the_priority
