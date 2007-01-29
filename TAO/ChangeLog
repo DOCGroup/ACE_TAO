@@ -1,3 +1,11 @@
+Mon Jan 29 19:07:44 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/RTCORBA/RT_Current.cpp:
+          tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        
+          Made changes to use the right "get" protocols hooks function
+          to obtain the right protocols hooks piece to use.
+
 Mon Jan 29 18:16:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/RTCORBA/RT_ORBInitializer.cpp:
