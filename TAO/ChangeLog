@@ -1,3 +1,15 @@
+Mon Jan 29 17:32:32 UTC 2007  Jaiganesh B<jai.dre.vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+          tao/ORB_Core.h:
+          tao/ORB_Core.inl:
+        
+          Made changes to include new "get" functions for the different
+          pieces of protocols hooks.
+        
+          Made changes to the ".cpp" file to create the different pieces
+          of protocols hooks.
+
 Mon Aug 28 19:13:09 UTC 2006  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Connection_Handler.h:
