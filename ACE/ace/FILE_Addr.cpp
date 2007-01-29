@@ -33,8 +33,7 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
       ACE_OS::strcpy (this->filename_,
                       ACE_DEFAULT_TEMP_FILE);
 #else /* ACE_DEFAULT_TEMP_FILE */
-      if (ACE::get_temp_dir (this->filename_,
-                                      MAXPATHLEN - 15) == -1)
+      if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 15) == -1)
         // -15 for ace-file-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
@@ -55,12 +54,9 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
     }
   else
     {
-      (void) ACE_OS::strsncpy (this->filename_,
-                               sa.filename_,
-                               sa.get_size ());
+      (void)ACE_OS::strsncpy (this->filename_, sa.filename_, sa.get_size ());
 
-      this->base_set (sa.get_type (),
-                      sa.get_size ());
+      this->base_set (sa.get_type (), sa.get_size ());
     }
   return 0;
 }
@@ -111,7 +107,7 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 void *
 ACE_FILE_Addr::get_addr (void) const
 {
-  return (void *) &this->filename_;
+  return (void *)&this->filename_;
 }
 
 void
