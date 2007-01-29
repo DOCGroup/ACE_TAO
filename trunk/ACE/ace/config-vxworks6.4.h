@@ -54,6 +54,22 @@
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
+// Needed include to get all VxWorks CPU types
+#include "types/vxCpu.h"
+#if defined __RTP__
+  #if defined (_VX_CPU) && (_VX_CPU == _VX_PENTIUM || _VX_CPU == _VX_PENTIUM2 || _VX_CPU == _VX_PENTIUM3 || _VX_CPU == _VX_PENTIUM4)
+    // If running an Intel Pentium the
+    // ACE_OS::gethrtime () can use the RDTSC instruction.
+    # define ACE_HAS_PENTIUM
+  #endif
+#else
+  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
+   // If running an Intel Pentium the
+   // ACE_OS::gethrtime () can use the RDTSC instruction.
+    # define ACE_HAS_PENTIUM
+  #endif
+#endif
+
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_3_PARAM_READDIR_R
@@ -174,6 +190,10 @@
   #define ACE_HAS_SVR4_DYNAMIC_LINKING
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
+  #if defined ACE_HAS_PENTIUM
+  // Bug to workaround VxWorks 6.4 x86
+  #  define ACE_LACKS_PUTENV
+  #endif
   #define ACE_HAS_SETENV
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
@@ -270,22 +290,6 @@
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
-#endif
-
-// Needed include to get all VxWorks CPU types
-#include "types/vxCpu.h"
-#if defined __RTP__
-  #if defined (_VX_CPU) && (_VX_CPU == _VX_PENTIUM || _VX_CPU == _VX_PENTIUM2 || _VX_CPU == _VX_PENTIUM3 || _VX_CPU == _VX_PENTIUM4)
-    // If running an Intel Pentium the
-    // ACE_OS::gethrtime () can use the RDTSC instruction.
-    # define ACE_HAS_PENTIUM
-  #endif
-#else
-  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
-   // If running an Intel Pentium the
-   // ACE_OS::gethrtime () can use the RDTSC instruction.
-    # define ACE_HAS_PENTIUM
-  #endif
 #endif
 
 // VxWorks defines the CPU define MAP, undef it to prevent problems with
