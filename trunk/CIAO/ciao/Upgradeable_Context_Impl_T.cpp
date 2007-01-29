@@ -36,8 +36,7 @@ namespace CIAO
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::deactivate_facet (
-      const PortableServer::ObjectId &oid
-    )
+      const PortableServer::ObjectId &oid)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /*
@@ -54,13 +53,11 @@ namespace CIAO
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
-     remove_facet (
-           CORBA::Object_ptr reference)
+     remove_facet (CORBA::Object_ptr reference)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid =
-      this->container_->the_facet_cons_POA ()->reference_to_id
-         (reference);
+      this->container_->the_facet_cons_POA ()->reference_to_id (reference);
 
     this->update_port_activator (oid.in ());
 
@@ -73,8 +70,7 @@ namespace CIAO
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
-     update_port_activator (
-           const PortableServer::ObjectId &oid)
+     update_port_activator (const PortableServer::ObjectId &oid)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /*

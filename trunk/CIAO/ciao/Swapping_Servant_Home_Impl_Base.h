@@ -46,12 +46,10 @@ namespace CIAO
     virtual ~Swapping_Home_Servant_Impl_Base (void);
 
     // Operations for CCMHome interface.
-    virtual ::CORBA::IRObject_ptr
-    get_component_def ()
+    virtual ::CORBA::IRObject_ptr get_component_def (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::CORBA::IRObject_ptr
-    get_home_def ()
+    virtual ::CORBA::IRObject_ptr get_home_def (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
