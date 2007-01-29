@@ -18,6 +18,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Protocols_Properties_Protocols_Hooks.h"
+#include "tao/Policy_Protocols_Hooks.h"
 
 ACE_RCSID (Strategies,
            UIOP_Connection_Handler,
@@ -75,8 +77,8 @@ TAO_UIOP_Connection_Handler::open (void*)
   protocol_properties.recv_buffer_size_ =
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Properties_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_properties_protocols_hooks ();
 
   bool client =
     this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
