@@ -1,0 +1,14 @@
+component C
+{
+};
+home H manages ::C
+{
+};
+composition session SC
+{
+  home executor H_Exec
+  {
+    implements ::H;
+    manages C_Exec;
+  };
+};
