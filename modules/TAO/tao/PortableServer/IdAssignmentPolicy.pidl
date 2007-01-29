@@ -1,0 +1,36 @@
+/**
+ * @file IdAssignmentPolicy.pidl
+ *
+ * $Id$
+ *
+ * @brief PIDL source for the PortableServer module.
+ */
+
+#ifndef _PORTABLESERVER_IDASSIGNMENTPOLICY_IDL_
+#define _PORTABLESERVER_IDASSIGNMENTPOLICY_IDL_
+
+#include "tao/Policy.pidl"
+
+#pragma prefix "omg.org"
+
+module PortableServer
+{
+# pragma version PortableServer 2.3
+
+  enum IdAssignmentPolicyValue
+  {
+    USER_ID,
+    SYSTEM_ID
+  };
+
+#if !defined (CORBA_E_MICRO)
+
+  local interface IdAssignmentPolicy : CORBA::Policy
+  {
+    readonly attribute IdAssignmentPolicyValue value;
+  };
+
+#endif
+};
+
+#endif // _PORTABLESERVER_IDASSIGNMENTPOLICY_IDL_

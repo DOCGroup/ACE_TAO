@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(COIOP_Tests): taoserver, strategies {
+  exename = COIOP_Test
+}
