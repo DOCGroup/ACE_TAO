@@ -35,8 +35,7 @@ namespace TAO
 
   Invocation_Status
   Collocated_Invocation::invoke (Collocation_Proxy_Broker *cpb,
-                                 Collocation_Strategy strat
-                                 )
+                                 Collocation_Strategy strat)
   {
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
@@ -74,8 +73,7 @@ namespace TAO
 
             dispatcher->dispatch (orb_core,
                                   request,
-                                  this->forwarded_to_.out ()
-                                 );
+                                  this->forwarded_to_.out ());
           }
         else
           {
@@ -85,8 +83,7 @@ namespace TAO
                            this->details_.args_num (),
                            this->details_.opname (),
                            this->details_.opname_len (),
-                           strat
-                          );
+                           strat);
           }
 
         // Invocation completed succesfully
@@ -99,16 +96,14 @@ namespace TAO
             if (this->forwarded_to_.in ())
               this->reply_received (TAO_INVOKE_RESTART);
 
-            s =
-              this->receive_other_interception ();
+            s = this->receive_other_interception ();
           }
         // NOTE: Any other condition that needs handling?
         else if (this->response_expected ())
           {
             this->reply_received (TAO_INVOKE_SUCCESS);
 
-            s =
-              this->receive_reply_interception ();
+            s = this->receive_reply_interception ();
           }
         if (s != TAO_INVOKE_SUCCESS)
           return s;

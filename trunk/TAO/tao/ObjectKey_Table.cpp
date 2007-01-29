@@ -144,10 +144,7 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
                   TAO::Refcounted_ObjectKey (key),
                   -1);
 
-
-
-  int retval =  this->table_.bind (key,
-                                   key_new);
+  int const retval =  this->table_.bind (key, key_new);
 
   if (retval != -1)
     {

@@ -104,7 +104,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       time_value.msec ()));
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Ignore all exceptions...
     }

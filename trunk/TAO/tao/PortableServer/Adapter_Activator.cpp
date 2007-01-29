@@ -43,7 +43,7 @@ namespace TAO
         {
           child->the_activator (this);
         }
-      catch ( ::CORBA::Exception&)
+      catch (const ::CORBA::Exception&)
         {
           (void) child->destroy (1,
                                  1);

@@ -23,7 +23,7 @@ namespace TAO
   namespace Portable_Server
   {
     RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator (void) :
-      etherealize_objects_ (1)
+      etherealize_objects_ (true)
     {
     }
 
@@ -69,11 +69,9 @@ namespace TAO
         }
 
       this->servant_activator_ =
-        PortableServer::ServantActivator::_narrow (imgr
-                                                  );
+        PortableServer::ServantActivator::_narrow (imgr);
 
-      this->validate_servant_manager (this->servant_activator_.in ()
-                                     );
+      this->validate_servant_manager (this->servant_activator_.in ());
     }
 
     TAO_SERVANT_LOCATION
@@ -84,9 +82,7 @@ namespace TAO
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 
-      location = this->poa_->servant_present (system_id,
-                                              servant
-                                             );
+      location = this->poa_->servant_present (system_id, servant);
 
       if (location == TAO_SERVANT_NOT_FOUND)
         {
@@ -112,8 +108,7 @@ namespace TAO
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
-                                          poa_current_impl
-                                         );
+                                          poa_current_impl);
 
       if (servant != 0)
         {
@@ -139,12 +134,9 @@ namespace TAO
       // reference.
       //
 
-      this->validate_servant_manager (this->servant_activator_.in ()
-                                     );
+      this->validate_servant_manager (this->servant_activator_.in ());
 
-      servant =
-        this->incarnate_servant (poa_current_impl.object_id ()
-                                );
+      servant = this->incarnate_servant (poa_current_impl.object_id ());
 
       // If the incarnate operation returns a servant that is
       // already active for a different Object Id and if the POA
@@ -194,8 +186,7 @@ namespace TAO
           CORBA::Boolean cleanup_in_progress = 0;
           this->etherealize_servant (poa_current_impl.object_id (),
                                      servant,
-                                     cleanup_in_progress
-                                    );
+                                     cleanup_in_progress);
 
           // We ended up waiting on a condition variable, the
           // POA state may have changed while we are waiting.
@@ -228,8 +219,7 @@ namespace TAO
                                              this->poa_,
                                              servant,
                                              cleanup_in_progress,
-                                             remaining_activations
-                                            );
+                                             remaining_activations);
     }
 
     PortableServer::Servant
@@ -248,8 +238,7 @@ namespace TAO
       // Invocations of etherealize on the servant manager are serialized.
       // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
       servant = this->servant_activator_->incarnate (object_id,
-                                                     this->poa_
-                                                    );
+                                                     this->poa_);
 
       if (servant == 0)
         {
@@ -301,8 +290,7 @@ namespace TAO
             {
               this->etherealize_servant (user_id,
                                          servant,
-                                         this->poa_->cleanup_in_progress ()
-                                        );
+                                         this->poa_->cleanup_in_progress ());
             }
           else
             {
@@ -317,7 +305,7 @@ namespace TAO
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      int result = this->poa_->unbind_using_user_id (user_id);
+      int const result = this->poa_->unbind_using_user_id (user_id);
 
       if (result != 0)
         throw ::CORBA::OBJ_ADAPTER ();

@@ -48,34 +48,26 @@ TAO_RT_ORB::create_mutex (void)
 }
 
 void
-TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex
-                           )
+TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->mutex_mgr_.destroy_mutex (mutex
-                                 );
+  this->mutex_mgr_.destroy_mutex (mutex);
 }
 
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_named_mutex (const char *name,
-                                CORBA::Boolean_out created_flag
-                                )
+                                CORBA::Boolean_out created_flag)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->mutex_mgr_.create_named_mutex (name,
-                                              created_flag
-                                             );
+  return this->mutex_mgr_.create_named_mutex (name, created_flag);
 }
 
 RTCORBA::Mutex_ptr
-TAO_RT_ORB::open_named_mutex (const char *name
-                              )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTCORBA::RTORB::MutexNotFound))
+TAO_RT_ORB::open_named_mutex (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException, RTCORBA::RTORB::MutexNotFound))
 {
-  return this->mutex_mgr_.open_named_mutex (name
-                                           );
+  return this->mutex_mgr_.open_named_mutex (name);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -108,8 +100,7 @@ TAO_Named_RT_Mutex_Manager::create_mutex (void)
 // as also indicated by the comment below.
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 void
-TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex
-                                           )
+TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RT_Mutex *tao_mutex =
@@ -135,8 +126,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex
 }
 #else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 void
-TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr
-                                           )
+TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -144,8 +134,7 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
-                                                CORBA::Boolean_out created_flag
-                                                )
+                                                CORBA::Boolean_out created_flag)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
@@ -156,15 +145,14 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                       CORBA::INTERNAL ());
 
   // Optimistic that we'll find it.
-  created_flag = 0;
+  created_flag = false;
 
   // If we find the mutex, simply return it.
   RTCORBA::Mutex_var mutex;
-  if (this->map_.find (name,
-                       mutex) != 0)
+  if (this->map_.find (name, mutex) != 0)
     {
       // Oops, we didn't find it.
-      created_flag = 1;
+      created_flag = true;
 
       RTCORBA::Mutex_ptr tmp_mutex;
 
@@ -180,9 +168,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
       mutex = tmp_mutex;
 
       // Add it to the map.
-      int result =
-        this->map_.bind (name,
-                         mutex);
+      int const result = this->map_.bind (name, mutex);
 
       if (result != 0)
         ACE_THROW_RETURN (CORBA::INTERNAL (),
@@ -200,8 +186,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 }
 
 RTCORBA::Mutex_ptr
-TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name
-                                              )
+TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::MutexNotFound))
 {
@@ -214,8 +199,7 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name
 
   // If we find the mutex, simply return it.
   RTCORBA::Mutex_var mutex;
-  if (this->map_.find (name,
-                       mutex) != 0)
+  if (this->map_.find (name, mutex) != 0)
     ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (),
                       RTCORBA::Mutex::_nil ());
 
@@ -281,8 +265,7 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       CORBA::Boolean no_delay,
                                                       CORBA::Long preallocate_buffer_size,
                                                       const char *mmap_filename,
-                                                      const char *mmap_lockname
-                                                      )
+                                                      const char *mmap_lockname)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SharedMemory_Protocol_Properties *tmp = 0;
@@ -386,13 +369,11 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
 }
 
 void
-TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                )
+TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
-  this->tp_manager_->destroy_threadpool (threadpool
-                                        );
+  this->tp_manager_->destroy_threadpool (threadpool);
 }
 
 RTCORBA::PriorityModelPolicy_ptr
@@ -411,8 +392,7 @@ TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
 }
 
 RTCORBA::ThreadpoolPolicy_ptr
-TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
-                                      )
+TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy *tmp = 0;
@@ -514,18 +494,14 @@ TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
 
 #if defined (linux)
 
-  int sched_policy =
-    orb->orb_core ()->orb_params ()->ace_sched_policy ();
+  int const sched_policy = orb->orb_core ()->orb_params ()->ace_sched_policy ();
 
-  int minimum_priority =
-    ACE_Sched_Params::priority_min (sched_policy);
+  int const minimum_priority = ACE_Sched_Params::priority_min (sched_policy);
 
   ACE_hthread_t thread_id;
   ACE_Thread::self (thread_id);
 
-  return ACE_Thread::setprio (thread_id,
-                              minimum_priority,
-                              sched_policy);
+  return ACE_Thread::setprio (thread_id, minimum_priority, sched_policy);
 
 #else /* linux */
 

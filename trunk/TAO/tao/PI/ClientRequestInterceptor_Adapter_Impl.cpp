@@ -42,9 +42,7 @@ namespace TAO
 
             if (registered.details_.should_be_processed (is_remote_request))
               {
-                registered.interceptor_->
-                  send_request (&ri
-                               );
+                registered.interceptor_->send_request (&ri);
               }
 
             // The starting interception point completed successfully.
@@ -54,16 +52,13 @@ namespace TAO
       }
     catch ( ::PortableInterceptor::ForwardRequest& exc)
       {
-        this->process_forward_request (invocation,
-                                       exc
-                                      );
+        this->process_forward_request (invocation, exc);
       }
   }
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_reply (
-    Invocation_Base &invocation
-    )
+    Invocation_Base &invocation)
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
@@ -106,8 +101,7 @@ namespace TAO
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_exception (
-      Invocation_Base &invocation
-      )
+      Invocation_Base &invocation)
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
@@ -137,18 +131,13 @@ namespace TAO
 
             if (registered.details_.should_be_processed (is_remote_request))
               {
-                registered.interceptor_->
-                  receive_exception (
-                    &ri
-                   );
+                registered.interceptor_->receive_exception (&ri);
               }
           }
       }
     catch ( ::PortableInterceptor::ForwardRequest& exc)
       {
-        this->process_forward_request (invocation,
-                                       exc
-                                      );
+        this->process_forward_request (invocation, exc);
       }
     catch ( ::CORBA::Exception& ex)
       {
@@ -218,8 +207,7 @@ namespace TAO
       }
     catch ( ::PortableInterceptor::ForwardRequest& exc)
       {
-        this->process_forward_request (invocation,
-                                       exc);
+        this->process_forward_request (invocation, exc);
       }
     catch ( ::CORBA::Exception& ex)
       {
@@ -272,8 +260,7 @@ namespace TAO
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies)
   {
-    this->interceptor_list_.add_interceptor (interceptor,
-                                             policies);
+    this->interceptor_list_.add_interceptor (interceptor, policies);
   }
 
   void

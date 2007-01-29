@@ -84,7 +84,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
             info.in ()
            );
         }
-      catch ( ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception& ex)
         {
           // According to the Portable Interceptors specification,
           // IORInterceptor::establish_components() must not throw an
@@ -153,7 +153,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
                );
             }
         }
-      catch ( ::CORBA::Exception&)
+      catch (const ::CORBA::Exception&)
         {
           throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 6,
                                       CORBA::COMPLETED_NO);

@@ -80,8 +80,7 @@ public:
   /// If the replace flag is true, update the specified context.
   /// Return 0 if the component was present and the replace flag
   /// was not set to true.
-  int set_context (const IOP::ServiceContext &context,
-                   CORBA::Boolean replace);
+  int set_context (const IOP::ServiceContext &context, CORBA::Boolean replace);
 
   /// Insert the component into the list, but efficiently stealing the
   /// contents of the octet sequence.

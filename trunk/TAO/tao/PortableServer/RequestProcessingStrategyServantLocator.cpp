@@ -235,7 +235,7 @@ namespace TAO
                                             servant_upcall.servant ()
                                            );
             }
-          catch ( ::CORBA::Exception&)
+          catch (const ::CORBA::Exception&)
             {
               // Ignore errors from servant locator ....
             }

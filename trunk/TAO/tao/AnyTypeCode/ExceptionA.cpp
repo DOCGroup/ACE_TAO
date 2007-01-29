@@ -45,7 +45,7 @@ namespace TAO
 
         return true;
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
       }
 
@@ -63,7 +63,7 @@ namespace TAO
 
         return true;
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
       }
 

@@ -60,7 +60,7 @@ TAO_Thread_Pool_Threads::svc (void)
       // Do the work
       this->run (orb_core);
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       // No point propagating this exception.  Print it out.
       ACE_ERROR ((LM_ERROR,

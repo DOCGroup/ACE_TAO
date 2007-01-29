@@ -150,7 +150,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, policy_factory.in ());
         }
-      catch ( ::CORBA::BAD_INV_ORDER& ex)
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -162,7 +162,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
             }
           throw;
         }
-      catch ( ::CORBA::Exception&)
+      catch (const ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
           throw;

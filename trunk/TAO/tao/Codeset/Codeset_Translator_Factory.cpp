@@ -45,8 +45,7 @@ TAO_Codeset_Translator_Factory::init (int , ACE_TCHAR **)
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_InputCDR *cdr,
-    ACE_Char_Codeset_Translator *trans
-  ) const
+    ACE_Char_Codeset_Translator *trans) const
 {
   cdr->char_translator(trans);
 }
@@ -54,8 +53,7 @@ TAO_Codeset_Translator_Factory::assign_i (
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_OutputCDR *cdr,
-    ACE_Char_Codeset_Translator *trans
-  ) const
+    ACE_Char_Codeset_Translator *trans) const
 {
   cdr->char_translator(trans);
 }
@@ -63,8 +61,7 @@ TAO_Codeset_Translator_Factory::assign_i (
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_InputCDR *cdr,
-    ACE_WChar_Codeset_Translator *trans
-  ) const
+    ACE_WChar_Codeset_Translator *trans) const
 {
   cdr->wchar_translator(trans);
 }
@@ -72,8 +69,7 @@ TAO_Codeset_Translator_Factory::assign_i (
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_OutputCDR *cdr,
-    ACE_WChar_Codeset_Translator *trans
-  ) const
+    ACE_WChar_Codeset_Translator *trans) const
 {
   cdr->wchar_translator(trans);
 }

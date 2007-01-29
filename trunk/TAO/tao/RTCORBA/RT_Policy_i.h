@@ -97,8 +97,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                  );
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -158,8 +157,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                  );
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -212,8 +210,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                  );
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -280,8 +277,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                  );
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -349,8 +345,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                  );
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -421,8 +416,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                  );
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -466,43 +460,37 @@ public:
   CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         )
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         )
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean keep_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive
-                   )
+  void keep_alive (CORBA::Boolean keep_alive)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean dont_route (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route
-                   )
+  void dont_route (CORBA::Boolean dont_route)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean no_delay (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void no_delay (CORBA::Boolean no_delay
-                 )
+  void no_delay (CORBA::Boolean no_delay)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable
-                                )
+  void enable_network_priority (CORBA::Boolean enable)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of TCPProtocolProperties.
@@ -551,15 +539,13 @@ public:
   CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         )
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         )
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -624,29 +610,25 @@ public:
   CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         )
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         )
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean keep_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive
-                   )
+  void keep_alive (CORBA::Boolean keep_alive)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean dont_route (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route
-                   )
+  void dont_route (CORBA::Boolean dont_route)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean no_delay (void)
@@ -662,22 +644,19 @@ public:
   CORBA::Long preallocate_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size
-                                )
+  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   char *mmap_filename (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_filename (const char *mmap_filename
-                      )
+  void mmap_filename (const char *mmap_filename)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   char *mmap_lockname (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_lockname (const char *mmap_lockname
-                      )
+  void mmap_lockname (const char *mmap_lockname)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -737,8 +716,7 @@ public:
   CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable
-                                )
+  void enable_network_priority (CORBA::Boolean enable)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of UserDatagramProtocolProperties.
@@ -784,43 +762,37 @@ public:
   CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         )
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         )
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean keep_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive
-                   )
+  void keep_alive (CORBA::Boolean keep_alive)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean dont_route (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route
-                   )
+  void dont_route (CORBA::Boolean dont_route)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean no_delay (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void no_delay (CORBA::Boolean no_delay
-                 )
+  void no_delay (CORBA::Boolean no_delay)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable
-                                )
+  void enable_network_priority (CORBA::Boolean enable)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of StreamControlProtocolProperties.

@@ -16,8 +16,7 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::PolicyList *
-TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts
-                                          )
+TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
@@ -26,8 +25,7 @@ TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts
 
 void
 TAO_Policy_Manager::set_policy_overrides (const CORBA::PolicyList & policies,
-                                          CORBA::SetOverrideType set_add
-                                          )
+                                          CORBA::SetOverrideType set_add)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::InvalidPolicies))
 {

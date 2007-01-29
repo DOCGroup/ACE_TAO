@@ -35,8 +35,7 @@ class TAO_Export TAO_LF_Follower_Auto_Adder
 {
 public:
   /// Constructor
-  TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &,
-                              TAO_LF_Follower *follower);
+  TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &, TAO_LF_Follower *follower);
 
   /// Destructor
   ~TAO_LF_Follower_Auto_Adder (void);

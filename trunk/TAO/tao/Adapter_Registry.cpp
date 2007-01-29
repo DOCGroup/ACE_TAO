@@ -44,7 +44,7 @@ TAO_Adapter_Registry::close (int wait_for_completion)
           this->adapters_[i]->close (wait_for_completion);
         }
     }
-  catch (::CORBA::Exception&ex)
+  catch (const::CORBA::Exception&ex)
     {
       if (TAO_debug_level > 3)
         {

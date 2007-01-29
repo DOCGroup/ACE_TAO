@@ -45,13 +45,9 @@ class TAO_Export TAO_NVList_Adapter : public ACE_Service_Object
 public:
   virtual ~TAO_NVList_Adapter (void);
 
-  virtual void create_list (
-      CORBA::Long count,
-      CORBA::NVList_ptr &new_list) = 0;
+  virtual void create_list (CORBA::Long count, CORBA::NVList_ptr &new_list) = 0;
 
-  virtual void create_named_value (
-      CORBA::NamedValue_ptr &nv) = 0;
-
+  virtual void create_named_value (CORBA::NamedValue_ptr &nv) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

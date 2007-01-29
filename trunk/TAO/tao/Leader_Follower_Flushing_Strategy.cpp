@@ -59,7 +59,7 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
             return -1;
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       return -1;
     }

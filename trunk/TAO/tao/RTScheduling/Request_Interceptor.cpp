@@ -291,7 +291,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
         ri->get_request_service_context (Server_Interceptor::SchedulingInfo
                                         );
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,

@@ -131,11 +131,11 @@ namespace TAO
                                           svr.in()
                                          );
         }
-      catch ( ::CORBA::SystemException&)
+      catch (const ::CORBA::SystemException&)
         {
           throw;
         }
-      catch ( ::CORBA::Exception&)
+      catch (const ::CORBA::Exception&)
         {
           throw ::CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
@@ -176,7 +176,7 @@ namespace TAO
           imr_locator->server_is_shutting_down (poa->name().c_str ()
                                                );
         }
-      catch ( ::CORBA::COMM_FAILURE&)
+      catch (const ::CORBA::COMM_FAILURE&)
         {
           // At the moment we call this during ORB shutdown and the ORB is
           // configured to drop replies during shutdown (it does by default in
@@ -184,13 +184,13 @@ namespace TAO
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG, "Ignoring COMM_FAILURE while unregistering from ImR.\n"));
         }
-      catch ( ::CORBA::TRANSIENT&)
+      catch (const ::CORBA::TRANSIENT&)
         {
           // Similarly, there are cases where we could get a TRANSIENT.
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG, "Ignoring TRANSIENT while unregistering from ImR.\n"));
         }
-      catch ( ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception& ex)
         {
           ex._tao_print_exception (
             "ImR_Client_Adapter_Impl::imr_notify_shutdown()");

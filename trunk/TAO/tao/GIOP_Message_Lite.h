@@ -141,7 +141,7 @@ public:
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &x
+      const CORBA::Exception &x
     );
 
   /// Consolidate fragmented message with associated fragments, being

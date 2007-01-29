@@ -66,7 +66,7 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
       if (ACE_OS::strcmp (this_name, tc_name) != 0)
         return 0;
     }
-  catch ( ::CORBA::TypeCode::BadKind&)
+  catch (const ::CORBA::TypeCode::BadKind&)
     {
       // Some TypeCodes do not support the id() and name()
       // operations.  Ignore the failure, and continue equality
@@ -133,7 +133,7 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
           return false;
         }
     }
-  catch ( ::CORBA::TypeCode::BadKind&)
+  catch (const ::CORBA::TypeCode::BadKind&)
     {
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode

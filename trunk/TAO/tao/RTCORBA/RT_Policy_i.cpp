@@ -55,8 +55,7 @@ TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy (void)
 }
 
 CORBA::Policy_ptr
-TAO_PriorityModelPolicy::create (const CORBA::Any &
-                                 )
+TAO_PriorityModelPolicy::create (const CORBA::Any &)
 {
   /*
    * @@ The following code should be changed once the OMG spec has

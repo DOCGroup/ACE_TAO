@@ -33,16 +33,13 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyNonRetain::strategy_init (
-      TAO_Root_POA *poa
-      )
+    ServantRetentionStrategyNonRetain::strategy_init (TAO_Root_POA *poa)
     {
       poa_ = poa;
     }
 
     void
-    ServantRetentionStrategyNonRetain::strategy_cleanup (
-      void)
+    ServantRetentionStrategyNonRetain::strategy_cleanup (void)
     {
       poa_ = 0;
     }
@@ -66,8 +63,7 @@ namespace TAO
 
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::system_id_to_object_id (
-      const PortableServer::ObjectId &system_id
-      )
+      const PortableServer::ObjectId &system_id)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongAdapter,
                          PortableServer::POA::WrongPolicy))
@@ -249,9 +245,7 @@ namespace TAO
                                              priority,
                                              true);
 
-      return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                        user_id
-                                                       );
+      return this->poa_->invoke_key_to_object_helper_i (intf, user_id);
     }
 
     CORBA::Object_ptr
@@ -274,7 +268,7 @@ namespace TAO
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      PortableServer::ObjectId *sys_id;
+      PortableServer::ObjectId *sys_id = 0;
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (oid),
                         CORBA::NO_MEMORY ());
@@ -289,9 +283,7 @@ namespace TAO
                                              priority,
                                              true);
 
-      return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                        oid
-                                                       );
+      return this->poa_->invoke_key_to_object_helper_i (intf, oid);
     }
 
     int
