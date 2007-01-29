@@ -67,7 +67,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::check_hint_i
   found = 0;
 
   // Get the recycling act for the svc_handler
-  CONNECTION_CACHE_ENTRY *possible_entry = (CONNECTION_CACHE_ENTRY *) sh->recycling_act ();
+  CONNECTION_CACHE_ENTRY *possible_entry =
+    (CONNECTION_CACHE_ENTRY *) sh->recycling_act ();
 
   // Check to see if the hint svc_handler has been closed down
   if (possible_entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
@@ -529,8 +530,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::cleanup (void)
   ACE_GUARD (MUTEX, ace_mon, *this->lock_);
 
   // Close down all cached service handlers.
-  typename CONNECTION_CACHE::ITERATOR iter =
-    this->connection_cache_.begin ();
+  typename CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
   while (iter != this->connection_cache_.end ())
     {
       if ((*iter).second () != 0)
