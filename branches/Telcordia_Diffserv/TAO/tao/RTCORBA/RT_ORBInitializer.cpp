@@ -14,6 +14,9 @@ ACE_RCSID (RTCORBA,
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/RT_PolicyFactory.h"
 #include "tao/RTCORBA/RT_Protocols_Hooks.h"
+#include "tao/RTCORBA/RT_Policy_Protocols_Hooks.h"
+#include "tao/RTCORBA/RT_Protocols_Properties_Protocols_Hooks.h"
+#include "tao/RTCORBA/RT_Thread_Priority_Protocols_Hooks.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/RT_ORB_Loader.h"
@@ -74,6 +77,25 @@ TAO_RT_ORBInitializer::pre_init (
   // Set the name of the Protocol_Hooks to be RT_Protocols_Hooks.
   TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
+
+  // Set the name of the Protocol_Hooks to be RT_Policy_Protocols_Hooks.
+  TAO_ORB_Core::set_policy_protocols_hooks ("RT_Policy_Protocols_Hooks");
+  ACE_Service_Config::process_directive (
+    ace_svc_desc_TAO_RT_Policy_Protocols_Hooks);
+
+  // Set the name of the Protocol_Hooks to be 
+  // RT_Protocols_Properties_Protocols_Hooks.
+  TAO_ORB_Core::set_protocols_properties_protocols_hooks (
+    "RT_Protocols_Properties_Protocols_Hooks");
+  ACE_Service_Config::process_directive (
+    ace_svc_desc_TAO_RT_Protocols_Properties_Protocols_Hooks);
+
+  // Set the name of the Protocol_Hooks to be 
+  // RT_Thread_Priority_Protocols_Hooks.
+  TAO_ORB_Core::set_thread_priority_protocols_hooks (
+    "RT_Thread_Priority_Protocols_Hooks");
+  ACE_Service_Config::process_directive (
+    ace_svc_desc_TAO_RT_Thread_Priority_Protocols_Hooks);
 
   // Set the name of the stub factory to be RT_Stub_Factory.
   TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");

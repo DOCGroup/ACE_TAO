@@ -1,3 +1,10 @@
+Mon Jan 29 18:16:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+        
+          Made changes to initialize the different protocols pieces
+          for RTCORBA.
+
 Mon Jan 29 18:05:47 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Strategies/UIOP_Connection_Handler.cpp:
