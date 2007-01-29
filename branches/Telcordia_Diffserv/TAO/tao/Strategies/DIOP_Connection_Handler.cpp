@@ -14,6 +14,8 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Protocols_Properties_Protocols_Hooks.h"
+#include "tao/Policy_Protocols_Hooks.h"
 #include "tao/Resume_Handle.h"
 
 #include "tao/Strategies/DIOP_Transport.h"
@@ -118,8 +120,8 @@ TAO_DIOP_Connection_Handler::open (void*)
   // for consistency with other protocols.
   TAO_DIOP_Protocol_Properties protocol_properties;
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Properties_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_properties_protocols_hooks ();
 
   bool client =
     this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
@@ -299,8 +301,8 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   if (set_network_priority)
     {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core ()->get_protocols_hooks ();
+      TAO_Policy_Protocols_Hooks *tph =
+        this->orb_core ()->get_policy_protocols_hooks ();
 
       CORBA::Long codepoint =
         tph->get_dscp_codepoint ();

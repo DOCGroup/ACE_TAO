@@ -16,6 +16,8 @@
 #include "tao/Strategies/SHMIOP_Endpoint.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Protocols_Properties_Protocols_Hooks.h"
+#include "tao/Policy_Protocols_Hooks.h"
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
@@ -77,8 +79,8 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Properties_Protocols_Hooks *tph =
+    this->orb_core ()->get_protocols_properties_protocols_hooks ();
 
   bool client =
     this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
