@@ -1,3 +1,30 @@
+Mon Jan 29 22:35:04 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy:
+          tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
+          tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+          tao/DiffServPolicy/DiffServPolicy_Export.h:
+          tao/DiffServPolicy/DiffServPolicy_Factory.cpp:
+          tao/DiffServPolicy/DiffServPolicy_Factory.h:
+          tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+          tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+          tao/DiffServPolicy/DiffServPolicy.pidl:
+          tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+          tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+        
+          Added a new DiffServ library for creating client-side
+          and server-side policies for setting DiffServ codepoints
+          to be sent with client-server communications.
+        
+          Added an ORB_Initializer for loading the DiffServ policy
+          factory, as well as registering the DiffServ protocols
+          hooks.
+        
+          DiffServ protocols hooks are used for adding DiffServ specific
+          information in the client-server request service context.
+
 Mon Jan 29 19:27:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
