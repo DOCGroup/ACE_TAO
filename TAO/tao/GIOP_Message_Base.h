@@ -132,8 +132,7 @@ public:
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &x
-    );
+      const CORBA::Exception &x);
 
   /// Header length
   virtual size_t header_length (void) const;

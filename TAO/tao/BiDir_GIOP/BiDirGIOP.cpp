@@ -51,7 +51,7 @@ TAO_BiDirGIOP_Loader::init (int,
 
           TAO_BiDirGIOP_Loader::is_activated_ = true;
         }
-      catch ( ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
             {

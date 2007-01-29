@@ -113,7 +113,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       }
     }
   }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
   {
     ex._tao_print_exception (name_);
     result = -1;

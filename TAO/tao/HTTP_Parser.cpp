@@ -123,7 +123,7 @@ TAO_HTTP_Parser::parse_string (const char *ior,
     {
       object = orb->string_to_object (string.c_str());
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       throw;
     }

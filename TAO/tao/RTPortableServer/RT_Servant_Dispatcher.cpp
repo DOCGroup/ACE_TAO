@@ -343,7 +343,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
             throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
                                                CORBA::COMPLETED_NO);
         }
-      catch ( ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception& ex)
         {
           // Eat up the exception.
           ex._tao_print_exception (

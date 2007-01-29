@@ -145,7 +145,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           return true;
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 
@@ -178,7 +178,7 @@ TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
       this->value_->_tao_encode (cdr);
       return true;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
   return false;
@@ -192,7 +192,7 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
       this->value_->_tao_decode (cdr);
       return true;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
   return false;

@@ -26,15 +26,13 @@ TAO_Operation_Details::corba_exception (const char *id)
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {
-      if (ACE_OS::strcmp (id,
-                          this->ex_data_[i].id) != 0)
+      if (ACE_OS::strcmp (id, this->ex_data_[i].id) != 0)
         {
           continue;
         }
 
       // Create an exception object
-      CORBA::Exception *exception =
-        this->ex_data_[i].alloc ();
+      CORBA::Exception *exception = this->ex_data_[i].alloc ();
 
       if (exception == 0)
         {

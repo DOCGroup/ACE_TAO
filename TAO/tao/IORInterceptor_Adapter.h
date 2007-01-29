@@ -64,19 +64,13 @@ public:
   virtual ~TAO_IORInterceptor_Adapter (void);
 
   virtual void add_interceptor (
-      PortableInterceptor::IORInterceptor_ptr interceptor
-
-    ) = 0;
+      PortableInterceptor::IORInterceptor_ptr interceptor) = 0;
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
+      const CORBA::PolicyList& policies) = 0;
 
-    ) = 0;
-
-  virtual void destroy_interceptors (
-
-      ) = 0;
+  virtual void destroy_interceptors (void) = 0;
 
   /// Call the IORInterceptor::establish_components() method on all
   /// registered IORInterceptors.
@@ -91,20 +85,17 @@ public:
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info
-                                       )
+  virtual void components_established (PortableInterceptor::IORInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
-      PortableInterceptor::AdapterState state
-      )
+      PortableInterceptor::AdapterState state)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   virtual void adapter_manager_state_changed (
       const char * id,
-      PortableInterceptor::AdapterState state
-      )
+      PortableInterceptor::AdapterState state)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

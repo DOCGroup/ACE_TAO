@@ -110,7 +110,7 @@ namespace TAO
           }
         bcp->get_buffering_constraint (buffering_constraint);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return true;
       }

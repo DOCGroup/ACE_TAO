@@ -160,7 +160,7 @@ namespace TAO
         // Duplicated by Any_Impl base class constructor.
         ::CORBA::release (any_tc);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
       }
 

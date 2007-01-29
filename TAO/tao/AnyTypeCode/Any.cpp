@@ -287,7 +287,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       impl->_tao_decode (cdr
                         );
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       return false;
     }

@@ -42,24 +42,17 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
       throw ::CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   try
     {
-      collocated_skel (servant,
-                       args,
-                       num_args);
-    }
+#endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
+      collocated_skel (servant, args, num_args);
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+    }
   catch (const ::PortableServer::ForwardRequest& forward_request)
     {
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return;
-    }
-#else
-  catch (const ::CORBA::Exception&)
-    {
-      ACE_UNUSED_ARG (forward_obj);
-      throw;
     }
 #endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
 }

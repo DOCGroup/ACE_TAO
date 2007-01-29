@@ -107,7 +107,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       time_value.msec ()));
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Ignore all exceptions...
     }
@@ -262,7 +262,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
       has_synchronization = true;
       scope = p->synchronization ();
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Ignore all exceptions...
     }

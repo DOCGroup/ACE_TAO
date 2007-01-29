@@ -59,15 +59,12 @@ namespace TAO
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec);
 
-    TAO_Transport *transport =
-      this->resolver_.transport ();
+    TAO_Transport *transport = this->resolver_.transport ();
 
     TAO_OutputCDR &cdr = transport->out_stream ();
 
     int const retval =
-      transport->generate_locate_request (tspec,
-                                          this->details_,
-                                          cdr);
+      transport->generate_locate_request (tspec, this->details_, cdr);
 
     if (retval == -1)
       return TAO_INVOKE_FAILURE;
@@ -75,9 +72,7 @@ namespace TAO
     countdown.update ();
 
     Invocation_Status s =
-      this->send_message (cdr,
-                          TAO_Transport::TAO_TWOWAY_REQUEST,
-                          max_wait_time);
+      this->send_message (cdr, TAO_Transport::TAO_TWOWAY_REQUEST, max_wait_time);
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -91,9 +86,7 @@ namespace TAO
       this->resolver_.transport_released ();
 
     s =
-      this->wait_for_reply (max_wait_time,
-                            rd,
-                            dispatch_guard);
+      this->wait_for_reply (max_wait_time, rd, dispatch_guard);
 
     s = this->check_reply (rd);
 

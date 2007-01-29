@@ -253,7 +253,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
           req.tao_send_reply ();
         }
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
@@ -274,8 +274,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
 
 void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                                                     void * servant_upcall,
-                                                    void * derived_this
-                                                    )
+                                                    void * derived_this)
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();

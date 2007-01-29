@@ -42,7 +42,7 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
           result = orb_core->run (max_wait_time, 1);
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       return -1;
     }
@@ -66,7 +66,7 @@ TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
             return -1;
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       return -1;
     }

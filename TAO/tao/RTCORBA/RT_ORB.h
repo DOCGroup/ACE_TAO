@@ -63,20 +63,15 @@ public:
   RTCORBA::Mutex_ptr create_mutex (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
-                      )
+  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                         CORBA::Boolean_out created_flag
-                                         )
+                                         CORBA::Boolean_out created_flag)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RTCORBA::Mutex_ptr open_named_mutex (const char * name
-                                       )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTCORBA::RTORB::MutexNotFound
-                     ));
+  RTCORBA::Mutex_ptr open_named_mutex (const char * name)
+    ACE_THROW_SPEC ((CORBA::SystemException, RTCORBA::RTORB::MutexNotFound));
 
 private:
 
@@ -125,8 +120,7 @@ public:
    * instances are destroyed as soon as their reference counts go to
    * 0.
    */
-  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
-                              )
+  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -135,16 +129,12 @@ public:
    * is set to 0.
    */
   virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                                 CORBA::Boolean_out created_flag
-                                                 )
+                                                 CORBA::Boolean_out created_flag)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Retrieve a previously created mutex.
-  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name
-                                                 )
-     ACE_THROW_SPEC ((CORBA::SystemException,
-                      RTCORBA::RTORB::MutexNotFound
-                      ));
+  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name)
+     ACE_THROW_SPEC ((CORBA::SystemException, RTCORBA::RTORB::MutexNotFound));
 
   /**
    * Create and return a TCPProtocolProperties instance with the specified
@@ -157,15 +147,13 @@ public:
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
                                   CORBA::Boolean no_delay,
-                                  CORBA::Boolean enable_network_priority
-                                  )
+                                  CORBA::Boolean enable_network_priority)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 
   RTCORBA::UnixDomainProtocolProperties_ptr
   create_unix_domain_protocol_properties (
                                           CORBA::Long send_buffer_size,
-                                          CORBA::Long recv_buffer_size
-                                          )
+                                          CORBA::Long recv_buffer_size                                          )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::SharedMemoryProtocolProperties_ptr
@@ -240,8 +228,7 @@ public:
 
   /// Create a ThreadpoolPolicy instance for POA creation
   virtual RTCORBA::ThreadpoolPolicy_ptr
-  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
-                            )
+  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -250,8 +237,7 @@ public:
    */
   virtual RTCORBA::PriorityBandedConnectionPolicy_ptr
   create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
-                                            priority_bands
-                                            )
+                                            priority_bands)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -268,8 +254,7 @@ public:
    * communication protocols on the server side.
    */
   virtual RTCORBA::ServerProtocolPolicy_ptr
-  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                 )
+  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -277,8 +262,7 @@ public:
    * communication protocols on the client side.
    */
   virtual RTCORBA::ClientProtocolPolicy_ptr
-  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                 )
+  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Reference to our creating ORB Core.

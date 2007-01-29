@@ -171,7 +171,7 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
     {
       found = this->find_object (key, forward_to.out ());
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 
@@ -199,7 +199,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
       CORBA::String_var ior = root_->find (object_key.in ());
       forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
-  catch ( ::IORTable::NotFound&)
+  catch (const ::IORTable::NotFound&)
     {
       return 0;
     }

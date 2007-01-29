@@ -55,8 +55,7 @@ TAO_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr,
 TAO::Invocation_Status
 TAO_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &,
-    TAO_Profile * /*profile*/
-    )
+    TAO_Profile * /*profile*/)
 {
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
@@ -69,8 +68,7 @@ TAO_Service_Callbacks::raise_comm_failure (
 TAO::Invocation_Status
 TAO_Service_Callbacks::raise_transient_failure (
     IOP::ServiceContextList &,
-    TAO_Profile * /*profile*/
-    )
+    TAO_Profile * /*profile*/ )
 {
   ACE_THROW_RETURN (CORBA::TRANSIENT (
       CORBA::SystemException::_tao_minor_code (

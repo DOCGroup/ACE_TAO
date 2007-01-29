@@ -98,8 +98,7 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   CORBA::Boolean retval = 0;
   if (this->ft_service_.service_callback ())
     {
-      retval =
-        this->ft_service_.service_callback ()->object_is_nil (obj);
+      retval = this->ft_service_.service_callback ()->object_is_nil (obj);
     }
   return retval;
 }
@@ -610,7 +609,7 @@ TAO_ORB_Core::is_permanent_forward_condition
   const TAO_Service_Callbacks *service_callback =
       this->fault_tolerance_service ().service_callback ();
 
-  const CORBA::Boolean permanent_forward_condition =
+  CORBA::Boolean const permanent_forward_condition =
       service_callback &&
       service_callback->is_permanent_forward_condition (obj,
                                                         service_context);

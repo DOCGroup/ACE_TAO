@@ -32,7 +32,7 @@ namespace TAO
                                                      );
           }
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }
@@ -59,7 +59,7 @@ namespace TAO
                                CORBA::ARG_IN | CORBA::ARG_INOUT
                               );
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }
@@ -85,7 +85,7 @@ namespace TAO
             this->lazy_evaluation_
            );
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }
