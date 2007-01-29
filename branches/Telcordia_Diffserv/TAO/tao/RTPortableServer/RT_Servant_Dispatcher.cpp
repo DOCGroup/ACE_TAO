@@ -12,6 +12,8 @@
 #include "tao/Connection_Handler.h"
 #include "tao/Service_Context.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Thread_Priority_Protocols_Hooks.h"
+#include "tao/Policy_Protocols_Hooks.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
@@ -80,8 +82,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     }
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks ();
+  TAO_Thread_Priority_Protocols_Hooks *tph =
+    poa.orb_core ().get_thread_priority_protocols_hooks ();
+
+  TAO_Policy_Protocols_Hooks *pph =
+    poa.orb_core ().get_policy_protocols_hooks ();
 
   const char *priority_model = 0;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
@@ -259,7 +264,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   ACE_CHECK;
 
   CORBA::Boolean set_server_network_priority =
-    tph->set_server_network_priority (req.transport ()->tag (),
+    pph->set_server_network_priority (req.transport ()->tag (),
                                       policy.in ()
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -356,8 +361,8 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
         {
           // Reset the priority of the current thread back to its original
           // value.
-          TAO_Protocols_Hooks *tph =
-            poa.orb_core ().get_protocols_hooks ();
+          TAO_Thread_Priority_Protocols_Hooks *tph =
+            poa.orb_core ().get_thread_priority_protocols_hooks ();
 
           if (tph->set_thread_native_priority (
                  pre_invoke_state.original_native_priority_
