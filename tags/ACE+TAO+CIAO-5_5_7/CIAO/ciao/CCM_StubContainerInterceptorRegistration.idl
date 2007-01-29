@@ -1,0 +1,24 @@
+// $Id$
+
+#if !defined (CCM_STUBCONTAINERINTERCEPTORREGISTRATION_IDL)
+#define CCM_STUBCONTAINERINTERCEPTORREGISTRATION_IDL
+
+#include "ciao/CCM_Cookie.idl"
+#include "ciao/CCM_InvalidRegistration.idl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface StubContainerInterceptor;
+
+    local interface StubContainerInterceptorRegistration
+    {
+      Components::Cookie register_stub_interceptor (in StubContainerInterceptor ci);
+      StubContainerInterceptor unregister_stub_interceptor (in Components::Cookie cookie)
+        raises(InvalidRegistration);
+    };
+  };
+};
+
+#endif /* CCM_STUBCONTAINERINTERCEPTORREGISTRATION_IDL */
