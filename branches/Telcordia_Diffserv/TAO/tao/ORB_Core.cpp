@@ -1930,13 +1930,13 @@ TAO_ORB_Core::service_context_list (
     ACE_ENV_ARG_DECL)
 {
   // @NOTE: Can use Interceptors instead..
-  this->protocols_hooks_->rt_service_context (stub,
+  this->policy_protocols_hooks_->rt_service_context (stub,
                                               service_context,
                                               restart
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->protocols_hooks_->np_service_context (stub,
+  this->network_priority_protocols_hooks_->np_service_context (stub,
                                               service_context,
                                               restart
                                               ACE_ENV_ARG_PARAMETER);
