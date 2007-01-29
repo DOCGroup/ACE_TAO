@@ -1,3 +1,9 @@
+Mon Jan 29 19:27:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+          Removed not needed return statements after ACE_THROW_RETURN, fixes
+          warnings with HP aCC on IA64
+
 Mon Jan 29 19:11:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter_Registry.cpp:
