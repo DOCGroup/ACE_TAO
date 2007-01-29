@@ -63,19 +63,22 @@
 // rtems 4.6.6.
 #define ACE_LACKS_WCHAR_H
 
-// Yes, we do have threads.
-#define ACE_HAS_THREADS
-// And they're even POSIX pthreads (MIT implementation)
-#define ACE_HAS_PTHREADS
-// ... and the final standard even!
-#define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_HAS_PTHREAD_SCHEDPARAM
-#define ACE_LACKS_THREAD_PROCESS_SCOPING
-
-// XXX thread defines go here
+#if !defined (ACE_MT_SAFE)
 #define ACE_MT_SAFE 1
-#define ACE_PAGE_SIZE 4096
+#endif
+
+#if ACE_MT_SAFE
+# define ACE_HAS_THREADS
+# define ACE_HAS_PTHREADS
+# define ACE_HAS_PTHREADS_STD
+# define ACE_HAS_THREAD_SPECIFIC_STORAGE
+# define ACE_HAS_PTHREAD_SCHEDPARAM
+# define ACE_LACKS_THREAD_PROCESS_SCOPING
+#else
+# define ACE_HAS_POSIX_GETPWNAM_R
+# define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#endif
+
 #define ACE_HAS_ALT_CUSERID
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_3_PARAM_READDIR_R
@@ -86,6 +89,7 @@
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
 #define ACE_HAS_NONCONST_READV
+#define ACE_HAS_GETPAGESIZE
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_REENTRANT_FUNCTIONS

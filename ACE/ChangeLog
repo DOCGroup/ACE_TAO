@@ -1,3 +1,36 @@
+Mon Jan 29 18:58:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Argv_Type_Converter.cpp:
+        * ace/Asynch_Pseudo_Task.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+          Layout changes, result of experimenting with a code
+          beautifier
+
+        * ace/config-rtems.h:
+          Improved rtems port, added support for building with
+          threads=0
+
+        * ace/config-sco-5.0.0.h:
+          Removed commented out define
+
+        * ace/config-vxworks6.4.h:
+          putenv fails with VxWorks 6.4 with a pentium target
+
+        * ace/Countdown_Time.{h,cpp}:
+          Use bool, removed return value from most methods, it was
+          meaningless, removed destructor, not needed to update members
+          in a destructor
+
+        * ace/Dev_Poll_Reactor.h:
+          Export Token_Guard, fixes bugzilla 2786, thanks to
+          <sailzeng at tencent dot com> for reporting this
+
+        * OS_NS_pwd.inl (getpwnam_r):
+          Initialize pointer with 0, simplified this a little
+
+        * docs/ACE-guidelines.html:
+          Updated example with doxygen style of documentation
+
 Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ACE version 5.5.6 released.
