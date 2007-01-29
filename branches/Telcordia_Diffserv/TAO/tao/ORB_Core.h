@@ -79,9 +79,14 @@ class TAO_Profile;
 
 class TAO_Endpoint_Selector_Factory;
 class TAO_Message_State_Factory;
-class TAO_Protocols_Hooks;
-class TAO_BiDir_Adapter;
 
+class TAO_Protocols_Hooks;
+class TAO_Policy_Protocols_Hooks;
+class TAO_Protocols_Properties_Protocols_Hooks;
+class TAO_Network_Priority_Protocols_Hooks;
+class TAO_Thread_Priority_Protocols_Hooks;
+
+class TAO_BiDir_Adapter;
 class TAO_Flushing_Strategy;
 
 class TAO_Thread_Lane_Resources_Manager;
@@ -323,6 +328,22 @@ public:
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
 
+  /// Sets the value of TAO_ORB_Core::policy_protocols_hooks_
+  static void set_policy_protocols_hooks (
+    const char *policy_protocols_hooks_name);
+
+  /// Sets the value of TAO_ORB_Core::protocols_properties_protocols_hooks_
+  static void set_protocols_preperties_protocols_hooks (
+    const char *protocols_properties_protocols_hooks_name);
+
+  /// Sets the value of TAO_ORB_Core::network_priority_protocols_hooks_
+  static void set_network_priority_protocols_hooks (
+    const char *network_priority_protocols_hooks_name);
+
+  /// Sets the value of TAO_ORB_Core::thread_priority_protocols_hooks_
+  static void set_thread_priority_protocols_hooks (
+    const char *thread_priority_protocols_hooks_name);
+
   /// Sets the value of TAO_ORB_Core::endpoint_selector_factory_
   static void set_endpoint_selector_factory (
     const char *endpoint_selector_factory_name);
@@ -337,6 +358,21 @@ public:
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks (void);
+
+  /// Get the value of the policy protoocols hooks
+  TAO_Policy_Protocols_Hooks * get_policy_protocols_hooks (void);
+
+  /// Get the value of the protocols properties protoocols hooks
+  TAO_Protocols_Properties_Protocols_Hooks * 
+    get_protocols_properties_protocols_hooks (void);
+
+  /// Get the value of the network priority protoocols hooks
+  TAO_Network_Priority_Protocols_Hooks * 
+    get_network_priority_protocols_hooks (void);
+
+  /// Get the value of the thread priority protoocols hooks
+  TAO_Thread_Priority_Protocols_Hooks * 
+    get_thread_priority_protocols_hooks (void);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
@@ -557,6 +593,19 @@ public:
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
+
+  /// Handle to the factory for policy protocols hooks
+  TAO_Policy_Protocols_Hooks *policy_protocols_hooks_;
+
+  /// Handle to the factory for protocols properties protocols hooks
+  TAO_Protocols_Properties_Protocols_Hooks 
+    *protocols_properties_protocols_hooks_;
+
+  /// Handle to the factory for network priority protocols hooks
+  TAO_Network_Priority_Protocols_Hooks *network_priority_protocols_hooks_;
+
+  /// Handle to the factory for thread priority protocols hooks
+  TAO_Thread_Priority_Protocols_Hooks *thread_priority_protocols_hooks_;
 
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
@@ -1302,6 +1351,30 @@ public:
    * set, its value will be set to be "RT_Protocols_Hooks".
    */
   ACE_CString protocols_hooks_name_;
+
+  /**
+   * Name of the policy protocols_hooks that needs to be instantiated.
+   * The default value is "Policy_Protocols_Hooks".
+   */
+  ACE_CString policy_protocols_hooks_name_;
+
+  /**
+   * Name of the protocols_hooks that needs to be instantiated.
+   * The default value is "Protocols_Properties_Protocols_Hooks".
+   */
+  ACE_CString protocols_properties_protocols_hooks_name_;
+
+  /**
+   * Name of the protocols_hooks that needs to be instantiated.
+   * The default value is "Network_Priority_Protocols_Hooks".
+   */
+  ACE_CString network_priority_protocols_hooks_name_;
+
+  /**
+   * Name of the protocols_hooks that needs to be instantiated.
+   * The default value is "Thread_Priority_Protocols_Hooks".
+   */
+  ACE_CString thread_priority_protocols_hooks_name_;
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
   TAO_ORB_Core::Timeout_Hook timeout_hook_;

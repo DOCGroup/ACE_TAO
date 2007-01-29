@@ -23,6 +23,10 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/TSS_Resources.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Policy_Protocols_Hooks.h"
+#include "tao/Protocols_Properties_Protocols_Hooks.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
+#include "tao/Thread_Priority_Protocols_Hooks.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/IORInterceptor_Adapter_Factory.h"
 #include "tao/debug.h"
@@ -148,6 +152,11 @@ TAO_ORB_Core_Static_Resources::instance (void)
 TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
   : sync_scope_hook_ (0),
     protocols_hooks_name_ ("Protocols_Hooks"),
+    policy_protocols_hooks_name_ ("Policy_Protocols_Hooks"),
+    protocols_properties_protocols_hooks_name_ 
+      ("Protocols_Properties_Protocols_Hooks"),
+    network_priority_protocols_hooks_name_ ("Network_Priority_Protocols_Hooks"),
+    thread_priority_protocols_hooks_name_ ("Thread_Priority_Protocols_Hooks"),
     timeout_hook_ (0),
     connection_timeout_hook_ (0),
     endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory"),
@@ -178,6 +187,13 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 {
   this->sync_scope_hook_ = other.sync_scope_hook_;
   this->protocols_hooks_name_ = other.protocols_hooks_name_;
+  this->policy_protocols_hooks_name_ = other.policy_protocols_hooks_name_;
+  this->protocols_properties_protocols_hooks_name_ =
+    other.protocols_properties_protocols_hooks_name_;
+  this->network_priority_protocols_hooks_name_ = 
+    other.network_priority_protocols_hooks_name_;
+  this->thread_priority_protocols_hooks_name_ = 
+    other.thread_priority_protocols_hooks_name_;
   this->timeout_hook_ = other.timeout_hook_;
   this->connection_timeout_hook_ = other.connection_timeout_hook_;
   this->endpoint_selector_factory_name_ =
@@ -204,6 +220,10 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
+    policy_protocols_hooks_ (0),
+    protocols_properties_policy_protocols_hooks_ (0),
+    network_priority_policy_protocols_hooks_ (0),
+    thread_priority_policy_protocols_hooks_ (0),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
     use_local_memory_pool_ (true),
 #else
@@ -1334,6 +1354,105 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  // Look in the service repository for an instance of 
+  // the Policy Protocol Hooks.
+  const ACE_CString &policy_protocols_hooks_name =
+     TAO_ORB_Core_Static_Resources::instance ()->
+       policy_protocols_hooks_name_;
+
+  this->policy_protocols_hooks_ =
+    ACE_Dynamic_Service<TAO_Policy_Protocols_Hooks>::instance
+    (this->configuration (),
+     ACE_TEXT_CHAR_TO_TCHAR (policy_protocols_hooks_name.c_str()));
+
+  // Must have valid protocol hooks.
+  if (this->policy_protocols_hooks_ == 0)
+    ACE_THROW_RETURN (CORBA::INITIALIZE (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      -1);
+
+  // Initialize the protocols hooks instance.
+  this->policy_protocols_hooks_->init_hooks (this
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  // Look in the service repository for an instance 
+  // of the Protocols Properties Protocol Hooks.
+  const ACE_CString &protocols_properties_protocols_hooks_name =
+     TAO_ORB_Core_Static_Resources::instance ()->
+       protocols_properties_protocols_hooks_name_;
+
+  this->protocols_properties_protocols_hooks_ =
+    ACE_Dynamic_Service<TAO_Protocols_Properties_Protocols_Hooks>::instance
+    (this->configuration (),
+     ACE_TEXT_CHAR_TO_TCHAR (
+       protocols_properties_protocols_hooks_name.c_str()));
+
+  // Must have valid protocol hooks.
+  if (this->protocols_properties_protocols_hooks_ == 0)
+    ACE_THROW_RETURN (CORBA::INITIALIZE (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      -1);
+
+  // Initialize the protocols hooks instance.
+  this->protocols_properties_protocols_hooks_->init_hooks (this
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  // Look in the service repository for an instance of the Protocol Hooks.
+  const ACE_CString &network_priority_protocols_hooks_name =
+     TAO_ORB_Core_Static_Resources::instance ()->
+       network_priority_protocols_hooks_name_;
+
+  this->network_priority_protocols_hooks_ =
+    ACE_Dynamic_Service<TAO_Network_Priority_Protocols_Hooks>::instance
+    (this->configuration (),
+     ACE_TEXT_CHAR_TO_TCHAR (network_priority_protocols_hooks_name.c_str()));
+
+  // Must have valid protocol hooks.
+  if (this->network_priority_protocols_hooks_ == 0)
+    ACE_THROW_RETURN (CORBA::INITIALIZE (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      -1);
+
+  // Initialize the protocols hooks instance.
+  this->network_priority_protocols_hooks_->init_hooks (this
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  // Look in the service repository for an instance of the Protocol Hooks.
+  const ACE_CString &thread_priority_protocols_hooks_name =
+     TAO_ORB_Core_Static_Resources::instance ()->
+       thread_priority_protocols_hooks_name_;
+
+  this->thread_priority_protocols_hooks_ =
+    ACE_Dynamic_Service<TAO_Thread_Priority_Protocols_Hooks>::instance
+    (this->configuration (),
+     ACE_TEXT_CHAR_TO_TCHAR (thread_priority_protocols_hooks_name.c_str()));
+
+  // Must have valid protocol hooks.
+  if (this->thread_priority_protocols_hooks_ == 0)
+    ACE_THROW_RETURN (CORBA::INITIALIZE (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      -1);
+
+  // Initialize the protocols hooks instance.
+  this->thread_priority_protocols_hooks_->init_hooks (this
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
 
@@ -1711,6 +1830,45 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
   // Is synchronization necessary?
   TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_ =
     protocols_hooks_name;
+}
+
+void
+TAO_ORB_Core::set_policy_protocols_hooks (
+  const char *policy_protocols_hooks_name)
+{
+  // Is synchronization necessary?
+  TAO_ORB_Core_Static_Resources::instance ()->policy_protocols_hooks_name_ =
+    policy_protocols_hooks_name;
+}
+
+void
+TAO_ORB_Core::set_protocols_properties_protocols_hooks (
+  const char *protocols_properties_protocols_hooks_name)
+{
+  // Is synchronization necessary?
+  TAO_ORB_Core_Static_Resources::instance ()->
+    protocols_properties_protocols_hooks_name_ =
+      protocols_properties_protocols_hooks_name;
+}
+
+void
+TAO_ORB_Core::set_network_priority_protocols_hooks (
+  const char *network_priority_protocols_hooks_name)
+{
+  // Is synchronization necessary?
+  TAO_ORB_Core_Static_Resources::instance ()->
+    network_priority_protocols_hooks_name_ =
+      network_priority_protocols_hooks_name;
+}
+
+void
+TAO_ORB_Core::set_thread_priority_protocols_hooks (
+  const char *thread_priority_protocols_hooks_name)
+{
+  // Is synchronization necessary?
+  TAO_ORB_Core_Static_Resources::instance ()->
+    thread_priority_protocols_hooks_name_ =
+      thread_priority_protocols_hooks_name;
 }
 
 void
