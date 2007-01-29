@@ -1,3 +1,7 @@
+Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ACE version 5.5.6 released.
+
 Fri Jan 26 10:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cached_Connect_Strategy_T.cpp
