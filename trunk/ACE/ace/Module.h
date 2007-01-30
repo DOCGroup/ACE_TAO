@@ -59,7 +59,7 @@ public:
     M_DELETE = 3,
 
     /// Indicates that <close> should not delete any Tasks.
-    M_DELETE_NONE = 4,
+    M_DELETE_NONE = 4
   };
 };
 
