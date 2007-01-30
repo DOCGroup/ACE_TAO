@@ -31,8 +31,7 @@ TAO_Default_Network_Priority_Protocols_Hooks::
 
 void
 TAO_Default_Network_Priority_Protocols_Hooks::init_hooks (
-  TAO_ORB_Core *
-  ACE_ENV_ARG_DECL_NOT_USED)
+  TAO_ORB_Core *)
 {
 }
 
@@ -40,8 +39,7 @@ TAO_Default_Network_Priority_Protocols_Hooks::init_hooks (
 void
 TAO_Default_Network_Priority_Protocols_Hooks::add_rep_np_service_context_hook (
    TAO_Service_Context &,
-   CORBA::Long &
-   ACE_ENV_ARG_DECL_NOT_USED)
+   CORBA::Long &)
 {
 }
 
@@ -49,15 +47,13 @@ void
 TAO_Default_Network_Priority_Protocols_Hooks::np_service_context (
     TAO_Stub *,
     TAO_Service_Context &,
-    CORBA::Boolean
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Boolean)
 {
 }
 
 void
 TAO_Default_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
-   CORBA::Long &
-   ACE_ENV_ARG_DECL_NOT_USED)
+   CORBA::Long &)
 {
 }
 

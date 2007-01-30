@@ -36,8 +36,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::
 }
 
 void
-TAO_DS_Network_Priority_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
-                                    ACE_ENV_ARG_DECL)
+TAO_DS_Network_Priority_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
 {
   this->orb_core_ = orb_core;
 }
@@ -46,8 +45,7 @@ void
 TAO_DS_Network_Priority_Protocols_Hooks::np_service_context (
     TAO_Stub *stub,
     TAO_Service_Context &service_context,
-    CORBA::Boolean restart
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Boolean restart)
 {
   // If the restart flag is true, then this call for a
   // reinvocation. We need not prepare the Service Context List once
@@ -55,26 +53,20 @@ TAO_DS_Network_Priority_Protocols_Hooks::np_service_context (
   if (!restart)
     {
       CORBA::Policy_var cnpp =
-        stub->get_cached_policy (TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        stub->get_cached_policy (TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY);
 
       if (!CORBA::is_nil (cnpp.in ()))
         {
           TAO::NetworkPriorityPolicy_var cnp =
-            TAO::NetworkPriorityPolicy::_narrow (cnpp.in ()
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            TAO::NetworkPriorityPolicy::_narrow (cnpp.in ());
 
           TAO::DiffservCodepoint reply_diffserv_codepoint;
           reply_diffserv_codepoint = cnp->get_reply_diffserv_codepoint ();
 
-          CORBA::Long rep_dscp_codepoint = reply_diffserv_codepoint;
+          CORBA::Long const rep_dscp_codepoint = reply_diffserv_codepoint;
 
           this->add_rep_np_service_context_hook (service_context,
-                                             rep_dscp_codepoint
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                                 rep_dscp_codepoint);
         }
     }
 }
@@ -82,22 +74,21 @@ TAO_DS_Network_Priority_Protocols_Hooks::np_service_context (
 void
 TAO_DS_Network_Priority_Protocols_Hooks::add_rep_np_service_context_hook (
    TAO_Service_Context &service_context,
-   CORBA::Long &dscp_codepoint
-   ACE_ENV_ARG_DECL_NOT_USED)
+   CORBA::Long &dscp_codepoint)
 {
   TAO_OutputCDR cdr;
   if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
       || (cdr << dscp_codepoint) == 0)
     {
-      ACE_THROW (CORBA::MARSHAL ());
+      throw CORBA::MARSHAL ();
     }
 
   service_context.set_context (IOP::REP_NWPRIORITY, cdr);
 }
 
 void
-TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (CORBA::Long &dscp_codepoint
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
+  CORBA::Long &dscp_codepoint)
 {
   this->dscp_codepoint_ = dscp_codepoint;
 }
@@ -117,5 +108,5 @@ ACE_STATIC_SVC_DEFINE (TAO_DS_Network_Priority_Protocols_Hooks,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_DiffServPolicy, 
+ACE_FACTORY_DEFINE (TAO_DiffServPolicy,
                     TAO_DS_Network_Priority_Protocols_Hooks)

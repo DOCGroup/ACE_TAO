@@ -27,7 +27,6 @@
 #include "tao/IOP_IORC.h"
 #include "ace/SString.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
@@ -41,30 +40,26 @@ class TAO_Service_Context;
 class TAO_Connection_Handler;
 class TAO_Stub;
 
-class TAO_Export TAO_Network_Priority_Protocols_Hooks 
+class TAO_Export TAO_Network_Priority_Protocols_Hooks
       : public ACE_Service_Object
 {
 public:
   /// destructor
   virtual ~TAO_Network_Priority_Protocols_Hooks (void);
 
-  virtual void init_hooks (TAO_ORB_Core *orb_core
-                           ACE_ENV_ARG_DECL) = 0;
+  virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;
 
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
-  virtual void set_dscp_codepoint (CORBA::Long &dscp_codepoint
-                                   ACE_ENV_ARG_DECL) = 0;
+  virtual void set_dscp_codepoint (CORBA::Long &dscp_codepoint) = 0;
 
   virtual void np_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
-                                   CORBA::Boolean restart
-                                   ACE_ENV_ARG_DECL) = 0;
+                                   CORBA::Boolean restart) = 0;
 
   virtual void add_rep_np_service_context_hook (
     TAO_Service_Context &service_context,
-    CORBA::Long &dscp_codepoint
-    ACE_ENV_ARG_DECL) = 0;
+    CORBA::Long &dscp_codepoint) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
