@@ -1,3 +1,12 @@
+Tue Jan 30 18:14:00 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+          tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+          tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        
+          Fixed #includes for compilation errors.
+
 Tue Jan 30 18:12:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy.mpc:
