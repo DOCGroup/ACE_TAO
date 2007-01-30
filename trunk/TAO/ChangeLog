@@ -1,3 +1,8 @@
+Tue Jan 30 12:37:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/Compression_Manager.{h,cpp}:
+          Fixed layout and warnings in single threaded build
+
 Tue Jan 30 12:03:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/Compressor_Factory.{h,cpp}:
