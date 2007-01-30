@@ -1,3 +1,12 @@
+Tue Jan 30 19:22:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/ORB_Core.h:
+          tao/ORB_Core.cpp:
+          tao/ORB_Core.inl:
+        
+          Added set and get functions for the Network Priority Protocols
+          Hooks.
+
 Tue Jan 30 19:15:31 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/TAO_Internal.cpp:
