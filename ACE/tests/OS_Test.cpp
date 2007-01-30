@@ -903,7 +903,7 @@ pagesize_test (void)
   long const pagesize = ACE_OS::getpagesize ();
   if (pagesize <= 0)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Pagesize should return a value bigger ")
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, pagesize should return a value bigger ")
                             ACE_TEXT ("then zero, it returned %d\n"), pagesize));
       return 1;
     }
