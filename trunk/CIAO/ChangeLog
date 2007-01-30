@@ -1,3 +1,11 @@
+Tue Jan 30 20:43:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Changed the check for the bind, with -1 return an error, with
+          1 report a debug message of the reuse, else a normal debug.
+          Thanks to Sandro Andrade <sandro dot andrade at gmail dot com>
+          for reporting that ReDAC was broken.
+
 Tue Jan 30 11:27:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Server_init.{h,cpp}:
