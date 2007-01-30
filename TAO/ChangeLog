@@ -1,3 +1,36 @@
+Mon Jan 30 00:10:57 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        Changes that allow non-CORBA exceptions to be propagated to the
+        caller.
+
+        * tao/GIOP_Message_Base.cpp (process_request):
+        * tao/GIOP_Message_Lite.cpp (process_request):
+
+          Allow non-CORBA exceptions to be propagated up to the
+          application server.
+
+        * tao/ORB.cpp:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.h:
+
+          Removed code that set the unexpected exception handler.
+
+        * tao/Collocated_Invocation.cpp (invoke):
+        * tao/Messaging/Asynch_Invocation.cpp (remote_invocation):
+        * tao/Synch_Invocation.cpp (remote_oneway, remote_twoway):
+        * tao/Invocation_Base.h:
+        * tao/Invocation_Base.cpp (send_request_interception):
+          (receive_reply_interception, receive_other_interception):
+
+          Notify interceptors of non-CORBA exception, and propagate that
+          exception up to the caller.
+
+          (handle_all_exceptions):
+
+          Fixed object lifetime problem.  A local CORBA::UNKNOWN exception
+          object was being used as if it exist beyond the scope of this
+          method.
+
 Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO version 1.5.6 released.

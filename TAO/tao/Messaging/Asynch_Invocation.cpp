@@ -25,45 +25,44 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   Asynch_Remote_Invocation::Asynch_Remote_Invocation (
-      CORBA::Object_ptr otarget,
-      Profile_Transport_Resolver &resolver,
-      TAO_Operation_Details &detail,
-      TAO_Asynch_Reply_Dispatcher_Base *rd,
-      bool response_expected)
+    CORBA::Object_ptr otarget,
+    Profile_Transport_Resolver &resolver,
+    TAO_Operation_Details &detail,
+    TAO_Asynch_Reply_Dispatcher_Base *rd,
+    bool response_expected)
     : Synch_Twoway_Invocation (otarget,
                                resolver,
                                detail,
                                response_expected)
-      , safe_rd_ (rd)
+    , safe_rd_ (rd)
   {
   }
 
   Invocation_Status
-  Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value *max_wait_time
-                                               )
+  Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value * max_wait_time)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec);
 
-    TAO_OutputCDR &cdr =
+    TAO_OutputCDR & cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
 
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
-    s =
-      this->send_request_interception ();
+    s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
-#endif /*TAO_HAS_INTERCEPTORS */
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
     // try block is to take care of the cases when things go wrong.
     try
       {
+#endif /*TAO_HAS_INTERCEPTORS */
+
         // Oneway semantics.  See comments for below send_message()
         // call.
         cdr.message_attributes (this->details_.request_id (),
@@ -71,12 +70,9 @@ namespace TAO
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec,
-                            cdr
-                           );
+        this->write_header (tspec, cdr);
 
-        this->marshal_data (cdr
-                           );
+        this->marshal_data (cdr);
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
@@ -107,11 +103,9 @@ namespace TAO
         // Send it as a oneway request. It will make all the required
         // paraphernalia within the ORB to fire, like buffering if
         // send blocks etc.
-        s =
-          this->send_message (cdr,
-                              TAO_Transport::TAO_ONEWAY_REQUEST,
-                              max_wait_time
-                             );
+        s = this->send_message (cdr,
+                                TAO_Transport::TAO_ONEWAY_REQUEST,
+                                max_wait_time);
 
 #if TAO_HAS_INTERCEPTORS == 1
         // NOTE: We don't need to do the auto_ptr <> trick. We got here
@@ -126,7 +120,7 @@ namespace TAO
         // Nothing great on here. If we get a restart during send or a
         // proper send, we are supposed to call receiver_other ()
         // interception point. So we do that here
-        Invocation_Status tmp =
+        Invocation_Status const tmp =
           this->receive_other_interception ();
 
         // We got an error during the interception.
@@ -145,10 +139,11 @@ namespace TAO
         if (this->resolver_.transport ()->idle_after_send ())
           (void) this->resolver_.transport_released ();
 
+#if TAO_HAS_INTERCEPTORS == 1
       }
     catch ( ::CORBA::Exception& ex)
       {
-#if TAO_HAS_INTERCEPTORS == 1
+
         PortableInterceptor::ReplyStatus const status =
           this->handle_any_exception (&ex);
 
@@ -157,11 +152,23 @@ namespace TAO
           s = TAO_INVOKE_RESTART;
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-#else
-        ACE_UNUSED_ARG (ex);
-#endif /*TAO_HAS_INTERCEPTORS*/
           throw;
       }
+    catch (...)
+      {
+        // Notify interceptors of non-CORBA exception, and propagate
+        // that exception to the caller.
+
+         PortableInterceptor::ReplyStatus const st =
+           this->handle_all_exception ();
+
+         if (st == PortableInterceptor::LOCATION_FORWARD ||
+             st == PortableInterceptor::TRANSPORT_RETRY)
+           s = TAO_INVOKE_RESTART;
+         else
+           throw;
+      }
+#endif /* TAO_HAS_INTERCEPTORS */
 
     return s;
   }
