@@ -1,0 +1,37 @@
+#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
+#include "tao/Compression/zlib/ZlibCompressor.h"
+
+ACE_RCSID (ZLIB,
+           ZlibCompressor_Factory,
+           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+
+Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
+  ::TAO::CompressorFactory (4),
+  compressor_ (::Compression::Compressor::_nil ())
+{
+}
+
+::Compression::Compressor_ptr
+Zlib_CompressorFactory::get_compressor (
+    ::Compression::CompressionLevel compression_level
+  )
+  ACE_THROW_SPEC ((
+    ::CORBA::SystemException
+  ))
+{
+  // @todo, make a array based on compression level
+  if (CORBA::is_nil (compressor_.in ()))
+    {
+      compressor_ = new ZlibCompressor (compression_level, this);
+    }
+
+  return ::Compression::Compressor::_duplicate (compressor_.in ());
+}
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
