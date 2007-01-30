@@ -1,3 +1,8 @@
+Tue Jan 30 12:03:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/Compressor_Factory.{h,cpp}:
+          Fixed layout and warnings in single threaded build
+
 Tue Jan 30 11:14:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
