@@ -14,6 +14,11 @@ ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
   this->start ();
 }
 
+ACE_Countdown_Time::~ACE_Countdown_Time (void)
+{
+  this->stop ();
+}
+
 void
 ACE_Countdown_Time::start (void)
 {
@@ -35,8 +40,7 @@ ACE_Countdown_Time::stop (void)
 {
   if (this->max_wait_time_ != 0 && this->stopped_ == false)
     {
-      ACE_Time_Value elapsed_time =
-        ACE_OS::gettimeofday () - this->start_time_;
+      ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - this->start_time_;
 
       if (*this->max_wait_time_ > elapsed_time)
         {
