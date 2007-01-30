@@ -1,0 +1,13 @@
+# file      : BuildRules/Recursion.pre.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# copyright : Copyright (c) 2002-2003 Boris Kolpackov
+# license   : http://kolpackov.net/license.html
+
+.SUFFIXES:
+
+.PHONY: _submodules
+
+_submodules::
+
+default_makefile_name := Makefile
+# $Id$
