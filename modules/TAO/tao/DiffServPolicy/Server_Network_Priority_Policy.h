@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/DiffServPolicy/DiffServPolicy_Export.h"
-#include "tao/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicyC.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -79,7 +79,7 @@ public:
   TAO::NetworkPriorityModel network_priority_model (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
   CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));

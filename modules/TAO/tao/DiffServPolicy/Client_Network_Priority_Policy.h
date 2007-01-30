@@ -25,7 +25,7 @@
 
 #include "tao/LocalObject.h"
 #include "tao/Basic_Types.h"
-#include "tao/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicyC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -78,7 +78,7 @@ public:
   TAO::NetworkPriorityModel network_priority_model (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
   CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
