@@ -1,7 +1,8 @@
 // $Id$
 
-#include "tao/Client_Network_Priority_Policy.h"
-#include "tao/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
+#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
 ACE_RCSID (DiffServPolicy,
