@@ -19,29 +19,26 @@ Echo_Handler::Echo_Handler(void)
 }
 
 void
-Echo_Handler::echo_operation (char const *
-                              ACE_ENV_ARG_DECL_NOT_USED)
+Echo_Handler::echo_operation (char const *)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->replies_;
 }
 
 void
-Echo_Handler::echo_operation_excep (::Messaging::ExceptionHolder *
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+Echo_Handler::echo_operation_excep (::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }
 
 void
-Echo_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Echo_Handler::shutdown (void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }
 
 void
-Echo_Handler::shutdown_excep (::Messaging::ExceptionHolder *
-                              ACE_ENV_ARG_DECL_NOT_USED)
+Echo_Handler::shutdown_excep (::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

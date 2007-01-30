@@ -37,14 +37,13 @@ public:
   ~Receiver_i (void);
   // Destructor.
 
-  virtual void message (const char *msg
-                        ACE_ENV_ARG_DECL)
+  virtual void message (const char *msg)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
   // Receives a message string.
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));

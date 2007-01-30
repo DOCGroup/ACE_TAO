@@ -40,47 +40,38 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
 {
   CORBA::Object_var obj;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // @@ Huh?!?
 
       this->poa_= PortableServer::POA::_duplicate (poa);
 
       // Get the naming context ptr to NameService.
-      //      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("ConcurrencyService");
 
       poa->activate_object_with_id (id.in (),
-                                    &this->lock_set_factory_
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    &this->lock_set_factory_);
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
       obj =
-        poa->id_to_reference (id.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->id_to_reference (id.in ());
 
       CORBA::String_var str =
-        orb->object_to_string (obj.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "listening as object <%s>\n",
                   str.in ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Concurrency Service");
+      ex._tao_print_exception ("Concurrency Service");
       return CORBA::Object::_nil ();
     }
-  ACE_ENDTRY;
 
   return obj._retn ();
 }
@@ -88,27 +79,22 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
 int
 TAO_Concurrency_Server::fini (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableServer::ObjectId_var id =
         this->poa_->servant_to_id (&this->lock_set_factory_);
 
-      this->poa_->deactivate_object (id.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               ACE_TEXT ("TAO_Concurrency_Server"));
+          ex._tao_print_exception (ACE_TEXT ("TAO_Concurrency_Server"));
         }
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

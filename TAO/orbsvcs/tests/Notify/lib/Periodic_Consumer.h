@@ -57,7 +57,6 @@ protected:
 
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,

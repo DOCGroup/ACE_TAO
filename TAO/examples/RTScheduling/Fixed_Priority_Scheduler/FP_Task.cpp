@@ -29,8 +29,7 @@ int
 FP_Task::activate_task (RTScheduling::Current_ptr current,
 			CORBA::Policy_ptr sched_param,
 			long flags,
-			ACE_Time_Value* base_time
-			ACE_ENV_ARG_DECL)
+			ACE_Time_Value* base_time)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -43,9 +42,7 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 
   base_time_ = base_time;
 
-  current_ = RTScheduling::Current::_narrow (current
-					     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  current_ = RTScheduling::Current::_narrow (current);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
 
@@ -68,16 +65,12 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 void
 FP_Task::pre_activate (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::Object_var object = DT_TEST::instance ()->orb ()->resolve_initial_references ("PriorityMappingManager"
-											   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = DT_TEST::instance ()->orb ()->resolve_initial_references ("PriorityMappingManager");
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
-	RTCORBA::PriorityMappingManager::_narrow (object.in ()
-						  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+	RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       RTCORBA::PriorityMapping *pm =
 	mapping_manager->mapping ();
@@ -98,12 +91,10 @@ FP_Task::pre_activate (void)
 
       this->importance_ = native_priority;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 }
 
 int

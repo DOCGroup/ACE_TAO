@@ -95,15 +95,13 @@ main (int argc, char *argv[])
 
   task_stats.init (100000);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -111,12 +109,10 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -124,14 +120,10 @@ main (int argc, char *argv[])
       if (enable_dynamic_scheduling)
         {
           CORBA::Object_ptr manager_obj =
-            orb->resolve_initial_references ("RTSchedulerManager"
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->resolve_initial_references ("RTSchedulerManager");
 
           TAO_RTScheduler_Manager_var manager =
-            TAO_RTScheduler_Manager::_narrow (manager_obj
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            TAO_RTScheduler_Manager::_narrow (manager_obj);
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
           if (enable_yield)
@@ -152,13 +144,10 @@ main (int argc, char *argv[])
           manager->rtscheduler (scheduler);
 
           CORBA::Object_var object =
-            orb->resolve_initial_references ("RTScheduler_Current"
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->resolve_initial_references ("RTScheduler_Current");
 
           current  =
-            RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            RTScheduling::Current::_narrow (object.in ());
         }
 
       Simple_Server_i server_impl (orb.in (),
@@ -167,12 +156,10 @@ main (int argc, char *argv[])
                                    enable_yield);
 
       Simple_Server_var server =
-        server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server_impl._this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -189,8 +176,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       Worker worker (orb.in ());
       if (worker.activate (flags,
@@ -219,13 +205,11 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "shutting down scheduler\n"));
       scheduler->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
   task_stats.dump_samples ("timeline.txt",
@@ -244,18 +228,15 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_Time_Value tv(120);
 
-  ACE_TRY
+  try
     {
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run (tv);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): Worker thread exiting...\n"));
   return 0;
 }

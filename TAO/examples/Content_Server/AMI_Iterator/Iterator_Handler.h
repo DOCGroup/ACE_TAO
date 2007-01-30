@@ -53,27 +53,23 @@ public:
   // name of the file being retrieved from the web server.
 
   virtual void next_chunk (CORBA::Boolean pending_data,
-                   const Web_Server::Chunk_Type & chunk
-                   ACE_ENV_ARG_DECL)
+                   const Web_Server::Chunk_Type & chunk)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void next_chunk_excep (
-      ::Messaging::ExceptionHolder *
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy_excep (
-      ::Messaging::ExceptionHolder *
-      ACE_ENV_ARG_DECL_NOT_USED)
+      ::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
   void run (int *request_count,
             const char *pathname,
-            Web_Server::Iterator_Factory_ptr factory
-            ACE_ENV_ARG_DECL)
+            Web_Server::Iterator_Factory_ptr factory)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Activate and run this Reply Handler.  The contents (not the
@@ -87,13 +83,12 @@ private:
   // on the heap).
 
   void initialize_content_iterator (const char *pathname,
-                                    Web_Server::Iterator_Factory_ptr factory
-                                    ACE_ENV_ARG_DECL)
+                                    Web_Server::Iterator_Factory_ptr factory)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Initialize the Content Iterator used to retrieve the file.
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this reply handler.
 

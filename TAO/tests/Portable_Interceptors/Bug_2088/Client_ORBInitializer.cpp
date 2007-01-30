@@ -15,23 +15,21 @@ Client_ORBInitializer::Client_ORBInitializer (void) :
 
 void
 Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   pre_init_called = true;
 
-  ACE_THROW (CORBA::NO_MEMORY ());
+  throw CORBA::NO_MEMORY ();
 }
 
 void
 Client_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   post_init_called = true;
 
-  ACE_THROW (CORBA::NO_MEMORY ());
+  throw CORBA::NO_MEMORY ();
 }
 

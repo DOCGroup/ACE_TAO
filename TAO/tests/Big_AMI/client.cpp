@@ -84,8 +84,7 @@ public:
   }
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l
-            ACE_ENV_ARG_DECL_NOT_USED)
+            CORBA::Long out_l)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ++reply_count_;
@@ -98,8 +97,7 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder
-                  ACE_ENV_ARG_DECL)
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ++reply_count_;
@@ -107,18 +105,15 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"
                                   "Testing proper exception handling ...\n"));
-      ACE_TRY
+      try
         {
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     };
 
 private:
@@ -129,39 +124,31 @@ int
 main (int argc, char *argv[])
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object_var =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa_var =
-        PortableServer::POA::_narrow (object_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object_var.in ());
 
       PortableServer::POAManager_var poa_manager_var =
-        poa_var->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa_var->the_POAManager ();
 
-      poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager_var->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // We reuse the object_var smart pointer!
-      object_var = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object_var = orb->string_to_object (ior);
 
       A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (object_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        A::AMI_Test::_narrow (object_var.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {
@@ -174,8 +161,7 @@ main (int argc, char *argv[])
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
       A::AMI_AMI_TestHandler_var the_handler_var =
-        handler._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        handler._this ();
 
       CORBA::Long l = 931247;
       A::Payload payload (payload_size);
@@ -198,9 +184,7 @@ main (int argc, char *argv[])
           ami_test_var->sendc_foo (the_handler_var.in (),
                                    l,
                                    "Let's talk AMI.",
-                                   payload
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                   payload);
         }
 
       // We are just sending all requests, but we shouldn't get any replies
@@ -227,9 +211,7 @@ main (int argc, char *argv[])
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
                                               "Let's talk SMI.",
-                                              payload
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              payload);
 
       if (debug)
         {
@@ -240,26 +222,20 @@ main (int argc, char *argv[])
 
       if (shutdown_flag)
         {
-          ami_test_var->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ami_test_var->shutdown ();
         }
 
       poa_var->destroy (1,  // ethernalize objects
                         0  // wait for completion
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       );
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

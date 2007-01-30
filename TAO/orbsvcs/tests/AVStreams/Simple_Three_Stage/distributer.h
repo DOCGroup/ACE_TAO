@@ -115,13 +115,11 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Initialize data components.
 
   void bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-                         const ACE_CString &mmdevice_name
-                         ACE_ENV_ARG_DECL);
+                         const ACE_CString &mmdevice_name);
   // Resolve the reference of the mmdevice from the naming service.
 
   TAO_StreamCtrl *receiver_streamctrl (void);

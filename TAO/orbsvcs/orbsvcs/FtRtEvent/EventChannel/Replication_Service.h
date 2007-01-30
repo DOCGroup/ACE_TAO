@@ -45,10 +45,10 @@ namespace FTRTEC
     /**
      * Used for checking if the incoming replication message is out of sequence.
      */
-    void check_validity(ACE_ENV_SINGLE_ARG_DECL);
+    void check_validity(void);
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-      (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
+      (const FtRtecEventChannelAdmin::ObjectId&);
 
    /**
     * Replicate a request.
@@ -57,16 +57,14 @@ namespace FTRTEC
     * @param rollback The rollback operation when the replication failed.
     */
     void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
-      RollbackOperation rollback
-      ACE_ENV_ARG_DECL);
+      RollbackOperation rollback);
 
    /**
     * Inform the backup replicas that a new replica has joined the object
     * group.
     */
     void add_member(const FTRT::ManagerInfo & info,
-                    CORBA::ULong object_group_ref_version
-                    ACE_ENV_ARG_DECL);
+                    CORBA::ULong object_group_ref_version);
 
     int  acquire_read (void);
     int  acquire_write (void);

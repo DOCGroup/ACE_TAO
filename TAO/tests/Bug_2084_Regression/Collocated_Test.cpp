@@ -49,8 +49,7 @@ main (int argc, char *argv[])
                   argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
     // Keep a copy of the ORB options args
@@ -66,9 +65,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
-                         server_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         server_orb.c_str ());
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -91,9 +88,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc(),
                          catc.get_TCHAR_argv(),
-                         client_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         client_orb.c_str ());
 
       Client_Task client_task (input,
                                corb.in (),
@@ -110,18 +105,15 @@ main (int argc, char *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 
       // Now that all threads have completed we can destroy the ORB
-      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb->destroy ();
       if (server_orb != client_orb)
         {
-          corb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          corb->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore exceptions..
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -65,12 +65,11 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-      CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy
-      ACE_ENV_ARG_DECL)
+      CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no consumer is connected...
@@ -85,32 +84,28 @@ public:
   CosEventComm::PullConsumer_ptr consumer (void) const;
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   /// Push an event into the queue.
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL);
+  void push (const CORBA::Any &event);
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   virtual void connect_pull_consumer (
-                CosEventComm::PullConsumer_ptr pull_consumer
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CosEventComm::PullConsumer_ptr pull_consumer)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
-  virtual CORBA::Any * pull (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Any * pull (void)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  virtual void disconnect_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_pull_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
@@ -118,9 +113,9 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 protected:
   /// Set the consumer, used by some implementations to change the

@@ -15,21 +15,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 FTEC_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FTEC_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  Request_Context_Repository().allocate_slots(info ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  Request_Context_Repository().allocate_slots(info);
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor;
   PortableInterceptor::ClientRequestInterceptor_ptr ctmp;
@@ -37,13 +34,10 @@ FTEC_ORBInitializer::post_init (
   ACE_NEW_THROW_EX(ctmp,
                    TAO_Set_Update_Interceptor,
                    CORBA::NO_MEMORY());
-  ACE_CHECK;
 
   client_interceptor = ctmp;
 
-  info->add_client_request_interceptor (client_interceptor.in()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_client_request_interceptor (client_interceptor.in());
 
   PortableInterceptor::ServerRequestInterceptor_var  server_interceptor;
   PortableInterceptor::ServerRequestInterceptor_ptr  stmp;
@@ -53,16 +47,13 @@ FTEC_ORBInitializer::post_init (
                 CORBA::NO_MEMORY());
   server_interceptor = stmp;
 
-  info->add_server_request_interceptor (server_interceptor.in()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (server_interceptor.in());
   ACE_NEW_THROW_EX(stmp,
                 FtEventServiceInterceptor,
                 CORBA::NO_MEMORY());
   server_interceptor = stmp;
 
-  info->add_server_request_interceptor (server_interceptor.in()
-                                        ACE_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (server_interceptor.in());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

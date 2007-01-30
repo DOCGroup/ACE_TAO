@@ -111,15 +111,12 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 {
   if (resolve_for_existing_naming_service)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           // Try to find an existing Naming Service.
           CORBA::Object_var naming_obj =
             orb->resolve_initial_references ("NameService",
-                                             timeout
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                             timeout);
 
           if (!CORBA::is_nil (naming_obj.in ()))
             {
@@ -131,24 +128,18 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                             "\nNameService found!\n"));
 
               this->naming_context_ =
-                CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CosNaming::NamingContext::_narrow (naming_obj.in ());
 
               this->naming_service_ior_ =
-                orb->object_to_string (naming_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                orb->object_to_string (naming_obj.in ());
 
               return 0;
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init");
+          ex._tao_print_exception ("TAO_Naming_Server::init");
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
     }
 
   if (TAO_debug_level > 0)
@@ -278,16 +269,14 @@ TAO_Naming_Server::init_with_orb (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Duplicate the ORB
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -305,17 +294,13 @@ TAO_Naming_Server::init_with_orb (int argc,
         return result;
 
       // Get the POA object.
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
       // Get the POA_Manager.
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       int numPolicies = 2;
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -334,30 +319,22 @@ TAO_Naming_Server::init_with_orb (int argc,
 
       // Id Assignment policy
       policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
 
       // Lifespan policy
       policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       if (this->use_servant_activator_)
         {
           // Request Processing Policy
           policies[2] =
-            this->root_poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->root_poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
           // Servant Retention Policy
           policies[3] =
-            this->root_poa_->create_servant_retention_policy (PortableServer::RETAIN
-                                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->root_poa_->create_servant_retention_policy (PortableServer::RETAIN);
         }
 #endif /* TAO_HAS_MINIMUM_POA */
 
@@ -365,11 +342,9 @@ TAO_Naming_Server::init_with_orb (int argc,
       // the object key each time it invokes the server.
       this->ns_poa_ = this->root_poa_->create_POA ("NameService",
                                                    poa_manager.in (),
-                                                   policies
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                   policies);
       // Warning!  If create_POA fails, then the policies won't be
       // destroyed and there will be hell to pay in memory leaks!
-      ACE_TRY_CHECK;
 
       // Creation of the new POAs over, so destroy the Policy_ptr's.
       for (CORBA::ULong i = 0;
@@ -377,8 +352,7 @@ TAO_Naming_Server::init_with_orb (int argc,
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       result = this->init (orb,
@@ -395,13 +369,12 @@ TAO_Naming_Server::init_with_orb (int argc,
       if (result == -1)
         return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init_with_orb");
+      ex._tao_print_exception (
+        "TAO_Naming_Server::init_with_orb");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->ior_file_name_ != 0)
     {
@@ -448,8 +421,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     int round_trip_timeout,
                                     int use_round_trip_timeout)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (use_storable_context)
         {
@@ -498,9 +470,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                        0,
                                                        persFactory.get(),
                                                        persistence_location,
-                                                       use_redundancy_
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                                       use_redundancy_);
 
           if (this->use_servant_activator_)
             persFactory.release();
@@ -537,9 +507,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           this->naming_context_ =
             TAO_Transient_Naming_Context::make_new_context (poa,
                                                             TAO_ROOT_NAMING_CONTEXT,
-                                                            context_size
-                                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                                            context_size);
 
         }
 
@@ -547,23 +515,17 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       // mechanism.  Primarily useful for dynamically loaded Name
       // Services.
       orb->register_initial_reference ("NameService",
-                                       this->naming_context_.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                       this->naming_context_.in ());
 
       // Set the ior of the root Naming Context.
       this->naming_service_ior_=
-        orb->object_to_string (this->naming_context_.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (this->naming_context_.in ());
 
       CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
@@ -571,11 +533,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       else
         {
           CORBA::String_var ior =
-            orb->object_to_string (this->naming_context_.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          adapter->bind ("NameService", ior.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->object_to_string (this->naming_context_.in ());
+          adapter->bind ("NameService", ior.in ());
         }
 
 #if defined (ACE_HAS_IP_MULTICAST)
@@ -664,35 +623,29 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         polList.length (1);
         polList[0] = orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                                          anyObjectVal);
-        ACE_TRY_CHECK;
 
         // set a timeout on the orb
         //
         CORBA::Object_var orbPolicyManagerObj =
-          orb->resolve_initial_references ("ORBPolicyManager"
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          orb->resolve_initial_references ("ORBPolicyManager");
 
         CORBA::PolicyManager_var orbPolicyManager =
           CORBA::PolicyManager::_narrow (orbPolicyManagerObj.in ());
-        ACE_TRY_CHECK;
         orbPolicyManager->set_policy_overrides (polList, CORBA::SET_OVERRIDE);
 
         polList[0]->destroy ();
-        ACE_TRY_CHECK;
         polList[0] = CORBA::Policy::_nil ();
       }
 #else
   ACE_UNUSED_ARG (use_round_trip_timeout);
 #endif /* TAO_HAS_CORBA_MESSAGING */
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Naming_Server::init_new_naming");
+      ex._tao_print_exception (
+        "TAO_Naming_Server::init_new_naming");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -702,35 +655,29 @@ TAO_Naming_Server::fini (void)
 {
   // Destroy the child POA ns_poa that is created when initializing
   // the Naming Service
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->ns_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->ns_poa_->destroy (1, 1);
 
 
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
       else
         {
-          adapter->unbind ("NameService" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          adapter->unbind ("NameService");
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore
     }
-  ACE_ENDTRY;
 
 
   if (this->ior_multicast_ != 0)

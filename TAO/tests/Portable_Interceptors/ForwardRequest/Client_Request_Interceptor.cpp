@@ -20,31 +20,28 @@ Client_Request_Interceptor::Client_Request_Interceptor (
 }
 
 char *
-Client_Request_Interceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Client_Request_Interceptor");
 }
 
 void
-Client_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_Request_Interceptor::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   ++this->request_count_;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
     return;
@@ -59,20 +56,14 @@ Client_Request_Interceptor::send_request (
           int argc = 0;
           this->orb_ = CORBA::ORB_init (argc,
                                         0,
-                                        this->orb_id_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                        this->orb_id_.in ());
         }
 
       CORBA::Object_var forward =
-        this->orb_->string_to_object (this->forward_str_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->orb_->string_to_object (this->forward_str_.in ());
 
       CORBA::String_var forward_str =
-        this->orb_->object_to_string (forward.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->orb_->object_to_string (forward.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "CLIENT (%P|%t) Request %d will be forwarded "
@@ -81,30 +72,27 @@ Client_Request_Interceptor::send_request (
                   this->request_count_));
 
       // Notice that this is not a permanent forward.
-      ACE_THROW (PortableInterceptor::ForwardRequest (forward.in ()));
+      throw PortableInterceptor::ForwardRequest (forward.in ());
     }
 }
 
 void
 Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_Request_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -112,23 +100,20 @@ Client_Request_Interceptor::receive_exception (
 
 void
 Client_Request_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->response_expected ();
 
   // Oneway
   if (!response_expected)
     return;
 
   PortableInterceptor::ReplyStatus reply_status =
-    ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->reply_status ();
 
   if (reply_status == PortableInterceptor::TRANSPORT_RETRY)
     return;
@@ -140,11 +125,10 @@ Client_Request_Interceptor::receive_other (
   // This will throw an exception if a location forward has not
   // occured.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   ACE_DEBUG ((LM_DEBUG,
               "CLIENT (%P|%t) Received LOCATION_FORWARD reply.\n"));

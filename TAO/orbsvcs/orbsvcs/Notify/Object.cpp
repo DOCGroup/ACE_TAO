@@ -68,45 +68,42 @@ TAO_Notify_Object::set_event_manager( TAO_Notify_Event_Manager* event_manager )
 }
 
 CORBA::Object_ptr
-TAO_Notify_Object::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
+TAO_Notify_Object::activate (PortableServer::Servant servant)
 {
-  return this->poa_->activate (servant, this->id_ ACE_ENV_ARG_PARAMETER);
+  return this->poa_->activate (servant, this->id_);
 }
 
 /// Activate with existing id
 CORBA::Object_ptr
 TAO_Notify_Object::activate (
     PortableServer::Servant servant,
-    CORBA::Long id
-    ACE_ENV_ARG_DECL)
+    CORBA::Long id)
 {
   this->id_ = id;
-  return this->poa_->activate_with_id (servant, this->id_ ACE_ENV_ARG_PARAMETER);
+  return this->poa_->activate_with_id (servant, this->id_);
 }
 
 
 void
-TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::deactivate (void)
 {
-  ACE_TRY
+  try
   {
-    this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->poa_->deactivate (this->id_);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
     // Do not propagate any exceptions
     if (TAO_debug_level > 2)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
+      ex._tao_print_exception ("(%P|%t)\n");
       ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
     }
   }
-  ACE_ENDTRY;
 }
 
 int
-TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::shutdown (void)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 1);
@@ -117,8 +114,7 @@ TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     this->shutdown_ = 1;
   }
 
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  this->deactivate ();
 
   this->shutdown_worker_task ();
 
@@ -126,9 +122,9 @@ TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_Notify_Object::ref (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::ref (void)
 {
-  return this->poa_->id_to_reference (this->id_ ACE_ENV_ARG_PARAMETER);
+  return this->poa_->id_to_reference (this->id_);
 }
 
 void
@@ -151,7 +147,7 @@ TAO_Notify_Object::destroy_proxy_poa (void)
 {
   if (this->proxy_poa_ != 0)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
       if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = 0;
       if ( this->proxy_poa_ == this->poa_ ) this->poa_ = 0;
@@ -160,18 +156,15 @@ TAO_Notify_Object::destroy_proxy_poa (void)
       {
         this->own_proxy_poa_ = false;
         ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( object_poa_ );
-        this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->proxy_poa_->destroy ();
       }
       this->proxy_poa_ = 0;
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Proxy shutdown error (%P|%t)\n");
+        ex._tao_print_exception ("Proxy shutdown error (%P|%t)\n");
     }
-    ACE_ENDTRY;
   }
 }
 
@@ -180,7 +173,7 @@ TAO_Notify_Object::destroy_object_poa (void)
 {
   if (this->object_poa_ != 0)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
       if ( this->object_poa_ == this->proxy_poa_ ) this->proxy_poa_ = 0;
       if ( this->object_poa_ == this->poa_ ) this->poa_ = 0;
@@ -189,18 +182,15 @@ TAO_Notify_Object::destroy_object_poa (void)
       {
         this->own_object_poa_ = false;
         ACE_Auto_Ptr< TAO_Notify_POA_Helper > aop( object_poa_ );
-        this->object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->object_poa_->destroy ();
       }
       this->object_poa_ = 0;
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 2)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Proxy shutdown error (%P|%t)\n");
+        ex._tao_print_exception ("Proxy shutdown error (%P|%t)\n");
     }
-    ACE_ENDTRY;
   }
 }
 
@@ -252,34 +242,31 @@ TAO_Notify_Object::set_poa (TAO_Notify_POA_Helper* poa)
 }
 
 void
-TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
+TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
 {
   CosNotification::PropertyErrorSeq err_seq;
 
   TAO_Notify_QoSProperties new_qos_properties;
 
   if (new_qos_properties.init (qos, err_seq) == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   // Apply the appropriate concurrency QoS
   if (new_qos_properties.thread_pool ().is_valid ())
   {
     if (new_qos_properties.thread_pool ().value ().static_threads == 0)
       {
-        TAO_Notify_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        TAO_Notify_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this);
       }
     else
       {
         TAO_Notify_PROPERTIES::instance()->builder()->
-        apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value ());
       }
   }
   else if (new_qos_properties.thread_pool_lane ().is_valid ())
     TAO_Notify_PROPERTIES::instance()->builder()->
-    apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value ());
 
   // Update the Thread Task's QoS properties..
   this->worker_task_->update_qos_properties (new_qos_properties);
@@ -289,14 +276,14 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_A
 
   // Init the the overall QoS on this object.
   if (new_qos_properties.copy (this->qos_properties_) == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   if (err_seq.length () > 0) // Unsupported Property
-    ACE_THROW (CosNotification::UnsupportedQoS (err_seq));
+    throw CosNotification::UnsupportedQoS (err_seq);
 }
 
 CosNotification::QoSProperties*
-TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Object::get_qos (void)
 {
   CosNotification::QoSProperties_var properties;
 

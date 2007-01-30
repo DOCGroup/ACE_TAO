@@ -35,15 +35,13 @@ public:
   Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy();
 
-  virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);
+  virtual void check_validity(void);
 
   virtual void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid
-    ACE_ENV_ARG_DECL);
+    const FtRtecEventChannelAdmin::ObjectId& oid);
   virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version
-                          ACE_ENV_ARG_DECL);
+                          CORBA::ULong object_group_ref_version);
 
   virtual int  acquire_read (void);
   virtual int  acquire_write (void);

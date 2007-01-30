@@ -14,6 +14,5 @@ public:
 class  Test_Smart_Factory: public TAO_Test_Default_Proxy_Factory
 {
 public:
-  virtual Test_ptr create_proxy (Test_ptr proxy
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual Test_ptr create_proxy (Test_ptr proxy);
 };

@@ -284,12 +284,12 @@ namespace RTCORBA
 
     static PriorityModelPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PriorityModelPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PriorityModelPolicy_ptr _nil (void)
@@ -303,7 +303,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::RTCORBA::PriorityModel priority_model (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -313,7 +313,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual RTCORBA::Priority server_priority (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -323,7 +323,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -333,7 +333,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -344,7 +344,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -418,12 +418,12 @@ namespace RTCORBA
 
     static ThreadpoolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ThreadpoolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ThreadpoolPolicy_ptr _nil (void)
@@ -437,7 +437,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual RTCORBA::ThreadpoolId threadpool (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -447,7 +447,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -457,7 +457,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -468,7 +468,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -537,12 +537,12 @@ namespace RTCORBA
 
     static ProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ProtocolProperties_ptr _nil (void)
@@ -557,7 +557,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -719,12 +719,12 @@ namespace RTCORBA
 
     static ServerProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ServerProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ServerProtocolPolicy_ptr _nil (void)
@@ -738,7 +738,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::RTCORBA::ProtocolList * protocols (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -748,7 +748,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -758,7 +758,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -769,7 +769,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -843,12 +843,12 @@ namespace RTCORBA
 
     static ClientProtocolPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ClientProtocolPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static ClientProtocolPolicy_ptr _nil (void)
@@ -862,7 +862,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::RTCORBA::ProtocolList * protocols (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -872,7 +872,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -882,7 +882,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -893,7 +893,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -967,12 +967,12 @@ namespace RTCORBA
 
     static PrivateConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PrivateConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PrivateConnectionPolicy_ptr _nil (void)
@@ -986,7 +986,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -996,7 +996,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1007,7 +1007,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1076,12 +1076,12 @@ namespace RTCORBA
 
     static TCPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static TCPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static TCPProtocolProperties_ptr _nil (void)
@@ -1095,7 +1095,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long send_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1106,7 +1106,7 @@ namespace RTCORBA
 
     virtual void send_buffer_size (
         ::CORBA::Long send_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1116,7 +1116,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long recv_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1127,7 +1127,7 @@ namespace RTCORBA
 
     virtual void recv_buffer_size (
         ::CORBA::Long recv_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1137,7 +1137,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean keep_alive (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1148,7 +1148,7 @@ namespace RTCORBA
 
     virtual void keep_alive (
         ::CORBA::Boolean keep_alive
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1158,7 +1158,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean dont_route (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1169,7 +1169,7 @@ namespace RTCORBA
 
     virtual void dont_route (
         ::CORBA::Boolean dont_route
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1179,7 +1179,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean no_delay (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1190,7 +1190,7 @@ namespace RTCORBA
 
     virtual void no_delay (
         ::CORBA::Boolean no_delay
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1200,7 +1200,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean enable_network_priority (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1211,7 +1211,7 @@ namespace RTCORBA
 
     virtual void enable_network_priority (
         ::CORBA::Boolean enable_network_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1222,7 +1222,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1291,12 +1291,12 @@ namespace RTCORBA
 
     static GIOPProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static GIOPProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static GIOPProtocolProperties_ptr _nil (void)
@@ -1311,7 +1311,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1380,12 +1380,12 @@ namespace RTCORBA
 
     static UnixDomainProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static UnixDomainProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static UnixDomainProtocolProperties_ptr _nil (void)
@@ -1399,7 +1399,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long send_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1410,7 +1410,7 @@ namespace RTCORBA
 
     virtual void send_buffer_size (
         ::CORBA::Long send_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1420,7 +1420,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long recv_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1431,7 +1431,7 @@ namespace RTCORBA
 
     virtual void recv_buffer_size (
         ::CORBA::Long recv_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1442,7 +1442,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1511,12 +1511,12 @@ namespace RTCORBA
 
     static SharedMemoryProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static SharedMemoryProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static SharedMemoryProtocolProperties_ptr _nil (void)
@@ -1530,7 +1530,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long send_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1541,7 +1541,7 @@ namespace RTCORBA
 
     virtual void send_buffer_size (
         ::CORBA::Long send_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1551,7 +1551,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long recv_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1562,7 +1562,7 @@ namespace RTCORBA
 
     virtual void recv_buffer_size (
         ::CORBA::Long recv_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1572,7 +1572,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean keep_alive (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1583,7 +1583,7 @@ namespace RTCORBA
 
     virtual void keep_alive (
         ::CORBA::Boolean keep_alive
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1593,7 +1593,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean dont_route (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1604,7 +1604,7 @@ namespace RTCORBA
 
     virtual void dont_route (
         ::CORBA::Boolean dont_route
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1614,7 +1614,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean no_delay (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1625,7 +1625,7 @@ namespace RTCORBA
 
     virtual void no_delay (
         ::CORBA::Boolean no_delay
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1635,7 +1635,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long preallocate_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1646,7 +1646,7 @@ namespace RTCORBA
 
     virtual void preallocate_buffer_size (
         ::CORBA::Long preallocate_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1656,7 +1656,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual char * mmap_filename (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1667,7 +1667,7 @@ namespace RTCORBA
 
     virtual void mmap_filename (
         const char * mmap_filename
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1677,7 +1677,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual char * mmap_lockname (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1688,7 +1688,7 @@ namespace RTCORBA
 
     virtual void mmap_lockname (
         const char * mmap_lockname
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1699,7 +1699,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1768,12 +1768,12 @@ namespace RTCORBA
 
     static UserDatagramProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static UserDatagramProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static UserDatagramProtocolProperties_ptr _nil (void)
@@ -1787,7 +1787,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean enable_network_priority (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1798,7 +1798,7 @@ namespace RTCORBA
 
     virtual void enable_network_priority (
         ::CORBA::Boolean enable_network_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1809,7 +1809,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -1878,12 +1878,12 @@ namespace RTCORBA
 
     static StreamControlProtocolProperties_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static StreamControlProtocolProperties_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static StreamControlProtocolProperties_ptr _nil (void)
@@ -1897,7 +1897,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long send_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1908,7 +1908,7 @@ namespace RTCORBA
 
     virtual void send_buffer_size (
         ::CORBA::Long send_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1918,7 +1918,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Long recv_buffer_size (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1929,7 +1929,7 @@ namespace RTCORBA
 
     virtual void recv_buffer_size (
         ::CORBA::Long recv_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1939,7 +1939,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean keep_alive (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1950,7 +1950,7 @@ namespace RTCORBA
 
     virtual void keep_alive (
         ::CORBA::Boolean keep_alive
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1960,7 +1960,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean dont_route (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1971,7 +1971,7 @@ namespace RTCORBA
 
     virtual void dont_route (
         ::CORBA::Boolean dont_route
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1981,7 +1981,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean no_delay (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1992,7 +1992,7 @@ namespace RTCORBA
 
     virtual void no_delay (
         ::CORBA::Boolean no_delay
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2002,7 +2002,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean enable_network_priority (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2013,7 +2013,7 @@ namespace RTCORBA
 
     virtual void enable_network_priority (
         ::CORBA::Boolean enable_network_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2024,7 +2024,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2180,12 +2180,12 @@ namespace RTCORBA
 
     static PriorityBandedConnectionPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PriorityBandedConnectionPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PriorityBandedConnectionPolicy_ptr _nil (void)
@@ -2199,7 +2199,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::RTCORBA::PriorityBands * priority_bands (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2209,7 +2209,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2219,7 +2219,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2230,7 +2230,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2299,12 +2299,12 @@ namespace RTCORBA
 
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static Current_ptr _nil (void)
@@ -2318,7 +2318,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual RTCORBA::Priority the_priority (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2329,7 +2329,7 @@ namespace RTCORBA
 
     virtual void the_priority (
         ::RTCORBA::Priority the_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2340,7 +2340,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2409,12 +2409,12 @@ namespace RTCORBA
 
     static Mutex_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static Mutex_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static Mutex_ptr _nil (void)
@@ -2428,7 +2428,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void lock (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2438,7 +2438,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void unlock (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2449,7 +2449,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean try_lock (
         ::TimeBase::TimeT max_wait
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2460,7 +2460,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -2529,12 +2529,12 @@ namespace RTCORBA
 
     static RTORB_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static RTORB_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static RTORB_ptr _nil (void)
@@ -2548,7 +2548,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::RTCORBA::Mutex_ptr create_mutex (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2559,7 +2559,7 @@ namespace RTCORBA
 
     virtual void destroy_mutex (
         ::RTCORBA::Mutex_ptr the_mutex
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2594,12 +2594,12 @@ namespace RTCORBA
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+
         );
 
       // TAO_IDL - Generated from
@@ -2621,7 +2621,7 @@ namespace RTCORBA
     virtual ::RTCORBA::Mutex_ptr create_named_mutex (
         const char * name,
         ::CORBA::Boolean_out created_flag
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2632,7 +2632,7 @@ namespace RTCORBA
 
     virtual ::RTCORBA::Mutex_ptr open_named_mutex (
         const char * name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2649,7 +2649,7 @@ namespace RTCORBA
         ::CORBA::Boolean dont_route,
         ::CORBA::Boolean no_delay,
         ::CORBA::Boolean enable_network_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2661,7 +2661,7 @@ namespace RTCORBA
     virtual ::RTCORBA::UnixDomainProtocolProperties_ptr create_unix_domain_protocol_properties (
         ::CORBA::Long send_buffer_size,
         ::CORBA::Long recv_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2679,7 +2679,7 @@ namespace RTCORBA
         ::CORBA::Long preallocate_buffer_size,
         const char * mmap_filename,
         const char * mmap_lockname
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2690,7 +2690,7 @@ namespace RTCORBA
 
     virtual ::RTCORBA::UserDatagramProtocolProperties_ptr create_user_datagram_protocol_properties (
         ::CORBA::Boolean enable_network_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2706,7 +2706,7 @@ namespace RTCORBA
         ::CORBA::Boolean dont_route,
         ::CORBA::Boolean no_delay,
         ::CORBA::Boolean enable_network_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2741,12 +2741,12 @@ namespace RTCORBA
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+
         );
 
       // TAO_IDL - Generated from
@@ -2773,7 +2773,7 @@ namespace RTCORBA
         ::CORBA::Boolean allow_request_buffering,
         ::CORBA::ULong max_buffered_requests,
         ::CORBA::ULong max_request_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2789,7 +2789,7 @@ namespace RTCORBA
         ::CORBA::Boolean allow_request_buffering,
         ::CORBA::ULong max_buffered_requests,
         ::CORBA::ULong max_request_buffer_size
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2800,7 +2800,7 @@ namespace RTCORBA
 
     virtual void destroy_threadpool (
         ::RTCORBA::ThreadpoolId threadpool
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -2813,7 +2813,7 @@ namespace RTCORBA
     virtual ::RTCORBA::PriorityModelPolicy_ptr create_priority_model_policy (
         ::RTCORBA::PriorityModel priority_model,
         ::RTCORBA::Priority server_priority
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2824,7 +2824,7 @@ namespace RTCORBA
 
     virtual ::RTCORBA::ThreadpoolPolicy_ptr create_threadpool_policy (
         ::RTCORBA::ThreadpoolId threadpool
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2835,7 +2835,7 @@ namespace RTCORBA
 
     virtual ::RTCORBA::PriorityBandedConnectionPolicy_ptr create_priority_banded_connection_policy (
         const ::RTCORBA::PriorityBands & priority_bands
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2846,7 +2846,7 @@ namespace RTCORBA
 
     virtual ::RTCORBA::ServerProtocolPolicy_ptr create_server_protocol_policy (
         const ::RTCORBA::ProtocolList & protocols
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2857,7 +2857,7 @@ namespace RTCORBA
 
     virtual ::RTCORBA::ClientProtocolPolicy_ptr create_client_protocol_policy (
         const ::RTCORBA::ProtocolList & protocols
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2867,7 +2867,7 @@ namespace RTCORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2878,7 +2878,7 @@ namespace RTCORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;

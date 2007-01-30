@@ -58,15 +58,12 @@ Persistent_Client_i::run (const char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Make the Grid.
       Grid_ptr grid = client->make_grid (width_,
-                                         height_
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         height_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid succesfully\n"));
@@ -77,9 +74,7 @@ Persistent_Client_i::run (const char *name,
           for (CORBA::Short ctr = 0; ctr < width_; ctr++)
             {
               CORBA::Long ret_val = grid->get (index_,
-                                               ctr
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               ctr);
 
               ACE_DEBUG ((LM_DEBUG,
                           "Grid value [%d][%d] =  %d \n",index_, ctr,ret_val));
@@ -87,29 +82,23 @@ Persistent_Client_i::run (const char *name,
         }
 
       if (client.shutdown () == 1) {
-        client->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        client->shutdown ();
       }
 
       if (this->remove_ == 1) {
-        client->cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        client->cleanup ();
       }
     }
-  ACE_CATCH (CORBA::UserException, range_ex)
+  catch (const CORBA::UserException& range_ex)
     {
-      ACE_PRINT_EXCEPTION (range_ex,
-                           "\tFrom get and set grid");
+      range_ex._tao_print_exception ("\tFrom get and set grid");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, memex)
+  catch (const CORBA::SystemException& memex)
     {
-      ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make grid as Memory exhausted");
+      memex._tao_print_exception ("Cannot make grid as Memory exhausted");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

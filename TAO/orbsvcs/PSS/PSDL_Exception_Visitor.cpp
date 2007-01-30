@@ -165,12 +165,12 @@ TAO_PSDL_Exception_Visitor::print_class_for_exception (void)
   *ps_sh << "\n";
   *ps_sh << "      virtual void _tao_encode (\n";
   *ps_sh << "          TAO_OutputCDR &\n";
-  *ps_sh << "          ACE_ENV_ARG_DECL_NOT_USED\n";
+  *ps_sh << "\n";
   *ps_sh << "        ) const;\n";
   *ps_sh << "      \n";
   *ps_sh << "      virtual void _tao_decode (\n";
   *ps_sh << "          TAO_InputCDR &\n";
-  *ps_sh << "          ACE_ENV_ARG_DECL_NOT_USED\n";
+  *ps_sh << "\n";
   *ps_sh << "        );\n";
   *ps_sh << "      \n";
 

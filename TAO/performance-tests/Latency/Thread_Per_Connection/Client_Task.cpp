@@ -16,28 +16,24 @@ Client_Task::Client_Task (Test::Roundtrip_ptr roundtrip,
 int
 Client_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       for (int i = 0; i != this->niterations_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          (void) this->roundtrip_->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->roundtrip_->test_method (start);
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           this->latency_.sample (now - start);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return 0;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -51,16 +47,15 @@ Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
 }
 
 void
-Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (void)
 {
   CORBA::ULongLong dummy = 0;
   for (int i = 0; i != 100; ++i)
     {
-      ACE_TRY
+      try
         {
-          (void) this->roundtrip_->test_method (dummy ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->roundtrip_->test_method (dummy);
         }
-      ACE_CATCHANY {} ACE_ENDTRY;
+      catch (const CORBA::Exception&){}
     }
 }

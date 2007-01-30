@@ -26,39 +26,30 @@ Notify_Structured_Push_Consumer::~Notify_Structured_Push_Consumer ()
 
 void
 Notify_Structured_Push_Consumer::_connect (
-                CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL)
+                CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
       CosNotifyChannelAdmin::STRUCTURED_EVENT,
-      proxy_id_
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      proxy_id_);
 
   this->proxy_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-      proxysupplier.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      proxysupplier.in ());
 
-  proxy_->connect_structured_push_consumer (objref.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy_->connect_structured_push_consumer (objref.in ());
 
-  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->_remove_ref ();
 }
 
 
 void
 Notify_Structured_Push_Consumer::push_structured_event(
-                          const CosNotification::StructuredEvent& /*event*/
-                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+                          const CosNotification::StructuredEvent& /*event*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ( this->count_ == 0 )

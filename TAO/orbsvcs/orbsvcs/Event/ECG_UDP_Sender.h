@@ -83,7 +83,7 @@ public:
   TAO_ECG_UDP_Sender_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
 
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
 private:
 
@@ -136,8 +136,7 @@ public:
    */
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecUDPAdmin::AddrServer_ptr addr_server,
-             TAO_ECG_Refcounted_Endpoint endpoint_rptr
-             ACE_ENV_ARG_DECL);
+             TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   /// Connect or reconnect to the EC with the given subscriptions.
   /**
@@ -145,8 +144,7 @@ public:
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub
-                ACE_ENV_ARG_DECL);
+  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub);
 
   /// Deactivate from POA and disconnect from EC, if necessary.  Shut
   /// down all sender components.
@@ -154,7 +152,7 @@ public:
    * Calling this method may result in decrementing of the reference
    * count (due to deactivation) and deletion of the object.
    */
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   //@}
 
   /// Accessors.
@@ -176,10 +174,9 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet &events)
       ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -194,12 +191,10 @@ private:
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub
-                    ACE_ENV_ARG_DECL);
+  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
   // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub
-                  ACE_ENV_ARG_DECL);
+  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub);
   //@}
 
   /// Proxy used to receive events from the Event Channel.

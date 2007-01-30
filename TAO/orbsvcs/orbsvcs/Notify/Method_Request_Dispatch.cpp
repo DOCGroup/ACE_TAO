@@ -66,7 +66,7 @@ TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
 #endif
 }
 
-int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+int TAO_Notify_Method_Request_Dispatch::execute_i (void)
 {
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
@@ -76,9 +76,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
       TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
       CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
                                                                   parent.filter_admin (),
-                                                                  parent.filter_operator ()
-                                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                                                  parent.filter_operator ());
 
       if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",&this->proxy_supplier_ , val));
@@ -88,24 +86,22 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
         return 0;
     }
 
-  ACE_TRY
+  try
     {
       TAO_Notify_Consumer* consumer = this->proxy_supplier_->consumer ();
 
       if (consumer != 0)
         {
-          consumer->deliver (this ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          consumer->deliver (this);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        ACE_TEXT ("TAO_Notify_Method_Request_Dispatch::: error sending event.\n ")
-        );
+        ex._tao_print_exception (
+          ACE_TEXT (
+            "TAO_Notify_Method_Request_Dispatch::: error sending event.\n "));
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -115,8 +111,7 @@ TAO_Notify_Method_Request_Dispatch_Queueable *
 TAO_Notify_Method_Request_Dispatch::unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
-    TAO_InputCDR & cdr
-    ACE_ENV_ARG_DECL)
+    TAO_InputCDR & cdr)
 {
   bool ok = true;
   TAO_Notify_Method_Request_Dispatch_Queueable * result = 0;
@@ -144,8 +139,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     if (ok)
     {
       TAO_Notify_ProxySupplier* proxy_supplier = ecf.find_proxy_supplier (id_path,
-        0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN(0);
+        0);
       if (proxy_supplier != 0)
       {
         if (DEBUG_LEVEL > 6) ACE_DEBUG ((LM_DEBUG,
@@ -157,7 +151,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       }
       else
       {
-        TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0 ACE_ENV_ARG_PARAMETER); //@@todo
+        TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0); //@@todo
         if (proxy_consumer == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -236,9 +230,9 @@ TAO_Notify_Method_Request_Dispatch_Queueable::~TAO_Notify_Method_Request_Dispatc
 }
 
 int
-TAO_Notify_Method_Request_Dispatch_Queueable::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Dispatch_Queueable::execute (void)
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
 /*********************************************************************************************************/
@@ -279,19 +273,18 @@ TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch
 }
 
 int
-TAO_Notify_Method_Request_Dispatch_No_Copy::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Dispatch_No_Copy::execute (void)
 {
-  return this->execute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->execute_i ();
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Method_Request_Dispatch_No_Copy::copy (void)
 {
   TAO_Notify_Method_Request_Queueable* request;
 
   TAO_Notify_Event::Ptr event_var (
-    this->event_->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
-  ACE_CHECK_RETURN (0);
+    this->event_->queueable_copy () );
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Dispatch_Queueable (*this, event_var, this->proxy_supplier_.get(), this->filtering_),

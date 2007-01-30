@@ -71,13 +71,10 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Parse the command-line arguments to get the IOR
       parse_args (argc, argv);
@@ -104,69 +101,54 @@ main (int argc, char **argv)
         }
 
       // Get the object reference with the IOR
-      CORBA::Object_var object = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->string_to_object (ior);
 
       CORBA::String_var string;
 
       // Narrow the object reference
-      A_var a = A::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      A_var a = A::_narrow (object.in ());
 
       // Narrow the object reference
-      intB_var b = intB::_narrow (a.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      intB_var b = intB::_narrow (a.in ());
 
       // Narrow the object reference
-      C_var c = C::_narrow (a.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      C_var c = C::_narrow (a.in ());
 
       // Narrow the object reference
-      D_var d = D::_narrow (c.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      D_var d = D::_narrow (c.in ());
 
-      string = a->method1 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = a->method1 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = b->method1 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = b->method1 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = b->method2 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = b->method2 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = c->method1 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = c->method1 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = c->method3 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = c->method3 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method1 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = d->method1 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method2 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = d->method2 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method3 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = d->method3 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method4 (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      string = d->method4 ();
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

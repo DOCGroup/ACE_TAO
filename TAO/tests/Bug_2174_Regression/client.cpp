@@ -44,22 +44,19 @@ int result = 1;
 
 int main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -70,7 +67,6 @@ int main (int argc, char* argv[])
         }
 
       CORBA::Boolean non_existent = server->_non_existent ();
-      ACE_TRY_CHECK;
 
       if (non_existent)
           result = 3;
@@ -81,23 +77,21 @@ int main (int argc, char* argv[])
                   "client (%P) _non_existent() returned %d\n",
                   static_cast<int>(non_existent) ));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch (const CORBA::OBJECT_NOT_EXIST& ex)
   {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR: Exception caught:");
+      ex._tao_print_exception ("ERROR: Exception caught:");
       result = 4;
   }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT&)
   {
       result = 5;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR: Exception caught:");
+      ex._tao_print_exception ("ERROR: Exception caught:");
       result = 6;
     }
-  ACE_ENDTRY;
   return result;
 }

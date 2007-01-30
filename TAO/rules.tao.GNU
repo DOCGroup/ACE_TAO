@@ -133,6 +133,11 @@ else  # interceptors
   ACE_MAKE_OPTIONS += interceptors
 endif # interceptors
 
+# The following is more to document the transport_current,
+# the $TAO_ROOT/tao/orbconf.h file defines it by default
+# CPPFLAGS += -DTAO_HAS_TRANSPORT_CURRENT=1
+transport_current ?= 1
+
 ifeq (1,$(CROSS-COMPILE))
   ACE_MAKE_OPTIONS += cross_compile
 else

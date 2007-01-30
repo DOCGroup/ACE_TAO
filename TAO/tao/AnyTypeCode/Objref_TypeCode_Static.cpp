@@ -55,8 +55,7 @@ TAO::TypeCode::Objref<char const *,
 
 CORBA::Boolean
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr /* tc */
-  ACE_ENV_ARG_DECL_NOT_USED) const
+  CORBA::TypeCode_ptr /* tc */) const
 {
   // Equality has already been established in the
   // CORBA::TypeCode base class.
@@ -66,8 +65,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equal_i (
 
 CORBA::Boolean
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr
-  ACE_ENV_ARG_DECL_NOT_USED) const
+  CORBA::TypeCode_ptr) const
 {
   // Equivalence already verified in the base class
   // CORBA::TypeCode::equivalent() method.
@@ -78,7 +76,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equivalent_i (
 CORBA::TypeCode_ptr
 TAO::TypeCode::Objref<char const *,
                       TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -94,45 +92,39 @@ TAO::TypeCode::Objref<char const *,
   if (this->kind_ == CORBA::tk_abstract_interface)
     {
       return adapter->create_abstract_interface_tc (this->attributes_.id (),
-                                                    ""  /* empty name */
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                    ""  /* empty name */);
     }
   else if (this->kind_ == CORBA::tk_component)
     {
       return adapter->create_component_tc (this->attributes_.id (),
-                                           ""  /* empty name */
-                                           ACE_ENV_ARG_PARAMETER);
+                                           ""  /* empty name */);
     }
   else if (this->kind_ == CORBA::tk_home)
     {
       return adapter->create_home_tc (this->attributes_.id (),
-                                      ""  /* empty name */
-                                      ACE_ENV_ARG_PARAMETER);
+                                      ""  /* empty name */);
     }
   else if (this->kind_ == CORBA::tk_local_interface)
     {
       return adapter->create_local_interface_tc (this->attributes_.id (),
-                                                 ""  /* empty name */
-                                                 ACE_ENV_ARG_PARAMETER);
+                                                 ""  /* empty name */);
 
     }
   else if (this->kind_ == CORBA::tk_native)
     {
       return adapter->create_native_tc (this->attributes_.id (),
-                                        ""  /* empty name */
-                                        ACE_ENV_ARG_PARAMETER);
+                                        ""  /* empty name */);
     }
   else // CORBA::tk_objref
     {
       return adapter->create_interface_tc (this->attributes_.id (),
-                                           ""  /* empty name */
-                                           ACE_ENV_ARG_PARAMETER);
+                                           ""  /* empty name */);
     }
 }
 
 char const *
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -141,7 +133,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i (
 
 char const *
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

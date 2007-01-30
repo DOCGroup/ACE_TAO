@@ -23,33 +23,32 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    ServantRetentionPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+    ServantRetentionPolicy::copy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ServantRetentionPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
                         ServantRetentionPolicy (this->value_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return copy;
     }
 
     void
-    ServantRetentionPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ServantRetentionPolicy::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::ServantRetentionPolicyValue
-    ServantRetentionPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ServantRetentionPolicy::value (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return this->value_;
     }
 
     CORBA::PolicyType
-    ServantRetentionPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ServantRetentionPolicy::policy_type (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::SERVANT_RETENTION_POLICY_ID;

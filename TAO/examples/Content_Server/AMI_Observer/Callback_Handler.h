@@ -77,15 +77,14 @@ public:
   // Constructor that creates a content iterator corresponding to the
   // name of the file being retrieved from the web server.
 
-  virtual void next_chunk (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void next_chunk (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback for this reply handler.
 
-  virtual void next_chunk_excep (::Messaging::ExceptionHolder *
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void next_chunk_excep (::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void run (ACE_ENV_SINGLE_ARG_DECL)
+  void run (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Activate and run this Reply Handler.  The contents (not the
@@ -98,12 +97,12 @@ private:
   // Destructor (private to ensure that Callback_Handler is allocated
   // on the heap).
 
-  void open_file (ACE_ENV_SINGLE_ARG_DECL)
+  void open_file (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result));
   // Open the file to be uploaded to the client callback.
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this reply handler.
 

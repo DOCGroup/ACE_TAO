@@ -190,14 +190,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_NO_COPY_OCTET_SEQUENCES 1
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
 
-#if defined (ACE_HAS_EXCEPTIONS)
-# define TAO_HAS_EXCEPTIONS
-// TAO_USE_EXCEPTIONS is only here for backwards compatibility and
-// will go away shortly so don't use it...
-# define TAO_USE_EXCEPTIONS
-#elif (defined (TAO_HAS_EXCEPTIONS) || defined (TAO_USE_EXCEPTIONS)) && !defined (ACE_HAS_EXCEPTIONS)
-# error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
-#endif /* TAO_HAS_EXCEPTIONS */
+#define TAO_HAS_EXCEPTIONS
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
@@ -842,8 +835,6 @@ enum TAO_Policy_Scope
 // Enable TransportCurrent by default
 #if !defined (TAO_HAS_TRANSPORT_CURRENT)
 #    define TAO_HAS_TRANSPORT_CURRENT 1
-#  else
-#    define TAO_HAS_TRANSPORT_CURRENT 0
 #endif  /* ! TAO_HAS_TRANSPORT_CURRENT */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

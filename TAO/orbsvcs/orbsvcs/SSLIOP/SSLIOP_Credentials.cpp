@@ -82,28 +82,28 @@ TAO::SSLIOP_Credentials::~SSLIOP_Credentials (void)
 }
 
 char *
-TAO::SSLIOP_Credentials::creds_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::creds_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 SecurityLevel3::CredentialsUsage
-TAO::SSLIOP_Credentials::creds_usage (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::creds_usage (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CU_Indefinite;
 }
 
 TimeBase::UtcT
-TAO::SSLIOP_Credentials::expiry_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::expiry_time (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->expiry_time_;
 }
 
 SecurityLevel3::CredentialsState
-TAO::SSLIOP_Credentials::creds_state (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP_Credentials::creds_state (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const ::X509 *x = this->x509_.in ();
@@ -152,19 +152,17 @@ TAO::SSLIOP_Credentials::creds_state (ACE_ENV_SINGLE_ARG_DECL)
 
 char *
 TAO::SSLIOP_Credentials::add_relinquished_listener (
-    SecurityLevel3::RelinquishedCredentialsListener_ptr /* listener */
-    ACE_ENV_ARG_DECL)
+    SecurityLevel3::RelinquishedCredentialsListener_ptr /* listener */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
-TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */
-                                                        ACE_ENV_ARG_DECL)
+TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 bool
@@ -175,17 +173,13 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
   // EVP_PKEY *ea = this->evp_.in ();
   // EVP_PKEY *eb = rhs.evp_.in ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   // No need for a full blown ACE_TRY/CATCH block.
 
   const SecurityLevel3::CredentialsType lct =
-    this->creds_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    this->creds_type ();
 
   const SecurityLevel3::CredentialsType rct =
-    const_cast<TAO::SSLIOP_Credentials &> (rhs).creds_type (
-      ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    const_cast<TAO::SSLIOP_Credentials &> (rhs).creds_type ();
 
   // Don't bother check the creds_id and expiry_time attributes.  They
   // are checked implicitly by the below X509_cmp() call.
@@ -211,8 +205,7 @@ TAO::SSLIOP_Credentials::hash (void) const
 }
 
 TAO::SSLIOP::Credentials_ptr
-TAO::SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+TAO::SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj)
 {
   return  TAO::SSLIOP_Credentials::_duplicate (
               dynamic_cast<TAO::SSLIOP_Credentials *> (obj));
@@ -248,11 +241,9 @@ tao_TAO_SSLIOP_Credentials_nil (void)
 }
 
 TAO::SSLIOP::Credentials_ptr
-tao_TAO_SSLIOP_Credentials_narrow (CORBA::Object *p
-                                   ACE_ENV_ARG_DECL)
+tao_TAO_SSLIOP_Credentials_narrow (CORBA::Object *p)
 {
-  return TAO::SSLIOP_Credentials::_narrow (p
-                                           ACE_ENV_ARG_PARAMETER);
+  return TAO::SSLIOP_Credentials::_narrow (p);
 }
 
 CORBA::Object_ptr

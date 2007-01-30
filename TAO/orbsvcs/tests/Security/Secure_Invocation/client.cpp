@@ -15,8 +15,7 @@ const char *cert_file = "cacert.pem";
 
 void
 insecure_invocation_test (CORBA::ORB_ptr orb,
-                          CORBA::Object_ptr obj
-                          ACE_ENV_ARG_DECL)
+                          CORBA::Object_ptr obj)
 {
   // Disable protection for this insecure invocation test.
 
@@ -28,9 +27,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
   // Create the Security::QOPPolicy.
   CORBA::Policy_var policy =
     orb->create_policy (Security::SecQOPPolicy,
-                        no_protection
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                        no_protection);
 
   CORBA::PolicyList policy_list (1);
   policy_list.length (1);
@@ -40,13 +37,10 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
   // protection).
   CORBA::Object_var object =
     obj->_set_policy_overrides (policy_list,
-                                CORBA::SET_OVERRIDE
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                CORBA::SET_OVERRIDE);
 
   Foo::Bar_var server =
-    Foo::Bar::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    Foo::Bar::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
     {
@@ -55,17 +49,16 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
                   "nil.\n",
                   ior));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
-  ACE_TRY
+  try
     {
       // This invocation should result in a CORBA::NO_PERMISSION
       // exception.
-      server->baz (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->baz ();
     }
-  ACE_CATCH (CORBA::NO_PERMISSION, exc)
+  catch (const CORBA::NO_PERMISSION&)
     {
       ACE_DEBUG ((LM_INFO,
                   "(%P|%t) Received CORBA::NO_PERMISSION from "
@@ -73,23 +66,19 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
 
       return;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_ERROR ((LM_ERROR,
               "(%P|%t) ERROR: CORBA::NO_PERMISSION was not thrown.\n"
               "(%P|%t) ERROR: It should have been thrown.\n"));
 
-  ACE_THROW (CORBA::INTERNAL ());
+  throw CORBA::INTERNAL ();
 }
 
 void
-secure_invocation_test (CORBA::Object_ptr object
-                        ACE_ENV_ARG_DECL)
+secure_invocation_test (CORBA::Object_ptr object)
 {
   Foo::Bar_var server =
-    Foo::Bar::_narrow (object ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    Foo::Bar::_narrow (object);
 
   if (CORBA::is_nil (server.in ()))
     {
@@ -98,15 +87,13 @@ secure_invocation_test (CORBA::Object_ptr object
                   "nil.\n",
                   ior));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   // This invocation should return successfully.
-  server->baz (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  server->baz ();
 
-  server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  server->shutdown ();
 }
 
 int
@@ -137,22 +124,20 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
       ACE_OS::putenv (env.c_str ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       // This test sets creates a Security::QOPPolicy with the
       // Quality-of-Protection set to "no protection."  It then
@@ -160,26 +145,21 @@ main (int argc, char *argv[])
       // then result in a CORBA::NO_PERMISSION exception.
       //
       // The server is not shutdown by this test.
-      insecure_invocation_test (orb.in (), object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      insecure_invocation_test (orb.in (), object.in ());
 
       // This test uses the default secure SSLIOP settings to securely
       // invoke a method on the server.  No exception should occur.
       //
       // The server *is* shutdown by this test.
-      secure_invocation_test (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      secure_invocation_test (object.in ());
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"

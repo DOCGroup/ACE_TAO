@@ -35,13 +35,12 @@ public:
   ~Client (void);
   //Dtor..
 
-  void create_widgets (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void create_widgets (void);
   // Adds the callbacks to the GUI underneath.....
 
   void show (void);
 
-  void parse_args (int argc, char *argv[]
-                   ACE_ENV_ARG_DECL);
+  void parse_args (int argc, char *argv[]);
 
   QVBox box_;
   // A box widget..

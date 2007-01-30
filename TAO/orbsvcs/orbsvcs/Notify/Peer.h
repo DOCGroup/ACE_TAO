@@ -49,21 +49,20 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   /// Shutdown the peer.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// Access Proxy.
   virtual TAO_Notify_Proxy* proxy (void) = 0;
 
   // Dispatch updates
   virtual void dispatch_updates (const TAO_Notify_EventTypeSeq & added,
-                                 const TAO_Notify_EventTypeSeq & removed
-                                 ACE_ENV_ARG_DECL);
+                                 const TAO_Notify_EventTypeSeq & removed);
 
   /// QoS changed notification from the Peer.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Handle dispatch exceptions.
-  void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_dispatch_exception (void);
 
   /// Retrieve the ior of this peer
   virtual ACE_CString get_ior (void) const = 0;
@@ -71,8 +70,7 @@ public:
 protected:
   /// Implementation of Peer specific dispatch_updates
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed
-                                   ACE_ENV_ARG_DECL) = 0;
+                                   const CosNotification::EventTypeSeq& removed) = 0;
 
 private:
   /// Release

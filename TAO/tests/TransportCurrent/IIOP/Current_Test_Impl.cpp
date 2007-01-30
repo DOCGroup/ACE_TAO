@@ -24,14 +24,14 @@ Current_Test_Impl::~Current_Test_Impl (void)
 }
 
 ::CORBA::Long
-Current_Test_Impl::self_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Current_Test_Impl::self_test (void)
         ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return 0;
 }
 
 void
-Current_Test_Impl::test_transport_current (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::test_transport_current (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
@@ -40,20 +40,16 @@ Current_Test_Impl::test_transport_current (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   CORBA::Object_var tcobject =
-    this->orb_->resolve_initial_references ("TAO::Transport::IIOP::Current"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+    this->orb_->resolve_initial_references ("TAO::Transport::IIOP::Current");
 
   TAO::Transport::IIOP::Current_var tc =
-    TAO::Transport::IIOP::Current::_narrow (tcobject.in ()
-                                            ACE_ENV_SINGLE_ARG_DECL);
-  ACE_TRY_CHECK;
+    TAO::Transport::IIOP::Current::_narrow (tcobject.in ());
 
   if (CORBA::is_nil (tc.in()))
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Unable to narrow down to TAO::Transport::IIOP::Current\n")));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   CORBA::String_var rhost (tc->remote_host ());
@@ -72,7 +68,7 @@ Current_Test_Impl::test_transport_current (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-Current_Test_Impl::invoked_by_client (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::invoked_by_client (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level >= 1) {
@@ -80,27 +76,21 @@ Current_Test_Impl::invoked_by_client (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("(%P|%t) server - Test method invoked by client.\n")));
   }
 
-  this->test_transport_current (ACE_ENV_SINGLE_ARG_DECL);
-  ACE_TRY_CHECK;
+  this->test_transport_current ();
 
   if (this->do_collocated_calls_)
     {
       CORBA::Object_var selfobject =
-        poa_->servant_to_reference (this
-                                    ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+        poa_->servant_to_reference (this);
 
       Test::Transport::CurrentTest_var self =
-        Test::Transport::CurrentTest::_narrow (selfobject.in ()
-                                               ACE_ENV_SINGLE_ARG_DECL);
-      ACE_TRY_CHECK;
+        Test::Transport::CurrentTest::_narrow (selfobject.in ());
 
       if (TAO_debug_level >= 1) {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) server - Making a collocated invocation to invoked_during_upcall().\n")));
       }
-      self->invoked_during_upcall (ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      self->invoked_during_upcall ();
     }
   else
     {
@@ -115,7 +105,7 @@ Current_Test_Impl::invoked_by_client (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Current_Test_Impl::invoked_during_upcall (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Current_Test_Impl::invoked_during_upcall (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
@@ -126,7 +116,7 @@ Current_Test_Impl::invoked_during_upcall (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Current_Test_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Current_Test_Impl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
@@ -134,6 +124,5 @@ Current_Test_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_TEXT ("(%P|%t) server - shutting down.\n")));
   }
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

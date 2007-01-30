@@ -25,7 +25,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::get_servant (
-      ACE_ENV_SINGLE_ARG_DECL)
+      void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
@@ -36,58 +36,57 @@ namespace TAO
     void
     RequestProcessingStrategyServantManager::set_servant (
       PortableServer::Servant servant
-      ACE_ENV_ARG_DECL)
+      )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
       ACE_UNUSED_ARG (servant);
 
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     void
     RequestProcessingStrategyServantManager::validate_servant_manager (
       PortableServer::ServantManager_ptr servant_manager
-      ACE_ENV_ARG_DECL)
+      )
     {
       // When no servant manager is set, give an exception with minor code 4,
       // see 11.3.8.6 of the corba spec
       if (CORBA::is_nil (servant_manager))
         {
-          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
-                                         CORBA::COMPLETED_NO));
+          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
         }
     }
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::system_id_to_servant (
       const PortableServer::ObjectId &system_id
-      ACE_ENV_ARG_DECL)
+      )
     {
       return this->poa_->find_servant (system_id
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
     }
 
     PortableServer::ObjectId *
     RequestProcessingStrategyServantManager::servant_to_id (
       PortableServer::Servant servant
-      ACE_ENV_ARG_DECL)
+      )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      return this->poa_->servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
+      return this->poa_->servant_to_user_id (servant);
     }
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::id_to_servant (
       const PortableServer::ObjectId &id
-      ACE_ENV_ARG_DECL)
+      )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      return this->poa_->user_id_to_servant_i (id ACE_ENV_ARG_PARAMETER);
+      return this->poa_->user_id_to_servant_i (id);
     }
 
     ::PortableServer::RequestProcessingPolicyValue

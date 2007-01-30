@@ -18,31 +18,22 @@ RtEC_Based_CosEC::~RtEC_Based_CosEC (void)
 }
 
 void
-RtEC_Based_CosEC::init_ORB  (int& argc, char *argv []
-                             ACE_ENV_ARG_DECL)
+RtEC_Based_CosEC::init_ORB  (int& argc, char *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                "");
 
   CORBA::Object_var poa_object  =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references("RootPOA");
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager->activate ();
 }
 
 int
@@ -99,45 +90,35 @@ RtEC_Based_CosEC::parse_args (int argc, char *argv [])
 }
 
 void
-RtEC_Based_CosEC::startup (int argc, char *argv[]
-                           ACE_ENV_ARG_DECL)
+RtEC_Based_CosEC::startup (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "Starting up the CosEvent Service...\n"));
 
   // initalize the ORB.
-  this->init_ORB (argc, argv
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->init_ORB (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
-  this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->resolve_naming_service ();
 
   this->init (this->poa_.in (),
               this->poa_.in (),
               this->eventTypeIds_,
               this->eventSourceIds_,
-              this->source_type_pairs_
-              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+              this->source_type_pairs_);
 
-  this->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->activate ();
 
   // Register ourselves with the naming service.
   ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
 
   CORBA::Object_var obj =
-    this->poa_->servant_to_reference (this
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->poa_->servant_to_reference (this);
 
   CORBA::String_var str =
-    this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->object_to_string (obj.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "The CosEC IOR is <%s>\n", str.in ()));
@@ -147,9 +128,7 @@ RtEC_Based_CosEC::startup (int argc, char *argv[]
   name[0].id = CORBA::string_dup (this->service_name);
 
   this->naming_->rebind (name,
-                         obj.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                         obj.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "Registered with the naming service as: %s\n",
@@ -157,29 +136,27 @@ RtEC_Based_CosEC::startup (int argc, char *argv[]
 }
 
 POA_RtecEventChannelAdmin::EventChannel_ptr
-RtEC_Based_CosEC::create_rtec (ACE_ENV_SINGLE_ARG_DECL)
+RtEC_Based_CosEC::create_rtec (void)
 {
   // see if the user wants a local RtEC..
   if (this->remote_rtec_ == 0)
-    return CosEC_ServantBase::create_rtec (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return CosEC_ServantBase::create_rtec ();
   else
     return 0;
 }
 
 void
-RtEC_Based_CosEC::activate_rtec (ACE_ENV_SINGLE_ARG_DECL)
+RtEC_Based_CosEC::activate_rtec (void)
 {
   // see if the user wants to use a local RtEC..
   if (this->remote_rtec_ == 0)
     {
-      CosEC_ServantBase::activate_rtec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CosEC_ServantBase::activate_rtec ();
     }
   else
     {
       // Try to locate a remote rtec.
-      this->locate_rtec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->locate_rtec ();
 
       // Use the return value to check success.
       if (CORBA::is_nil (this->rtec_.in ()))
@@ -189,18 +166,17 @@ RtEC_Based_CosEC::activate_rtec (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-RtEC_Based_CosEC::deactivate_rtec (ACE_ENV_SINGLE_ARG_DECL)
+RtEC_Based_CosEC::deactivate_rtec (void)
 {
   // Check if the local rtec is to be deactivated.
   if (this->remote_rtec_ == 0)
     {
-      CosEC_ServantBase::deactivate_rtec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CosEC_ServantBase::deactivate_rtec ();
     }
 }
 
 void
-RtEC_Based_CosEC::locate_rtec (ACE_ENV_SINGLE_ARG_DECL)
+RtEC_Based_CosEC::locate_rtec (void)
 {
   CosNaming::Name ref_name (1);
   ref_name.length (1);
@@ -208,67 +184,54 @@ RtEC_Based_CosEC::locate_rtec (ACE_ENV_SINGLE_ARG_DECL)
     CORBA::string_dup (this->rt_service_name);
 
   CORBA::Object_var obj =
-    this->naming_->resolve (ref_name
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->naming_->resolve (ref_name);
 
   this->rtec_ =
-    RtecEventChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 
 void
-RtEC_Based_CosEC::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+RtEC_Based_CosEC::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 
 int
 RtEC_Based_CosEC::run (void)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: Running the CosEventService\n", __FILE__));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-RtEC_Based_CosEC::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+RtEC_Based_CosEC::shutdown (void)
 {
   // Deactivate.
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->deactivate ();
 
   // Unbind from the naming service.
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup (this->service_name);
 
-  this->naming_->unbind (name
-                         ACE_ENV_ARG_PARAMETER);
+  this->naming_->unbind (name);
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
@@ -282,12 +245,10 @@ main (int argc, char *argv[])
 
   RtEC_Based_CosEC service;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       service.startup (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       argv);
 
       if (service.run () == -1)
         {
@@ -297,13 +258,11 @@ main (int argc, char *argv[])
                             1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start CosEventService");
+      ex._tao_print_exception ("Failed to start CosEventService");
       return 1;
     }
-  ACE_ENDTRY;
 
   service.shutdown ();
 

@@ -26,16 +26,13 @@ change_network_priority (int enable_network_priority,
                          Test_var &server,
                          CORBA::ORB_ptr orb)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       // Set the tcp protocol protperties
       RTCORBA::TCPProtocolProperties_var tcp_properties =
@@ -44,9 +41,7 @@ change_network_priority (int enable_network_priority,
                                                 1,
                                                 0,
                                                 1,
-                                                enable_network_priority
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                enable_network_priority);
 
       RTCORBA::ProtocolList protocols;
       protocols.length (1);
@@ -59,27 +54,20 @@ change_network_priority (int enable_network_priority,
       CORBA::PolicyList policy_list;
       policy_list.length (1);
       policy_list[0] =
-        rt_orb->create_client_protocol_policy (protocols
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rt_orb->create_client_protocol_policy (protocols);
 
       switch (level)
         {
           // Change policy at ORB level
         case ORB:
           {
-            object = orb->resolve_initial_references ("ORBPolicyManager"
-                                                      ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            object = orb->resolve_initial_references ("ORBPolicyManager");
 
             CORBA::PolicyManager_var policy_manager =
-              CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              CORBA::PolicyManager::_narrow (object.in ());
 
             policy_manager->set_policy_overrides (policy_list,
-                                                  CORBA::SET_OVERRIDE
-                                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                                                  CORBA::SET_OVERRIDE);
 
             break;
           }
@@ -88,18 +76,13 @@ change_network_priority (int enable_network_priority,
         case THREAD:
           {
             object =
-              orb->resolve_initial_references ("PolicyCurrent"
-                                               ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              orb->resolve_initial_references ("PolicyCurrent");
 
             CORBA::PolicyCurrent_var policy_current =
-              CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              CORBA::PolicyCurrent::_narrow (object.in ());
 
             policy_current->set_policy_overrides (policy_list,
-                                                  CORBA::SET_OVERRIDE
-                                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                                                  CORBA::SET_OVERRIDE);
 
             break;
           }
@@ -108,23 +91,18 @@ change_network_priority (int enable_network_priority,
         case OBJECT:
           {
             CORBA::Object_var object = server->_set_policy_overrides (policy_list,
-                                                                      CORBA::SET_OVERRIDE
-                                                                      ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                                                                      CORBA::SET_OVERRIDE);
 
-            server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            server = Test::_narrow (object.in ());
 
             break;
           }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -185,34 +163,27 @@ toggle (int &i)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
       // Initialize and obtain reference to the Test object.
       CORBA::Object_var client_object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test_var server =
-        Test::_narrow (client_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (client_object.in ());
 
       // Resolve the Network priority Mapping Manager
       CORBA::Object_var object =
-        orb->resolve_initial_references ("NetworkPriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NetworkPriorityMappingManager");
 
       RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
-        RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
       // Initialize the custom priority mapping
       Custom_Network_Priority_Mapping *cnpm = 0;
@@ -250,24 +221,20 @@ main (int argc, char *argv[])
               break;
             }
 
-          server->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->test_method ();
         }
 
       // Shut down Server ORB.
       if (shutdown_server)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

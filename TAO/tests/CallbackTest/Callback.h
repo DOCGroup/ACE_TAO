@@ -17,13 +17,13 @@ public:
   Callback (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (CORBA::String_out answer ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean are_you_there (CORBA::String_out answer)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_oneway (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void test_oneway (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   /// Use an ORB reference to shutdown the application.

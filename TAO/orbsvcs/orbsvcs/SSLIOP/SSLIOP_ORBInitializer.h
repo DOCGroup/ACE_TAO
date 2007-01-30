@@ -60,19 +60,16 @@ namespace TAO
                       CSIIOP::AssociationOptions csiv2_target_supports,
                       CSIIOP::AssociationOptions csiv2_target_requires);
 
-      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     private:
 
       // Obtain the TSS slot ID assigned to the "SSLIOPCurrent" object.
-      size_t get_tss_slot_id (PortableInterceptor::ORBInitInfo_ptr info
-                              ACE_ENV_ARG_DECL);
+      size_t get_tss_slot_id (PortableInterceptor::ORBInitInfo_ptr info);
 
     private:
 

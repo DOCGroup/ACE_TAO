@@ -16,9 +16,9 @@ public:
   // Print out the results and any errors
 
   // = The skeleton methods
-  virtual void worker_started (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void worker_started (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void worker_finished (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

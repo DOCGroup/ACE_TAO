@@ -17,8 +17,7 @@ namespace Test
   public:
     // = The skeleton methods
     virtual void send_stuff (const char* str,
-                             CORBA::Boolean flag
-                             ACE_ENV_ARG_DECL_NOT_USED)
+                             CORBA::Boolean flag)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,

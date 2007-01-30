@@ -41,7 +41,7 @@ struct Server_Info
     );
 
   /// Convert to the corba type
-  ImplementationRepository::ServerInformation* createImRServerInfo(ACE_ENV_SINGLE_ARG_DECL);
+  ImplementationRepository::ServerInformation* createImRServerInfo(void);
 
   void reset();
 

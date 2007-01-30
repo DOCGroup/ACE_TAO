@@ -16,11 +16,7 @@ inline
 ACE_UINT32
 ACE_round (ACE_timer_t t)
 {
-#if defined (ACE_LACKS_FLOATING_POINT)
-  return t;
-#else
   return static_cast<ACE_UINT32> (t);
-#endif
 }
 
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
@@ -555,7 +551,7 @@ Client::find_frequency (void)
 }
 
 CORBA::ORB_ptr
-Client::init_orb (ACE_ENV_SINGLE_ARG_DECL)
+Client::init_orb (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
@@ -584,9 +580,7 @@ Client::init_orb (ACE_ENV_SINGLE_ARG_DECL)
   ACE_OS::sprintf (orbid, "orb:%d", this->id_);
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
-                                        orbid
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+                                        orbid);
 
   if (this->id_ == 0)
     {
@@ -615,7 +609,7 @@ Client::init_orb (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+Client::get_cubit (CORBA::ORB_ptr orb)
 {
   char *my_ior =
     this->ts_->use_utilization_test_ == 1
@@ -634,9 +628,7 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
                       -1);
 
   CORBA::Object_var objref =
-    orb->string_to_object (my_ior
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->string_to_object (my_ior);
 
   if (CORBA::is_nil (objref.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -645,9 +637,7 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
   // Narrow the CORBA::Object reference to the stub object,
   // checking the type along the way using _is_a.
-  this->cubit_ = Cubit::_narrow (objref.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->cubit_ = Cubit::_narrow (objref.in ());
 
   if (CORBA::is_nil (this->cubit_))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -658,9 +648,7 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
               "(%t) Binding succeeded\n"));
 
   CORBA::String_var str =
-    orb->object_to_string (this->cubit_
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (this->cubit_);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) CUBIT OBJECT connected to <%s>\n",
@@ -672,19 +660,16 @@ Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 int
 Client::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = this->init_orb (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = this->init_orb ();
 
       // Find the frequency of CORBA requests based on thread id.
       this->find_frequency ();
 
       // Get the cubit object from the file.
-      int r = this->get_cubit (orb.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = this->get_cubit (orb.in ());
       if (r != 0)
         return r;
 
@@ -718,21 +703,18 @@ Client::svc (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
-          this->cubit_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->cubit_->shutdown ();
         }
 
       CORBA::release (this->cubit_);
       this->cubit_ = 0;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Task_Client::svc()");
+      ex._tao_print_exception ("Task_Client::svc()");
     }
-  ACE_ENDTRY;
 
   // To avoid a memPartFree on VxWorks.  It will leak memory, though.
   ACE_THR_FUNC_RETURN status = 0;
@@ -748,8 +730,7 @@ Client::svc (void)
 int
 Client::cube_octet (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->call_count_++;
       // Cube an octet.
@@ -759,14 +740,11 @@ Client::cube_octet (void)
       START_QUANTIFY;
 
       if (this->ts_->use_utilization_test_ == 1 && this->ts_->remote_invocations_ == 0)
-        ret_octet = this->cubit_impl_.cube_octet (arg_octet
-                                                  ACE_ENV_ARG_PARAMETER);
+        ret_octet = this->cubit_impl_.cube_octet (arg_octet);
       else
-        ret_octet = this->cubit_->cube_octet (arg_octet
-                                              ACE_ENV_ARG_PARAMETER);
+        ret_octet = this->cubit_->cube_octet (arg_octet);
 
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
 
       // Perform the cube operation.
       arg_octet = arg_octet * arg_octet * arg_octet;
@@ -782,20 +760,18 @@ Client::cube_octet (void)
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "call to cube_octet()\n");
+      ex._tao_print_exception ("call to cube_octet()\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 Client::cube_short (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->call_count_++;
 
@@ -803,10 +779,8 @@ Client::cube_short (void)
       CORBA::Short ret_short;
 
       START_QUANTIFY;
-      ret_short = this->cubit_->cube_short (arg_short
-                                            ACE_ENV_ARG_PARAMETER);
+      ret_short = this->cubit_->cube_short (arg_short);
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
       arg_short = arg_short * arg_short * arg_short;
 
       if (arg_short != ret_short)
@@ -819,20 +793,18 @@ Client::cube_short (void)
                             -1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "call to cube_short\n");
+      ex._tao_print_exception ("call to cube_short\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 Client::cube_long (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       this->call_count_++;
 
@@ -840,10 +812,8 @@ Client::cube_long (void)
       CORBA::Long ret_long;
 
       START_QUANTIFY;
-      ret_long = this->cubit_->cube_long (arg_long
-                                          ACE_ENV_ARG_PARAMETER);
+      ret_long = this->cubit_->cube_long (arg_long);
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
 
       arg_long = arg_long * arg_long * arg_long;
 
@@ -856,20 +826,18 @@ Client::cube_long (void)
                       ret_long));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "call to cube_long()\n");
+      ex._tao_print_exception ("call to cube_long()\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
 Client::cube_struct (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Cubit::Many arg_struct;
       Cubit::Many ret_struct;
@@ -881,10 +849,8 @@ Client::cube_struct (void)
       arg_struct.o = func (this->num_);
 
       START_QUANTIFY;
-      ret_struct = this->cubit_->cube_struct (arg_struct
-                                              ACE_ENV_ARG_PARAMETER);
+      ret_struct = this->cubit_->cube_struct (arg_struct);
       STOP_QUANTIFY;
-      ACE_TRY_CHECK;
 
       arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
       arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
@@ -899,12 +865,11 @@ Client::cube_struct (void)
                       "**cube_struct error!\n"));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "call to cube_struct()\n");
+      ex._tao_print_exception ("call to cube_struct()\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -942,21 +907,18 @@ Client::make_request (void)
     }
   else
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           this->call_count_++;
           START_QUANTIFY;
-          this->cubit_->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->cubit_->noop ();
           STOP_QUANTIFY;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "oneway call noop()\n");
+          ex._tao_print_exception ("oneway call noop()\n");
           return -1;
         }
-      ACE_ENDTRY;
     }
   // return success.
   return 0;
@@ -1016,12 +978,7 @@ ACE_timer_t
 Client::calc_delta (ACE_timer_t real_time,
                     ACE_timer_t delta)
 {
-  ACE_timer_t new_delta;
-#if defined (ACE_LACKS_FLOATING_POINT)
-  new_delta = 40 * real_time / 100  +  60 * delta / 100;
-#else /* !ACE_LACKS_FLOATING_POINT */
-  new_delta = 0.4 * fabs (real_time)  +  0.6 * delta;
-#endif /* ACE_LACKS_FLOATING_POINT */
+  ACE_timer_t new_delta = 0.4 * fabs (real_time)  +  0.6 * delta;
   return new_delta;
 }
 

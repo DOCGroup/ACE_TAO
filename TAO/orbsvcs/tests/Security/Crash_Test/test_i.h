@@ -31,11 +31,10 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void send_line (const char *line
-                  ACE_ENV_ARG_DECL_NOT_USED)
+  void send_line (const char *line)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

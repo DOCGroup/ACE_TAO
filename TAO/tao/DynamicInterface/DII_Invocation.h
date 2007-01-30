@@ -40,8 +40,6 @@ namespace Dynamic
 
 namespace TAO
 {
-  /**
-   */
   class TAO_DynamicInterface_Export DII_Invocation:
     public Synch_Twoway_Invocation
   {
@@ -56,20 +54,14 @@ namespace TAO
                     bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
-    virtual Dynamic::ParameterList *arguments (ACE_ENV_SINGLE_ARG_DECL)
+    virtual Dynamic::ParameterList *arguments (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-    Invocation_Status remote_invocation (
-        ACE_Time_Value *max_wait_time
-        ACE_ENV_ARG_DECL
-      )
+    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time)
       ACE_THROW_SPEC ((CORBA::Exception));
 
-    virtual Invocation_Status handle_user_exception (
-        TAO_InputCDR &cdr
-        ACE_ENV_ARG_DECL
-      )
+    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr)
       ACE_THROW_SPEC ((CORBA::Exception));
   private:
 
@@ -80,10 +72,6 @@ namespace TAO
 
   };
 
-
-  /*
-   *
-   */
   class TAO_DynamicInterface_Export DII_Deferred_Invocation
     : public Asynch_Remote_Invocation
   {
@@ -98,14 +86,11 @@ namespace TAO
                              bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
-    virtual Dynamic::ParameterList *arguments (ACE_ENV_SINGLE_ARG_DECL)
+    virtual Dynamic::ParameterList *arguments (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-    Invocation_Status remote_invocation (
-        ACE_Time_Value *max_wait_time
-        ACE_ENV_ARG_DECL
-      )
+    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time)
       ACE_THROW_SPEC ((CORBA::Exception));
 
   private:

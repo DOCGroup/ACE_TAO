@@ -85,9 +85,9 @@ public:
                                     CACHING_STRATEGY,
                                     ATTRIBUTES>
           CONNECTION_CACHE;
-  typedef ACE_TYPENAME CONNECTION_CACHE::CACHE_ENTRY CONNECTION_CACHE_ENTRY;
-  typedef ACE_TYPENAME CONNECTION_CACHE::key_type KEY;
-  typedef ACE_TYPENAME CONNECTION_CACHE::mapped_type VALUE;
+  typedef typename CONNECTION_CACHE::CACHE_ENTRY CONNECTION_CACHE_ENTRY;
+  typedef typename CONNECTION_CACHE::key_type KEY;
+  typedef typename CONNECTION_CACHE::mapped_type VALUE;
 
   typedef ACE_Recyclable_Handler_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
                                                   ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,

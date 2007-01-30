@@ -14,8 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
-                                        const CORBA::Any & value
-                                        ACE_ENV_ARG_DECL)
+                                        const CORBA::Any & value)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
@@ -37,7 +36,6 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
                           arg->use_confidentiality,
                           arg->use_integrity),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (policy);
     }
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
@@ -49,7 +47,6 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
       ACE_NEW_THROW_EX (policy,
                         TAO::SL3::ObjectCredentialsPolicy (*creds),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (policy);
     }
   else
     {

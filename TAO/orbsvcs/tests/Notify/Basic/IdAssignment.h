@@ -27,30 +27,24 @@ public:
   int parse_args (int argc,
                   char *argv[]);
   void init (int argc,
-             char *argv[]
-             ACE_ENV_ARG_DECL);
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+             char *argv[]);
+  void run_test (void);
 
 private:
-  CosNotifyChannelAdmin::ChannelID create_ec (ACE_ENV_SINGLE_ARG_DECL);
-  void destroy_ec (CosNotifyChannelAdmin::ChannelID id
-                   ACE_ENV_ARG_DECL);
+  CosNotifyChannelAdmin::ChannelID create_ec (void);
+  void destroy_ec (CosNotifyChannelAdmin::ChannelID id);
 
   CosNotifyChannelAdmin::AdminID create_supplier_admin (
       CosNotifyChannelAdmin::ChannelID channel_id
-      ACE_ENV_ARG_DECL
     );
   CosNotifyChannelAdmin::AdminID create_consumer_admin (
       CosNotifyChannelAdmin::ChannelID channel_id
-      ACE_ENV_ARG_DECL
     );
 
   void destroy_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id,
-                               CosNotifyChannelAdmin::AdminID admin_id
-                               ACE_ENV_ARG_DECL);
+                               CosNotifyChannelAdmin::AdminID admin_id);
   void destroy_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id,
-                               CosNotifyChannelAdmin::AdminID admin_id
-                               ACE_ENV_ARG_DECL);
+                               CosNotifyChannelAdmin::AdminID admin_id);
 
   // = Data members.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;

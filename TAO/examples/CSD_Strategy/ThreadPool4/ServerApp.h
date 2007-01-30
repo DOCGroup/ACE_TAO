@@ -13,9 +13,9 @@ class ServerApp
     ServerApp();
     ~ServerApp();
 
-    int run(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    int run(int argc, char* argv[]);
 
-   
+
   private:
 
     int parse_args(int argc, char* argv[]);
@@ -23,15 +23,13 @@ class ServerApp
 
     Foo_ptr
     create_foo(
-      PortableServer::POA_ptr poa, 
-      const char* servant_name
-      ACE_ENV_ARG_DECL);
+      PortableServer::POA_ptr poa,
+      const char* servant_name);
 
     Callback_ptr
     create_callback(
       PortableServer::POA_ptr poa,
-      const char* servant_name
-      ACE_ENV_ARG_DECL);
+      const char* servant_name);
 
 
     ACE_CString exe_name_;

@@ -49,13 +49,11 @@ public:
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
   /// Called by the MMDevice, when it needs to create an B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 protected:
   /// The "A" stream endpoint
@@ -93,18 +91,18 @@ public:
 
 protected:
   /// Bind to the naming service
-  virtual int bind_to_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int bind_to_naming_service (void);
 
   /**
    * Get the object reference for the newly created stream
    * endpoint (which will be in the child process)
    * Subclasses will define the functionality for this
    */
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int get_stream_endpoint (void) = 0;
 
   /// Get the Vdev object reference for the newly created
   /// endpoint
-  virtual int get_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_vdev (void);
 
   /// Naming context
   CosNaming::NamingContext_var naming_context_;
@@ -140,11 +138,10 @@ public:
 protected:
   /// Creates an "A" type stream endpoint, and a vdev
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
   /// Gets the "A" type stream endpoint from the child process
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_stream_endpoint (void);
 
 };
 
@@ -168,12 +165,11 @@ public:
 protected:
   /// Creates a "B" type stream endpoint, and a vdev
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 
   /// Gets the object reference of the "B" type streamendpoint.
-  virtual int get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int get_stream_endpoint (void);
 
 };
 

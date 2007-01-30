@@ -32,7 +32,7 @@ RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
 }
 
 TAO_Invocation_Endpoint_Selector *
-RT_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RT_Endpoint_Selector_Factory::get_selector (void)
 {
   return this->rt_invocation_endpoint_selector_;
 }

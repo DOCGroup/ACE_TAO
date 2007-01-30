@@ -48,7 +48,7 @@ private:
                   char *argv[]);
   // Process the command line arguments.
 
-  int populate_ifr (ACE_ENV_SINGLE_ARG_DECL);
+  int populate_ifr (void);
   // Put in something to query about.
 
 private:

@@ -47,14 +47,13 @@ namespace
     virtual void
     receives_none (Type&)
     {
-      os << " (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
     receives_post (Type&)
     {
-      os << endl << STRS[ENV_SRC_NOTUSED] << ")" << endl;
+      os << endl << ")" << endl;
     }
 
     virtual void
@@ -229,8 +228,7 @@ namespace
 
       os << "_ptr" << endl
          << scope_.name () << "_exec_i::get_"
-         << p.name () << " (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+         << p.name () << " ()" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl
@@ -256,7 +254,7 @@ namespace
       Traversal::ConsumerData::belongs (c, belongs_);
 
       os << " * /* ev */" << endl
-         << STRS[ENV_SRC_NOTUSED] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl
@@ -443,7 +441,7 @@ namespace
       os << "void" << endl
          << t.name () << "_exec_i::set_session_context (" << endl
          << STRS[COMP_SC] << "_ptr ctx" << endl
-         << STRS[ENV_SRC] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -451,18 +449,17 @@ namespace
          << "this->context_ =" << endl
          << "  " << t.name () << "_Context::_narrow (" << endl
          << "  ctx" << endl
-         << "  " << STRS[ENV_ARG] <<");"
-         << "ACE_CHECK;" << endl;
+         << "  " <<");"
+         << endl;
 
       os << "if (this->context_ == 0)" << endl
          << "{"
-         << "ACE_THROW ( ::CORBA::INTERNAL ());"
+         << "throw ::CORBA::INTERNAL ();"
          << "}"
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+         << t.name () << "_exec_i::ciao_preactivate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -471,8 +468,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ciao_postactivate (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+         << t.name () << "_exec_i::ciao_postactivate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -481,8 +477,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_activate (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+         << t.name () << "_exec_i::ccm_activate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -491,8 +486,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_passivate (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+         << t.name () << "_exec_i::ccm_passivate ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -501,8 +495,7 @@ namespace
          << "}";
 
       os << "void" << endl
-         << t.name () << "_exec_i::ccm_remove (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
+         << t.name () << "_exec_i::ccm_remove ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -571,8 +564,7 @@ namespace
     virtual void
     receives_none (SemanticGraph::HomeFactory&)
     {
-      os << " (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
@@ -584,7 +576,7 @@ namespace
     virtual void
     receives_post (SemanticGraph::HomeFactory&)
     {
-      os << endl << STRS[ENV_SRC_NOTUSED] << ")" << endl;
+      os << endl << ")" << endl;
     }
 
     virtual void
@@ -665,8 +657,7 @@ namespace
     virtual void
     receives_none (SemanticGraph::HomeFinder&)
     {
-      os << " (" << endl
-         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl;
+      os << " ()" << endl;
     }
 
     virtual void
@@ -678,7 +669,7 @@ namespace
     virtual void
     receives_post (SemanticGraph::HomeFinder&)
     {
-      os << endl << STRS[ENV_SRC_NOTUSED] << ")" << endl;
+      os << endl << ")" << endl;
     }
 
     virtual void
@@ -982,8 +973,7 @@ namespace
 
       os << "// Implicit operations." << endl << endl
          << STRS[COMP_EC] << "_ptr" << endl
-         << t.name () << "_exec_i::create (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << t.name () << "_exec_i::create ()" << endl
          << STRS[EXCP_START] << " "
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -1005,8 +995,7 @@ namespace
 
        os << "_exec_i," << endl
           << "::CORBA::NO_MEMORY ());"
-          << STRS[ACE_CR] << " (" << STRS[COMP_EC]
-          << "::_nil ());" << endl
+          << endl
           << "return retval;"
           << "}";
     }

@@ -20,12 +20,11 @@ public:
   Payload_Receiver (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void more_data (const Test::Payload &payload
-                          ACE_ENV_ARG_DECL)
+  virtual void more_data (const Test::Payload &payload)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Payload_Receiver::Invalid_Payload));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   int get_count (void) const;

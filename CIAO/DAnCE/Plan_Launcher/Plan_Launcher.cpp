@@ -139,20 +139,16 @@ namespace CIAO
     }
 
     static ::Deployment::DomainApplicationManager_ptr
-    read_dap_ior (CORBA::ORB_ptr orb
-                  ACE_ENV_ARG_DECL)
+    read_dap_ior (CORBA::ORB_ptr orb)
     {
-      CORBA::Object_var obj = orb->string_to_object (dap_ior
-                                                     ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = orb->string_to_object (dap_ior);
       return
-        Deployment::DomainApplicationManager::_narrow (obj.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+        Deployment::DomainApplicationManager::_narrow (obj.in ());
     }
 
     static int
     write_dap_ior (CORBA::ORB_ptr orb,
-                   ::Deployment::DomainApplicationManager_ptr dap
-                   ACE_ENV_ARG_DECL)
+                   ::Deployment::DomainApplicationManager_ptr dap)
     {
       CORBA::String_var ior = orb->object_to_string (dap);
 
@@ -172,16 +168,13 @@ namespace CIAO
     static int
     run_main_implementation (int argc, char *argv[])
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
-      ACE_TRY
+      try
         {
           CORBA::ORB_var orb =
             CORBA::ORB_init (argc,
                              argv,
-                             ""
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                             "");
 
           if (parse_args (argc, argv) == false)
             return -1;
@@ -271,9 +264,7 @@ namespace CIAO
             }
           else if (mode == pl_mode_stop_by_dam) // tear down by DAM
             {
-              dapp_mgr = read_dap_ior (orb.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              dapp_mgr = read_dap_ior (orb.in ());
 
               if (CORBA::is_nil (dapp_mgr.in ()))
                 {
@@ -301,29 +292,25 @@ namespace CIAO
                 }
             }
 
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
         }
-      ACE_CATCH (Plan_Launcher_i::Deployment_Failure, ex)
+      catch (const Plan_Launcher_i::Deployment_Failure&)
         {
           ACE_ERROR ((LM_ERROR,
                       "Deployment failed. Plan_Launcher exiting.\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "(%P|%t) Plan_Launcher: ");
+          ex._tao_print_exception ("(%P|%t) Plan_Launcher: ");
 
           return -1;
         }
-      ACE_CATCHALL
+      catch (...)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) Plan_Launcher: Unknown exception.\n"));
           return -1;
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
 
       return 0;
     }

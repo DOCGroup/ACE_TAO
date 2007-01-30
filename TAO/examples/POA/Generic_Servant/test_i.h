@@ -22,28 +22,26 @@ public:
           PortableServer::POA_ptr poa);
   // Constructor - takes a POA and a value parameter
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
   // Returns the Default POA of this servant
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
+  void method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A twoway operation.
 
-  void oneway_method (ACE_ENV_SINGLE_ARG_DECL)
+  void oneway_method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A oneway operation.
 
-  void timed_method (CORBA::ULong timeout
-                     ACE_ENV_ARG_DECL)
+  void timed_method (CORBA::ULong timeout)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A timed twoway operation.
 
-  void timed_oneway_method (CORBA::ULong timeout
-                            ACE_ENV_ARG_DECL)
+  void timed_oneway_method (CORBA::ULong timeout)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // A timed twoway operation.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the ORB
 

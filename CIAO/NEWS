@@ -61,6 +61,16 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.5 and CIAO-0.5.6
+======================================================
+
+. Removed all exception environment macros except ACE_THROW_RETURN
+  and ACE_THROW_SPEC
+
+. All CIAO libraries built on UNIX systems will now have the correct library
+  version numbers.  Previously they had the same version numbers as TAO
+  libraries.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.4 and CIAO-0.5.5
 ======================================================
 

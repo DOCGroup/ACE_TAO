@@ -45,22 +45,19 @@ main (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG, "(%P) Starting client\n"));
 
-  ACE_TRY_NEW_ENV
+  try
   {
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      CORBA::ORB_init (argc, argv, "");
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     CORBA::Object_var tmp =
-      orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb->string_to_object(ior);
 
     Test::Payload_Receiver_var payload_receiver =
-      Test::Payload_Receiver::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      Test::Payload_Receiver::_narrow(tmp.in ());
 
     if (CORBA::is_nil (payload_receiver.in ()))
     {
@@ -110,8 +107,7 @@ main (int argc, char *argv[])
     while (ACE_OS::gettimeofday() < end_time)
     {
       ACE_Time_Value tv (0, 100 * 1000);
-      orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run (tv);
       if (task0.done() && task1.done() && task2.done())
         break;
     }
@@ -122,20 +118,16 @@ main (int argc, char *argv[])
     while (orb->work_pending())
     {
       ACE_Time_Value tv(0, 100 * 1000);
-      orb->run(tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run(tv);
     }
 
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb->destroy ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Exception caught:");
+    ex._tao_print_exception ("Exception caught:");
     return 1;
   }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "(%P) Ending client\n"));
 

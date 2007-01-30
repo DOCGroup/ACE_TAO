@@ -107,16 +107,13 @@ write_iors_to_file (const char *ior)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       int result = parse_args (argc, argv);
       if (result != 0)
@@ -124,20 +121,15 @@ main (int argc, char **argv)
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create a servant.
       reference_counted_test_i *servant = 0;
@@ -147,17 +139,14 @@ main (int argc, char **argv)
                       -1);
 
       // Get Object Reference for the servant object.
-      test_var test = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var test = servant->_this ();
 
       // This means that the ownership of <servant> now belongs to
       // the POA.
-      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      servant->_remove_ref ();
 
       // Stringyfy all the object references and print them out.
-      CORBA::String_var ior = orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var ior = orb->object_to_string (test.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
@@ -167,19 +156,15 @@ main (int argc, char **argv)
       if (write_result != 0)
         return write_result;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

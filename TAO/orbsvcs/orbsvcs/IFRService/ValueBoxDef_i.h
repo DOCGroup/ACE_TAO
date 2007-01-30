@@ -51,43 +51,36 @@ public:
   virtual ~TAO_ValueBoxDef_i (void);
   // Destructor
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::DefinitionKind def_kind ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA::IDLType_ptr original_type_def (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::IDLType_ptr original_type_def ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::IDLType_ptr original_type_def_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::IDLType_ptr original_type_def_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void original_type_def (
-      CORBA::IDLType_ptr original_type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::IDLType_ptr original_type_def)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void original_type_def_i (
-      CORBA::IDLType_ptr original_type_def
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::IDLType_ptr original_type_def)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

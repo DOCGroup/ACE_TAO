@@ -35,10 +35,10 @@ public:
   TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
-  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type);
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void run (void);
 
 protected:
   // = Data members
@@ -66,23 +66,22 @@ protected:
   virtual ~TAO_Notify_Lanes_Consumer (void);
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
-  void connect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (void);
 
   /// Disconnect the supplier.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Deactivate.
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   // = NotifyPublish method
   virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -92,7 +91,6 @@ protected:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -100,7 +98,6 @@ protected:
        ));
 
   virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException

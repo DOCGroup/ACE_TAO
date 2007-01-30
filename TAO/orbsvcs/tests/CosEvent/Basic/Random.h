@@ -44,15 +44,13 @@ public:
   RND_Consumer (RND_Driver *driver);
   // Constructor
 
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL)
+  void push (const CORBA::Any &event)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin);
+  void disconnect (void);
 
 protected:
   RND_Driver *driver_;
@@ -78,8 +76,7 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const CORBA::Any &event
-             ACE_ENV_ARG_DECL)
+  void push (const CORBA::Any &event)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -104,16 +101,14 @@ public:
   RND_Supplier (void);
   // Constructor
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin);
+  void disconnect (void);
 
-  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
-  void push (CORBA::Any &event
-             ACE_ENV_ARG_DECL);
+  void push_new_event (void);
+  void push (CORBA::Any &event);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);
@@ -142,12 +137,10 @@ public:
   int run (int argc, char *argv[]);
   // Run the test
 
-  void timer (const CORBA::Any &e
-              ACE_ENV_ARG_DECL);
+  void timer (const CORBA::Any &e);
   // The main timer has expired
 
-  void event (const CORBA::Any &e
-              ACE_ENV_ARG_DECL);
+  void event (const CORBA::Any &e);
   // One of the consumers has received an event
 
 private:

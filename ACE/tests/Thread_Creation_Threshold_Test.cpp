@@ -156,7 +156,7 @@ Thread_Pool::open (void *)
 {
   if (PRINT_DEBUG_MSGS)
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("(%P|%t) pool start %d threads..."),
+    ACE_TEXT ("(%P|%t) pool start %d threads...\n"),
 		this->n_threads_));
 
   if (this->total_activated_threads_ >= (65534 - this->n_threads_))

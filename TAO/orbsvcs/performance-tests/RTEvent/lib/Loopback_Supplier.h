@@ -37,22 +37,20 @@ public:
                      PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                ACE_ENV_ARG_DECL);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
-  void push (const RtecEventComm::EventSet &events
-             ACE_ENV_ARG_DECL_NOT_USED)
+  void push (const RtecEventComm::EventSet &events)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@{
   /** @name The RtecEventComm::PushSupplier methods
    */
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

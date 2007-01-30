@@ -48,8 +48,7 @@ namespace CIAO
                     RTEvent_Supplier_Config_impl (this->root_poa_.in ()),
                     Supplier_Config::_nil ());
     RTEvent_Supplier_Config_var return_rtec =
-      supplier_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      supplier_config->_this ();
     return return_rtec._retn ();
   }
 
@@ -63,8 +62,7 @@ namespace CIAO
                     RTEvent_Consumer_Config_impl (this->root_poa_.in ()),
                     Consumer_Config::_nil ());
     RTEvent_Consumer_Config_var return_rtec =
-      consumer_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_config->_this ();
     return return_rtec._retn ();
   }
 
@@ -73,8 +71,7 @@ namespace CIAO
   // to multiple event suppliers.
   void
   RTEventService::connect_event_supplier (
-      Supplier_Config_ptr supplier_config
-      ACE_ENV_ARG_DECL)
+      Supplier_Config_ptr supplier_config)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -84,19 +81,16 @@ namespace CIAO
       }
 
     RTEvent_Supplier_Config_ptr rt_config =
-      RTEvent_Supplier_Config::_narrow (supplier_config
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      RTEvent_Supplier_Config::_narrow (supplier_config);
 
     if (CORBA::is_nil (rt_config))
       {
-        ACE_THROW (CORBA::BAD_PARAM ());
+        throw CORBA::BAD_PARAM ();
       }
 
     // Get a proxy push consumer from the EventChannel.
     RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-      this->rt_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->rt_event_channel_->for_suppliers ();
 
     RtecEventChannelAdmin::ProxyPushConsumer_var proxy_push_consumer =
       supplier_admin->obtain_push_consumer();
@@ -106,12 +100,10 @@ namespace CIAO
     ACE_NEW (supplier_servant,
              RTEventServiceSupplier_impl (root_poa_.in ()));
     RtecEventComm::PushSupplier_var push_supplier =
-      supplier_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      supplier_servant->_this ();
 
     RtecEventChannelAdmin::SupplierQOS_var qos =
-      rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      rt_config->rt_event_qos ();
 
     ACE_SupplierQOS_Factory supplier_qos;
     supplier_qos.insert (ACE_ES_EVENT_SOURCE_ANY, ACE_ES_EVENT_ANY, 0, 1);
@@ -122,9 +114,7 @@ namespace CIAO
                        1);
 
     proxy_push_consumer->connect_push_supplier (push_supplier.in (),
-                                                supplier_qos.get_SupplierQOS ()
-                                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                                                supplier_qos.get_SupplierQOS ());
 
 
     this->proxy_consumer_map_.bind (
@@ -134,8 +124,7 @@ namespace CIAO
 
   void
   RTEventService::connect_event_consumer (
-      Consumer_Config_ptr consumer_config
-      ACE_ENV_ARG_DECL)
+      Consumer_Config_ptr consumer_config)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -145,29 +134,24 @@ namespace CIAO
       }
 
     RTEvent_Consumer_Config_ptr rt_config =
-      RTEvent_Consumer_Config::_narrow (consumer_config
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      RTEvent_Consumer_Config::_narrow (consumer_config);
 
     if (CORBA::is_nil (rt_config))
       {
-        ACE_THROW (CORBA::BAD_PARAM ());
+        throw CORBA::BAD_PARAM ();
       }
 
     Components::EventConsumerBase_var consumer =
-      consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_config->consumer ();
 
     if (CORBA::is_nil (consumer.in ()))
       ACE_DEBUG ((LM_DEBUG, "nil event consumer\n"));
 
     RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      this->rt_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->rt_event_channel_->for_consumers ();
 
     RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier =
-      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_admin->obtain_push_supplier ();
 
     // Create and register consumer servant
     RTEventServiceConsumer_impl * consumer_servant = 0;
@@ -176,12 +160,10 @@ namespace CIAO
                root_poa_.in (),
                consumer.in ()));
     RtecEventComm::PushConsumer_var push_consumer =
-      consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_servant->_this ();
 
     RtecEventChannelAdmin::ConsumerQOS_var qos =
-      rt_config->rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      rt_config->rt_event_qos ();
 
     ACE_DEBUG ((LM_DEBUG, "\n======== ConsumerQoS length is: %d\n\n",
                 qos->dependencies.length ()));
@@ -200,20 +182,17 @@ namespace CIAO
     proxy_supplier->connect_push_consumer (push_consumer.in (),
                                            qos.in ()
                                            //qos_factory.get_ConsumerQOS ()
-                                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                                           );
 
     ACE_CString consumer_id =
-      consumer_config->consumer_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      consumer_config->consumer_id ();
 
     this->proxy_supplier_map_.bind (consumer_id.c_str (), proxy_supplier._retn ());
   }
 
   void
   RTEventService::disconnect_event_supplier (
-      const char * connection_id
-      ACE_ENV_ARG_DECL)
+      const char * connection_id)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       Components::InvalidConnection))
@@ -224,15 +203,12 @@ namespace CIAO
 
     this->proxy_consumer_map_.unbind (connection_id, proxy_consumer);
 
-    proxy_consumer->disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    proxy_consumer->disconnect_push_consumer ();
   }
 
   void
   RTEventService::disconnect_event_consumer (
-      const char * connection_id
-      ACE_ENV_ARG_DECL)
+      const char * connection_id)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       Components::InvalidConnection))
@@ -241,15 +217,12 @@ namespace CIAO
 
     this->proxy_supplier_map_.unbind (connection_id, proxy_supplier);
 
-    proxy_supplier->disconnect_push_supplier (
-      ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    proxy_supplier->disconnect_push_supplier ();
   }
 
   void
   RTEventService::push_event (
-      Components::EventBase * ev
-      ACE_ENV_ARG_DECL)
+      Components::EventBase * ev)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -264,8 +237,7 @@ namespace CIAO
   RTEventService::ciao_push_event (
       Components::EventBase * ev,
       const char * source_id,
-      CORBA::TypeCode_ptr tc
-      ACE_ENV_ARG_DECL)
+      CORBA::TypeCode_ptr tc)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       Components::BadEventType))
@@ -288,7 +260,7 @@ namespace CIAO
     // (if any) will get truncated when the Any is demarshaled. So the
     // signature of this method has been changed to pass in the derived
     // typecode, and TAO-specific methods are used to assign it as the
-    // Any's typecode and encode the value. This incurs an extra 
+    // Any's typecode and encode the value. This incurs an extra
     // encoding, which we may want to try to optimize someday.
     TAO_OutputCDR out;
     out << ev;
@@ -308,11 +280,10 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG,
                     "CIAO (%P|%t) - RTEventService::ciao_push_event, "
                     "Error in finding the proxy consumer object.\n"));
-        ACE_THROW (Components::BadEventType ());
+        throw Components::BadEventType ();
       }
 
-    proxy_consumer->push (events ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    proxy_consumer->push (events);
   }
 
   void
@@ -331,10 +302,8 @@ namespace CIAO
                                                 this->root_poa_.in ());
     TAO_EC_Event_Channel * ec_servant = 0;
     ACE_NEW (ec_servant, TAO_EC_Event_Channel (attributes));
-    ec_servant->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-    this->rt_event_channel_ = ec_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ec_servant->activate ();
+    this->rt_event_channel_ = ec_servant->_this ();
 
     if (false)
       {
@@ -353,8 +322,7 @@ namespace CIAO
   RTEventService::create_addr_serv (
         const char * name,
         ::CORBA::UShort port,
-        const char * address
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const char * address)
       ACE_THROW_SPEC ((
         ::CORBA::SystemException))
   {
@@ -388,22 +356,20 @@ namespace CIAO
       // Now we create and activate the servant
       SimpleAddressServer as_impl (addr);
       RtecUDPAdmin::AddrServer_var addr_srv =
-        as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        as_impl._this ();
 */
 
     this->addr_serv_map_.bind (
       name,
       RtecUDPAdmin::AddrServer::_duplicate (addr_srv.in ()));
-      
+
 
     return true;
   }
 
   ::CORBA::Boolean
   RTEventService::create_sender (
-        const char * addr_serv_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const char * addr_serv_id)
       ACE_THROW_SPEC ((
         ::CORBA::SystemException))
   {
@@ -426,9 +392,7 @@ namespace CIAO
     TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
     sender->init (this->rt_event_channel_.in (),
                   addr_srv.in (),
-                  endpoint
-                  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+                  endpoint);
 
     // Setup the subscription and connect to the EC
     ACE_ConsumerQOS_Factory cons_qos_fact;
@@ -445,8 +409,7 @@ namespace CIAO
   RTEventService::create_receiver (
         const char * addr_serv_id,
         ::CORBA::Boolean is_multicast,
-        ::CORBA::UShort listen_port
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ::CORBA::UShort listen_port)
       ACE_THROW_SPEC ((
         ::CORBA::SystemException))
   {
@@ -526,7 +489,7 @@ namespace CIAO
 
 
   ::RtecEventChannelAdmin::EventChannel_ptr
-  RTEventService::tao_rt_event_channel (ACE_ENV_SINGLE_ARG_DECL)
+  RTEventService::tao_rt_event_channel ()
     ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     return this->rt_event_channel_.in ();
@@ -583,7 +546,7 @@ namespace CIAO
         ACE_OS::printf("%s\n", out.str().c_str()); // printf is synchronized
 
         Components::EventBase * ev = 0;
-        ACE_TRY
+        try
         {
           TAO::Unknown_IDL_Type *unk =
               dynamic_cast<TAO::Unknown_IDL_Type *> (events[i].data.any_value.impl ());
@@ -592,9 +555,7 @@ namespace CIAO
           if (for_reading >> ev)
             {
               ev->_add_ref ();
-              this->event_consumer_->push_event (ev
-                                                 ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+              this->event_consumer_->push_event (ev);
             }
           else
             {
@@ -602,14 +563,12 @@ namespace CIAO
                                     "failed to extract event\n"));
             }
         }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "CORBA EXCEPTION caught\n"));
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                              "RTEventServiceConsumer_impl::push()\n");
+          ex._tao_print_exception ("RTEventServiceConsumer_impl::push()\n");
         }
-        ACE_ENDTRY;
       }
 
   }
@@ -650,8 +609,7 @@ namespace CIAO
 
   void
   RTEvent_Supplier_Config_impl::supplier_id (
-      const char * supplier_id
-      ACE_ENV_ARG_DECL)
+      const char * supplier_id)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -683,8 +641,7 @@ namespace CIAO
   }
 
   CONNECTION_ID
-  RTEvent_Supplier_Config_impl::supplier_id (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Supplier_Config_impl::supplier_id ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -692,8 +649,7 @@ namespace CIAO
   }
 
   EventServiceType
-  RTEvent_Supplier_Config_impl::service_type (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Supplier_Config_impl::service_type ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -701,8 +657,7 @@ namespace CIAO
   }
 
   RtecEventChannelAdmin::SupplierQOS *
-  RTEvent_Supplier_Config_impl::rt_event_qos (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Supplier_Config_impl::rt_event_qos ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -714,8 +669,7 @@ namespace CIAO
   }
 
   void
-  RTEvent_Supplier_Config_impl::destroy (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Supplier_Config_impl::destroy ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -742,7 +696,7 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::start_conjunction_group (
-      CORBA::Long size ACE_ENV_ARG_DECL)
+      CORBA::Long size)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -754,8 +708,7 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::start_disjunction_group (
-      CORBA::Long size
-      ACE_ENV_ARG_DECL)
+      CORBA::Long size)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -768,8 +721,7 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::insert_source (
-      const char * source_id
-      ACE_ENV_ARG_DECL)
+      const char * source_id)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -784,8 +736,7 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::insert_type (
-        ::CORBA::Long event_type
-        ACE_ENV_ARG_DECL)
+        ::CORBA::Long event_type)
       ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     if (event_type == 0L)
@@ -797,8 +748,7 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::consumer_id (
-      const char * consumer_id
-      ACE_ENV_ARG_DECL)
+      const char * consumer_id)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -815,8 +765,7 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::consumer (
-      Components::EventConsumerBase_ptr consumer
-      ACE_ENV_ARG_DECL)
+      Components::EventConsumerBase_ptr consumer)
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -824,8 +773,7 @@ namespace CIAO
   }
 
   CONNECTION_ID
-  RTEvent_Consumer_Config_impl::consumer_id (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Consumer_Config_impl::consumer_id ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -834,8 +782,7 @@ namespace CIAO
 
 
   EventServiceType
-  RTEvent_Consumer_Config_impl::service_type (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Consumer_Config_impl::service_type ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -843,8 +790,7 @@ namespace CIAO
   }
 
   Components::EventConsumerBase_ptr
-  RTEvent_Consumer_Config_impl::consumer (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Consumer_Config_impl::consumer ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -857,8 +803,7 @@ namespace CIAO
   }
 
   RtecEventChannelAdmin::ConsumerQOS *
-  RTEvent_Consumer_Config_impl::rt_event_qos (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Consumer_Config_impl::rt_event_qos ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
@@ -871,8 +816,7 @@ namespace CIAO
   }
 
   void
-  RTEvent_Consumer_Config_impl::destroy (
-      ACE_ENV_SINGLE_ARG_DECL)
+  RTEvent_Consumer_Config_impl::destroy ()
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {

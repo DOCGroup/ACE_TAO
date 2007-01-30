@@ -32,8 +32,6 @@ namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
-
-  class Environment;
 }
 
 /**
@@ -54,7 +52,7 @@ public:
 
   /// Is @a object collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL) const = 0;
+                                        ) const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -90,19 +90,16 @@ TAO_Notify_Tests_Worker::svc (void)
   ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d \n", priority));
 #endif
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_DEBUG, "Running Commands... \n"));
-      this->cmd_builder_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->cmd_builder_->execute ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ORB run error\n");
+      ex._tao_print_exception ("Error: ORB run error\n");
     }
-  ACE_ENDTRY;
 
 
   ACE_DEBUG ((LM_DEBUG, "Finished executing commands\n"));
@@ -137,7 +134,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
   // just disabling it altogether.  It doesn't provide much value, and
   // makes service startup needlessly more verbose.  See bugzilla 2477
   // for details.
-  
+
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -151,19 +148,16 @@ TAO_Notify_Tests_ORB_Run_Worker::svc (void)
   ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d \n", priority));
 #endif
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -235,15 +229,13 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 }
 
 int
-TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
                                 command_line.get_ASCII_argv(),
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                "");
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -253,8 +245,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   if (skip_priority_levels_check_ == 0)
     check_supported_priorities (this->orb_.in());
 
-  LOOKUP_MANAGER->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  LOOKUP_MANAGER->init (this->orb_.in ());
 
   this->cmd_builder_ =
     ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>::instance (TAO_Notify_Tests_Name::command_builder);
@@ -272,7 +263,7 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_Notify_Tests_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Driver::run (void)
 {
   // Task activation flags.
   long flags =

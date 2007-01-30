@@ -116,23 +116,19 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
 int
 ifr_adding_visitor::visit_predefined_type (AST_PredefinedType *node)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->ir_current_ =
       be_global->repository ()->get_primitive (
                                     this->predefined_type_to_pkind (node)
-                                    ACE_ENV_ARG_PARAMETER
                                   );
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_predefined_type"));
+      ex._tao_print_exception (ACE_TEXT ("visit_predefined_type"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -147,15 +143,12 @@ ifr_adding_visitor::visit_module (AST_Module *node)
 
   CORBA::Container_var new_def;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // If this module been opened before, it will already be in
       // the repository.
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -169,9 +162,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
                                        node->repoID (),
                                        node->local_name ()->get_string (),
                                        node->version ()
-                                       ACE_ENV_ARG_PARAMETER
                                      );
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -187,8 +178,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
       else
         {
           CORBA::DefinitionKind kind =
-            prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            prev_def->def_kind ();
 
           if (kind == CORBA::dk_Module)
             {
@@ -201,9 +191,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
               this->in_reopened_ = 1;
 
               new_def =
-                CORBA::ComponentIR::Container::_narrow (prev_def.in ()
-                                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::ComponentIR::Container::_narrow (prev_def.in ());
             }
         }
 
@@ -244,14 +232,12 @@ ifr_adding_visitor::visit_module (AST_Module *node)
           );
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_module"));
+      ex._tao_print_exception (ACE_TEXT ("visit_module"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -264,21 +250,16 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          int status = this->create_interface_def (node
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int status = this->create_interface_def (node);
 
           return status;
         }
@@ -314,38 +295,29 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               if (node->ifr_fwd_added () == 0)
                 {
                   CORBA::DefinitionKind kind =
-                    prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    prev_def->def_kind ();
 
                   if (kind == CORBA::dk_Interface)
                     {
                       CORBA::InterfaceDef_var iface =
-                        CORBA::InterfaceDef::_narrow (prev_def.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                        CORBA::InterfaceDef::_narrow (prev_def.in ());
 
                       CORBA::ContainedSeq_var contents =
                         iface->contents (CORBA::dk_all,
-                                         1
-                                         ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                                         1);
 
                       CORBA::ULong length = contents->length ();
 
                       for (CORBA::ULong i = 0; i < length; ++i)
                         {
-                          contents[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
+                          contents[i]->destroy ();
                         }
                     }
                   else
                     {
-                      prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      prev_def->destroy ();
 
-                      int status = this->create_interface_def (node
-                                                               ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      int status = this->create_interface_def (node);
 
                       return status;
                     }
@@ -363,9 +335,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               for (CORBA::ULong i = 0; i < n_parents; ++i)
                 {
                   result =
-                    be_global->repository ()->lookup_id (parents[i]->repoID ()
-                                                         ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    be_global->repository ()->lookup_id (parents[i]->repoID ());
 
                   // If one of our interface's parents is not in the repository,
                   // that means that it has not yet been seen (even as a
@@ -375,17 +345,13 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                   if (CORBA::is_nil (result.in ()))
                     {
                       this->ir_current_ =
-                        CORBA::IDLType::_narrow (prev_def.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK
+                        CORBA::IDLType::_narrow (prev_def.in ());
 
                       return 0;
                     }
 
                   bases[i] =
-                    CORBA::InterfaceDef::_narrow (result.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    CORBA::InterfaceDef::_narrow (result.in ());
 
                   if (CORBA::is_nil (bases[i]))
                     {
@@ -401,13 +367,9 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                 }
 
               CORBA::InterfaceDef_var extant_def =
-                CORBA::InterfaceDef::_narrow (prev_def. in ()
-                                              ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::InterfaceDef::_narrow (prev_def. in ());
 
-              extant_def->base_interfaces (bases
-                                           ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK
+              extant_def->base_interfaces (bases);
 
               node->ifr_added (1);
 
@@ -470,20 +432,16 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
               this->ir_current_ =
-                CORBA::IDLType::_narrow (prev_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::IDLType::_narrow (prev_def.in ());
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_interface"));
+      ex._tao_print_exception (ACE_TEXT ("visit_interface"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -498,14 +456,11 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 
   AST_Interface *i = node->full_definition ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (i->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (i->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -530,7 +485,6 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                                        i->local_name ()->get_string (),
                                        i->version (),
                                        bases
-                                       ACE_ENV_ARG_PARAMETER
                                      );
                 }
               else
@@ -541,11 +495,9 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                                        i->local_name ()->get_string (),
                                        i->version (),
                                        bases
-                                       ACE_ENV_ARG_PARAMETER
                                      );
                 }
 
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -564,14 +516,12 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
         }
 
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_interface_fwd"));
+      ex._tao_print_exception (ACE_TEXT ("visit_interface_fwd"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -584,12 +534,9 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->element_type (node->boxed_type ()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->element_type (node->boxed_type ());
 
       CORBA::Container_ptr current_scope =
         CORBA::Container::_nil ();
@@ -602,9 +549,7 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
                 node->local_name ()->get_string (),
                 node->version (),
                 this->ir_current_.in ()
-                ACE_ENV_ARG_PARAMETER
               );
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -619,14 +564,12 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
 
       node->ifr_added (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_valuebox"));
+      ex._tao_print_exception (ACE_TEXT ("visit_valuebox"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -639,21 +582,16 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          int status = this->create_value_def (node
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int status = this->create_value_def (node);
 
           return status;
         }
@@ -689,39 +627,30 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               if (node->ifr_fwd_added () == 0)
                 {
                   CORBA::DefinitionKind kind =
-                    prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    prev_def->def_kind ();
 
                   if (kind == CORBA::dk_Value)
                     {
                       CORBA::ValueDef_var value =
-                        CORBA::ValueDef::_narrow (prev_def.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                        CORBA::ValueDef::_narrow (prev_def.in ());
 
                       CORBA::ContainedSeq_var contents =
                         value->contents (CORBA::dk_all,
-                                         1
-                                         ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                                         1);
 
                       CORBA::ULong length = contents->length ();
 
                       for (CORBA::ULong i = 0; i < length; ++i)
                         {
-                          contents[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
+                          contents[i]->destroy ();
                         }
                     }
                   else
                     {
-                      prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      prev_def->destroy ();
 
                       int status =
-                        this->create_value_def (node
-                                                ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                        this->create_value_def (node);
 
                       return status;
                     }
@@ -730,71 +659,47 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // Our previous definition is a valuetype, so narrow it here,
               // then populate it.
               CORBA::ExtValueDef_var extant_def =
-                CORBA::ExtValueDef::_narrow (prev_def. in ()
-                                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::ExtValueDef::_narrow (prev_def. in ());
 
               // Concrete base value.
 
               CORBA::ValueDef_var base_vt;
               this->fill_base_value (base_vt.out (),
-                                     node
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                     node);
 
-              extant_def->base_value (base_vt.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->base_value (base_vt.in ());
 
               // Abstract base values.
 
               CORBA::ValueDefSeq abstract_base_values;
               this->fill_abstract_base_values (abstract_base_values,
-                                               node
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               node);
 
-              extant_def->abstract_base_values (abstract_base_values
-                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->abstract_base_values (abstract_base_values);
 
               // Supported interfaces.
 
               CORBA::InterfaceDefSeq supported;
               this->fill_supported_interfaces (supported,
-                                               node
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               node);
 
-              extant_def->supported_interfaces (supported
-                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->supported_interfaces (supported);
 
               // Intializers.
 
               CORBA::ExtInitializerSeq initializers;
               this->fill_initializers (initializers,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                       node);
 
-              extant_def->ext_initializers (initializers
-                                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->ext_initializers (initializers);
 
               // Truncatable, abstract, custom.
 
-              extant_def->is_abstract (static_cast<CORBA::Boolean> (node->is_abstract ())
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->is_abstract (static_cast<CORBA::Boolean> (node->is_abstract ()));
 
-              extant_def->is_truncatable (static_cast<CORBA::Boolean> (node->truncatable ())
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->is_truncatable (static_cast<CORBA::Boolean> (node->truncatable ()));
 
-              extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ())
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ()));
 
               node->ifr_added (1);
 
@@ -858,20 +763,16 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
               this->ir_current_ =
-                CORBA::IDLType::_narrow (prev_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::IDLType::_narrow (prev_def.in ());
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_valuetype"));
+      ex._tao_print_exception (ACE_TEXT ("visit_valuetype"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -886,14 +787,11 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 
   AST_Interface *v = node->full_definition ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (v->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (v->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -929,9 +827,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
                                    abstract_bases,
                                    supported,
                                    initializers
-                                   ACE_ENV_ARG_PARAMETER
                                  );
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -949,14 +845,12 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
           v->ifr_fwd_added (1);
         }
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_valuetype_fwd"));
+      ex._tao_print_exception (ACE_TEXT ("visit_valuetype_fwd"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -969,21 +863,16 @@ ifr_adding_visitor::visit_component (AST_Component *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          int status = this->create_component_def (node
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int status = this->create_component_def (node);
 
           return status;
         }
@@ -1019,41 +908,32 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               if (node->ifr_fwd_added () == 0)
                 {
                   CORBA::DefinitionKind kind =
-                    prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    prev_def->def_kind ();
 
                   if (kind == CORBA::dk_Component)
                     {
                       CORBA::ComponentIR::ComponentDef_var value =
                         CORBA::ComponentIR::ComponentDef::_narrow (
                             prev_def.in ()
-                            ACE_ENV_ARG_PARAMETER
                           );
-                      ACE_TRY_CHECK;
 
                       CORBA::ContainedSeq_var contents =
                         value->contents (CORBA::dk_all,
-                                         1
-                                         ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                                         1);
 
                       CORBA::ULong length = contents->length ();
 
                       for (CORBA::ULong i = 0; i < length; ++i)
                         {
-                          contents[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
+                          contents[i]->destroy ();
                         }
                     }
                   else
                     {
-                      prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      prev_def->destroy ();
 
                       int status =
-                        this->create_component_def (node
-                                                    ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                        this->create_component_def (node);
 
                       return status;
                     }
@@ -1064,54 +944,34 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               CORBA::ComponentIR::ComponentDef_var extant_def =
                 CORBA::ComponentIR::ComponentDef::_narrow (
                                                       prev_def.in ()
-                                                      ACE_ENV_ARG_PARAMETER
                                                     );
-              ACE_TRY_CHECK;
 
               CORBA::InterfaceDefSeq supported_interfaces;
               this->fill_supported_interfaces (supported_interfaces,
-                                               node
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               node);
 
-              extant_def->supported_interfaces (supported_interfaces
-                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->supported_interfaces (supported_interfaces);
 
               CORBA::ComponentIR::ComponentDef_var base_component;
               this->fill_base_component (base_component.out (),
-                                         node
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                         node);
 
-              extant_def->base_component (base_component.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->base_component (base_component.in ());
 
               this->visit_all_provides (node,
-                                        extant_def.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                        extant_def.in ());
 
               this->visit_all_uses (node,
-                                    extant_def.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                    extant_def.in ());
 
               this->visit_all_emits (node,
-                                     extant_def.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                     extant_def.in ());
 
               this->visit_all_publishes (node,
-                                         extant_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                         extant_def.in ());
 
               this->visit_all_consumes (node,
-                                        extant_def.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                        extant_def.in ());
 
               node->ifr_added (1);
 
@@ -1175,20 +1035,16 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
               this->ir_current_ =
-                CORBA::IDLType::_narrow (prev_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::IDLType::_narrow (prev_def.in ());
             }
         }
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_component"));
+      ex._tao_print_exception (ACE_TEXT ("visit_component"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1204,14 +1060,11 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
   AST_Component *c =
     AST_Component::narrow_from_decl (node->full_definition ());
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (c->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (c->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1223,9 +1076,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               CORBA::ComponentIR::Container_var ccm_scope =
                 CORBA::ComponentIR::Container::_narrow (
                                                    current_scope
-                                                   ACE_ENV_ARG_PARAMETER
                                                  );
-              ACE_TRY_CHECK;
 
               // If our full definition is found in this IDL file, we go
               // ahead and create the full entry now.
@@ -1240,14 +1091,10 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               if (node->is_defined ())
                 {
                   this->fill_supported_interfaces (supported_interfaces,
-                                                   c
-                                                   ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                                   c);
 
                   this->fill_base_component (base_component.out (),
-                                             c
-                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                             c);
                 }
 
               this->ir_current_ =
@@ -1257,9 +1104,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
                                c->version (),
                                base_component.in (),
                                supported_interfaces
-                               ACE_ENV_ARG_PARAMETER
                              );
-              ACE_TRY_CHECK;
 
               // Might as well go ahead and complete the repository
               // entry now, if we can - we're halfway there already.
@@ -1268,34 +1113,22 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
                   CORBA::ComponentIR::ComponentDef_var new_def =
                     CORBA::ComponentIR::ComponentDef::_narrow (
                         this->ir_current_.in ()
-                        ACE_ENV_ARG_PARAMETER
                       );
-                  ACE_TRY_CHECK;
 
                   this->visit_all_provides (c,
-                                            new_def.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                            new_def.in ());
 
                   this->visit_all_uses (c,
-                                        new_def.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                        new_def.in ());
 
                   this->visit_all_emits (c,
-                                         new_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                         new_def.in ());
 
                   this->visit_all_publishes (c,
-                                             new_def.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                             new_def.in ());
 
                   this->visit_all_consumes (c,
-                                            new_def.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                            new_def.in ());
                 }
             }
           else
@@ -1314,14 +1147,12 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
           c->ifr_fwd_added (1);
         }
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_component_fwd"));
+      ex._tao_print_exception (ACE_TEXT ("visit_component_fwd"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1334,21 +1165,16 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          int status = this->create_event_def (node
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int status = this->create_event_def (node);
 
           return status;
         }
@@ -1384,41 +1210,32 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               if (node->ifr_fwd_added () == 0)
                 {
                   CORBA::DefinitionKind kind =
-                    prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    prev_def->def_kind ();
 
                   if (kind == CORBA::dk_Value)
                     {
                       CORBA::ComponentIR::EventDef_var event =
                         CORBA::ComponentIR::EventDef::_narrow (
                             prev_def.in ()
-                            ACE_ENV_ARG_PARAMETER
                           );
-                      ACE_TRY_CHECK;
 
                       CORBA::ContainedSeq_var contents =
                         event->contents (CORBA::dk_all,
-                                         1
-                                         ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                                         1);
 
                       CORBA::ULong length = contents->length ();
 
                       for (CORBA::ULong i = 0; i < length; ++i)
                         {
-                          contents[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
+                          contents[i]->destroy ();
                         }
                     }
                   else
                     {
-                      prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      prev_def->destroy ();
 
                       int status =
-                        this->create_event_def (node
-                                                ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                        this->create_event_def (node);
 
                       return status;
                     }
@@ -1427,71 +1244,47 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // Our previous definition is a valuetype, so narrow it here,
               // then populate it.
               CORBA::ComponentIR::EventDef_var extant_def =
-                CORBA::ComponentIR::EventDef::_narrow (prev_def. in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::ComponentIR::EventDef::_narrow (prev_def. in ());
 
               // Concrete base value.
 
               CORBA::ValueDef_var base_vt;
               this->fill_base_value (base_vt.out (),
-                                     node
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                     node);
 
-              extant_def->base_value (base_vt.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->base_value (base_vt.in ());
 
               // Abstract base values.
 
               CORBA::ValueDefSeq abstract_base_values;
               this->fill_abstract_base_values (abstract_base_values,
-                                               node
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               node);
 
-              extant_def->abstract_base_values (abstract_base_values
-                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->abstract_base_values (abstract_base_values);
 
               // Supported interfaces.
 
               CORBA::InterfaceDefSeq supported;
               this->fill_supported_interfaces (supported,
-                                               node
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               node);
 
-              extant_def->supported_interfaces (supported
-                                                ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->supported_interfaces (supported);
 
               // Intializers.
 
               CORBA::ExtInitializerSeq initializers;
               this->fill_initializers (initializers,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                       node);
 
-              extant_def->ext_initializers (initializers
-                                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->ext_initializers (initializers);
 
               // Truncatable, abstract, custom.
 
-              extant_def->is_abstract (static_cast<CORBA::Boolean> (node->is_abstract ())
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->is_abstract (static_cast<CORBA::Boolean> (node->is_abstract ()));
 
-              extant_def->is_truncatable (static_cast<CORBA::Boolean> (node->truncatable ())
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->is_truncatable (static_cast<CORBA::Boolean> (node->truncatable ()));
 
-              extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ())
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ()));
 
               node->ifr_added (1);
 
@@ -1555,20 +1348,16 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
               this->ir_current_ =
-                CORBA::IDLType::_narrow (prev_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::IDLType::_narrow (prev_def.in ());
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_eventtype"));
+      ex._tao_print_exception (ACE_TEXT ("visit_eventtype"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1583,14 +1372,11 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
 
   AST_Interface *v = node->full_definition ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (v->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (v->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1614,9 +1400,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
               CORBA::ComponentIR::Container_var ccm_scope =
                 CORBA::ComponentIR::Container::_narrow (
                                                    current_scope
-                                                   ACE_ENV_ARG_PARAMETER
                                                  );
-              ACE_TRY_CHECK;
 
               CORBA::Boolean abstract =
                 static_cast<CORBA::Boolean> (v->is_abstract ());
@@ -1633,9 +1417,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
                                abstract_bases,
                                supported,
                                initializers
-                               ACE_ENV_ARG_PARAMETER
                              );
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -1653,14 +1435,12 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
           v->ifr_fwd_added (1);
         }
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_eventtype_fwd"));
+      ex._tao_print_exception (ACE_TEXT ("visit_eventtype_fwd"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1673,21 +1453,16 @@ ifr_adding_visitor::visit_home (AST_Home *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this interface already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          int status = this->create_home_def (node
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int status = this->create_home_def (node);
 
           return status;
         }
@@ -1723,41 +1498,32 @@ ifr_adding_visitor::visit_home (AST_Home *node)
               if (node->ifr_fwd_added () == 0)
                 {
                   CORBA::DefinitionKind kind =
-                    prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    prev_def->def_kind ();
 
                   if (kind == CORBA::dk_Component)
                     {
                       CORBA::ComponentIR::HomeDef_var value =
                         CORBA::ComponentIR::HomeDef::_narrow (
                             prev_def.in ()
-                            ACE_ENV_ARG_PARAMETER
                           );
-                      ACE_TRY_CHECK;
 
                       CORBA::ContainedSeq_var contents =
                         value->contents (CORBA::dk_all,
-                                         1
-                                         ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                                         1);
 
                       CORBA::ULong length = contents->length ();
 
                       for (CORBA::ULong i = 0; i < length; ++i)
                         {
-                          contents[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                          ACE_TRY_CHECK;
+                          contents[i]->destroy ();
                         }
                     }
                   else
                     {
-                      prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                      prev_def->destroy ();
 
                       int status =
-                        this->create_home_def (node
-                                               ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+                        this->create_home_def (node);
 
                       return status;
                     }
@@ -1775,20 +1541,16 @@ ifr_adding_visitor::visit_home (AST_Home *node)
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
               this->ir_current_ =
-                CORBA::IDLType::_narrow (prev_def.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::IDLType::_narrow (prev_def.in ());
             }
         }
    }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_home"));
+      ex._tao_print_exception (ACE_TEXT ("visit_home"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1807,13 +1569,10 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -1839,26 +1598,23 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
           // second time and we want to just update ir_current_.
           if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              prev_def->destroy ();
 
               return this->visit_structure (node);
             }
 
           this->ir_current_ =
-            CORBA::IDLType::_narrow (prev_def.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_adding_visitor::visit_structure"));
+      ex._tao_print_exception (
+        ACE_TEXT (
+          "ifr_adding_visitor::visit_structure"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1888,14 +1644,11 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -1930,9 +1683,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
                     node->local_name ()->get_string (),
                     node->version (),
                     members
-                    ACE_ENV_ARG_PARAMETER
                   );
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -1958,8 +1709,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
           // second time and we want to just update ir_current_.
           if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              prev_def->destroy ();
 
               return this->visit_enum (node);
             }
@@ -1967,19 +1717,15 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
           // There is already an entry in the repository, so just update
           // the current IR object holder.
           this->ir_current_ =
-            CORBA::EnumDef::_narrow (prev_def.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            CORBA::EnumDef::_narrow (prev_def.in ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_adding_visitor::visit_enum"));
+      ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::visit_enum"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2035,30 +1781,23 @@ ifr_adding_visitor::visit_field (AST_Field *node)
 int
 ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       AST_Type *type = node->field_type ();
 
       // Updates ir_current_.
-      this->get_referenced_type (type
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->get_referenced_type (type);
 
       CORBA::AttributeMode mode =
         node->readonly () ? CORBA::ATTR_READONLY : CORBA::ATTR_NORMAL;
 
       CORBA::ExceptionDefSeq get_exceptions;
       this->fill_get_exceptions (get_exceptions,
-                                 node
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                 node);
 
       CORBA::ExceptionDefSeq set_exceptions;
       this->fill_set_exceptions (set_exceptions,
-                                 node
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                 node);
 
       CORBA::Container_ptr current_scope =
         CORBA::Container::_nil ();
@@ -2066,15 +1805,12 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
           CORBA::DefinitionKind kind =
-            current_scope->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            current_scope->def_kind ();
 
           if (kind == CORBA::dk_Value || kind == CORBA::dk_Event)
             {
               CORBA::ExtValueDef_var value =
-                CORBA::ExtValueDef::_narrow (current_scope
-                                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::ExtValueDef::_narrow (current_scope);
 
               CORBA::ExtAttributeDef_var new_def =
                 value->create_ext_attribute (
@@ -2085,18 +1821,14 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
                     mode,
                     get_exceptions,
                     set_exceptions
-                    ACE_ENV_ARG_PARAMETER
                   );
-              ACE_TRY_CHECK;
             }
           else
             {
               // We are an interface, a local interface, an abstract
               // interface or a component. This narrow covers them all.
               CORBA::InterfaceAttrExtension_var iface =
-                CORBA::InterfaceAttrExtension::_narrow (current_scope
-                                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                CORBA::InterfaceAttrExtension::_narrow (current_scope);
 
               CORBA::ExtAttributeDef_var new_def =
                 iface->create_ext_attribute (
@@ -2107,9 +1839,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
                     mode,
                     get_exceptions,
                     set_exceptions
-                    ACE_ENV_ARG_PARAMETER
                   );
-              ACE_TRY_CHECK;
             }
         }
       else
@@ -2123,14 +1853,12 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
           );
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_attribute"));
+      ex._tao_print_exception (ACE_TEXT ("visit_attribute"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2143,13 +1871,10 @@ ifr_adding_visitor::visit_union (AST_Union *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -2177,26 +1902,21 @@ ifr_adding_visitor::visit_union (AST_Union *node)
           // second time and we want to just update ir_current_.
           if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              prev_def->destroy ();
 
               return this->visit_union (node);
             }
 
           this->ir_current_ =
-            CORBA::UnionDef::_narrow (prev_def.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            CORBA::UnionDef::_narrow (prev_def.in ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_adding_visitor::visit_union"));
+      ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::visit_union"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2211,13 +1931,10 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
 
   const char *id = node->repoID ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (id
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (id);
 
       // Nothing prevents this constant's repo id from already being
       // in the repository as another type, if it came from another
@@ -2235,8 +1952,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           // second time and we want to just update ir_current_.
           if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              prev_def->destroy ();
             }
           else
             {
@@ -2254,21 +1970,15 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           // This constant's type is a typedef - look up the typedef to
           // pass to create_constant().
           CORBA::Contained_var contained =
-            be_global->repository ()->lookup_id (td->repoID ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            be_global->repository ()->lookup_id (td->repoID ());
 
-          this->ir_current_ = CORBA::IDLType::_narrow (contained.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
         }
       else
         {
           CORBA::PrimitiveKind pkind = this->expr_type_to_pkind (ev->et);
           this->ir_current_ =
-            be_global->repository ()->get_primitive (pkind
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            be_global->repository ()->get_primitive (pkind);
         }
 
       CORBA::Any any;
@@ -2287,9 +1997,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
                 node->version (),
                 this->ir_current_.in (),
                 any
-                ACE_ENV_ARG_PARAMETER
               );
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -2302,14 +2010,12 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           );
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_constant"));
+      ex._tao_print_exception (ACE_TEXT ("visit_constant"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2317,12 +2023,9 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
 int
 ifr_adding_visitor::visit_array (AST_Array *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->element_type (node->base_type ()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->element_type (node->base_type ());
 
       AST_Expression **dims = node->dims ();
 
@@ -2332,19 +2035,15 @@ ifr_adding_visitor::visit_array (AST_Array *node)
             be_global->repository ()->create_array (
                 dims[i - 1]->ev ()->u.ulval,
                 this->ir_current_.in ()
-                ACE_ENV_ARG_PARAMETER
               );
-          ACE_TRY_CHECK;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_array"));
+      ex._tao_print_exception (ACE_TEXT ("visit_array"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2352,29 +2051,22 @@ ifr_adding_visitor::visit_array (AST_Array *node)
 int
 ifr_adding_visitor::visit_sequence (AST_Sequence *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->element_type (node->base_type ()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->element_type (node->base_type ());
 
       this->ir_current_ =
         be_global->repository ()->create_sequence (
                                       node->max_size ()->ev ()->u.ulval,
                                       this->ir_current_.in ()
-                                      ACE_ENV_ARG_PARAMETER
                                     );
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_sequence"));
+      ex._tao_print_exception (ACE_TEXT ("visit_sequence"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2388,32 +2080,26 @@ ifr_adding_visitor::visit_string (AST_String *node)
 
   CORBA::ULong bound = static_cast<CORBA::ULong> (ev->u.ulval);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (node->node_type () == AST_Decl::NT_string)
         {
           this->ir_current_ =
-            be_global->repository ()->create_string (bound
-                                                     ACE_ENV_ARG_PARAMETER);
+            be_global->repository ()->create_string (bound);
         }
       else
         {
           this->ir_current_ =
-            be_global->repository ()->create_wstring (bound
-                                                      ACE_ENV_ARG_PARAMETER);
+            be_global->repository ()->create_wstring (bound);
         }
 
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_string"));
+      ex._tao_print_exception (ACE_TEXT ("visit_string"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2426,12 +2112,9 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->element_type (node->base_type ()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->element_type (node->base_type ());
 
       CORBA::Container_ptr current_scope =
         CORBA::Container::_nil ();
@@ -2444,9 +2127,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
                 node->local_name ()->get_string (),
                 node->version (),
                 this->ir_current_.in ()
-                ACE_ENV_ARG_PARAMETER
               );
-          ACE_TRY_CHECK;
         }
       else
         {
@@ -2461,14 +2142,12 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
 
       node->ifr_added (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_typedef"));
+      ex._tao_print_exception (ACE_TEXT ("visit_typedef"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2523,13 +2202,10 @@ ifr_adding_visitor::visit_native (AST_Native *node)
       return 0;
     }
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        be_global->repository ()->lookup_id (node->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -2543,9 +2219,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
                     node->repoID (),
                     node->local_name ()->get_string (),
                     node->version ()
-                    ACE_ENV_ARG_PARAMETER
                   );
-              ACE_TRY_CHECK;
             }
           else
             {
@@ -2571,27 +2245,22 @@ ifr_adding_visitor::visit_native (AST_Native *node)
           // second time and we want to just update ir_current_.
           if (node->ifr_added () == 0 && this->in_reopened_ == 0)
             {
-              prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              prev_def->destroy ();
 
               // This call will take the other branch.
               return this->visit_native (node);
             }
 
           this->ir_current_ =
-            CORBA::NativeDef::_narrow (prev_def.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            CORBA::NativeDef::_narrow (prev_def.in ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_native"));
+      ex._tao_print_exception (ACE_TEXT ("visit_native"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -2772,8 +2441,7 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
 }
 
 void
-ifr_adding_visitor::element_type (AST_Type *base_type
-                                  ACE_ENV_ARG_DECL)
+ifr_adding_visitor::element_type (AST_Type *base_type)
 {
   if (base_type->anonymous ())
     {
@@ -2789,9 +2457,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type
   else
     {
       CORBA::Contained_var contained =
-        be_global->repository ()->lookup_id (base_type->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        be_global->repository ()->lookup_id (base_type->repoID ());
 
       if (CORBA::is_nil (contained.in ()))
         {
@@ -2802,15 +2468,12 @@ ifr_adding_visitor::element_type (AST_Type *base_type
             ));
         }
 
-      this->ir_current_ = CORBA::IDLType::_narrow (contained.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->ir_current_ = CORBA::IDLType::_narrow (contained.in ());
     }
 }
 
 int
-ifr_adding_visitor::create_interface_def (AST_Interface *node
-                                          ACE_ENV_ARG_DECL)
+ifr_adding_visitor::create_interface_def (AST_Interface *node)
 {
   CORBA::ULong n_parents = static_cast<CORBA::ULong> (node->n_inherits ());
   AST_Interface **parents = node->inherits ();
@@ -2826,16 +2489,13 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
       for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
           result =
-            be_global->repository ()->lookup_id (parents[i]->repoID ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            be_global->repository ()->lookup_id (parents[i]->repoID ());
 
           // If we got to visit_interface() from a forward declared interface,
           // this node may not yet be in the repository.
           if (CORBA::is_nil (result.in ()))
             {
-              int status = this->create_interface_def (parents[i]
-                                                       ACE_ENV_ARG_PARAMETER);
+              int status = this->create_interface_def (parents[i]);
 
               if (status != 0)
                 {
@@ -2850,16 +2510,12 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                 }
 
               bases[i] =
-                CORBA::AbstractInterfaceDef::_narrow (this->ir_current_.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (-1);
+                CORBA::AbstractInterfaceDef::_narrow (this->ir_current_.in ());
             }
           else
             {
               abs_bases[i] =
-                CORBA::AbstractInterfaceDef::_narrow (result.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (-1);
+                CORBA::AbstractInterfaceDef::_narrow (result.in ());
             }
 
           if (CORBA::is_nil (abs_bases[i]))
@@ -2883,16 +2539,13 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
       for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
           result =
-            be_global->repository ()->lookup_id (parents[i]->repoID ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            be_global->repository ()->lookup_id (parents[i]->repoID ());
 
           // If we got to visit_interface() from a forward declared interface,
           // this node may not yet be in the repository.
           if (CORBA::is_nil (result.in ()))
             {
-              int status = this->create_interface_def (parents[i]
-                                                       ACE_ENV_ARG_PARAMETER);
+              int status = this->create_interface_def (parents[i]);
 
               if (status != 0)
                 {
@@ -2906,15 +2559,11 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                   );
                 }
 
-              bases[i] = CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (-1);
+              bases[i] = CORBA::InterfaceDef::_narrow (this->ir_current_.in ());
             }
           else
             {
-              bases[i] = CORBA::InterfaceDef::_narrow (result.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (-1);
+              bases[i] = CORBA::InterfaceDef::_narrow (result.in ());
             }
 
           if (CORBA::is_nil (bases[i]))
@@ -2946,7 +2595,6 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                                node->local_name ()->get_string (),
                                node->version (),
                                bases
-                               ACE_ENV_ARG_PARAMETER
                              );
         }
       else if (node->is_abstract ())
@@ -2957,7 +2605,6 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                                node->local_name ()->get_string (),
                                node->version (),
                                abs_bases
-                               ACE_ENV_ARG_PARAMETER
                              );
         }
       else
@@ -2968,19 +2615,15 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                                node->local_name ()->get_string (),
                                node->version (),
                                bases
-                               ACE_ENV_ARG_PARAMETER
                              );
         }
 
-      ACE_CHECK_RETURN (-1);
 
       node->ifr_added (1);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (new_def.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::Container::_narrow (new_def.in ());
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
@@ -3047,8 +2690,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
 }
 
 int
-ifr_adding_visitor::create_value_def (AST_ValueType *node
-                                      ACE_ENV_ARG_DECL)
+ifr_adding_visitor::create_value_def (AST_ValueType *node)
 {
   CORBA::Container_ptr current_scope =
     CORBA::Container::_nil ();
@@ -3057,27 +2699,19 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node
     {
       CORBA::ValueDef_var base_value;
       this->fill_base_value (base_value.out (),
-                             node
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                             node);
 
       CORBA::ValueDefSeq abstract_base_values;
       this->fill_abstract_base_values (abstract_base_values,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                       node);
 
       CORBA::InterfaceDefSeq supported_interfaces;
       this->fill_supported_interfaces (supported_interfaces,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                       node);
 
       CORBA::ExtInitializerSeq initializers;
       this->fill_initializers (initializers,
-                               node
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                               node);
 
       CORBA::ExtValueDef_var new_def =
         current_scope->create_ext_value (
@@ -3091,17 +2725,13 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node
                            abstract_base_values,
                            supported_interfaces,
                            initializers
-                           ACE_ENV_ARG_PARAMETER
                          );
-      ACE_CHECK_RETURN (-1);
 
       node->ifr_added (1);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (new_def.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::Container::_narrow (new_def.in ());
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
@@ -3168,8 +2798,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node
 }
 
 int
-ifr_adding_visitor::create_component_def (AST_Component *node
-                                          ACE_ENV_ARG_DECL)
+ifr_adding_visitor::create_component_def (AST_Component *node)
 {
   CORBA::Container_ptr current_scope =
     CORBA::Container::_nil ();
@@ -3178,29 +2807,21 @@ ifr_adding_visitor::create_component_def (AST_Component *node
     {
       CORBA::ComponentIR::ComponentDef_var base_component;
       this->fill_base_component (base_component.out (),
-                                 node
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                 node);
 
       CORBA::InterfaceDefSeq supported_interfaces;
       this->fill_supported_interfaces (supported_interfaces,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                       node);
 
       CORBA::ComponentIR::Container_var ccm_scope =
-        CORBA::ComponentIR::Container::_narrow (current_scope
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::ComponentIR::Container::_narrow (current_scope);
 
       CORBA::ComponentIR::ComponentDef_var new_def =
         ccm_scope->create_component (node->repoID (),
                                      node->local_name ()->get_string (),
                                      node->version (),
                                      base_component.in (),
-                                     supported_interfaces
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                     supported_interfaces);
 
       node->ifr_added (1);
 
@@ -3230,29 +2851,19 @@ ifr_adding_visitor::create_component_def (AST_Component *node
         }
 
       this->visit_all_provides (node,
-                                new_def.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                new_def.in ());
 
       this->visit_all_uses (node,
-                            new_def.in ()
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                            new_def.in ());
 
       this->visit_all_emits (node,
-                             new_def.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                             new_def.in ());
 
       this->visit_all_publishes (node,
-                                 new_def.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                 new_def.in ());
 
       this->visit_all_consumes (node,
-                                new_def.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                new_def.in ());
 
       // This spot in the AST doesn't necessarily have to be the
       // interface definition - it could be any reference to it.
@@ -3294,8 +2905,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node
 }
 
 int
-ifr_adding_visitor::create_home_def (AST_Home *node
-                                     ACE_ENV_ARG_DECL)
+ifr_adding_visitor::create_home_def (AST_Home *node)
 {
   CORBA::Container_ptr current_scope =
     CORBA::Container::_nil ();
@@ -3304,32 +2914,22 @@ ifr_adding_visitor::create_home_def (AST_Home *node
     {
       CORBA::ComponentIR::HomeDef_var base_home;
       this->fill_base_home (base_home.out (),
-                            node
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                            node);
 
       CORBA::ComponentIR::ComponentDef_var managed_component;
       this->fill_managed_component (managed_component.out (),
-                                    node
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                    node);
 
       CORBA::InterfaceDefSeq supported_interfaces;
       this->fill_supported_interfaces (supported_interfaces,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                       node);
 
       CORBA::ValueDef_var primary_key;
       this->fill_primary_key (primary_key.out (),
-                              node
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                              node);
 
       CORBA::ComponentIR::Container_var ccm_scope =
-        CORBA::ComponentIR::Container::_narrow (current_scope
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::ComponentIR::Container::_narrow (current_scope);
 
       CORBA::ComponentIR::HomeDef_var new_def =
         ccm_scope->create_home (node->repoID (),
@@ -3338,17 +2938,13 @@ ifr_adding_visitor::create_home_def (AST_Home *node
                                 base_home.in (),
                                 managed_component.in (),
                                 supported_interfaces,
-                                primary_key.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                primary_key.in ());
 
       node->ifr_added (1);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (new_def.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::Container::_narrow (new_def.in ());
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
@@ -3378,14 +2974,10 @@ ifr_adding_visitor::create_home_def (AST_Home *node
       // Get the contents of these lists into the repository.
 
       this->visit_all_factories (node,
-                                 new_def.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                 new_def.in ());
 
       this->visit_all_finders (node,
-                               new_def.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                               new_def.in ());
 
       // This spot in the AST doesn't necessarily have to be the
       // interface definition - it could be any reference to it.
@@ -3427,8 +3019,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node
 }
 
 int
-ifr_adding_visitor::create_event_def (AST_EventType *node
-                                      ACE_ENV_ARG_DECL)
+ifr_adding_visitor::create_event_def (AST_EventType *node)
 {
   CORBA::Container_ptr current_scope =
     CORBA::Container::_nil ();
@@ -3437,32 +3028,22 @@ ifr_adding_visitor::create_event_def (AST_EventType *node
     {
       CORBA::ValueDef_var base_value;
       this->fill_base_value (base_value.out (),
-                             node
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                             node);
 
       CORBA::ValueDefSeq abstract_base_values;
       this->fill_abstract_base_values (abstract_base_values,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                       node);
 
       CORBA::InterfaceDefSeq supported_interfaces;
       this->fill_supported_interfaces (supported_interfaces,
-                                       node
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                       node);
 
       CORBA::ExtInitializerSeq initializers;
       this->fill_initializers (initializers,
-                               node
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                               node);
 
       CORBA::ComponentIR::Container_var ccm_scope =
-        CORBA::ComponentIR::Container::_narrow (current_scope
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::ComponentIR::Container::_narrow (current_scope);
 
       CORBA::ExtValueDef_var new_def =
         ccm_scope->create_event (
@@ -3476,17 +3057,13 @@ ifr_adding_visitor::create_event_def (AST_EventType *node
                        abstract_base_values,
                        supported_interfaces,
                        initializers
-                       ACE_ENV_ARG_PARAMETER
                      );
-      ACE_CHECK_RETURN (-1);
 
       node->ifr_added (1);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
-        CORBA::Container::_narrow (new_def.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::Container::_narrow (new_def.in ());
 
       if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
         {
@@ -3555,7 +3132,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node
 int
 ifr_adding_visitor::create_value_member (AST_Field *node)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       AST_Type *bt = node->field_type ();
       AST_Decl::NodeType nt = bt->node_type ();
@@ -3585,14 +3162,10 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
         {
           // If the IDL is legal, this will succeed.
           CORBA::Contained_var holder =
-                be_global->repository ()->lookup_id (bt->repoID ()
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+                be_global->repository ()->lookup_id (bt->repoID ());
 
           this->ir_current_ =
-            CORBA::IDLType::_narrow (holder.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            CORBA::IDLType::_narrow (holder.in ());
         }
 
       CORBA::Visibility vis = CORBA::PUBLIC_MEMBER;
@@ -3627,37 +3200,29 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
             -1
           );
         }
-      ACE_TRY_CHECK;
 
       CORBA::ValueDef_var vt =
-        CORBA::ValueDef::_narrow (current_scope
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ValueDef::_narrow (current_scope);
 
       CORBA::ValueMemberDef_var vm =
         vt->create_value_member (node->repoID (),
                                  node->local_name ()->get_string (),
                                  node->version (),
                                  this->ir_current_.in (),
-                                 vis
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                 vis);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("create_value_member"));
+      ex._tao_print_exception (ACE_TEXT ("create_value_member"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-ifr_adding_visitor::get_referenced_type (AST_Type *node
-                                         ACE_ENV_ARG_DECL)
+ifr_adding_visitor::get_referenced_type (AST_Type *node)
 {
   switch (node->node_type ())
   {
@@ -3685,14 +3250,10 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node
     default:
       {
         CORBA::Contained_var prev_def =
-          be_global->repository ()->lookup_id (node->repoID ()
-                                               ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+          be_global->repository ()->lookup_id (node->repoID ());
 
         this->ir_current_ =
-          CORBA::IDLType::_narrow (prev_def.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+          CORBA::IDLType::_narrow (prev_def.in ());
         break;
       }
   }
@@ -3700,8 +3261,7 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node
 
 void
 ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
-                                     AST_ValueType *node
-                                     ACE_ENV_ARG_DECL)
+                                     AST_ValueType *node)
 {
   result = CORBA::ValueDef::_nil ();
   AST_ValueType *base_value = node->inherits_concrete ();
@@ -3714,15 +3274,12 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
   CORBA::Contained_var holder =
     be_global->repository ()->lookup_id (
                                   base_value->repoID ()
-                                  ACE_ENV_ARG_PARAMETER
                                 );
-  ACE_CHECK;
 
   if (!CORBA::is_nil (holder.in ()))
     {
       result =
-        CORBA::ValueDef::_narrow (holder.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+        CORBA::ValueDef::_narrow (holder.in ());
     }
 }
 
@@ -3730,7 +3287,6 @@ void
 ifr_adding_visitor::fill_base_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
     AST_Component *node
-    ACE_ENV_ARG_DECL
   )
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
@@ -3744,22 +3300,18 @@ ifr_adding_visitor::fill_base_component (
   CORBA::Contained_var holder =
     be_global->repository ()->lookup_id (
                                   base_component->repoID ()
-                                  ACE_ENV_ARG_PARAMETER
                                 );
-  ACE_CHECK;
 
   if (!CORBA::is_nil (holder.in ()))
     {
       result =
-        CORBA::ComponentIR::ComponentDef::_narrow (holder.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+        CORBA::ComponentIR::ComponentDef::_narrow (holder.in ());
     }
 }
 
 void
 ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
-                                    AST_Home *node
-                                    ACE_ENV_ARG_DECL)
+                                    AST_Home *node)
 {
   result = CORBA::ComponentIR::HomeDef::_nil ();
   AST_Home *base_home = node->base_home ();
@@ -3772,15 +3324,12 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
   CORBA::Contained_var holder =
     be_global->repository ()->lookup_id (
                                   base_home->repoID ()
-                                  ACE_ENV_ARG_PARAMETER
                                 );
-  ACE_CHECK;
 
   if (!CORBA::is_nil (holder.in ()))
     {
       result =
-        CORBA::ComponentIR::HomeDef::_narrow (holder.in ()
-                                              ACE_ENV_ARG_PARAMETER);
+        CORBA::ComponentIR::HomeDef::_narrow (holder.in ());
     }
   else
     {
@@ -3788,8 +3337,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
       /// the repository and go again.
       (void) base_home->ast_accept (this);
       this->fill_base_home (result,
-                            node
-                            ACE_ENV_ARG_PARAMETER);
+                            node);
     }
 }
 
@@ -3797,7 +3345,6 @@ void
 ifr_adding_visitor::fill_managed_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
     AST_Home *node
-    ACE_ENV_ARG_DECL
   )
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
@@ -3809,15 +3356,12 @@ ifr_adding_visitor::fill_managed_component (
     }
 
   CORBA::Contained_var holder =
-    be_global->repository ()->lookup_id (managed_component->repoID ()
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    be_global->repository ()->lookup_id (managed_component->repoID ());
 
   if (!CORBA::is_nil (holder.in ()))
     {
       result =
-        CORBA::ComponentIR::ComponentDef::_narrow (holder.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+        CORBA::ComponentIR::ComponentDef::_narrow (holder.in ());
     }
   else
     {
@@ -3825,15 +3369,13 @@ ifr_adding_visitor::fill_managed_component (
       /// the repository and go again.
       (void) managed_component->ast_accept (this);
       this->fill_managed_component (result,
-                                    node
-                                    ACE_ENV_ARG_PARAMETER);
+                                    node);
     }
 }
 
 void
 ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
-                                      AST_Home *node
-                                      ACE_ENV_ARG_DECL)
+                                      AST_Home *node)
 {
   result = CORBA::ValueDef::_nil ();
   AST_ValueType *primary_key = node->primary_key ();
@@ -3844,15 +3386,12 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
     }
 
   CORBA::Contained_var holder =
-    be_global->repository ()->lookup_id (primary_key->repoID ()
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    be_global->repository ()->lookup_id (primary_key->repoID ());
 
   if (!CORBA::is_nil (holder.in ()))
     {
       result =
-        CORBA::ValueDef::_narrow (holder.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+        CORBA::ValueDef::_narrow (holder.in ());
     }
   else
     {
@@ -3860,15 +3399,13 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
       /// the repository and go again.
       (void) primary_key->ast_accept (this);
       this->fill_primary_key (result,
-                              node
-                              ACE_ENV_ARG_PARAMETER);
+                              node);
     }
 }
 
 void
 ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
-                                               AST_ValueType *node
-                                               ACE_ENV_ARG_DECL)
+                                               AST_ValueType *node)
 {
   CORBA::Long s_length = node->n_inherits ();
   result.length (0);
@@ -3894,29 +3431,24 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
           (void) list[i]->ast_accept (this);
 
           result[first_abs ? i : i - 1] =
-            CORBA::ValueDef::_narrow (this->ir_current_.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            CORBA::ValueDef::_narrow (this->ir_current_.in ());
         }
     }
 }
 
 void
 ifr_adding_visitor::fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
-                                               AST_Interface *node
-                                               ACE_ENV_ARG_DECL)
+                                               AST_Interface *node)
 {
   result.length (0);
   this->fill_interfaces (result,
                          node->inherits (),
-                         node->n_inherits ()
-                         ACE_ENV_ARG_PARAMETER);
+                         node->n_inherits ());
 }
 
 void
 ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
-                                               AST_Interface *node
-                                               ACE_ENV_ARG_DECL)
+                                               AST_Interface *node)
 {
   result.length (0);
   CORBA::Long s_length = 0;
@@ -3952,15 +3484,13 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
 
   this->fill_interfaces (result,
                          list,
-                         s_length
-                         ACE_ENV_ARG_PARAMETER);
+                         s_length);
 }
 
 void
 ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
                                      AST_Interface **list,
-                                     CORBA::Long length
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Long length)
 {
   // Not sure if this could be negative in some default case or
   // not. If it's 0, we should make the call anyway to clear
@@ -3976,17 +3506,14 @@ ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
           (void) list[i]->ast_accept (this);
 
           result[i] =
-            CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            CORBA::InterfaceDef::_narrow (this->ir_current_.in ());
         }
     }
 }
 
 void
 ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
-                                       AST_ValueType *node
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       AST_ValueType *node)
 {
   result.length (0);
   AST_Decl *item = 0;
@@ -4078,28 +3605,23 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
 
 void
 ifr_adding_visitor::fill_get_exceptions (CORBA::ExceptionDefSeq &result,
-                                         AST_Attribute *node
-                                         ACE_ENV_ARG_DECL)
+                                         AST_Attribute *node)
 {
   this->fill_exceptions (result,
-                         node->get_get_exceptions ()
-                         ACE_ENV_ARG_PARAMETER);
+                         node->get_get_exceptions ());
 }
 
 void
 ifr_adding_visitor::fill_set_exceptions (CORBA::ExceptionDefSeq &result,
-                                         AST_Attribute *node
-                                         ACE_ENV_ARG_DECL)
+                                         AST_Attribute *node)
 {
   this->fill_exceptions (result,
-                         node->get_set_exceptions ()
-                         ACE_ENV_ARG_PARAMETER);
+                         node->get_set_exceptions ());
 }
 
 void
 ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
-                                     AST_Decl *node
-                                     ACE_ENV_ARG_DECL)
+                                     AST_Decl *node)
 {
   switch (node->node_type ())
     {
@@ -4107,16 +3629,14 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
         {
           AST_Operation *op = AST_Operation::narrow_from_decl (node);
           this->fill_exceptions (result,
-                                 op->exceptions ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                 op->exceptions ());
           return;
         }
       case AST_Decl::NT_factory:
         {
           AST_Factory *f = AST_Factory::narrow_from_decl (node);
           this->fill_exceptions (result,
-                                 f->exceptions ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                 f->exceptions ());
           return;
         }
       default:
@@ -4127,8 +3647,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
 
 void
 ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
-                                     UTL_ExceptList *list
-                                     ACE_ENV_ARG_DECL)
+                                     UTL_ExceptList *list)
 {
   if (list == 0)
     {
@@ -4152,21 +3671,16 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
       // inherit from IDLType.
       (void) d->ast_accept (this);
 
-      holder = be_global->repository ()->lookup_id (d->repoID ()
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      holder = be_global->repository ()->lookup_id (d->repoID ());
 
       result[index] =
-        CORBA::ExceptionDef::_narrow (holder.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        CORBA::ExceptionDef::_narrow (holder.in ());
     }
 }
 
 void
 ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
-                                 AST_Operation *node
-                                 ACE_ENV_ARG_DECL)
+                                 AST_Operation *node)
 {
   AST_Argument *arg = 0;
   CORBA::ULong n_args = static_cast<CORBA::ULong> (node->argument_count ());
@@ -4189,7 +3703,6 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
 
       result[index].type_def =
         CORBA::IDLType::_duplicate (this->ir_current_.in ());
-      ACE_CHECK;
 
       result[index].mode = CORBA::PARAM_IN;
     }
@@ -4197,8 +3710,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
 
 void
 ifr_adding_visitor::visit_all_provides (AST_Component *node,
-                                        CORBA::ComponentIR::ComponentDef_ptr c
-                                        ACE_ENV_ARG_DECL)
+                                        CORBA::ComponentIR::ComponentDef_ptr c)
 {
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
@@ -4213,13 +3725,9 @@ ifr_adding_visitor::visit_all_provides (AST_Component *node,
        i.advance ())
     {
       i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
 
-      interface_type = CORBA::InterfaceDef::_narrow (contained.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      interface_type = CORBA::InterfaceDef::_narrow (contained.in ());
 
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
@@ -4227,16 +3735,13 @@ ifr_adding_visitor::visit_all_provides (AST_Component *node,
       new_def = c->create_provides (str.fast_rep (),
                                     local_name,
                                     tmp->impl->version (),
-                                    interface_type.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    interface_type.in ());
     }
 }
 
 void
 ifr_adding_visitor::visit_all_uses (AST_Component *node,
-                                    CORBA::ComponentIR::ComponentDef_ptr c
-                                    ACE_ENV_ARG_DECL)
+                                    CORBA::ComponentIR::ComponentDef_ptr c)
 {
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
@@ -4251,13 +3756,9 @@ ifr_adding_visitor::visit_all_uses (AST_Component *node,
        i.advance ())
     {
       i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
 
-      interface_type = CORBA::InterfaceDef::_narrow (contained.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      interface_type = CORBA::InterfaceDef::_narrow (contained.in ());
 
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
@@ -4266,16 +3767,13 @@ ifr_adding_visitor::visit_all_uses (AST_Component *node,
                                 local_name,
                                 tmp->impl->version (),
                                 interface_type.in (),
-                                static_cast<CORBA::Boolean> (tmp->is_multiple)
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                static_cast<CORBA::Boolean> (tmp->is_multiple));
     }
 }
 
 void
 ifr_adding_visitor::visit_all_emits (AST_Component *node,
-                                     CORBA::ComponentIR::ComponentDef_ptr c
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::ComponentIR::ComponentDef_ptr c)
 {
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
@@ -4290,14 +3788,10 @@ ifr_adding_visitor::visit_all_emits (AST_Component *node,
        i.advance ())
     {
       i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
 
       event_type =
-        CORBA::ComponentIR::EventDef::_narrow (contained.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        CORBA::ComponentIR::EventDef::_narrow (contained.in ());
 
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
@@ -4305,16 +3799,13 @@ ifr_adding_visitor::visit_all_emits (AST_Component *node,
       new_def = c->create_emits (str.fast_rep (),
                                  local_name,
                                  tmp->impl->version (),
-                                 event_type.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                 event_type.in ());
     }
 }
 
 void
 ifr_adding_visitor::visit_all_publishes (AST_Component *node,
-                                         CORBA::ComponentIR::ComponentDef_ptr c
-                                         ACE_ENV_ARG_DECL)
+                                         CORBA::ComponentIR::ComponentDef_ptr c)
 {
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
@@ -4329,14 +3820,10 @@ ifr_adding_visitor::visit_all_publishes (AST_Component *node,
        i.advance ())
     {
       i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
 
       event_type =
-        CORBA::ComponentIR::EventDef::_narrow (contained.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        CORBA::ComponentIR::EventDef::_narrow (contained.in ());
 
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
@@ -4344,16 +3831,13 @@ ifr_adding_visitor::visit_all_publishes (AST_Component *node,
       new_def = c->create_publishes (str.fast_rep (),
                                      local_name,
                                      tmp->impl->version (),
-                                     event_type.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     event_type.in ());
     }
 }
 
 void
 ifr_adding_visitor::visit_all_consumes (AST_Component *node,
-                                        CORBA::ComponentIR::ComponentDef_ptr c
-                                        ACE_ENV_ARG_DECL)
+                                        CORBA::ComponentIR::ComponentDef_ptr c)
 {
   AST_Component::port_description *tmp = 0;
   CORBA::Contained_var contained;
@@ -4368,14 +3852,10 @@ ifr_adding_visitor::visit_all_consumes (AST_Component *node,
        i.advance ())
     {
       i.next (tmp);
-      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      contained = be_global->repository ()->lookup_id (tmp->impl->repoID ());
 
       event_type =
-        CORBA::ComponentIR::EventDef::_narrow (contained.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        CORBA::ComponentIR::EventDef::_narrow (contained.in ());
 
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
@@ -4383,16 +3863,13 @@ ifr_adding_visitor::visit_all_consumes (AST_Component *node,
       new_def = c->create_consumes (str.fast_rep (),
                                     local_name,
                                     tmp->impl->version (),
-                                    event_type.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    event_type.in ());
     }
 }
 
 void
 ifr_adding_visitor::visit_all_factories (AST_Home *node,
-                                         CORBA::ComponentIR::HomeDef_ptr h
-                                         ACE_ENV_ARG_DECL)
+                                         CORBA::ComponentIR::HomeDef_ptr h)
 {
   AST_Operation **tmp = 0;
   CORBA::Contained_var contained;
@@ -4405,30 +3882,23 @@ ifr_adding_visitor::visit_all_factories (AST_Home *node,
       i.next (tmp);
       CORBA::ParDescriptionSeq params;
       this->fill_params (params,
-                         *tmp
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                         *tmp);
 
       CORBA::ExceptionDefSeq exceptions;
       this->fill_exceptions (exceptions,
-                             *tmp
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                             *tmp);
 
       new_def = h->create_factory ((*tmp)->repoID (),
                                    (*tmp)->local_name ()->get_string (),
                                    (*tmp)->version (),
                                    params,
-                                   exceptions
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                   exceptions);
     }
 }
 
 void
 ifr_adding_visitor::visit_all_finders (AST_Home *node,
-                                       CORBA::ComponentIR::HomeDef_ptr h
-                                       ACE_ENV_ARG_DECL)
+                                       CORBA::ComponentIR::HomeDef_ptr h)
 {
   AST_Operation **tmp = 0;
   CORBA::Contained_var contained;
@@ -4441,23 +3911,17 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
       i.next (tmp);
       CORBA::ParDescriptionSeq params;
       this->fill_params (params,
-                         *tmp
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                         *tmp);
 
       CORBA::ExceptionDefSeq exceptions;
       this->fill_exceptions (exceptions,
-                             *tmp
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                             *tmp);
 
       new_def = h->create_finder ((*tmp)->repoID (),
                                   (*tmp)->local_name ()->get_string (),
                                   (*tmp)->version (),
                                   params,
-                                  exceptions
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                  exceptions);
     }
 }
 

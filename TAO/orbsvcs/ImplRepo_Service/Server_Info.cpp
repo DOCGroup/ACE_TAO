@@ -31,7 +31,7 @@ Server_Info::Server_Info
 }
 
 ImplementationRepository::ServerInformation*
-Server_Info::createImRServerInfo (ACE_ENV_SINGLE_ARG_DECL)
+Server_Info::createImRServerInfo (void)
 {
   ImplementationRepository::ServerInformation* info;
   ACE_NEW_THROW_EX (info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());

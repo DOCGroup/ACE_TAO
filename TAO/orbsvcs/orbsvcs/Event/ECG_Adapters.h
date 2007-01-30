@@ -66,8 +66,7 @@ public:
   virtual int handle_input (ACE_SOCK_Dgram& dgram) = 0;
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr
-                         ACE_ENV_ARG_DECL) = 0;
+                         RtecUDPAdmin::UDP_Addr_out addr) = 0;
 };
 
 typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown,

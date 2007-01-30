@@ -25,18 +25,18 @@ public:
                 ServantActivator &activator,
                 CORBA::Long value);
 
-  virtual CORBA::Long doit (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long doit (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Setup forwarding
-  virtual void forward (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void forward (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      test::Cannot_Forward));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
   // Returns the default POA for this servant.
 
 protected:

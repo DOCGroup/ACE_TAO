@@ -38,18 +38,16 @@ namespace TAO
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
   {
-    ACE_TRY_NEW_ENV
+    try
       {
         this->value_->_tao_encode (cdr
-                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                  );
 
         return true;
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
       }
-    ACE_ENDTRY;
 
     return false;
   }
@@ -58,18 +56,16 @@ namespace TAO
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
   {
-    ACE_TRY_NEW_ENV
+    try
       {
         this->value_->_tao_decode (cdr
-                                   ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                  );
 
         return true;
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
       }
-    ACE_ENDTRY;
 
     return false;
   }

@@ -62,20 +62,20 @@ public:
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_var & orb);
 
   /**
    * Prepare to exit.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
   /**
    * idle time activity.
    * @param result [out] status code to return from process
    * @returns 0 to continue; nonzero to quit
    */
-  int idle(int &result ACE_ENV_ARG_DECL);
+  int idle(int &result);
 
   void request_quit();
 
@@ -89,57 +89,53 @@ public:
 
   //////////////////////////////////////////
   // Override CORBA servant virtual methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (void);
 
 private:
   ///////////////////////////
   // override Replica methods
-  virtual void set (CORBA::Long value
-      ACE_ENV_ARG_DECL)
+  virtual void set (CORBA::Long value)
       ACE_THROW_SPEC (( CORBA::SystemException));
 
-  virtual CORBA::Long increment (CORBA::Long delta
-      ACE_ENV_ARG_DECL)
+  virtual CORBA::Long increment (CORBA::Long delta)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long get (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long get (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long counter (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long counter (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void counter (CORBA::Long counter
-      ACE_ENV_ARG_DECL)
+  virtual void counter (CORBA::Long counter)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void die (FT_TEST::TestReplica::Bane when
-      ACE_ENV_ARG_DECL)
+  virtual void die (FT_TEST::TestReplica::Bane when)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ///////////////////////////
   // override Updatable
 
-  virtual ::FT::State * get_update (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::FT::State * get_update (void)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable));
 
-  virtual void set_update (const FT::State & s ACE_ENV_ARG_DECL)
+  virtual void set_update (const FT::State & s)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidUpdate));
 
-  virtual ::FT::State * get_state (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::FT::State * get_state (void)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable));
 
-  virtual void set_state (const FT::State & s ACE_ENV_ARG_DECL)
+  virtual void set_state (const FT::State & s)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidState));
 
   ////////////////
@@ -149,7 +145,6 @@ private:
       const char * iogr,
       PortableGroup::ObjectGroupRefVersion version,
       CORBA::Boolean is_primary
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

@@ -21,15 +21,13 @@ Server_Request_Interceptor::Server_Request_Interceptor (const char *name)
 
 void
 Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->server_side_test (ri);
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -53,7 +51,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
           // (NO_PERMISSION, in this case).
           ACE_DEBUG ((LM_DEBUG,
                       " raised CORBA::NO_PERMISSION exception\n"));
-          ACE_THROW (CORBA::NO_PERMISSION ());  // Expected exception.
+          throw CORBA::NO_PERMISSION ();  // Expected exception.
 
         default:
           break;
@@ -68,15 +66,13 @@ Server_Request_Interceptor::receive_request_service_contexts (
 
 void
 Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->server_side_test (ri);
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -88,14 +84,12 @@ Server_Request_Interceptor::receive_request (
 
 void
 Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->server_side_test (ri);
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -110,8 +104,7 @@ Server_Request_Interceptor::send_reply (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       Test::TestScenario scenario;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -129,7 +122,7 @@ Server_Request_Interceptor::send_reply (
               // (NO_PERMISSION, in this case).
               ACE_DEBUG ((LM_DEBUG,
                           " raised CORBA::NO_PERMISSION exception\n"));
-              ACE_THROW (CORBA::NO_PERMISSION ());  // Expected exception.
+              throw CORBA::NO_PERMISSION ();  // Expected exception.
 
             default:
               break;
@@ -147,15 +140,13 @@ Server_Request_Interceptor::send_reply (
 
 void
 Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->server_side_test (ri);
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -170,8 +161,7 @@ Server_Request_Interceptor::send_exception (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->arguments ();
 
       Test::TestScenario scenario;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -185,13 +175,11 @@ Server_Request_Interceptor::send_exception (
           switch (scenario)
             {
             case 4:
-              exception = ri->sending_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              exception = ri->sending_exception ();
 
               tc = exception->type ();
 
-              id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
+              id = tc->id ();
 
               if (ACE_OS::strcmp (id, "IDL:Test/X:1.0") == 0)
                 {
@@ -206,7 +194,7 @@ Server_Request_Interceptor::send_exception (
                               "CORBA::NO_PERMISSION exception\n"));
 
                   // Expected exception.
-                  ACE_THROW (CORBA::NO_PERMISSION ());
+                  throw CORBA::NO_PERMISSION ();
                 }
               else
                 {
@@ -231,15 +219,13 @@ Server_Request_Interceptor::send_exception (
 
 void
 Server_Request_Interceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->server_side_test (ri);
 
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
@@ -253,11 +239,9 @@ Server_Request_Interceptor::send_other (
 
 CORBA::Boolean
 Server_Request_Interceptor::server_side_test (
-  PortableInterceptor::ServerRequestInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr info)
 {
-  CORBA::String_var op = info->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::String_var op = info->operation ();
 
   return ACE_OS::strcmp (op.in (), "server_test") == 0 ? 1 : 0;
 }

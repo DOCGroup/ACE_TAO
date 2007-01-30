@@ -32,10 +32,10 @@ IOR_corbaloc_Client_i::~IOR_corbaloc_Client_i (void)
 }
 
 int
-IOR_corbaloc_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
+IOR_corbaloc_Client_i::run (void)
 {
 
-  ACE_TRY
+  try
     {
       CosNaming::Name name (1);
 
@@ -44,14 +44,11 @@ IOR_corbaloc_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Resolve the name
       CORBA::Object_var factory_object =
-        this->naming_context_->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->naming_context_->resolve (name);
 
       // Narrow
       corbaloc::Status_var factory =
-        corbaloc::Status::_narrow (factory_object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        corbaloc::Status::_narrow (factory_object.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -63,8 +60,7 @@ IOR_corbaloc_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        factory->print_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory->print_status ();
 
       if (ret_value != 0)
         {
@@ -73,31 +69,28 @@ IOR_corbaloc_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
                     0));
         }
     }
-  ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
+  catch (const CosNaming::NamingContext::NotFound& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "CosNaming::NamingContext::NotFound");
+      ex._tao_print_exception ("CosNaming::NamingContext::NotFound");
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception on client side");
+      ex._tao_print_exception ("A system exception on client side");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
 IOR_corbaloc_Client_i::init (int& argc,
-                             char *argv[]
-                             ACE_ENV_ARG_DECL)
+                             char *argv[])
 {
 
-  ACE_TRY
+  try
     {
 
       // First initialize the ORB, that will remove some arguments...
@@ -105,7 +98,7 @@ IOR_corbaloc_Client_i::init (int& argc,
         CORBA::ORB_init (argc,
                          argv,
                          "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 
       if(argc < 2){
               ACE_DEBUG((LM_DEBUG, "\nUsage:\n  %s [corbaloc URL for NameService]\n", argv[0]));
@@ -116,9 +109,7 @@ IOR_corbaloc_Client_i::init (int& argc,
 
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->string_to_object (corbaloc_url_.c_str()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (corbaloc_url_.c_str());
 
       if (CORBA::is_nil (naming_context_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -127,26 +118,22 @@ IOR_corbaloc_Client_i::init (int& argc,
 
       // Narrow to get the correct reference
       this->naming_context_ =
-        CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContextExt::_narrow (naming_context_object.in ());
 
       if (CORBA::is_nil (this->naming_context_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot narrow Naming Service\n :client"),
                           -1);
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "client");
+      ex._tao_print_exception ("client");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

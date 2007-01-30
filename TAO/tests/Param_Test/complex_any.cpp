@@ -20,8 +20,8 @@
 #include "complex_any.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Param_Test, 
-           complex_any, 
+ACE_RCSID (Param_Test,
+           complex_any,
            "$Id$")
 
 const int LEVEL_2_LENGTH = 5;
@@ -53,8 +53,7 @@ Test_Complex_Any::opname (void) const
 }
 
 void
-Test_Complex_Any::dii_req_invoke (CORBA::Request *req
-                                  ACE_ENV_ARG_DECL)
+Test_Complex_Any::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -62,29 +61,25 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_any);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   const CORBA::Any *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = CORBA::Any (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::Any (*tmp);
 }
 
 int
-Test_Complex_Any::init_parameters (Param_Test_ptr
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+Test_Complex_Any::init_parameters (Param_Test_ptr)
 {
   return this->reset_parameters ();
 }
@@ -169,22 +164,18 @@ Test_Complex_Any::reset_parameters (void)
 }
 
 int
-Test_Complex_Any::run_sii_test (Param_Test_ptr objref
-                                ACE_ENV_ARG_DECL)
+Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       this->ret_ = objref->test_complex_any (this->in_,
                                              this->inout_,
-                                             this->out_.out ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             this->out_.out ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

@@ -39,28 +39,23 @@ Supplier::~Supplier ()
 int
 Supplier::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
 
 
       CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
 
       CosNaming::Name name (1);
@@ -68,14 +63,10 @@ Supplier::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup (NOTIFY_TLS_LOG_FACTORY_NAME);
 
       CORBA::Object_var obj =
-        this->naming_context_->resolve (name
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->naming_context_->resolve (name);
 
       this->notify_log_factory_ =
-        DsNotifyLogAdmin::NotifyLogFactory::_narrow (obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DsNotifyLogAdmin::NotifyLogFactory::_narrow (obj.in ());
 
       ACE_ASSERT (!CORBA::is_nil (this->notify_log_factory_.in ()));
 
@@ -98,10 +89,8 @@ Supplier::run (int argc, char* argv[])
                                           threshold,
                                           initial_qos,
                                           initial_admin,
-                                          logid
-                                          ACE_ENV_ARG_PARAMETER);
+                                          logid);
 
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Create returned logid = %d\n",logid));
@@ -124,13 +113,11 @@ Supplier::run (int argc, char* argv[])
       ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
       CosNotifyFilter::FilterFactory_var ffact =
-        notify_log_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        notify_log_->default_filter_factory ();
 
       // setup a filter at the consumer admin
       CosNotifyFilter::Filter_var sa_filter =
-        ffact->create_filter (TCL_GRAMMAR ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ffact->create_filter (TCL_GRAMMAR);
 
       ACE_ASSERT (!CORBA::is_nil (sa_filter.in ()));
 
@@ -140,19 +127,16 @@ Supplier::run (int argc, char* argv[])
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup (SA_FILTER);
 
-      sa_filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sa_filter->add_constraints (constraint_list);
 
-      supplier_admin_->add_filter (sa_filter.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier_admin_->add_filter (sa_filter.in ());
 
       // startup the first supplier
       ACE_NEW_THROW_EX (supplier_1,
-                        Filter_StructuredPushSupplier (ACE_ENV_SINGLE_ARG_PARAMETER),
+                        Filter_StructuredPushSupplier (),
                         CORBA::NO_MEMORY ());
 
-      supplier_1->connect (supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier_1->connect (supplier_admin_.in ());
 
       // operations:
       CosNotification::StructuredEvent event;
@@ -197,19 +181,16 @@ Supplier::run (int argc, char* argv[])
         // any
         event.remainder_of_body <<= (CORBA::Long)k;
 
-        supplier_1->send_event (event ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        supplier_1->send_event (event);
       }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog get_n_records...\n"));
 
 #ifndef ACE_LACKS_LONGLONG_T
-      CORBA::ULongLong retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULongLong retval = notify_log_->get_n_records ();
 #else
-      CORBA::Long retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-      ACE_TRY_CHECK;
+      CORBA::Long retval = notify_log_->get_n_records ().lo();
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d \n", retval));
@@ -217,11 +198,9 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog::get_current_size...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-       retval = notify_log_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       retval = notify_log_->get_current_size ();
 #else
-       retval = notify_log_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-      ACE_TRY_CHECK;
+       retval = notify_log_->get_current_size ().lo();
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
@@ -246,17 +225,14 @@ Supplier::run (int argc, char* argv[])
      ACE_DEBUG ((LM_DEBUG,
                  "Deleting records... \n"));
 
-     retval = notify_log_->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     retval = notify_log_->delete_records (QUERY_LANG, QUERY_2);
 
      ACE_DEBUG ((LM_DEBUG,
                  "Calling NotifyLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-     retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     retval = notify_log_->get_n_records ();
 #else
-     retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-     ACE_TRY_CHECK;
+     retval = notify_log_->get_n_records ().lo();
 #endif
 
      ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d \n",
@@ -264,11 +240,9 @@ Supplier::run (int argc, char* argv[])
 
      ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-     retval = notify_log_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
+     retval = notify_log_->get_current_size ();
 #else
-     retval = notify_log_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-     ACE_TRY_CHECK;
+     retval = notify_log_->get_current_size ().lo();
 #endif
 
      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
@@ -276,17 +250,16 @@ Supplier::run (int argc, char* argv[])
      this->notify_log_->destroy();
 
      }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier::run");
+      ex._tao_print_exception ("Supplier::run");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 
-Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (void)
 {
 }
 
@@ -295,43 +268,37 @@ Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier ()
 }
 
 void
-Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin ACE_ENV_ARG_DECL)
+Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   CosNotifyComm::StructuredPushSupplier_var objref =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
-  proxy_consumer_->connect_structured_push_supplier (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy_consumer_->connect_structured_push_supplier (objref.in ());
 }
 
 void
-Filter_StructuredPushSupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Filter_StructuredPushSupplier::disconnect (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_structured_push_consumer();
 }
 
 void
 Filter_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const CosNotification::EventTypeSeq & /*removed */)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
@@ -342,17 +309,16 @@ Filter_StructuredPushSupplier::subscription_change
 
 void
 Filter_StructuredPushSupplier::send_event
-   (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
+   (const CosNotification::StructuredEvent& event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy_consumer_->push_structured_event (event);
 }
 
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
-   (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+   (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

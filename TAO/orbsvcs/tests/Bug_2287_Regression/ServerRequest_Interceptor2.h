@@ -46,38 +46,33 @@ TAO249_ServerRequest_Interceptor2 (void);
  */
 //@{
 /// Return the name of this ServerRequestinterceptor.
-virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
+virtual char * name (void)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
-virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+virtual void destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
 virtual void receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest));
 
 virtual void receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest));
 
 virtual void send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
 virtual void send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest));
 
 virtual void send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest));
 //@}
@@ -90,7 +85,7 @@ protected:
 private:
 
 CORBA::ORB_var orb_;
-    
+
 CORBA::Boolean expired_;
 };
 

@@ -49,11 +49,11 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
             }
           catch (Stock::Invalid_Stock &e)
             {
-              ACE_PRINT_EXCEPTION (e, "Stock exception: invalid stock name: ");
+              e._tao_print_exception ("Stock exception: invalid stock name: ");
             }
           catch (CORBA::Exception &ex)
             {
-      ACE_PRINT_EXCEPTION (ex, "Stock_StockNameConsumer_i::push_StockName: ");
+      ex._tao_print_exception ("Stock_StockNameConsumer_i::push_StockName: ");
             }
         }
     }

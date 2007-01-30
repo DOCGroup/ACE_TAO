@@ -32,8 +32,7 @@ class CSD_PT_TestInf_Export ClientEngine : public TAO_Intrusive_Ref_Count_Base<A
     ClientEngine();
     virtual ~ClientEngine();
 
-    virtual bool execute(unsigned num_loops 
-                         ACE_ENV_ARG_DECL) = 0;
+    virtual bool execute(unsigned num_loops) = 0;
 };
 
 #endif

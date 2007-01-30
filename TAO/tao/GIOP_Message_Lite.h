@@ -141,7 +141,7 @@ public:
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &x
+      const CORBA::Exception &x
     );
 
   /// Consolidate fragmented message with associated fragments, being
@@ -252,7 +252,7 @@ private:
   int write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Writes the locate _reply message in to the <output>

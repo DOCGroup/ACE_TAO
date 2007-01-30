@@ -51,7 +51,7 @@ public:
   virtual ~TAO_Notify_ProxyPushConsumer ();
 
 
-//  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+//  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual const char * get_proxy_type_name (void) const;
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
@@ -59,24 +59,24 @@ public:
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
-  virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void push (const CORBA::Any & data ACE_ENV_ARG_DECL)
+  virtual void push (const CORBA::Any & data)
     ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
                    ));
 
-  virtual void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+  virtual void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected
                      ));
 
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

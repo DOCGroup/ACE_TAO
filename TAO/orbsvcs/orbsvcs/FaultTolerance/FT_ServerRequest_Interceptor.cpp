@@ -29,69 +29,58 @@ namespace TAO
   }
 
   char *
-  FT_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ServerRequest_Interceptor::name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup ("TAO_FT_ServerRequest_Interceptor");
   }
 
   void
-  FT_ServerRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ServerRequest_Interceptor::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ServerRequest_Interceptor::receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
     // Check for the group version service context
-    ACE_TRY
+    try
       {
         IOP::ServiceContext_var sc =
-          ri->get_request_service_context (IOP::FT_GROUP_VERSION
-                                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
-        this->check_iogr_version (sc.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->check_iogr_version (sc.in ());
       }
-    ACE_CATCH (CORBA::BAD_PARAM, ex)
+    catch (const CORBA::BAD_PARAM&)
       {
         // No group version context, no problem just return.
         return;
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
       {
-        ACE_RE_THROW;
+        throw;
       }
-    ACE_ENDTRY;
-    ACE_CHECK;
 
   }
 
   void
   FT_ServerRequest_Interceptor::receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
     // Check for the group version service context
     CORBA::String_var op =
-      ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->operation ();
 
     if (ACE_OS::strcmp (op.in (),
                         "tao_update_object_group") == 0)
     {
-      this->update_iogr (ri
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->update_iogr (ri);
     }
 
     // Else the world is fine
@@ -99,16 +88,14 @@ namespace TAO
 
   void
   FT_ServerRequest_Interceptor::send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr
-      ACE_ENV_ARG_DECL_NOT_USED)
+      PortableInterceptor::ServerRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ServerRequest_Interceptor::send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr
-      ACE_ENV_ARG_DECL_NOT_USED)
+      PortableInterceptor::ServerRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
@@ -116,8 +103,7 @@ namespace TAO
 
   void
   FT_ServerRequest_Interceptor::send_other (
-      PortableInterceptor::ServerRequestInfo_ptr
-      ACE_ENV_ARG_DECL_NOT_USED)
+      PortableInterceptor::ServerRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
@@ -125,8 +111,7 @@ namespace TAO
 
   void
   FT_ServerRequest_Interceptor::check_iogr_version (
-      const IOP::ServiceContext &svc
-      ACE_ENV_ARG_DECL)
+      const IOP::ServiceContext &svc)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
@@ -143,8 +128,7 @@ namespace TAO
     FT::FTGroupVersionServiceContext fgvsc;
 
     if ((cdr >> fgvsc) == 0)
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
 
     if (fgvsc.object_group_ref_version >
@@ -160,18 +144,17 @@ namespace TAO
              this->object_group_ref_version_)
       {
         // Notice that this is a permanent forward.
-        ACE_THROW (PortableInterceptor::ForwardRequest (
-                   this->iogr_.in()));
+        throw PortableInterceptor::ForwardRequest (this->iogr_.in());
       }
     else if ((fgvsc.object_group_ref_version ==
              this->object_group_ref_version_) &&
              !this->is_primary_)
       {
-        ACE_THROW (CORBA::TRANSIENT (
-                       CORBA::SystemException::_tao_minor_code (
-                       TAO::VMCID,
-                       EINVAL),
-                       CORBA::COMPLETED_NO));
+        throw CORBA::TRANSIENT (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
     else
       {
@@ -181,15 +164,13 @@ namespace TAO
 
   void
   FT_ServerRequest_Interceptor::update_iogr (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->orb_.in () == 0)
       {
         CORBA::String_var orb_id =
-          ri->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          ri->orb_id ();
 
         int argc = 0;
         char **argv = 0;
@@ -197,20 +178,17 @@ namespace TAO
         this->orb_ =
           CORBA::ORB_init (argc,
                            argv,
-                           orb_id.in ()
-                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+                           orb_id.in ());
       }
 
     Dynamic::ParameterList_var param =
-      ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->arguments ();
 
     // this is only for checking the tao_update_object_group operation
     // which accepts three parameters, i.e.,an iogr as a string,
     // a version object and a boolean.
     if (param->length () != 3 )
-      ACE_THROW (CORBA::TRANSIENT ());
+      throw CORBA::TRANSIENT ();
 
     const char *str = 0;
 
@@ -221,16 +199,14 @@ namespace TAO
     CORBA::String_var obj (str);
 
     this->iogr_ =
-      this->orb_->string_to_object (obj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+      this->orb_->string_to_object (obj.in ());
 
-    ACE_CHECK;
 
     // @@ This exception is a hack to let the RM know that we have
     // received and updated the IOGR. We will add a special minor code
     // soon.
     if (this->iogr_.in ())
-      ACE_THROW (CORBA::TRANSACTION_ROLLEDBACK ());
+      throw CORBA::TRANSACTION_ROLLEDBACK ();
   }
 }
 

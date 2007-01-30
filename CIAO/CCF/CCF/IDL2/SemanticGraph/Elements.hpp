@@ -894,7 +894,7 @@ namespace CCF
         }
 
         void
-        set_right_node (Const& n)
+        set_right_node (Const&)
         {
         }
 

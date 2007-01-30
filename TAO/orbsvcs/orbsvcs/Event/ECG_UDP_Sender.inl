@@ -80,7 +80,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command::operator= (
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Sender_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Sender_Disconnect_Command::execute (void)
 {
   if (CORBA::is_nil (this->proxy_.in ()))
     // We are not connected.
@@ -89,8 +89,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   RtecEventChannelAdmin::ProxyPushSupplier_var release_proxy =
     this->proxy_._retn ();
 
-  release_proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  release_proxy->disconnect_push_supplier ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

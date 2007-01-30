@@ -33,8 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class Environment;
-
   class Exception;
 }
 
@@ -69,7 +67,7 @@ public:
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              ACE_ENV_SINGLE_ARG_DECL) = 0;
+              void) = 0;
 
 
 };

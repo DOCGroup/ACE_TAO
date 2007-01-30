@@ -28,7 +28,7 @@ class CSD_TP_Foo_C_Export Foo_C_Custom_ClientEngine : public ClientEngine
                               unsigned               client_id);
     virtual ~Foo_C_Custom_ClientEngine();
 
-    virtual bool execute(ACE_ENV_SINGLE_ARG_DECL);
+    virtual bool execute(void);
 
     static void expected_results(Foo_C_Statistics& stats);
 

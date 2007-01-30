@@ -49,8 +49,7 @@ int
 MIF_Task::activate_task (RTScheduling::Current_ptr current,
        CORBA::Policy_ptr sched_param,
        long flags,
-       ACE_Time_Value* base_time
-       ACE_ENV_ARG_DECL)
+       ACE_Time_Value* base_time)
 {
 
   if (TAO_debug_level > 0)
@@ -64,9 +63,7 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 
   base_time_ = base_time;
 
-  current_ = RTScheduling::Current::_narrow (current
-               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  current_ = RTScheduling::Current::_narrow (current);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
 
@@ -88,7 +85,7 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 int
 MIF_Task::perform_task (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 
       char msg [BUFSIZ];
@@ -123,9 +120,7 @@ MIF_Task::perform_task (void)
 
           current_->update_scheduling_segment (name,
                                                sched_param.in (),
-                                               sched_param.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                               sched_param.in ());
         }
 
       if (this->dist_)
@@ -152,22 +147,18 @@ MIF_Task::perform_task (void)
 
               current_->update_scheduling_segment (name,
                                                    sched_param.in (),
-                                                   sched_param.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                   sched_param.in ());
 
             }
 
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

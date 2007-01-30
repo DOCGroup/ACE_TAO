@@ -90,31 +90,26 @@ TAO_Notify_Tests_SupplierAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_SupplierAdmin_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_SupplierAdmin_Command::handle_create (void)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str ());
 
   // create supplier admin
   CosNotifyChannelAdmin::SupplierAdmin_var sa =
     ec->new_for_suppliers (this->ifgop_,
-                           this->id_
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                           this->id_);
 
-  LOOKUP_MANAGER->_register (sa.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->_register (sa.in(), this->name_.c_str ());
 }
 
 void
-TAO_Notify_Tests_SupplierAdmin_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_SupplierAdmin_Command::handle_offers (void)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var admin;
 
-  LOOKUP_MANAGER->resolve (admin, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (admin, this->name_.c_str ());
 
       // Let the user see what we're subscribed for,
   ACE_DEBUG ((LM_DEBUG, "Calling SupplierAdmin offer_change : "));
@@ -132,48 +127,41 @@ TAO_Notify_Tests_SupplierAdmin_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
-  admin->offer_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  admin->offer_change (this->added_, this->removed_);
 }
 
 void
-TAO_Notify_Tests_SupplierAdmin_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_SupplierAdmin_Command::handle_status (void)
 {
 }
 
 void
-TAO_Notify_Tests_SupplierAdmin_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_SupplierAdmin_Command::handle_set_qos (void)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var admin;
 
-  LOOKUP_MANAGER->resolve (admin, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (admin, this->name_.c_str ());
 
-  admin->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  admin->set_qos (this->qos_);
 }
 
 void
-TAO_Notify_Tests_SupplierAdmin_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_SupplierAdmin_Command::execute_i (void)
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_create ();
     }
   else if (this->command_ == OFFER)
     {
-      this->handle_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_offers ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_set_qos ();
     }
   else if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_status ();
     }
 }

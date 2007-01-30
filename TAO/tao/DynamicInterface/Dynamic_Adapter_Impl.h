@@ -58,12 +58,12 @@ public:
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags
-                               ACE_ENV_ARG_DECL);
+                              );
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
                                       const char *op
-                                      ACE_ENV_ARG_DECL);
+                                     );
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -82,7 +82,7 @@ public:
   // CORBA::ORB::create_exception_list.
 
   virtual void create_exception_list (CORBA::ExceptionList_ptr &list
-                                      ACE_ENV_ARG_DECL);
+                                     );
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

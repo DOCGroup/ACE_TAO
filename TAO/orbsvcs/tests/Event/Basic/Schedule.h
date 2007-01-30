@@ -52,12 +52,12 @@ public:
   virtual void print_usage (void);
 
   /// Set the scheduling service attribute
-  void initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL);
+  void initialize_ec_impl (void);
   void cleanup_ec (void);
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
 
   /// Don't run the suppliers, just compute the schedule.
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results (void);
@@ -66,13 +66,11 @@ public:
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED);
+      int& shutdown_event_type);
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED);
+      int& shutdown_event_type);
 
 private:
   /// The scheduler implementation

@@ -13,25 +13,21 @@ TAO_Notify_Proxy::updates_off (void)
 ACE_INLINE CORBA::Boolean
 TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
                              , TAO_Notify_FilterAdmin& parent_filter_admin
-                             , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-                             ACE_ENV_ARG_DECL)
+                             , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator)
 {
   // check if it passes the parent filter.
   CORBA::Boolean parent_val =
-    parent_filter_admin.match (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    parent_filter_admin.match (event);
 
   CORBA::Boolean val = 0;
 
   if (filter_operator == CosNotifyChannelAdmin::AND_OP)
     {
-      val = parent_val && this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      val = parent_val && this->filter_admin_.match (event);
     }
   else
     {
-      val = parent_val || this->filter_admin_.match (event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      val = parent_val || this->filter_admin_.match (event);
     }
 
   return val;

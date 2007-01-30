@@ -108,9 +108,9 @@ TAO::Any_Impl::_remove_ref (void)
 
 void
 TAO::Any_Impl::_tao_decode (TAO_InputCDR &
-                            ACE_ENV_ARG_DECL)
+                            )
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean

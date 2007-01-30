@@ -17,14 +17,14 @@ class ClientApp : public TestAppBase
 
   protected:
 
-    virtual int run_i(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    virtual int run_i(int argc, char* argv[]);
 
   private:
 
     // These are all called, in order, by the run_i() method.
-    int init(int argc, char* argv[] ACE_ENV_ARG_DECL);
-    void client_setup(ACE_ENV_SINGLE_ARG_DECL);
-    int  run_engine(ACE_ENV_SINGLE_ARG_DECL);
+    int init(int argc, char* argv[]);
+    void client_setup(void);
+    int  run_engine(void);
     void cleanup();
 
     // Helper methods used by the methods above.

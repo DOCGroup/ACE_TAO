@@ -84,7 +84,7 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile * make_profile (void);
   //@}
 
   /// Cancel the passed cvs handler from the connector

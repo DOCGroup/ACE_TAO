@@ -82,59 +82,46 @@ private:
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // Prints the time stats.
 
-  void cube_union (ACE_ENV_SINGLE_ARG_DECL);
+  void cube_union (void);
   // Exercise the union.  Cube a union.
 
-  void cube_struct (int i
-                    ACE_ENV_ARG_DECL);
+  void cube_struct (int i);
   // calculate the cube from a struct.
 
-  void cube_long (int i
-                  ACE_ENV_ARG_DECL);
+  void cube_long (int i);
   // calculate the cube from a long.
 
-  void cube_oneway (int i
-                    ACE_ENV_ARG_DECL);
+  void cube_oneway (int i);
   // Oneway operation test.
 
-  void cube_void (int i
-                  ACE_ENV_ARG_DECL);
+  void cube_void (int i);
   // Twoway operation test.
 
-  void cube_octet (int i
-                   ACE_ENV_ARG_DECL);
+  void cube_octet (int i);
   // Cube an octet.
 
-  void cube_short (int i
-                   ACE_ENV_ARG_DECL);
+  void cube_short (int i);
   // Cube a short.
 
-  void cube_long_sequence (int i, int l
-                           ACE_ENV_ARG_DECL);
+  void cube_long_sequence (int i, int l);
   // Cube a sequence <l> is the length of the sequence.
 
-  void cube_octet_sequence (int i, int l
-                            ACE_ENV_ARG_DECL);
+  void cube_octet_sequence (int i, int l);
   // Cube a sequence of octets, <l> is the length of the sequence.
 
-  void cube_many_sequence (int i, int l
-                           ACE_ENV_ARG_DECL);
+  void cube_many_sequence (int i, int l);
   // Cube a sequence of manys, <l> is the length of the sequence.
 
-  void cube_rti_data (int i, int numUpdates, int numAttrs
-                      ACE_ENV_ARG_DECL);
+  void cube_rti_data (int i, int numUpdates, int numAttrs);
   // Cube a sequence <l> is the length of the sequence.
 
-  void cube_any_struct (int i
-                    ACE_ENV_ARG_DECL);
+  void cube_any_struct (int i);
   // calculate the cube from a struct in an any.
 
-  void cube_any (int i
-                 ACE_ENV_ARG_DECL);
+  void cube_any (int i);
   // calculate the cube from a long in an any.
 
-  int shutdown_server (int do_shutdown
-                       ACE_ENV_ARG_DECL);
+  int shutdown_server (int do_shutdown);
   // Invoke the method with <do_shutdown> != 0 to shutdown the server.
 
   int argc_;

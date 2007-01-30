@@ -107,7 +107,7 @@ namespace TAO
 
       /// More TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
-      virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+      virtual TAO_Profile *make_profile (void);
 
       /// Cancel the passed cvs handler from the connector
       /// Its not clear what it means to cancel in HTIOP, since there's no

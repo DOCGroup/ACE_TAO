@@ -84,14 +84,14 @@ namespace POA_CORBA
 
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     CORBA::PolicyType policy_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -101,7 +101,7 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -111,7 +111,7 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

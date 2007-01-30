@@ -18,7 +18,7 @@ Simple_Server_i::Simple_Server_i (void)
 }
 
 char*
-Simple_Server_i::remote_call (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+Simple_Server_i::remote_call (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing remote_call()\n", _key.in()));
@@ -32,7 +32,7 @@ Simple_Server_i::remote_call (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_
 
 
 char*
-Simple_Server_i::shutdown (const char* key ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::shutdown (const char* key)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing shutdown()\n", _key.in()));
@@ -52,7 +52,7 @@ Simple_Server_i::shutdown (const char* key ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 char*
-Simple_Server_i::abort (const char* key ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::abort (const char* key)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing abort()\n", _key.in()));

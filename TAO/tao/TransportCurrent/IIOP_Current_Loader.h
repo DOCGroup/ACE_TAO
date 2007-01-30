@@ -17,6 +17,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
+
 #include "tao/TransportCurrent/Current_Loader.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -66,5 +70,7 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Transport_Current,
 
 ACE_FACTORY_DECLARE (TAO_Transport_Current,
                      TAO_Transport_IIOP_Current_Loader)
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 #endif /* TAO_TRANSPORT_IIOP_TRAITS_LOADER_H */

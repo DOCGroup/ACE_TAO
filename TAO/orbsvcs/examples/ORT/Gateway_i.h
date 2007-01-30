@@ -32,13 +32,11 @@ public:
   Gateway_i (CORBA::ORB_ptr orb,
              PortableServer::Current_ptr poa_current);
 
-  virtual void invoke (CORBA::ServerRequest_ptr request
-                       ACE_ENV_ARG_DECL);
+  virtual void invoke (CORBA::ServerRequest_ptr request);
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL);
+      PortableServer::POA_ptr poa);
 
  private:
 

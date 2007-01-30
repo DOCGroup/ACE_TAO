@@ -31,11 +31,11 @@ public:
     NS_FilterType supplierFilter, Notify_Test_Client& client);
 
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                CosNotifyChannelAdmin::EventChannel_ptr ec ACE_ENV_ARG_DECL)
+                CosNotifyChannelAdmin::EventChannel_ptr ec)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  void push_structured_event (const CosNotification::StructuredEvent& ACE_ENV_ARG_DECL)
+  void push_structured_event (const CosNotification::StructuredEvent&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   ACE_CString name_;

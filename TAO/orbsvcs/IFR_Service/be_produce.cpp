@@ -99,15 +99,13 @@ BE_abort (void)
 }
 
 void
-BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
+BE_create_holding_scope (void)
 {
   CORBA::ModuleDef_ptr scope = CORBA::ModuleDef::_nil ();
 
   // If we are multi-threaded, it may already be created.
   CORBA::Contained_var result =
-    be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    be_global->repository ()->lookup_id (be_global->holding_scope_name ());
 
   // Will live until the repository goes away for good.
   if (CORBA::is_nil (result.in ()))
@@ -117,27 +115,21 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
                                       be_global->holding_scope_name (),
                                       be_global->holding_scope_name (),
                                       "1.0"
-                                      ACE_ENV_ARG_PARAMETER
                                     );
-      ACE_CHECK;
     }
   else
     {
-      scope = CORBA::ModuleDef::_narrow (result.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      scope = CORBA::ModuleDef::_narrow (result.in ());
     }
 
   be_global->holding_scope (scope);
 }
 
 int
-BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
+BE_ifr_repo_init (void)
 {
   CORBA::Object_var object =
-    be_global->orb ()->resolve_initial_references ("InterfaceRepository"
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    be_global->orb ()->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (object.in ()))
     {
@@ -150,9 +142,7 @@ BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Repository_var repo =
-    CORBA::Repository::_narrow (object.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    CORBA::Repository::_narrow (object.in ());
 
   if (CORBA::is_nil (repo.in ()))
     {
@@ -173,19 +163,16 @@ BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_DECL)
 TAO_IFR_BE_Export void
 BE_produce (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      int status = BE_ifr_repo_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int status = BE_ifr_repo_init ();
 
       if (status != 0)
         {
           return;
         }
 
-      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      BE_create_holding_scope ();
 
       // Get the root node.
       AST_Decl *d = idl_global->root ();
@@ -237,13 +224,11 @@ BE_produce (void)
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_produce"));
+      ex._tao_print_exception (ACE_TEXT ("BE_produce"));
 
     }
-  ACE_ENDTRY;
 
   // Clean up.
   BE_cleanup ();

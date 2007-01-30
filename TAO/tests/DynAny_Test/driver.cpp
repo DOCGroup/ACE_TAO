@@ -66,15 +66,13 @@ Driver::~Driver (void)
 int
 Driver::init (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    "local"
-                                    ACE_ENV_ARG_PARAMETER);
+                                    "local");
 
-      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)
@@ -84,13 +82,11 @@ Driver::init (int argc, char* argv[])
                           -1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Driver::init");
+      ex._tao_print_exception ("Driver::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -115,7 +111,7 @@ Driver::parse_args (int argc, char* argv[])
       {
       case 't':
         test_str = get_opts.opt_arg ();
-        
+
         if (!ACE_OS::strcmp (test_str, "dynany"))
           this->test_type_ = TEST_DYNANY;
         else if (!ACE_OS::strcmp (test_str, "dynarray"))

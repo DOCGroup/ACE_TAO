@@ -89,48 +89,46 @@ namespace MyImpl
 
     // Attribute operations.
 
-    virtual CORBA::Long hertz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long hertz ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void hertz (CORBA::Long hertz
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void hertz (CORBA::Long hertz)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from supported interface(s)
 
-    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void start ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void stop ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Boolean active (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Boolean active ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
-    virtual void set_session_context (Components::SessionContext_ptr ctx
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void set_session_context (Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_preactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ciao_postactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
@@ -168,14 +166,13 @@ namespace MyImpl
     // Explicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    new_RateGen (CORBA::Long hertz
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    new_RateGen (CORBA::Long hertz)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   };

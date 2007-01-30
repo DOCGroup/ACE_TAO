@@ -142,11 +142,11 @@ public:
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void activate (void);
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void shutdown (void);
 
   /// Access the dispatching module....
   TAO_CEC_Dispatching* dispatching (void) const;
@@ -195,21 +195,15 @@ public:
 
   /// Used to inform the EC that a Consumer has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_TypedProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_TypedProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_TypedProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_TypedProxyPushConsumer*);
+  virtual void reconnected (TAO_CEC_TypedProxyPushConsumer*);
+  virtual void disconnected (TAO_CEC_TypedProxyPushConsumer*);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
-  virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushSupplier*);
+  virtual void reconnected (TAO_CEC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// Can the consumers reconnect to the EC?
   int consumer_reconnect (void) const;
@@ -229,10 +223,10 @@ public:
   TAO_CEC_Operation_Params * find_from_ifr_cache (const char *operation);
 
   /// Function allows consumer admin to register the uses interface
-  int consumer_register_uses_interace (const char *uses_interface ACE_ENV_ARG_DECL);
+  int consumer_register_uses_interace (const char *uses_interface);
 
   /// Function allows supplier admin to register the supported interface
-  int supplier_register_supported_interface (const char *supported_interface ACE_ENV_ARG_DECL);
+  int supplier_register_supported_interface (const char *supported_interface);
 
   /// Function to return the supported_interface_
   const char * supported_interface (void) const;
@@ -245,24 +239,22 @@ public:
 
   /// Function populates the NVList from the provide param information
   virtual void create_operation_list (TAO_CEC_Operation_Params *oper_params,
-                                      CORBA::NVList_out new_list
-                                      ACE_ENV_ARG_DECL);
+                                      CORBA::NVList_out new_list);
 
   /// Function creates an empty NVList
   virtual void create_list (CORBA::Long count,
-                            CORBA::NVList_out new_list
-                            ACE_ENV_ARG_DECL);
+                            CORBA::NVList_out new_list);
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
   virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-    for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+    for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-    for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+    for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ServantRetryMap& get_servant_retry_map (void);
@@ -273,7 +265,7 @@ public:
 
 protected:
   /// Function caches the full interface description from the IFR
-  int cache_interface_description (const char *interface ACE_ENV_ARG_DECL);
+  int cache_interface_description (const char *interface);
 
   /// Insert a operation/parameter into the IFR cache
   int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);

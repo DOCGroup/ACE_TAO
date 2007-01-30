@@ -74,27 +74,26 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 void
 TAO::CSD::FW_Server_Request_Wrapper::dispatch
                                             (PortableServer::Servant servant
-                                             ACE_ENV_ARG_DECL)
+                                             )
 {
-  ACE_TRY
+  try
     {
-      servant->_dispatch(*this->request_, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      servant->_dispatch(*this->request_, 0);
     }
   // Only CORBA exceptions are caught here.
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (this->request_->collocated())
         {
           // For collocated requests, we re-throw the exception.
-          ACE_RE_THROW;
+          throw;
         }
       else if (!this->request_->sync_with_server() &&
               this->request_->response_expected() &&
               !this->request_->deferred_reply())
         {
           // The request is a remote request that is expecting a reply.
-          this->request_->tao_send_reply_exception(ACE_ANY_EXCEPTION);
+          this->request_->tao_send_reply_exception(ex);
         }
       else if (TAO_debug_level > 0)
         {
@@ -108,13 +107,10 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (
-              ACE_ANY_EXCEPTION,
-              "FW_Server_Request_Wrapper::dispatch ()");
+          ex._tao_print_exception ("FW_Server_Request_Wrapper::dispatch ()");
         }
      }
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_CATCHALL
+  catch (...)
     {
       // @@ TODO some c++ exception or another, but what do we do with
       //    it?
@@ -130,7 +126,7 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
       if (this->request_->collocated())
         {
           // For collocated requests, we re-throw the exception.
-          ACE_RE_THROW;
+          throw;
         }
       else if (!this->request_->sync_with_server() &&
               this->request_->response_expected() &&
@@ -151,14 +147,11 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (
-              exception,
-              "FW_Server_Request_Wrapper::dispatch ()");
+          exception._tao_print_exception (
+            "FW_Server_Request_Wrapper::dispatch ()");
         }
      }
-#endif /* TAO_HAS_EXCEPTIONS */
 
-   ACE_ENDTRY;
 }
 
 
@@ -166,15 +159,10 @@ TAO_ServerRequest*
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
 {
   // TBD-CSD: Ultimately add an argument for an allocator.
-  TAO_ServerRequest* clone_obj;
+  TAO_ServerRequest* clone_obj = 0;
   ACE_NEW_RETURN (clone_obj,
                   TAO_ServerRequest (),
                   0);
-
-  if (clone_obj == 0)
-    {
-      return 0;
-    }
 
   // TYPE: TAO_Pluggable_Messaging*
   // ACTION: Assuming that a shallow-copy is ok here.

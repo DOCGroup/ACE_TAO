@@ -31,10 +31,10 @@ template <class T>
 ACE_Future_Set<T>::~ACE_Future_Set (void)
 {
   // Detach ourselves from all remaining futures, if any, in our map.
-  ACE_TYPENAME FUTURE_HASH_MAP::iterator iterator =
+  typename FUTURE_HASH_MAP::iterator iterator =
     this->future_map_.begin ();
 
-  ACE_TYPENAME FUTURE_HASH_MAP::iterator end =
+  typename FUTURE_HASH_MAP::iterator end =
     this->future_map_.end ();
 
   for (;

@@ -68,15 +68,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,26 +82,21 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -116,15 +109,12 @@ main (int argc, char *argv[])
       Callback_i callback_impl (orb.in ());
 
       Callback_var callback =
-        callback_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        callback_impl._this ();
 
       for (int i = 0; i != niterations; ++i)
         {
           CORBA::Long r =
-            server->test_method (0, 0, callback.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            server->test_method (0, 0, callback.in ());
 
           if (r != 0)
             {
@@ -136,59 +126,47 @@ main (int argc, char *argv[])
 
       if (do_abort)
         {
-          ACE_TRY_EX(ABORT)
+          try
             {
-              server->shutdown_now (0 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(ABORT);
+              server->shutdown_now (0);
             }
-          ACE_CATCH (CORBA::COMM_FAILURE, comm_failure)
+          catch (const CORBA::COMM_FAILURE& comm_failure)
             {
               ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
-          ACE_ENDTRY;
-          ACE_TRY_CHECK;
         }
       else if (do_crash)
         {
-          ACE_TRY_EX(CRASH)
+          try
             {
-              server->shutdown_now (1 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(CRASH);
+              server->shutdown_now (1);
             }
-          ACE_CATCH (CORBA::COMM_FAILURE, comm_failure)
+          catch (const CORBA::COMM_FAILURE& comm_failure)
             {
               ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
-          ACE_ENDTRY;
-          ACE_TRY_CHECK;
         }
       else if (do_suicide)
         {
-          (void) server->test_method (1, 0, callback.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) server->test_method (1, 0, callback.in ());
           ACE_DEBUG ((LM_DEBUG, "ERROR: client should have aborted\n"));
         }
       else if (do_self_shutdown)
         {
-          (void) server->test_method (1, 1, callback.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) server->test_method (1, 1, callback.in ());
         }
 
       if (do_shutdown)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
 
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, x)
+  catch (const CORBA::COMM_FAILURE& x)
     {
       // For other case this is expected.
       if (do_self_shutdown == 0)
@@ -196,13 +174,11 @@ main (int argc, char *argv[])
           x._tao_print_exception ("ERROR: Unexpected exception \n");
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in client:");
+      ex._tao_print_exception ("Exception caught in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

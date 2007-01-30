@@ -56,7 +56,7 @@ namespace TAO
                               bool response_expected = true);
 
     Invocation_Status remote_invocation (ACE_Time_Value *value
-                                         ACE_ENV_ARG_DECL)
+                                         )
       ACE_THROW_SPEC ((CORBA::Exception));
 
   protected:

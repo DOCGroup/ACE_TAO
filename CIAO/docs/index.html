@@ -82,46 +82,37 @@ Visio file</a> (The same file in Visio V.5 format is <a
  <a href="imgs/DAnCE-Dynamic.sxd">DAnCE-Dynamic.sxd</a> <br>
 <br>
 <hr>
-<h2>CIAO's D&C Framework (DAnCE) part-by-part</h2>
+<h2>CIAO's D&C Framework (<a href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/index.html">DAnCE</a>) part-by-part</h2>
 DAnCE's implementation is based on the OMG's Deployment and Configuration
 Specification version [ptc/2003-07-08]. Here is a list of the major
 actors of CIAO runtime that a user should be aware of.
 <ul>
-  <li><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/dir_000011.html"><strong>NodeManager:</strong></a>
+  <li><strong>NodeManager:</strong>
 A daemon process responsible for managing NodeApplications that reside
 in the same physical node.</li>
   <p> </p>
-  <li><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/dir_000007.html"><strong>NodeApplicationManager:</strong></a>
+  <li><strong>NodeApplicationManager:</strong>
 A infrastructure component responsible for deploying&nbsp;
 locality-constrained applications onto a node. A NodeApplicationManager
 is usually created by NodeManager.<br>
   </li>
   <p> </p>
-  <li><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/dir_000013.html"><strong>NodeApplication:</strong></a>
+  <li><strong>NodeApplication:</strong>
 A component server instance spawned by NodeApplicationManager. <br>
   </li>
   <p> </p>
-  <li><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/dir_000008.html"><strong>ExecutionManager:</strong></a>
+  <li><strong>ExecutionManager:</strong>
 Infrastructure component responsible for executing an component-based
 DRE application based on the information from DeploymentPlan.</li>
   <p> </p>
-  <li><strong><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/dir_000010.html"><strong>DomainApplicationManager</strong></a></strong>:
+  <li><strong>DomainApplicationManager</strong>:
 Domain-oriented auxiliary component created and used by
 ExecutionManager to deploy the component-based DRE application at the
 domain level. <br>
     <br>
   </li>
-  <li><strong><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/tools/assembly_deployer/index.html"><strong></strong></a></strong><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/tools/assembly_deployer/index.html"><strong></strong></a><strong><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/tools/assembly_deployer/index.html"><strong></strong></a></strong><strong><a
- href="http://www.dre.vanderbilt.edu/Doxygen/Current/html/tao/ciao/dance/dir_000009.html"><strong>PlanLauncher</strong></a></strong><strong>:
-    </strong>Executor component responsible for parsing the XML-based
+  <li><strong>PlanLauncher</strong></strong>:
+Executor component responsible for parsing the XML-based
 deploymentplan and passing the plan to ExecutionManager for execution.<br>
     <br>
 To understand the runtime inter-relationships of various CIAO actors,

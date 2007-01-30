@@ -57,7 +57,7 @@ public:
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb
-                                          ACE_ENV_ARG_DECL)
+                                          )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -69,19 +69,19 @@ private:
    */
   CORBA::Object_ptr make_stub_from_mprofile (CORBA::ORB_ptr orb,
                                              TAO_MProfile &mprofile
-                                             ACE_ENV_ARG_DECL)
+                                             )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Gets the pointer to the key_string when the protocol used is RIR
   CORBA::Object_ptr parse_string_rir_helper (const char *corbaloc_name,
                                              CORBA::ORB_ptr orb
-                                             ACE_ENV_ARG_DECL)
+                                             )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void make_canonical (const char *ior,
                        size_t ior_len,
                        ACE_CString &canonical_endpoint
-                       ACE_ENV_ARG_DECL)
+                       )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   struct parsed_endpoint {

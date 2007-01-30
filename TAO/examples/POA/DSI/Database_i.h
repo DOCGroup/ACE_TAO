@@ -35,28 +35,24 @@ public:
   {
   public:
     Entry (CORBA::ORB_ptr orb,
-           PortableServer::POA_ptr poa
-           ACE_ENV_ARG_DECL_NOT_USED);
+           PortableServer::POA_ptr poa);
     ~Entry (void);
 
-    virtual void invoke (CORBA::ServerRequest_ptr request
-                         ACE_ENV_ARG_DECL);
+    virtual void invoke (CORBA::ServerRequest_ptr request);
     // The invoke() method receives requests issued to any CORBA
     // object incarnated by the DSI servant and performs the
     // processing necessary to execute the request.
 
     virtual CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
-                                                    PortableServer::POA_ptr poa
-                                                    ACE_ENV_ARG_DECL);
+                                                    PortableServer::POA_ptr poa);
     // The _primary_interface() method receives an ObjectId value and
     // a POA_ptr as input parameters and returns a valid RepositoryId
     // representing the most-derived interface for that oid.
 
-    virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    virtual PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA for this servant.
 
-    virtual void is_a (CORBA::ServerRequest_ptr request
-                       ACE_ENV_ARG_DECL);
+    virtual void is_a (CORBA::ServerRequest_ptr request);
     // Handles the _is_a call
 
   protected:
@@ -74,36 +70,32 @@ public:
   {
   public:
     Agent (CORBA::ORB_ptr orb,
-           PortableServer::POA_ptr poa
-           ACE_ENV_ARG_DECL_NOT_USED);
+           PortableServer::POA_ptr poa);
     ~Agent (void);
 
     virtual Database::Entry_ptr create_entry (const char *key,
                                               const char *entry_type,
-                                              const Database::NVPairSequence &initial_attributes
-                                              ACE_ENV_ARG_DECL)
+                                              const Database::NVPairSequence &initial_attributes)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Duplicate_Key));
 
     virtual Database::Entry_ptr find_entry (const char *key,
-                                            const char *entry_type
-                                            ACE_ENV_ARG_DECL)
+                                            const char *entry_type)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Not_Found));
 
     virtual void destroy_entry (const char *key,
-                                const char *entry_type
-                                ACE_ENV_ARG_DECL)
+                                const char *entry_type)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Database::Unknown_Type,
                        Database::Unknown_Key));
 
-    virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    virtual PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA for this servant.
 
   protected:

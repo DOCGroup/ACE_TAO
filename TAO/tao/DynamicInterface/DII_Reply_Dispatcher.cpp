@@ -79,23 +79,20 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
                   ACE_TEXT ("(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n")));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Call the Request back and send the reply data.
       this->req_->handle_response (this->reply_cdr_,
                                    this->reply_status_
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  );
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception during reply handler");
+          ex._tao_print_exception ("Exception during reply handler");
         }
     }
-  ACE_ENDTRY;
 
   // This was dynamically allocated. Now the job is done.
   (void) this->decr_refcount ();
@@ -106,9 +103,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 void
 TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0,
@@ -117,29 +113,23 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
       TAO_OutputCDR out_cdr;
 
       comm_failure._tao_encode (out_cdr
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               );
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
       this->req_->handle_response (cdr,
                                    TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  );
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (
-              ACE_ANY_EXCEPTION,
-              "DII_Deferred_Reply_Dispacher::connection_closed"
-            );
+          ex._tao_print_exception (
+            "DII_Deferred_Reply_Dispacher::connection_closed");
         }
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   (void) this->decr_refcount ();
 }

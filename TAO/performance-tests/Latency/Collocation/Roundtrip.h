@@ -22,11 +22,10 @@ public:
   Roundtrip (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Timestamp test_method (Test::Timestamp send_time
-                                       ACE_ENV_ARG_DECL)
+  virtual Test::Timestamp test_method (Test::Timestamp send_time)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

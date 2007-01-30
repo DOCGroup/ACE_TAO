@@ -139,8 +139,7 @@ print_params (void)
 }
 
 static void
-twoway_work_test (Test_ptr server
-                  ACE_ENV_ARG_DECL)
+twoway_work_test (Test_ptr server)
 {
 #if defined (USING_TIMERS)
   ACE_Throughput_Stats latency;
@@ -160,9 +159,7 @@ twoway_work_test (Test_ptr server
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 #endif /* USING_TIMERS */
 
-      server->twoway_work_test (work
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      server->twoway_work_test (work);
 
 #if defined (USING_TIMERS)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -184,8 +181,7 @@ twoway_work_test (Test_ptr server
 }
 
 static void
-oneway_work_test (Test_ptr server
-                  ACE_ENV_ARG_DECL)
+oneway_work_test (Test_ptr server)
 {
 #if defined (USING_TIMERS)
   ACE_Throughput_Stats latency;
@@ -205,9 +201,7 @@ oneway_work_test (Test_ptr server
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 #endif /* USING_TIMERS */
 
-      server->oneway_work_test (work
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      server->oneway_work_test (work);
 
 #if defined (USING_TIMERS)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -229,8 +223,7 @@ oneway_work_test (Test_ptr server
 }
 
 static void
-oneway_payload_test (Test_ptr server
-                     ACE_ENV_ARG_DECL)
+oneway_payload_test (Test_ptr server)
 {
 #if defined (USING_TIMERS)
   ACE_Throughput_Stats latency;
@@ -253,9 +246,7 @@ oneway_payload_test (Test_ptr server
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 #endif /* USING_TIMERS */
 
-      server->oneway_payload_test (the_data
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      server->oneway_payload_test (the_data);
 
 #if defined (USING_TIMERS)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -427,7 +418,7 @@ main (int argc, char *argv[])
   if (result != 0)
     return result;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Calibrate the timer.
       gsf = ACE_High_Res_Timer::global_scale_factor ();
@@ -436,9 +427,7 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       // Get the command line options.
       if (parse_args (argc, argv) != 0)
@@ -449,32 +438,20 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (obj.in ());
 
-      obj = orb->resolve_initial_references ("PolicyCurrent"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = orb->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (obj.in ());
 
-      ACE_TRY_CHECK;
 
-      obj = orb->string_to_object (ior
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = orb->string_to_object (ior);
 
-      Test_var server = Test::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Test_var server = Test::_narrow (obj.in ());
 
       // Print testing parameters.
       print_params ();
@@ -482,9 +459,7 @@ main (int argc, char *argv[])
       // Run the test.
       if (test_twoway)
         {
-          twoway_work_test (server.in ()
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          twoway_work_test (server.in ());
         }
       else
         {
@@ -499,39 +474,29 @@ main (int argc, char *argv[])
           // Set up the sync scope policy.
           sync_scope_policy_list[0] =
             orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                                sync_scope_any
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                sync_scope_any);
 
           switch (level)
           {
             case ORB_LEVEL:
               // Set the sync scope policy at the ORB level.
               policy_manager->set_policy_overrides (sync_scope_policy_list,
-                                                    CORBA::ADD_OVERRIDE
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    CORBA::ADD_OVERRIDE);
               break;
 
             case THREAD_LEVEL:
               // Set the sync scope policy at the thread level.
               policy_current->set_policy_overrides (sync_scope_policy_list,
-                                                    CORBA::ADD_OVERRIDE
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    CORBA::ADD_OVERRIDE);
               break;
 
             case OBJECT_LEVEL:
               // Set the sync scope policy at the object level.
               obj = server->_set_policy_overrides (sync_scope_policy_list,
-                                                   CORBA::ADD_OVERRIDE
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                   CORBA::ADD_OVERRIDE);
 
               // Get the new object reference with the updated policy.
-              server = Test::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              server = Test::_narrow (obj.in ());
               break;
 
             default:
@@ -539,8 +504,7 @@ main (int argc, char *argv[])
           }
 
           // We are done with this policy.
-          sync_scope_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          sync_scope_policy_list[0]->destroy ();
 
           // Are we buffering the oneway requests?
           if (sync_scope == Messaging::SYNC_NONE)
@@ -562,34 +526,24 @@ main (int argc, char *argv[])
               // Set up the buffering constraint policy.
               buffering_constraint_policy_list[0] =
                 orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
-                                    buffering_constraint_any
-                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                    buffering_constraint_any);
 
               // Set up the constraints (at the object level).
               obj = server->_set_policy_overrides (buffering_constraint_policy_list,
-                                                   CORBA::ADD_OVERRIDE
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                   CORBA::ADD_OVERRIDE);
 
               // We are done with this policy.
-              buffering_constraint_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              buffering_constraint_policy_list[0]->destroy ();
 
               // Get the new object reference with the updated policy.
-              server = Test::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              server = Test::_narrow (obj.in ());
             }
 
           // Run the oneway test.
           if (payload_test)
-            oneway_payload_test (server.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+            oneway_payload_test (server.in ());
           else
-            oneway_work_test (server.in ()
-                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            oneway_work_test (server.in ());
         }
 
       if (shutdown_server)
@@ -597,8 +551,7 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "\nShutting down server\n"));
 
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
       // Destroy the ORB. On some platforms, e.g., Win32, the socket
@@ -607,16 +560,13 @@ main (int argc, char *argv[])
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

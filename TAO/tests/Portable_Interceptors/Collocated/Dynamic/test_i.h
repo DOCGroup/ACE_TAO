@@ -27,23 +27,21 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void normal (CORBA::Long arg
-               ACE_ENV_ARG_DECL_NOT_USED)
+  void normal (CORBA::Long arg)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long calculate (
                          CORBA::Long one,
-                         CORBA::Long two
-                         ACE_ENV_ARG_DECL_NOT_USED)
+                         CORBA::Long two)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void user (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void user (void)
     ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly));
 
-  void system (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void system (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

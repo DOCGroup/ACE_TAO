@@ -96,22 +96,19 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
@@ -124,8 +121,7 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           ACE_hrtime_t start = 0;
-          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) roundtrip->test_method (start);
         }
 
       ACE_Sample_History history (niterations);
@@ -144,21 +140,17 @@ main (int argc, char *argv[])
               CORBA::ULongLong start = ACE_OS::gethrtime ();
 
               request[j] =
-                roundtrip->_request ("test_method"
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                roundtrip->_request ("test_method");
 
               request[j]->add_in_arg () <<= start;
               request[j]->set_return_type (CORBA::_tc_ulonglong);
 
-              request[j]->send_deferred (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              request[j]->send_deferred ();
             }
 
           for (j = 0; j != burst; ++j)
             {
-              request[j]->get_response (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              request[j]->get_response ();
 
               CORBA::ULongLong retval;
               if ((request[j]->return_value () >>= retval) == 1)
@@ -193,17 +185,14 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          roundtrip->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -10,19 +10,16 @@ ACE_RCSID (Hello,
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -30,8 +27,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
@@ -40,37 +36,28 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      PortableServer::ObjectId_var obj_id = root_poa->activate_object (hello_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var obj_id = root_poa->activate_object (hello_impl);
 
-      CORBA::Object_var obj_var = root_poa->id_to_reference (obj_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var obj_var = root_poa->id_to_reference (obj_id.in ());
 
-      PortableServer::ObjectId_var new_obj_id = root_poa->reference_to_id (obj_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableServer::ObjectId_var new_obj_id = root_poa->reference_to_id (obj_var.in ());
 
       // Invoke reference_to_servant(). Should retrieve servant.
       PortableServer::ServantBase_var servant =
-        root_poa->reference_to_servant (obj_var.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->reference_to_servant (obj_var.in ());
 
       // Assert correctness.
       ACE_ASSERT (hello_impl == servant.in());
 
-      root_poa->deactivate_object (new_obj_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->deactivate_object (new_obj_id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

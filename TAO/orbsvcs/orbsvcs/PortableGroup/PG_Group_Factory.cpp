@@ -49,8 +49,7 @@ TAO::PG_Group_Factory::~PG_Group_Factory (void)
 void TAO::PG_Group_Factory::init (
   CORBA::ORB_ptr orb,
   PortableServer::POA_ptr poa,
-  PortableGroup::FactoryRegistry_ptr factory_registry
-  ACE_ENV_ARG_DECL)
+  PortableGroup::FactoryRegistry_ptr factory_registry)
 {
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
   ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
@@ -65,16 +64,14 @@ void TAO::PG_Group_Factory::init (
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->factory_registry_.in ()));
 
-  this->manipulator_.init (orb, poa ACE_ENV_ARG_PARAMETER);
-//  ACE_CHECK;
+  this->manipulator_.init (orb, poa);
 }
 
 
 TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    TAO::PG_Property_Set * typeid_properties
-    ACE_ENV_ARG_DECL)
+    TAO::PG_Property_Set * typeid_properties)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::NoFactory,
                    PortableGroup::ObjectNotCreated,
@@ -90,9 +87,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     this->manipulator_.create_object_group (
       type_id,
       this->domain_id_,
-      group_id
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+      group_id);
 
   // pick up the object group information as assigned by
   // ObjectGroupManager
@@ -127,26 +122,24 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   return objectGroup;
 }
 
-void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_group
-    ACE_ENV_ARG_DECL)
+void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_group)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectNotFound))
 {
   if (! destroy_group (object_group))
   {
-    ACE_THROW (PortableGroup::ObjectNotFound ());
+    throw PortableGroup::ObjectNotFound ();
   }
 }
 
 
-void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroupId group_id
-    ACE_ENV_ARG_DECL)
+void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroupId group_id)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectNotFound))
 {
   if (! destroy_group (group_id))
   {
-    ACE_THROW (PortableGroup::ObjectNotFound ());
+    throw PortableGroup::ObjectNotFound ();
   }
 }
 
@@ -199,8 +192,7 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
 
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
-    const PortableGroup::Location & the_location
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Location & the_location)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   size_t upper_limit = this->group_map_.current_size ();
@@ -209,7 +201,6 @@ TAO::PG_Group_Factory::groups_at_location (
     result,
     PortableGroup::ObjectGroups (upper_limit),
     CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (0);
 
   result->length(upper_limit);
 

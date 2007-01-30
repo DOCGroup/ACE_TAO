@@ -8,16 +8,16 @@ TestImpl::TestImpl (CORBA::ORB_ptr orb)
 {
 }
 
-// virtual 
-void TestImpl::myMethod (ACE_ENV_SINGLE_ARG_DECL)
+// virtual
+void TestImpl::myMethod (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_ERROR, "(%P): TestImpl::myMethod called!.\n") );
 }
 
 
-// virtual 
-void TestImpl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+// virtual
+void TestImpl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Give the client thread time to return from the collocated

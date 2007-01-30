@@ -40,7 +40,7 @@ public:
   virtual ~StubFaultConsumer ();
 
 
-  ::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  ::PortableServer::POA_ptr _default_POA (void);
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -51,8 +51,7 @@ public:
   /**
    * Publish this objects IOR.
    */
-  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier
-    ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -69,7 +68,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
 
   size_t notifications() const;
@@ -80,18 +79,16 @@ public:
     // CORBA methods
     virtual void push_structured_event(
       const CosNotification::StructuredEvent &notification
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
 
-   virtual void disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+   virtual void disconnect_structured_push_consumer(void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   ////////////////////

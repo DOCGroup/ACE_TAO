@@ -76,12 +76,11 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-      CosEventChannelAdmin::ProxyPushSupplier_ptr &
-      ACE_ENV_ARG_DECL)
+      CosEventChannelAdmin::ProxyPushSupplier_ptr &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no consumer is connected...
@@ -96,29 +95,22 @@ public:
   CosEventComm::PushConsumer_ptr consumer (void) const;
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// Internal methods to push an event to each consumer.
-  virtual void push (const CORBA::Any &event
-                     ACE_ENV_ARG_DECL);
-  virtual void push_nocopy (CORBA::Any &event
-                            ACE_ENV_ARG_DECL);
+  virtual void push (const CORBA::Any &event);
+  virtual void push_nocopy (CORBA::Any &event);
   /// Internal methods to invoke a typed event to each consumer.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL);
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Pushes to the consumer, verifies that it is connected.
-  void push_to_consumer (const CORBA::Any &event
-                         ACE_ENV_ARG_DECL);
-  void reactive_push_to_consumer (const CORBA::Any &event
-                                  ACE_ENV_ARG_DECL);
+  void push_to_consumer (const CORBA::Any &event);
+  void reactive_push_to_consumer (const CORBA::Any &event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event
-                           ACE_ENV_ARG_DECL);
-  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event
-                                    ACE_ENV_ARG_DECL);
+  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
+  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /**
@@ -126,17 +118,15 @@ public:
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   // = The CosEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
-                CosEventComm::PushConsumer_ptr push_consumer
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CosEventComm::PushConsumer_ptr push_consumer)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected,
                        CosEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
@@ -144,9 +134,9 @@ public:
   CORBA::ULong _decr_refcnt (void);
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 protected:
   /// Set the consumer, used by some implementations to change the

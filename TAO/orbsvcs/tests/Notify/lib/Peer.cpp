@@ -26,7 +26,7 @@ TAO_Notify_Tests_Peer::~TAO_Notify_Tests_Peer ()
 }
 
 void
-TAO_Notify_Tests_Peer::init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Peer::init (PortableServer::POA_ptr poa)
 {
   this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }
@@ -87,7 +87,7 @@ TAO_Notify_Tests_Peer::get_name (void)
 }
 
 void
-TAO_Notify_Tests_Peer::set_poa (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Peer::set_poa (PortableServer::POA_ptr poa)
 {
   this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }

@@ -39,14 +39,11 @@ main (int argc, char *argv[])
 {
   int status = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Client ORB");
 
       if (::parse_args (argc, argv) != 0)
         return -1;
@@ -55,19 +52,17 @@ main (int argc, char *argv[])
       // IOR occurs during the various interceptions executed during
       // this test.
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       ForwardRequestTest::test_var server =
-        ForwardRequestTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ForwardRequestTest::test::_narrow (object.in ());
 
       // Before and after the LOCATION_FORWARD_PERM the marshaled
       // object reference must differ.
 
       // Create a stringified/marshaled snapshot of Object reference
       CORBA::String_var marshaled_obj_snapshot1 =
-          orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+          orb->object_to_string (server.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -84,8 +79,7 @@ main (int argc, char *argv[])
                       "CLIENT: Issuing request %d.\n",
                       i));
 
-          number += server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          number += server->number ();
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Number %d .\n",
@@ -106,7 +100,7 @@ main (int argc, char *argv[])
       // consequence the marshaled representation of "server" should
       // look different now, compare to snapshot1.
       CORBA::String_var marshaled_obj_snapshot2 =
-          orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
+          orb->object_to_string (server.in ());
 
       if (strcmp (marshaled_obj_snapshot1.in (), marshaled_obj_snapshot2.in ()) == 0)
         {
@@ -116,16 +110,13 @@ main (int argc, char *argv[])
           ACE_OS::abort ();
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "Group_Ref_Manip Test passed.\n"));

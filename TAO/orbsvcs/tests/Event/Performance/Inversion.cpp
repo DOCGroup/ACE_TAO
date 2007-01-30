@@ -56,11 +56,10 @@ EC_Inversion::parse_args (int &argc, char *argv [])
 }
 
 void
-EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Inversion::connect_consumers (void)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_consumers ();
 
   ACE_ConsumerQOS_Factory qos0;
   qos0.start_disjunction_group (2);
@@ -69,8 +68,7 @@ EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 
   this->consumers_[0]->connect (consumer_admin.in (),
                                 qos0.get_ConsumerQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1
-                                ACE_ENV_ARG_PARAMETER);
+                                ACE_ES_EVENT_UNDEFINED + 1);
 
   for (int i = 1; i < this->n_consumers_; ++i)
     {
@@ -85,19 +83,17 @@ EC_Inversion::connect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 
       this->consumers_[i]->connect (consumer_admin.in (),
                                     qos1.get_ConsumerQOS (),
-                                    base_event + 1
-                                    ACE_ENV_ARG_PARAMETER);
+                                    base_event + 1);
     }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
 }
 
 void
-EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Inversion::connect_suppliers (void)
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_suppliers ();
 
   ACE_SupplierQOS_Factory qos0;
   qos0.insert (1, ACE_ES_EVENT_UNDEFINED, 0, 1);
@@ -105,8 +101,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
   this->suppliers_[0]->connect (supplier_admin.in (),
                                 qos0.get_SupplierQOS (),
-                                ACE_ES_EVENT_UNDEFINED + 1
-                                ACE_ENV_ARG_PARAMETER);
+                                ACE_ES_EVENT_UNDEFINED + 1);
 
   for (int j = 1; j != this->n_suppliers_; ++j)
     {
@@ -120,8 +115,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
       this->suppliers_[j]->connect (supplier_admin.in (),
                                     qos1.get_SupplierQOS (),
-                                    base_event + 1
-                                    ACE_ENV_ARG_PARAMETER);
+                                    base_event + 1);
     }
 
   if (this->verbose ())
@@ -129,7 +123,7 @@ EC_Inversion::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Inversion::activate_tasks (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Inversion::activate_tasks (void)
 {
   int priority;
 

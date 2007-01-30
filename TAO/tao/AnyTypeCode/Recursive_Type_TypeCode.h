@@ -122,9 +122,9 @@ namespace TAO
        */
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ACE_ENV_ARG_DECL) const;
+                                      ) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ACE_ENV_ARG_DECL) const;
+                                           ) const;
       //@}
 
 

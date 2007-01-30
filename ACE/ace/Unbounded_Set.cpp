@@ -30,7 +30,7 @@ template <class T> int
 ACE_Unbounded_Set<T>::insert_tail (const T &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set<T>::insert_tail");
-  ACE_Node<T> *temp;
+  ACE_Node<T> *temp = 0;
 
   // Insert <item> into the old dummy node location.
   this->head_->item_ = item;

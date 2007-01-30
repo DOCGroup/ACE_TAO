@@ -16,11 +16,10 @@ TAO_Notify_Tests_RT_Application_Command::~TAO_Notify_Tests_RT_Application_Comman
 }
 
 void
-TAO_Notify_Tests_RT_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_RT_Application_Command::handle_init (void)
 {
   // Call the Base class.
-  TAO_Notify_Tests_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_Notify_Tests_Application_Command::handle_init ();
 
   CORBA::ORB_var orb;
 
@@ -28,8 +27,7 @@ TAO_Notify_Tests_RT_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_Notify_Tests_RT_Priority_Mapping* mapping = new TAO_Notify_Tests_RT_Priority_Mapping ();
 
-  mapping->init (orb.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  mapping->init (orb.in ());
 
   LOOKUP_MANAGER->_register (mapping);
 }

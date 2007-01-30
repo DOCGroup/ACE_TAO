@@ -36,11 +36,10 @@ public:
   //@{
   /** @name The RtecEventComm::PushCallback methods
    */
-  virtual void sample (Test::Timestamp the_timestamp
-                       ACE_ENV_ARG_DECL)
+  virtual void sample (Test::Timestamp the_timestamp)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

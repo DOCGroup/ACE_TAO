@@ -42,8 +42,7 @@ namespace CIAO
 
       void
       PlanGenerator_exec_i::push_deployment (
-        ::CIAO::RACE::Deploy_Input * ev
-        ACE_ENV_ARG_DECL_NOT_USED)
+        ::CIAO::RACE::Deploy_Input * ev)
       ACE_THROW_SPEC ((CORBA::SystemException))
       {
         try
@@ -72,7 +71,7 @@ namespace CIAO
             ACE_ERROR ((LM_ERROR,
                         "Unable to acquire RepositoryManagerDaemon's objref\n"));
 
-            ACE_THROW (CORBA::INTERNAL ());
+            throw CORBA::INTERNAL ();
           }
 
           //now obtian the corresponding PackageConfiguration from
@@ -95,7 +94,7 @@ namespace CIAO
             ACE_ERROR ((LM_ERROR,
                        "Error! Package not found! Location update failed!\n"));
 
-            ACE_THROW (CORBA::INTERNAL ());
+            throw CORBA::INTERNAL ();
 
           }
           catch (CORBA::Exception &)
@@ -103,7 +102,7 @@ namespace CIAO
             ACE_ERROR ((LM_ERROR,
                        "Error! General exception! Location update failed!\n"));
 
-            ACE_THROW (CORBA::INTERNAL ());
+            throw CORBA::INTERNAL ();
           }
 
           //now create the plan
@@ -149,27 +148,23 @@ namespace CIAO
 
       void
       PlanGenerator_exec_i::set_session_context (
-        ::Components::SessionContext_ptr ctx
-        ACE_ENV_ARG_DECL)
+        ::Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
       {
         this->context_ =
         PlanGenerator_Context::_narrow (
-          ctx
-          ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+          ctx);
 
         if (this->context_ == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
       }
 
       void
-      PlanGenerator_exec_i::ciao_preactivate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      PlanGenerator_exec_i::ciao_preactivate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -178,8 +173,7 @@ namespace CIAO
       }
 
       void
-      PlanGenerator_exec_i::ciao_postactivate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      PlanGenerator_exec_i::ciao_postactivate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -188,8 +182,7 @@ namespace CIAO
       }
 
       void
-      PlanGenerator_exec_i::ccm_activate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      PlanGenerator_exec_i::ccm_activate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -198,8 +191,7 @@ namespace CIAO
       }
 
       void
-      PlanGenerator_exec_i::ccm_passivate (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      PlanGenerator_exec_i::ccm_passivate ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -208,8 +200,7 @@ namespace CIAO
       }
 
       void
-      PlanGenerator_exec_i::ccm_remove (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      PlanGenerator_exec_i::ccm_remove ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -240,8 +231,7 @@ namespace CIAO
       // Implicit operations.
 
       ::Components::EnterpriseComponent_ptr
-      PlanGenerator_Home_exec_i::create (
-        ACE_ENV_SINGLE_ARG_DECL)
+      PlanGenerator_Home_exec_i::create ()
       ACE_THROW_SPEC ((
                         ::CORBA::SystemException,
                         ::Components::CCMException))
@@ -253,7 +243,6 @@ namespace CIAO
           retval,
           PlanGenerator_exec_i,
           CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
         return retval;
       }

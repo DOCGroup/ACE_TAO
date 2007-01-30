@@ -69,14 +69,13 @@ namespace TAO
      * PortableInterceptor::ObjectReferenceTemplate ValueType.
      */
     //@{
-    virtual char * server_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * server_id (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual char * orb_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * orb_id (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual PortableInterceptor::AdapterName * adapter_name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual PortableInterceptor::AdapterName * adapter_name (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
 
@@ -89,11 +88,8 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
-      const PortableInterceptor::ObjectId & id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-                       CORBA::SystemException
-                       ));
+      const PortableInterceptor::ObjectId & id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
 
   protected:

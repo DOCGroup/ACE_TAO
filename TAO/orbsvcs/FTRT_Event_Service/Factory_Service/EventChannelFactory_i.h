@@ -29,7 +29,6 @@ public:
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -42,7 +41,6 @@ public:
 
   virtual void delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-    ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
     CORBA::SystemException

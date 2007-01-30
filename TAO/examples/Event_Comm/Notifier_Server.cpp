@@ -24,12 +24,10 @@ Notifier_Server::~Notifier_Server (void)
 int
 Notifier_Server::close (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // disconnect all the consumers.
-      this->servant_.disconnect ("notifier shutdown."
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->servant_.disconnect ("notifier shutdown.");
 
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
@@ -37,18 +35,15 @@ Notifier_Server::close (void)
       notifier_obj_name[0].id =
         CORBA::string_dup (NOTIFIER_BIND_NAME);
 
-      this->naming_server_->unbind (notifier_obj_name
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->naming_server_->unbind (notifier_obj_name);
 
       // Instruct the ORB to shutdown.
       this->orb_manager_.orb ()->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
     return 0;
 }
@@ -57,9 +52,9 @@ Notifier_Server::close (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Server::init_naming_service (void)
 {
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -72,29 +67,23 @@ Notifier_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 
       // Register the object implementation with the POA.
       Event_Comm::Notifier_var notifier_obj =
-        this->servant_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->servant_._this ();
 
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
       notifier_obj_name.length (1);
       notifier_obj_name[0].id =
         CORBA::string_dup (NOTIFIER_BIND_NAME);
-      ACE_TRY_CHECK;
 
       // Now, attach the object name to the context.
       this->naming_server_->bind (notifier_obj_name,
-                                  notifier_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  notifier_obj.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Notifier_Server::init_naming_service\n");
+      ex._tao_print_exception ("Notifier_Server::init_naming_service\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -103,44 +92,38 @@ Notifier_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 // Initialize the server.
 int
 Notifier_Server::init (int argc,
-                       char *argv[]
-                       ACE_ENV_ARG_DECL)
+                       char *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
 
  if (this->orb_manager_.init_child_poa (argc,
                                         argv,
-                                        "child_poa"
-                                        ACE_ENV_ARG_PARAMETER) == -1)
+                                        "child_poa") == -1)
 
    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                       "init_child_poa"),
                       -1);
- ACE_CHECK_RETURN (-1);
 
- this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
- ACE_CHECK_RETURN (-1);
+ this->orb_manager_.activate_poa_manager ();
 
  // Activate the servant in the POA.
  CORBA::String_var str =
    this->orb_manager_.activate_under_child_poa (NOTIFIER_BIND_NAME,
-                                                 &this->servant_
-                                                ACE_ENV_ARG_PARAMETER);
+                                                 &this->servant_);
 
- return this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+ return this->init_naming_service ();
 }
 
 int
-Notifier_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Server::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running the notifier server...\n"));
 
   // Run the main event loop for the ORB.
-  this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_manager_.run ();
 
   return 0;
 }

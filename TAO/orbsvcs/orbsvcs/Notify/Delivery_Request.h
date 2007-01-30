@@ -101,7 +101,7 @@ public:
   bool should_retry () const;
 
   /// expose routing slip method
-  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter ACE_ENV_ARG_DECL);
+  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
   // Meaningless, but needed by ACE_Vector on some platforms (gcc2.x LynxOS)
   bool operator == (const Delivery_Request & rhs) const;

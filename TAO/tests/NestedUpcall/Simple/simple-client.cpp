@@ -43,7 +43,7 @@ Client_Task::Client_Task (client_ptr c,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (!quiet)
         ACE_DEBUG ((LM_DEBUG,
@@ -52,19 +52,15 @@ Client_Task::svc (void)
 
       // Now, we can invoke an operation on the remote side.
       this->server_->start (this->client_.in (),
-                            call_count
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            call_count);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client_Task::svc");
+      ex._tao_print_exception ("Client_Task::svc");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -125,49 +121,36 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       int result = parse_args (argc,
                                argv);
       if (result != 0)
         return result;
 
-      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA"
-                                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      object = orb->string_to_object (ior
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = orb->string_to_object (ior);
 
-      server_var server = server::_narrow (object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_var server = server::_narrow (object.in ());
 
       // Create an client object to hand to the other side...
       client_i client_servant (quiet,
                                server.in ());
 
-      client_var client_object = client_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client_var client_object = client_servant._this ();
 
       Client_Task client_tasks (client_object.in (),
                                 server.in ());
@@ -177,21 +160,16 @@ main (int argc,
 
       if (shutdown_server)
         {
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
         }
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "client::main");
+      ex._tao_print_exception ("client::main");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

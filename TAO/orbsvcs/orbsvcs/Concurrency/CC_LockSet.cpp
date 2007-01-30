@@ -27,17 +27,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CC_LockSet::CC_LockSet (void)
   : related_lockset_ (0)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->Init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->Init ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_LockSet::CC_LockSet (void)");
+      ex._tao_print_exception ("CC_LockSet::CC_LockSet (void)");
     }
-  ACE_ENDTRY;
 }
 
 // Constructor used to create related lock sets.
@@ -45,23 +42,20 @@ CC_LockSet::CC_LockSet (void)
 CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
   : related_lockset_ (related)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->Init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->Init ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CC_LockSet::CC_LockSet (...)");
+      ex._tao_print_exception ("CC_LockSet::CC_LockSet (...)");
     }
-  ACE_ENDTRY;
 }
 
 // Initialization.
 
 void
-CC_LockSet::Init (ACE_ENV_SINGLE_ARG_DECL)
+CC_LockSet::Init (void)
 {
   // Set the mode of the statically allocated locks
   lock_[CC_IR] = 0;
@@ -72,7 +66,7 @@ CC_LockSet::Init (ACE_ENV_SINGLE_ARG_DECL)
 
   // Acquire the semaphore in order to be able to put requests on hold
   if (semaphore_.acquire () == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 }
 
 // Destructor
@@ -97,8 +91,7 @@ CORBA::Boolean CC_LockSet::compatible (CC_LockModeEnum mr)
 // Locks the lock in the desired mode. Blocks until success.
 
 void
-CC_LockSet::lock (CosConcurrencyControl::lock_mode mode
-                  ACE_ENV_ARG_DECL)
+CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
@@ -112,14 +105,13 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode
   // the FIFO properties of ACE_Token!
   if (this->lock_i (lm) == 1)
     if (semaphore_.acquire () == -1)
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
 }
 
 // Tries to lock. If it is not possible false is returned.
 
 CORBA::Boolean
-CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode
-                      ACE_ENV_ARG_DECL_NOT_USED)
+CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockModeEnum lm = lmconvert (mode);
@@ -159,8 +151,7 @@ CC_LockSet::lmconvert (CosConcurrencyControl::lock_mode mode)
 // Unlock the lock
 
 void
-CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode
-                    ACE_ENV_ARG_DECL)
+CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosConcurrencyControl::LockNotHeld))
 {
@@ -172,7 +163,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mlock_);
 
   if (lock_[lm] == 0) // This lock is not held.
-    ACE_THROW (CosConcurrencyControl::LockNotHeld());
+    throw CosConcurrencyControl::LockNotHeld();
   else
     lock_[lm]--;
 
@@ -188,7 +179,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode
       if (compatible (lock_on_queue) == 1)
         {
           if (semaphore_.release () == -1)
-            ACE_THROW (CORBA::INTERNAL ());
+            throw CORBA::INTERNAL ();
           lock_[lock_on_queue]++;
         }
       else
@@ -204,8 +195,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode
 
 void
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
-                         CosConcurrencyControl::lock_mode new_mode
-                         ACE_ENV_ARG_DECL)
+                         CosConcurrencyControl::lock_mode new_mode)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosConcurrencyControl::LockNotHeld))
 {
@@ -215,14 +205,13 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
   CC_LockModeEnum lm_new = lmconvert (new_mode);
 
   if (this->lock_held (lm_held) == 0) // This lock is not held
-    ACE_THROW (CosConcurrencyControl::LockNotHeld());
+    throw CosConcurrencyControl::LockNotHeld();
   else if (this->change_mode_i (lm_held, lm_new)==1)
     {
-      this->unlock (held_mode ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->unlock (held_mode);
 
       if (semaphore_.acquire () == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
     }
   //  this->dump ();
 }

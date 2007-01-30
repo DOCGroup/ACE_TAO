@@ -42,8 +42,7 @@ TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
     const PortableServer::ObjectId &oid,
-    PortableServer::POA_ptr poa
-    ACE_ENV_ARG_DECL)
+    PortableServer::POA_ptr poa)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -83,7 +82,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
                                                  persistence_directory_,
                                                  context_size_),
                                                  CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Put <context_impl> into the auto pointer temporarily, in case next
   // allocation fails.
@@ -93,7 +91,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
@@ -111,8 +108,7 @@ TAO_Storable_Naming_Context_Activator::etherealize (
     PortableServer::POA_ptr /*adapter*/,
     PortableServer::Servant servant,
     CORBA::Boolean /*cleanup_in_progress*/,
-    CORBA::Boolean remaining_activations
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Boolean remaining_activations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!remaining_activations) {

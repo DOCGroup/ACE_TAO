@@ -107,37 +107,26 @@ TAO_SCIOP_Connection_Handler::open (void*)
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
+  bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       if (client)
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tph->client_protocol_properties_at_orb_level (protocol_properties);
         }
       else
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,

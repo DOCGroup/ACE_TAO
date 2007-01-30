@@ -27,18 +27,15 @@ main (int argc, char *argv[])
 
   Control control (toplevel);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       Client client (orb.in ());
 
-      client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.parse_args (argc, argv);
 
       client.add_callback (control);
 
@@ -47,12 +44,11 @@ main (int argc, char *argv[])
       XtRealizeWidget (toplevel);
       XtAppMainLoop (app);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -67,8 +63,7 @@ Client::~Client (void)
 
 void
 Client::parse_args (int argc,
-                    char *argv[]
-                    ACE_ENV_ARG_DECL)
+                    char *argv[])
 {
   const char *ior = "file://test.ior";
 
@@ -91,12 +86,10 @@ Client::parse_args (int argc,
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->string_to_object (ior);
 
   this->server_ =
-    Stopwatch::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    Stopwatch::_narrow (object.in ());
 
   if (CORBA::is_nil(this->server_.in ()))
     {
@@ -144,37 +137,30 @@ Client::stop_callback (Widget /*widget*/,
 void
 Client::start_hook (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->server_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->start ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception in the start button callback");
+      ex._tao_print_exception (
+        "Caught an exception in the start button callback");
       return;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 Client::stop_hook (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->server_->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->server_->stop ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught an exception in the stop button callback");
+      ex._tao_print_exception (
+        "Caught an exception in the stop button callback");
       return;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 

@@ -40,8 +40,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
@@ -50,16 +49,13 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       if (::parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       if (CORBA::is_nil (obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -67,8 +63,7 @@ main (int argc, char *argv[])
                           -1);
 
       TX_Object_var txObject =
-        TX_Object::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        TX_Object::_narrow (obj.in ());
 
       DataSeq data_input;
 
@@ -84,20 +79,17 @@ main (int argc, char *argv[])
                   "Sending  octet sequence of length:\t%u\n",
                   data_input.length ()));
 
-      txObject->send (data_input ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      txObject->send (data_input);
 
       DataSeq_var data_output;
 
-      txObject->recv (data_output.out () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      txObject->recv (data_output.out ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received octet sequence of length:\t%u\n",
                   data_output->length ()));
 
-      txObject->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      txObject->shutdown ();
 
       // Sanity check
       if (data_output->length () != len
@@ -109,14 +101,12 @@ main (int argc, char *argv[])
                            "the one that was sent.\n"),
                           -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ERROR");
+      ex._tao_print_exception ("ERROR");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"

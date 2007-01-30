@@ -20,8 +20,8 @@
 #include "orbsvcs/Concurrency/CC_Lock.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Concurrency, 
-           CC_Lock, 
+ACE_RCSID (Concurrency,
+           CC_Lock,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -43,7 +43,7 @@ CC_Lock::~CC_Lock (void)
 }
 
 void
-CC_Lock::lock (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CC_Lock::lock (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
@@ -51,7 +51,7 @@ CC_Lock::lock (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::Boolean
-CC_Lock::try_lock (ACE_ENV_SINGLE_ARG_DECL)
+CC_Lock::try_lock (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
@@ -86,17 +86,17 @@ CC_Lock::try_lock (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CC_Lock::unlock (ACE_ENV_SINGLE_ARG_DECL)
+CC_Lock::unlock (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
   if (lock_held_ == 0)
-    ACE_THROW (CosConcurrencyControl::LockNotHeld ());
+    throw CosConcurrencyControl::LockNotHeld ();
 
   int success = 0; //semaphore_.release ();
 
   if (success == -1)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
   lock_held_--;
 
@@ -106,8 +106,7 @@ CC_Lock::unlock (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode
-                      ACE_ENV_ARG_DECL)
+CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::change_mode\n"));
@@ -117,7 +116,7 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode
   // write lock
 
   if (lock_held_ == 0)
-    ACE_THROW (CosConcurrencyControl::LockNotHeld ());
+    throw CosConcurrencyControl::LockNotHeld ();
 
   this->mode_ = new_mode;
 }
@@ -205,7 +204,7 @@ void CC_LockModeIterator::First (void)
   current_ = CosConcurrencyControl::intention_read;
 }
 
-void CC_LockModeIterator::Next (ACE_ENV_SINGLE_ARG_DECL)
+void CC_LockModeIterator::Next (void)
 {
   switch (current_)
     {
@@ -222,9 +221,9 @@ void CC_LockModeIterator::Next (ACE_ENV_SINGLE_ARG_DECL)
       current_ = CosConcurrencyControl::write;
       break;
     case CosConcurrencyControl::write:
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     default:
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }
 

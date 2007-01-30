@@ -95,13 +95,10 @@ public:
   int idle (void);
   int execute_delayed_operations (void);
 
-  void connected_i (PROXY *proxy
-                    ACE_ENV_ARG_DECL);
-  void reconnected_i (PROXY *proxy
-                    ACE_ENV_ARG_DECL);
-  void disconnected_i (PROXY *proxy
-                     ACE_ENV_ARG_DECL);
-  void shutdown_i (ACE_ENV_SINGLE_ARG_DECL);
+  void connected_i (PROXY *proxy);
+  void reconnected_i (PROXY *proxy);
+  void disconnected_i (PROXY *proxy);
+  void shutdown_i (void);
 
   typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
   typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
@@ -109,15 +106,11 @@ public:
   typedef TAO_ESF_Shutdown_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE> > Shutdown_Command;
 
   // = The TAO_ESF_Proxy methods
-  virtual void for_each (TAO_ESF_Worker<PROXY> *worker
-                         ACE_ENV_ARG_DECL);
-  virtual void connected (PROXY *proxy
-                          ACE_ENV_ARG_DECL);
-  virtual void reconnected (PROXY *proxy
-                            ACE_ENV_ARG_DECL);
-  virtual void disconnected (PROXY *proxy
-                             ACE_ENV_ARG_DECL);
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void for_each (TAO_ESF_Worker<PROXY> *worker);
+  virtual void connected (PROXY *proxy);
+  virtual void reconnected (PROXY *proxy);
+  virtual void disconnected (PROXY *proxy);
+  virtual void shutdown (void);
 
 private:
   COLLECTION collection_;

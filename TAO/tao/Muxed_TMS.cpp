@@ -126,8 +126,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                       *this->lock_,
                       -1);
 
-    result =
-      this->dispatcher_table_.unbind (params.request_id_, rd);
+    result = this->dispatcher_table_.unbind (params.request_id_, rd);
 
     if (TAO_debug_level > 8)
       ACE_DEBUG ((LM_DEBUG,
@@ -194,7 +193,6 @@ TAO_Muxed_TMS::connection_closed (void)
       retval = this->clear_cache ();
     }
   while (retval != -1);
-
 }
 
 int

@@ -58,10 +58,10 @@ public:
   virtual int close (u_long flags);
 
   /// Activate the threadpool
-  void init (const NotifyExt::ThreadPoolParams& tp_params, const TAO_Notify_AdminProperties::Ptr& admin_properties ACE_ENV_ARG_DECL);
+  void init (const NotifyExt::ThreadPoolParams& tp_params, const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
   /// Queue the request
-  virtual void execute (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL);
+  virtual void execute (TAO_Notify_Method_Request& method_request);
 
   /// Shutdown task
   virtual void shutdown ();

@@ -38,7 +38,7 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
 
 TimeBase::TimeT
 TAO_ConnectionTimeoutPolicy::relative_expiry (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->relative_expiry_;
@@ -46,7 +46,7 @@ TAO_ConnectionTimeoutPolicy::relative_expiry (
 
 CORBA::PolicyType
 TAO_ConnectionTimeoutPolicy::policy_type (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::CONNECTION_TIMEOUT_POLICY_TYPE;
@@ -58,7 +58,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                    bool &has_timeout,
                                    ACE_Time_Value &time_value)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Policy_var policy = 0;
 
@@ -67,16 +67,14 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
           policy =
             orb_core->get_cached_policy_including_current (
               TAO_CACHED_POLICY_CONNECTION_TIMEOUT
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+             );
         }
       else
         {
           policy =
             stub->get_cached_policy (
               TAO_CACHED_POLICY_CONNECTION_TIMEOUT
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+             );
         }
 
       if (CORBA::is_nil (policy.in ()))
@@ -88,11 +86,9 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
       TAO::ConnectionTimeoutPolicy_var p =
         TAO::ConnectionTimeoutPolicy::_narrow (
           policy.in ()
-          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+         );
 
-      TimeBase::TimeT t = p->relative_expiry (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TimeBase::TimeT t = p->relative_expiry ();
       TimeBase::TimeT seconds = t / 10000000u;
       TimeBase::TimeT microseconds = (t % 10000000u) / 10;
       time_value.set (ACE_U64_TO_U32 (seconds),
@@ -108,16 +104,15 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       time_value.msec ()));
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       // Ignore all exceptions...
     }
-  ACE_ENDTRY;
 }
 
 CORBA::Policy_ptr
 TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val
-                                            ACE_ENV_ARG_DECL)
+                                            )
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -132,7 +127,6 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val
                     TAO_ConnectionTimeoutPolicy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
@@ -148,7 +142,7 @@ TAO_ConnectionTimeoutPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-TAO_ConnectionTimeoutPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ConnectionTimeoutPolicy::copy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
@@ -158,13 +152,12 @@ TAO_ConnectionTimeoutPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
                     TAO_ConnectionTimeoutPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
   return tmp;
 }
 
 void
-TAO_ConnectionTimeoutPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ConnectionTimeoutPolicy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

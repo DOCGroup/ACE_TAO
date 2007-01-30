@@ -56,15 +56,15 @@ namespace TAO
 
       /// Accessor for the servant busy flag.
       TP_Servant_State* find(PortableServer::Servant servant
-                             ACE_ENV_ARG_DECL);
+                            );
 
       /// Insert the servant to map.
       void insert(PortableServer::Servant servant
-                  ACE_ENV_ARG_DECL);
+                 );
 
       /// Remove the servant from map.
       void remove(PortableServer::Servant servant
-                  ACE_ENV_ARG_DECL);
+                 );
 
 
     private:

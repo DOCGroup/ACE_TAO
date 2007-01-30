@@ -36,11 +36,10 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -59,12 +58,10 @@ main (int argc, char *argv[])
             {
               iorfile = "file://" + iorfile;
               CORBA::Object_var tmp =
-                orb->string_to_object(iorfile.c_str () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                orb->string_to_object(iorfile.c_str ());
 
               test_var test =
-                test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                test::_narrow(tmp.in ());
 
               if (CORBA::is_nil (test.in ()))
                 {
@@ -74,15 +71,13 @@ main (int argc, char *argv[])
                                     1);
                 }
 
-              test->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK
+              test->send_stuff ("Some stuff to send");
 
               // Test for LFU strategy.  The transport to any other
               // server should be removed before the first one.
               if (i == 0)
                 {
-                  test->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK
+                  test->send_stuff ("Some stuff to send");
 
                   holder = test;
                 }
@@ -92,8 +87,7 @@ main (int argc, char *argv[])
                                 // removed.
                   if (!CORBA::is_nil(holder.in ()))
                     {
-                      holder->send_stuff ("Some stuff to send" ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK
+                      holder->send_stuff ("Some stuff to send");
                     }
                 }
             }
@@ -103,19 +97,15 @@ main (int argc, char *argv[])
             }
         }
 
-      orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->shutdown (1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

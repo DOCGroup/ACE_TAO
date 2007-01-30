@@ -78,18 +78,18 @@ public:
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
   virtual CORBA::StringSeq * arguments (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the ORBid for the ORB currently being initialized.
   virtual char * orb_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the CodecFactory for the ORB currently being
   /// initialized.
   virtual IOP::CodecFactory_ptr codec_factory (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a mapping between a string and a corresponding object
@@ -105,7 +105,7 @@ public:
   virtual void register_initial_reference (
       const char * id,
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::InvalidName));
 
@@ -114,7 +114,7 @@ public:
   /// since the ORB may not be fully initialized yet.
   virtual CORBA::Object_ptr resolve_initial_references (
       const char * id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::InvalidName));
 
@@ -122,7 +122,7 @@ public:
   /// being initialized.
   virtual void add_client_request_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
@@ -130,7 +130,7 @@ public:
   /// being initialized.
   virtual void add_server_request_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
@@ -138,7 +138,7 @@ public:
   /// initialized.
   virtual void add_ior_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
@@ -147,7 +147,7 @@ public:
   virtual void add_client_request_interceptor_with_policy (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName,
                      CORBA::PolicyError));
@@ -157,7 +157,7 @@ public:
   virtual void add_server_request_interceptor_with_policy (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName,
                      CORBA::PolicyError));
@@ -167,7 +167,7 @@ public:
   virtual void add_ior_interceptor_with_policy (
       PortableInterceptor::IORInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName,
                      CORBA::PolicyError));
@@ -175,7 +175,7 @@ public:
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
   virtual PortableInterceptor::SlotId allocate_slot_id (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a policy factory of the given policy type with the ORB
@@ -183,11 +183,11 @@ public:
   virtual void register_policy_factory (
       CORBA::PolicyType type,
       PortableInterceptor::PolicyFactory_ptr policy_factory
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ORB_ptr _get_orb (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     );
   //@}
 
@@ -210,7 +210,7 @@ public:
    */
   size_t allocate_tss_slot_id (
       ACE_CLEANUP_FUNC cleanup
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a pointer to the ORB Core associated with the ORB being
@@ -249,12 +249,12 @@ public:
 
   static TAO_ORBInitInfo_ptr _narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
 
   static TAO_ORBInitInfo_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
 
   static TAO_ORBInitInfo_ptr _nil (void)
@@ -274,7 +274,7 @@ protected:
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
   /// has been called on each of the ORBInitializers, this ORBInitInfo
   /// is no longer valid.  Throw an exception in that case.
-  void check_validity (ACE_ENV_SINGLE_ARG_DECL);
+  void check_validity (void);
 
 private:
 

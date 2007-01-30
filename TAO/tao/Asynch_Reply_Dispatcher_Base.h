@@ -66,7 +66,7 @@ public:
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong ,
                                const ACE_Time_Value &
-                               ACE_ENV_ARG_DECL) = 0;
+                               ) = 0;
 
   /// @name Mutators for refcount
   //@{

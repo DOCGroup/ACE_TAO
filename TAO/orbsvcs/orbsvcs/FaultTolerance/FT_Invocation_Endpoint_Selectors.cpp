@@ -29,30 +29,24 @@ TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector (void)
 void
 TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *val
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *val)
 {
   bool retval =
     this->select_primary (r,
-                          val
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                          val);
 
   if (retval)
     return;
 
   retval =
     this->select_secondary (r,
-                            val
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                            val);
 
   if (retval == false)
     {
       // If we get here, we completely failed to find an endpoint selector
       // that we know how to use, so throw an exception.
-      ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
   return;
@@ -61,8 +55,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
 bool
 TAO_FT_Invocation_Endpoint_Selector::select_primary (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *max_wait_time)
 {
   // Grab the forwarded list
   TAO_MProfile *prof_list =
@@ -89,9 +82,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
       TAO_Profile *tmp = prof_list->get_profile (i);
 
       bool retval =
-        this->check_profile_for_primary (tmp
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        this->check_profile_for_primary (tmp);
 
       // Choose a non-primary
       if (retval == true && tmp != 0)
@@ -99,9 +90,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
           retval =
             this->try_connect (r,
                                tmp,
-                               max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+                               max_wait_time);
 
           if (retval == true)
             return true;
@@ -114,8 +103,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
 bool
 TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *max_wait_time)
 {
   // Grab the forwarded list
   TAO_MProfile *prof_list =
@@ -141,9 +129,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
         prof_list->get_profile (i);
 
       bool retval =
-        this->check_profile_for_primary (tmp
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+        this->check_profile_for_primary (tmp);
 
       // Choose a non-primary
       if (retval == false && tmp != 0)
@@ -151,9 +137,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
           retval =
             this->try_connect (r,
                                tmp,
-                               max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+                               max_wait_time);
 
           if (retval == true)
             return true;
@@ -167,8 +151,7 @@ bool
 TAO_FT_Invocation_Endpoint_Selector::try_connect (
     TAO::Profile_Transport_Resolver *r,
     TAO_Profile *profile,
-    ACE_Time_Value *max_wait_time
-    ACE_ENV_ARG_DECL)
+    ACE_Time_Value *max_wait_time)
 {
   r->profile (profile);
 
@@ -184,9 +167,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
 
       bool retval =
         r->try_connect (&desc,
-                        max_wait_time
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                        max_wait_time);
 
       // @@ Good place to handle timeouts.. We can omit timeouts and
       // go ahead looking for other things... There are some small
@@ -206,8 +187,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
 
 bool
 TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
-    TAO_Profile *pfile
-    ACE_ENV_ARG_DECL_NOT_USED)
+    TAO_Profile *pfile)
 {
   if (pfile == 0)
     return false;

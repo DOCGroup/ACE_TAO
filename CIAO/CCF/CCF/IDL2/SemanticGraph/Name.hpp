@@ -208,6 +208,8 @@ namespace CCF
       //
       struct NamePrinter
       {
+        virtual ~NamePrinter ();
+
         virtual void
         print (std::ostream&, SimpleName const&) = 0;
 

@@ -11,28 +11,22 @@ main (int argc, char* argv [])
 {
   CORBA::ORB_var orb;
   RTScheduling::Current_var current;
-		    
+
   const char * name = 0;
   CORBA::Policy_ptr sched_param = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
 
   Test_Thread_Action thread_action;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       orb = CORBA::ORB_init (argc,
 			     argv,
-			     ""
-			     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+			     "");
 
-      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
-								       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
-									      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
       TAO_Scheduler* scheduler;
       ACE_NEW_RETURN (scheduler,
@@ -42,15 +36,11 @@ main (int argc, char* argv [])
 
       manager->rtscheduler (scheduler);
 
-      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
-								       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      current = RTScheduling::Current::_narrow (current_obj.in ()
-						ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      ACE_TRY_EX (block1)
+      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+
+      current = RTScheduling::Current::_narrow (current_obj.in ());
+
+      try
 	{
 
 	  ACE_DEBUG ((LM_DEBUG,
@@ -63,45 +53,39 @@ main (int argc, char* argv [])
 			  sched_param,
 			  implicit_sched_param,
 			  0,
-			  0
-			  ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (block1);
+			  0);
 	}
-      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+      catch (const CORBA::BAD_INV_ORDER& )
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Spawn should be in the context of a Scheduling Segment - Expected Exception\n"));
 	}
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
 	{
-	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			       "\n");
+	  ex._tao_print_exception ("\n");
 	}
-      ACE_ENDTRY;
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "Start - Scheduling Segment...\n"));
 
       current->begin_scheduling_segment ("Potter",
 					 sched_param,
-					 implicit_sched_param
-					 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+					 implicit_sched_param);
+
       size_t count = 0;
       ACE_OS::memcpy (&count,
 		      current->id ()->get_buffer (),
 		      current->id ()->length ());
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "The Current DT Guid is %d\n",
 		  count));
-      
+
       //Initialize data to be passed to the Thread_Action::do method
       Data spawn_data;
       spawn_data.data = "Harry Potter";
       spawn_data.current = RTScheduling::Current::_duplicate (current.in ());
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "Spawning a new DT...\n"));
       RTScheduling::DistributableThread_var dt =
@@ -111,27 +95,21 @@ main (int argc, char* argv [])
 		      sched_param,
 		      implicit_sched_param,
 		      0,
-		      0
-		      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      current->end_scheduling_segment (name
-				       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+		      0);
+
+      current->end_scheduling_segment (name);
       ACE_DEBUG ((LM_DEBUG,
 		  "End - Scheduling Segment %d\n",
 		  count));
-     
-    } 
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Caught Exception\n");
+
     }
-  ACE_ENDTRY; 
-  
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Caught Exception\n");
+    }
+
   ACE_Thread_Manager::instance ()->wait ();
-  
+
   return 0;
 }
 

@@ -15,8 +15,7 @@ template<typename T>
 void
 TAO_IFR_Generic_Utils<T>::destroy_special (const char *section_name,
                                            TAO_Repository_i *repo,
-                                           ACE_Configuration_Section_Key &key
-                                           ACE_ENV_ARG_DECL)
+                                           ACE_Configuration_Section_Key &key)
 {
   ACE_Configuration_Section_Key sub_key;
   int status =
@@ -49,8 +48,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const char *section_name,
                                      special_key);
       T impl (repo);
       impl.section_key (special_key);
-      impl.destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      impl.destroy_i ();
     }
 }
 
@@ -138,17 +136,14 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
     T_desc &desc,
     TAO_Repository_i *repo,
     ACE_Configuration_Section_Key &key
-    ACE_ENV_ARG_DECL
   )
 {
   T_impl impl (repo);
   impl.section_key (key);
 
-  desc.name = impl.name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.name = impl.name_i ();
 
-  desc.id = impl.id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.id = impl.id_i ();
 
   ACE_TString holder;
   repo->config ()->get_string_value (key,
@@ -156,8 +151,7 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
                                      holder);
   desc.defined_in = holder.fast_rep ();
 
-  desc.version = impl.version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.version = impl.version_i ();
 }
 
 template<typename T_strseq>
@@ -304,8 +298,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                  CORBA::Boolean is_multiple,
                                  TAO_Repository_i *repo,
                                  CORBA::DefinitionKind port_kind,
-                                 ACE_Configuration_Section_Key &key
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_Configuration_Section_Key &key)
 {
   TAO_Container_i::tmp_name_holder (name);
   ACE_Configuration_Section_Key new_key;
@@ -319,9 +312,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                           name,
                                           &TAO_Container_i::same_as_tmp_name,
                                           version,
-                                          sub_section
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (T::_nil ());
+                                          sub_section);
 
   const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (port_base_type);
@@ -349,12 +340,9 @@ TAO_Port_Utils<T>::create_entry (const char *id,
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (path,
-                                              repo
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (T::_nil ());
+                                              repo);
 
-  return T::_narrow (obj.in ()
-                     ACE_ENV_ARG_PARAMETER);
+  return T::_narrow (obj.in ());
 }
 
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)

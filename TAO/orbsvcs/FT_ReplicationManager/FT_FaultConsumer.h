@@ -71,15 +71,14 @@ namespace TAO
     int init (
       PortableServer::POA_ptr poa,
       FT::FaultNotifier_ptr fault_notifier,
-      TAO::FT_FaultAnalyzer * fault_analyzer
-      ACE_ENV_ARG_DECL);
+      TAO::FT_FaultAnalyzer * fault_analyzer);
 
     /**
     * Clean house for process shut down.
     * - Disconnect from FT::FaultNotifier.
     * - Deactivate from the POA.
     */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
     * Accessor for a duplicate of this consumer's object reference.
@@ -106,19 +105,16 @@ namespace TAO
     // CORBA methods
     virtual void push_structured_event (
       const CosNotification::StructuredEvent &notification
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
 
    virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException));
 

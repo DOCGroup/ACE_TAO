@@ -31,7 +31,7 @@ RPS_Monitor::~RPS_Monitor (void)
 }
 
 CosLoadBalancing::Location *
-RPS_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
+RPS_Monitor::the_location (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Location * location;
@@ -42,13 +42,12 @@ RPS_Monitor::the_location (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return location;
 }
 
 CosLoadBalancing::LoadList *
-RPS_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
+RPS_Monitor::loads (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const ACE_Time_Value current_time = ACE_OS::gettimeofday ();
@@ -72,7 +71,6 @@ RPS_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   CosLoadBalancing::LoadList_var load_list = tmp;
 

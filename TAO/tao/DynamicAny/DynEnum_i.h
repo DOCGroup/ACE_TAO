@@ -53,21 +53,21 @@ public:
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc
-             ACE_ENV_ARG_DECL);
+            );
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any
-             ACE_ENV_ARG_DECL);
+            );
 
   // = LocalObject methods.
   static TAO_DynEnum_i *_narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
   // = Functions specific to DynEnum.
 
   virtual char * get_as_string (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -75,7 +75,7 @@ public:
 
   virtual void set_as_string (
       const char * value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -83,7 +83,7 @@ public:
       ));
 
   virtual CORBA::ULong get_as_ulong (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -91,7 +91,7 @@ public:
 
   virtual void set_as_ulong (
       CORBA::ULong value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -102,7 +102,7 @@ public:
 
   virtual void from_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -111,7 +111,7 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -119,21 +119,21 @@ public:
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,

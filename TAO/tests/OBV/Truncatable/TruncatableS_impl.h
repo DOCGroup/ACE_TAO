@@ -36,7 +36,6 @@ public:
         ::OBV_TruncatableTest::BaseValue * iv,
         ::OBV_TruncatableTest::BaseValue_out ov,
         char *& desc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -47,7 +46,6 @@ public:
         const char * id,
         ::OBV_TruncatableTest::TValue1_out ov,
         char *& desc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -58,7 +56,6 @@ public:
         ::OBV_TruncatableTest::TValue4 * iv,
         ::OBV_TruncatableTest::TValue4_out ov,
         char *& desc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -72,7 +69,6 @@ public:
       ::OBV_TruncatableTest::TValue4 * iv3,
       ::OBV_TruncatableTest::TValue1 * iv4,
       char *& desc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       ::CORBA::SystemException
@@ -82,12 +78,12 @@ public:
                     const char * id,
                     ::OBV_TruncatableTest::TValue1_out ov,
                     char *& desc
-                    ACE_ENV_ARG_DECL )
+ )
     ACE_THROW_SPEC ((
       ::CORBA::SystemException
     ));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -47,8 +47,7 @@ public:
   void add_callback (Control &);
   // Adds the callbacks to the GUI underneath.....
 
-  void parse_args (int argc, char *argv[]
-                   ACE_ENV_ARG_DECL);
+  void parse_args (int argc, char *argv[]);
 private:
 
   CORBA::ORB_var orb_;

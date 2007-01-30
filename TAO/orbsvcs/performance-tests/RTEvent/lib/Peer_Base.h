@@ -32,8 +32,7 @@ class TAO_RTEC_Perf_Export Peer_Base
 public:
   /// Constructor
   Peer_Base (CORBA::ORB_ptr orb,
-             RTServer_Setup &rtserver_setup
-             ACE_ENV_ARG_DECL);
+             RTServer_Setup &rtserver_setup);
 
   /// Destructor
   virtual ~Peer_Base (void);
@@ -41,23 +40,21 @@ public:
   //@{
   /** @name The Federated_Test::Peer methods
    */
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Object_ptr
-      channel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      channel (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void connect (Federated_Test::Peer_ptr remote_peer
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  virtual void connect (Federated_Test::Peer_ptr remote_peer)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   Federated_Test::Loopback_ptr setup_loopback (CORBA::Long experiment_id,
-                                               CORBA::Long base_event_type
-                                               ACE_ENV_ARG_DECL_NOT_USED)
+                                               CORBA::Long base_event_type)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

@@ -36,22 +36,19 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       SimpleStrings_var server =
-        SimpleStrings::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        SimpleStrings::_narrow(tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -62,24 +59,20 @@ main (int argc, char *argv[])
         }
 
       ArrayOfString_var the_strings;
-      server->get_strings (the_strings.out () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->get_strings (the_strings.out ());
 
       for(size_t i = 0; i < 15; i++)
         {
           ACE_DEBUG ((LM_DEBUG, "%s\n", the_strings[i].in ()));
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

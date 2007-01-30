@@ -18,11 +18,9 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
 
   DT_Test (void);
 
-  int init (int argc, char *argv []
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (int argc, char *argv []);
 
-  void run (int argc, char *argv []
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void run (int argc, char *argv []);
 
   void dt_creator (MIF_DT_Creator* dt_creator);
 

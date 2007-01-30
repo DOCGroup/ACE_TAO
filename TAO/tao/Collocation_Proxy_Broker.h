@@ -39,7 +39,6 @@ namespace CORBA
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
-  class Environment;
 }
 
 namespace TAO
@@ -57,7 +56,7 @@ namespace TAO
     virtual ~Collocation_Proxy_Broker (void);
 
     virtual Collocation_Strategy get_strategy (CORBA::Object_ptr obj
-                                               ACE_ENV_ARG_DECL) = 0;
+                                               ) = 0;
 
     virtual void dispatch (CORBA::Object_ptr obj,
                            CORBA::Object_out forward_obj,
@@ -66,7 +65,7 @@ namespace TAO
                            const char * op,
                            size_t op_len,
                            Collocation_Strategy strategy
-                           ACE_ENV_ARG_DECL) = 0;
+                           ) = 0;
   };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

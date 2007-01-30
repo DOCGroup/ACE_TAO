@@ -19,16 +19,15 @@ public:
   // Ctor
 
   void init (int& argc,
-             char**& argv
-             ACE_ENV_ARG_DECL);
+             char**& argv);
 
   // Initialize the ORB, POA etc.
 
-  int make_merged_iors (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int make_merged_iors (void);
   // Merges the different IORS
 
   /// Run the  ORB event loop..
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
 
   /// Write the merged IOGRs to a file
   int write_to_files (void);
@@ -44,7 +43,7 @@ private:
   /// Sets the properties for the profiles
   int set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
 		      CORBA::Object_ptr merged_set,
-		      CORBA::Object_ptr primary, CORBA::ULong version ACE_ENV_ARG_DECL);
+		      CORBA::Object_ptr primary, CORBA::ULong version);
 
   /// Our ORB
   CORBA::ORB_var orb_;

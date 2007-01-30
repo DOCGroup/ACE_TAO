@@ -54,13 +54,11 @@ public:
   virtual int svc (void);
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     CORBA::Any& event
-                     ACE_ENV_ARG_DECL);
+                     CORBA::Any& event);
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       TAO_CEC_TypedEvent& typed_event
-                       ACE_ENV_ARG_DECL);
+                       TAO_CEC_TypedEvent& typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:
@@ -87,7 +85,7 @@ public:
   virtual ~TAO_CEC_Dispatch_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
+  virtual int execute (void) = 0;
 };
 
 // ****************************************************************
@@ -99,7 +97,7 @@ public:
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 };
 
 // ****************************************************************
@@ -117,7 +115,7 @@ public:
   virtual ~TAO_CEC_Push_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 
 private:
   /// The proxy
@@ -143,7 +141,7 @@ public:
   virtual ~TAO_CEC_Invoke_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 
 private:
   /// The proxy

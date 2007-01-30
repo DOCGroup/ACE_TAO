@@ -41,8 +41,7 @@ TAO_EC_Bitmask_Filter::size (void) const
 
 int
 TAO_EC_Bitmask_Filter::filter (const RtecEventComm::EventSet& event,
-                                TAO_EC_QOS_Info& qos_info
-                                ACE_ENV_ARG_DECL)
+                                TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
     return 0;
@@ -51,13 +50,12 @@ TAO_EC_Bitmask_Filter::filter (const RtecEventComm::EventSet& event,
       || (event[0].header.source & this->source_mask_) == 0)
     return 0;
 
-  return this->child_->filter (event, qos_info ACE_ENV_ARG_PARAMETER);
+  return this->child_->filter (event, qos_info);
 }
 
 int
 TAO_EC_Bitmask_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info
-                                   ACE_ENV_ARG_DECL)
+                                   TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
     return 0;
@@ -66,25 +64,23 @@ TAO_EC_Bitmask_Filter::filter_nocopy (RtecEventComm::EventSet& event,
       || (event[0].header.source & this->source_mask_) == 0)
     return 0;
 
-  return this->child_->filter_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
+  return this->child_->filter_nocopy (event, qos_info);
 }
 
 void
 TAO_EC_Bitmask_Filter::push (const RtecEventComm::EventSet &event,
-                             TAO_EC_QOS_Info &qos_info
-                             ACE_ENV_ARG_DECL)
+                             TAO_EC_QOS_Info &qos_info)
 {
   if (this->parent () != 0)
-    this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
+    this->parent ()->push (event, qos_info);
 }
 
 void
 TAO_EC_Bitmask_Filter::push_nocopy (RtecEventComm::EventSet &event,
-                                    TAO_EC_QOS_Info &qos_info
-                                    ACE_ENV_ARG_DECL)
+                                    TAO_EC_QOS_Info &qos_info)
 {
   if (this->parent () != 0)
-    this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
+    this->parent ()->push_nocopy (event, qos_info);
 }
 
 void
@@ -113,8 +109,7 @@ TAO_EC_Bitmask_Filter::can_match (
 int
 TAO_EC_Bitmask_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &
-      ACE_ENV_ARG_DECL_NOT_USED)
+      const TAO_EC_QOS_Info &)
 {
   return 0;
 }

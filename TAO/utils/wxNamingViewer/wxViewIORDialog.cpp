@@ -208,21 +208,19 @@ void WxViewIORDialog::decodeIOR()
   for( CORBA::ULong slot = 0; slot < count; slot++) {
 
     const TAO_Profile* profile = baseProfiles.get_profile( slot);
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY {
+    try{
 
       // The need to const_cast should disappear in TAO 1.1.2 BUT IT DIDN'T
       char* profileString =
-          const_cast<TAO_Profile*>(profile)->to_string(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          const_cast<TAO_Profile*>(profile)->to_string();
       profiles->AppendItem( rootItem, profileString);
       delete [] profileString;
 
-    } ACE_CATCH( CORBA::Exception, ex) {
+    } catch (const CORBA::Exception& ex) {
 
       wxMessageBox( ex._info().c_str(), "CORBA::Exception");
 
-    } ACE_ENDTRY;
+    }
 
   }
   profiles->Expand( rootItem);

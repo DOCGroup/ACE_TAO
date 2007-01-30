@@ -43,12 +43,12 @@ public:
   ~TAO_Notify_Tests_RT_Test_Filter ();
 
 protected:
-  virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * constraint_grammar (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidConstraint
@@ -56,7 +56,6 @@ protected:
 
   virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
                                    const CosNotifyFilter::ConstraintInfoSeq & modify_list
-                                   ACE_ENV_ARG_DECL
                                    )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -64,57 +63,57 @@ protected:
                      CosNotifyFilter::ConstraintNotFound
                      ));
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::ConstraintNotFound
                      ));
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void remove_all_constraints (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove_all_constraints (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual CORBA::Boolean match (const CORBA::Any & filterable_data ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean match (const CORBA::Any & filterable_data)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data ACE_ENV_ARG_DECL)
+  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void detach_callback (CosNotifyFilter::CallbackID callback ACE_ENV_ARG_DECL)
+  virtual void detach_callback (CosNotifyFilter::CallbackID callback)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::CallbackNotFound
                      ));
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

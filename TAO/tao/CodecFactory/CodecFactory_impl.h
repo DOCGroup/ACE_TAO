@@ -53,13 +53,13 @@ public:
 
   /// Create a Coder/Decoder for the given type of encoding.
   virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                       )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::CodecFactory::UnknownEncoding));
 
   /// Create a Coder/Decoder for the given type of encoding and codesets.
   virtual IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc
-                                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::CodecFactory::UnknownEncoding,
                      IOP::CodecFactory::UnsupportedCodeset));
@@ -75,7 +75,7 @@ private:
                                  IOP::EncodingFormat encoding_format,
                                  TAO_Codeset_Translator_Base * char_trans,
                                  TAO_Codeset_Translator_Base * wchar_trans
-                                 ACE_ENV_ARG_DECL)
+                                 )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::CodecFactory::UnknownEncoding));
 private:

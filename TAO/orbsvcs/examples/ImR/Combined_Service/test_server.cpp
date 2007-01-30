@@ -21,7 +21,7 @@ public:
   }
   virtual ~test_i (void) {
   }
-  virtual CORBA::Long get (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException)) {
+  virtual CORBA::Long get (void) ACE_THROW_SPEC ((CORBA::SystemException)) {
     ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
     return n_;
   }
@@ -41,7 +41,7 @@ POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poam
 int main(int argc, char* argv[]) {
 
   try {
- 
+
     ORB_var orb = ORB_init(argc, argv);
 
     Object_var obj = orb->resolve_initial_references("RootPOA");
@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
     orb->destroy();
 
   } catch (CORBA::Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "TestServer::init()");
+    e._tao_print_exception ("TestServer::init()");
   }
   return 0;
 }

@@ -17,16 +17,13 @@ class Echo_Handler
 public:
   Echo_Handler(void);
 
-  virtual void echo_operation(char const * retval
-                              ACE_ENV_ARG_DECL)
+  virtual void echo_operation(char const * retval)
     ACE_THROW_SPEC((CORBA::SystemException));
-  virtual void echo_operation_excep(::Messaging::ExceptionHolder * h
-                                    ACE_ENV_ARG_DECL)
+  virtual void echo_operation_excep(::Messaging::ExceptionHolder * h)
     ACE_THROW_SPEC((CORBA::SystemException));
-  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown(void)
     ACE_THROW_SPEC((CORBA::SystemException));
-  virtual void shutdown_excep(::Messaging::ExceptionHolder * h
-                              ACE_ENV_ARG_DECL)
+  virtual void shutdown_excep(::Messaging::ExceptionHolder * h)
     ACE_THROW_SPEC((CORBA::SystemException));
 
   CORBA::ULong replies (void) const;

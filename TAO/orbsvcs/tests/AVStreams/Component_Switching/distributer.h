@@ -116,8 +116,7 @@ public:
   /// Store the reference to the protocol object corresponding
   /// to the transport
 
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
-                                                      ACE_ENV_ARG_DECL_NOT_USED);
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec);
   /// Called when a sender makes a connection request.
 
 private:
@@ -173,8 +172,7 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   /// Initialize data components.
 
   int parse_args (int argc,
@@ -194,7 +192,7 @@ public:
   void stream_destroyed (void);
   /// Called when stream destroyed
 
-  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (void);
   ///Unbind the sender and receiver from the Naming Service
 
 protected:

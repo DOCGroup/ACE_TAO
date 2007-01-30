@@ -64,14 +64,12 @@ public:
    * not exists (i.e. _non_existent() returns true and/or the
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
-  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy);
 
   /// Some system exception was raised while trying to contact the
   /// supplier
   virtual void system_exception (TAO_EC_ProxyPushConsumer * proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

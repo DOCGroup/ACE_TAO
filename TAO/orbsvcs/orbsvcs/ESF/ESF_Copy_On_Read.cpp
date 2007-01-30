@@ -23,13 +23,12 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    for_each (TAO_ESF_Worker<PROXY> *worker
-              ACE_ENV_ARG_DECL)
+    for_each (TAO_ESF_Worker<PROXY> *worker)
 {
   // @@ Use an allocator for this memory...
   PROXY **proxies = 0;
   size_t size = 0;
-  ACE_TRY
+  try
     {
       {
         ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
@@ -54,13 +53,12 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
       worker->set_size(size);
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {
-          worker->work (*j ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          worker->work (*j);
           (*j)->_decr_refcnt ();
         }
       delete[] proxies;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       for (PROXY **j = proxies; j != proxies + size; ++j)
         {
@@ -69,50 +67,46 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
         }
       delete[] proxies;
 
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    connected (PROXY *proxy
-               ACE_ENV_ARG_DECL)
+    connected (PROXY *proxy)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   proxy->_incr_refcnt ();
-  this->collection_.connected (proxy ACE_ENV_ARG_PARAMETER);
+  this->collection_.connected (proxy);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    reconnected (PROXY *proxy
-                 ACE_ENV_ARG_DECL)
+    reconnected (PROXY *proxy)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   proxy->_incr_refcnt ();
-  this->collection_.reconnected (proxy ACE_ENV_ARG_PARAMETER);
+  this->collection_.reconnected (proxy);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    disconnected (PROXY *proxy
-                  ACE_ENV_ARG_DECL)
+    disconnected (PROXY *proxy)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  this->collection_.disconnected (proxy ACE_ENV_ARG_PARAMETER);
+  this->collection_.disconnected (proxy);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    shutdown (void)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  this->collection_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->collection_.shutdown ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

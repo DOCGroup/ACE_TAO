@@ -63,8 +63,8 @@ TAO_COIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 TAO_Transport *
 TAO_COIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
-                                     TAO_Transport_Descriptor_Interface &,
-                                     ACE_Time_Value * /*max_wait_time*/)
+                                      TAO_Transport_Descriptor_Interface &,
+                                      ACE_Time_Value * /*max_wait_time*/)
 {
   // No remote connection possible with COIOP
   return 0;
@@ -89,7 +89,7 @@ TAO_COIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_COIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO_COIOP_Connector::make_profile (void)
 {
   // The endpoint should be of the form:
   //    N.n@uuid/object_key
@@ -104,7 +104,6 @@ TAO_COIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }

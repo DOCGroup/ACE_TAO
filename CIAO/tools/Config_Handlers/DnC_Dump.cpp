@@ -759,7 +759,7 @@ namespace Deployment
             {
               ACE_DEBUG ((LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
 encoded different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
                       temp));
@@ -781,7 +781,7 @@ encoded different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
                       temp));
@@ -795,7 +795,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
                       temp));
@@ -809,7 +809,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %u \n", Dump_Obj::indent (),
                       temp));
@@ -823,7 +823,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
                       temp));
@@ -836,7 +836,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %f \n", Dump_Obj::indent (),
                       temp));
@@ -849,7 +849,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
 
           if (temp)
@@ -866,7 +866,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
                       temp));
@@ -880,7 +880,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
                       temp));
@@ -894,7 +894,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
                       temp));
@@ -907,7 +907,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %l \n", Dump_Obj::indent (),
                       temp));
@@ -921,7 +921,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %d \n", Dump_Obj::indent (),
                       temp));
@@ -935,7 +935,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %c \n", Dump_Obj::indent (),
                       temp));
@@ -949,7 +949,7 @@ encoded with different type"));
             {
               ACE_DEBUG ((LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
 encoded with different type"));
-              ACE_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
           ACE_DEBUG ((LM_DEBUG, "%sAny value: %s \n", Dump_Obj::indent (),
                       temp));
@@ -958,7 +958,7 @@ encoded with different type"));
 
       default:
         ACE_DEBUG ((LM_DEBUG, "Unknown type encoded in Any\n"));
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       }
   }
 }

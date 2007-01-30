@@ -100,12 +100,14 @@
 #      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 #      endif
-#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      if defined (RWSTD_NO_NAMESPACE)
+         namespace std {} using namespace std;
+#      else
+#        define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      endif /* RWSTD_NO_NAMESPACE */
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
 #    endif /* _HP_NAMESPACE_STD */
-
-#    define ACE_HAS_TYPENAME_KEYWORD
 
 // Compiler implements templates that support typedefs inside of classes
 // used as formal arguments to a template class.
@@ -266,9 +268,6 @@
 
 /* Platform defines MAP_FAILED as a long constant. */
 #define ACE_HAS_LONG_MAP_FAILED 1
-
-/* Define to 1 if platform has memchr(). */
-#define ACE_HAS_MEMCHR 1
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG

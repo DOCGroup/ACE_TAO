@@ -25,7 +25,7 @@ TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin (void)
 }
 
 CosNotifyFilter::FilterID
-TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (new_filter))
@@ -33,7 +33,6 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_E
 
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   CosNotifyFilter::FilterID new_id = this->filter_ids_.id ();
 
@@ -48,7 +47,7 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_E
 }
 
 void
-TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
@@ -56,14 +55,13 @@ TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id ACE_E
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   if (this->filter_list_.unbind (filter_id) == -1)
-    ACE_THROW (CosNotifyFilter::FilterNotFound ());
+    throw CosNotifyFilter::FilterNotFound ();
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
@@ -71,7 +69,6 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   CosNotifyFilter::Filter_var filter_var;
 
@@ -84,14 +81,13 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_Notify_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterAdmin::get_all_filters (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   // Figure out the length of the list.
   size_t len = this->filter_list_.current_size ();
@@ -102,7 +98,6 @@ TAO_Notify_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (list_ptr,
                     CosNotifyFilter::FilterIDSeq,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   CosNotifyFilter::FilterIDSeq_var list (list_ptr);
 
@@ -122,18 +117,17 @@ TAO_Notify_FilterAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_FilterAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterAdmin::remove_all_filters (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   this->filter_list_.unbind_all ();
 }
 
 void
-TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   if (this->filter_list_.current_size() == 0)
     return;
@@ -141,8 +135,7 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_E
   bool changed = true;
 
   TAO_Notify::NVPList attrs;
-  bool want_children = saver.begin_object(0, "filter_admin", attrs, changed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  bool want_children = saver.begin_object(0, "filter_admin", attrs, changed);
   if (want_children)
   {
     FILTER_LIST::ITERATOR iter (this->filter_list_);
@@ -156,22 +149,19 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_E
     {
       TAO_Notify::NVPList fattrs;
       CORBA::Long id = entry->ext_id_;
-      CORBA::String_var ior = orb->object_to_string(entry->int_id_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::String_var ior = orb->object_to_string(entry->int_id_.in());
       fattrs.push_back(TAO_Notify::NVP("IOR", ior.in()));
-      saver.begin_object(id, "filter", fattrs, changed ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      saver.end_object(id, "filter" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      saver.begin_object(id, "filter", fattrs, changed);
+      saver.end_object(id, "filter");
     }
   }
 
-  saver.end_object(0, "filter_admin" ACE_ENV_ARG_PARAMETER);
+  saver.end_object(0, "filter_admin");
 }
 
 TAO_Notify::Topology_Object*
 TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
+  const TAO_Notify::NVPList& attrs)
 {
   if (type == "filter")
   {
@@ -181,10 +171,8 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
     ACE_CString ior;
     attrs.load("IOR", ior);
 
-    CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
-    CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    CORBA::Object_var obj = orb->string_to_object(ior.c_str());
+    CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_unchecked_narrow(obj.in());
     if (! CORBA::is_nil(filter.in()))
     {
       this->filter_ids_.set_last_used(id);

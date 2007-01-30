@@ -74,7 +74,7 @@ namespace CIAO
 
 
     Deployment::DomainApplicationManagers *
-    DAM_Map::get_dams (ACE_ENV_SINGLE_ARG_DECL)
+    DAM_Map::get_dams ()
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::get_dams");
       CORBA::ULong const sz =
@@ -85,7 +85,6 @@ namespace CIAO
       ACE_NEW_THROW_EX (list,
                         Deployment::DomainApplicationManagers (sz),
                         CORBA::NO_MEMORY());
-      ACE_CHECK_RETURN (0);
 
       // Add the manager to the list
       list->length (sz);

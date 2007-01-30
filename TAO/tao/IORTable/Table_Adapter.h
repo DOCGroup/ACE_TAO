@@ -43,16 +43,13 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void close (int wait_for_completion
-                      ACE_ENV_ARG_DECL);
-  virtual void check_close (int wait_for_completion
-                            ACE_ENV_ARG_DECL);
+  virtual void open (void);
+  virtual void close (int wait_for_completion);
+  virtual void check_close (int wait_for_completion);
   virtual int priority (void) const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to
-                        ACE_ENV_ARG_DECL)
+                        CORBA::Object_out foward_to)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual const char *name (void) const;
@@ -60,15 +57,14 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
-  virtual CORBA::Long initialize_collocated_object (TAO_Stub *);
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *stub);
 
 private:
   static ACE_Lock * create_lock (bool enable_locking, TAO_SYNCH_MUTEX &l);
   /// Helper method to find an object bound in the table.
   /// @return 1 if found, 0 otherwise.
   CORBA::Long find_object (TAO::ObjectKey &key,
-                           CORBA::Object_out forward_to
-                           ACE_ENV_ARG_DECL)
+                           CORBA::Object_out forward_to)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The ORB Core we belong to

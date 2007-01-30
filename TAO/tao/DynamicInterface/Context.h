@@ -53,8 +53,6 @@ namespace CORBA
   class NVList;
   typedef NVList *NVList_ptr;
 
-  class Environment;
-
   typedef TAO_Pseudo_Var_T<Context> Context_var;
   typedef TAO_Pseudo_Out_T<Context> Context_out;
 
@@ -92,29 +90,29 @@ namespace CORBA
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-    const char *context_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+    const char *context_name (void) const;
 
-    CORBA::Context_ptr parent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+    CORBA::Context_ptr parent (void) const;
 
     void create_child (const char *child_ctx_name,
                        CORBA::Context_out child_ctx
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       );
 
     void set_one_value (const char *propname,
                         const CORBA::Any &propvalue
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                        );
 
     void set_values (CORBA::NVList_ptr values
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     );
 
     void delete_values (const char *propname
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                        );
 
     void get_values (const char *start_scope,
                      CORBA::Flags op_flags,
                      const char *pattern,
                      CORBA::NVList_ptr &values
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                     );
 
     // Useful for template programming.
     typedef CORBA::Context_ptr _ptr_type;
@@ -170,11 +168,11 @@ namespace CORBA
 
     /// Return the typecode at slot i. Raises the "Bounds" exception.
     char *item (CORBA::ULong slot
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                );
 
     /// Remove the typecode at slot i. Raises the "Bounds" exception.
     void remove (CORBA::ULong slot
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                 );
 
     /// Increment and decrement ref counts.
     void _incr_refcnt (void);

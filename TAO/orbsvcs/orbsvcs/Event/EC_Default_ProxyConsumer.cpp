@@ -25,8 +25,7 @@ TAO_EC_Default_ProxyPushConsumer::~TAO_EC_Default_ProxyPushConsumer (void)
 void
 TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
-      const RtecEventChannelAdmin::SupplierQOS& qos
-      ACE_ENV_ARG_DECL)
+      const RtecEventChannelAdmin::SupplierQOS& qos)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecEventChannelAdmin::AlreadyConnected))
 {
@@ -35,12 +34,11 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     if (this->is_connected_i ())
       {
         if (this->event_channel_->supplier_reconnect () == 0)
-          ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
+          throw RtecEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed, go ahead and disconnect the
         // consumer...
@@ -55,10 +53,8 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
               TAO_EC_Unlock, ace_mon, reverse_lock,
               CORBA::INTERNAL ());
           // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-          ACE_CHECK;
 
-          this->event_channel_->reconnected (this ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->event_channel_->reconnected (this);
         }
 
         // A separate thread could have connected siomultaneously,
@@ -84,12 +80,11 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
   }
 
   // Notify the event channel...
-  this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->connected (this);
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
-                                        ACE_ENV_ARG_DECL)
+TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
@@ -99,14 +94,11 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
   if (!ace_mon.locked ())
     return;
 
-  ace_mon.filter->push (event, this
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ace_mon.filter->push (event, this);
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::PushSupplier_var supplier;
@@ -117,7 +109,6 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
 
     connected = this->is_connected_i ();
     supplier = this->supplier_._retn ();
@@ -128,8 +119,7 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer (
   }
 
   // Notify the event channel...
-  this->event_channel_->disconnected (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->event_channel_->disconnected (this);
 
   if (CORBA::is_nil (supplier.in ()))
     {
@@ -138,54 +128,50 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer (
 
   if (this->event_channel_->disconnect_callbacks ())
     {
-      ACE_TRY
+      try
         {
-          supplier->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          supplier->disconnect_push_supplier ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // Ignore exceptions, we must isolate other clients from
           // failures on this one.
         }
-      ACE_ENDTRY;
     }
 }
 
 PortableServer::POA_ptr
-TAO_EC_Default_ProxyPushConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Default_ProxyPushConsumer::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Default_ProxyPushConsumer::_add_ref (void)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Default_ProxyPushConsumer::_remove_ref (void)
 {
   this->_decr_refcnt ();
 }
 
 void
 TAO_EC_Default_ProxyPushConsumer::activate (
-   RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-   ACE_ENV_ARG_DECL)
+   RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  proxy = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy = this->_this ();
 }
 
 PortableServer::ObjectId
-TAO_EC_Default_ProxyPushConsumer::object_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Default_ProxyPushConsumer::object_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var result =
-    this->default_POA_->servant_to_id (this ACE_ENV_ARG_PARAMETER);
+    this->default_POA_->servant_to_id (this);
   return result.in ();
 }
 

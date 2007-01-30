@@ -54,11 +54,10 @@ bool
 TAO::TypeCode::Case_Enum_T<StringType,
                            TypeCodeType>::equal_label (::CORBA::ULong index,
                                                        ::CORBA::TypeCode_ptr tc
-                                                       ACE_ENV_ARG_DECL) const
+                                                       ) const
 {
   CORBA::Any_var const any = tc->member_label (index
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+                                              );
 
   // The equality operator == below is guaranteed to be defined for
   // the discriminator type since an IDL union discriminator type must
@@ -79,7 +78,7 @@ template <typename StringType,
           typename TypeCodeType>
 CORBA::Any *
 TAO::TypeCode::Case_Enum_T<StringType,
-                           TypeCodeType>::label (ACE_ENV_SINGLE_ARG_DECL) const
+                           TypeCodeType>::label (void) const
 {
     TAO_OutputCDR out_cdr;
 
@@ -89,7 +88,6 @@ TAO::TypeCode::Case_Enum_T<StringType,
     ACE_NEW_THROW_EX (retval,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     TAO_InputCDR in_cdr (out_cdr);
     TAO::Unknown_IDL_Type *unk = 0;
@@ -97,7 +95,6 @@ TAO::TypeCode::Case_Enum_T<StringType,
                       TAO::Unknown_IDL_Type (this->discriminator_tc_.in (),
                                              in_cdr),
                       CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     CORBA::Any_var safe_value (retval);
 

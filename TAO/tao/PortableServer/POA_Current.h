@@ -48,7 +48,7 @@ namespace TAO
        * Can raise the @c NoContext exception if this function is
        * not invoked in the context of an upcall.
        */
-      PortableServer::POA_ptr get_POA (ACE_ENV_SINGLE_ARG_DECL)
+      PortableServer::POA_ptr get_POA (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::Current::NoContext));
 
@@ -57,7 +57,7 @@ namespace TAO
        * raise the @c NoContext exception if this function is not
        * invoked in the context of an upcall.
        */
-      PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
+      PortableServer::ObjectId *get_object_id (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::Current::NoContext));
 
@@ -70,7 +70,7 @@ namespace TAO
        * Object::is_equivalent operation to compare the two references may not
        * necessarily return true.
        */
-      CORBA::Object_ptr get_reference (ACE_ENV_SINGLE_ARG_DECL)
+      CORBA::Object_ptr get_reference (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::Current::NoContext));
 
@@ -79,7 +79,7 @@ namespace TAO
        * context it is called. If called outside the context of the POA
        * dispatched operation, a NoContext exception is raised
        */
-      PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      PortableServer::Servant get_servant (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::Current::NoContext));
 

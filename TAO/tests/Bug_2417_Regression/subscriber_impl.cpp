@@ -16,7 +16,6 @@ Subscriber_impl::~Subscriber_impl()
 void
 Subscriber_impl::onData (
       ::CORBA::Double
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       ::CORBA::SystemException
@@ -29,7 +28,6 @@ Subscriber_impl::onData (
 
 ::CORBA::Boolean
 Subscriber_impl::isAlive (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       ::CORBA::SystemException

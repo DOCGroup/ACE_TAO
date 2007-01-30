@@ -39,8 +39,7 @@ TAO_Metrics_UpcallMonitor::~TAO_Metrics_UpcallMonitor ()
 
 ACE_INLINE void
 TAO_Metrics_UpcallMonitor::
-report_made_deadline (RtecScheduler::handle_t handle
-                      ACE_ENV_ARG_DECL)
+report_made_deadline (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_0))
 {
@@ -51,7 +50,7 @@ report_made_deadline (RtecScheduler::handle_t handle
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Failed trybind for handle %u in made map\n", handle));
-      ACE_THROW (Metrics::INTERNAL_0 ());
+      throw Metrics::INTERNAL_0 ();
     }
 
   ++entry->int_id_;
@@ -61,8 +60,7 @@ report_made_deadline (RtecScheduler::handle_t handle
 
 ACE_INLINE void
 TAO_Metrics_UpcallMonitor::
-report_missed_deadline (RtecScheduler::handle_t handle
-                        ACE_ENV_ARG_DECL)
+report_missed_deadline (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_1))
 {
@@ -73,7 +71,7 @@ report_missed_deadline (RtecScheduler::handle_t handle
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Failed trybind for handle %u in missed map\n", handle));
-      ACE_THROW (Metrics::INTERNAL_1 ());
+      throw Metrics::INTERNAL_1 ();
     }
 
   ++entry->int_id_;
@@ -84,8 +82,7 @@ report_missed_deadline (RtecScheduler::handle_t handle
 
 ACE_INLINE void
 TAO_Metrics_UpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t handle,
-                                              Metrics::QoSParameter_t_out qos
-                                              ACE_ENV_ARG_DECL)
+                                              Metrics::QoSParameter_t_out qos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_2,
                      Metrics::INTERNAL_3))
@@ -99,14 +96,14 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t handle,
     {
       ACE_DEBUG ((LM_DEBUG, "TAO_Metrics_UpcallMonitor::get_aggregate_QoS: "
                   "Failed trybind for handle %u in made map\n", handle));
-      ACE_THROW (Metrics::INTERNAL_2 ());
+      throw Metrics::INTERNAL_2 ();
     }
 
   if (missed_map_.trybind (handle, missed_count, missed_entry) < 0)
     {
       ACE_DEBUG ((LM_DEBUG, "TAO_Metrics_UpcallMonitor::get_aggregate_QoS: "
                   "Failed trybind for handle %u in missed map\n", handle));
-      ACE_THROW (Metrics::INTERNAL_3 ());
+      throw Metrics::INTERNAL_3 ();
     }
 
   ACE_NEW_THROW_EX (qos,
@@ -127,8 +124,7 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t handle,
 ACE_INLINE void
 TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set (
       const Metrics::Handle_Set_t & handle_set,
-      Metrics::QoSParameter_Set_out qos_set
-      ACE_ENV_ARG_DECL)
+      Metrics::QoSParameter_Set_out qos_set)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_4,
                      Metrics::INTERNAL_5))
@@ -157,7 +153,7 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set (
                       "TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set: "
                       "Failed trybind for handle_set [%d] = %u in made map\n",
                       i, handle_set [i]));
-          ACE_THROW (Metrics::INTERNAL_4 ());
+          throw Metrics::INTERNAL_4 ();
         }
 
       if (missed_map_.trybind (handle_set [i], missed_count, missed_entry) < 0)
@@ -166,7 +162,7 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set (
                       "TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set: "
                       "Failed trybind for handle_set[%d]=%u in missed map\n",
                       i, handle_set [i]));
-          ACE_THROW (Metrics::INTERNAL_5 ());
+          throw Metrics::INTERNAL_5 ();
         }
 
       qos_set [i].handle = handle_set [i];
@@ -182,8 +178,7 @@ TAO_Metrics_UpcallMonitor::get_aggregate_QoS_set (
 // Resets the aggregate QoS information for the given operation.
 
 ACE_INLINE void
-TAO_Metrics_UpcallMonitor::reset_statistics (RtecScheduler::handle_t handle
-                                             ACE_ENV_ARG_DECL)
+TAO_Metrics_UpcallMonitor::reset_statistics (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_7,
                      Metrics::INTERNAL_8))
@@ -192,12 +187,12 @@ TAO_Metrics_UpcallMonitor::reset_statistics (RtecScheduler::handle_t handle
 
   if (made_map_.rebind (handle, count) < 0)
     {
-      ACE_THROW (Metrics::INTERNAL_7 ());
+      throw Metrics::INTERNAL_7 ();
     }
 
   if (missed_map_.rebind (handle, count) < 0)
     {
-      ACE_THROW (Metrics::INTERNAL_8 ());
+      throw Metrics::INTERNAL_8 ();
     }
 }
 
@@ -242,26 +237,22 @@ TAO_Metrics_ReportingUpcallMonitor::~TAO_Metrics_ReportingUpcallMonitor ()
 
 ACE_INLINE void
 TAO_Metrics_ReportingUpcallMonitor::
-report_made_deadline (RtecScheduler::handle_t handle
-                      ACE_ENV_ARG_DECL)
+report_made_deadline (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_0))
 {
-  monitor_.report_made_deadline (handle
-                                 ACE_ENV_ARG_DECL);
+  monitor_.report_made_deadline (handle);
 }
 
 // Reports an unsuccessful upcall.
 
 ACE_INLINE void
 TAO_Metrics_ReportingUpcallMonitor::
-report_missed_deadline (RtecScheduler::handle_t handle
-                        ACE_ENV_ARG_DECL)
+report_missed_deadline (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_1))
 {
-  monitor_.report_missed_deadline (handle
-                                   ACE_ENV_ARG_DECL);
+  monitor_.report_missed_deadline (handle);
 }
 
 
@@ -269,15 +260,13 @@ report_missed_deadline (RtecScheduler::handle_t handle
 
 ACE_INLINE void
 TAO_Metrics_ReportingUpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t handle,
-                                              Metrics::QoSParameter_t_out qos
-                                              ACE_ENV_ARG_DECL)
+                                              Metrics::QoSParameter_t_out qos)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_2,
                      Metrics::INTERNAL_3))
 {
   monitor_.get_aggregate_QoS (handle,
-                              qos
-                              ACE_ENV_ARG_DECL);
+                              qos);
 }
 
 
@@ -287,15 +276,13 @@ TAO_Metrics_ReportingUpcallMonitor::get_aggregate_QoS (RtecScheduler::handle_t h
 ACE_INLINE void
 TAO_Metrics_ReportingUpcallMonitor::get_aggregate_QoS_set (
       const Metrics::Handle_Set_t & handle_set,
-      Metrics::QoSParameter_Set_out qos_set
-      ACE_ENV_ARG_DECL)
+      Metrics::QoSParameter_Set_out qos_set)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_4,
                      Metrics::INTERNAL_5))
 {
   monitor_.get_aggregate_QoS_set (handle_set,
-                                  qos_set
-                                  ACE_ENV_ARG_DECL);
+                                  qos_set);
 }
 
 
@@ -303,14 +290,12 @@ TAO_Metrics_ReportingUpcallMonitor::get_aggregate_QoS_set (
 // Resets the aggregate QoS information for the given operation.
 
 ACE_INLINE void
-TAO_Metrics_ReportingUpcallMonitor::reset_statistics (RtecScheduler::handle_t handle
-                                                      ACE_ENV_ARG_DECL)
+TAO_Metrics_ReportingUpcallMonitor::reset_statistics (RtecScheduler::handle_t handle)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::INTERNAL_7,
                      Metrics::INTERNAL_8))
 {
-  monitor_.reset_statistics (handle
-                             ACE_ENV_ARG_DECL);
+  monitor_.reset_statistics (handle);
 }
 
 
@@ -319,15 +304,14 @@ TAO_Metrics_ReportingUpcallMonitor::reset_statistics (RtecScheduler::handle_t ha
 ACE_INLINE void
 TAO_Metrics_ReportingUpcallMonitor::report_aggregate_QoS (
       Metrics::QoSLogger_ptr logger,
-      Metrics::Time interval
-      ACE_ENV_ARG_DECL)
+      Metrics::Time interval)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Metrics::NIL_LOGGER,
                      Metrics::INTERNAL_6))
 {
   if (CORBA::is_nil (logger))
     {
-      ACE_THROW (Metrics::NIL_LOGGER ());
+      throw Metrics::NIL_LOGGER ();
     }
 
   Metrics::QoSParameter_Set qos_set;

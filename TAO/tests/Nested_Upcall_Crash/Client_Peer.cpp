@@ -30,27 +30,23 @@ Client_Peer::Client_Peer (CORBA::ORB_ptr orb)
 void
 Client_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
-                    Test::Payload const &
-                    ACE_ENV_ARG_DECL)
+                    Test::Payload const &)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
   if (max_depth > 0)
   {
     Test::Peer_var me =
-      this->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->_this();
 
     Test::Payload return_data;
 
-    callback->callme(me.in(), max_depth - 1, return_data
-                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    callback->callme(me.in(), max_depth - 1, return_data);
   }
 }
 
 void
-Client_Peer::crash(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Peer::crash(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   Crasher * crasher = new Crasher;
@@ -61,7 +57,7 @@ Client_Peer::crash(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Client_Peer::noop(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Peer::noop(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

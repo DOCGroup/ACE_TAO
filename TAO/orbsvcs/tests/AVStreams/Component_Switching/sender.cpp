@@ -150,26 +150,21 @@ Sender::~Sender (void)
 }
 
 void
-Sender::shut_down (ACE_ENV_SINGLE_ARG_DECL)
+Sender::shut_down (void)
 {
-  ACE_TRY
+  try
     {
       AVStreams::MMDevice_var mmdevice =
-        this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->sender_mmdevice_->_this ();
 
       SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
-                                                                mmdevice.in ()
-                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                                mmdevice.in ());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender::shut_down Failed\n");
+      ex._tao_print_exception ("Sender::shut_down Failed\n");
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -206,8 +201,7 @@ Sender::parse_args (int argc,
 
 int
 Sender::init (int argc,
-              char **argv
-              ACE_ENV_ARG_DECL)
+              char **argv)
 {
   /// Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -266,26 +260,22 @@ Sender::init (int argc,
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->sender_mmdevice_->_this ();
 
   /// Register the object reference with the Naming Service and bind to
   /// the receivers
   this->connection_manager_.bind_to_receivers (this->sender_name_,
-                                               mmdevice.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                               mmdevice.in ());
 
   /// Connect to the receivers
-  this->connection_manager_.connect_to_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_receivers ();
 
   return 0;
 }
 
 /// Method to send data at the specified rate
 int
-Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
+Sender::pace_data (void)
 {
   /// The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -300,7 +290,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                 this->frame_rate_,
                 inter_frame_time.msec ()));
 
-  ACE_TRY
+  try
     {
       /// The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
@@ -314,8 +304,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
               ACE_DEBUG ((LM_DEBUG,
                           "Shut Down called\n"));
 
-              this->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->shut_down ();
 
               break;
             }
@@ -337,8 +326,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
 
-              this->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->shut_down ();
 
               break;
 
@@ -379,9 +367,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 
                   /// Run the orb for the wait time so the sender can
                   /// continue other orb requests.
-                  TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                         ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  TAO_AV_CORE::instance ()->orb ()->run (wait_time);
 
                 }
             }
@@ -417,13 +403,11 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
         } /// end while
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender::pace_data Failed\n");
+      ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -455,62 +439,46 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       ///Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       /// Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       /// Initialize the Client.
       int result = 0;
       result = SENDER::instance ()->init (argc,
-                                          argv
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "client::init failed\n"), -1);
 
-      SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      SENDER::instance ()->pace_data ();
 
       orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Sender Failed\n");
+      ex._tao_print_exception ("Sender Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   SENDER::close (); // Explicitly finalize the Unmanaged_Singleton.
 

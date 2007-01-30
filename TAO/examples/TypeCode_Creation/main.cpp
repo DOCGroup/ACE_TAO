@@ -8,19 +8,15 @@ ACE_RCSID(TypeCode_Creation, main, "$Id$")
 
 int main(int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "");
 
       CORBA::TypeCode_var iface_tc =
         orb->create_interface_tc (CORBA::string_dup ("IDL:iface:1.0"),
-                                  CORBA::string_dup ("iface")
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  CORBA::string_dup ("iface"));
 
       CORBA::ULong length = 5;
 
@@ -72,9 +68,7 @@ int main(int argc, char *argv[])
       CORBA::TypeCode_ptr foo_tc = orb->create_union_tc ("IDL:foo:1.0",
                                                           "foo",
                                                           CORBA::_tc_short,
-                                                          foo_members
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                          foo_members);
 
       length = 2;
 
@@ -94,14 +88,10 @@ int main(int argc, char *argv[])
 
       CORBA::TypeCode_var bar_tc = orb->create_struct_tc ("IDL:bar:1.0",
                                                           "bar",
-                                                          bar_members
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                          bar_members);
 
       // Check for equality with the typecode created by the IDL compiler.
-      CORBA::Boolean eq = bar_tc->equal (_tc_bar
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Boolean eq = bar_tc->equal (_tc_bar);
 
       if (!eq)
         {
@@ -111,13 +101,11 @@ int main(int argc, char *argv[])
 
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "exception:");
+      ex._tao_print_exception ("exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

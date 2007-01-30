@@ -12,7 +12,7 @@ TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
 }
 
 void
-TAO_Offer_Importer::perform_queries (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Offer_Importer::perform_queries (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -34,12 +34,11 @@ TAO_Offer_Importer::perform_queries (ACE_ENV_SINGLE_ARG_DECL)
   policies.return_card (16*NUM_OFFERS);
   policies.link_follow_rule (CosTrading::always);
 
-  this->perform_queries_with_policies (policies ACE_ENV_ARG_PARAMETER);
-  // ACE_CHECK;
+  this->perform_queries_with_policies (policies);
 }
 
 void
-TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Offer_Importer::perform_directed_queries (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -63,16 +62,14 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
-  CosTrading::Link_var link_if = this->lookup_->link_if (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosTrading::Link_var link_if = this->lookup_->link_if ();
 
   if (this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
                   " linked to the root trader.\n"));
     }
-  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links ();
 
   if (link_name_seq->length () > 0)
     {
@@ -83,15 +80,12 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       CosTrading::Link::LinkInfo_var link_info =
-        link_if->describe_link (link_name_seq[0u] ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        link_if->describe_link (link_name_seq[0u]);
 
       CosTrading::Lookup_ptr lookup_if = link_info->target.in ();
-      CosTrading::Link_var link_if2 = lookup_if->link_if (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CosTrading::Link_var link_if2 = lookup_if->link_if ();
 
-      CosTrading::LinkNameSeq_var link_name_seq2 = link_if2->list_links (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CosTrading::LinkNameSeq_var link_name_seq2 = link_if2->list_links ();
 
       if (link_name_seq2->length () > 0)
         {
@@ -117,8 +111,7 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
               policies.starting_trader (new CosTrading::TraderName
                                         (2, 2, trader_name, 1));
 
-              this->perform_queries_with_policies (policies ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
+              this->perform_queries_with_policies (policies);
             }
         }
       else
@@ -138,7 +131,6 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Offer_Importer::perform_queries_with_policies (
     const TAO_Policy_Creator& policies
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
@@ -152,7 +144,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
                    CosTrading::DuplicatePropertyName,
                    CosTrading::DuplicatePolicyName))
 {
-  ACE_TRY
+  try
     {
       CosTrading::Lookup::SpecifiedProps desired_props;
 
@@ -189,9 +181,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
                                 8,
                                 offer_seq_out,
                                 offer_iterator_out,
-                                limits_applied_out
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                limits_applied_out);
 
           CosTrading::OfferSeq_var offer_seq (offer_seq_ptr);
           CosTrading::OfferIterator_var offer_iterator (offer_iterator_ptr);
@@ -201,9 +191,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
             {
               ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));
               this->display_results (*offer_seq_ptr,
-                                     offer_iterator_ptr
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                     offer_iterator_ptr);
 
               if (limits_applied_out->length () > 0)
                 ACE_DEBUG ((LM_DEBUG, "*** Limits Applied:\n\n"));
@@ -217,21 +205,20 @@ TAO_Offer_Importer::perform_queries_with_policies (
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Importer::perform_queries");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Importer::perform_queries");
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
 TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
-                                     CosTrading::OfferIterator_ptr offer_iterator
-                                     ACE_ENV_ARG_DECL) const
+                                     CosTrading::OfferIterator_ptr offer_iterator) const
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       CORBA::ULong length = 0, i = 0;
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
@@ -241,15 +228,11 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
         {
           // Call back to the exported object.
           TAO_Trader_Test::Remote_Output_var remote_output =
-            TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in ());
 
-          remote_output->confirm (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          remote_output->confirm ();
 
-          TT_Info::dump_properties (offer_seq[i].properties, 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          TT_Info::dump_properties (offer_seq[i].properties, 1);
           ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
         }
 
@@ -266,39 +249,32 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
               CosTrading::OfferSeq_out iter_offers_out (iter_offers_ptr);
 
               any_left = offer_iterator->next_n (length,
-                                                 iter_offers_out
-                                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                 iter_offers_out);
 
               CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
               for (length = iter_offers->length (), i = 0; i < length; i++)
                 {
                   // Call back to the exported object.
                   TAO_Trader_Test::Remote_Output_var remote_output =
-                    TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                    TAO_Trader_Test::Remote_Output::_narrow (offer_seq[i].reference.in ());
 
-                  remote_output->confirm (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  remote_output->confirm ();
 
                   CosTrading::PropertySeq& props = iter_offers[i].properties;
-                  TT_Info::dump_properties (props, 1 ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  TT_Info::dump_properties (props, 1);
 
                   ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
                 }
 
             } while (any_left);
 
-          offer_iterator->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          offer_iterator->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Importer::display_results");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "TAO_Offer_Importer::display_results");
+      throw;
     }
-  ACE_ENDTRY;
 }

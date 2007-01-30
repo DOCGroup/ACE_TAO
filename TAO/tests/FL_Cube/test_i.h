@@ -62,11 +62,11 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void set_x_angle (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+  void set_x_angle (CORBA::Long x)
      ACE_THROW_SPEC ((CORBA::SystemException));
-  void set_y_angle (CORBA::Long y ACE_ENV_ARG_DECL_NOT_USED)
+  void set_y_angle (CORBA::Long y)
      ACE_THROW_SPEC ((CORBA::SystemException));
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -13,50 +13,40 @@ CEC_Counting_Supplier::CEC_Counting_Supplier (void)
 
 void
 CEC_Counting_Supplier::connect (
-    CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-    ACE_ENV_ARG_DECL)
+    CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   CosEventComm::PushSupplier_var supplier =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
       this->consumer_proxy_ =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        supplier_admin->obtain_push_consumer ();
     }
 
-  this->consumer_proxy_->connect_push_supplier (supplier.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->connect_push_supplier (supplier.in ());
 }
 
 void
-CEC_Counting_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+CEC_Counting_Supplier::disconnect (void)
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
-      this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumer_proxy_->disconnect_push_consumer ();
     }
 
   PortableServer::POA_var supplier_poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var supplier_id =
-    supplier_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  supplier_poa->deactivate_object (supplier_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_poa->servant_to_id (this);
+  supplier_poa->deactivate_object (supplier_id.in ());
 
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
-CEC_Counting_Supplier::push (const CORBA::Any&
-                ACE_ENV_ARG_DECL)
+CEC_Counting_Supplier::push (const CORBA::Any&)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -65,13 +55,12 @@ CEC_Counting_Supplier::push (const CORBA::Any&
   CORBA::Any event;
   event <<= CORBA::Long(0);
 
-  this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->push (event);
   this->event_count++;
 }
 
 void
-CEC_Counting_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CEC_Counting_Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
@@ -94,16 +83,14 @@ CEC_Counting_Supplier_Task::
 int
 CEC_Counting_Supplier_Task::svc ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -121,15 +108,14 @@ CEC_Counting_Supplier_Task::push_count (void)
 }
 
 void
-CEC_Counting_Supplier_Task::run (ACE_ENV_SINGLE_ARG_DECL)
+CEC_Counting_Supplier_Task::run (void)
 {
   CORBA::Any event;
   event <<= CORBA::Long(0);
 
   int stop = 0;
   do {
-    this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->supplier_->push (event);
 
     if (this->milliseconds_ != 0)
       {
@@ -160,49 +146,40 @@ CEC_Pull_Counting_Supplier::CEC_Pull_Counting_Supplier (void)
 
 void
 CEC_Pull_Counting_Supplier::connect (
-    CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-    ACE_ENV_ARG_DECL)
+    CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
   CosEventComm::PullSupplier_var supplier =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     {
       this->consumer_proxy_ =
-        supplier_admin->obtain_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        supplier_admin->obtain_pull_consumer ();
     }
 
-  this->consumer_proxy_->connect_pull_supplier (supplier.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->connect_pull_supplier (supplier.in ());
 }
 
 void
-CEC_Pull_Counting_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+CEC_Pull_Counting_Supplier::disconnect (void)
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
-      this->consumer_proxy_->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumer_proxy_->disconnect_pull_consumer ();
     }
 
   PortableServer::POA_var supplier_poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var supplier_id =
-    supplier_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  supplier_poa->deactivate_object (supplier_id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_poa->servant_to_id (this);
+  supplier_poa->deactivate_object (supplier_id.in ());
 
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPullConsumer::_nil ();
 }
 
 CORBA::Any*
-CEC_Pull_Counting_Supplier::pull (ACE_ENV_SINGLE_ARG_DECL)
+CEC_Pull_Counting_Supplier::pull (void)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -222,8 +199,7 @@ CEC_Pull_Counting_Supplier::pull (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Any*
-CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event
-                                      ACE_ENV_ARG_DECL)
+CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -248,7 +224,7 @@ CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event
 }
 
 void
-CEC_Pull_Counting_Supplier::disconnect_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CEC_Pull_Counting_Supplier::disconnect_pull_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;

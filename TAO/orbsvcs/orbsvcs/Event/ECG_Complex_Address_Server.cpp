@@ -124,8 +124,7 @@ TAO_ECG_Complex_Address_Server::add_entry (const char * key,
 void
 TAO_ECG_Complex_Address_Server::get_addr (
                          const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr
-                         ACE_ENV_ARG_DECL_NOT_USED)
+                         RtecUDPAdmin::UDP_Addr_out addr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Long key;

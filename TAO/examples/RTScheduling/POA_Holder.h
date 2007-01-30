@@ -40,8 +40,7 @@ public:
   int init (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate the new POA using the parameters initialized before.
-  void activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa
-                 ACE_ENV_ARG_DECL);
+  void activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa);
 
  protected:
   /// = POA create options.

@@ -1076,8 +1076,10 @@ private:
   TAO_MMAP_Allocator * const mmap_allocator_;
 #endif  /* TAO_HAS_SENDFILE==1 */
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
   /// Statistics
   TAO::Transport::Stats* stats_;
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /*
    * specialization hook to add class members from concrete
@@ -1094,6 +1096,7 @@ private:
 
 //@@ TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
 namespace TAO
 {
   namespace Transport
@@ -1118,6 +1121,7 @@ namespace TAO
     {
     public:
       Stats ();
+      virtual ~Stats ();
 
       void messages_sent (size_t message_length);
       CORBA::LongLong messages_sent (void) const;
@@ -1131,12 +1135,12 @@ namespace TAO
       const ACE_Time_Value& opened_since (void) const;
 
     private:
-      // @NOTE: I could have used bytes_rcvd_.samples_count() instead,
+      // The bytes_rcvd_.samples_count() could have been used instead,
       // however there was a suspicion that 32 bits would be
       // insufficient.
       CORBA::LongLong messages_rcvd_;
 
-      // @NOTE: I could have used bytes_sent_.samples_count() instead,
+      // The bytes_sent_.samples_count() could have been used instead,
       // however there was a suspicion that 32 bits would be
       // insufficient.
       CORBA::LongLong messages_sent_;
@@ -1148,6 +1152,7 @@ namespace TAO
     };
   }
 }
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

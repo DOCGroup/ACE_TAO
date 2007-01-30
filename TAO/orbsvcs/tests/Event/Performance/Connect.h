@@ -51,27 +51,25 @@ public:
   virtual void print_usage (void);
   virtual void print_args (void) const;
 
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
   // Don't run the suppliers, just test connect and disconnect calls.
 
   virtual void dump_results (void);
 
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int i
-    ACE_ENV_ARG_DECL);
-  virtual void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+    int i);
+  virtual void disconnect_consumers (void);
+  virtual void disconnect_suppliers (void);
 
   virtual EC_Consumer* allocate_consumer (int i);
   virtual EC_Supplier* allocate_supplier (int i);
 
-  virtual void connect_clients (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
-  virtual void disconnect_clients (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void connect_clients (void);
+  virtual void disconnect_clients (void);
 
 private:
   ACE_hrtime_t start_time_;
@@ -94,12 +92,10 @@ public:
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
   virtual void connect (
       const RtecEventChannelAdmin::ConsumerQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
   virtual void dump_results (const char* name,
                              ACE_UINT32 global_scale_factor);
 
@@ -117,12 +113,10 @@ public:
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
         const RtecEventChannelAdmin::SupplierQOS& qos,
-        int shutdown_event_type
-        ACE_ENV_ARG_DECL);
+        int shutdown_event_type);
   virtual void connect (
       const RtecEventChannelAdmin::SupplierQOS& qos,
-      int shutdown_event_type
-      ACE_ENV_ARG_DECL);
+      int shutdown_event_type);
   virtual void dump_results (const char* name,
                              ACE_UINT32 global_scale_factor);
 

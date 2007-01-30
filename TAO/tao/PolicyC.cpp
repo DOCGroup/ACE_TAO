@@ -167,7 +167,7 @@ void CORBA::PolicyError::_raise (void) const
 
 void CORBA::PolicyError::_tao_encode (
     TAO_OutputCDR &cdr
-    ACE_ENV_ARG_DECL
+
   ) const
 {
   if (cdr << *this)
@@ -175,12 +175,12 @@ void CORBA::PolicyError::_tao_encode (
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void CORBA::PolicyError::_tao_decode (
     TAO_InputCDR &cdr
-    ACE_ENV_ARG_DECL
+
   )
 {
   if (cdr >> *this)
@@ -188,7 +188,7 @@ void CORBA::PolicyError::_tao_decode (
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 
@@ -303,7 +303,7 @@ void CORBA::InvalidPolicies::_raise (void) const
 
 void CORBA::InvalidPolicies::_tao_encode (
     TAO_OutputCDR &cdr
-    ACE_ENV_ARG_DECL
+
   ) const
 {
   if (cdr << *this)
@@ -311,12 +311,12 @@ void CORBA::InvalidPolicies::_tao_encode (
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void CORBA::InvalidPolicies::_tao_decode (
     TAO_InputCDR &cdr
-    ACE_ENV_ARG_DECL
+
   )
 {
   if (cdr >> *this)
@@ -324,7 +324,7 @@ void CORBA::InvalidPolicies::_tao_decode (
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 
@@ -408,7 +408,7 @@ TAO::Collocation_Proxy_Broker *
 // be\be_visitor_operation/operation_cs.cpp:78
 
 CORBA::PolicyType CORBA::Policy::policy_type (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -440,8 +440,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       this->the_TAO_Policy_Proxy_Broker_
     );
 
-  _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (_tao_retval.excp ());
+  _tao_call.invoke (0, 0);
 
   return _tao_retval.retn ();
 }
@@ -450,7 +449,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::Policy_ptr CORBA::Policy::copy (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -482,8 +481,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       this->the_TAO_Policy_Proxy_Broker_
     );
 
-  _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (_tao_retval.excp ());
+  _tao_call.invoke (0, 0);
 
   return _tao_retval.retn ();
 }
@@ -492,7 +490,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 // be\be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::Policy::destroy (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -524,8 +522,7 @@ void CORBA::Policy::destroy (
       this->the_TAO_Policy_Proxy_Broker_
     );
 
-  _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  _tao_call.invoke (0, 0);
 }
 
 CORBA::Policy::Policy (void)
@@ -558,7 +555,7 @@ CORBA::Policy::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::Policy_ptr
 CORBA::Policy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+
   )
 {
   return
@@ -566,14 +563,14 @@ CORBA::Policy::_narrow (
         _tao_objref,
         "IDL:omg.org/CORBA/Policy:1.0",
         CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
-        ACE_ENV_ARG_PARAMETER
+
       );
 }
 
 CORBA::Policy_ptr
 CORBA::Policy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+
   )
 {
   return
@@ -581,7 +578,7 @@ CORBA::Policy::_unchecked_narrow (
         _tao_objref,
         "IDL:omg.org/CORBA/Policy:1.0",
         CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
-        ACE_ENV_ARG_PARAMETER
+
       );
 }
 
@@ -605,7 +602,7 @@ CORBA::Policy::_tao_release (Policy_ptr obj)
 CORBA::Boolean
 CORBA::Policy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL
+
   )
 {
   if (
@@ -625,7 +622,7 @@ CORBA::Policy::_is_a (
     {
       return this->::CORBA::Object::_is_a (
           value
-          ACE_ENV_ARG_PARAMETER
+
         );
     }
 }
@@ -694,7 +691,7 @@ CORBA::PolicyManager::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::PolicyManager_ptr
 CORBA::PolicyManager::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PolicyManager::_duplicate (
@@ -705,7 +702,7 @@ CORBA::PolicyManager::_narrow (
 CORBA::PolicyManager_ptr
 CORBA::PolicyManager::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PolicyManager::_duplicate (
@@ -733,7 +730,7 @@ CORBA::PolicyManager::_tao_release (PolicyManager_ptr obj)
 CORBA::Boolean
 CORBA::PolicyManager::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (
@@ -823,7 +820,7 @@ CORBA::PolicyCurrent::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::PolicyCurrent_ptr
 CORBA::PolicyCurrent::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PolicyCurrent::_duplicate (
@@ -834,7 +831,7 @@ CORBA::PolicyCurrent::_narrow (
 CORBA::PolicyCurrent_ptr
 CORBA::PolicyCurrent::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   return PolicyCurrent::_duplicate (
@@ -862,7 +859,7 @@ CORBA::PolicyCurrent::_tao_release (PolicyCurrent_ptr obj)
 CORBA::Boolean
 CORBA::PolicyCurrent::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
+
   )
 {
   if (

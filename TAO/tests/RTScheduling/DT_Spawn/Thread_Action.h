@@ -20,8 +20,7 @@ public RTScheduling::ThreadAction
  public:
   Test_Thread_Action (void);
 
-  virtual void _cxx_do (CORBA::VoidData data
-			ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void _cxx_do (CORBA::VoidData data)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -33,8 +32,7 @@ Test_Thread_Action::Test_Thread_Action (void)
 }
 
 void
-Test_Thread_Action::_cxx_do (CORBA::VoidData data
-			     ACE_ENV_ARG_DECL)
+Test_Thread_Action::_cxx_do (CORBA::VoidData data)
      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -53,8 +51,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data
 	      count));
 
   RTScheduling::Current::NameList_var segment_name_list =
-    tmp->current->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    tmp->current->current_scheduling_segment_names ();
 
   ACE_DEBUG ((LM_DEBUG,
 	      "Segment Names for DT %d:\n",

@@ -28,16 +28,15 @@ namespace CIAO
         virtual ~Controller_exec_i (void);
 
         // Supported operations.
-        virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        virtual void start ()
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
-        virtual void stop (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        virtual void stop ()
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
         // Attribute operations.
         virtual ::CORBA::Double
-        sampling_period (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        sampling_period ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
         // Port operations.
@@ -46,43 +45,37 @@ namespace CIAO
 
         virtual void
         set_session_context (
-          ::Components::SessionContext_ptr ctx
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+          ::Components::SessionContext_ptr ctx)
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
         virtual void
-        ciao_preactivate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ciao_preactivate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
         virtual void
-        ciao_postactivate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ciao_postactivate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
         virtual void
-        ccm_activate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ccm_activate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
         virtual void
-        ccm_passivate (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ccm_passivate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
         virtual void
-        ccm_remove (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ccm_remove ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
@@ -110,8 +103,7 @@ namespace CIAO
         // Implicit operations.
 
         virtual ::Components::EnterpriseComponent_ptr
-        create (
-          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        create ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));

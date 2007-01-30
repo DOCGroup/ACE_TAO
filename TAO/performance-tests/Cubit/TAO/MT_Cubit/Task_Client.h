@@ -58,12 +58,6 @@
 # include /**/ <math.h>
 #endif /* ACE_HAS_EXCEPTIONS */
 
-#if defined (ACE_LACKS_FLOATING_POINT)
-// The following is just temporary, until we finish the sqrt()
-// implementation.
-#define sqrt(X) (1)
-#endif /* ACE_LACKS_FLOATING_POINT */
-
 #if defined (ACE_HAS_QUANTIFY)
 # define START_QUANTIFY quantify_start_recording_data ();
 # define STOP_QUANTIFY quantify_stop_recording_data();
@@ -279,14 +273,13 @@ public:
   // cubed.
 
 private:
-  CORBA::ORB_ptr init_orb (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::ORB_ptr init_orb (void);
   // initialize the ORB.
 
   void read_ior (void);
   // reads the cubit ior from a file.
 
-  int get_cubit (CORBA::ORB_ptr orb
-                 ACE_ENV_ARG_DECL);
+  int get_cubit (CORBA::ORB_ptr orb);
   // gets the cubit object.
 
   int run_tests (void);

@@ -12,7 +12,7 @@ ACE_RCSID (MT_Server,
            "$Id$")
 
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::test_method (CORBA::Long x)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -23,16 +23,16 @@ Simple_Server_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 //---------------------------------------------------------------------------
 
 CORBA::Long
-Another_One_i::test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+Another_One_i::test_method (CORBA::Long x)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)

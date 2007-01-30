@@ -15,7 +15,7 @@ CORBA::Policy_ptr
 TAO_PI_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value
-    ACE_ENV_ARG_DECL)
+    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
@@ -34,7 +34,6 @@ TAO_PI_PolicyFactory::create_policy (
                         TAO_ProcessingModePolicy (policy_value),
                         CORBA::NO_MEMORY (TAO::VMCID,
                                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return processing_mode_policy;
     }

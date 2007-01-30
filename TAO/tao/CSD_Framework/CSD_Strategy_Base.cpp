@@ -24,7 +24,7 @@ TAO::CSD::Strategy_Base::~Strategy_Base()
 
 CORBA::Boolean
 TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil(poa))
@@ -79,16 +79,14 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
 
   // Set the CSD Strategy_Base on the strategy proxy object owned by the POA.
   bool strategy_set = false;
-  ACE_TRY_NEW_ENV
+  try
     {
-      poa_impl->set_csd_strategy (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_impl->set_csd_strategy (this);
       strategy_set = true;
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (! strategy_set)
     {
@@ -113,8 +111,8 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
 void
 TAO::CSD::Strategy_Base::servant_activated_event_i
                                 (PortableServer::Servant ,
-                                 const PortableServer::ObjectId& 
-                                 ACE_ENV_ARG_DECL)
+                                 const PortableServer::ObjectId&
+                                 )
 {
   // do nothing.
 }
@@ -124,7 +122,7 @@ void
 TAO::CSD::Strategy_Base::servant_deactivated_event_i
                                 (PortableServer::Servant,
                                  const PortableServer::ObjectId&
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
   // do nothing.
 }

@@ -261,7 +261,7 @@ TAO_Notify_EventTypeSeq::dump (void) const
 
   // TAO_Notify::Topology_Object
 void
-TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
@@ -273,26 +273,23 @@ TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_
 
   if (this->size() != 0)
   {
-    saver.begin_object(0, "subscriptions", attrs, changed ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    saver.begin_object(0, "subscriptions", attrs, changed);
     for (iter.first (); iter.next (event_type) != 0; iter.advance ())
     {
-      event_type->save_persistent(saver ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      event_type->save_persistent(saver);
     }
 // todo:
 //    for all deleted children
 //    {
 //      saver.delete_child(child_type, child_id);
 //    }
-    saver.end_object(0, "subscriptions" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    saver.end_object(0, "subscriptions");
   }
 }
 
 TAO_Notify::Topology_Object*
 TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL_NOT_USED)
+  const TAO_Notify::NVPList& attrs)
 {
   ACE_UNUSED_ARG (id);
   TAO_Notify::Topology_Object *result = this;

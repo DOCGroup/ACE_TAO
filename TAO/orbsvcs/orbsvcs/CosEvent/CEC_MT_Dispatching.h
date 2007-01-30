@@ -51,18 +51,14 @@ public:
   virtual void activate (void);
   virtual void shutdown (void);
   virtual void push (TAO_CEC_ProxyPushSupplier* proxy,
-                     const CORBA::Any & event
-                     ACE_ENV_ARG_DECL);
+                     const CORBA::Any & event);
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                            CORBA::Any& event
-                            ACE_ENV_ARG_DECL);
+                            CORBA::Any& event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent & typed_event
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       const TAO_CEC_TypedEvent & typed_event);
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
-                              TAO_CEC_TypedEvent & typed_event
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              TAO_CEC_TypedEvent & typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:

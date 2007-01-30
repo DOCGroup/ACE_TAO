@@ -56,26 +56,22 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
   virtual TAO_FT_Request_Duration_Policy *clone (void) const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TimeT request_duration_policy_value (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Change the CORBA representation to the ACE representation.
@@ -111,26 +107,22 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
   virtual TAO_FT_Heart_Beat_Policy *clone (void) const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Change the CORBA representation to the ACE representation.

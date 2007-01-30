@@ -71,7 +71,7 @@ public:
   virtual ~TAO_ComponentRepository_i (void);
   // Destructor.
 
-  virtual int create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int create_servants_and_poas (void);
   // We create a default servant servant for each IR Object
   // type and its corresponding POA.
 

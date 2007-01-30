@@ -88,14 +88,13 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Method to initialize the various data components.
 
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object);
   // Set the protocol object corresponding to the transport protocol chosen.
 
-  int pace_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int pace_data (void);
   // Method to pace and send data from a file.
 
   FILE *file (void);
@@ -114,7 +113,7 @@ private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
 
-  int bind_to_server (ACE_ENV_SINGLE_ARG_DECL);
+  int bind_to_server (void);
   // Method that binds the ftp client to the server
 
   ENDPOINT_STRATEGY endpoint_strategy_;

@@ -33,39 +33,33 @@ public:
   ~Echo_Server_Request_Interceptor ();
   // dotr.
 
-  void forward_reference (CORBA::Object_ptr forward_location
-                          ACE_ENV_ARG_DECL)
+  void forward_reference (CORBA::Object_ptr forward_location)
                           ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 

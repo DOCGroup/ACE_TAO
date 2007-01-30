@@ -13,12 +13,10 @@ Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb)
 int
 Worker_Thread::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
   return 0;
 }

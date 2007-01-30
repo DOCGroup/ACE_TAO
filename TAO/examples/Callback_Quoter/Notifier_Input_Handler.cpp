@@ -54,43 +54,37 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Input_Handler::init_naming_service (void)
 {
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
-  if (this->naming_server_.init (orb.in ()) == -1) 
+  if (this->naming_server_.init (orb.in ()) == -1)
     return -1;
-             
+
   // create the name for the naming service
   CosNaming::Name notifier_obj_name (1);
   notifier_obj_name.length (1);
   notifier_obj_name[0].id = CORBA::string_dup ("Notifier");
 
   // (re)Bind the object.
-  ACE_TRY
+  try
     {
-      Notifier_var notifier_obj = notifier_i_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Notifier_var notifier_obj = notifier_i_._this ();
 
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       naming_server_->rebind (notifier_obj_name,
-                              notifier_obj.in()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              notifier_obj.in());
 
     }
-  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+  catch (const CosNaming::NamingContext::AlreadyBound&)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s \n",
                          "Notifier"),
                         -1);
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -142,8 +136,7 @@ Notifier_Input_Handler::parse_args (void)
 
 int
 Notifier_Input_Handler::init (int argc,
-                              char *argv[]
-                              ACE_ENV_ARG_DECL)
+                              char *argv[])
 {
 
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
@@ -154,13 +147,11 @@ Notifier_Input_Handler::init (int argc,
 
   if (this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
 
   int retval = this->parse_args ();
 
@@ -187,9 +178,7 @@ Notifier_Input_Handler::init (int argc,
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
-                                                 &this->notifier_i_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                 &this->notifier_i_);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -205,14 +194,13 @@ Notifier_Input_Handler::init (int argc,
 
   if (this->using_naming_service_)
     {
-      this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->init_naming_service ();
     }
   return 0;
 }
 
 int
-Notifier_Input_Handler::run (ACE_ENV_SINGLE_ARG_DECL)
+Notifier_Input_Handler::run (void)
 {
   // Run the main event loop for the ORB.
 
@@ -220,8 +208,7 @@ Notifier_Input_Handler::run (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               " Type \"q\" to quit \n "));
 
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int result = this->orb_manager_.run ();
 
   if (result == -1)
     {
@@ -238,9 +225,8 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // The string could read contains \n\0 hence using ACE_OS::read
       // which returns the no of bytes read and hence i can manipulate
@@ -260,17 +246,14 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
         {
           // @@ Please remove this call if it's not used.
           // (this->notifier_i_.consumer_map_).close();
-          this->notifier_i_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->notifier_i_.shutdown ();
         }
     }
-   ACE_CATCHANY
+   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Input_Handler::init");
+      ex._tao_print_exception ("Input_Handler::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

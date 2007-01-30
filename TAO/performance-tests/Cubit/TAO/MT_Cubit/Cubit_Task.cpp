@@ -65,34 +65,29 @@ Cubit_Task::svc (void)
                        "Create Servants failed.\n"),
                       -1);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       GLOBALS::instance ()->barrier_->wait ();
 
       // Handle requests for this object until we're killed, or one of
       // the methods asks us to exit.
-      int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = this->orb_manager_.run ();
 
       if (r == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "run"),
                           -1);
-      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "poa->destroy()");
+      ex._tao_print_exception ("poa->destroy()");
     }
-  ACE_ENDTRY;
 
   // Need to clean up and do a CORBA::release on everything we've
   // created!
@@ -106,8 +101,7 @@ Cubit_Task::svc (void)
 int
 Cubit_Task::initialize_orb (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_ARGV args (this->orbargs_);
 
@@ -122,9 +116,7 @@ Cubit_Task::initialize_orb (void)
       int r = this->orb_manager_.init_child_poa (argc,
                                                  argv,
                                                  "persistent_poa",
-                                                 orb_name
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                 orb_name);
       if (r == -1)
         return -1;
 
@@ -145,12 +137,11 @@ Cubit_Task::initialize_orb (void)
           GLOBALS::instance ()->ready_cnd_.broadcast ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "orb_init");
+      ex._tao_print_exception ("orb_init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -167,24 +158,18 @@ Cubit_Task::get_servant_ior (u_int index)
 int
 Cubit_Task::create_servants (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var manager =
-        poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager();
 
-      manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager->activate();
 
       // Create the array of cubit implementations.
       ACE_NEW_RETURN (this->servants_,
@@ -233,14 +218,11 @@ Cubit_Task::create_servants (void)
           // some client.  Then release the object.
 
           Cubit_var cubit =
-            this->servants_[i]->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->servants_[i]->_this ();
 
 
           CORBA::String_var str =
-            this->orb_->object_to_string (cubit.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_->object_to_string (cubit.in ());
 
           this->servants_iors_[i] =
             ACE_OS::strdup (str.in ());
@@ -248,12 +230,10 @@ Cubit_Task::create_servants (void)
 
       delete [] buffer;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Cubit_Task::create_servants");
+      ex._tao_print_exception ("Cubit_Task::create_servants");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

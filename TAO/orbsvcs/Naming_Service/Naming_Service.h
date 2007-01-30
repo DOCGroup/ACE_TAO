@@ -44,10 +44,10 @@ public:
   virtual int fini (void);
   // The opposite of init().
 
-  int run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int run (void);
   // Run the TAO_Naming_Service.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (void);
   // Shut down the TAO_Naming_Service; you must still call fini().
 
   virtual ~TAO_Naming_Service (void);

@@ -62,19 +62,14 @@ LifeCycle::parse_args (int argc,
 
 void
 LifeCycle::init (int argc,
-                     char* argv[]
-                     ACE_ENV_ARG_DECL)
+                     char* argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
-                                        ""
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                        "");
 
   CORBA::Object_var rootObj =
-    orb->resolve_initial_references ("NameService"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    orb->resolve_initial_references ("NameService");
 
   if (CORBA::is_nil (rootObj.in ()))
     {
@@ -84,24 +79,18 @@ LifeCycle::init (int argc,
     }
 
   CosNaming::NamingContext_var rootNC =
-    CosNaming::NamingContext::_narrow (rootObj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNaming::NamingContext::_narrow (rootObj.in ());
 
   CosNaming::Name name (1);
   name.length (1);
   name[0].id = CORBA::string_dup ("NotifyEventChannelFactory");
 
-  CORBA::Object_var obj = rootNC->resolve (name
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var obj = rootNC->resolve (name);
 
   notify_factory_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (
         obj.in()
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK;
 
   if (CORBA::is_nil (notify_factory_.in ()))
     {
@@ -113,32 +102,26 @@ LifeCycle::init (int argc,
 }
 
 void
-LifeCycle::run_test(ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::run_test(void)
 {
   for (int i = 0; i < this->count_; ++i)
     {
-     this->create_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK;
+     this->create_ec ();
 
-     this->create_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK;
+     this->create_supplier_admin ();
 
-     this->create_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK;
+     this->create_consumer_admin ();
 
-     this->destroy_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK;
+     this->destroy_consumer_admin ();
 
-     this->destroy_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK;
+     this->destroy_supplier_admin ();
 
-     this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK;
+     this->destroy_ec ();
   }
 }
 
 void
-LifeCycle::create_ec (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::create_ec (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotification::QoSProperties initial_qos;
@@ -146,9 +129,7 @@ LifeCycle::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 
   this->ec_ = notify_factory_->create_channel (initial_qos,
                                                initial_admin,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               id);
 
   if (CORBA::is_nil (ec_.in ())) {
     ACE_ERROR ((LM_ERROR,
@@ -162,16 +143,14 @@ LifeCycle::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-LifeCycle::create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::create_supplier_admin (void)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
           CosNotifyChannelAdmin::OR_OP;
 
   supplier_admin_ = this->ec_->new_for_suppliers (ifgop,
-                                                  adminid
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                  adminid);
 
   if (CORBA::is_nil (supplier_admin_.in ()))
     {
@@ -186,14 +165,13 @@ LifeCycle::create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-LifeCycle::create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::create_consumer_admin (void)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
-  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid);
 
   if (CORBA::is_nil (consumer_admin_.in()))
     {
@@ -208,10 +186,9 @@ LifeCycle::create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-LifeCycle::destroy_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::destroy_supplier_admin (void)
 {
-  this->supplier_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->supplier_admin_->destroy ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
@@ -219,10 +196,9 @@ LifeCycle::destroy_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-LifeCycle::destroy_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::destroy_consumer_admin (void)
 {
-  this->consumer_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_admin_->destroy ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
@@ -230,10 +206,9 @@ LifeCycle::destroy_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-LifeCycle::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::destroy_ec (void)
 {
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ec_->destroy ();
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
@@ -244,8 +219,7 @@ LifeCycle::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       LifeCycle test;
 
@@ -253,19 +227,15 @@ main (int argc, char *argv[])
                        argv);
 
       test.init (argc,
-                 argv
-                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                 argv);
 
-      test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test.run_test ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error: ");
+      ex._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -549,9 +549,9 @@ class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Map_Impl_Iterator_Adapter<ACE_TYPENAME ACE_Map<KEY, VALUE>::value_type, ITERATOR, ENTRY>
+  typedef ACE_Map_Impl_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, ITERATOR, ENTRY>
           iterator_impl;
-  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<ACE_TYPENAME ACE_Map<KEY, VALUE>::value_type, REVERSE_ITERATOR, ENTRY>
+  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, REVERSE_ITERATOR, ENTRY>
           reverse_iterator_impl;
 
   typedef IMPLEMENTATION
@@ -738,7 +738,7 @@ class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::iterator
+  typedef typename ACE_Active_Map_Manager<VALUE>::iterator
           implementation;
 
   /// Constructor.
@@ -784,7 +784,7 @@ class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Itera
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::reverse_iterator
+  typedef typename ACE_Active_Map_Manager<VALUE>::reverse_iterator
           implementation;
 
   /// Constructor.
@@ -1034,7 +1034,7 @@ class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator
+  typedef typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator
           implementation;
 
   /// Constructor.
@@ -1080,7 +1080,7 @@ class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iter
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator
+  typedef typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator
           implementation;
 
   /// Constructor.
@@ -1320,7 +1320,7 @@ class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator
+  typedef typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator
           implementation;
 
   /// Constructor.
@@ -1366,7 +1366,7 @@ class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Imp
 public:
 
   // = Traits.
-  typedef ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator
+  typedef typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator
           implementation;
 
   /// Constructor.

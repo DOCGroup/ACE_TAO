@@ -82,15 +82,14 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // This call shouldn't throw since CORBA::TypeCode::equal() verified
   // that the TCKind is the same as our's prior to invoking this
   // method, meaning that member_count() is supported.
 
   CORBA::ULong const tc_nenumerators =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
   if (tc_nenumerators != this->nenumerators_)
     return false;
@@ -102,8 +101,7 @@ TAO::TypeCode::Enum<StringType,
       char const * const lhs_name =
         Traits<StringType>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+                                                    );
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return false;
@@ -118,14 +116,13 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
 
   CORBA::ULong const tc_nenumerators =
-    tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    tc->member_count ();
 
   if (tc_nenumerators != this->nenumerators_)
     return false;
@@ -138,7 +135,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::get_compact_typecode_i (
-  ACE_ENV_SINGLE_ARG_DECL) const
+  void) const
 {
   ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
@@ -170,13 +167,13 @@ TAO::TypeCode::Enum<StringType,
                              ""  /* empty name */,
                              tc_enumerators,
                              this->nenumerators_
-                             ACE_ENV_ARG_PARAMETER);
+                            );
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -186,7 +183,7 @@ TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::name_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -198,7 +195,7 @@ CORBA::ULong
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::member_count_i (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+  void) const
 {
   return this->nenumerators_;
 }
@@ -209,7 +206,7 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::member_name_i (
   CORBA::ULong index
-  ACE_ENV_ARG_DECL) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

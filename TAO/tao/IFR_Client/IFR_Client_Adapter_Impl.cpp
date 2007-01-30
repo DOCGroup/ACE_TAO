@@ -67,13 +67,12 @@ CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
     const char *repo_id
-    ACE_ENV_ARG_DECL
+
   )
 {
   CORBA::Object_var obj =
     orb->resolve_initial_references ("InterfaceRepository"
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+                                    );
 
   if (CORBA::is_nil (obj.in ()))
     {
@@ -83,8 +82,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
   CORBA::Repository_var repo =
     CORBA::Repository::_narrow (obj.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+                               );
 
   if (CORBA::is_nil (repo.in ()))
     {
@@ -93,8 +91,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
     }
 
   CORBA::Contained_var result = repo->lookup_id (repo_id
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
+                                                );
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -103,14 +100,14 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
   else
     {
       return CORBA::InterfaceDef::_narrow (result.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+                                          );
     }
 }
 
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     CORBA::Object_ptr target
-    ACE_ENV_ARG_DECL
+
   )
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
@@ -129,20 +126,18 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
       0
     );
 
-  ACE_TRY
+  try
     {
-      _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK (_tao_retval.excp ());
+      _tao_call.invoke (0, 0);
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  catch (const ::CORBA::OBJECT_NOT_EXIST&)
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
 
   return _tao_retval.retn ();
 }
@@ -153,20 +148,18 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
     CORBA::ORB_ptr orb,
     CORBA::OperationDef_ptr opDef,
     CORBA::NVList_ptr &result
-    ACE_ENV_ARG_DECL
+
   )
 {
   // Create an empty NVList.
   orb->create_list (0,
                     result
-                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                   );
 
   // Get the parameters (if any) from the OperationDef, and for each
   // parameter add a corresponding entry to the result.
   CORBA::ParDescriptionSeq_var params =
-    opDef->params (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    opDef->params ();
 
   CORBA::ULong paramCount = params->length ();
 
@@ -193,7 +186,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
           break;
         default:
           // Shouldn't happen
-          ACE_THROW (CORBA::INTERNAL());
+          throw ::CORBA::INTERNAL();
         }
 
       // Add an argument to the NVList.

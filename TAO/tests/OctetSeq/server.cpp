@@ -4,8 +4,8 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (OctetSeq, 
-           server, 
+ACE_RCSID (OctetSeq,
+           server,
            "$Id$")
 
 const char *ior_output_file = "test.ior";
@@ -38,15 +38,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,12 +52,10 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -69,12 +65,10 @@ main (int argc, char *argv[])
                                 128); // @@ TODO
 
         Test::Database_var server =
-          server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          server_impl._this ();
 
         CORBA::String_var ior =
-          orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          orb->object_to_string (server.in ());
 
         ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -91,28 +85,22 @@ main (int argc, char *argv[])
             ACE_OS::fclose (output_file);
           }
 
-        poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        poa_manager->activate ();
 
-        orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        orb->run ();
 
         ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-        root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        root_poa->destroy (1, 1);
       }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

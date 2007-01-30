@@ -30,13 +30,11 @@ public:
                                  unsigned int high,
                                  Notify_Test_Client& client);
 
-  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
-                ACE_ENV_ARG_DECL)
+  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  void push_structured_events (const CosNotification::EventBatch&
-                               ACE_ENV_ARG_DECL)
+  void push_structured_events (const CosNotification::EventBatch&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_CString name_;

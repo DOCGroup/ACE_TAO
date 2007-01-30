@@ -16,12 +16,10 @@ struct RefHelper
   typedef typename T::_ptr_type T_ptr;
   typedef typename T::_var_type T_var;
 
-  static T_ptr string_to_ref(CORBA::ORB_ptr orb, 
-                             const char* ior 
-                             ACE_ENV_ARG_DECL)
+  static T_ptr string_to_ref(CORBA::ORB_ptr orb,
+                             const char* ior)
   {
-    CORBA::Object_var obj = orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(T::_nil ());
+    CORBA::Object_var obj = orb->string_to_object(ior);
 
     if (CORBA::is_nil(obj.in()))
       {
@@ -30,8 +28,7 @@ struct RefHelper
         ACE_THROW_RETURN (TestAppException(), T::_nil ());
       }
 
-    T_var t_obj = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(T::_nil ());
+    T_var t_obj = T::_narrow(obj.in());
 
     if (CORBA::is_nil(t_obj.in()))
       {
@@ -43,13 +40,11 @@ struct RefHelper
     return t_obj._retn();
   }
 
-  static T_ptr resolve_initial_ref(CORBA::ORB_ptr orb, 
-                                   const char* name
-                                   ACE_ENV_ARG_DECL)
+  static T_ptr resolve_initial_ref(CORBA::ORB_ptr orb,
+                                   const char* name)
   {
-    CORBA::Object_var obj 
-      = orb->resolve_initial_references(name ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (T::_nil ());
+    CORBA::Object_var obj
+      = orb->resolve_initial_references(name);
 
     if (CORBA::is_nil(obj.in()))
       {
@@ -59,8 +54,7 @@ struct RefHelper
         ACE_THROW_RETURN (TestAppException(), T::_nil ());
       }
 
-    T_var t_obj = T::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (T::_nil ());
+    T_var t_obj = T::_narrow(obj.in());
 
 
     if (CORBA::is_nil(t_obj.in()))
@@ -81,19 +75,16 @@ struct CSD_TP_Test_Export AppHelper
 
   static void ref_to_file(CORBA::ORB_ptr    orb,
                           CORBA::Object_ptr obj,
-                          const char*       filename
-                          ACE_ENV_ARG_DECL);
+                          const char*       filename);
 
   static PortableServer::POA_ptr create_poa
                               (const char*                    name,
                                PortableServer::POA_ptr        root_poa,
                                PortableServer::POAManager_ptr mgr,
-                               CORBA::PolicyList&             policies
-                               ACE_ENV_ARG_DECL);
+                               CORBA::PolicyList&             policies);
 
   static CORBA::Object_ptr activate_servant(PortableServer::POA_ptr poa,
-                                            PortableServer::Servant servant
-                                            ACE_ENV_ARG_DECL);
+                                            PortableServer::Servant servant);
 
   // This helper method is used because there is a chance that the
   // initial CORBA request made to the target ORB will fail during

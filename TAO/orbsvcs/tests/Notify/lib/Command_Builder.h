@@ -53,7 +53,7 @@ public:
   void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
 
   /// Execute the <start_command_>.
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
 protected:
   /// The starting command. each command executes the next one when done.

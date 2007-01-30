@@ -93,27 +93,22 @@ public:
 
   /// Concrete implementations can use this methods to keep track of
   /// the consumers interested in this events.
-  virtual void connected (TAO_EC_ProxyPushSupplier *supplier
-                          ACE_ENV_ARG_DECL) = 0;
-  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier
-                          ACE_ENV_ARG_DECL) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier
-                             ACE_ENV_ARG_DECL) = 0;
+  virtual void connected (TAO_EC_ProxyPushSupplier *supplier) = 0;
+  virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier) = 0;
 
   /// The event channel is shutting down.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void shutdown (void) = 0;
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.
   virtual void push (const RtecEventComm::EventSet &event,
-                     TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL) = 0;
+                     TAO_EC_ProxyPushConsumer *consumer) = 0;
 
   /// Events are first scheduled by the TAO_EC_Scheduling_Strategy,
   /// and then pushed through this class again.
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info
-                                     ACE_ENV_ARG_DECL) = 0;
+                                     const TAO_EC_QOS_Info &event_info) = 0;
 
   /// Increment and decrement the reference count, locking must be
   /// provided by the user.
@@ -129,8 +124,7 @@ public:
   TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
                         const TAO_EC_QOS_Info &event_info);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
 
 private:
   /// The event we push on each case, use a reference to avoid copies.

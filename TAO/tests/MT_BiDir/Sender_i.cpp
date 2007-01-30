@@ -29,8 +29,7 @@ Sender_i::Sender_i (int no_clients,
 
 
 CORBA::Long
-Sender_i::receiver_object (Receiver_ptr recv
-                           ACE_ENV_ARG_DECL)
+Sender_i::receiver_object (Receiver_ptr recv)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Sender::Table_Full))
 {
@@ -57,14 +56,12 @@ Sender_i::receiver_object (Receiver_ptr recv
 
 
 void
-Sender_i::send_message (ACE_ENV_SINGLE_ARG_DECL)
+Sender_i::send_message (void)
 {
   // NOTE:No synchronization with purpose. Synchrnozing this is
   // going to spoil the whole purpose of this test.
   int send_to =
     ACE_OS::rand () % this->no_clients_;
 
-  this->receivers_[send_to]->receive_payload (this->payload_
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->receivers_[send_to]->receive_payload (this->payload_);
 }

@@ -1625,7 +1625,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     );
 
   this->gen_standard_include (this->client_header_,
-                              "tao/Environment.h");
+                              "tao/Basic_Types.h");
 
   // Conditionally included.
 

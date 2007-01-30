@@ -54,7 +54,7 @@ public:
   int init (int argc, char *argv[]);
   // Initializes <orb_manager_>, and parses commandline arguments.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // See TITLE.
 
 private:

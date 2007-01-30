@@ -10,8 +10,7 @@ ACE_RCSID (Abstract_Interface,
 
 
 char *
-foo_i::foo_op (const char * inarg
-               ACE_ENV_ARG_DECL)
+foo_i::foo_op (const char * inarg)
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     BadInput
@@ -33,8 +32,7 @@ foo_i::foo_op (const char * inarg
 }
 
 char *
-foo_i::base_op (const char * inarg
-                ACE_ENV_ARG_DECL)
+foo_i::base_op (const char * inarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       BadInput
@@ -56,8 +54,7 @@ foo_i::base_op (const char * inarg
 }
 
 void
-passer_i::pass_ops (base_out outarg
-                    ACE_ENV_ARG_DECL)
+passer_i::pass_ops (base_out outarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -66,13 +63,11 @@ passer_i::pass_ops (base_out outarg
   ACE_NEW (servant,
            foo_i);
   PortableServer::ServantBase_var safety (servant);
-  outarg = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  outarg = servant->_this ();
 }
 
 void
-passer_i::pass_state (base_out outarg
-                      ACE_ENV_ARG_DECL_NOT_USED)
+passer_i::pass_state (base_out outarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))

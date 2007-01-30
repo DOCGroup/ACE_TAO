@@ -34,47 +34,46 @@ namespace MyImpl
 
     /// Default destructor.
     ~GPS_exec_i ();
-    
+
     // Operations from HUDisplay::GPS
-    HUDisplay::CCM_position_ptr get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    HUDisplay::CCM_position_ptr get_MyLocation ()
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
-    void push_Refresh (HUDisplay::tick * ACE_ENV_ARG_DECL)
+
+    void push_Refresh (HUDisplay::tick *)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from HUDisplay::position
-    CORBA::Long posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    CORBA::Long posx ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    CORBA::Long posy ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    void set_session_context (Components::SessionContext_ptr ctx
-			      ACE_ENV_ARG_DECL)
+    void set_session_context (Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void ciao_preactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void ccm_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void ciao_postactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void ccm_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
 
-    void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    void ccm_remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
-	
+
    protected:
     // Component specific context
     HUDisplay::CCM_GPS_Context_var context_;
@@ -96,18 +95,18 @@ namespace MyImpl
   public:
     /// Default ctor.
     GPSHome_exec_i ();
-    
+
     /// Default dtor.
     ~GPSHome_exec_i ();
 
     // Explicit home operations
 /*     virtual ::Components::EnterpriseComponent_ptr */
-/*       new_GPS (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) */
+/*       new_GPS () */
 /*       ACE_THROW_SPEC ((CORBA::SystemException)); */
 
     // Implicit home operations
     virtual ::Components::EnterpriseComponent_ptr
-      create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Components::CCMException));
   };
@@ -123,10 +122,10 @@ namespace MyImpl
     }
 
     // Operations from HUDisplay::position
-    CORBA::Long posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    CORBA::Long posx ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    CORBA::Long posy ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:

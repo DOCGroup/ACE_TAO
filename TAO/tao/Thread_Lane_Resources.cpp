@@ -104,7 +104,7 @@ TAO_Thread_Lane_Resources::acceptor_registry (void)
 }
 
 TAO_Connector_Registry *
-TAO_Thread_Lane_Resources::connector_registry (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Thread_Lane_Resources::connector_registry (void)
 {
   // Double check.
   if (this->connector_registry_ == 0)
@@ -354,7 +354,7 @@ TAO_Thread_Lane_Resources::ami_response_handler_allocator (void)
 int
 TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
                                                    bool ignore_address
-                                                   ACE_ENV_ARG_DECL)
+                                                   )
 {
   // Access the acceptor registry.
   TAO_Acceptor_Registry &ar = this->acceptor_registry ();
@@ -364,8 +364,7 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoi
                         this->leader_follower ().reactor (),
                         endpoint_set,
                         ignore_address
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                       );
 
   return result;
 }

@@ -23,12 +23,10 @@ TAO_LB_Push_Handler::handle_timeout (
   const ACE_Time_Value & /* current_time */,
   const void * /* arg */)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosLoadBalancing::LoadList_var loads =
-        this->monitor_->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->monitor_->loads ();
 
 //       ACE_DEBUG ((LM_DEBUG,
 //                   "PUSHING LOAD:\n"
@@ -38,20 +36,16 @@ TAO_LB_Push_Handler::handle_timeout (
 //                   loads[0].value));
 
       this->manager_->push_loads (this->location_,
-                                  loads.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  loads.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Catch the exception and ignore it.
       //  @@ Yah?
 
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "(%P|%t) Push_Handler::handle_timeout()\n");
+        ex._tao_print_exception ("(%P|%t) Push_Handler::handle_timeout()\n");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -37,15 +37,15 @@ namespace TAO
     public:
       LifespanStrategy (void);
 
-      virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
+      virtual void strategy_init(TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(ACE_ENV_SINGLE_ARG_DECL);
+      virtual void strategy_cleanup(void);
 
       void create (const char *name, const TAO::ObjectKey &key);
 
-      virtual void notify_startup (ACE_ENV_SINGLE_ARG_DECL) = 0;
+      virtual void notify_startup (void) = 0;
 
-      virtual void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL) = 0;
+      virtual void notify_shutdown (void) = 0;
 
       /**
        * Validate the passed object key if it belongs to this POA.
@@ -70,7 +70,7 @@ namespace TAO
         const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const = 0;
 
       /// Check the state of the POA.
-      virtual void check_state (ACE_ENV_SINGLE_ARG_DECL) = 0;
+      virtual void check_state (void) = 0;
 
       virtual ::PortableServer::LifespanPolicyValue type() const = 0;
 

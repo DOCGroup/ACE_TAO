@@ -20,7 +20,7 @@
 #include "nested_struct.h"
 
 ACE_RCSID (Param_Test,
-           nested_struct, 
+           nested_struct,
            "$Id$")
 
 // ************************************************************************
@@ -50,36 +50,32 @@ Test_Nested_Struct::opname (void) const
 }
 
 void
-Test_Nested_Struct::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
+Test_Nested_Struct::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Nested_Struct);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Nested_Struct *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Nested_Struct (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Nested_Struct (*tmp);
 }
 
 int
-Test_Nested_Struct::init_parameters (Param_Test_ptr
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+Test_Nested_Struct::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -132,27 +128,22 @@ Test_Nested_Struct::reset_parameters (void)
 }
 
 int
-Test_Nested_Struct::run_sii_test (Param_Test_ptr objref
-                                  ACE_ENV_ARG_DECL)
+Test_Nested_Struct::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Nested_Struct_out out (this->out_.out ());
       this->ret_ = objref->test_nested_struct (this->in_,
                                                this->inout_.inout (),
-                                               out
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Nested_Struct::run_sii_test\n");
+      ex._tao_print_exception ("Test_Nested_Struct::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

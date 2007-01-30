@@ -16,7 +16,6 @@ MultiTypes_PushConsumer::MultiTypes_PushConsumer (MultiTypes* client)
 
 void
 MultiTypes_PushConsumer::push (const CORBA::Any & /*data*/
-                               ACE_ENV_ARG_DECL_NOT_USED
                                )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -35,7 +34,6 @@ MultiTypes_StructuredPushConsumer::MultiTypes_StructuredPushConsumer (MultiTypes
 
 void
 MultiTypes_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
-                                      ACE_ENV_ARG_DECL_NOT_USED
                                       )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -56,7 +54,6 @@ MultiTypes_SequencePushConsumer::MultiTypes_SequencePushConsumer (MultiTypes* cl
 // Since this should *never* happen, I'm not fixing it now.
 void
 MultiTypes_SequencePushConsumer::push_structured_events (const CosNotification::EventBatch & /*notifications*/
-                                                         ACE_ENV_ARG_DECL_NOT_USED
                                                          )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -95,12 +92,10 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.value ()));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (disconnect_on_last_event_ == 1)
   {
-    consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    consumer->disconnect ();
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "PushConsumer has been disconnected.\n"));
     consumer = 0;
@@ -115,12 +110,10 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.value ()));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (disconnect_on_last_event_ == 1)
   {
-    consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    consumer->disconnect ();
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer has been disconnected.\n"));
     consumer = 0;
@@ -135,12 +128,10 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.value ()));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (disconnect_on_last_event_ == 1)
   {
-    consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    consumer->disconnect ();
 
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer has been disconnected.\n"));
@@ -150,34 +141,26 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
 
 int
 MultiTypes::init (int argc,
-                         char* argv []
-                         ACE_ENV_ARG_DECL)
+                         char* argv [])
 {
   // Initialize the base class.
   Notify_Test_Client::init (argc,
-                            argv
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);;
+                            argv);
 
   // Create all participants.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   this->supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_,
-                            adminid
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);;
+                            adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_,
-                            adminid
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                            adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -191,43 +174,31 @@ MultiTypes::init (int argc,
   sequence_supplier_ = new TAO_Notify_Tests_SequencePushSupplier ();
 
   // Init and connect all consumers.
-  structured_consumer_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  structured_consumer_->init (root_poa_.in ());
 
-  structured_consumer_->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  structured_consumer_->connect (this->consumer_admin_.in ());
 
-  any_consumer_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  any_consumer_->init (root_poa_.in ());
 
-  any_consumer_->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  any_consumer_->connect (this->consumer_admin_.in ());
 
 
-  sequence_consumer_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  sequence_consumer_->init (root_poa_.in ());
 
-  sequence_consumer_->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  sequence_consumer_->connect (this->consumer_admin_.in ());
 
   // Init and connect all suppliers.
-  any_supplier_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  any_supplier_->init (root_poa_.in ());
 
-  any_supplier_->connect (this->supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  any_supplier_->connect (this->supplier_admin_.in ());
 
-  structured_supplier_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  structured_supplier_->init (root_poa_.in ());
 
-  structured_supplier_->connect (this->supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  structured_supplier_->connect (this->supplier_admin_.in ());
 
-  sequence_supplier_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  sequence_supplier_->init (root_poa_.in ());
 
-  sequence_supplier_->connect (this->supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  sequence_supplier_->connect (this->supplier_admin_.in ());
 
   consumer_start( 0 );
 
@@ -242,21 +213,19 @@ MultiTypes::parse_args(int, char **)
 }
 
 void
-MultiTypes::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+MultiTypes::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               id);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
+MultiTypes::run_test (void)
 {
   // Send an Any, all consumers should receive it.
   CORBA::Any any;
@@ -264,8 +233,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Sending Any Event..\n"));
-  any_supplier_->send_event (any ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  any_supplier_->send_event (any);
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
@@ -286,8 +254,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Sending Structured Event..\n"));
-  structured_supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  structured_supplier_->send_event (event);
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
@@ -314,8 +281,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Sending Sequence Event..\n"));
-  sequence_supplier_->send_events (events ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  sequence_supplier_->send_events (events);
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 2 events..\n"));
@@ -332,8 +298,7 @@ MultiTypes::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Sending LAST Any Event, Consumers will attempt disconnect..\n"));
-  any_supplier_->send_event (any ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  any_supplier_->send_event (any);
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Waiting for consumers to receive the 1 event..\n"));
@@ -360,7 +325,7 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 }
 
 void
-MultiTypes::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MultiTypes::end_test (void)
 {
   consumer_done( 0 );
 }
@@ -369,9 +334,7 @@ int
 MultiTypes::check_results (void)
 {
   // Destroy the channel.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->ec_->destroy ();
 
   return 0;
 }
@@ -388,25 +351,20 @@ main (int argc, char* argv[])
       return 1;
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       client.init (argc,
-                   argv
-                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                   argv);
 
-      client.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.run_test ();
 
-      client.end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.end_test ();
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return client.check_results ();
 }

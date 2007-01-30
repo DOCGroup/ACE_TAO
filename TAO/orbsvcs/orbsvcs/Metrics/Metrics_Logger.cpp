@@ -214,8 +214,7 @@ TAO_Metrics_Logger::svc (void)
 // Sends a banner to be written to the log file and to the visualization browser.
 
 void
-TAO_Metrics_Logger::send_banner (const char *banner
-                                 ACE_ENV_ARG_DECL)
+TAO_Metrics_Logger::send_banner (const char *banner)
   throw (CORBA::SystemException)
 {
   // Package up the data and put it on the task queue.
@@ -278,8 +277,7 @@ TAO_Metrics_Logger::process_banner (const char *banner)
 
 void
 TAO_Metrics_Logger::log_aggregate_QoS (const Metrics::QoSParameter_Set & qos_params,
-                                       Metrics::Time interval
-                                       ACE_ENV_ARG_DECL)
+                                       Metrics::Time interval)
   throw (CORBA::SystemException)
 {
 // This is a temporary patch to eliminate this data from the log.  It was
@@ -400,19 +398,18 @@ TAO_Metrics_Logger::process_aggregate_QoS (const Metrics::QoSParameter_Set & qos
       // Push an event to the visualization browser.
       CORBA::Any any;
 
-      ACE_TRY_NEW_ENV
+      try
         {
           any.replace (Metrics::_tc_QoSData, &qos_data_, 0, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
 #if defined (METRICS_LOGGER_ERROR_OUTPUT_ENABLED)
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Metrics_Logger::process_aggregate_QoS");
+          ex._tao_print_exception (
+            "TAO_Metrics_Logger::process_aggregate_QoS");
 #endif
           return;
         }
-      ACE_ENDTRY;
 
       this->dove_supplier_.notify (any);
     }
@@ -434,21 +431,17 @@ TAO_Metrics_Logger::process_aggregate_QoS (const Metrics::QoSParameter_Set & qos
 
 void
 TAO_Metrics_Logger::set_identities (const Metrics::ProbeIdentity_Set &
-                                      probe_identities
-                                    ACE_ENV_ARG_DECL)
+                                      probe_identities)
   throw (CORBA::SystemException)
 {
   for (u_long i = 0; i < probe_identities.length (); ++i)
     {
-      this->set_identity (probe_identities [i]
-                          ACE_ENV_ARG_DECL);
-      ACE_CHECK;
+      this->set_identity (probe_identities [i]);
     }
 }
 
 void
-TAO_Metrics_Logger::set_identity (const Metrics::ProbeIdentity_t & probe_identity
-                                  ACE_ENV_ARG_DECL)
+TAO_Metrics_Logger::set_identity (const Metrics::ProbeIdentity_t & probe_identity)
   throw (CORBA::SystemException)
 {
   // Look up the existing name that is bound, creating one if there is
@@ -460,7 +453,6 @@ TAO_Metrics_Logger::set_identity (const Metrics::ProbeIdentity_t & probe_identit
       ACE_NEW_THROW_EX (name,
                         CORBA::String_var (probe_identity.probe_name),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // What is this used for?  BRM
       auto_ptr<CORBA::String_var> name_ptr (name);
@@ -503,8 +495,7 @@ TAO_Metrics_Logger::set_identity (const Metrics::ProbeIdentity_t & probe_identit
 void
 TAO_Metrics_Logger::log_timeprobe_data (const Metrics::TimeprobeParameter_Set &
                                         timeprobe_params,
-                                        Metrics::Time interval
-                                        ACE_ENV_ARG_DECL)
+                                        Metrics::Time interval)
   throw (CORBA::SystemException)
 {
   // Package up the data and put it on the task queue.
@@ -836,19 +827,18 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
             static_cast<CORBA::Double> (ACE_UINT64_DBLCAST_ADAPTER (queue_time))
             / static_cast<CORBA::Double> (ACE_UINT64_DBLCAST_ADAPTER (interval));
 
-          ACE_TRY_NEW_ENV
+          try
             {
               any.replace (Metrics::_tc_UtilData, &util_data_, 0, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
 #if defined (METRICS_LOGGER_ERROR_OUTPUT_ENABLED)
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Metrics_Logger::process_aggregate_QoS");
+              ex._tao_print_exception (
+                "TAO_Metrics_Logger::process_aggregate_QoS");
 #endif
               return;
             }
-          ACE_ENDTRY;
 
           this->dove_supplier_.notify (any);
         }

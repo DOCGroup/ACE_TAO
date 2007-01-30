@@ -11,7 +11,7 @@ Client_Worker::Client_Worker (Simple_Server_ptr server,
 }
 
 void
-Client_Worker::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Worker::validate_connection (void)
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -19,40 +19,34 @@ Client_Worker::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int j = 0; j != 100; ++j)
    {
-      ACE_TRY
+      try
         {
-          this->server_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->ping ();
 
           if(TAO_debug_level > 0)
             ACE_DEBUG (( LM_DEBUG,
                          "******** VALIDATED ******* \n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
         }
-      ACE_ENDTRY;
    }
 }
 
 int
 Client_Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Validate connections befire doing any actual work..
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-       ACE_TRY_CHECK;
+      this->validate_connection ();
 
-       this->server_->validate_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
-       ACE_TRY_CHECK;
+       this->server_->validate_protocol ();
 
        for (int i = 0; i < this->niterations_; ++i)
          {
-           this->server_->test_method (i ACE_ENV_ARG_PARAMETER);
-           ACE_TRY_CHECK;
+           this->server_->test_method (i);
 
            if (TAO_debug_level > 0)
              ACE_DEBUG ((LM_DEBUG,
@@ -60,15 +54,13 @@ Client_Worker::svc (void)
                          i));
          }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) Got an exception \n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client_Worker : Exception Raised");
+      ex._tao_print_exception ("Client_Worker : Exception Raised");
 
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

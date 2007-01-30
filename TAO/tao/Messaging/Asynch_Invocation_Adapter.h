@@ -43,7 +43,6 @@ class TAO_Asynch_Reply_Dispatcher_Base;
 namespace  CORBA
 {
   class Object;
-  class Environment;
   class SystemException;
 }
 
@@ -75,11 +74,11 @@ namespace TAO
 
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
                  const TAO_Reply_Handler_Skeleton &reply_handler_skel
-                 ACE_ENV_ARG_DECL);
+                );
 
     virtual void invoke (TAO::Exception_Data *ex,
                          unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
+                        );
   protected:
 
     virtual Invocation_Status invoke_twoway (
@@ -87,14 +86,14 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+       );
 
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Collocation_Strategy strat
-        ACE_ENV_ARG_DECL);
+       );
 
   private:
     /// Autofunctor to manage the reply dispatcher

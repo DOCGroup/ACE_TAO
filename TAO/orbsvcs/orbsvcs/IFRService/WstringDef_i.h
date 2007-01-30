@@ -51,54 +51,45 @@ public:
   virtual ~TAO_WstringDef_i (void);
   // Destructor.
 
-  virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::DefinitionKind def_kind ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's virtual function.
 
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::TypeCode_ptr type_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's virtual function.
 
-  virtual CORBA::ULong bound (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::ULong bound ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::ULong bound_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::ULong bound_i ()
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void bound (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::ULong bound)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void bound_i (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::ULong bound)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

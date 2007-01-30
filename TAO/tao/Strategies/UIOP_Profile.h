@@ -75,12 +75,11 @@ public:
   ~TAO_UIOP_Profile (void);
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char *to_string (ACE_ENV_SINGLE_ARG_DECL);
+  virtual char *to_string (void);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ACE_ENV_ARG_DECL);
+  virtual CORBA::ULong hash (CORBA::ULong max);
   /**
    * Add <endp> to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
@@ -93,8 +92,7 @@ protected:
   /// Protected template methods. Please see documentation in
   /// Profile.h for details.
   virtual int decode_profile (TAO_InputCDR& cdr);
-  virtual void parse_string_i (const char *string
-                               ACE_ENV_ARG_DECL);
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual int decode_endpoints (void);
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);

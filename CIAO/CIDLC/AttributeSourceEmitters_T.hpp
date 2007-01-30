@@ -39,8 +39,8 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   virtual void
   gen_swapping_set ()
   {
-    os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");"
-       << "ACE_CHECK;" << endl;
+    os << "this->activate_component (" << ");"
+       << endl;
   }
 
   virtual void
@@ -61,7 +61,6 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
     os << (exec_src_ ? " /* " : " ")
        << a.name ()
        << (exec_src_ ? " */" : "") << endl
-       << (exec_src_ ? STRS[ENV_SRC_NOTUSED] : STRS[ENV_SRC])
        << ")" << endl;
   }
 
@@ -107,7 +106,7 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
 
         os << "this->executor_->" << a.name () << " (" << endl
            << a.name () << endl
-           << STRS[ENV_ARG] << ");" << endl;
+           << ");" << endl;
       }
 
     os << "}";
@@ -142,12 +141,10 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
       read_type_name_emitter_ (c),
       type_name_emitter_ (c),
       return_emitter_ (c),
-      ace_check_return_emitter_ (c),
       exec_src_ (exec_src)
   {
     read_belongs_.node_traverser (read_type_name_emitter_);
     return_belongs_.node_traverser (return_emitter_);
-    ace_check_return_belongs_.node_traverser (ace_check_return_emitter_);
     edge_traverser (get_raises_);
     get_raises_.node_traverser (type_name_emitter_);
   }
@@ -159,7 +156,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   virtual void
   gen_swapping_get (SemanticGraph::ReadWriteAttribute& a)
   {
-    os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");";
+    os << "this->activate_component ();";
 
     Traversal::ReadWriteAttribute::belongs (a, ace_check_return_belongs_);
 
@@ -192,7 +189,6 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
     os << scope_.name ()
        << (exec_src_ ? "_exec_i::" : "_Servant::")
        << a.name () << " (" << endl
-       << (exec_src_ ? STRS[ENV_SNGL_SRC_NOTUSED] : STRS[ENV_SNGL_SRC])
        << ")" << endl;
   }
 
@@ -243,8 +239,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
           this->gen_swapping_get (a);
         }
 
-        os << "return this->executor_->" << a.name () << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ");";
+        os << "return this->executor_->" << a.name () << " ();";
       }
 
     os << "}";
@@ -265,7 +260,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   virtual void
   gen_swapping_get (SemanticGraph::ReadAttribute& a)
   {
-    os << "this->activate_component (" << STRS[ENV_SNGL_ARG] << ");";
+    os << "this->activate_component ();";
 
     Traversal::ReadAttribute::belongs (a, ace_check_return_belongs_);
 
@@ -286,7 +281,6 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
     os << scope_.name ()
        << (exec_src_ ? "_exec_i::" : "_Servant::")
        << a.name () << " (" << endl
-       << (exec_src_ ? STRS[ENV_SNGL_SRC_NOTUSED] : STRS[ENV_SNGL_SRC])
        << ")" << endl;
   }
 
@@ -337,8 +331,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
           this->gen_swapping_get (a);
         }
 
-        os << "return this->executor_->" << a.name () << " (" << endl
-           << STRS[ENV_SNGL_ARG] << ");";
+        os << "return this->executor_->" << a.name () << " ();";
       }
 
     os << "}";
@@ -357,7 +350,6 @@ private:
   ReturnTypeNameEmitter read_type_name_emitter_;
   FullTypeNameEmitter type_name_emitter_;
   NullReturnEmitter return_emitter_;
-  AceCheckReturnEmitter ace_check_return_emitter_;
   Traversal::Belongs read_belongs_;
   Traversal::Belongs return_belongs_;
   Traversal::Belongs ace_check_return_belongs_;

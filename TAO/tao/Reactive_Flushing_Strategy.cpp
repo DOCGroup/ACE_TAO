@@ -33,22 +33,19 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
   int result = 0;
 
   // @@ Should we pass this down?  Can we?
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       TAO_ORB_Core * const orb_core = transport->orb_core ();
 
       while (!msg->all_data_sent () && result >= 0)
         {
-          result = orb_core->run (max_wait_time, 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          result = orb_core->run (max_wait_time, 1);
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return result;
 }
@@ -57,25 +54,22 @@ int
 TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
 {
   // @@ Should we pass this down?  Can we?
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       TAO_ORB_Core * const orb_core = transport->orb_core ();
 
       while (!transport->queue_is_empty ())
         {
-          int const result = orb_core->run (0, 1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int const result = orb_core->run (0, 1);
 
           if (result == -1)
             return -1;
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

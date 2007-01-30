@@ -51,11 +51,10 @@ public:
   // Set of available Time servers.
 
   int init (int argc,
-            ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL);
+            ACE_TCHAR *argv[]);
   // Initialize the Clerk state - parsing arguments and waiting.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
 private:

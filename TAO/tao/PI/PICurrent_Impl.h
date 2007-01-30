@@ -59,14 +59,14 @@ namespace TAO
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
     CORBA::Any *get_slot (PortableInterceptor::SlotId identifier
-                          ACE_ENV_ARG_DECL)
+                          )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
 
     /// Set information in the slot table at the given SlotId.
     void set_slot (PortableInterceptor::SlotId identifier,
                    const CORBA::Any & data
-                   ACE_ENV_ARG_DECL)
+                   )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
 

@@ -101,28 +101,28 @@ namespace TAO
       int prepare_for_upcall (const TAO::ObjectKey &key,
                               const char *operation,
                               CORBA::Object_out forward_to
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              );
 
       /// Helper.
       int prepare_for_upcall_i (const TAO::ObjectKey &key,
                                 const char *operation,
                                 CORBA::Object_out forward_to,
                                 bool &wait_occurred_restart_call
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                );
 
       /// Run pre_invoke for a remote request.
       void pre_invoke_remote_request (TAO_ServerRequest &req
-                                      ACE_ENV_ARG_DECL);
+                                     );
 
       /// Run pre_invoke for a collocated request.
-      void pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_DECL);
+      void pre_invoke_collocated_request (void);
 
       /// Run post_invoke for a request.
       void post_invoke (void);
 
       /// Locate POA.
       ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key
-                                  ACE_ENV_ARG_DECL);
+                                 );
 
       /// POA accessor.
       ::TAO_Root_POA &poa (void) const;
@@ -187,7 +187,7 @@ namespace TAO
     protected:
 
       void post_invoke_servant_cleanup (void);
-      void single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL);
+      void single_threaded_poa_setup (void);
       void single_threaded_poa_cleanup (void);
       void servant_cleanup (void);
       void poa_cleanup (void);

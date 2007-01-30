@@ -51,38 +51,32 @@ Event_Service::~Event_Service (void)
 int
 Event_Service::run (int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Make a copy of command line parameter.
       ACE_Argv_Type_Converter command(argc, argv);
 
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv(), "");
 
       if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
         return 1;
 
       CORBA::Object_var root_poa_object =
-        this->orb_->resolve_initial_references("RootPOA"
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (root_poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the root POA.\n"),
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (root_poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (root_poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // When we have a service name or a non local scheduler we must use the
       // naming service.
@@ -97,8 +91,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       if (use_name_service)
         {
           naming_obj=
-            this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_->resolve_initial_references ("NameService");
 
           if (CORBA::is_nil (naming_obj.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -106,8 +99,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                               1);
 
           naming_context =
-            CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            CosNaming::NamingContext::_narrow (naming_obj.in ());
         }
 
       // This is the name we (potentially) register the Scheduling
@@ -125,27 +117,21 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                           ACE_Config_Scheduler,
                           1);
 
-          scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          scheduler = this->sched_impl_->_this ();
 
           // Register the servant with the Naming Context....
           if (!CORBA::is_nil (naming_context.in ()))
             {
-              naming_context->rebind (schedule_name, scheduler.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              naming_context->rebind (schedule_name, scheduler.in ());
             }
         }
       else if (this->scheduler_type_ == ES_SCHED_GLOBAL)
         {
           // Get reference to a scheduler from naming service
           CORBA::Object_var tmp =
-            naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            naming_context->resolve (schedule_name);
 
-          scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
-                                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ());
 
           if (CORBA::is_nil (scheduler.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -167,13 +153,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                       1);
       this->ec_impl_ = ec_impl;
 
-      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl->activate ();
 
       RtecEventChannelAdmin::EventChannel_var ec;
 
       // If the object_id_ is empty and we don't use BiDIR GIOP, activate the
-      // servant under the default POA, else create a new child POA with 
+      // servant under the default POA, else create a new child POA with
       // the needed policies
       int persistent = ACE_OS::strcmp(this->object_id_.c_str(), "");
       if ((persistent == 0) && (this->use_bidir_giop_ == false))
@@ -181,8 +166,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           // Notice that we activate *this* object with the POA, but we
           // forward all the requests to the underlying EC
           // implementation.
-          ec = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ec = this->_this ();
         }
       else
         {
@@ -194,14 +178,10 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           if (persistent != 0)
             {
               policies[index++] =
-                root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
               policies[index++] =
-                root_poa->create_lifespan_policy (PortableServer::PERSISTENT
-                                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
             }
 
           if (this->use_bidir_giop_ == true)
@@ -210,9 +190,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
               pol <<= BiDirPolicy::BOTH;
               policies[index++] =
                 this->orb_->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-                                           pol
-                                            ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                           pol);
             }
 
           policies.length (index);
@@ -221,17 +199,14 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           PortableServer::POA_var child_poa =
             root_poa->create_POA (child_poa_name.c_str (),
                                   poa_manager.in (),
-                                  policies
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                  policies);
 
           // Creation of persistentPOA is over. Destroy the Policy objects.
           for (CORBA::ULong i = 0;
                i < policies.length ();
                ++i)
             {
-              policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              policies[i]->destroy ();
             }
 
           if (CORBA::is_nil (child_poa.in ()))
@@ -243,24 +218,17 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
             PortableServer::string_to_ObjectId(object_id_.c_str());
 
           child_poa->activate_object_with_id(ec_object_id.in(),
-                                             this
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                             this);
 
           CORBA::Object_var ec_obj =
-            child_poa->id_to_reference(ec_object_id.in()
-                                        ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            child_poa->id_to_reference(ec_object_id.in());
 
           ec =
-            RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in()
-                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
         }
 
       CORBA::String_var str =
-         this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+         this->orb_->object_to_string (ec.in ());
 
       if (ACE_OS::strcmp(this->ior_file_name_.c_str(), "") != 0)
         {
@@ -299,39 +267,34 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           CosNaming::Name channel_name (1);
           channel_name.length (1);
           channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
-          naming_context->rebind (channel_name, ec.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          naming_context->rebind (channel_name, ec.in ());
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%s; running event service\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(__FILE__)));
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
       if (bind_to_naming_service_ && !CORBA::is_nil (naming_context.in ()))
         {
           CosNaming::Name channel_name (1);
           channel_name.length (1);
           channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
-          naming_context->unbind (channel_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          naming_context->unbind (channel_name);
         }
 
       if (!CORBA::is_nil (scheduler.in ()) &&
           !CORBA::is_nil (naming_context.in ()))
         {
-          naming_context->unbind (schedule_name ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          naming_context->unbind (schedule_name);
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "EC");
+      ex._tao_print_exception ("EC");
     }
-  ACE_ENDTRY;
 
 
   return 0;
@@ -423,47 +386,44 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-Event_Service::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+Event_Service::for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ec_impl_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ec_impl_->for_consumers ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-Event_Service::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+Event_Service::for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ec_impl_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ec_impl_->for_suppliers ();
 }
 
 void
-Event_Service::destroy (ACE_ENV_SINGLE_ARG_DECL)
+Event_Service::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->ec_impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->ec_impl_->destroy ();
   this->orb_->shutdown ();
 }
 
 RtecEventChannelAdmin::Observer_Handle
-Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer
-                                ACE_ENV_ARG_DECL)
+Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
+  return this->ec_impl_->append_observer (observer);
 }
 
 void
-Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
-                                ACE_ENV_ARG_DECL)
+Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
-  this->ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
+  this->ec_impl_->remove_observer (handle);
 }
 

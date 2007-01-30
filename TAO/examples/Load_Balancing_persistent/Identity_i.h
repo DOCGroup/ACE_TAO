@@ -31,12 +31,11 @@ public:
   ~Identity_i (void);
   // Destructor.
 
-  virtual void get_name (CORBA::String_out name
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void get_name (CORBA::String_out name)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the name of this object.
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL)
+  PortableServer::POA_ptr _default_POA (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Method for the POA that will return the persistent POA_ptr stored
   // in here..

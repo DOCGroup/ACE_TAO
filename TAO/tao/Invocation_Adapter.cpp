@@ -35,13 +35,10 @@ namespace TAO
 
   void
   Invocation_Adapter::invoke (TAO::Exception_Data *ex_data,
-                              unsigned long ex_count
-                              ACE_ENV_ARG_DECL)
+                              unsigned long ex_count)
   {
     // Should stub object be refcounted here?
-    TAO_Stub *stub =
-      this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    TAO_Stub *stub = this->get_stub ();
 
     TAO_Operation_Details op_details (this->operation_,
                                       this->op_len_,
@@ -51,16 +48,12 @@ namespace TAO
                                       ex_count,
                                       this->is_dii_request_);
 
-    this->invoke_i (stub,
-                    op_details
-                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->invoke_i (stub, op_details);
   }
 
   void
   Invocation_Adapter::invoke_i (TAO_Stub *stub,
-                                TAO_Operation_Details &details
-                                ACE_ENV_ARG_DECL)
+                                TAO_Operation_Details &details)
   {
     // The invocation has got to be within the context of the
     // corresponding ORB's configuration. Otherwise things like
@@ -89,9 +82,7 @@ namespace TAO
         if (cpb_ != 0 || effective_target->_servant () != 0)
           {
             strat =
-              TAO_ORB_Core::collocation_strategy (effective_target.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+              TAO_ORB_Core::collocation_strategy (effective_target.in ());
           }
 
         if (strat == TAO_CS_REMOTE_STRATEGY ||
@@ -102,25 +93,20 @@ namespace TAO
               this->invoke_remote_i (stub,
                                      details,
                                      effective_target,
-                                     max_wait_time
-                                     ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+                                     max_wait_time);
           }
         else
           {
             if (strat == TAO_CS_THRU_POA_STRATEGY)
               {
-                (void) this->set_response_flags (stub,
-                                                 details);
+                (void) this->set_response_flags (stub, details);
               }
 
             status =
               this->invoke_collocated_i (stub,
                                          details,
                                          effective_target,
-                                         strat
-                                         ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+                                         strat);
           }
 
         if (status == TAO_INVOKE_RESTART)
@@ -151,7 +137,7 @@ namespace TAO
   }
 
   TAO_Stub *
-  Invocation_Adapter::get_stub (ACE_ENV_SINGLE_ARG_DECL) const
+  Invocation_Adapter::get_stub (void) const
   {
     TAO_Stub * const stub =
       this->target_->_stubobj ();
@@ -171,8 +157,7 @@ namespace TAO
   Invocation_Adapter::invoke_collocated_i (TAO_Stub *stub,
                                            TAO_Operation_Details &details,
                                            CORBA::Object_var &effective_target,
-                                           Collocation_Strategy strat
-                                           ACE_ENV_ARG_DECL)
+                                           Collocation_Strategy strat)
   {
     // To make a collocated call we must have a collocated proxy broker, the
     // invoke_i() will make sure that we only come here when we have one
@@ -189,11 +174,7 @@ namespace TAO
                                     details,
                                     this->type_ == TAO_TWOWAY_INVOCATION);
 
-    status =
-      coll_inv.invoke (this->cpb_,
-                       strat
-                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    status = coll_inv.invoke (this->cpb_, strat);
 
     if (status == TAO_INVOKE_RESTART &&
         coll_inv.is_forwarded ())
@@ -210,9 +191,7 @@ namespace TAO
 
         (void) this->object_forwarded (effective_target,
                                        stub,
-                                       is_permanent_forward
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                                       is_permanent_forward);
       }
 
     return status;
@@ -258,13 +237,10 @@ namespace TAO
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
                                        TAO_Operation_Details &details,
                                        CORBA::Object_var &effective_target,
-                                       ACE_Time_Value *&max_wait_time
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_Time_Value *&max_wait_time)
   {
     ACE_Time_Value tmp_wait_time;
-    bool is_timeout  =
-      this->get_timeout (stub,
-                         tmp_wait_time);
+    bool const is_timeout = this->get_timeout (stub, tmp_wait_time);
 
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
@@ -285,9 +261,7 @@ namespace TAO
       stub,
       block_connect);
 
-    resolver.resolve (max_wait_time
-                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    resolver.resolve (max_wait_time);
 
     if (TAO_debug_level)
       {
@@ -306,16 +280,14 @@ namespace TAO
         return this->invoke_oneway (details,
                                     effective_target,
                                     resolver,
-                                    max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
+                                    max_wait_time);
       }
     else if (this->type_ == TAO_TWOWAY_INVOCATION)
       {
         return this->invoke_twoway (details,
                                     effective_target,
                                     resolver,
-                                    max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
+                                    max_wait_time);
       }
 
     return TAO_INVOKE_FAILURE;
@@ -325,8 +297,7 @@ namespace TAO
   Invocation_Adapter::invoke_twoway (TAO_Operation_Details &details,
                                      CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
-                                     ACE_Time_Value *&max_wait_time
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_Time_Value *&max_wait_time)
   {
     // Simple sanity check
     if (this->mode_ != TAO_SYNCHRONOUS_INVOCATION ||
@@ -340,14 +311,10 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
-    TAO::Synch_Twoway_Invocation synch (this->target_,
-                                        r,
-                                        details);
+    TAO::Synch_Twoway_Invocation synch (this->target_,  r, details);
 
     Invocation_Status const status =
-      synch.remote_twoway (max_wait_time
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
@@ -364,9 +331,7 @@ namespace TAO
 
         this->object_forwarded (effective_target,
                                 r.stub (),
-                                is_permanent_forward
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                                is_permanent_forward);
       }
 
     return status;
@@ -376,17 +341,12 @@ namespace TAO
   Invocation_Adapter::invoke_oneway (TAO_Operation_Details &details,
                                      CORBA::Object_var &effective_target,
                                      Profile_Transport_Resolver &r,
-                                     ACE_Time_Value *&max_wait_time
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_Time_Value *&max_wait_time)
   {
-    TAO::Synch_Oneway_Invocation synch (this->target_,
-                                        r,
-                                        details);
+    TAO::Synch_Oneway_Invocation synch (this->target_, r, details);
 
     Invocation_Status const s =
-      synch.remote_oneway (max_wait_time
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      synch.remote_oneway (max_wait_time);
 
     if (s == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
@@ -402,9 +362,7 @@ namespace TAO
 #endif
         this->object_forwarded (effective_target,
                                 r.stub (),
-                                is_permanent_forward
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                                is_permanent_forward);
       }
 
     return s;
@@ -413,8 +371,7 @@ namespace TAO
   void
   Invocation_Adapter::object_forwarded (CORBA::Object_var &effective_target,
                                         TAO_Stub *stub,
-                                        CORBA::Boolean permanent_forward
-                                        ACE_ENV_ARG_DECL)
+                                        CORBA::Boolean permanent_forward)
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
@@ -422,22 +379,22 @@ namespace TAO
       effective_target->_stubobj ();
 
     if (stubobj == 0)
-      ACE_THROW (CORBA::INTERNAL (
+      throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
-        CORBA::COMPLETED_NO));
+        CORBA::COMPLETED_NO);
 
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
 
     if (stub->next_profile () == 0)
-      ACE_THROW (CORBA::TRANSIENT (
+      throw ::CORBA::TRANSIENT (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
-        CORBA::COMPLETED_NO));
+        CORBA::COMPLETED_NO);
 
     return;
   }

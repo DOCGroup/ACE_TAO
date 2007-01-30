@@ -21,8 +21,8 @@
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (On_Demand_Activation, 
-           Servant_Activator, 
+ACE_RCSID (On_Demand_Activation,
+           Servant_Activator,
            "$Id$")
 
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
@@ -32,8 +32,7 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
 
 PortableServer::Servant
 ServantActivator::incarnate (const PortableServer::ObjectId &oid,
-                             PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL)
+                             PortableServer::POA_ptr poa)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -58,8 +57,7 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
                                PortableServer::POA_ptr ,
                                PortableServer::Servant servant,
                                CORBA::Boolean ,
-                               CORBA::Boolean remaining_activations
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                               CORBA::Boolean remaining_activations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated

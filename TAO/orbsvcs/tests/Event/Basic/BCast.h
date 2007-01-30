@@ -46,7 +46,7 @@ public:
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
 
   /// Don't run the suppliers, just test connect and disconnect calls.
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results (void);
@@ -73,8 +73,7 @@ public:
   Simple_Address_Server (const ACE_INET_Addr& address);
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address
-                         ACE_ENV_ARG_DECL)
+                         RtecUDPAdmin::UDP_Addr& address)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

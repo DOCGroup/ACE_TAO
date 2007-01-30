@@ -32,28 +32,26 @@ Client_Task::done(void) const
 }
 
 void
-Client_Task::do_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::do_invocations(Test::Payload& payload)
 {
   ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s sending %d payloads.\n",
              this->id_.c_str(), this->event_count_));
 
   for (int i = 0; i != this->event_count_; ++i)
     {
-      this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->payload_receiver_->more_data (payload);
     }
 }
 
 void
-Client_Task::do_sync_none_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::do_sync_none_invocations(Test::Payload& payload)
 {
   ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s sending %d SYNC_NONE payloads.\n",
              this->id_.c_str(), this->event_count_));
 
   for (int i = 0; i != this->event_count_; ++i)
     {
-      this->payload_receiver_->sync_none_more_data (payload ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->payload_receiver_->sync_none_more_data (payload);
     }
 }
 
@@ -67,19 +65,14 @@ Client_Task::svc (void)
   for (CORBA::ULong j = 0; j != payload.length (); ++j)
     payload[j] = (j % 256);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("PolicyCurrent");
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       CORBA::Any scope_as_any;
       scope_as_any <<= this->sync_scope_;
@@ -89,46 +82,40 @@ Client_Task::svc (void)
       policy_list.length (1);
       policy_list[0] =
         this->orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                                   scope_as_any
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   scope_as_any);
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            CORBA::ADD_OVERRIDE);
 
       if (this->sync_scope_ == Messaging::SYNC_NONE)
-        this->do_sync_none_invocations(payload ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->do_sync_none_invocations(payload);
       else
-        this->do_invocations(payload ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->do_invocations(payload);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s: ",
                  this->id_.c_str()));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
+      ex._tao_print_exception ("");
       done_ = true;
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s finished.\n", this->id_.c_str()));
   done_ = true;
   return 0;
 }
 
 void
-Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (void)
 {
-  ACE_TRY
+  try
     {
       Test::Payload payload(0);
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->payload_receiver_->more_data (payload);
         }
     }
-  ACE_CATCHANY {} ACE_ENDTRY;
+  catch (const CORBA::Exception&){}
 }

@@ -60,7 +60,16 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
 
-static ACE_thread_key_t the_log_msg_tss_key = 0;
+#if defined (ACE_MVS)
+  static ACE_thread_key_t the_log_msg_tss_key =
+  #if !defined(_LP64)
+      { '\0','\0','\0','\0' };
+  #else
+      { '\0','\0','\0','\0','\0','\0','\0','\0' };
+  #endif
+#else
+  static ACE_thread_key_t the_log_msg_tss_key = 0;
+#endif /* defined (ACE_MVS) */
 
 ACE_thread_key_t *log_msg_tss_key (void)
 {

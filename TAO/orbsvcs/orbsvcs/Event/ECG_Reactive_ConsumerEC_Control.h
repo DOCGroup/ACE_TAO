@@ -84,16 +84,14 @@ public:
   // = Documented in TAO_EC_ConsumerControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway
-                                        ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway);
   virtual void system_exception (TAO_EC_Gateway_IIOP *gateway,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_eventchannel (ACE_ENV_SINGLE_ARG_DECL);
+  void query_eventchannel (void);
 
 private:
   /// The polling rate

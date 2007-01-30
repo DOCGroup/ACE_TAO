@@ -60,8 +60,7 @@ Grid_i::~Grid_i (void)
 void
 Grid_i::set (CORBA::Short x,
              CORBA::Short y,
-             CORBA::Long value
-             ACE_ENV_ARG_DECL)
+             CORBA::Long value)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -69,7 +68,7 @@ Grid_i::set (CORBA::Short x,
       || y < 0
       || x >= width_
       || y >= height_)
-    ACE_THROW (Grid::RANGE_ERROR ());
+    throw Grid::RANGE_ERROR ();
   else
     array_[x][y] = value;
 }
@@ -78,8 +77,7 @@ Grid_i::set (CORBA::Short x,
 
 CORBA::Long
 Grid_i::get (CORBA::Short x,
-             CORBA::Short y
-             ACE_ENV_ARG_DECL)
+             CORBA::Short y)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Grid::RANGE_ERROR))
 {
@@ -95,30 +93,28 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::width (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->width_;
 }
 
 CORBA::Short
-Grid_i::height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_i::height (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->height_;
 }
 
 void
-Grid_i::width (CORBA::Short x
-               ACE_ENV_ARG_DECL_NOT_USED)
+Grid_i::width (CORBA::Short x)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->width_ = x;
 }
 
 void
-Grid_i::height (CORBA::Short y
-                ACE_ENV_ARG_DECL_NOT_USED)
+Grid_i::height (CORBA::Short y)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->height_ = y;
@@ -126,7 +122,7 @@ Grid_i::height (CORBA::Short y
 
 // Destroy the grid
 void
-Grid_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
+Grid_i::destroy ( )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Delete the array.
@@ -168,8 +164,7 @@ Grid_Factory_i::~Grid_Factory_i (void)
 
 Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
-                           CORBA::Short height
-                           ACE_ENV_ARG_DECL)
+                           CORBA::Short height)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -204,7 +199,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   grid_ptr->set_pool (pool_t_);
 
   // Register the Grid pointer.
-  return grid_ptr->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return grid_ptr->_this ();
 }
 
 // Set the ORB pointer.
@@ -217,7 +212,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 
 // Shutdown.
 void
-Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_Factory_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -229,7 +224,7 @@ Grid_Factory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Grid_Factory_i::cleanup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Grid_Factory_i::cleanup (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *name = "Array";

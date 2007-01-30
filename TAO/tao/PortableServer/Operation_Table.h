@@ -29,27 +29,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ServerRequest;
 class TAO_Abstract_ServantBase;
 
-namespace CORBA
-{
-  class Environment;
-}
-
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
     void *,
     void *
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
-    , CORBA::Environment &
-#endif
   );
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
     TAO::Argument **,
     int
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
-    , CORBA::Environment &
-#endif
   );
 
 /**

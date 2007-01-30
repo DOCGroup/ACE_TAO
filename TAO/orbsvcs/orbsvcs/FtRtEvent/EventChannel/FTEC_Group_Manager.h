@@ -35,37 +35,30 @@ public:
 
   virtual CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out cur
-        ACE_ENV_ARG_DECL)
+        FTRT::Location_out cur)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   void create_group (
     const FTRT::ManagerInfoList & info_list,
-    CORBA::ULong object_group_ref_version
-    ACE_ENV_ARG_DECL);
+    CORBA::ULong object_group_ref_version);
 
   void join_group (
-    const FTRT::ManagerInfo & info
-    ACE_ENV_ARG_DECL);
+    const FTRT::ManagerInfo & info);
 
   void add_member (
     const FTRT::ManagerInfo & info,
-    CORBA::ULong object_group_ref_version
-    ACE_ENV_ARG_DECL);
+    CORBA::ULong object_group_ref_version);
 
   void remove_member (
     const FTRT::Location & crashed_location,
-    CORBA::ULong object_group_ref_version
-    ACE_ENV_ARG_DECL);
+    CORBA::ULong object_group_ref_version);
 
   void replica_crashed (
-    const FTRT::Location & location
-    ACE_ENV_ARG_DECL);
+    const FTRT::Location & location);
 
 private:
   virtual void get_state (
         FtRtecEventChannelAdmin::EventChannelState & s
-        ACE_ENV_ARG_DECL
       )=0;
 
   virtual void connection_closed();

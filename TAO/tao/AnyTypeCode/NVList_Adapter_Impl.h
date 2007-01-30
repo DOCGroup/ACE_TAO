@@ -36,11 +36,11 @@ public:
   virtual void create_list (
       CORBA::Long count,
       CORBA::NVList_ptr &new_list
-      ACE_ENV_ARG_DECL);
+     );
 
   virtual void create_named_value (
       CORBA::NamedValue_ptr &nv
-      ACE_ENV_ARG_DECL);
+     );
 
   /// Used to force the initialization of the NVList adapter
   static int Initializer (void);

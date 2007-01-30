@@ -22,15 +22,14 @@ class FooServantList
                    CORBA::ORB_ptr orb);
     ~FooServantList();
 
-    void create_and_activate(CORBA::ORB_ptr orb, 
-                             PortableServer::POA_ptr poa
-                             ACE_ENV_ARG_DECL);
+    void create_and_activate(CORBA::ORB_ptr orb,
+                             PortableServer::POA_ptr poa);
 
-    void client_done(ACE_ENV_SINGLE_ARG_DECL);
+    void client_done(void);
 
     ClientTask* collocated_client () const;
 
-    void deactivate_servant (ACE_ENV_SINGLE_ARG_DECL);
+    void deactivate_servant (void);
 
   private:
 
@@ -41,7 +40,7 @@ class FooServantList
     PortableServer::ServantBase_var* safe_servants_;
     ACE_CString prefix_;
     unsigned num_servants_;
-    
+
     LockType num_clients_lock_;
     unsigned num_clients_;
     unsigned init_num_clients_;

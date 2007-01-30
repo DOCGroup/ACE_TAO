@@ -92,20 +92,17 @@ TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::handle_init (void)
 {
   /// Fetch the root poa.
   PortableServer::POA_var root_poa;
   LOOKUP_MANAGER->resolve (root_poa);
-  ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    root_poa->the_POAManager ();
 
   /// Activate the root POA.
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager->activate ();
 
   TAO_Notify_Tests_Priority_Mapping* mapping = new TAO_Notify_Tests_Priority_Mapping ();
 
@@ -113,7 +110,7 @@ TAO_Notify_Tests_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_wait_for_completion (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_wait_for_completion (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t) Waiting for suppliers and consumers to finish...\n"));
 
@@ -124,7 +121,7 @@ TAO_Notify_Tests_Application_Command::handle_wait_for_completion (ACE_ENV_SINGLE
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Shutting down the Application...\n"));
 
@@ -136,7 +133,7 @@ TAO_Notify_Tests_Application_Command::handle_shutdown (ACE_ENV_SINGLE_ARG_DECL_N
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_dump_stats (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Dumpimg stats...\n"));
 
@@ -147,7 +144,7 @@ TAO_Notify_Tests_Application_Command::handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_run (void)
 {
   // Run the Consumers
 
@@ -163,62 +160,54 @@ TAO_Notify_Tests_Application_Command::handle_run (ACE_ENV_SINGLE_ARG_DECL_NOT_US
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_signal_peer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::handle_signal_peer (void)
 {
   TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
-  act_mgr->signal_peer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  act_mgr->signal_peer ();
 }
 
 void
-TAO_Notify_Tests_Application_Command::handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::handle_wait_to_start (void)
 {
   TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
-  act_mgr->write_ior (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  act_mgr->write_ior ();
 
-  act_mgr->wait_for_start_signal (ACE_ENV_SINGLE_ARG_PARAMETER);
+  act_mgr->wait_for_start_signal ();
 }
 
 void
-TAO_Notify_Tests_Application_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::execute_i (void)
 {
   if (this->command_ == INIT)
     {
-      this->handle_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_init ();
     }
   else if (this->command_ == RUN)
     {
-      this->handle_run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_run ();
     }
   else if (this->command_ == WAIT_FOR_EVENTS)
     {
-      this->handle_wait_for_completion (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_wait_for_completion ();
     }
   else if (this->command_ == SHUTDOWN)
     {
-      this->handle_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_shutdown ();
     }
   else if (this->command_ == DUMP_STATE)
     {
-      this->handle_dump_stats (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_dump_stats ();
     }
   else if (this->command_ == SIGNAL_PEER)
     {
-      this->handle_signal_peer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_signal_peer ();
     }
   else if (this->command_ == WAIT_TO_START)
     {
-      this->handle_wait_to_start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_wait_to_start ();
     }
 }

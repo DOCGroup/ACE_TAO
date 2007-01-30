@@ -40,27 +40,27 @@ public:
   virtual ~Bottom_Impl (void);
 
   // IDL Interface Methods
-  virtual char * top_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * top_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual char * left_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * left_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual char * right_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * right_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual char * bottom_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * bottom_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -89,24 +89,24 @@ public:
   virtual ~Delegated_Bottom_Impl (void);
 
   // IDL Interface Methods.
-  virtual char * top_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * top_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  virtual char * left_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * left_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  virtual char * right_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * right_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
-  virtual char * bottom_quote (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * bottom_quote (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

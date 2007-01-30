@@ -20,17 +20,16 @@ Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb, Thread_Pool *pool)
 }
 
 void
-Echo_Caller::start_task(Test::Echo_ptr client
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Echo_Caller::start_task(Test::Echo_ptr client)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   pool_->put(Test::Echo::_duplicate(client));
 }
 
 void
-Echo_Caller::shutdown(ACE_ENV_SINGLE_ARG_DECL)
+Echo_Caller::shutdown(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
-  orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
+  orb_->shutdown(0);
 }

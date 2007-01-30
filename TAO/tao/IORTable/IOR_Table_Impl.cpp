@@ -18,11 +18,9 @@ ACE_RCSID (IORTable,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IOR_Table_Impl_ptr
-TAO::Objref_Traits<TAO_IOR_Table_Impl>::duplicate (
-    TAO_IOR_Table_Impl_ptr p
-  )
+TAO::Objref_Traits <TAO_IOR_Table_Impl>::duplicate (TAO_IOR_Table_Impl_ptr p)
 {
-  if (! ::CORBA::is_nil (p))
+  if (!::CORBA::is_nil (p))
     {
       p->_add_ref ();
     }
@@ -31,24 +29,20 @@ TAO::Objref_Traits<TAO_IOR_Table_Impl>::duplicate (
 }
 
 void
-TAO::Objref_Traits<TAO_IOR_Table_Impl>::release (
-    TAO_IOR_Table_Impl_ptr p
-  )
+TAO::Objref_Traits <TAO_IOR_Table_Impl>::release (TAO_IOR_Table_Impl_ptr p)
 {
   ::CORBA::release (p);
 }
 
 TAO_IOR_Table_Impl_ptr
-TAO::Objref_Traits<TAO_IOR_Table_Impl>::nil (void)
+TAO::Objref_Traits <TAO_IOR_Table_Impl>::nil (void)
 {
   return TAO_IOR_Table_Impl::_nil ();
 }
 
 ::CORBA::Boolean
-TAO::Objref_Traits<TAO_IOR_Table_Impl>::marshal (
-    const TAO_IOR_Table_Impl_ptr ,
-    TAO_OutputCDR &
-  )
+TAO::Objref_Traits <TAO_IOR_Table_Impl>::marshal (const TAO_IOR_Table_Impl_ptr,
+                                                  TAO_OutputCDR &)
 {
   return false;
 }
@@ -58,12 +52,8 @@ TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
 }
 
 char *
-TAO_IOR_Table_Impl::find (const char *object_key
-                          ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IORTable::NotFound
-      ))
+TAO_IOR_Table_Impl::find (const char *object_key)
+  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   // We don't want the lock held during locate, so make it go out
   // of scope before then.
@@ -80,62 +70,38 @@ TAO_IOR_Table_Impl::find (const char *object_key
       ACE_THROW_RETURN (IORTable::NotFound (), 0);
   }
 
-  return this->locator_->locate (object_key ACE_ENV_ARG_PARAMETER);
+  return this->locator_->locate (object_key);
 }
 
 void
-TAO_IOR_Table_Impl::bind (
-        const char * object_key,
-        const char * IOR
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IORTable::AlreadyBound
-      ))
+TAO_IOR_Table_Impl::bind (const char * object_key, const char * IOR)
+  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::AlreadyBound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.bind (object_key, IOR) != 0)
-    ACE_THROW (IORTable::AlreadyBound ());
+    throw IORTable::AlreadyBound ();
 }
 
 void
-TAO_IOR_Table_Impl::rebind (
-        const char * object_key,
-        const char * IOR
-        ACE_ENV_ARG_DECL_NOT_USED
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
+TAO_IOR_Table_Impl::rebind (const char * object_key, const char * IOR)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->map_.rebind (object_key, IOR);
 }
 
 void
-TAO_IOR_Table_Impl::unbind (
-        const char * object_key
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IORTable::NotFound
-      ))
+TAO_IOR_Table_Impl::unbind (const char * object_key)
+  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.unbind (object_key) != 0)
-    ACE_THROW (IORTable::NotFound ());
+    throw IORTable::NotFound ();
 }
 
 void
-TAO_IOR_Table_Impl::set_locator (
-        IORTable::Locator_ptr locator
-        ACE_ENV_ARG_DECL_NOT_USED
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
+TAO_IOR_Table_Impl::set_locator (IORTable::Locator_ptr locator)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->locator_ = IORTable::Locator::_duplicate (locator);

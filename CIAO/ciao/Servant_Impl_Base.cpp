@@ -23,7 +23,6 @@ namespace CIAO
 
   ::Components::PrimaryKeyBase *
   Servant_Impl_Base::get_primary_key (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Components::NoKeyAvailable))
@@ -33,7 +32,6 @@ namespace CIAO
 
   CORBA::IRObject_ptr
   Servant_Impl_Base::get_component_def (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -43,7 +41,6 @@ namespace CIAO
 
   void
   Servant_Impl_Base::configuration_complete (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidConfiguration))
@@ -53,95 +50,78 @@ namespace CIAO
 
   void
   Servant_Impl_Base::remove (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    ACE_TRY
+    try
     {
       // Removing Facets
       Components::FacetDescriptions_var facets =
-        this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->get_all_facets ();
 
       CORBA::ULong const facet_len = facets->length ();
       for (CORBA::ULong i = 0; i < facet_len; ++i)
       {
         PortableServer::ObjectId_var facet_id =
           this->container_->the_facet_cons_POA ()->reference_to_id
-              (facets[i]->facet_ref () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+              (facets[i]->facet_ref ());
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
 
-        sa->update_port_activator (facet_id.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        sa->update_port_activator (facet_id.in ());
 
         this->container_->the_facet_cons_POA ()->deactivate_object
-          (facet_id ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          (facet_id);
       }
 
       // Removed Facets
 
       // Removing Consumers
       Components::ConsumerDescriptions_var consumers =
-        this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->get_all_consumers ();
 
       CORBA::ULong const consumer_len = consumers->length ();
       for (CORBA::ULong j = 0; j < consumer_len; ++j)
       {
         PortableServer::ObjectId_var cons_id =
           this->container_->the_facet_cons_POA ()->reference_to_id
-              (consumers[j]->consumer () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+              (consumers[j]->consumer ());
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
-        sa->update_port_activator (cons_id.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        sa->update_port_activator (cons_id.in ());
 
         this->container_->the_facet_cons_POA ()->deactivate_object
-          (cons_id ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          (cons_id);
       }
 
       Components::SessionComponent_var temp = this->get_executor ();
-      temp->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      temp->ccm_remove ();
 
       CORBA::Object_var objref =
         this->container_->get_objref (this);
 
       Components::CCMObject_var ccmobjref =
-        Components::CCMObject::_narrow (objref.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Components::CCMObject::_narrow (objref.in ());
 
       PortableServer::ObjectId_var oid;
 
       this->container_->uninstall_component (ccmobjref.in (),
-                                             oid.out ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             oid.out ());
 
       this->home_servant_->update_component_map (oid);
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Port not active\n");
+      ex._tao_print_exception ("Port not active\n");
     }
-    ACE_ENDTRY;
   }
 
   ::Components::ConnectionDescriptions *
   Servant_Impl_Base::get_connections (
       const char * /* name */
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -151,7 +131,6 @@ namespace CIAO
 
   ::Components::ComponentPortDescription *
   Servant_Impl_Base::get_all_ports (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -162,24 +141,19 @@ namespace CIAO
     ::Components::ComponentPortDescription_var retv = cps;
 
     ::Components::FacetDescriptions_var facets_desc =
-      this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->get_all_facets ();
 
     ::Components::ReceptacleDescriptions_var receptacle_desc =
-      this->get_all_receptacles (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->get_all_receptacles ();
 
     ::Components::ConsumerDescriptions_var consumer_desc =
-      this->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->get_all_consumers ();
 
     ::Components::EmitterDescriptions_var emitter_desc =
-      this->get_all_emitters (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->get_all_emitters ();
 
     ::Components::PublisherDescriptions_var publisher_desc =
-      this->get_all_publishers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+      this->get_all_publishers ();
 
     retv->facets (facets_desc.in ());
     retv->receptacles (receptacle_desc.in ());
@@ -193,7 +167,6 @@ namespace CIAO
   CORBA::Object_ptr
   Servant_Impl_Base::provide_facet (
       const char *name
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -218,7 +191,6 @@ namespace CIAO
   Components::FacetDescriptions *
   Servant_Impl_Base::get_named_facets (
       const ::Components::NameList & names
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -250,7 +222,6 @@ namespace CIAO
 
   ::Components::FacetDescriptions *
   Servant_Impl_Base::get_all_facets (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -278,7 +249,6 @@ namespace CIAO
 
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -287,7 +257,6 @@ namespace CIAO
                       ::Components::ConsumerDescriptions (
                       this->consumer_table_.size ()),
                       CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     ::Components::ConsumerDescriptions_var retval = tmp;
 
@@ -309,7 +278,6 @@ namespace CIAO
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (
       const char *sink_name
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -335,7 +303,6 @@ namespace CIAO
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_named_consumers (
       const ::Components::NameList & names
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -368,7 +335,6 @@ namespace CIAO
   ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -379,7 +345,6 @@ namespace CIAO
   ::Components::ReceptacleDescriptions *
 
   Servant_Impl_Base::get_all_receptacles (
-      ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -414,7 +379,6 @@ namespace CIAO
   ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_named_receptacles (
       const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -425,7 +389,6 @@ namespace CIAO
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
       const ::Components::NameList & /* names */
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
@@ -436,13 +399,12 @@ namespace CIAO
   /// Protected operations.
   void
   Servant_Impl_Base::add_facet (const char *port_name,
-                                ::CORBA::Object_ptr port_ref
-                                ACE_ENV_ARG_DECL)
+                                ::CORBA::Object_ptr port_ref)
     ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
-        ACE_THROW ( ::CORBA::BAD_PARAM ());
+        throw ::CORBA::BAD_PARAM ();
         return;
       }
 
@@ -584,13 +546,12 @@ namespace CIAO
   Servant_Impl_Base::add_consumer (
       const char *port_name,
       ::Components::EventConsumerBase_ptr port_ref
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
-        ACE_THROW ( ::CORBA::BAD_PARAM ());
+        throw ::CORBA::BAD_PARAM ();
         return;
       }
 
@@ -671,7 +632,7 @@ namespace CIAO
   }
 
   ::Components::StandardConfigurator_ptr
-  Servant_Impl_Base::get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL)
+  Servant_Impl_Base::get_standard_configurator ()
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Create the configurator servant.
@@ -683,15 +644,13 @@ namespace CIAO
 
 
     Components::StandardConfigurator_var configurator =
-      config_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (Components::StandardConfigurator::_nil ());
+      config_impl->_this ();
 
     return configurator._retn ();
   }
 
   PortableServer::POA_ptr
-  Servant_Impl_Base::_default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Servant_Impl_Base::_default_POA ()
   {
     return
       PortableServer::POA::_duplicate (container_->the_POA ());

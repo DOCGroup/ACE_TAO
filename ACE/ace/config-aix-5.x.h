@@ -73,7 +73,6 @@
    // These are for Visual Age C++ only
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #    define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
-#    define ACE_HAS_TYPENAME_KEYWORD
      // When using -qtempinc, we don't need to see template implementation
      // source (though we do need a pragma to find the correct source file).
      // However, without -qtempinc (either -qnotempinc or -qtemplateregistry)

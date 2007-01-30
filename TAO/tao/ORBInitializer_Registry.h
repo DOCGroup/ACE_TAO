@@ -35,10 +35,7 @@ namespace PortableInterceptor
 
   /// Register an ORBInitializer with the global ORBInitializer
   /// table.
-  TAO_Export void register_orb_initializer (
-      ORBInitializer_ptr init
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    );
+  TAO_Export void register_orb_initializer (ORBInitializer_ptr init);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

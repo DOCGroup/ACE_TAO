@@ -22,13 +22,13 @@ public:
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
   // = The skeleton methods
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void ping (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void ping (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean has_ft_request_service_context (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean has_ft_request_service_context (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

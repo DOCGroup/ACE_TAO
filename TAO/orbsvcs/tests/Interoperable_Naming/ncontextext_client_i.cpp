@@ -148,10 +148,10 @@ NContextExt_Client_i::get_name ()
 }
 
 int
-NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
+NContextExt_Client_i::run (void)
 {
 
-  ACE_TRY_EX (OuterBlock)
+  try
     {
       CosNaming::Name name;
 
@@ -163,30 +163,24 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Get the stringified form of the name
        CORBA::String_var str_name =
-        this->naming_context_->to_string (name
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+        this->naming_context_->to_string (name);
 
       CORBA::Object_var factory_object;
 
-      ACE_TRY_EX (InnerBlock)
+      try
         {
           // Resolve the name using the stringified form of the name
           factory_object =
-            this->naming_context_->resolve_str (str_name.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (InnerBlock);
+            this->naming_context_->resolve_str (str_name.in ());
         }
-      ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
         }
-      ACE_ENDTRY;
 
       // Narrow
       Web_Server::Iterator_Factory_var factory =
-        Web_Server::Iterator_Factory::_narrow (factory_object.in () ACE_ENV_ARG_PARAMETER);
+        Web_Server::Iterator_Factory::_narrow (factory_object.in ());
 
-      ACE_TRY_CHECK_EX (OuterBlock);
 
       // Create bindings
       CosNaming::BindingIterator_var iter;
@@ -194,16 +188,12 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       this->naming_context_->list (2,
                                    bindings_list.out (),
-                                   iter.out ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+                                   iter.out ());
 
       // Convert the stringified name back as CosNaming::Name and print
       // them out.
       CosNaming::Name *nam =
-        this->naming_context_->to_name (str_name.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+        this->naming_context_->to_name (str_name.in ());
 
       // Declare a CosNaming::Name variable and assign length to it.
       CosNaming::Name nm;
@@ -227,9 +217,7 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       CORBA::String_var url_string =
         this->naming_context_->to_url (address.in (),
-                                       obj_name.in()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (OuterBlock);
+                                       obj_name.in());
 
       if (this->view_ == 0)
         {
@@ -240,23 +228,21 @@ NContextExt_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
                               url_string);
         }
     }
-  ACE_CATCH (CORBA::NO_MEMORY, ex)
+  catch (const CORBA::NO_MEMORY& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
+      ex._tao_print_exception ("A system exception oc client side");
       return -1;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
+      ex._tao_print_exception ("A system exception oc client side");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -267,8 +253,7 @@ NContextExt_Client_i::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       // First initialize the ORB, that will remove some arguments...
@@ -276,7 +261,7 @@ NContextExt_Client_i::init (int argc, char **argv)
         CORBA::ORB_init (this->argc_,
                          this->argv_,
                          "" /* the ORB name, it can be anything! */
-                         ACE_ENV_ARG_PARAMETER);
+                         );
 
       // There must be at least one argument, the file that has to be
       // retrieved
@@ -285,8 +270,7 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // Get a reference to the Naming Service
       CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_context_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -295,21 +279,18 @@ NContextExt_Client_i::init (int argc, char **argv)
 
       // Narrow to get the correct reference
       this->naming_context_ =
-        CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContextExt::_narrow (naming_context_object.in ());
 
       if (CORBA::is_nil (this->naming_context_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot narrow Naming Service\n"),
                           1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
+      ex._tao_print_exception ("client");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

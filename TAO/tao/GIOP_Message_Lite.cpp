@@ -676,22 +676,19 @@ int
 TAO_GIOP_Message_Lite::generate_exception_reply (
     TAO_OutputCDR &cdr,
     TAO_Pluggable_Reply_Params_Base &params,
-    CORBA::Exception &x
-  )
+    const CORBA::Exception &x)
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Make the GIOP & reply header. They are version specific.
       this->write_reply_header (cdr,
                                 params);
-      x._tao_encode (cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      x._tao_encode (cdr);
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const ::CORBA::Exception&)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
@@ -702,8 +699,6 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
                   ACE_TEXT ("generate_exception_reply ()\n")));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -755,8 +750,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
 
   int parse_error = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       parse_error =
         this->parse_request_header (request);
@@ -770,8 +764,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
 
       // Throw an exception if the
       if (parse_error != 0)
-        ACE_TRY_THROW (CORBA::MARSHAL (0,
-                                       CORBA::COMPLETED_NO));
+        throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
       request_id = request.request_id ();
 
       response_required = request.response_expected ();
@@ -782,8 +775,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
       this->orb_core_->adapter_registry ()->dispatch (request.object_key (),
                                                       request,
                                                       forward_to
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                      );
 
       if (!CORBA::is_nil (forward_to.in ()))
         {
@@ -827,7 +819,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
         }
     }
   // Only CORBA exceptions are caught here.
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       int result = 0;
 
@@ -837,7 +829,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                                                this->orb_core_,
                                                request_id,
                                                &request.reply_service_info (),
-                                               &ACE_ANY_EXCEPTION);
+                                               &ex);
           if (result == -1)
             {
               if (TAO_debug_level > 0)
@@ -846,9 +838,8 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (
-                      ACE_ANY_EXCEPTION,
-                      "TAO_GIOP_Message_Lite::process_request[2]");
+                  ex._tao_print_exception (
+                    "TAO_GIOP_Message_Lite::process_request[2]");
                 }
             }
 
@@ -865,14 +856,12 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                       ACE_TEXT ("(%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
 
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "TAO: ");
+          ex._tao_print_exception ("TAO: ");
         }
 
       return result;
     }
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_CATCHALL
+  catch (...)
     {
       // @@ TODO some c++ exception or another, but what do we do with
       //    it?
@@ -907,9 +896,8 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("%p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (
-                      exception,
-                      "TAO_GIOP_Message_Lite::process_request[3]");
+                  exception._tao_print_exception (
+                    "TAO_GIOP_Message_Lite::process_request[3]");
                 }
             }
         }
@@ -927,8 +915,6 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
 
       return result;
     }
-#endif /* TAO_HAS_EXCEPTIONS */
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -951,16 +937,14 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
   CORBA::Boolean response_required = 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int parse_error =
         this->parse_locate_header (locate_request);
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (0,
-                                         CORBA::COMPLETED_NO));
+          throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
         }
 
       // Execute a fake request to find out if the object is there or
@@ -995,8 +979,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
       if (parse_error != 0)
         {
-          ACE_TRY_THROW (CORBA::MARSHAL (0,
-                                         CORBA::COMPLETED_NO));
+          throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
         }
 
       CORBA::Object_var forward_to;
@@ -1004,8 +987,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
       this->orb_core_->adapter_registry ()->dispatch (server_request.object_key (),
                                                       server_request,
                                                       forward_to
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                      );
 
       if (!CORBA::is_nil (forward_to.in ()))
         {
@@ -1046,7 +1028,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
         }
     }
 
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       // Normal exception, so the object is not here
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
@@ -1055,8 +1037,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
                     ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Lite::process_locate_request - ")
                     ACE_TEXT ("CORBA exception raised\n")));
     }
-#if defined (TAO_HAS_EXCEPTIONS)
-  ACE_CATCHALL
+  catch (...)
     {
       // Normal exception, so the object is not here
       status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
@@ -1065,8 +1046,6 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
                     ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Lite::process_locate_request - ")
                     ACE_TEXT ("C++ exception raised\n")));
     }
-#endif /* TAO_HAS_EXCEPTIONS */
-  ACE_ENDTRY;
 
   return this->make_send_locate_reply (transport,
                                        output,
@@ -1200,7 +1179,7 @@ int
 TAO_GIOP_Message_Lite::write_reply_header (
     TAO_OutputCDR &output,
     TAO_Pluggable_Reply_Params_Base &reply
-    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
+     /*  */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1487,9 +1466,8 @@ TAO_GIOP_Message_Lite::send_reply_exception (
 
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Write the exception.
       reply_params.reply_status_ = TAO_GIOP_USER_EXCEPTION;
@@ -1504,10 +1482,9 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                                 reply_params);
 
 
-      x->_tao_encode (output ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      x->_tao_encode (output);
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const ::CORBA::Exception&)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
@@ -1519,7 +1496,6 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                   ACE_TEXT ("send_reply_exception ()")));
       return -1;
     }
-  ACE_ENDTRY;
 
   return transport->send_message (output);
 }

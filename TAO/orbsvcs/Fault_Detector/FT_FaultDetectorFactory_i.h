@@ -117,13 +117,13 @@ namespace TAO
      * @param orb our ORB -- we keep var to it.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /**
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
      * Idle-time activity.
@@ -131,7 +131,7 @@ namespace TAO
      * @param result is set to process return code if return value is non-zero.
      * @return zero to continue; nonzero to exit
      */
-    int idle(int & result ACE_ENV_ARG_DECL);
+    int idle(int & result);
 
 
     /**
@@ -156,14 +156,13 @@ namespace TAO
     // CORBA interface FaultDetectorFactory methods
     virtual void change_properties (
         const PortableGroup::Properties & property_set
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , PortableGroup::InvalidProperty
       ));
 
-    virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void shutdown (void)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -174,7 +173,6 @@ namespace TAO
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -187,7 +185,6 @@ namespace TAO
 
     virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -197,7 +194,7 @@ namespace TAO
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
 
-    virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CORBA::Boolean is_alive (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /////////////////////////

@@ -23,26 +23,23 @@ int
 Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       while (1)
         {
           // run the even loop for 1 second...
           ACE_Time_Value tv (1, 0);
-          this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->run (tv);
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
           if (this->terminate_loop_ != 0)
             break;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }

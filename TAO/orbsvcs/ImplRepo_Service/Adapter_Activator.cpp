@@ -26,8 +26,7 @@ ImR_Adapter::init (PortableServer::ServantLocator_ptr servant)
 
 CORBA::Boolean
 ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
-                                        const char *name
-                                        ACE_ENV_ARG_DECL)
+                                        const char *name)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (! CORBA::is_nil(parent));
@@ -37,57 +36,48 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
 
   const char *exception_message = "Null Message";
 
-  ACE_TRY
+  try
     {
       // Servant Retention Policy
       exception_message = "While PortableServer::POA::create_servant_retention_policy";
       policies[0] =
-        parent->create_servant_retention_policy (PortableServer::NON_RETAIN ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        parent->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
       // Request Processing Policy
       exception_message = "While PortableServer::POA::create_request_processing_policy";
       policies[1] =
-        parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        parent->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
       PortableServer::POAManager_var poa_manager =
-        parent->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        parent->the_POAManager ();
 
       exception_message = "While create_POA";
       PortableServer::POA_var child =
         parent->create_POA (name,
                             poa_manager.in (),
-                            policies
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            policies);
 
       exception_message = "While unknown_adapter::policy->destroy";
       for (CORBA::ULong i = 0; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy->destroy ();
         }
 
       exception_message = "While child->the_activator";
-      child->the_activator (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      child->the_activator (this);
 
       exception_message = "While unknown_adapter, set_servant_manager";
-      child->set_servant_manager (this->servant_locator_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      child->set_servant_manager (this->servant_locator_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "IMR_Adapter_Activator::unknown_adapter - %s\n",
                   exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "System Exception");
+      ex._tao_print_exception ("System Exception");
       return 0;
     }
-  ACE_ENDTRY;
 
   // Finally, now everything is fine
   return 1;

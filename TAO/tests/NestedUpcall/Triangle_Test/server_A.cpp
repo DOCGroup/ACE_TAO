@@ -64,17 +64,14 @@ Object_A_Server::parse_args (void)
 
 int
 Object_A_Server::init (int argc,
-                       char** argv
-                       ACE_ENV_ARG_DECL)
+                       char** argv)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
-                                     "child_poa"
-                                     ACE_ENV_ARG_PARAMETER);
+                                     "child_poa");
 
-  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -83,9 +80,7 @@ Object_A_Server::init (int argc,
 
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("object_A",
-                                                 &this->object_A_i_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                 &this->object_A_i_);
 
   if (this->ior_output_file_)
     {
@@ -101,10 +96,9 @@ Object_A_Server::init (int argc,
 
 
 int
-Object_A_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Object_A_Server::run (void)
 {
-  int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int r = this->orb_manager_.run ();
 
   if (r == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -125,31 +119,27 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object A Server \n \n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int retval =
-        object_A_Server.init (argc,argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        object_A_Server.init (argc,argv);
 
       if (retval == -1)
         return 1;
       else
         {
-          object_A_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          object_A_Server.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

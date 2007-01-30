@@ -37,64 +37,58 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs_by_id (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL)
+    find_log (DsLogAdmin::LogId id)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ))					= 0;
 
   /// Returns true if log exists, otherwise false
-  virtual bool 
-    exists (DsLogAdmin::LogId id
-	    ACE_ENV_ARG_DECL)				= 0;
+  virtual bool
+    exists (DsLogAdmin::LogId id)				= 0;
 
   /// Remove the given entry from the hash table.
-  virtual int 
-    remove (DsLogAdmin::LogId id
-	    ACE_ENV_ARG_DECL)				= 0;
+  virtual int
+    remove (DsLogAdmin::LogId id)				= 0;
 
   /// @brief Create log
   virtual void
     create (DsLogAdmin::LogFullActionType full_action,
 	    CORBA::ULongLong max_size,
 	    const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-	    DsLogAdmin::LogId_out id_out
-	    ACE_ENV_ARG_DECL)				= 0;
+	    DsLogAdmin::LogId_out id_out)				= 0;
 
   /// @brief Create log
-  virtual void 
+  virtual void
     create_with_id (DsLogAdmin::LogId id,
 		    DsLogAdmin::LogFullActionType full_action,
 		    CORBA::ULongLong max_size,
-		    const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-		    ACE_ENV_ARG_DECL)			= 0;
+		    const DsLogAdmin::CapacityAlarmThresholdList* thresholds)			= 0;
 
-  /// @brief Get log record store 
+  /// @brief Get log record store
   ///
   /// Get/Create a log record store for log channel @a id.
   ///
   /// @param id log id
   ///
   virtual TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id
-		          ACE_ENV_ARG_DECL)		= 0;
+    get_log_record_store (DsLogAdmin::LogId id)		= 0;
 
 protected:
-  // Constructor 
+  // Constructor
   TAO_LogStore() {}
 
 

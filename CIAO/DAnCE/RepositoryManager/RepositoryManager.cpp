@@ -73,13 +73,10 @@ private:
 
 bool
 write_ior_file (CORBA::ORB_ptr orb,
-                CIAO::RepositoryManagerDaemon_ptr obj
-                ACE_ENV_ARG_DECL)
+                CIAO::RepositoryManagerDaemon_ptr obj)
 {
   CORBA::String_var ior =
-    orb->object_to_string (obj
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    orb->object_to_string (obj);
 
   FILE* RMior_file =
     ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
@@ -101,8 +98,7 @@ write_ior_file (CORBA::ORB_ptr orb,
 
 bool
 register_with_ns (CORBA::ORB_ptr orb,
-                  CIAO::RepositoryManagerDaemon_ptr obj
-                  ACE_ENV_ARG_DECL)
+                  CIAO::RepositoryManagerDaemon_ptr obj)
 {
   if (CIAO::RepositoryManager::repoman_name_ != "")
     CIAO::RepositoryManager::RMname_service =
@@ -110,9 +106,7 @@ register_with_ns (CORBA::ORB_ptr orb,
 
   // Naming Service related operations
   CORBA::Object_var naming_context_object =
-    orb->resolve_initial_references ("NameService"
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    orb->resolve_initial_references ("NameService");
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -174,17 +168,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       retval =
         write_ior_file (orb.in (),
-        RepositoryManagerDaemon.in ()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RepositoryManagerDaemon.in ());
     }
     else if (CIAO::RepositoryManager::register_with_ns_)
     {
       retval =
         register_with_ns (orb.in (),
-        RepositoryManagerDaemon.in ()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RepositoryManagerDaemon.in ());
     }
 
     if (!retval)
@@ -276,16 +266,13 @@ Worker::Worker (CORBA::ORB_ptr orb)
 
 int Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }
 

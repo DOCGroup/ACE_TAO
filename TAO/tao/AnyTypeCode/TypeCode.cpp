@@ -32,7 +32,7 @@ CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
 
 CORBA::Boolean
 CORBA::TypeCode::equal (TypeCode_ptr tc
-                        ACE_ENV_ARG_DECL) const
+                        ) const
 {
   if (this == tc)
     {
@@ -45,49 +45,42 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
                         false);
     }
 
-  CORBA::TCKind const tc_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TCKind const tc_kind = tc->kind ();
 
   if (tc_kind != this->kind_)
     return 0;
 
-  ACE_TRY
+  try
     {
-      char const * const tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      char const * const tc_id = tc->id ();
 
-      char const * const this_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      char const * const this_id = this->id ();
 
       if (ACE_OS::strcmp (this_id, tc_id) != 0)
         return 0;
 
-      char const * const tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      char const * const tc_name = tc->name ();
 
-      char const * const this_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      char const * const this_name = this->name ();
 
       if (ACE_OS::strcmp (this_name, tc_name) != 0)
         return 0;
     }
-  ACE_CATCH (CORBA::TypeCode::BadKind, ex)
+  catch (const ::CORBA::TypeCode::BadKind&)
     {
       // Some TypeCodes do not support the id() and name()
       // operations.  Ignore the failure, and continue equality
       // verification using TypeCode subclass-specific techniques
       // below.
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return this->equal_i (tc
-                        ACE_ENV_ARG_PARAMETER);
+                       );
 }
 
 CORBA::Boolean
 CORBA::TypeCode::equivalent (TypeCode_ptr tc
-                             ACE_ENV_ARG_DECL) const
+                             ) const
 {
   if (this == tc)
     {
@@ -105,89 +98,81 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
 
   CORBA::TypeCode_var unaliased_this =
     TAO::unaliased_typecode (mutable_this
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+                            );
 
   CORBA::TypeCode_var unaliased_tc =
     TAO::unaliased_typecode (tc
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+                            );
 
 
   CORBA::TCKind const this_kind =
-    unaliased_this->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    unaliased_this->kind ();
 
   CORBA::TCKind const tc_kind =
-    unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    unaliased_tc->kind ();
 
   if (tc_kind != this_kind)
     return false;
 
-  ACE_TRY
+  try
     {
       char const * const this_id =
-        unaliased_this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        unaliased_this->id ();
 
       char const * const tc_id =
-        unaliased_tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        unaliased_tc->id ();
 
       if (ACE_OS::strlen (this_id) == 0
           || ACE_OS::strlen (tc_id) == 0)
         {
           return unaliased_this->equivalent_i (unaliased_tc.in ()
-                                               ACE_ENV_ARG_PARAMETER);
+                                              );
         }
       else if (ACE_OS::strcmp (this_id, tc_id) != 0)
         {
           return false;
         }
     }
-  ACE_CATCH (CORBA::TypeCode::BadKind, ex)
+  catch (const ::CORBA::TypeCode::BadKind&)
     {
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
       // subclass-specific techniques.
       return unaliased_this->equivalent_i (unaliased_tc.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+                                          );
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (false);
 
   return true;
 }
 
 char const *
-CORBA::TypeCode::id_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::id_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 char const *
-CORBA::TypeCode::name_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::name_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::ULong
-CORBA::TypeCode::member_count_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::member_count_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 char const *
 CORBA::TypeCode::member_name_i (CORBA::ULong /* index */
-                                ACE_ENV_ARG_DECL) const
+                                ) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::member_type_i (CORBA::ULong /* index */
-                                ACE_ENV_ARG_DECL) const
+                                ) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                     CORBA::TypeCode::_nil ());
@@ -195,66 +180,66 @@ CORBA::TypeCode::member_type_i (CORBA::ULong /* index */
 
 CORBA::Any *
 CORBA::TypeCode::member_label_i (CORBA::ULong /* index */
-                                 ACE_ENV_ARG_DECL) const
+                                 ) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::discriminator_type_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::discriminator_type_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                     CORBA::TypeCode::_nil ());
 }
 
 CORBA::Long
-CORBA::TypeCode::default_index_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::default_index_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::ULong
-CORBA::TypeCode::length_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::length_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::content_type_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::content_type_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                     CORBA::TypeCode::_nil ());
 }
 
 CORBA::UShort
-CORBA::TypeCode::fixed_digits_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::fixed_digits_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::UShort
-CORBA::TypeCode::fixed_scale_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::fixed_scale_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::Visibility
 CORBA::TypeCode::member_visibility_i (CORBA::ULong /* index */
-                                      ACE_ENV_ARG_DECL) const
+                                      ) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                     CORBA::PRIVATE_MEMBER);
 }
 
 CORBA::ValueModifier
-CORBA::TypeCode::type_modifier_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::type_modifier_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                     CORBA::VM_NONE);
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::concrete_base_type_i (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::TypeCode::concrete_base_type_i (void) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
                     CORBA::TypeCode::_nil ());
@@ -300,19 +285,19 @@ CORBA::TypeCode::Bounds::_raise (void) const
 
 void
 CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr
-                                      ACE_ENV_ARG_DECL) const
+                                      ) const
 {
   if (cdr << this->_rep_id ())
     {
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void
 CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+                                      )
 {
 }
 
@@ -348,19 +333,19 @@ CORBA::TypeCode::BadKind::_raise (void) const
 
 void
 CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr
-                                       ACE_ENV_ARG_DECL) const
+                                       ) const
 {
   if (cdr << this->_rep_id ())
     {
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void
 CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       )
 {
 }
 
@@ -406,7 +391,7 @@ operator<< (TAO_OutputCDR & cdr,
 
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
-                         ACE_ENV_ARG_DECL)
+                         )
 {
   if (CORBA::is_nil (tc))
     {
@@ -415,8 +400,7 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
                         tc);
     }
 
-  CORBA::TCKind tc_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (tc);
+  CORBA::TCKind tc_kind = tc->kind ();
 
   if (tc_kind == CORBA::tk_alias)
     {
@@ -427,11 +411,9 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
       do
         {
           tc_content =
-            tc_content->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (tc);
+            tc_content->content_type ();
 
-          tc_kind = tc_content->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (tc);
+          tc_kind = tc_content->kind ();
         }
       while (tc_kind == CORBA::tk_alias);
 
@@ -477,7 +459,7 @@ namespace TAO
   {
     CORBA::TypeCode::_duplicate (p);
   }
-   
+
   void
   In_Object_Argument_Cloner_T<CORBA::TypeCode_ptr>::release (
                                                 CORBA::TypeCode_ptr p)
@@ -490,14 +472,13 @@ namespace TAO
 
 CORBA::TCKind
 TAO::unaliased_kind (CORBA::TypeCode_ptr tc
-                     ACE_ENV_ARG_DECL)
+                     )
 {
   CORBA::TypeCode_var unaliased_tc =
     TAO::unaliased_typecode (tc
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TAO_TC_KIND_COUNT);
+                            );
 
-  return unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return unaliased_tc->kind ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

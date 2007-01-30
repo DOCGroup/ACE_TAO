@@ -81,7 +81,6 @@ struct Worker : ACE_Task_Base
         try
           {
             const char *ret = srv_->test_method (str);
-            ACE_TRY_CHECK;
             if (0 != ACE_OS::strcmp (str, ret)) return 1;
           }
         catch (CORBA::Exception& ex)

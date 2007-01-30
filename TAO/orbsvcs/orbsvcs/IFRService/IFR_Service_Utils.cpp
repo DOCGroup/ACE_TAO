@@ -61,17 +61,14 @@ TAO_IFR_Server::init_with_orb (int argc,
                                CORBA::ORB_ptr orb,
                                int use_multicast_server)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Duplicate the ORB.
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         {
@@ -83,9 +80,7 @@ TAO_IFR_Server::init_with_orb (int argc,
           );
         }
       this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       int retval = OPTIONS::instance ()->parse_args (argc,
                                                     argv);
@@ -95,24 +90,21 @@ TAO_IFR_Server::init_with_orb (int argc,
           return retval;
         }
 
-      retval = this->create_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = this->create_poa ();
 
       if (retval != 0)
         {
           return retval;
         }
 
-      retval = this->open_config (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = this->open_config ();
 
       if (retval != 0)
         {
           return retval;
         }
 
-      retval = this->create_repository (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = this->create_repository ();
 
       if (retval != 0)
         {
@@ -123,8 +115,7 @@ TAO_IFR_Server::init_with_orb (int argc,
           || OPTIONS::instance()->support_multicast_discovery ())
         {
           retval =
-            this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->init_multicast_server ();
 
           if (retval != 0)
             {
@@ -132,102 +123,80 @@ TAO_IFR_Server::init_with_orb (int argc,
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "IFR_Service::init");
+      ex._tao_print_exception ("IFR_Service::init");
 
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
 TAO_IFR_Server::fini (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       this->root_poa_->destroy (1,
-                                1
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO_IFR_Server::fini");
-      ACE_RE_THROW;
+      ex._tao_print_exception ("TAO_IFR_Server::fini");
+      throw;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 int
-TAO_IFR_Server::create_poa (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IFR_Server::create_poa (void)
 {
   PortableServer::POAManager_var poa_manager =
-    this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->root_poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   CORBA::PolicyList policies (5);
   policies.length (5);
 
   // ID Assignment Policy.
   policies[0] =
-    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
 
   // Lifespan Policy.
   policies[1] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
   // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
         PortableServer::USE_DEFAULT_SERVANT
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
         PortableServer::NON_RETAIN
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   // Id Uniqueness Policy.
   policies[4] =
     this->root_poa_->create_id_uniqueness_policy (
         PortableServer::MULTIPLE_ID
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   this->repo_poa_ =
     this->root_poa_->create_POA ("repoPOA",
                                  poa_manager.in (),
-                                 policies
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                 policies);
 
-  policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  policies[0]->destroy ();
 
   return 0;
 }
 
 int
-TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IFR_Server::open_config (void)
 {
   if (OPTIONS::instance ()->using_registry ())
     {
@@ -241,7 +210,6 @@ TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
       ACE_NEW_THROW_EX (this->config_,
                         ACE_Configuration_Win32Registry (root),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (-1);
 #endif /* ACE_WIN32 */
 
       return 0;
@@ -252,7 +220,6 @@ TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
       ACE_NEW_THROW_EX (heap,
                         ACE_Configuration_Heap,
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (-1);
 
       if (OPTIONS::instance ()->persistent ())
         {
@@ -284,7 +251,7 @@ TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IFR_Server::create_repository (void)
 {
   TAO_ComponentRepository_i *impl = 0;
   ACE_NEW_THROW_EX (
@@ -296,7 +263,6 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
         ),
       CORBA::NO_MEMORY ()
     );
-  ACE_CHECK_RETURN (-1);
 
   auto_ptr<TAO_ComponentRepository_i> safety (impl);
   TAO_IFR_Service_Utils::repo_ = impl;
@@ -313,14 +279,11 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
         ),
       CORBA::NO_MEMORY ()
     );
-  ACE_CHECK_RETURN (-1);
 
   PortableServer::ServantBase_var tie_safety (impl_tie);
   safety.release ();
 
-  this->repo_poa_->set_servant (impl_tie
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->repo_poa_->set_servant (impl_tie);
 
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId ("");
@@ -329,20 +292,14 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
     this->repo_poa_->create_reference_with_id (
         oid.in (),
         "IDL:omg.org/CORBA/ComponentIR/ComponentRepository:1.0"
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Repository_ptr repo_ref =
-    CORBA::Repository::_narrow (obj.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    CORBA::Repository::_narrow (obj.in ());
 
   // Initialize the repository.
   int status = impl->repo_init (repo_ref,
-                                this->repo_poa_
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                this->repo_poa_);
 
   if (status != 0)
     {
@@ -351,20 +308,14 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
 
   // Save and output the IOR string.
   this->ifr_ior_ =
-    this->orb_->object_to_string (repo_ref
-                                  ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (repo_ref);
 
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var table_object =
-    this->orb_->resolve_initial_references ("IORTable"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references ("IORTable");
 
   IORTable::Table_var adapter =
-    IORTable::Table::_narrow (table_object.in ()
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    IORTable::Table::_narrow (table_object.in ());
 
   if (CORBA::is_nil (adapter.in ()))
     {
@@ -373,16 +324,12 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
   else
     {
       adapter->bind ("InterfaceRepository",
-                     this->ifr_ior_.in ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                     this->ifr_ior_.in ());
     }
 
   // Add the repository to the ORB's table of initialized object references.
   this->orb_->register_initial_reference ("InterfaceRepository",
-                                          repo_ref
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+                                          repo_ref);
 
   FILE *output_file_ =
     ACE_OS::fopen (OPTIONS::instance()->ior_output_file (),
@@ -399,7 +346,7 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
 
 // Install ior multicast handler.
 int
-TAO_IFR_Server::init_multicast_server (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IFR_Server::init_multicast_server (void)
 {
 #if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.
@@ -437,7 +384,6 @@ TAO_IFR_Server::init_multicast_server (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (this->ior_multicast_,
                     TAO_IOR_Multicast (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
 
   if (mde.length () != 0)
     {
@@ -518,7 +464,6 @@ void
 TAO_IFR_Service_Utils::valid_container (
     CORBA::DefinitionKind container_kind,
     CORBA::DefinitionKind contained_kind
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -580,8 +525,7 @@ TAO_IFR_Service_Utils::valid_container (
 
   if (error_flag == 1)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
     }
 }
 
@@ -592,25 +536,20 @@ TAO_IFR_Service_Utils::pre_exist (
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
     CORBA::DefinitionKind kind
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Service_Utils::id_exists (id,
-                                    repo
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                    repo);
 
   TAO_IFR_Service_Utils::name_exists (checker,
                                       key,
                                       repo,
-                                      kind
-                                      ACE_ENV_ARG_PARAMETER);
+                                      kind);
 }
 
 void
 TAO_IFR_Service_Utils::id_exists (const char *id,
-                                  TAO_Repository_i *repo
-                                  ACE_ENV_ARG_DECL)
+                                  TAO_Repository_i *repo)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The repo id must not already exist.
@@ -620,8 +559,7 @@ TAO_IFR_Service_Utils::id_exists (const char *id,
                                          holder)
        == 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 }
 
@@ -631,7 +569,6 @@ TAO_IFR_Service_Utils::name_exists (
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
     CORBA::DefinitionKind kind
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -671,8 +608,9 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (member_name.fast_rep ()) != 0)
             {
-              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
-                                           CORBA::COMPLETED_NO));
+              throw CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 3,
+                CORBA::COMPLETED_NO);
             }
         }
     }
@@ -707,8 +645,9 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (defn_name.fast_rep ()) != 0)
             {
-              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
-                                           CORBA::COMPLETED_NO));
+              throw CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 3,
+                CORBA::COMPLETED_NO);
             }
         }
     }
@@ -719,9 +658,7 @@ TAO_IFR_Service_Utils::name_exists (
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "attrs",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
     }
 
   if (kind == CORBA::dk_Interface)
@@ -729,9 +666,7 @@ TAO_IFR_Service_Utils::name_exists (
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "ops",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
     }
 
   if (kind == CORBA::dk_Component)
@@ -739,37 +674,27 @@ TAO_IFR_Service_Utils::name_exists (
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "provides",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
 
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "uses",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
 
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "emits",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
 
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "publishes",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
 
       TAO_IFR_Service_Utils::check_subsection (checker,
                                                "consumes",
                                                repo->config (),
-                                               key
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                               key);
     }
 }
 
@@ -779,7 +704,6 @@ TAO_IFR_Service_Utils::check_subsection (
     const char *sub_section,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -817,8 +741,7 @@ TAO_IFR_Service_Utils::check_subsection (
 
       if ((*checker) (entry_name.fast_rep ()) != 0)
         {
-          ACE_THROW (CORBA::BAD_PARAM (3,
-                                       CORBA::COMPLETED_NO));
+          throw CORBA::BAD_PARAM (3, CORBA::COMPLETED_NO);
           return;
         }
     }
@@ -832,19 +755,16 @@ TAO_IFR_Service_Utils::valid_creation (
     name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo
-    ACE_ENV_ARG_DECL
   )
 {
   TAO_IFR_Service_Utils::valid_container (container_kind,
-                                          contained_kind
-                                          ACE_ENV_ARG_PARAMETER);
+                                          contained_kind);
 
   TAO_IFR_Service_Utils::pre_exist (id,
                                     checker,
                                     key,
                                     repo,
-                                    container_kind
-                                    ACE_ENV_ARG_PARAMETER);
+                                    container_kind);
 }
 
 ACE_TString
@@ -859,7 +779,6 @@ TAO_IFR_Service_Utils::create_common (
     TAO_IFR_Service_Utils::name_clash_checker checker,
     const char *version,
     const char *sub_section_name
-    ACE_ENV_ARG_DECL
   )
 {
   ACE_TString path;
@@ -871,9 +790,7 @@ TAO_IFR_Service_Utils::create_common (
                                          id,
                                          checker,
                                          container_key,
-                                         repo
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (path);
+                                         repo);
 
   ACE_Configuration *config = repo->config ();
 
@@ -1021,7 +938,6 @@ CORBA::TypeCode_ptr
 TAO_IFR_Service_Utils::gen_valuetype_tc_r (
       ACE_Configuration_Section_Key &key,
       TAO_Repository_i *repo
-      ACE_ENV_ARG_DECL
     )
 {
   ACE_TString name;
@@ -1086,26 +1002,21 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
                                     0);
       base_tc =
         TAO_IFR_Service_Utils::gen_valuetype_tc_r (base_key,
-                                                   repo
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+                                                   repo);
     }
 
   CORBA::ValueMemberSeq vm_seq;
   vm_seq.length (0);
   TAO_IFR_Service_Utils::fill_valuemember_seq (vm_seq,
                                                key,
-                                               repo
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+                                               repo);
 
   return
     repo->tc_factory ()->create_value_tc (id.c_str (),
                                           name.c_str (),
                                           tm,
                                           base_tc.in (),
-                                          vm_seq
-                                          ACE_ENV_ARG_PARAMETER);
+                                          vm_seq);
 }
 
 void
@@ -1113,7 +1024,6 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
     CORBA::ValueMemberSeq &vm_seq,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo
-    ACE_ENV_ARG_DECL
   )
 {
   ACE_Configuration_Section_Key members_key;
@@ -1168,8 +1078,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
       TAO_IDLType_i *impl =
         TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                 repo);
-      vm_seq[i].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      vm_seq[i].type = impl->type_i ();
 
       repo->config ()->get_integer_value (member_key,
                                           "access",
@@ -1287,23 +1196,20 @@ TAO_IFR_Service_Utils::path_to_container (ACE_TString &path,
 
 CORBA::Object_ptr
 TAO_IFR_Service_Utils::path_to_ir_object (ACE_TString &path,
-                                          TAO_Repository_i *repo
-                                          ACE_ENV_ARG_DECL)
+                                          TAO_Repository_i *repo)
 {
   CORBA::DefinitionKind def_kind =
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
 
   return TAO_IFR_Service_Utils::create_objref (def_kind,
                                                path.c_str (),
-                                               repo
-                                               ACE_ENV_ARG_PARAMETER);
+                                               repo);
 }
 
 CORBA::Object_ptr
 TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
                                       const char *obj_id,
-                                      TAO_Repository_i *repo
-                                      ACE_ENV_ARG_DECL)
+                                      TAO_Repository_i *repo)
 {
   ACE_TString repo_id ("IDL:omg.org/");
 
@@ -1421,8 +1327,7 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
   PortableServer::POA_ptr poa = repo->select_poa (def_kind);
 
   return poa->create_reference_with_id (oid.in (),
-                                        repo_id.c_str ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                        repo_id.c_str ());
 }
 
 char *

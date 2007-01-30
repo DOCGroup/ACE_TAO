@@ -45,7 +45,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i (void);
 
   /// Get the command name.
   virtual const char* get_name (void);
@@ -53,7 +53,7 @@ public:
 
 protected:
   /// Create the POA with the params parsed.
-  void create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
+  void create (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa);
 
 #ifdef HPUX_11
    // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h

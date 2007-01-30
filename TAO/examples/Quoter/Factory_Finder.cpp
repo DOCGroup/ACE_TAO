@@ -28,7 +28,7 @@ Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)
 
 Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Unbind the Quoter Factory Finder.
       CosNaming::Name factory_Finder_Name (2);
@@ -36,31 +36,26 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void)
       factory_Finder_Name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_Finder_Name[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
       if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
-        this->quoterNamingContext_var_->unbind (factory_Finder_Name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->quoterNamingContext_var_->unbind (factory_Finder_Name);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not unbind the Factor Finder from the Name Service\n"));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "~Quoter_Factor_Finder_Server");
+      ex._tao_print_exception ("~Quoter_Factor_Finder_Server");
     }
-  ACE_ENDTRY;
 }
 
 int
 Quoter_Factory_Finder_Server::init (int argc,
-                                    char *argv[]
-                                    ACE_ENV_ARG_DECL)
+                                    char *argv[])
 {
   const char *exception_message = "Null Message";
 
-  ACE_TRY
+  try
     {
       exception_message = "While ORB_Manager::init";
       int initvalue = this->orb_manager_.init (argc,
-                                               argv
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               argv);
 
       if (initvalue == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -70,8 +65,7 @@ Quoter_Factory_Finder_Server::init (int argc,
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
-      int result = this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int result = this->orb_manager_.activate_poa_manager ();
 
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
@@ -90,9 +84,7 @@ Quoter_Factory_Finder_Server::init (int argc,
       // Activate the object.
       exception_message = "Failure while activating the Quoter Factory Finder Impl";
       CORBA::String_var str  =
-        this->orb_manager_.activate (this->quoter_Factory_Finder_i_ptr_
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_manager_.activate (this->quoter_Factory_Finder_i_ptr_);
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
@@ -105,8 +97,7 @@ Quoter_Factory_Finder_Server::init (int argc,
       // Get the Naming Service object reference.
       exception_message = "While resolving the Name Service";
       CORBA::Object_var namingObj_var =
-        orb_manager_.orb()->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb_manager_.orb()->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
@@ -115,9 +106,7 @@ Quoter_Factory_Finder_Server::init (int argc,
       // Narrow the object reference to a Naming Context.
       exception_message = "While narrowing the Naming Context";
       CosNaming::NamingContext_var namingContext_var =
-        CosNaming::NamingContext::_narrow (namingObj_var.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (namingObj_var.in ());
 
       // Get the IDL_Quoter naming context.
       CosNaming::Name quoterContextName (1);  // max = 1
@@ -126,14 +115,11 @@ Quoter_Factory_Finder_Server::init (int argc,
 
       exception_message = "While resolving the Quoter Naming Context";
       CORBA::Object_var quoterNamingObj_var =
-        namingContext_var->resolve (quoterContextName ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        namingContext_var->resolve (quoterContextName);
 
       exception_message = "While narrowing the Quoter Naming Context";
       quoterNamingContext_var_ =
-        CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -146,39 +132,34 @@ Quoter_Factory_Finder_Server::init (int argc,
       quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
       exception_message = "Factory_Factory::_this";
-      CORBA::Object_var ff_obj = this->quoter_Factory_Finder_i_ptr_->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var ff_obj = this->quoter_Factory_Finder_i_ptr_->_this();
 
       exception_message = "While binding the Factory Finder";
       quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
-                                      ff_obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      ff_obj.in ());
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Factory_Finder: Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factor_Finder_Server::init - %s\n", exception_message));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-Quoter_Factory_Finder_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Quoter_Factory_Finder_Server::run (void)
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Factory_Finder_Server is running\n"));
 
-  orb_manager_.orb()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb_manager_.orb()->run ();
 
   return 0;
 }
@@ -224,29 +205,26 @@ main (int argc, char *argv [])
 {
   Quoter_Factory_Finder_Server quoter_Factory_Finder_Server;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      int result = quoter_Factory_Finder_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int result = quoter_Factory_Finder_Server.init (argc, argv);
 
       if (result == -1)
         return 1;
       else
         {
-          quoter_Factory_Finder_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          quoter_Factory_Finder_Server.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }

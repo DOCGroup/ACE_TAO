@@ -75,12 +75,10 @@ public:
    * not exists (i.e. _non_existent() returns true and/or the
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
-  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy);
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /**
@@ -88,13 +86,11 @@ public:
    * not exists (i.e. _non_existent() returns true and/or the
    * CORBA::OBJECT_NOT_EXIST exception has been raised).
    */
-  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void supplier_not_exist (TAO_CEC_ProxyPullConsumer *proxy);
 
   /// Some system exception was rasied while trying to push an event.
   virtual void system_exception (TAO_CEC_ProxyPullConsumer *proxy,
-                                 CORBA::SystemException &
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 CORBA::SystemException &);
 
   /// Do we need to disconnect this supplier?  The parameter type for
   /// proxy is PortableServer::ServantBase* due to the fact that this

@@ -31,17 +31,17 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void ping (ACE_ENV_SINGLE_ARG_DECL)
+  void ping (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void validate_protocol (ACE_ENV_SINGLE_ARG_DECL)
+  void validate_protocol (void)
     ACE_THROW_SPEC ((Simple_Server::WrongProtocolType,
                      CORBA::SystemException));
 
-  CORBA::Long test_method (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Long test_method (CORBA::Long x)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

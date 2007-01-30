@@ -521,9 +521,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt_nl << be_uidt_nl;
   *os << "if (_tao_adapter == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,"
+      << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1,"
       << be_nl
-      << "                                  ::CORBA::COMPLETED_NO));"
+      << "                                  ::CORBA::COMPLETED_NO);"
       << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
@@ -547,7 +547,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "if (_tao_result == false)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl
+      << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
       << "}" << be_uidt;
 
   this->generate_send_reply (os);

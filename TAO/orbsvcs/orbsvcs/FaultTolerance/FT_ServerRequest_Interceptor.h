@@ -69,51 +69,44 @@ namespace TAO
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * name (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ServerRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
     virtual void receive_request (
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
     virtual void send_reply (
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void send_exception (
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
     virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
     //@}
   private:
 
-    void check_iogr_version (const IOP::ServiceContext &svc
-                             ACE_ENV_ARG_DECL)
+    void check_iogr_version (const IOP::ServiceContext &svc)
       ACE_THROW_SPEC ((CORBA::SystemException,
            PortableInterceptor::ForwardRequest));
 
     void update_iogr (
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:

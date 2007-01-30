@@ -42,23 +42,20 @@ int
 main (int argc, char *argv[])
 {
   CORBA::Boolean result = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // First perform the test with an IOR
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -69,10 +66,9 @@ main (int argc, char *argv[])
         }
 
       // Check this isn't generating exceptions for any other reason
-      hello->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->ping ();
 
-      if (hello->has_ft_request_service_context (ACE_ENV_SINGLE_ARG_PARAMETER))
+      if (hello->has_ft_request_service_context ())
         {
           ACE_DEBUG ((LM_ERROR, "ERROR - REGRESSION - Request made on a plain IOR has a FT_REQUEST service context.\n" ));
           result = 1;
@@ -84,12 +80,10 @@ main (int argc, char *argv[])
 
       // Now repeat the test (for the converse result) with an IOGR
       tmp =
-        orb->string_to_object(iogr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(iogr);
 
       hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -100,10 +94,9 @@ main (int argc, char *argv[])
         }
 
       // Check this isn't generating transients for any other reason
-      hello->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->ping ();
 
-      if (! hello->has_ft_request_service_context (ACE_ENV_SINGLE_ARG_PARAMETER))
+      if (! hello->has_ft_request_service_context ())
         {
           ACE_DEBUG ((LM_ERROR, "ERROR - REGRESSION - Request made on an IOGR has no FT_REQUEST service context.\n" ));
           result = 1;
@@ -113,19 +106,16 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG, "Request made on an IOGR has a FT_REQUEST service context. This is OK.\n" ));
         }
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test failed (Not regression) because unexpected exception caught:");
+      ex._tao_print_exception (
+        "Test failed (Not regression) because unexpected exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (result)
     {

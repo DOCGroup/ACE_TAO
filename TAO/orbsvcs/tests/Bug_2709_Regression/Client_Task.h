@@ -17,9 +17,9 @@ public:
     const ACE_CString& server_ior_file);
 
   CORBA::Object_ptr make_iogr (
-     const char* domain_id, 
-     CORBA::ULongLong group_id, 
-     CORBA::ULong group_version ACE_ENV_ARG_DECL);
+     const char* domain_id,
+     CORBA::ULongLong group_id,
+     CORBA::ULong group_version);
 
   /// Thread entry point
   int svc (void);

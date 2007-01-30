@@ -18,15 +18,14 @@ MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 }
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMDevice_exec_i::get_data_read (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::get_data_read ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
 }
 
 void
-MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
-                                       ACE_ENV_ARG_DECL)
+MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Nitify others
@@ -38,98 +37,94 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
                   "BMDevice, received a timeout from EC \n"));
     }
 
-  this->context_->push_data_available (event
-                                       ACE_ENV_ARG_PARAMETER);
+  this->context_->push_data_available (event);
 }
 
 char *
-MyImpl::BMDevice_exec_i::data_read (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::data_read ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_);
 }
 
 char *
-MyImpl::BMDevice_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDevice_exec_i::get_data ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->data_read (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->data_read ();
 }
 
 // Operations from Components::SessionComponent
 void
 MyImpl::BMDevice_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::set_session_context\n"));
     }
 
   this->context_ =
-    BasicSP::CCM_BMDevice_Context::_narrow (ctx
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    BasicSP::CCM_BMDevice_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::BMDevice_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_activate\n"));
     }
-    
+
 }
 
 void
-MyImpl::BMDevice_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
     }
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::BMDevice_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "MyImpl::BMDevice_exec_i::ccm_remove\n"));
     }
 }
@@ -149,7 +144,7 @@ MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMDeviceHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::BMDeviceHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

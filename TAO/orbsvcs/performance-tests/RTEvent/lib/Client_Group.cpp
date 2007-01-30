@@ -13,8 +13,8 @@
 #include "Client_Group.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Client_Group, 
+ACE_RCSID (TAO_PERF_RTEC,
+           Client_Group,
            "$Id$")
 
 void
@@ -54,14 +54,12 @@ Client_Group::init (CORBA::Long experiment_id,
 }
 
 void
-Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL)
+Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  this->client_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
+  this->client_pair_.connect (ec);
   Auto_Disconnect<Client_Pair> client_pair_disconnect (&this->client_pair_);
 
-  this->loopback_pair_.connect (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->loopback_pair_.connect (ec);
   Auto_Disconnect<Loopback_Pair> loopback_pair_disconnect (&this->loopback_pair_);
 
   loopback_pair_disconnect.release ();
@@ -69,7 +67,7 @@ Client_Group::connect (RtecEventChannelAdmin::EventChannel_ptr ec
 }
 
 void
-Client_Group::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Client_Group::disconnect (void)
 {
   Auto_Disconnect<Client_Pair> client_pair_disconnect (&this->client_pair_);
   Auto_Disconnect<Loopback_Pair> loopback_pair_disconnect (&this->loopback_pair_);

@@ -90,7 +90,7 @@ public:
 
 protected:
   /// Do the real work
-  virtual int run (TAO_ORB_Core &orb_core ACE_ENV_ARG_PARAMETER);
+  virtual int run (TAO_ORB_Core &orb_core);
 
   /// Lane to which this thread belongs to.
   TAO_Thread_Lane &lane_;
@@ -112,7 +112,7 @@ public:
 
 protected:
   /// Do the real work
-  virtual int run (TAO_ORB_Core &orb_core ACE_ENV_ARG_PARAMETER);
+  virtual int run (TAO_ORB_Core &orb_core);
 };
 
 class TAO_Thread_Pool;
@@ -135,14 +135,13 @@ public:
                    CORBA::Short lane_priority,
                    CORBA::ULong static_threads,
                    CORBA::ULong dynamic_threads,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                   ACE_ENV_ARG_DECL);
+                   ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Destructor.
   ~TAO_Thread_Lane (void);
 
   /// Open the lane.
-  void open (ACE_ENV_SINGLE_ARG_DECL);
+  void open (void);
 
   /// Finalize the resources.
   void finalize (void);
@@ -198,7 +197,7 @@ public:
 private:
 
   /// Validate lane's priority and map it to a native value.
-  void validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL);
+  void validate_and_map_priority (void);
 
   int create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
                         CORBA::ULong number_of_threads,
@@ -269,8 +268,7 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                   ACE_ENV_ARG_DECL);
+                   ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Constructor (for pools with lanes).
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -281,14 +279,13 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                   ACE_ENV_ARG_DECL);
+                   ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Destructor.
   ~TAO_Thread_Pool (void);
 
   /// Open the pool.
-  void open (ACE_ENV_SINGLE_ARG_DECL);
+  void open (void);
 
   /// Finalize the resources.
   void finalize (void);
@@ -386,8 +383,7 @@ public:
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
                      CORBA::ULong max_request_buffer_size,
-                     ACE_Time_Value const &dynamic_thread_idle_timeout
-                     ACE_ENV_ARG_DECL)
+                     ACE_Time_Value const &dynamic_thread_idle_timeout)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a threadpool with lanes.
@@ -399,16 +395,16 @@ public:
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size,
                                 ACE_Time_Value const &dynamic_thread_idle_timeout
-                                ACE_ENV_ARG_DECL)
+                                )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy a threadpool.
   void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                           ACE_ENV_ARG_DECL)
+                           )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
-  TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id ACE_ENV_ARG_DECL);
+  TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id);
 
   /// Collection of thread pools.
   typedef ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex> THREAD_POOLS;
@@ -433,8 +429,7 @@ private:
                        CORBA::Boolean allow_request_buffering,
                        CORBA::ULong max_buffered_requests,
                        CORBA::ULong max_request_buffer_size,
-                       ACE_Time_Value const &dynamic_thread_idle_timeout
-                       ACE_ENV_ARG_DECL)
+                       ACE_Time_Value const &dynamic_thread_idle_timeout)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::ThreadpoolId
@@ -445,12 +440,11 @@ private:
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
                                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  ACE_ENV_ARG_DECL)
+                                  )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::ThreadpoolId
-  create_threadpool_helper (TAO_Thread_Pool *thread_pool
-                            ACE_ENV_ARG_DECL)
+  create_threadpool_helper (TAO_Thread_Pool *thread_pool)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @}

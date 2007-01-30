@@ -59,12 +59,10 @@ Thread_Task::svc (void)
   // if debugging, dump the priority that we're actually at.
   if (TAO_debug_level > 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
       // Get the priority of the current thread.
       RTCORBA::Priority prio =
-        ACTIVITY::instance()->current ()->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        ACTIVITY::instance()->current ()->the_priority ();
 
       if (prio == this->task_priority_)
         ACE_DEBUG ((LM_DEBUG,

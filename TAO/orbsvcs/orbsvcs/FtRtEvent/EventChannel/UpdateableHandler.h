@@ -31,21 +31,18 @@ public:
 
     FTRT::AMI_UpdateableHandler_ptr activate(
       Update_Manager* mgr, int id,
-      PortableServer::ObjectId& oid
-      ACE_ENV_ARG_DECL);
+      PortableServer::ObjectId& oid);
     typedef void (Update_Manager::*Handler)(int);
 
-    void dispatch(Handler handler ACE_ENV_ARG_DECL) ;
+    void dispatch(Handler handler) ;
 
     virtual void set_update (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         ));
     virtual void set_update_excep (
         ::Messaging::ExceptionHolder * excep_holder
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

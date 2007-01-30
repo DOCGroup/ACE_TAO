@@ -107,10 +107,10 @@ public:
   ~TAO_Notify_Tests_Driver ();
 
   /// Init
-  int init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL);
+  int init (int argc, ACE_TCHAR *argv[]);
 
   /// Execute the commands.
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
 
   /// Shutdown
   virtual void shutdown (void);

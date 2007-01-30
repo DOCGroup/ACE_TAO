@@ -31,49 +31,42 @@ TAO_EC_Trivial_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer*)
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier*
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_Trivial_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier*)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier*
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_Trivial_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier*)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*
-                                              ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Trivial_Supplier_Filter::shutdown (void)
 {
 }
 
 void
 TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
-                                      TAO_EC_ProxyPushConsumer *consumer
-                                      ACE_ENV_ARG_DECL)
+                                      TAO_EC_ProxyPushConsumer *consumer)
 {
   TAO_EC_Scheduling_Strategy* scheduling_strategy =
     this->event_channel_->scheduling_strategy ();
   scheduling_strategy->schedule_event (event,
                                        consumer,
-                                       this
-                                       ACE_ENV_ARG_PARAMETER);
+                                       this);
 }
 
 void
 TAO_EC_Trivial_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event,
-                                                      const TAO_EC_QOS_Info &event_info
-                                                      ACE_ENV_ARG_DECL)
+                                                      const TAO_EC_QOS_Info &event_info)
 {
   TAO_EC_Filter_Worker worker (event, event_info);
-  this->event_channel_->for_each_consumer (&worker
-                                           ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->for_each_consumer (&worker);
 }
 
 CORBA::ULong

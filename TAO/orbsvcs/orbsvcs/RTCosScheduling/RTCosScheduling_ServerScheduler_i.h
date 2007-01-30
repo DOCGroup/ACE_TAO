@@ -122,42 +122,37 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
 
     virtual ~RTCosScheduling_ServerScheduler_Interceptor();
 
-    virtual char* name(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char* name(void)
     ACE_THROW_SPEC((
       CORBA::SystemException));
 
-    virtual void destroy( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroy()
      ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual void receive_request(
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest));
 
     virtual void receive_request_service_contexts(
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest));
 
     virtual void send_reply(
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC((CORBA::SystemException));
 
     virtual void send_exception(
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest));
 
     virtual void send_other(
-        PortableInterceptor::ServerRequestInfo_ptr ri
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC((
         CORBA::SystemException,
         PortableInterceptor::ForwardRequest));
@@ -232,8 +227,7 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
         PortableServer::POA_ptr parent,
         const char * adapter_name,
         PortableServer::POAManager_ptr a_POAManager,
-        const CORBA::PolicyList & policies
-        ACE_ENV_ARG_DECL)
+        const CORBA::PolicyList & policies)
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , PortableServer::POA::AdapterAlreadyExists
@@ -248,8 +242,7 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
      * @param name name to associate with the CORBA object reference
      */
     virtual void schedule_object (CORBA::Object_ptr obj,
-        const char * name
-        ACE_ENV_ARG_DECL)
+        const char * name)
       ACE_THROW_SPEC (( CORBA::SystemException
         , RTCosScheduling::UnknownName));
 

@@ -54,21 +54,17 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
 
   // If sending the exception to the client fails, then we just give
   // up, release the transport and return.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
                              (TAO_AMH_REPLY_LOCATION_CODE,
                               EFAULT),
                              CORBA::COMPLETED_NO);
-      this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->_tao_rh_send_exception (ex);
     }
-  ACE_CATCHALL
+  catch (...)
     {
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
@@ -86,7 +82,7 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -99,11 +95,11 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL)
         // request and is now trying to send back the reply.  Hence we
         // say that the operation has completed but let the server
         // anyway that it is not doing something right.
-        ACE_THROW (CORBA::BAD_INV_ORDER
+        throw ::CORBA::BAD_INV_ORDER
                           (CORBA::SystemException::_tao_minor_code
                                   (TAO_AMH_REPLY_LOCATION_CODE,
                                    EEXIST),
-                           CORBA::COMPLETED_YES));
+                           CORBA::COMPLETED_YES);
       }
   }
 
@@ -135,7 +131,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 {
 
   {
@@ -145,11 +141,11 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
     // server-app saying it is not doing something right.
     if (this->reply_status_ != TAO_RS_INITIALIZED)
       {
-        ACE_THROW (CORBA::BAD_INV_ORDER (
+        throw ::CORBA::BAD_INV_ORDER (
                           CORBA::SystemException::_tao_minor_code (
                                                   TAO_AMH_REPLY_LOCATION_CODE,
                                                   ENOTSUP),
-                          CORBA::COMPLETED_YES));
+                          CORBA::COMPLETED_YES);
       }
     this->reply_status_ = TAO_RS_SENDING;
   }
@@ -181,17 +177,17 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
-                                                  ACE_ENV_ARG_DECL)
+                                                  )
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->reply_status_ != TAO_RS_UNINITIALIZED)
       {
-        ACE_THROW (CORBA::BAD_INV_ORDER (
+        throw ::CORBA::BAD_INV_ORDER (
           CORBA::SystemException::_tao_minor_code (
             TAO_AMH_REPLY_LOCATION_CODE,
             ENOTSUP),
-          CORBA::COMPLETED_YES));
+          CORBA::COMPLETED_YES);
       }
     this->reply_status_ = TAO_RS_SENDING;
   }
@@ -212,7 +208,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
                                                   reply_params,
                                                   ex) == -1)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw ::CORBA::INTERNAL ();
     }
 
   // Send the Exception

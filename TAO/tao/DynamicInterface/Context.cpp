@@ -44,7 +44,7 @@ CORBA::Context::_decr_refcnt (void)
 }
 
 const char *
-CORBA::Context::context_name (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::Context::context_name (void) const
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                          CORBA::COMPLETED_NO),
@@ -52,7 +52,7 @@ CORBA::Context::context_name (ACE_ENV_SINGLE_ARG_DECL) const
 }
 
 CORBA::Context_ptr
-CORBA::Context::parent (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::Context::parent (void) const
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
                                          CORBA::COMPLETED_NO),
@@ -61,47 +61,37 @@ CORBA::Context::parent (ACE_ENV_SINGLE_ARG_DECL) const
 
 void
 CORBA::Context::create_child (const char * /* child_ctx_name */,
-                              CORBA::Context_out /* child_ctx */
-                              ACE_ENV_ARG_DECL)
+                              CORBA::Context_out /* child_ctx */)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
 CORBA::Context::set_one_value (const char * /* propname */,
-                               const CORBA::Any & /* propvalue */
-                               ACE_ENV_ARG_DECL)
+                               const CORBA::Any & /* propvalue */)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
-CORBA::Context::set_values (CORBA::NVList_ptr
-                            ACE_ENV_ARG_DECL)
+CORBA::Context::set_values (CORBA::NVList_ptr)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
-CORBA::Context::delete_values (const char * /* propname */
-                               ACE_ENV_ARG_DECL)
+CORBA::Context::delete_values (const char * /* propname */)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
 CORBA::Context::get_values (const char * /* start_scope */,
                             CORBA::Flags /* op_flags */,
                             const char * /* pattern */,
-                            CORBA::NVList_ptr & /* values */
-                            ACE_ENV_ARG_DECL)
+                            CORBA::NVList_ptr & /* values */)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 CORBA::ContextList::ContextList (CORBA::ULong len,
@@ -142,8 +132,7 @@ CORBA::ContextList::add_consume (char *ctx)
 }
 
 char *
-CORBA::ContextList::item (CORBA::ULong slot
-                         ACE_ENV_ARG_DECL)
+CORBA::ContextList::item (CORBA::ULong slot)
 {
   char **ctx = 0;
 
@@ -159,10 +148,9 @@ CORBA::ContextList::item (CORBA::ULong slot
 }
 
 void
-CORBA::ContextList::remove (CORBA::ULong
-                           ACE_ENV_ARG_DECL)
+CORBA::ContextList::remove (CORBA::ULong)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::ContextList_ptr

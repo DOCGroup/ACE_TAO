@@ -50,52 +50,41 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
       const ACE_Time_Value &,
       const void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Query the state of the Current object *before* we initiate
       // the iteration...
       CORBA::PolicyTypeSeq types;
       CORBA::PolicyList_var policies =
-        this->policy_current_->get_policy_overrides (types
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->policy_current_->get_policy_overrides (types);
 
       // Change the timeout
       this->policy_current_->set_policy_overrides (this->policy_list_,
-                                                   CORBA::ADD_OVERRIDE
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                   CORBA::ADD_OVERRIDE);
 
-      ACE_TRY_EX (query)
+      try
         {
           TAO_CEC_Pull_Event worker (this->event_channel_->consumer_admin (),
                                      this->event_channel_->supplier_control ());
 
-          this->event_channel_->supplier_admin ()->for_each (&worker
-                                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (query);
+          this->event_channel_->supplier_admin ()->for_each (&worker);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // Ignore all exceptions
         }
-      ACE_ENDTRY;
 
       this->policy_current_->set_policy_overrides (policies.in (),
-                                                   CORBA::SET_OVERRIDE
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                   CORBA::SET_OVERRIDE);
       for (CORBA::ULong i = 0; i != policies->length (); ++i)
         {
-          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policies[i]->destroy ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -109,18 +98,14 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
   if (timer_id_ == -1)
     return;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Get the PolicyCurrent object
       CORBA::Object_var tmp =
-        this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
-        CORBA::PolicyCurrent::_narrow (tmp.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyCurrent::_narrow (tmp.in ());
 
       // Pre-compute the policy list to the set the right timeout
       // value...
@@ -135,14 +120,11 @@ TAO_CEC_Reactive_Pulling_Strategy::activate (void)
       this->policy_list_[0] =
         this->orb_->create_policy (
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-               any
-               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+               any);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
@@ -175,29 +157,24 @@ TAO_CEC_Pulling_Strategy_Adapter::handle_timeout (
 // ****************************************************************
 
 void
-TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
-                          ACE_ENV_ARG_DECL)
+TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer)
 {
   CORBA::Boolean has_event = 0;
   CORBA::Any_var any;
 
-  ACE_TRY
+  try
     {
-      any = consumer->try_pull_from_supplier (has_event
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      any = consumer->try_pull_from_supplier (has_event);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
       return;
     }
-  ACE_ENDTRY;
 
   if (has_event)
     {
-      this->consumer_admin_->push (any.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumer_admin_->push (any.in ());
     }
 }
 

@@ -26,12 +26,12 @@
 class Server_i : public virtual POA_Simple_Server::Server
 {
  public:
-  
+
   Server_i ();
-  
+
   ~Server_i ();
-  
-  virtual char *get_status (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
+  virtual char *get_status (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

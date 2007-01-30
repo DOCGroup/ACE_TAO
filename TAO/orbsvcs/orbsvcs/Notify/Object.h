@@ -60,30 +60,29 @@ public:
   ID id (void) const;
 
   /// Activate
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
 
   /// Activate with existing id
   virtual CORBA::Object_ptr activate (
       PortableServer::Servant servant,
-      CORBA::Long id
-      ACE_ENV_ARG_DECL);
+      CORBA::Long id);
 
   /// Deactivate
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   /// Have we been shutdown. returns 1 if shutdown.
   int has_shutdown (void);
 
-  void execute_task (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL);
+  void execute_task (TAO_Notify_Method_Request& method_request);
 
   /// Get CORBA Ref.
-  CORBA::Object_ptr ref (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr ref (void);
 
   /// Set the QoS Properties.
-  virtual void set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL);
+  virtual void set_qos (const CosNotification::QoSProperties & qos);
 
   /// Get the QoS Properties.
-  CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL);
+  CosNotification::QoSProperties* get_qos (void);
 
   bool find_qos_property_value (
     const char * name,
@@ -96,7 +95,7 @@ public:
   TAO_Notify_Event_Manager& event_manager (void);
 
   /// shutdown. Returns 1 ifif the shutdown was already run once before.
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (void);
 
   /// Load our attributes. Each derived type should call the superclass
   /// load first before loading its own attributes.
@@ -117,7 +116,7 @@ protected:
 
   /// Changes the primary poa to the current proxy poa
   void set_primary_as_proxy_poa();
- 
+
   /// Accessor for the proxy_poa_
   TAO_Notify_POA_Helper* proxy_poa (void);
 

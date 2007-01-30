@@ -35,16 +35,14 @@ public:
   /// Constructor
   RND_Consumer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event
-             ACE_ENV_ARG_DECL)
+  void push (const RtecEventComm::EventSet &event)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  void disconnect (void);
 
 protected:
   /// The driver
@@ -70,8 +68,7 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event
-             ACE_ENV_ARG_DECL)
+  void push (const RtecEventComm::EventSet &event)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -97,16 +94,14 @@ public:
   RND_Supplier (int verbose);
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos
-                ACE_ENV_ARG_DECL);
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+                const RtecEventChannelAdmin::SupplierQOS &qos);
+  void disconnect (void);
 
   /// Push a single event...
-  void push_new_event (ACE_ENV_SINGLE_ARG_DECL);
-  void push (RtecEventComm::EventSet &event
-             ACE_ENV_ARG_DECL);
+  void push_new_event (void);
+  void push (RtecEventComm::EventSet &event);
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Active method
@@ -140,12 +135,10 @@ public:
   int run (int argc, char *argv[]);
 
   /// The main timer has expired
-  void timer (const RtecEventComm::Event &e
-              ACE_ENV_ARG_DECL);
+  void timer (const RtecEventComm::Event &e);
 
   /// One of the consumers has received an event
-  void event (const RtecEventComm::Event &e
-              ACE_ENV_ARG_DECL);
+  void event (const RtecEventComm::Event &e);
 
 private:
   RND_Driver (const RND_Driver &);

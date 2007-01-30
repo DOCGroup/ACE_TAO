@@ -3,8 +3,8 @@
 
 #include "idl3_client.h"
 
-ACE_RCSID (Application_Test, 
-           client, 
+ACE_RCSID (Application_Test,
+           client,
            "$Id$")
 
 int
@@ -12,19 +12,17 @@ main (int argc, char *argv[])
 {
   IDL3_Client client;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       if (client.init (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER)
+                       argv)
            == -1)
         {
           return 1;
         }
       else
         {
-          int status = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int status = client.run ();
 
           if (status == -1)
             {
@@ -32,13 +30,11 @@ main (int argc, char *argv[])
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client Exception");
+      ex._tao_print_exception ("Client Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

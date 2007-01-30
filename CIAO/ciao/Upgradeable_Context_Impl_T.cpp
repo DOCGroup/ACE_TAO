@@ -36,9 +36,7 @@ namespace CIAO
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::deactivate_facet (
-      const PortableServer::ObjectId &oid
-      ACE_ENV_ARG_DECL
-    )
+      const PortableServer::ObjectId &oid)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /*
@@ -46,8 +44,7 @@ namespace CIAO
         PortableServer::string_to_ObjectId (obj_id);
     */
 
-    this->container_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->container_->deactivate_facet (oid);
   }
 
   template <typename BASE_CTX,
@@ -56,21 +53,15 @@ namespace CIAO
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
-     remove_facet (
-           CORBA::Object_ptr reference
-           ACE_ENV_ARG_DECL)
+     remove_facet (CORBA::Object_ptr reference)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid =
-      this->container_->the_facet_cons_POA ()->reference_to_id
-         (reference ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      this->container_->the_facet_cons_POA ()->reference_to_id (reference);
 
-    this->update_port_activator (oid.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->update_port_activator (oid.in ());
 
-    this->deactivate_facet (oid.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->deactivate_facet (oid.in ());
   }
 
   template <typename BASE_CTX,
@@ -79,9 +70,7 @@ namespace CIAO
             typename COMP_VAR>
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::
-     update_port_activator (
-           const PortableServer::ObjectId &oid
-           ACE_ENV_ARG_DECL)
+     update_port_activator (const PortableServer::ObjectId &oid)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /*
@@ -91,8 +80,7 @@ namespace CIAO
 
     CIAO::Servant_Activator *sa =
         this->container_->ports_servant_activator ();
-    sa->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    sa->update_port_activator (oid);
   }
 
 }

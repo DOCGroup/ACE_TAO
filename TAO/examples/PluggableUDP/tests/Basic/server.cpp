@@ -62,15 +62,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,39 +76,29 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Install a persistent POA in order to achieve a persistent IOR
       // for our object.
       CORBA::PolicyList policies;
       policies.length (2);
       policies[0] =
-        root_poa->create_lifespan_policy(PortableServer::PERSISTENT
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
       policies[1] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
 
       PortableServer::POA_var persistent_poa =
         root_poa->create_POA("persistent",
                              poa_manager.in (),
-                             policies
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             policies);
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[0]->destroy ();
 
-      policies[1]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policies[1]->destroy ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -123,27 +111,21 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("UDP_Object");
 
       persistent_poa->activate_object_with_id (id.in (),
-                                               &udp_i
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               &udp_i);
 
       CORBA::Object_var obj =
-        persistent_poa->id_to_reference (id.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        persistent_poa->id_to_reference (id.in ());
 
 
-      UDP_var udp_var = UDP::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      UDP_var udp_var = UDP::_narrow (obj.in ());
 
-      // UDP_var udp_var = udp_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // UDP_var udp_var = udp_i._this ();
       if (CORBA::is_nil (udp_var.in ()))
         ACE_DEBUG ((LM_DEBUG,
                     "Failed to narrow correct object reference.\n"));
 
       CORBA::String_var ior =
-        orb->object_to_string (udp_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (udp_var.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
@@ -160,8 +142,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       /*
       // Instantiate reply handler
@@ -170,8 +151,7 @@ main (int argc, char *argv[])
       udpHandler_i.orb (orb.in ());
 
       UDP_var udpHandler_var =
-        udpHandler_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        udpHandler_i._this ();
 
       // Instantiate client
       UDP_Client_i* client = new UDP_Client_i (orb,
@@ -181,28 +161,23 @@ main (int argc, char *argv[])
       client->activate ();
       */
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         );
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       //delete client;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

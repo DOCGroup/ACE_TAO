@@ -17,8 +17,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::TAO_ESF_Proxy_RB_Tree (void)
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 {
   int r = this->impl_.bind (proxy, 1);
   if (r == 0)
@@ -38,8 +37,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 {
   int r = this->impl_.rebind (proxy, 1);
   if (r == 0)
@@ -61,8 +59,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy)
 {
   int r = this->impl_.unbind (proxy);
   if (r != 0)
@@ -75,7 +72,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (void)
 {
   Iterator end = this->impl_.end ();
   for (Iterator i = this->impl_.begin (); i != end; ++i)

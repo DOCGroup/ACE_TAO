@@ -40,7 +40,7 @@ namespace CIDL_StockDistributor_Impl
   pulse_Generator::open_h ()
   {
     // convert the task into a active object that runs in separate thread
-    return this->activate (); 
+    return this->activate ();
   }
 
   int
@@ -49,7 +49,7 @@ namespace CIDL_StockDistributor_Impl
     this->reactor ()->end_reactor_event_loop ();
 
     // wait for all threads in the task to exit before it returns
-    return this->wait (); 
+    return this->wait ();
   }
 
   int
@@ -142,8 +142,7 @@ namespace CIDL_StockDistributor_Impl
   //==================================================================
 
   ::Stock::StockInfo *
-  StockQuoter_exec_i::get_stock_info (const char *stock_name
-  ACE_ENV_ARG_DECL)
+  StockQuoter_exec_i::get_stock_info (const char *stock_name)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Stock::Invalid_Stock))
@@ -188,26 +187,24 @@ namespace CIDL_StockDistributor_Impl
   // Supported or inherited operations.
 
   void
-  StockDistributor_exec_i::start (
-  ACE_ENV_SINGLE_ARG_DECL)
+  StockDistributor_exec_i::start ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->rate_ == 0 || this->pulser_.active())
     {
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw CORBA::BAD_PARAM ();
     }
 
     this->pulser_.start (this->rate_);
   }
 
   void
-  StockDistributor_exec_i::stop (
-  ACE_ENV_SINGLE_ARG_DECL)
+  StockDistributor_exec_i::stop ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (! this->pulser_.active ())
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      throw CORBA::BAD_INV_ORDER ();
     }
 
     this->pulser_.stop ();
@@ -216,8 +213,7 @@ namespace CIDL_StockDistributor_Impl
   // Attribute operations.
 
   ::CORBA::Long
-  StockDistributor_exec_i::rate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::rate ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->rate_;
@@ -225,8 +221,7 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::rate (
-  ::CORBA::Long rate
-  ACE_ENV_ARG_DECL_NOT_USED)
+  ::CORBA::Long rate)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->rate_ = rate;
@@ -235,7 +230,7 @@ namespace CIDL_StockDistributor_Impl
   // Port operations.
 
   ::Stock::CCM_StockQuoter_ptr
-  StockDistributor_exec_i::get_push_quoter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::get_push_quoter ()
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new StockQuoter_exec_i (*this);
@@ -261,25 +256,21 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx
-  ACE_ENV_ARG_DECL)
+  ::Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
-    this->context_ = StockDistributor_Context::_narrow (ctx
-                                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->context_ = StockDistributor_Context::_narrow (ctx);
 
     if (this->context_ == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   }
 
   void
-  StockDistributor_exec_i::ciao_preactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -287,8 +278,7 @@ namespace CIDL_StockDistributor_Impl
   }
 
   void
-  StockDistributor_exec_i::ciao_postactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -296,8 +286,7 @@ namespace CIDL_StockDistributor_Impl
   }
 
   void
-  StockDistributor_exec_i::ccm_activate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -307,8 +296,7 @@ namespace CIDL_StockDistributor_Impl
   }
 
   void
-  StockDistributor_exec_i::ccm_passivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -318,8 +306,7 @@ namespace CIDL_StockDistributor_Impl
   }
 
   void
-  StockDistributor_exec_i::ccm_remove (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  StockDistributor_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -339,8 +326,7 @@ namespace CIDL_StockDistributor_Impl
   }
 
   ::Components::EnterpriseComponent_ptr
-  StockDistributorHome_exec_i::create (
-  ACE_ENV_SINGLE_ARG_DECL)
+  StockDistributorHome_exec_i::create ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -352,7 +338,6 @@ namespace CIDL_StockDistributor_Impl
     retval,
     StockDistributor_exec_i,
     CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
     return retval;
   }
 

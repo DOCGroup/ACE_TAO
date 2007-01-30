@@ -49,14 +49,14 @@ private:
 
 public:
   /// initialize the ORB et. al.
-  int init (int& argc, char *argv [] ACE_ENV_ARG_DECL);
+  int init (int& argc, char *argv []);
 
 
   /// Activate the tasks, jobs, poas.
-  void run (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  void run (int argc, char *argv[]);
 
   /// Resolve the naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (void);
 
   /// = Accessors
   CORBA::ORB_ptr orb (void);
@@ -64,8 +64,7 @@ public:
   void builder (Builder* builder);
 
   /// Returns priority if server declared model else -1
-  CORBA::Short get_server_priority (CORBA::Object_ptr server
-                                    ACE_ENV_ARG_DECL);
+  CORBA::Short get_server_priority (CORBA::Object_ptr server);
   /// = Callbacks
   /// Task ended notification
   void task_ended (Periodic_Task* ended_task);
@@ -76,13 +75,13 @@ public:
   protected:
   /// = Activation methods.
   /// Activate the POA's
-  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_poa_list (void);
 
   /// Activate the task list.
-  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_schedule (void);
 
   /// Activate the Job's
-  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_job_list (void);
 
   /// Check if we should process exit
   void check_ifexit (void);

@@ -63,7 +63,7 @@ DynServer_Loader::DynServer_Loader(void)
 }
 
 int
-DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
+DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   try {
 
@@ -111,7 +111,7 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
     ACE_DEBUG((LM_DEBUG, "dynserver: running.\n"));
 
   } catch (Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "DynServer::init()");
+    e._tao_print_exception ("DynServer::init()");
   }
   return 0;
 }
@@ -135,7 +135,7 @@ DynServer_Loader::fini (void)
     return 0;
 
   } catch (Exception& e) {
-    ACE_PRINT_EXCEPTION(e, "DynServer::fini()");
+    e._tao_print_exception ("DynServer::fini()");
   }
   return -1;
 }
@@ -143,8 +143,7 @@ DynServer_Loader::fini (void)
 Object_ptr
 DynServer_Loader::create_object (ORB_ptr,
                                  int,
-                                 ACE_TCHAR **
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_TCHAR **)
                                  ACE_THROW_SPEC ((SystemException))
 {
   ACE_THROW_RETURN(NO_IMPLEMENT(), Object::_nil());

@@ -37,32 +37,32 @@ namespace TAO
     public:
       RequestProcessingStrategyServantManager (void);
 
-      PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      PortableServer::Servant get_servant (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      void set_servant (PortableServer::Servant servant ACE_ENV_ARG_DECL)
+      void set_servant (PortableServer::Servant servant )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
       void validate_servant_manager (
         PortableServer::ServantManager_ptr servant_manager
-        ACE_ENV_ARG_DECL);
+       );
 
       virtual PortableServer::Servant system_id_to_servant (
         const PortableServer::ObjectId &system_id
-        ACE_ENV_ARG_DECL);
+       );
 
       virtual PortableServer::Servant id_to_servant (
         const PortableServer::ObjectId &id
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ObjectNotActive,
                            PortableServer::POA::WrongPolicy));
 
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy));

@@ -33,12 +33,11 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   int dt_task_init (ACE_Arg_Shifter& arg_shifter);
 
-  virtual void create_distributable_threads (RTScheduling::Current_ptr  current
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void create_distributable_threads (RTScheduling::Current_ptr  current);
 
-  void activate_poa_list (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void activate_job_list (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void activate_schedule (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void activate_poa_list (void);
+  void activate_job_list (void);
+  void activate_schedule (void);
 
   virtual void yield (int suspend_time,
           Thread_Task* task) = 0;
@@ -56,7 +55,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   //  virtual Task* task (void) = 0;
 
   /// Resolve the naming service.
-  int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int resolve_naming_service (void);
 
   int dt_count (void);
 
@@ -81,9 +80,9 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   Synch_i* synch (void);
 
-  void register_synch_obj (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void register_synch_obj (void);
 
-  int activate_root_poa (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  int activate_root_poa (void);
 
  protected:
 

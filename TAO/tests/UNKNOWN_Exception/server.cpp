@@ -32,8 +32,8 @@ public:
   void unknown_exception_during_deactivation (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void _add_ref (void);
+  void _remove_ref (void);
 
   CORBA::ORB_var orb_;
 
@@ -84,7 +84,7 @@ test_i::unknown_exception_during_deactivation (void)
 }
 
 void
-test_i::_add_ref (ACE_ENV_SINGLE_ARG_DECL)
+test_i::_add_ref (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::_add_ref() called; current refcount = %d\n",
@@ -92,7 +92,7 @@ test_i::_add_ref (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-test_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+test_i::_remove_ref (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::_remove_ref() called; current refcount = %d\n",

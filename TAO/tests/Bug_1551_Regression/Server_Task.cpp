@@ -16,17 +16,14 @@ int
 Server_Task::svc (void)
 {
   //   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server task finished\n"));
   return 0;
 }

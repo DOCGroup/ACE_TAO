@@ -43,23 +43,20 @@ TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (voi
 }
 
 int
-TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (void)
 {
   TAO_ORB_Parameters *params =
     this->orb_core_->orb_params ();
 
   TAO_EndpointSet endpoint_set;
 
-  params->get_endpoint_set (TAO_DEFAULT_LANE,
-                            endpoint_set);
+  params->get_endpoint_set (TAO_DEFAULT_LANE, endpoint_set);
 
   bool ignore_address = false;
 
-  int result =
+  int const result =
     this->default_lane_resources_->open_acceptor_registry (endpoint_set,
-                                                           ignore_address
-                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                           ignore_address);
 
   return result;
 }

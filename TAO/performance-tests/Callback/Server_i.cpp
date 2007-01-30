@@ -9,8 +9,7 @@
 ACE_RCSID(Callback, Server_i, "$Id$")
 
 void
-Server_i::set_callback (Test::Callback_ptr callback
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Server_i::set_callback (Test::Callback_ptr callback)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_ = Test::Callback::_duplicate (callback);
@@ -18,18 +17,17 @@ Server_i::set_callback (Test::Callback_ptr callback
 
 void
 Server_i::request (Test::TimeStamp time_stamp,
-                   const Test::Payload &payload
-                   ACE_ENV_ARG_DECL)
+                   const Test::Payload &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->callback_.in ()))
     return;
 
-  this->callback_->response (time_stamp, payload ACE_ENV_ARG_PARAMETER);
+  this->callback_->response (time_stamp, payload);
 }
 
 void
-Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->done_ = 1;

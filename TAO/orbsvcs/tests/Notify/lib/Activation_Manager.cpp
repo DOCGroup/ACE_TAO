@@ -95,7 +95,7 @@ TAO_Notify_Tests_Activation_Manager::consumer_count (void)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -112,7 +112,7 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Suppli
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -129,7 +129,7 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consum
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -140,7 +140,7 @@ TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Supplier
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -225,20 +225,18 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::write_ior (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Activation_Manager::write_ior (void)
 {
   PortableServer::ServantBase_var servant_var (this);
 
-  Notify_Test::Activation_Manager_var am_object = _this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  Notify_Test::Activation_Manager_var am_object = _this ();
 
   CORBA::ORB_var orb;
   LOOKUP_MANAGER->resolve (orb);
 
   // Write IOR to a file, if asked.
   CORBA::String_var str =
-    orb->object_to_string (am_object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    orb->object_to_string (am_object.in ());
 
   if (this->ior_output_file_)
     {
@@ -251,7 +249,7 @@ TAO_Notify_Tests_Activation_Manager::write_ior (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -260,7 +258,7 @@ TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (ACE_ENV_SINGLE_ARG_D
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Activation_Manager::start (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -273,17 +271,15 @@ TAO_Notify_Tests_Activation_Manager::start (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::signal_peer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Activation_Manager::signal_peer (void)
 {
   CORBA::ORB_var orb;
   LOOKUP_MANAGER->resolve (orb);
 
   CORBA::Object_var object =
-    orb->string_to_object (this->ior_input_file_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    orb->string_to_object (this->ior_input_file_.c_str ());
 
-  Notify_Test::Activation_Manager_var peer = Notify_Test::Activation_Manager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  Notify_Test::Activation_Manager_var peer = Notify_Test::Activation_Manager::_narrow (object.in ());
 
   if (CORBA::is_nil (peer.in ()))
     {
@@ -292,5 +288,5 @@ TAO_Notify_Tests_Activation_Manager::signal_peer (ACE_ENV_SINGLE_ARG_DECL)
                   this->ior_input_file_.c_str ()));
     }
 
-  peer->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+  peer->start ();
 }

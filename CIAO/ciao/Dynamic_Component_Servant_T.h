@@ -45,8 +45,7 @@ namespace CIAO
     virtual ~Dynamic_Component_Servant (void);
 
     virtual PortableServer::Servant
-      create (PortableServer::ObjectId &oid
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      create (PortableServer::ObjectId &oid);
 
     virtual void destroy (PortableServer::ObjectId &oid);
 

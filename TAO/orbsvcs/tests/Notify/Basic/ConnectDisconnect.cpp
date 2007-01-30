@@ -77,34 +77,26 @@ ConnectDisconnect::on_entity_destroyed (void)
 
 int
 ConnectDisconnect::init (int argc,
-                         char* argv []
-                         ACE_ENV_ARG_DECL)
+                         char* argv [])
 {
   // Initialize the base class.
   Notify_Test_Client::init (argc,
-                            argv
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);;
+                            argv);
 
   // Create all participants.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   this->supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_,
-                            adminid
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);;
+                            adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_,
-                            adminid
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                            adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
@@ -188,21 +180,19 @@ ConnectDisconnect::parse_args(int argc, char *argv[])
 }
 
 void
-ConnectDisconnect::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+ConnectDisconnect::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               id);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
+ConnectDisconnect::run_test (void)
 {
   for (int iterations = 0; iterations < count_; ++iterations)
     {
@@ -214,33 +204,22 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
           ACE_NEW (this->any_consumer_[i],
                    CD_PushConsumer (this,
                                     i));
-          this->any_consumer_[i]->init (root_poa_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-          this->any_consumer_[i]->connect (this->consumer_admin_.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->any_consumer_[i]->init (root_poa_.in ());
+          this->any_consumer_[i]->connect (this->consumer_admin_.in ());
 
           // Create and connect Structured consumers.
           ACE_NEW (this->structured_consumer_[i],
                    CD_StructuredPushConsumer (this,
                                               i));
-          this->structured_consumer_[i]->init (root_poa_.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-          this->structured_consumer_[i]->connect (this->consumer_admin_.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->structured_consumer_[i]->init (root_poa_.in ());
+          this->structured_consumer_[i]->connect (this->consumer_admin_.in ());
 
           // Create and connect Sequence consumers.
           ACE_NEW (this->sequence_consumer_[i],
                    CD_SequencePushConsumer (this,
                                             i));
-          this->sequence_consumer_[i]->init (root_poa_.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-          this->sequence_consumer_[i]->connect (this->consumer_admin_.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+          this->sequence_consumer_[i]->init (root_poa_.in ());
+          this->sequence_consumer_[i]->connect (this->consumer_admin_.in ());
         }
 
       for (i = 0; i < this->suppliers_; ++i)
@@ -248,78 +227,56 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
           ACE_NEW (this->any_supplier_[i],
                    CD_PushSupplier (this,
                                     i));
-          this->any_supplier_[i]->init (root_poa_.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-          this->any_supplier_[i]->connect (this->supplier_admin_.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->any_supplier_[i]->init (root_poa_.in ());
+          this->any_supplier_[i]->connect (this->supplier_admin_.in ());
 
           // Create and connect Structured suppliers.
           ACE_NEW (this->structured_supplier_[i],
                    CD_StructuredPushSupplier (this,
                                               i));
-          this->structured_supplier_[i]->init (root_poa_.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-          this->structured_supplier_[i]->connect (this->supplier_admin_.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->structured_supplier_[i]->init (root_poa_.in ());
+          this->structured_supplier_[i]->connect (this->supplier_admin_.in ());
 
           // Create and connect Sequence suppliers.
           ACE_NEW (this->sequence_supplier_[i],
                    CD_SequencePushSupplier (this,
                                             i));
-          this->sequence_supplier_[i]->init (root_poa_.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-          this->sequence_supplier_[i]->connect (this->supplier_admin_.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->sequence_supplier_[i]->init (root_poa_.in ());
+          this->sequence_supplier_[i]->connect (this->supplier_admin_.in ());
         }
 
       for (i = 0; i < this->consumers_; ++i)
         {
           // Disconnnect Any consumers.
-          this->any_consumer_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->any_consumer_[i]->disconnect ();
 
           // Disconnect Structured Consumers.
           this->structured_consumer_[i]->disconnect (
-                                             ACE_ENV_SINGLE_ARG_PARAMETER
                                            );
-          ACE_CHECK;
 
           // Disconnect Sequence Consumers.
           this->sequence_consumer_[i]->disconnect (
-                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                      );
-          ACE_CHECK;
         }
 
       for (i = 0; i < this->suppliers_; ++i)
         {
           // Disconnnect Any suppliers.
-          this->any_supplier_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->any_supplier_[i]->disconnect ();
 
           // Disconnect Structured Suppliers.
           this->structured_supplier_[i]->disconnect (
-                                             ACE_ENV_SINGLE_ARG_PARAMETER
                                            );
-          ACE_CHECK;
 
           // Disconnect Sequence Suppliers.
           this->sequence_supplier_[i]->disconnect (
-                                           ACE_ENV_SINGLE_ARG_PARAMETER
                                          );
-          ACE_CHECK;
         }
     }
 }
 
 void
-ConnectDisconnect::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ConnectDisconnect::end_test (void)
 {
   consumer_done( 0 );
 }
@@ -340,9 +297,7 @@ ConnectDisconnect::check_results (void)
     }
 
   // Destroy the channel.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->ec_->destroy ();
 
   return 0;
 }
@@ -359,23 +314,19 @@ main (int argc, char* argv[])
       return 1;
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.init (argc, argv);
 
-      client.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.run_test ();
 
-      client.end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client.end_test ();
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return client.check_results ();
 }

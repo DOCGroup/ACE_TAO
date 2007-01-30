@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE  TAO_Notify_Event_Map_Entry_T<PROXY>*
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event_type)
 {
   TAO_Notify_Event_Map_Entry_T<PROXY>* entry;
 
@@ -29,13 +29,13 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::release (ENTRY* entry)
     delete entry;
 }
 
-template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
+template <class PROXY, class ACE_LOCK>  ACE_INLINE  typename TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection (void)
 {
   return this->broadcast_entry_.collection ();
 }
 
-template <class PROXY, class ACE_LOCK>  ACE_INLINE  ACE_TYPENAME TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
+template <class PROXY, class ACE_LOCK>  ACE_INLINE  typename TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::updates_collection (void)
 {
   return this->updates_entry_.collection ();

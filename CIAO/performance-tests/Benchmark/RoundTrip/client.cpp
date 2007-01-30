@@ -85,7 +85,7 @@ set_priority ()
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       //set priority on the platform
       set_priority();
@@ -93,9 +93,7 @@ main (int argc, char *argv[])
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "");
 
       if (parse_args(argc, argv) == -1)
         {
@@ -105,20 +103,16 @@ main (int argc, char *argv[])
 
       // Resolve HomeFinder interface
       CORBA::Object_var obj
-        = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->string_to_object (ior);
 
       Benchmark::RoundTripHome_var home
-        = Benchmark::RoundTripHome::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = Benchmark::RoundTripHome::_narrow (obj.in ());
 
       if (CORBA::is_nil (home.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire TestHome objref\n"), -1);
 
       Benchmark::RoundTrip_var test
-        = home->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = home->create ();
 
       //Get the RoundTrip reference
       Benchmark::LatencyTest_var round_trip = test->provide_latency ();
@@ -127,8 +121,7 @@ main (int argc, char *argv[])
       long start = 0L;
       for (int j = 0; j < 100; ++j)
         {
-          round_trip->makeCall (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          round_trip->makeCall (start);
         }
 
       ///// Start Test ////////////////////////////////////////////
@@ -142,8 +135,7 @@ main (int argc, char *argv[])
           //Test value to be sent to the server
           long test = 0;
 
-          (void) round_trip->makeCall (test ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) round_trip->makeCall (test);
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - start);
@@ -171,13 +163,12 @@ main (int argc, char *argv[])
                                              stats.samples_count ());
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception Handled:");
+      ex._tao_print_exception ("Exception Handled:");
       return 1;
     }
 
-  ACE_ENDTRY;
 
   return 0;
 }

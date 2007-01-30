@@ -51,14 +51,14 @@ public:
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
 
   /// Don't run the suppliers, just test connect and disconnect calls.
-  void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  void execute_test (void);
 
   /// Don't dump the EC_Driver results, they are meaningless.
   void dump_results (void);
 
   /// Separate the suppliers and consumers.
-  void execute_consumer_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void execute_supplier_test (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void execute_consumer_test (void);
+  void execute_supplier_test (void);
 
 private:
   /// What aspect of reconnection are we going to test?

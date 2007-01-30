@@ -61,8 +61,7 @@ namespace TAO
 
         /// Construct a Test::Policy object as a test.
         virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                                 const CORBA::Any & value
-                                                 ACE_ENV_ARG_DECL)
+                                                 const CORBA::Any & value)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            CORBA::PolicyError));
 

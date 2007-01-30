@@ -5,8 +5,8 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/ConsumesDef_i.h"
 
-ACE_RCSID (IFRService, 
-           ConsumesDef_i, 
+ACE_RCSID (IFRService,
+           ConsumesDef_i,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -25,7 +25,7 @@ TAO_ConsumesDef_i::~TAO_ConsumesDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_ConsumesDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ConsumesDef_i::def_kind (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Consumes;

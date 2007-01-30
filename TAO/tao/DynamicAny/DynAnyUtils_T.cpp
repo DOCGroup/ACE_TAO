@@ -42,7 +42,7 @@ namespace TAO
   {
     if (the_dynany->destroyed ())
       {
-        ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+        throw ::CORBA::OBJECT_NOT_EXIST ();
       }
 
     if (the_dynany->has_components ())

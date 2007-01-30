@@ -24,8 +24,7 @@ TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory (void)
 
 
 TAO_Invocation_Endpoint_Selector *
-TAO_FT_Endpoint_Selector_Factory::get_selector (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO_FT_Endpoint_Selector_Factory::get_selector ()
 {
     if (this->ft_endpoint_selector_ == 0)
     {
@@ -40,7 +39,6 @@ TAO_FT_Endpoint_Selector_Factory::get_selector (
           ACE_NEW_THROW_EX (ft_endpoint_selector_,
                             TAO_FT_Invocation_Endpoint_Selector (),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (0);
         }
     }
 

@@ -37,13 +37,13 @@ public:
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 
-  virtual int init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  virtual int init (int argc, char *argv []);
   // starts the orb and resolves the notify factory via a naming service.
 
   virtual int parse_args (int argc, char* argv[]);
   // Allow the user to override this empty method
 
-  int ORB_run (ACE_ENV_SINGLE_ARG_DECL);
+  int ORB_run (void);
   // Call ORB::run to accept requests.
 
   void consumer_start (TAO_Notify_Tests_Peer*);
@@ -70,20 +70,18 @@ public:
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
                                               const char* name,
                                               int resolve
-                                              ACE_ENV_ARG_DECL
                                             );
   // Create an Event Channel.  Ownership is passed to the caller.
 
 protected:
   int init_ORB (int argc,
-                char *argv []
-                ACE_ENV_ARG_DECL);
+                char *argv []);
   // Initializes the ORB.
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (void);
   // Try to get hold of a running naming service.
 
-  void resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_Notify_factory (void);
   // Try to resolve the Notify factory from the Naming service.
 
   // = Data Members

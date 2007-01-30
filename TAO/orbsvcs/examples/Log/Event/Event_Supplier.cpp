@@ -30,39 +30,30 @@ Supplier::Supplier (void)
 int
 Supplier::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
 
       CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
 
       CosNaming::Name name (1);
@@ -70,14 +61,10 @@ Supplier::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup (EVENT_TLS_LOG_FACTORY_NAME);
 
       CORBA::Object_var obj =
-        this->naming_context_->resolve (name
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->naming_context_->resolve (name);
 
       this->event_log_factory_ =
-        DsEventLogAdmin::EventLogFactory::_narrow (obj.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DsEventLogAdmin::EventLogFactory::_narrow (obj.in ());
 
       ACE_ASSERT (!CORBA::is_nil (this->event_log_factory_.in ()));
 
@@ -98,24 +85,22 @@ Supplier::run (int argc, char* argv[])
         this->event_log_factory_->create (logfullaction,
                                           max_size,
                                           threshold,
-                                          logid
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          logid);
 
 
       ACE_DEBUG ((LM_DEBUG,
                   "Create returned logid = %d\n",logid));
 
       CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_log->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+        event_log->for_suppliers ();
 
       this->consumer_ =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+        supplier_admin->obtain_push_consumer ();
 
       CosEventComm::PushSupplier_var supplier =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->_this ();
 
-      this->consumer_->connect_push_supplier (supplier.in () ACE_ENV_ARG_PARAMETER);
+      this->consumer_->connect_push_supplier (supplier.in ());
 
       // Create some fake log events.
       CORBA::Any event;
@@ -123,21 +108,18 @@ Supplier::run (int argc, char* argv[])
 
       for (int d = 0; d < LOG_EVENT_COUNT; d++)
         {
-          this->consumer_->push (event ACE_ENV_ARG_PARAMETER);
+          this->consumer_->push (event);
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Writing %d records...\n", LOG_EVENT_COUNT));
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-      CORBA::ULongLong retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ULongLong retval = event_log->get_n_records ();
 #else
-      CORBA::Long retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-      ACE_TRY_CHECK;
+      CORBA::Long retval = event_log->get_n_records ().lo();
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Number of records in Log = %d \n", retval));
@@ -145,11 +127,9 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_current_size...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-      retval = event_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = event_log->get_current_size ();
 #else
-      retval = event_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-      ACE_TRY_CHECK;
+      retval = event_log->get_current_size ().lo();
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
@@ -174,17 +154,14 @@ Supplier::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Deleting records... \n"));
 
-      retval = event_log->delete_records (QUERY_LANG, QUERY_2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = event_log->delete_records (QUERY_LANG, QUERY_2);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling EventLog::get_n_records...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-      retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = event_log->get_n_records ();
 #else
-      retval = event_log->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-      ACE_TRY_CHECK;
+      retval = event_log->get_n_records ().lo();
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d \n",
@@ -192,48 +169,40 @@ Supplier::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
 #ifndef ACE_LACKS_LONGLONG_T
-      retval = event_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      retval = event_log->get_current_size ();
 #else
-      retval = event_log->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
-      ACE_TRY_CHECK;
+      retval = event_log->get_current_size ().lo();
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d \n", retval));
 
      // Disconnect from the EC
-      this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->consumer_->disconnect_push_consumer ();
 
       // Destroy the EC....
-      //event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      event_log->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      //event_channel->destroy ();
+      event_log->destroy ();
 
       // Deactivate this object...
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->servant_to_id (this);
 
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 0);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Supplier::run");
+      ex._tao_print_exception ("Supplier::run");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

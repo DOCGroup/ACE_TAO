@@ -327,7 +327,6 @@ TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
         }
       else
         {
-          ACE_DECLARE_NEW_CORBA_ENV;
           ACE_THROW_RETURN(CORBA::CODESET_INCOMPATIBLE (), 0);
         }
     }

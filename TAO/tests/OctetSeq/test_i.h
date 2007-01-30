@@ -35,19 +35,16 @@ public:
   void set (Test::Index i,
             const Test::OctetSeq& seq,
             CORBA::Double verification_token,
-            CORBA::Double_out returned_token
-            ACE_ENV_ARG_DECL_NOT_USED)
+            CORBA::Double_out returned_token)
     ACE_THROW_SPEC ((Test::OutOfRange));
 
-  Test::OctetSeq* get (Test::Index i
-                       ACE_ENV_ARG_DECL_NOT_USED)
+  Test::OctetSeq* get (Test::Index i)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange));
 
-  CORBA::ULong get_crc (Test::Index i
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::ULong get_crc (Test::Index i)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

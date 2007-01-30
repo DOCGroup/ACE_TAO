@@ -21,9 +21,9 @@ TAO_Notify_Subscription_Change_Worker::~TAO_Notify_Subscription_Change_Worker ()
 }
 
 void
-TAO_Notify_Subscription_Change_Worker::work (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Subscription_Change_Worker::work (TAO_Notify_Proxy* proxy)
 {
-  proxy->admin_types_changed (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
+  proxy->admin_types_changed (this->added_, this->removed_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

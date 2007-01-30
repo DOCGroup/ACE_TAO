@@ -60,15 +60,13 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior);
 
       Test_var server =
-        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -81,13 +79,10 @@ Task::svc (void)
       // Check that the object is configured with CLIENT_PROPAGATED
       // PriorityModelPolicy.
       CORBA::Policy_var policy =
-        server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
       RTCORBA::PriorityModelPolicy_var priority_policy =
-        RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (priority_policy.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -95,8 +90,7 @@ Task::svc (void)
                           -1);
 
       RTCORBA::PriorityModel priority_model =
-        priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        priority_policy->priority_model ();
 
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -107,19 +101,13 @@ Task::svc (void)
       // Make several invocation, changing the priority of this thread
       // for each.
       object =
-        this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
-      object = this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = this->orb_->resolve_initial_references ("PriorityMappingManager");
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
@@ -145,12 +133,10 @@ Task::svc (void)
 
       for (int i = 0; i < 3; ++i)
         {
-          current->the_priority (desired_priority ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          current->the_priority (desired_priority);
 
           CORBA::Short priority =
-            current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            current->the_priority ();
 
           if (desired_priority != priority)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -159,30 +145,25 @@ Task::svc (void)
                               -1);
 
 
-          server->test_method (priority ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->test_method (priority);
 
           desired_priority++;
         }
 
       // Shut down Server ORB.
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
-  ACE_CATCH (CORBA::DATA_CONVERSION, ex)
+  catch (const CORBA::DATA_CONVERSION& ex)
     {
-      ACE_PRINT_EXCEPTION(ex,
-                          "Most likely, this is due to the in-ability "
-                          "to set the thread priority.");
+      ex._tao_print_exception (
+        "Most likely, this is due to the in-ability ""to set the thread priority.");
       return -1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -190,7 +171,7 @@ Task::svc (void)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Register the interceptors to check for the RTCORBA
       // service contexts in the reply messages.
@@ -202,14 +183,11 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       // Initialize and obtain reference to the Test object.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -256,13 +234,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

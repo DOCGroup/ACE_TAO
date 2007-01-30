@@ -51,7 +51,7 @@ public:
 
   /// Copy constructor.
   TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs);
-  
+
   virtual ~TAO_EndpointPolicy_i ();
 
 
@@ -60,20 +60,20 @@ public:
 
   // = The EndpointPolicy::Policy methods
 
-  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   virtual EndpointPolicy::EndpointList * value (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    void
   )
   ACE_THROW_SPEC ((
     ::CORBA::SystemException

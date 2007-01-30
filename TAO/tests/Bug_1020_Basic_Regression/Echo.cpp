@@ -12,8 +12,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 }
 
 void
-Echo::echo_payload (Test::Payload &
-                    ACE_ENV_ARG_DECL_NOT_USED)
+Echo::echo_payload (Test::Payload &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,

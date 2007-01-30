@@ -17,22 +17,20 @@ TAO_Notify_PushSupplier::~TAO_Notify_PushSupplier ()
 }
 
 void
-TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
+TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier)
 {
   // TODO: verify single init call
   // push_supplier is optional
   this->push_supplier_ = CosEventComm::PushSupplier::_duplicate (push_supplier);
 
-  ACE_TRY
+  try
     {
-      this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->subscribe_ = CosNotifyComm::NotifySubscribe::_narrow (push_supplier);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // _narrow failed which probably means the interface is CosEventComm type.
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -47,18 +45,15 @@ TAO_Notify_PushSupplier::get_ior (void) const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
-    CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in());
     result = static_cast<const char*> (ior.in ());
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     result.fast_clear();
   }
-  ACE_ENDTRY;
   return result;
 }
 

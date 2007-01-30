@@ -84,8 +84,7 @@ public:
    * the user MUST call shutdown () when handler is no longer needed
    * (and its reactor still exists).
    */
-  void open (RtecEventChannelAdmin::EventChannel_ptr ec
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void open (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// TAO_ECG_Handler_Shutdown method.
   /**
@@ -124,12 +123,10 @@ private:
     /// Event Channel Observer methods
     //@{
     virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const RtecEventChannelAdmin::ConsumerQOS& sub)
       ACE_THROW_SPEC ((CORBA::SystemException));
     virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const RtecEventChannelAdmin::SupplierQOS& pub)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -147,8 +144,7 @@ private:
 
   /// The Observer method.  Subscribe/unsubscribe to multicast groups
   /// according to changes in consumer subscriptions.
-  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
-                        ACE_ENV_ARG_DECL)
+  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -173,8 +169,7 @@ private:
    */
   void compute_required_subscriptions (
         const RtecEventChannelAdmin::ConsumerQOS& sub,
-              Address_Set& multicast_addresses
-              ACE_ENV_ARG_DECL)
+              Address_Set& multicast_addresses)
               ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Unsubscribe from any multicast addresses we are currently
@@ -220,7 +215,7 @@ private:
     Observer_Disconnect_Command (const Observer_Disconnect_Command &rhs);
     Observer_Disconnect_Command & operator= (const Observer_Disconnect_Command & rhs);
 
-    void execute (ACE_ENV_SINGLE_ARG_DECL);
+    void execute (void);
 
   private:
 

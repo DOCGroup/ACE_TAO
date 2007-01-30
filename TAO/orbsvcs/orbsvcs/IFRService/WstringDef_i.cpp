@@ -25,26 +25,25 @@ TAO_WstringDef_i::~TAO_WstringDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_WstringDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_WstringDef_i::def_kind (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Wstring;
 }
 
 void
-TAO_WstringDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_WstringDef_i::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i ();
 }
 
 void
-TAO_WstringDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_WstringDef_i::destroy_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString name;
@@ -58,42 +57,38 @@ TAO_WstringDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CORBA::TypeCode_ptr
-TAO_WstringDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_WstringDef_i::type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_WstringDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_WstringDef_i::type_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong bound = this->bound_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA::ULong bound = this->bound_i ();
 
-  return this->repo_->tc_factory ()->create_wstring_tc (bound
-                                                        ACE_ENV_ARG_PARAMETER);
+  return this->repo_->tc_factory ()->create_wstring_tc (bound);
 }
 CORBA::ULong
-TAO_WstringDef_i::bound (ACE_ENV_SINGLE_ARG_DECL)
+TAO_WstringDef_i::bound (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->bound_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->bound_i ();
 }
 
 
 CORBA::ULong
-TAO_WstringDef_i::bound_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_WstringDef_i::bound_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int retval = 0;
@@ -105,22 +100,18 @@ TAO_WstringDef_i::bound_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_WstringDef_i::bound (CORBA::ULong bound
-                         ACE_ENV_ARG_DECL)
+TAO_WstringDef_i::bound (CORBA::ULong bound)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->bound_i (bound
-                 ACE_ENV_ARG_PARAMETER);
+  this->bound_i (bound);
 }
 
 void
-TAO_WstringDef_i::bound_i (CORBA::ULong bound
-                           ACE_ENV_ARG_DECL_NOT_USED)
+TAO_WstringDef_i::bound_i (CORBA::ULong bound)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,

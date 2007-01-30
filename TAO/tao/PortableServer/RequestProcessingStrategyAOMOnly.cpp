@@ -24,7 +24,7 @@ namespace TAO
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyAOMOnly::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+    RequestProcessingStrategyAOMOnly::get_servant_manager (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -35,27 +35,27 @@ namespace TAO
     void
     RequestProcessingStrategyAOMOnly::set_servant_manager (
       PortableServer::ServantManager_ptr /*imgr*/
-                         ACE_ENV_ARG_DECL)
+                         )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     void
     RequestProcessingStrategyAOMOnly::set_servant (
       PortableServer::Servant /*servant*/
-      ACE_ENV_ARG_DECL)
+      )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     PortableServer::Servant
-    RequestProcessingStrategyAOMOnly::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+    RequestProcessingStrategyAOMOnly::get_servant (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -67,11 +67,11 @@ namespace TAO
     RequestProcessingStrategyAOMOnly::locate_servant (
       const PortableServer::ObjectId & system_id,
       PortableServer::Servant & servant
-      ACE_ENV_ARG_DECL)
+      )
     {
       return this->poa_->servant_present (system_id,
                                           servant
-                                          ACE_ENV_ARG_PARAMETER);
+                                         );
     }
 
     PortableServer::Servant
@@ -81,15 +81,14 @@ namespace TAO
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/
-      ACE_ENV_ARG_DECL)
+      )
     {
       PortableServer::Servant servant = 0;
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
                                           poa_current_impl
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                         );
 
       if (servant == 0)
         {
@@ -104,29 +103,29 @@ namespace TAO
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::system_id_to_servant (
       const PortableServer::ObjectId &system_id
-      ACE_ENV_ARG_DECL)
+      )
     {
       return this->poa_->find_servant (system_id
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
     }
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::id_to_servant (
       const PortableServer::ObjectId &id
-      ACE_ENV_ARG_DECL)
+      )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
       return this->poa_->user_id_to_servant_i (id
-                                               ACE_ENV_ARG_PARAMETER);
+                                              );
     }
 
     void
     RequestProcessingStrategyAOMOnly::cleanup_servant (
       PortableServer::Servant servant,
       const PortableServer::ObjectId &user_id
-      ACE_ENV_ARG_DECL)
+      )
     {
       if (servant)
         {
@@ -134,8 +133,7 @@ namespace TAO
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          servant->_remove_ref ();
         }
 
       // This operation causes the association of the Object Id specified
@@ -145,7 +143,7 @@ namespace TAO
 
       if (result != 0)
         {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
     }
 
@@ -158,12 +156,12 @@ namespace TAO
     PortableServer::ObjectId *
     RequestProcessingStrategyAOMOnly::servant_to_id (
       PortableServer::Servant servant
-      ACE_ENV_ARG_DECL)
+      )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      return this->poa_->servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
+      return this->poa_->servant_to_user_id (servant);
     }
 
     void

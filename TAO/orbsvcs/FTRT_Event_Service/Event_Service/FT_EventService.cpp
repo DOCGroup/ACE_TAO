@@ -40,7 +40,7 @@ FT_EventService::~FT_EventService()
 int
 FT_EventService::run(int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     // Make a copy of command line parameter.
     ACE_Argv_Type_Converter command(argc, argv);
@@ -48,72 +48,58 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
     // Initialize ORB.
     orb_ = CORBA::ORB_init (command.get_argc(),
                             command.get_ASCII_argv(),
-                            "" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+                            "");
 
     if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
       return 1;
 
     CORBA::Object_var root_poa_object =
-      orb_->resolve_initial_references("RootPOA"
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb_->resolve_initial_references("RootPOA");
     if (CORBA::is_nil (root_poa_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
       " (%P|%t) Unable to initialize the root POA.\n"),
       1);
 
     PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (root_poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      PortableServer::POA::_narrow (root_poa_object.in ());
 
     PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      root_poa->the_POAManager ();
 
-    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    poa_manager->activate ();
 
     CORBA::Object_var naming_obj =
-      orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb_->resolve_initial_references ("NameService");
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
       " (%P|%t) Unable to initialize the Naming Service.\n"),
       1);
 
     CosNaming::NamingContext_var naming_context =
-      CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-    setup_scheduler(naming_context.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(-1);
+    setup_scheduler(naming_context.in());
 
 
-    poa_manager->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    poa_manager->activate();
 
     // Activate the Event channel implementation
 
     TAO_FTEC_Event_Channel ec(orb_, root_poa);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
-      ec.activate(membership_
-        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      ec.activate(membership_);
 
     if (report_factory(orb_.in(), ec_ior.in() )==-1)
       return -1;
 
-    orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb_->run();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    ex._tao_print_exception ("A CORBA Exception occurred.");
     return -1;
   }
-  ACE_ENDTRY;
 
 
   ACE_Thread_Manager::instance()->wait();
@@ -205,8 +191,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
 }
 
 void
-FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
-                                 ACE_ENV_ARG_DECL)
+FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context)
 {
     RtecScheduler::Scheduler_var scheduler;
     if (CORBA::is_nil(naming_context)) {
@@ -214,8 +199,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
             ACE_Config_Scheduler,
             CORBA::NO_MEMORY());
 
-        scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        scheduler = this->sched_impl_->_this ();
 
         if (ACE_Scheduler_Factory::server(scheduler.in()) == -1)
             ACE_ERROR((LM_ERROR,"Unable to install scheduler\n"));
@@ -238,23 +222,17 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
                     ACE_Config_Scheduler,
                     CORBA::NO_MEMORY());
 
-                scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_CHECK;
+                scheduler = this->sched_impl_->_this ();
 
                 // Register the servant with the Naming Context....
-                naming_context->rebind (schedule_name, scheduler.in ()
-                    ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                naming_context->rebind (schedule_name, scheduler.in ());
             }
             else
             {
                 CORBA::Object_var tmp =
-                    naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                    naming_context->resolve (schedule_name);
 
-                scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
-                    ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ());
             }
         }
     }
@@ -264,7 +242,7 @@ int
 FT_EventService::report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  ACE_TRY_NEW_ENV {
+  try{
     char* addr = ACE_OS::getenv("EventChannelFactoryAddr");
 
     if (addr != NULL) {
@@ -278,10 +256,8 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
         ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Invalid Factory Address\n"), -1);
 
       ACE_DEBUG((LM_DEBUG,"Factory connected\n"));
-      CORBA::String_var my_ior_string = orb->object_to_string(ec
-        ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var my_ior_string = orb->object_to_string(ec);
 
-      ACE_TRY_CHECK;
       int len = strlen(my_ior_string.in()) ;
 
       if (stream.send_n(my_ior_string.in(), len) != len)
@@ -290,10 +266,9 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
       stream.close();
     }
   }
-  ACE_CATCHALL {
+  catch (...){
     return -1;
   }
-  ACE_ENDTRY;
   return 0;
 }
 

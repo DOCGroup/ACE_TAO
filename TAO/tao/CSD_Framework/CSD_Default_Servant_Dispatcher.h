@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Interface for CSD_POA servant dispatching strategies.
  */
-class TAO_CSD_FW_Export TAO_CSD_Default_Servant_Dispatcher 
+class TAO_CSD_FW_Export TAO_CSD_Default_Servant_Dispatcher
   : public virtual TAO_Default_Servant_Dispatcher
 {
 public:
@@ -43,8 +43,7 @@ public:
                                          ACE_Lock &lock,
                                          TAO_SYNCH_MUTEX &thread_lock,
                                          TAO_ORB_Core &orb_core,
-                                         TAO_Object_Adapter *object_adapter
-                                         ACE_ENV_ARG_DECL);
+                                         TAO_Object_Adapter *object_adapter);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

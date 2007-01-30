@@ -78,6 +78,8 @@
 #define TAO_HAS_AMI 1
 #define TAO_HAS_INTERCEPTORS 1
 #define TAO_HAS_SCIOP 1
+#define TAO_HAS_COIOP 1
+#define TAO_HAS_TRANSPORT_CURRENT 1
 
 /// Generate token library documentation
 #define ACE_HAS_TOKENS_LIBRARY

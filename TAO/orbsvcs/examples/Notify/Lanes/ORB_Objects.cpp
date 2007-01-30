@@ -9,42 +9,28 @@ TAO_Notify_ORB_Objects::TAO_Notify_ORB_Objects (void)
 }
 
 void
-TAO_Notify_ORB_Objects::init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL)
+TAO_Notify_ORB_Objects::init (CORBA::ORB_var& orb)
 {
   this->orb_ = orb;
 
-  CORBA::Object_var object =  this->orb_->resolve_initial_references("RootPOA"
-                                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var object =  this->orb_->resolve_initial_references("RootPOA");
 
-  this->root_poa_ = PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->root_poa_ = PortableServer::POA::_narrow (object.in ());
 
   // Resolve the RTORB.
-  object = this->orb_->resolve_initial_references ("RTORB"
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  object = this->orb_->resolve_initial_references ("RTORB");
 
-  this->rt_orb_ = RTCORBA::RTORB::_narrow (object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->rt_orb_ = RTCORBA::RTORB::_narrow (object.in ());
 
   // Resolve the Current
-  object = this->orb_->resolve_initial_references ("RTCurrent"
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  object = this->orb_->resolve_initial_references ("RTCurrent");
 
-  this->current_ = RTCORBA::Current::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->current_ = RTCORBA::Current::_narrow (object.in ());
 
   // Resolve the Naming service
-  object = this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  object = this->orb_->resolve_initial_references ("NameService");
 
-  this->naming_ = CosNaming::NamingContextExt::_narrow (object.in ()
-                                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->naming_ = CosNaming::NamingContextExt::_narrow (object.in ());
 }
 
 TAO_Notify_ORB_Objects::~TAO_Notify_ORB_Objects ()
@@ -52,7 +38,7 @@ TAO_Notify_ORB_Objects::~TAO_Notify_ORB_Objects ()
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_ORB_Objects::notify_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ORB_Objects::notify_factory (void)
 {
   CosNotifyChannelAdmin::EventChannelFactory_var ecf;
 
@@ -61,11 +47,9 @@ TAO_Notify_ORB_Objects::notify_factory (ACE_ENV_SINGLE_ARG_DECL)
   name.length (1);
   name[0].id = CORBA::string_dup ("NotifyEventChannelFactory");
 
-  CORBA::Object_var object = this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ecf._retn ());
+  CORBA::Object_var object = this->naming_->resolve (name);
 
-  ecf = CosNotifyChannelAdmin::EventChannelFactory::_narrow (object.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ecf._retn ());
+  ecf = CosNotifyChannelAdmin::EventChannelFactory::_narrow (object.in());
 
   return ecf._retn ();
 }

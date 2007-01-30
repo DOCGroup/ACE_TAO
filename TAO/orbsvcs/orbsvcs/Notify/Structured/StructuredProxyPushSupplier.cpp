@@ -29,7 +29,7 @@ TAO_Notify_StructuredProxyPushSupplier::release (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_StructuredProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_StructuredProxyPushSupplier::MyType (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -38,7 +38,7 @@ TAO_Notify_StructuredProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNotifyComm::StructuredPushConsumer_ptr push_consumer)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
@@ -51,25 +51,22 @@ TAO_Notify_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNot
                     TAO_Notify_StructuredPushConsumer (this),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->init (push_consumer);
 
-  this->connect (consumer ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->connect (consumer);
+  this->self_change ();
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 
 {
   TAO_Notify_StructuredProxyPushSupplier::Ptr guard( this );
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy ();
+  this->self_change ();
 }
 
 const char *
@@ -86,25 +83,20 @@ TAO_Notify_StructuredProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& a
   if (attrs.load("PeerIOR", ior))
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
     {
       CosNotifyComm::StructuredPushConsumer_var pc = CosNotifyComm::StructuredPushConsumer::_nil();
       if (ior.length() > 0)
       {
-        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-        pc = CosNotifyComm::StructuredPushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        CORBA::Object_var obj = orb->string_to_object(ior.c_str());
+        pc = CosNotifyComm::StructuredPushConsumer::_unchecked_narrow(obj.in());
       }
-      this->connect_structured_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->connect_structured_push_consumer(pc.in());
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
     {
       // if we can't connect... tough
     }
-    ACE_ENDTRY;
   }
 }
 

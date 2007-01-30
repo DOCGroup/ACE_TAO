@@ -27,18 +27,15 @@ TAO_EC_Object_Deactivator::deactivate (void)
 {
   if (this->deactivate_ && !CORBA::is_nil (this->poa_.in ()))
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
     {
       this->deactivate_ = 0;
-      this->poa_->deactivate_object (id_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->poa_->deactivate_object (id_);
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
     {
       // The deactivation can throw...
     }
-    ACE_ENDTRY;
   }
 }
 
@@ -122,17 +119,14 @@ TAO_EC_ORB_Holder::~TAO_EC_ORB_Holder (void)
 {
   if (!CORBA::is_nil (this->orb_.in ()))
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
-        this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->orb_->destroy ();
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
       {
         // Ignore.
       }
-    ACE_ENDTRY;
   }
 }
 
@@ -155,17 +149,14 @@ TAO_EC_Event_Channel_Holder::~TAO_EC_Event_Channel_Holder (void)
 {
   if (!CORBA::is_nil (this->ec_.in ()))
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
-        this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->ec_->destroy ();
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
       {
         // Ignore.
       }
-    ACE_ENDTRY;
   }
 }
 

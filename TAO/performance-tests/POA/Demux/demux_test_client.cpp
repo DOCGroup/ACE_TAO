@@ -47,28 +47,23 @@ Demux_Test_Client::~Demux_Test_Client (void)
 //
 
 int
-Demux_Test_Client::init (int argc, char *argv []
-                         ACE_ENV_ARG_DECL)
+Demux_Test_Client::init (int argc, char *argv [])
 {
   this->argc_ = argc;
   this->argv_ = argv;
 
   // Grab the ORB
-  ACE_TRY_EX (GET_ORB)
+  try
     {
       // get the underlying ORB
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (GET_ORB);
+        CORBA::ORB_init (argc, argv, "");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ORB_init");
-      ACE_RE_THROW_EX (GET_ORB);
+      ex._tao_print_exception ("ORB_init");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -102,18 +97,14 @@ Demux_Test_Client::init (int argc, char *argv []
           }
 
         // Get the IOR and output it to the file
-        ACE_TRY_EX (IOR)
+        try
           {
-            CORBA::Object_var objref = this->orb_->string_to_object (str
-                                                                     ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX (IOR);
+            CORBA::Object_var objref = this->orb_->string_to_object (str);
 
             // now narrow to Demux_Test object
 
-            this->demux_test_[i][j] = Demux_Test::_narrow (objref.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+            this->demux_test_[i][j] = Demux_Test::_narrow (objref.in ());
 
-            ACE_TRY_CHECK_EX (IOR);
 
             if (CORBA::is_nil (this->demux_test_[i][j].in ()))
               {
@@ -123,14 +114,11 @@ Demux_Test_Client::init (int argc, char *argv []
                                   -1);
               }
             }
-        ACE_CATCHANY
+        catch (const CORBA::Exception& ex)
           {
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "object_to_string");
-            ACE_RE_THROW_EX (IOR);
+            ex._tao_print_exception ("object_to_string");
+            throw;
           }
-        ACE_ENDTRY;
-        ACE_CHECK_RETURN (-1);
       } // j and i loop
 
   ACE_OS::fclose (this->ior_fp_);
@@ -255,7 +243,7 @@ Demux_Test_Client::parse_args (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+Demux_Test_Client::run (void)
 {
   // open a temporary results file
   if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
@@ -265,59 +253,48 @@ Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
                          "Failed to open the results file for writing\n"),
                         -1);
     }
-  ACE_TRY_EX (RUN)
+  try
     {
       switch (this->is_)
         {
         case Demux_Test_Client::LINEAR:
-          (void) this->run_linear_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (RUN);
+          (void) this->run_linear_test ();
           break;
         case Demux_Test_Client::RANDOM:
-          (void) this->run_random_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (RUN);
+          (void) this->run_random_test ();
           break;
         case Demux_Test_Client::BEST:
-          (void) this->run_best_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (RUN);
+          (void) this->run_best_test ();
           break;
         case Demux_Test_Client::WORST:
-          (void) this->run_worst_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (RUN);
+          (void) this->run_worst_test ();
           break;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "run failed");
+      ex._tao_print_exception ("run failed");
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) Demux_Test_Client::run - "
                   "Error running the Client\n"));
-      ACE_RE_THROW_EX (RUN);
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (this->result_fp_);
 
-  ACE_TRY_EX (SHUTDOWN)
+  try
     {
       // call the shutdown method one the first object
-      this->demux_test_[0][0]->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (SHUTDOWN);
+      this->demux_test_[0][0]->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "shutdown failed");
+      ex._tao_print_exception ("shutdown failed");
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) Demux_Test_Client::run - "
                   "Error running the Client\n"));
-      ACE_RE_THROW_EX (SHUTDOWN) ;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
       // now print the results
   if (this->print_results () == -1)
@@ -332,7 +309,7 @@ Demux_Test_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Demux_Test_Client::run_linear_test (ACE_ENV_SINGLE_ARG_DECL)
+Demux_Test_Client::run_linear_test (void)
 {
   CORBA::ULong j, k, l, m;
   ACE_hrtime_t start, end;
@@ -345,7 +322,7 @@ Demux_Test_Client::run_linear_test (ACE_ENV_SINGLE_ARG_DECL)
             start = ACE_OS::gethrtime ();
 
             // invoke the method
-            this->op_db_[l].op_ (this->demux_test_[j][k].in () ACE_ENV_ARG_PARAMETER);
+            this->op_db_[l].op_ (this->demux_test_[j][k].in ());
 
             end = ACE_OS::gethrtime ();
 
@@ -362,7 +339,7 @@ Demux_Test_Client::run_linear_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Demux_Test_Client::run_random_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_random_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Random test\n"));
@@ -370,7 +347,7 @@ Demux_Test_Client::run_random_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-Demux_Test_Client::run_best_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_best_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Best Test\n"));
@@ -378,7 +355,7 @@ Demux_Test_Client::run_best_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-Demux_Test_Client::run_worst_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Demux_Test_Client::run_worst_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "ERROR : Worst test\n"));

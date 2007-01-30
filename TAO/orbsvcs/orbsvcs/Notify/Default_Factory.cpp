@@ -32,11 +32,11 @@ template <class PROXY>
 class COW_Collection_Default_Factory
 {
 public:
-  typedef ACE_TYPENAME TAO_ESF_Proxy_List<PROXY>::Iterator PROXY_ITER;
+  typedef typename TAO_ESF_Proxy_List<PROXY>::Iterator PROXY_ITER;
   typedef TAO_ESF_Copy_On_Write<PROXY, TAO_ESF_Proxy_List<PROXY>,PROXY_ITER, ACE_SYNCH> COLLECTION;
   typedef TAO_ESF_Proxy_Collection<PROXY> BASE_COLLECTION;
 
-  void create (BASE_COLLECTION* &collection ACE_ENV_ARG_DECL)
+  void create (BASE_COLLECTION* &collection)
   {
     ACE_NEW_THROW_EX (collection,
                       COLLECTION (),
@@ -53,49 +53,49 @@ TAO_Notify_Default_Factory::~TAO_Notify_Default_Factory ()
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_ProxySupplier_Collection* &collection ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_ProxySupplier_Collection* &collection)
 {
   COW_Collection_Default_Factory<TAO_Notify_ProxySupplier> f;
-  f.create (collection ACE_ENV_ARG_PARAMETER);
+  f.create (collection);
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_ProxyConsumer_Collection* &collection ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_ProxyConsumer_Collection* &collection)
 {
   COW_Collection_Default_Factory<TAO_Notify_ProxyConsumer> f;
-  f.create (collection ACE_ENV_ARG_PARAMETER);
+  f.create (collection);
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel_Collection* &collection ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel_Collection* &collection)
 {
   COW_Collection_Default_Factory<TAO_Notify_EventChannel> f;
-  f.create (collection ACE_ENV_ARG_PARAMETER);
+  f.create (collection);
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_ConsumerAdmin_Collection* &collection ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_ConsumerAdmin_Collection* &collection)
 {
   COW_Collection_Default_Factory<TAO_Notify_ConsumerAdmin> f;
-  f.create (collection ACE_ENV_ARG_PARAMETER);
+  f.create (collection);
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_SupplierAdmin_Collection* &collection ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_SupplierAdmin_Collection* &collection)
 {
   COW_Collection_Default_Factory<TAO_Notify_SupplierAdmin> f;
-  f.create (collection ACE_ENV_ARG_PARAMETER);
+  f.create (collection);
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_Proxy_Collection* &collection ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_Proxy_Collection* &collection)
 {
   COW_Collection_Default_Factory<TAO_Notify_Proxy> f;
-  f.create (collection ACE_ENV_ARG_PARAMETER);
+  f.create (collection);
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory)
 {
   ACE_NEW_THROW_EX (factory,
                     TAO_Notify_EventChannelFactory (),
@@ -103,7 +103,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory ACE
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel*& channel ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel*& channel)
 {
   ACE_NEW_THROW_EX (channel,
                     TAO_Notify_EventChannel (),
@@ -112,7 +112,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel*& channel ACE_ENV_AR
 
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_SupplierAdmin*& admin ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_SupplierAdmin*& admin)
 {
   ACE_NEW_THROW_EX (admin,
                     TAO_Notify_SupplierAdmin (),
@@ -120,7 +120,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_SupplierAdmin*& admin ACE_ENV_ARG
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_ConsumerAdmin*& admin ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_ConsumerAdmin*& admin)
 {
   ACE_NEW_THROW_EX (admin,
                     TAO_Notify_ConsumerAdmin (),
@@ -128,7 +128,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_ConsumerAdmin*& admin ACE_ENV_ARG
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_StructuredProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_StructuredProxyPushConsumer*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_StructuredProxyPushConsumer (),
@@ -136,7 +136,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_StructuredProxyPushConsumer*& pro
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_StructuredProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_StructuredProxyPushSupplier*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_StructuredProxyPushSupplier (),
@@ -144,7 +144,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_StructuredProxyPushSupplier*& pro
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_ProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_ProxyPushConsumer*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_ProxyPushConsumer (),
@@ -152,7 +152,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_ProxyPushConsumer*& proxy ACE_ENV
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_ProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_ProxyPushSupplier*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_ProxyPushSupplier (),
@@ -160,7 +160,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_ProxyPushSupplier*& proxy ACE_ENV
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_CosEC_ProxyPushConsumer (),
@@ -168,7 +168,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy A
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_CosEC_ProxyPushSupplier (),
@@ -176,7 +176,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy A
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushConsumer*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushConsumer*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_SequenceProxyPushConsumer (),
@@ -184,7 +184,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushConsumer*& proxy
 }
 
 void
-TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushSupplier*& proxy)
 {
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_SequenceProxyPushSupplier (),

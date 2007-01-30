@@ -73,21 +73,20 @@ public:
                   char *argv[]);
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // initialization.
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
   // Run the test.
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL);
+  void end_test (void);
   // End the test.
 
   int check_results (void);
   // Check if we got the expected results.
 
 protected:
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create EC.
 
   CosNotifyChannelAdmin::EventChannel_var ec_;

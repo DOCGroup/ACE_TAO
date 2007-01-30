@@ -31,8 +31,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 void
-Hello::set_callback (Test::CallBack_ptr cb
-                     ACE_ENV_ARG_DECL_NOT_USED)
+Hello::set_callback (Test::CallBack_ptr cb)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) got callback \n"));
@@ -41,7 +40,7 @@ Hello::set_callback (Test::CallBack_ptr cb
 }
 
 void
-Hello::method (CORBA::Short count ACE_ENV_ARG_DECL_NOT_USED)
+Hello::method (CORBA::Short count)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (++this->count_ > 10)

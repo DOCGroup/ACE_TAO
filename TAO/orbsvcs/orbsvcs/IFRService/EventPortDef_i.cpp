@@ -27,21 +27,18 @@ TAO_EventPortDef_i::~TAO_EventPortDef_i (void)
 
 CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+  this->update_key ();
 
-  return this->event_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->event_i ();
 }
 
 CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event_i (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -49,34 +46,27 @@ TAO_EventPortDef_i::event_i (
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_type",
                                             holder);
-  CORBA::Contained_var obj = this->repo_->lookup_id (holder.fast_rep ()
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
+  CORBA::Contained_var obj = this->repo_->lookup_id (holder.fast_rep ());
 
-  return CORBA::ComponentIR::EventDef::_narrow (obj.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+  return CORBA::ComponentIR::EventDef::_narrow (obj.in ());
 }
 
 void
 TAO_EventPortDef_i::event (
     CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->event_i (event
-                 ACE_ENV_ARG_PARAMETER);
+  this->event_i (event);
 }
 
 void
 TAO_EventPortDef_i::event_i (
     CORBA::ComponentIR::EventDef_ptr event
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -110,23 +100,19 @@ TAO_EventPortDef_i::event_i (
 CORBA::Boolean
 TAO_EventPortDef_i::is_a (
     const char *event_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->is_a_i (event_id
-                       ACE_ENV_ARG_PARAMETER);
+  return this->is_a_i (event_id);
 }
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a_i (
     const char *event_id
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -144,24 +130,22 @@ TAO_EventPortDef_i::is_a_i (
                                        0);
   TAO_EventDef_i impl (this->repo_);
   impl.section_key (key);
-  return impl.is_a_i (event_id
-                      ACE_ENV_ARG_PARAMETER);
+  return impl.is_a_i (event_id);
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventPortDef_i::describe (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EventPortDef_i::describe_i (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::EventPortDescription epd;
@@ -170,9 +154,7 @@ TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                               epd,
                                               this->repo_,
                                               this->section_key_
-                                              ACE_ENV_ARG_PARAMETER
                                             );
-  ACE_CHECK_RETURN (0);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -191,7 +173,7 @@ TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::DefinitionKind
-TAO_EventPortDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EventPortDef_i::def_kind (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_none;

@@ -190,9 +190,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // The code used to set the timeout to zero, with the intent of 
+  // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
-  // was to cause the connection to timeout immediately. 
+  // was to cause the connection to timeout immediately.
 
   // This is where we need to set the ACE::HTBP::Stream to the connection
   // handler.
@@ -347,7 +347,7 @@ TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)
  * @brief Create a profile with a given endpoint.
  */
 TAO_Profile *
-TAO::HTIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO::HTIOP::Connector::make_profile (void)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -362,7 +362,6 @@ TAO::HTIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (0);
 
   return profile;
 }

@@ -36,7 +36,6 @@ public:
   // = SequencePushConsumer methods
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -75,24 +74,23 @@ public:
                   char *argv[]) ;
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // Initialization.
 
   void on_event_received (void);
   // Called when an event is received.
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
   // Run the test.
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL);
+  void end_test (void);
   // End the test.
 
   int check_results (void);
   // check if we got the expected results.
 
 protected:
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create EC
 
   int event_count_;

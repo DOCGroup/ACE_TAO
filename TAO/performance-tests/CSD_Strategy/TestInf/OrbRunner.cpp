@@ -17,7 +17,7 @@ OrbRunner::~OrbRunner()
 
 
 void
-OrbRunner::run(ACE_ENV_SINGLE_ARG_DECL)
+OrbRunner::run(void)
 {
   ACE_ASSERT(this->num_orb_threads_ > 0);
 
@@ -27,8 +27,7 @@ OrbRunner::run(ACE_ENV_SINGLE_ARG_DECL)
     {
       // Since the num_orb_threads_ is exactly one, we just use the current
       // (mainline) thread to run the ORB event loop.
-      this->orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->run();
     }
   else
     {
@@ -43,12 +42,11 @@ OrbRunner::run(ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to open the OrbTask.\n"));
-          ACE_THROW(TestAppException());
+          throw TestAppException();
         }
 
       // This will use the current (mainline) thread to run the ORB event loop.
-      this->orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->run();
 
       // Now that the current thread has unblocked from running the orb,
       // make sure to wait for all of the worker threads to complete.

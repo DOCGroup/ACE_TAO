@@ -17,8 +17,7 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_Service_Context::set_context_i (IOP::ServiceId id,
-                                    TAO_OutputCDR &cdr)
+TAO_Service_Context::set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr)
 {
   IOP::ServiceContext context;
   context.context_id = id;

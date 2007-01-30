@@ -5,33 +5,29 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       Server_i server;
 
-      int retval = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int retval = server.init (argc, argv);
 
       if (retval == -1)
         return -1;
       else
         {
-          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server.run ();
         }
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "Server: System Exception");
+      sysex._tao_print_exception ("Server: System Exception");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "Server: User Exception");
+      userex._tao_print_exception ("Server: User Exception");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -78,22 +78,19 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Factory_var factory =
-        Test::Factory::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Factory::_narrow (object.in ());
 
       if (CORBA::is_nil (factory.in ()))
         {
@@ -118,8 +115,7 @@ main (int argc, char *argv[])
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           references[i] =
-            factory->create_simple_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            factory->create_simple_object ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           activation.sample (now - start);
@@ -142,8 +138,7 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          references[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          references[j]->destroy ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           destruction.sample (now - start);
@@ -161,16 +156,14 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          factory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          factory->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

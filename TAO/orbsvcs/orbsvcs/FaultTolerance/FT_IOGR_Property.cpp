@@ -23,8 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
-    CORBA::Object_ptr &ior
-    ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+    CORBA::Object_ptr &ior)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::Invalid_IOR))
 {
@@ -77,8 +76,7 @@ TAO_FT_IOGR_Property::set_property (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
-    CORBA::Object_ptr ior
-    ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+    CORBA::Object_ptr ior)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))
@@ -92,8 +90,7 @@ TAO_FT_IOGR_Property::is_primary_set (
 
 CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
-    CORBA::Object_ptr ior
-    ACE_ENV_ARG_DECL)
+    CORBA::Object_ptr ior)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -144,7 +141,6 @@ TAO_FT_IOGR_Property::get_primary (
 
   CORBA::Object_var new_obj = temp_obj;
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
@@ -165,8 +161,7 @@ TAO_FT_IOGR_Property::get_primary (
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
     CORBA::Object_ptr &ior1,
-    CORBA::Object_ptr ior2
-    ACE_ENV_ARG_DECL)
+    CORBA::Object_ptr ior2)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound,
@@ -346,8 +341,7 @@ TAO_FT_IOGR_Property::get_primary_profile (
 CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
     const CORBA::Object_ptr iogr,
-    FT::TagFTGroupTaggedComponent &fgtc
-    ACE_ENV_ARG_DECL) const
+    FT::TagFTGroupTaggedComponent &fgtc) const
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Stub *stub =
@@ -399,8 +393,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
-    CORBA::Object_ptr &iogr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CORBA::Object_ptr &iogr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the MProfile

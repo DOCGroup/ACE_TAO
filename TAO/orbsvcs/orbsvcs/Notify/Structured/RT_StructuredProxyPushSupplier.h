@@ -40,17 +40,17 @@ public:
   ~TAO_Notify_RT_StructuredProxyPushSupplier ();
 
   /// Activate this object and obtain the Event_Forwarder interface.
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
 
   /// Dummy method to prevent hidden TAO_Notify_Proxy::activate warning.
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant,
-                                      CORBA::Long id ACE_ENV_ARG_DECL);
+                                      CORBA::Long id);
 
   /// Dispatch Event to consumer
-  void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request ACE_ENV_ARG_DECL);
+  void deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & request);
 
   /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
+  virtual void push_no_filtering (const TAO_Notify_Event* event);
 
 private:
   /// Our ref.

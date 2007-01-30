@@ -14,16 +14,14 @@ TAO_Default_Protocols_Hooks::~TAO_Default_Protocols_Hooks (void)
 }
 
 void
-TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *)
 {
 }
 
 void
 TAO_Default_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &,
                                                           CORBA::Policy *,
-                                                          CORBA::Short &
-                                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                                          CORBA::Short &)
 {
 }
 
@@ -39,20 +37,18 @@ TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *,
                                                              CORBA::Short,
                                                              CORBA::Short &,
                                                              CORBA::Short &,
-                                                             int &)
+                                                             bool &)
 {
 }
 
 int
-TAO_Default_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &
-                                                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::get_thread_native_priority (CORBA::Short &
-                                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::get_thread_native_priority (CORBA::Short &)
 {
   return 0;
 }
@@ -60,21 +56,19 @@ TAO_Default_Protocols_Hooks::get_thread_native_priority (CORBA::Short &
 int
 TAO_Default_Protocols_Hooks::get_thread_CORBA_and_native_priority (CORBA::Short &,
                                                                    CORBA::Short &
-                                                                   ACE_ENV_ARG_DECL_NOT_USED)
+                                                                   )
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short
-                                                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short
-                                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short)
 {
   return 0;
 }
@@ -82,84 +76,81 @@ TAO_Default_Protocols_Hooks::set_thread_native_priority (CORBA::Short
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
                                                  TAO_Service_Context &,
-                                                 CORBA::Boolean
-                                                 ACE_ENV_ARG_DECL_NOT_USED)
+                                                 CORBA::Boolean)
 {
 }
 
 CORBA::Boolean
 TAO_Default_Protocols_Hooks::set_client_network_priority (IOP::ProfileId,
-                                                          TAO_Stub *
-                                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                                          TAO_Stub *)
 {
   return false;
 }
 
 CORBA::Boolean
 TAO_Default_Protocols_Hooks::set_server_network_priority (IOP::ProfileId,
-                                                          CORBA::Policy *
-                                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                                          CORBA::Policy *)
 {
   return false;
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_IIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_IIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_UIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_UIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_SHMIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_SHMIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_DIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_DIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::server_protocol_properties_at_orb_level (
+  TAO_SCIOP_Protocol_Properties &)
 {
 }
 
 void
-TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &
-                                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Default_Protocols_Hooks::client_protocol_properties_at_orb_level (
+  TAO_SCIOP_Protocol_Properties &)
 {
 }
 

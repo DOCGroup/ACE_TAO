@@ -34,7 +34,7 @@ Job_i::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-Job_i::work (CORBA::ULong work ACE_ENV_ARG_DECL_NOT_USED)
+Job_i::work (CORBA::ULong work)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static CORBA::ULong prime_number = 9619;
@@ -51,7 +51,7 @@ Job_i::work (CORBA::ULong work ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-Job_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Job_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACTIVITY::instance()->job_ended (this);

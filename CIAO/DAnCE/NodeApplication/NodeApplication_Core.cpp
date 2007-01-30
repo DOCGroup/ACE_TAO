@@ -68,24 +68,18 @@ CIAO::NodeApplication_Core::svc ()
 {
   CIAO_TRACE ("CIAO::NodeApplication_Core::svc");
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // ...
       CIAO::NodeApplication_Impl *nodeapp_servant = 0;
@@ -100,18 +94,12 @@ CIAO::NodeApplication_Core::svc ()
 
       // Configuring NodeApplication.
       PortableServer::ObjectId_var nodeapp_oid
-        = root_poa->activate_object (nodeapp_servant
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->activate_object (nodeapp_servant);
 
-      object = root_poa->id_to_reference (nodeapp_oid.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = root_poa->id_to_reference (nodeapp_oid.in ());
 
       Deployment::NodeApplication_var nodeapp_obj =
-        Deployment::NodeApplication::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Deployment::NodeApplication::_narrow (object.in ());
 
       if (CORBA::is_nil (nodeapp_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -125,8 +113,7 @@ CIAO::NodeApplication_Core::svc ()
        * 1. call init remotely from NodeApplicationManager
        * 2. call init locally on the servant of NodeApplication.
        */
-      bool retval = nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      bool retval = nodeapp_servant->init ();
 
       if (retval)
         {
@@ -135,9 +122,7 @@ CIAO::NodeApplication_Core::svc ()
           return 1;
         }
 
-      CORBA::String_var str = this->orb_->object_to_string (nodeapp_obj.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var str = this->orb_->object_to_string (nodeapp_obj.in ());
 
       if (this->options_.write_ior_file ())
         CIAO::Utility::write_IOR (this->options_.ior_output_filename (),
@@ -155,42 +140,32 @@ CIAO::NodeApplication_Core::svc ()
 
       if (this->options_.use_callback ())
         {
-          object = this->orb_->string_to_object (this->options_.callback_ior ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          object = this->orb_->string_to_object (this->options_.callback_ior ());
 
           CIAO::NodeApplication_Callback_var nam_callback
-            = CIAO::NodeApplication_Callback::_narrow (object.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            = CIAO::NodeApplication_Callback::_narrow (object.in ());
 
           Deployment::Properties_out properties_out (prop.out ());
 
           nodeapp_man
             = nam_callback->register_node_application (nodeapp_obj.in (),
-                                                       properties_out
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                                       properties_out);
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Running NodeApplication...\n"));
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "Exiting NodeApplication...\n"));

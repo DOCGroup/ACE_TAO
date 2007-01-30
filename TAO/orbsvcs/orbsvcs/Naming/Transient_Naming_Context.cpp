@@ -144,8 +144,7 @@ TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context (void)
 CosNaming::NamingContext_ptr
 TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                 const char *poa_id,
-                                                size_t context_size
-                                                ACE_ENV_ARG_DECL)
+                                                size_t context_size)
 {
   // Store the stub we will return here.
   CosNaming::NamingContext_var result;
@@ -158,7 +157,6 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                   poa_id,
                                                   context_size),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (result._retn ());
 
   // Put <context_impl> into the auto pointer temporarily, in case next
   // allocation fails.
@@ -168,7 +166,6 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (result._retn ());
 
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
@@ -183,24 +180,20 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
     PortableServer::string_to_ObjectId (poa_id);
 
   poa->activate_object_with_id (id.in (),
-                                context
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (result._retn ());
+                                context);
 
-  result = context->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  result = context->_this ();
 
   return result._retn ();
 }
 
 CosNaming::NamingContext_ptr
-TAO_Transient_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Transient_Naming_Context::new_context (void)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -219,9 +212,7 @@ TAO_Transient_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
   CosNaming::NamingContext_var result =
     make_new_context (this->poa_.in (),
                       poa_id,
-                      this->transient_context_->total_size ()
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+                      this->transient_context_->total_size ());
 
   return result._retn ();
 }
@@ -229,8 +220,7 @@ TAO_Transient_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                                     CosNaming::BindingList_out &bl,
-                                    CosNaming::BindingIterator_out &bi
-                                    ACE_ENV_ARG_DECL)
+                                    CosNaming::BindingIterator_out &bi)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -238,26 +228,23 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   // Obtain a lock before we proceed with the operation.
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // Dynamically allocate iterator for traversing the underlying hash map.
   HASH_MAP::ITERATOR *hash_iter = 0;
   ACE_NEW_THROW_EX (hash_iter,
                     HASH_MAP::ITERATOR (transient_context_->map ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   // Store <hash_iter temporarily in auto pointer, in case we'll have
   // some failures and throw an exception.
@@ -295,7 +282,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       hash_iter->advance ();
 
       if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
-          ACE_THROW (CORBA::NO_MEMORY());
+          throw CORBA::NO_MEMORY();
     }
 
   // Now we are done with the BindingsList, and we can follow up on
@@ -310,7 +297,6 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       ACE_NEW_THROW_EX (bind_iter,
                         ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // Release <hash_iter> from auto pointer, and start using
       // reference counting to control our servant.
@@ -319,8 +305,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
-      interface_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      interface_->_add_ref ();
 
       // Register with the POA.
       char poa_id[BUFSIZ];
@@ -332,12 +317,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
         PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                           bind_iter);
 
-      bi = bind_iter->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      bi = bind_iter->_this ();
     }
 }
 

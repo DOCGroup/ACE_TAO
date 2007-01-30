@@ -66,8 +66,7 @@ private:
   void perform_iteration (ACE_RANDR_TYPE &seed,
                           CORBA::PolicyList_var &policies,
                           CORBA::PolicyManager_ptr policy_manager,
-                          CORBA::PolicyCurrent_ptr policy_current
-                          ACE_ENV_ARG_DECL);
+                          CORBA::PolicyCurrent_ptr policy_current);
 
 private:
   CORBA::ORB_var orb_;
@@ -83,25 +82,21 @@ private:
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object ("corbaloc:iiop:localhost:12345/FakeIOR"
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object ("corbaloc:iiop:localhost:12345/FakeIOR");
 
       Test_var test =
 	TAO::Narrow_Utils<Test>::unchecked_narrow (
 	   object.in (),
 	   _TAO_Test_Proxy_Broker_Factory_function_pointer);
-      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
         {
@@ -124,13 +119,11 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -150,10 +143,9 @@ void
 Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
                                  CORBA::PolicyList_var &policies,
                                  CORBA::PolicyManager_ptr policy_manager,
-                                 CORBA::PolicyCurrent_ptr policy_current
-                                 ACE_ENV_ARG_DECL)
+                                 CORBA::PolicyCurrent_ptr policy_current)
 {
-  ACE_TRY
+  try
     {
       int r = ACE_OS::rand_r (seed);
 
@@ -211,9 +203,7 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
             }
 
           policy = this->orb_->create_policy (policy_type,
-                                              any
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                              any);
 
           CORBA::SetOverrideType override_type = CORBA::SET_OVERRIDE;
           if (operation == ADD_OBJECT_POLICY
@@ -232,52 +222,41 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
             {
               CORBA::Object_var tmp =
                 this->test_->_set_policy_overrides (policy_list,
-                                                    override_type
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    override_type);
             }
           else if (operation == ADD_CURRENT_POLICY
                    || operation == SET_CURRENT_POLICY)
             {
               policy_current->set_policy_overrides (policy_list,
-                                                    override_type
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    override_type);
             }
           else
             {
               // operation == ADD_CURRENT_POLICY
               // || operation == SET_CURRENT_POLICY)
               policy_manager->set_policy_overrides (policy_list,
-                                                    override_type
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    override_type);
             }
-          policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          policy_list[0]->destroy ();
         }
       else if (operation == SAVE_CURRENT_POLICIES)
         {
           CORBA::PolicyTypeSeq types;
           policies =
-            policy_current->get_policy_overrides (types ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            policy_current->get_policy_overrides (types);
         }
       else if (operation == SAVE_MANAGER_POLICIES)
         {
           CORBA::PolicyTypeSeq types;
           policies =
-            policy_manager->get_policy_overrides (types ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            policy_manager->get_policy_overrides (types);
         }
       else if (operation == RESTORE_CURRENT_POLICIES)
         {
           if (policies.ptr () != 0)
             {
               policy_current->set_policy_overrides (policies.in (),
-                                                    CORBA::SET_OVERRIDE
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    CORBA::SET_OVERRIDE);
             }
         }
       else // operation == RESTORE_MANAGER_POLICIES)
@@ -285,24 +264,21 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
           if (policies.ptr () != 0)
             {
               policy_manager->set_policy_overrides (policies.in (),
-                                                    CORBA::SET_OVERRIDE
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                    CORBA::SET_OVERRIDE);
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Ignore all exceptions
     }
-  ACE_ENDTRY;
 }
 
 
 int
 Manipulation::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
 #ifndef ACE_LACKS_LONGLONG_T
       ACE_RANDR_TYPE seed =
@@ -312,22 +288,16 @@ Manipulation::svc (void)
         static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime().lo());
 #endif
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("ORBPolicyManager"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
 
       for (int i = 0; i != this->niterations_; ++i)
@@ -336,16 +306,12 @@ Manipulation::svc (void)
           this->perform_iteration (seed,
                                    policies,
                                    policy_manager.in (),
-                                   policy_current.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                   policy_current.in ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Manipulation: exception raised");
+      ex._tao_print_exception ("Manipulation: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

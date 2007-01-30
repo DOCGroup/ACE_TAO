@@ -11,16 +11,12 @@ TAO_Notify_Tests_RT_Priority_Mapping::~TAO_Notify_Tests_RT_Priority_Mapping (voi
 }
 
 void
-TAO_Notify_Tests_RT_Priority_Mapping::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_RT_Priority_Mapping::init (CORBA::ORB_ptr orb)
 {
-  CORBA::Object_var object = orb->resolve_initial_references ("PriorityMappingManager"
-                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var object = orb->resolve_initial_references ("PriorityMappingManager");
 
   RTCORBA::PriorityMappingManager_var mapping_manager =
-    RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
   this->priority_mapping_ = mapping_manager->mapping ();
 }

@@ -51,9 +51,9 @@ class ACE_Recycling_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef typename SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                        handler_type;
+  typedef typename SVC_HANDLER::stream_type  stream_type;
 
   /// Virtual Destructor
   virtual ~ACE_Recycling_Strategy (void);
@@ -86,9 +86,9 @@ class ACE_Creation_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef typename SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                        handler_type;
+  typedef typename SVC_HANDLER::stream_type  stream_type;
 
   // = Initialization and termination methods.
 
@@ -253,9 +253,9 @@ class ACE_Concurrency_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef typename SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                        handler_type;
+  typedef typename SVC_HANDLER::stream_type  stream_type;
 
   /// Constructor
   ACE_Concurrency_Strategy (int flags = 0);
@@ -500,10 +500,10 @@ class ACE_Accept_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_PEER_ACCEPTOR_ADDR                 addr_type;
-  typedef ACE_PEER_ACCEPTOR                      acceptor_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef ACE_PEER_ACCEPTOR_ADDR             addr_type;
+  typedef ACE_PEER_ACCEPTOR                  acceptor_type;
+  typedef SVC_HANDLER                        handler_type;
+  typedef typename SVC_HANDLER::stream_type  stream_type;
 
   // = Initialization and termination methods.
   /// Default constructor.
@@ -567,10 +567,10 @@ class ACE_Connect_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_PEER_CONNECTOR_ADDR                addr_type;
-  typedef ACE_PEER_CONNECTOR                     connector_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef ACE_PEER_CONNECTOR_ADDR            addr_type;
+  typedef ACE_PEER_CONNECTOR                 connector_type;
+  typedef SVC_HANDLER                        handler_type;
+  typedef typename SVC_HANDLER::stream_type  stream_type;
 
   // = Initialization and termination methods.
   /// Default constructor.
@@ -633,9 +633,9 @@ class ACE_Scheduling_Strategy
 public:
 
   // Useful STL-style traits.
-  typedef ACE_TYPENAME SVC_HANDLER::addr_type    addr_type;
-  typedef SVC_HANDLER                            handler_type;
-  typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
+  typedef typename SVC_HANDLER::addr_type    addr_type;
+  typedef SVC_HANDLER                        handler_type;
+  typedef typename SVC_HANDLER::stream_type  stream_type;
 
   // = Initialization and termination methods.
 
@@ -948,8 +948,8 @@ public:
   typedef ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Null_Mutex>
           CONNECTION_MAP;
 
-  typedef ACE_TYPENAME CONNECTION_MAP::ITERATOR CONNECTION_MAP_ITERATOR;
-  typedef ACE_TYPENAME CONNECTION_MAP::ENTRY CONNECTION_MAP_ENTRY;
+  typedef typename CONNECTION_MAP::ITERATOR CONNECTION_MAP_ITERATOR;
+  typedef typename CONNECTION_MAP::ENTRY CONNECTION_MAP_ENTRY;
 
   typedef ACE_Reverse_Lock<MUTEX> REVERSE_MUTEX;
 

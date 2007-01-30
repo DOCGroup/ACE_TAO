@@ -8,14 +8,14 @@
 
 class ClientTask;
 
-class ClientApp 
+class ClientApp
 {
   public:
 
     ClientApp();
     ~ClientApp();
 
-    int run(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    int run(int argc, char* argv[]);
 
 
   private:

@@ -38,8 +38,7 @@ public:
   // implementation of corba interface
   char * op1 (const char * name,
               const CORBA::Any & inany,
-              CORBA::Any_out outany
-              ACE_ENV_ARG_DECL_NOT_USED)
+              CORBA::Any_out outany)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -59,17 +58,16 @@ public:
     return CORBA::string_dup (name);
   };
 
-  ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::wstring_dup (s1);
   };
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+    this->orb_->shutdown (0);
   };
 
 private:
@@ -84,20 +82,16 @@ private:
 int main(int argc, char *argv[])
 {
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Init the orb
       CORBA::ORB_var orb= CORBA::ORB_init (argc,
                                            argv,
-                                           ""
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           "");
 
       // Initialize POA
       CORBA::Object_var poa_object=
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       // Check POA
       if (CORBA::is_nil (poa_object.in ()))
@@ -109,14 +103,11 @@ int main(int argc, char *argv[])
 
       // Get the ROOT POA
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Get the POA manager
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Create a C++ implementation of CORBA object
       SimpleImpl* my_impl = 0;
@@ -125,13 +116,10 @@ int main(int argc, char *argv[])
                       -1);
 
       // Create CORBA object for servant and REGISTER with POA
-      simple_var server = my_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      simple_var server = my_impl->_this ();
 
       // Get the IOR for our object
-      CORBA::String_var ior = orb->object_to_string (server.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var ior = orb->object_to_string (server.in ());
 
       FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
@@ -143,26 +131,20 @@ int main(int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       // Activate POA manager
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Wait for calls
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in server:");
+      ex._tao_print_exception ("Exception caught in server:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

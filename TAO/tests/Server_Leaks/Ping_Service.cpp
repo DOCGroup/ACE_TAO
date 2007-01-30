@@ -11,14 +11,14 @@ Ping_Service::Ping_Service (CORBA::ORB_ptr orb)
 }
 
 void
-Ping_Service::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Ping_Service::ping (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Ping_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Ping_Service::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

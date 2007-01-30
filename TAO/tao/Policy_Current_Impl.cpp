@@ -8,7 +8,6 @@
 # include "tao/Policy_Current_Impl.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Policy_Manager,
            "$Id$")
@@ -18,23 +17,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_Policy_Current_Impl::set_policy_overrides (
     const CORBA::PolicyList & policies,
-    CORBA::SetOverrideType set_add
-    ACE_ENV_ARG_DECL
-  )
+    CORBA::SetOverrideType set_add)
 {
-  this->manager_impl_.set_policy_overrides (policies,
-                                            set_add
-                                            ACE_ENV_ARG_PARAMETER);
+  this->manager_impl_.set_policy_overrides (policies, set_add);
 }
 
 CORBA::PolicyList *
-TAO_Policy_Current_Impl::get_policy_overrides (
-    const CORBA::PolicyTypeSeq & ts
-    ACE_ENV_ARG_DECL
-  )
+TAO_Policy_Current_Impl::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
 {
-  return this->manager_impl_.get_policy_overrides (ts
-                                                   ACE_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_policy_overrides (ts);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

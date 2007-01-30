@@ -83,7 +83,7 @@ public:
   TAO_ECG_UDP_Receiver_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs);
 
-  void execute (ACE_ENV_SINGLE_ARG_DECL);
+  void execute (void);
 
 private:
 
@@ -136,8 +136,7 @@ public:
    */
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              TAO_ECG_Refcounted_Endpoint ignore_from,
-             RtecUDPAdmin::AddrServer_ptr addr_server
-             ACE_ENV_ARG_DECL);
+             RtecUDPAdmin::AddrServer_ptr addr_server);
 
   /// Connect or reconnect to the EC with the given publications.
   /**
@@ -145,8 +144,7 @@ public:
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::SupplierQOS& pub
-                ACE_ENV_ARG_DECL);
+  void connect (const RtecEventChannelAdmin::SupplierQOS& pub);
 
   /// Set the handler we must notify when shutdown occurs.  (This is
   /// the handler that alerts us when data is available on udp/mcast socket.)
@@ -161,20 +159,19 @@ public:
    * result in decrementing of the reference count (due to
    * deactivation) and deletion of the object.
    */
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   //@}
 
   /// Accessor.
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
   /// if nill Address Server was specified in init ().
   void get_addr (const RtecEventComm::EventHeader& header,
-                 RtecUDPAdmin::UDP_Addr_out addr
-                 ACE_ENV_ARG_DECL);
+                 RtecUDPAdmin::UDP_Addr_out addr);
 
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// TAO_ECG_Dgram_Handler method.
@@ -197,12 +194,10 @@ private:
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
-                    ACE_ENV_ARG_DECL);
+  void new_connect (const RtecEventChannelAdmin::SupplierQOS& pub);
 
   // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::SupplierQOS& pub
-                  ACE_ENV_ARG_DECL);
+  void reconnect (const RtecEventChannelAdmin::SupplierQOS& pub);
   //@}
 
   /// Event Channel to which we act as a supplier.

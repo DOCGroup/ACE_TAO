@@ -40,11 +40,6 @@ namespace PortableServer
   typedef ::TAO_ServantBase ServantBase;
 }
 
-namespace CORBA
-{
-  class Environment;
-}
-
 namespace TAO
 {
   class Argument;
@@ -88,14 +83,12 @@ namespace TAO
                  TAO::Argument * const args[],
                  size_t nargs,
                  TAO::Upcall_Command & command
-
 #if TAO_HAS_INTERCEPTORS == 1
                  , void * servant_upcall
                  , CORBA::TypeCode_ptr const * exceptions
                  , CORBA::ULong nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-                 ACE_ENV_ARG_DECL);
+                );
 
   private:
 
@@ -107,8 +100,7 @@ namespace TAO
      */
     void pre_upcall (TAO_InputCDR & cdr,
                      TAO::Argument * const * args,
-                     size_t nargs
-                     ACE_ENV_ARG_DECL);
+                     size_t nargs);
 
     /// Perform post-upcall operations.
     /**
@@ -117,8 +109,7 @@ namespace TAO
      */
     void post_upcall (TAO_OutputCDR & cdr,
                       TAO::Argument * const * args,
-                      size_t nargs
-                      ACE_ENV_ARG_DECL);
+                      size_t nargs);
 
   };
 

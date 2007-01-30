@@ -40,7 +40,7 @@ namespace TAO
 
       virtual void destroy (
         ImplicitActivationStrategy *strategy
-        ACE_ENV_ARG_DECL);
+       );
     };
   }
 }

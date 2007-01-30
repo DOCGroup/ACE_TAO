@@ -43,7 +43,7 @@ public:
   virtual ~TAO_Notify_PushSupplier ();
 
   /// Init
-  void init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
+  void init (CosEventComm::PushSupplier_ptr push_supplier);
 
   /// Retrieve the ior of this peer
   virtual ACE_CString get_ior (void) const;

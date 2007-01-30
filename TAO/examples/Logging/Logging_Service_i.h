@@ -57,15 +57,13 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
+            char **argv);
   // Initialize the Logger_Server state - parsing arguments and ...
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the ORB.
 
-  Logger_ptr make_logger (const char *name
-                          ACE_ENV_ARG_DECL);
+  Logger_ptr make_logger (const char *name);
   // This function creates and returns a logger with the given <name>.
   // Currently, <name> is unused.
 
@@ -73,7 +71,7 @@ private:
   int parse_args (void);
   // Parses the commandline arguments.
 
-  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (void);
   // Initialises the name server and registers logger_factory with the
   // name server.
 

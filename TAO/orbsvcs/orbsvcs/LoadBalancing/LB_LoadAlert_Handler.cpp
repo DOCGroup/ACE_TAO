@@ -14,15 +14,14 @@ TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler (void)
 }
 
 void
-TAO_LB_LoadAlert_Handler::enable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_LoadAlert_Handler::enable_alert (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_LoadAlert_Handler::enable_alert_excep (
-    ::Messaging::ExceptionHolder *
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -32,15 +31,14 @@ TAO_LB_LoadAlert_Handler::enable_alert_excep (
 }
 
 void
-TAO_LB_LoadAlert_Handler::disable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_LoadAlert_Handler::disable_alert (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_LoadAlert_Handler::disable_alert_excep (
-    ::Messaging::ExceptionHolder *
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)

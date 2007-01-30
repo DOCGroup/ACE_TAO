@@ -101,8 +101,7 @@ public:
   Handler (void) {};
 
   void foo (CORBA::Long result,
-            CORBA::Long out_l
-            ACE_ENV_ARG_DECL_NOT_USED)
+            CORBA::Long out_l)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       if (debug)
@@ -116,29 +115,23 @@ public:
       number_of_replies--;
     };
 
-   void foo_excep (::Messaging::ExceptionHolder * excep_holder
-                  ACE_ENV_ARG_DECL)
+   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"));
-      ACE_TRY
+      try
         {
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught exception:");
+          ex._tao_print_exception ("Caught exception:");
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     };
 
-  void get_yadda (CORBA::Long result
-                  ACE_ENV_ARG_DECL_NOT_USED)
+  void get_yadda (CORBA::Long result)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -146,23 +139,21 @@ public:
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  void get_yadda_excep (::Messaging::ExceptionHolder *)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
-  void set_yadda (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void set_yadda (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called: \n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  void set_yadda_excep (::Messaging::ExceptionHolder *)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -178,12 +169,10 @@ int
 main (int argc, char *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_client"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -191,12 +180,10 @@ main (int argc, char *argv[])
       ACE_OS::socket_init ();
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       A::AMI_Test_var server =
-        A::AMI_Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        A::AMI_Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -209,8 +196,7 @@ main (int argc, char *argv[])
       // Activate POA to handle the call back.
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -218,15 +204,12 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
 
@@ -253,13 +236,11 @@ main (int argc, char *argv[])
       while (number_of_replies > 0)
         {
           CORBA::Boolean pending =
-            orb->work_pending(ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->work_pending();
 
           if (pending)
             {
-              orb->perform_work(ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->perform_work();
             }
         }
 
@@ -279,19 +260,15 @@ main (int argc, char *argv[])
 
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         );
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   ACE_END_TEST;
   return 0;
@@ -304,13 +281,13 @@ Client::Client (A::AMI_Test_ptr server,
                 :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
      niterations_ (niterations)
 {
-  the_handler_var_ = handler._this (/* ACE_ENV_SINGLE_ARG_PARAMETER */);
+  the_handler_var_ = handler._this (/* */);
 }
 
 int
 Client::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Long number = 931232;
 
@@ -318,9 +295,7 @@ Client::svc (void)
         {
           ami_test_var_->sendc_foo (the_handler_var_.in (),
                                     number,
-                                    "Let's talk AMI."
-                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                    "Let's talk AMI.");
         }
       if (debug)
         {
@@ -329,11 +304,9 @@ Client::svc (void)
                       niterations));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "MT_Client: exception raised");
+      ex._tao_print_exception ("MT_Client: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }

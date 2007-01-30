@@ -837,8 +837,8 @@ get_ip_interfaces_getifaddrs (size_t &count,
 {
   // Take advantage of the BSD getifaddrs function that simplifies
   // access to connected interfaces.
-  struct ifaddrs *ifap;
-  struct ifaddrs *p_if;
+  struct ifaddrs *ifap = 0;
+  struct ifaddrs *p_if = 0;
 
   if (::getifaddrs (&ifap) != 0)
     return -1;
@@ -1227,11 +1227,8 @@ ACE::get_ip_interfaces (size_t &count,
   return get_ip_interfaces_aix (count, addrs);
 #elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
   return get_ip_interfaces_vxworks_lt600 (count, addrs);
-
 #elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE
-
-  size_t num_ifs, num_ifs_found;
 
   // Call specific routine as necessary.
   ACE_HANDLE handle = ACE::get_handle();
@@ -1241,6 +1238,8 @@ ACE::get_ip_interfaces (size_t &count,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE::get_ip_interfaces:open")),
                       -1);
+
+  size_t num_ifs, num_ifs_found;
 
   if (ACE::count_interfaces (handle, num_ifs))
     {

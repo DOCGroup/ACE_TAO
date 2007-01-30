@@ -110,28 +110,25 @@ class Test
 {
 public:
   static void run (CORBA::ORB_ptr orb,
-                   char *IOR
-                   ACE_ENV_ARG_DECL)
+                   char *IOR)
   {
     if (IOR != 0)
       {
         // Get an object reference from the argument string.
-        CORBA::Object_var object = orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        CORBA::Object_var object = orb->string_to_object (IOR);
 
-        /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
+        /*if (.exception () != 0)
           {
-            ACE_ENV_ARG_PARAMETER.print_exception ("CORBA::ORB::string_to_object");
+.print_exception ("CORBA::ORB::string_to_object");
             return;
           }
         */
         // Try to narrow the object reference to a reference.
-        T_var test = T::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        T_var test = T::_narrow (object.in ());
 
-        /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
+        /*if (.exception () != 0)
           {
-            ACE_ENV_ARG_PARAMETER.print_exception ("_narrow");
+.print_exception ("_narrow");
             return;
           }
         */
@@ -146,8 +143,7 @@ public:
         for (i = 0; i < iterations ; i++)
           {
             // Invoke the doit() method on the reference.
-            result = test->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_CHECK;
+            result = test->doit ();
           }
 
         // stop the timer.
@@ -157,9 +153,9 @@ public:
         // compute average time.
         print_stats (elapsed_time, i);
 
-        /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
+        /*if (.exception () != 0)
           {
-            ACE_ENV_ARG_PARAMETER.print_exception ("doit");
+.print_exception ("doit");
             return;
           }
         */
@@ -174,12 +170,10 @@ public:
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
         // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -189,42 +183,28 @@ main (int argc, char **argv)
       int i = 1;
 
       Test<A, A_var>::run (orb.in (),
-                           IOR[i++]
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                           IOR[i++]);
 
       Test<Outer::B, Outer::B_var>::run (orb.in (),
-                                         IOR[i++]
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         IOR[i++]);
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
-                                                       IOR[i++]
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                       IOR[i++]);
 
       Test<A, A_var>::run (orb.in (),
-                           IOR[i++]
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                           IOR[i++]);
 
       Test<Outer::B, Outer::B_var>::run (orb.in (),
-                                         IOR[i++]
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         IOR[i++]);
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
-                                                       IOR[i++]
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                       IOR[i++]);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception Caught in main");
+      ex._tao_print_exception ("Exception Caught in main");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

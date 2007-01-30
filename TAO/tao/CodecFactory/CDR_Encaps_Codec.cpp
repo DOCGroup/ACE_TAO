@@ -44,13 +44,12 @@ TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
-                              ACE_ENV_ARG_DECL)
+                              )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                );
 
   // ----------------------------------------------------------------
 
@@ -84,7 +83,6 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
@@ -108,7 +106,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
 
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
-                              ACE_ENV_ARG_DECL)
+                              )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::FormatMismatch))
 {
@@ -159,7 +157,6 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
                             0,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any = any;
 
@@ -173,13 +170,12 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
 
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
-                                    ACE_ENV_ARG_DECL)
+                                    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                );
 
   // ----------------------------------------------------------------
   TAO_OutputCDR cdr ((size_t) 0,            // size
@@ -216,8 +212,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
           TAO_Marshal_Object::perform_append (data._tao_get_typecode (),
                                               &for_reading,
                                               &cdr
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                             );
         }
       else
         {
@@ -237,7 +232,6 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                               ),
                             CORBA::COMPLETED_NO
                           ));
-      ACE_CHECK_RETURN (0);
 
       CORBA::OctetSeq_var safe_octet_seq = octet_seq;
 
@@ -265,7 +259,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                                     CORBA::TypeCode_ptr tc
-                                    ACE_ENV_ARG_DECL)
+                                    )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    IOP::Codec::FormatMismatch,
                    IOP::Codec::TypeMismatch))
@@ -333,7 +327,6 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                               ),
                             CORBA::COMPLETED_NO
                           ));
-      ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any = any;
 
@@ -353,7 +346,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 void
 TAO_CDR_Encaps_Codec::check_type_for_encoding (
     const CORBA::Any & data
-    ACE_ENV_ARG_DECL
+
   )
 {
   // @@ TODO: Are there any other conditions we need to check?
@@ -361,8 +354,8 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (
   CORBA::TypeCode_var typecode = data.type ();
   if (this->major_ == 1
       && this->minor_ == 0
-      && typecode->equivalent (CORBA::_tc_wstring ACE_ENV_ARG_PARAMETER))
-    ACE_THROW (IOP::Codec::InvalidTypeForEncoding ());
+      && typecode->equivalent (CORBA::_tc_wstring))
+    throw IOP::Codec::InvalidTypeForEncoding ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

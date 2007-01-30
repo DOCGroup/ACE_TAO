@@ -70,7 +70,7 @@ namespace CIAO_GLUE
 
     // get_component implementation.
     virtual CORBA::Object_ptr
-    _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    _get_component ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
@@ -108,55 +108,53 @@ namespace CIAO_GLUE
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
 ##  if [receptacle name] is a simplex receptacle ('uses')
     [uses type]_ptr
-    get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_connection_[receptacle name] ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // [receptacle name]Connections typedef'ed as a sequence of
     // struct [receptacle name]Connection.
     [receptacle name]Connections *
-    get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    get_connections_[receptacle name] ();
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##  endif [receptacle name]
 ##end foreach [receptacle name] with [uses type]
 
 ##foreach [event name] with [eventtype] in (list of all event sources) generate:
-    void push_[event name] ([eventtype] *ev
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    void push_[event name] ([eventtype] *ev)
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##end foreach [event name] with [eventtype]
 
     // Operations for ::Components::CCMContext
     virtual ::Components::Principal_ptr
-    get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_caller_principal ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::CCMHome_ptr
-    get_CCM_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_CCM_home ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Boolean
-    get_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_rollback_only ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 
     virtual ::Components::Transaction::UserTransaction_ptr
-    get_user_transaction (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_user_transaction ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 
     virtual CORBA::Boolean
-    is_caller_in_role (const char * role
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    is_caller_in_role (const char * role)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    set_rollback_only (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    set_rollback_only ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 
     // Operations for ::Components::SessionContext interface
     virtual CORBA::Object_ptr
-    get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_CCM_object ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
   protected:
@@ -167,14 +165,13 @@ namespace CIAO_GLUE
 ##  if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
     void
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_[receptacle name] ([uses type]_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::AlreadyConnected,
                        ::Components::InvalidConnection));
 
     [uses type]_ptr
-    disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    disconnect_[receptacle name] ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::NoConnection));
 
@@ -184,15 +181,13 @@ namespace CIAO_GLUE
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
     ::Components::Cookie *
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_[receptacle name] ([uses type]_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceedConnectionLimit,
                        ::Components::InvalidConnection));
 
     [uses type]_ptr
-    disconnect_[receptacle name] (::Components::Cookie *ck
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    disconnect_[receptacle name] (::Components::Cookie *ck)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
 
@@ -205,13 +200,12 @@ namespace CIAO_GLUE
     // Operations for emits interfaces.
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
     void
-    connect_[emit name] ([eventtype]Consumer_ptr c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_[emit name] ([eventtype]Consumer_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::AlreadyConnected));
 
     [eventtype]Consumer_ptr
-    disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    disconnect_[emit name] ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::NoConnection));
 
@@ -221,14 +215,12 @@ namespace CIAO_GLUE
     // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
       ::Components::Cookie *
-      subscribe_[publish name] ([eventtype]Consumer_ptr c
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      subscribe_[publish name] ([eventtype]Consumer_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
       [eventtype]Consumer_ptr
-      unsubscribe_[publish name] (::Components::Cookie *ck
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      unsubscribe_[publish name] (::Components::Cookie *ck)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
 
@@ -273,7 +265,7 @@ namespace CIAO_GLUE
     // Operations for provides interfaces.
 ##foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
     virtual [facet type]_ptr
-    provide_[facet name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    provide_[facet name] ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##end foreach [facet name] with [facet type]
 
@@ -283,37 +275,34 @@ namespace CIAO_GLUE
 ##  if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
     virtual void
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_[receptacle name] ([uses type]_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::AlreadyConnected,
                        ::Components::InvalidConnection));
 
     virtual [uses type]_ptr
-    disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    disconnect_[receptacle name] ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::NoConnection));
 
     virtual [uses type]_ptr
-    get_connection_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_connection_[receptacle name] ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
     virtual ::Components::Cookie *
-    connect_[receptacle name] ([uses type]_ptr c
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_[receptacle name] ([uses type]_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceedConnectionLimit,
                        ::Components::InvalidConnection));
 
     virtual [uses type]_ptr
-    disconnect_[receptacle name] (::Components::Cookie *ck
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    disconnect_[receptacle name] (::Components::Cookie *ck)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
 
     virtual [receptacle name]Connections *
-    get_connections_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_connections_[receptacle name] ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##  endif [receptacle name]
 ##end foreach [receptacle name] with [uses type]
@@ -333,20 +322,18 @@ namespace CIAO_GLUE
       ~[event type]Consumer_[consumer name]_Servant ();
 
 ##  foreach [type] in ([eventtype] and all its parent eventtype, if any)
-      virtual void push_[type] ([type] *evt
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      virtual void push_[type] ([type] *evt)
         ACE_THROW_SPEC ((CORBA::SystemException));
 ##  end [type]
 
       // Inherit from ::Compopnents::EventConsumerBase
-      virtual void push_event (::Components::EventBase *ev
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      virtual void push_event (::Components::EventBase *ev)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          ::Components::BadEventType));
 
     // get_component implementation.
       virtual CORBA::Object_ptr
-      _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      _get_component ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
@@ -358,20 +345,19 @@ namespace CIAO_GLUE
     };
 
     virtual [eventtype]Consumer_ptr
-    get_consumer_[consumer name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_consumer_[consumer name] ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##end foreach [consumer name] with [eventtype]
 
     // Operations for emits interfaces.
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
     virtual void
-    connect_[emit name] ([eventtype]Consumer_ptr c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    connect_[emit name] ([eventtype]Consumer_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException
                        ::Components::AlreadyConnected));
 
     virtual [eventtype]Consumer_ptr
-    disconnect_[emit name] (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    disconnect_[emit name] ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::NoConnection));
 ##end foreach [emit name] with [eventtype]
@@ -379,45 +365,39 @@ namespace CIAO_GLUE
     // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
     virtual ::Components::Cookie *
-    subscribe_[publish name] ([eventtype]Consumer_ptr c
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    subscribe_[publish name] ([eventtype]Consumer_ptr c)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
     virtual [eventtype]Consumer_ptr
-    unsubscribe_[publish name] (::Components::Cookie *ck
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    unsubscribe_[publish name] (::Components::Cookie *ck)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
 ##end foreach [publish name] with [eventtype]
 
     // Operations for Navigation interface
     virtual CORBA::Object_ptr
-    provide_facet (const char * name
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    provide_facet (const char * name)
       ACE_THROW_SPEC ((CORBA::SystemException ,
                        Components::InvalidName)) ;
 
     virtual ::Components::FacetDescriptions *
-    get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_facets ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::FacetDescriptions *
-    get_named_facets (const Components::NameList & names
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_facets (const Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException ,
                        Components::InvalidName));
 
     virtual CORBA::Boolean
-    same_component (CORBA::Object_ptr object_ref
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    same_component (CORBA::Object_ptr object_ref)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations for Receptacles interface
     virtual ::Components::Cookie *
     connect (const char * name,
-             CORBA::Object_ptr connection
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             CORBA::Object_ptr connection)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::InvalidConnection,
@@ -426,8 +406,7 @@ namespace CIAO_GLUE
 
     virtual CORBA::Object_ptr
     disconnect (const char * name,
-                Components::Cookie *ck
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                Components::Cookie *ck)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::InvalidConnection,
@@ -435,32 +414,28 @@ namespace CIAO_GLUE
                        Components::NoConnection));
 
     virtual ::Components::ConnectionDescriptions *
-    get_connections (const char * name
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_connections (const char * name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_receptacles ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_named_receptacles (const Components::NameList & names
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_receptacles (const Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     // Operations for Events interface
     virtual ::Components::EventConsumerBase_ptr
-    get_consumer (const char * sink_name
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_consumer (const char * sink_name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::Cookie *
     subscribe (const char * publisher_name,
-               Components::EventConsumerBase_ptr subscriber
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+               Components::EventConsumerBase_ptr subscriber)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::InvalidConnection,
@@ -468,100 +443,94 @@ namespace CIAO_GLUE
 
     virtual ::Components::EventConsumerBase_ptr
     unsubscribe (const char * publisher_name,
-                 Components::Cookie *ck
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                 Components::Cookie *ck)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::InvalidConnection));
 
     virtual void
     connect_consumer (const char * emitter_name,
-                      Components::EventConsumerBase_ptr consumer
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      Components::EventConsumerBase_ptr consumer)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::AlreadyConnected,
                        Components::InvalidConnection));
 
     virtual ::Components::EventConsumerBase_ptr
-    disconnect_consumer (const char * source_name
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    disconnect_consumer (const char * source_name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::NoConnection));
 
     virtual ::Components::ConsumerDescriptions *
-    get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_consumers ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::ConsumerDescriptions *
-    get_named_consumers (const Components::NameList & names
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_consumers (const Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::EmitterDescriptions *
-    get_all_emitters (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_emitters ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::EmitterDescriptions *
-    get_named_emitters (const Components::NameList & names
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_emitters (const Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     virtual ::Components::PublisherDescriptions *
-    get_all_publishers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_publishers ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::PublisherDescriptions *
-    get_named_publishers (const Components::NameList & names
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_named_publishers (const Components::NameList & names)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
     // Operations for CCMObject interface
     virtual ::CORBA::IRObject_ptr
-    get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_component_def ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::CCMHome_ptr
-    get_ccm_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_ccm_home ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::PrimaryKeyBase *
-    get_primary_key (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_primary_key ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::NoKeyAvailable));
 
     virtual void
-    configuration_complete (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    configuration_complete ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidConfiguration));
 
     virtual void
-    remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
     virtual ::Components::ComponentPortDescription *
-    get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_all_ports ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // get_component implementation.
     virtual CORBA::Object_ptr
-    _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    _get_component ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // CIAO specific operations.
 
     // Activate the object in the container_
     void
-    _ciao_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    _ciao_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    _ciao_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
@@ -613,7 +582,7 @@ namespace CIAO_GLUE
     // for factory operations inherit from parent home(s), they should return
     // the corresponding component types their homes manage
     virtual [component name]_ptr
-    [factory name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    [factory name] (....)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::CreateFailure,
                        ....));
@@ -624,7 +593,7 @@ namespace CIAO_GLUE
     // for finder operations inherit from parent home(s), they should return
     // the corresponding component types their homes manage
     virtual [component name]_ptr
-    [finder name] (.... ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    [finder name] (....)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::FinderFailure,
                        ....));
@@ -634,7 +603,7 @@ namespace CIAO_GLUE
 
     // Operations for KeylessHome interface
     virtual ::Components::CCMObject_ptr
-    create_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create_component ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
@@ -642,65 +611,58 @@ namespace CIAO_GLUE
 
     // We do not support key'ed home at the moment but we might
     // as well generate the mapping.
-    virtual [component name]_ptr create ([key type] *key
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual [component name]_ptr create ([key type] *key)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::CreationFailure,
                        ::Components::DuplicateKeyValue,
                        ::Components::InvalidKey));
 
     virtual [component name]_ptr
-    find_by_primary_key ([key type] *key
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    find_by_primary_key ([key type] *key)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::FinderFailure,
                        ::Components::UnknownKeyValue,
                        ::Components::InvalidKey));
 
-    virtual void remove ([key type] *key
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void remove ([key type] *key)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::RemoveFailure,
                        ::Components::UnknownKeyValue,
                        ::Components::InvalidKey));
 
     virtual [key type] *
-    get_primary_key ([component name]_ptr comp
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    get_primary_key ([component name]_ptr comp)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 ##  endif (keyed or keyless home)
 
     // Operations for Implicit Home interface
     virtual [component name]_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
     // Operations for CCMHome interface
     virtual ::CORBA::IRObject_ptr
-    get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_component_def ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::CORBA::IRObject_ptr
-    get_home_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    get_home_def ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void remove_component (Components::CCMObject_ptr comp
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void remove_component (Components::CCMObject_ptr comp)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
   protected:
     // Helper method for factory operations.
      [component name]_ptr
-     _ciao_activate_component (CCM_[component name]_ptr exe
-                               ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+     _ciao_activate_component (CCM_[component name]_ptr exe)
        ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    _ciao_passivate_component ([component name]_ptr comp
-                               ACE_ENV_SINGLE_ARG_DECL)
+    _ciao_passivate_component ([component name]_ptr comp)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // My Executor.
@@ -721,8 +683,7 @@ namespace CIAO_GLUE
 
 extern "C" [SERVANT]_Export ::PortableServer::Servant
 create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
-                           CIAO::Session_Container *c
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                           CIAO::Session_Container *c);
 
 #if defined (__ACE_INLINE__)
 # include "[idl-name]_svnt.inl"

@@ -57,7 +57,7 @@ public:
 
 public:
 
-  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::ValueBase * create_for_unmarshal (void);
 
 };
 

@@ -49,8 +49,7 @@ Trading_Service::~Trading_Service (void)
 
 int
 Trading_Service::init (int argc,
-                       ACE_TCHAR *argv[]
-                       ACE_ENV_ARG_DECL_NOT_USED)
+                       ACE_TCHAR *argv[])
 {
   int result_trader =
     this->trading_loader_.init (argc, argv);
@@ -62,13 +61,12 @@ Trading_Service::init (int argc,
 }
 
 int
-Trading_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Trading_Service::run (void)
 {
   Trading_Shutdown trading_shutdown (*this);
 
   int return_value =
-    this->trading_loader_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->trading_loader_.run ();
 
   return return_value;
 }

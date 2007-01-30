@@ -22,27 +22,27 @@ public:
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
   // = The skeleton methods
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void throw_exception (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void throw_exception (void)
     ACE_THROW_SPEC ((CORBA::SystemException, Test::MyException));
-    
-  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  virtual CORBA::Boolean call_back (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  virtual CORBA::Boolean check_request_id (ACE_ENV_SINGLE_ARG_DECL)
+
+  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong drop_down_dead (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Boolean call_back (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-        
+
+  virtual CORBA::Boolean check_request_id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::ULong drop_down_dead (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   static CORBA::Boolean ids_differ_;
 
 private:

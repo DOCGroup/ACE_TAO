@@ -42,9 +42,8 @@ Server_Task::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start doing some work....\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Before start
       CORBA::ULong connection_no =
@@ -55,8 +54,7 @@ Server_Task::svc (void)
           if (i%50 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sending message ....\n"));
 
-          this->sender_->send_message (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sender_->send_message ();
 
           // Sanity check for connections..
           if (connection_no <
@@ -74,12 +72,10 @@ Server_Task::svc (void)
 
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in iteration.\n");
+      ex._tao_print_exception ("Caught exception in iteration.\n");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

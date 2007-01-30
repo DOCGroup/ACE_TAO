@@ -34,8 +34,7 @@ public:
   void recv_reply (CORBA::Long id);
   // Keep track of the progress on each peer
 
-  CORBA::Long bind (Peer_ptr a_peer
-                    ACE_ENV_ARG_DECL);
+  CORBA::Long bind (Peer_ptr a_peer);
   // One of the peers has bound to the server
 
   void start (void);
@@ -74,14 +73,11 @@ public:
   // ctor
 
   // = The Progress methods.
-  void sent_request (CORBA::Long id
-                     ACE_ENV_ARG_DECL)
+  void sent_request (CORBA::Long id)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void recv_reply (CORBA::Long id
-                   ACE_ENV_ARG_DECL)
+  void recv_reply (CORBA::Long id)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  CORBA::Long bind (Peer_ptr a_peer
-                    ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Long bind (Peer_ptr a_peer)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

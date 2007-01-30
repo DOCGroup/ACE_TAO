@@ -32,11 +32,6 @@ class TAO_Thread_Lane_Resources;
 class TAO_LF_Strategy;
 class TAO_MProfile;
 
-namespace CORBA
-{
-  class Environment;
-}
-
 /**
  * @class TAO_Thread_Lane_Resources_Manager
  *
@@ -59,7 +54,7 @@ public:
   virtual void finalize (void) = 0;
 
   /// Open default resources.
-  virtual int open_default_resources (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int open_default_resources (void) = 0;
 
   /// Shutdown reactor.
   virtual void shutdown_reactor (void) = 0;

@@ -24,7 +24,7 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 }
 
 void
-Server_Request_Interceptor::reset (ACE_ENV_ARG_DECL)
+Server_Request_Interceptor::reset ()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->request_count_ = 0;
@@ -34,44 +34,40 @@ Server_Request_Interceptor::reset (ACE_ENV_ARG_DECL)
 void
 Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
-  CORBA::Object_ptr obj2
-  ACE_ENV_ARG_DECL)
+  CORBA::Object_ptr obj2)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
-    ACE_THROW (CORBA::INV_OBJREF (
-                 CORBA::SystemException::_tao_minor_code (
-                   TAO::VMCID,
-                   EINVAL),
-                 CORBA::COMPLETED_NO));
+    throw CORBA::INV_OBJREF (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EINVAL),
+      CORBA::COMPLETED_NO);
 
   char *argv[] = {NULL};
   int   argc = 0;
-  
+
   // Fetch the ORB having been initialized in main()
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CORBA::ORB_init (argc, argv, "Server ORB");
 
-  CORBA::String_var str1 = orb->object_to_string (obj1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var str1 = orb->object_to_string (obj1);
 
-  CORBA::String_var str2 = orb->object_to_string (obj2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var str2 = orb->object_to_string (obj2);
 
-  this->obj_[0] = orb->string_to_object (str1.in () ACE_ENV_ARG_PARAMETER);
-  this->obj_[1] = orb->string_to_object (str2.in () ACE_ENV_ARG_PARAMETER);
+  this->obj_[0] = orb->string_to_object (str1.in ());
+  this->obj_[1] = orb->string_to_object (str2.in ());
 }
 
 char *
-Server_Request_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Request_Interceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::release (this->obj_[0]);
@@ -80,8 +76,7 @@ Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -95,9 +90,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
   if (this->forward_request_thrown_ == true)
     {
       IOP::ServiceContext_var svc =
-        ri->get_request_service_context (IOP::FT_GROUP_VERSION
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
       // extract the group component
       TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
@@ -130,8 +123,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
 
 void
 Server_Request_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -147,15 +139,13 @@ Server_Request_Interceptor::receive_request (
       this->forward_request_thrown_ = true;
 
       // Throw forward exception
-      ACE_THROW (PortableInterceptor::ForwardRequest (this->obj_[1]));
+      throw PortableInterceptor::ForwardRequest (this->obj_[1]);
     }
 
   if (this->forward_request_thrown_ == true)
     {
       IOP::ServiceContext_var svc =
-        ri->get_request_service_context (IOP::FT_GROUP_VERSION
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
       // extract the group component
       TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
@@ -189,16 +179,14 @@ Server_Request_Interceptor::receive_request (
 
 void
 Server_Request_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -206,8 +194,7 @@ Server_Request_Interceptor::send_exception (
 
 void
 Server_Request_Interceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

@@ -61,8 +61,7 @@ public:
   // Constructor
 
   virtual void next_chunk (const Web_Server::Chunk_Type &chunk,
-                           CORBA::Boolean last_chunk
-                           ACE_ENV_ARG_DECL)
+                           CORBA::Boolean last_chunk)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns the next <chunk> of the file starting at
   // <offset>.  If there are no more bindings, false is returned.
@@ -92,7 +91,7 @@ private:
 
 private:
 
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
   // Deactivate this Callback servant.
 
 private:

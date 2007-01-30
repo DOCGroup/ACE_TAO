@@ -38,8 +38,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 CORBA::Boolean
-catiiop (char* string
-         ACE_ENV_ARG_DECL)
+catiiop (char* string)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
@@ -155,8 +154,7 @@ CORBA::Boolean
 cat_profile_helper(TAO_InputCDR& stream, const char *protocol);
 
 CORBA::Boolean
-catior (char const * str
-        ACE_ENV_ARG_DECL_NOT_USED)
+catior (char const * str)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -341,8 +339,7 @@ catior (char const * str
 // : interface_marker
 
 CORBA::Boolean
-catpoop (char* string
-        ACE_ENV_ARG_DECL)
+catpoop (char* string)
 {
   if (!string || !*string)
     return 0;
@@ -459,11 +456,10 @@ catpoop (char* string
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_Argv_Type_Converter argcon (argcw, argvw);
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argcon.get_argc (),
                                              argcon.get_ASCII_argv (),
-                                             "TAO" ACE_ENV_ARG_PARAMETER);
+                                             "TAO");
   CORBA::Boolean b = 0;
   CORBA::Boolean have_argument = 0;
   int opt;
@@ -489,15 +485,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
             CORBA::Object_var server_object;
 
-            ACE_TRY
+            try
               {
                 // Find the Naming Service.
                 CORBA::Object_var naming_context_object =
-                  orb_var->resolve_initial_references ("NameService"
-                                                       ACE_ENV_ARG_PARAMETER);
+                  orb_var->resolve_initial_references ("NameService");
                 CosNaming::NamingContextExt_var naming_context =
-                  CosNaming::NamingContextExt::_narrow (naming_context_object.in ()
-                                                        ACE_ENV_ARG_PARAMETER);
+                  CosNaming::NamingContextExt::_narrow (naming_context_object.in ());
 
                 if (CORBA::is_nil (naming_context.in ()))
                 {
@@ -507,13 +501,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 }
 
                 CosNaming::Name *name =
-                  naming_context->to_name (get_opt.opt_arg ()
-                                           ACE_ENV_ARG_PARAMETER);
+                  naming_context->to_name (get_opt.opt_arg ());
 
-                ACE_TRY_EX (RESOLUTION)
+                try
                   {
-                    server_object = naming_context->resolve (*name
-                                                         ACE_ENV_ARG_PARAMETER);
+                    server_object = naming_context->resolve (*name);
                       if (CORBA::is_nil (server_object.in ()))
                       {
                         ACE_ERROR_RETURN ((LM_ERROR,
@@ -521,7 +513,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                           -1);
                       }
                   }
-                ACE_CATCH (const CosNaming::NamingContext::NotFound, nf)
+                catch (const CosNaming::NamingContext::NotFound& nf)
                   {
                     const char     *reason;
 
@@ -546,7 +538,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       reason),
                                      -1);
                   }
-                ACE_CATCH (const CosNaming::NamingContext::InvalidName, in)
+                catch (const CosNaming::NamingContext::InvalidName&)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -555,7 +547,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       get_opt.opt_arg ()),
                                      -1);
                   }
-                ACE_CATCH (const CosNaming::NamingContext::CannotProceed, cp)
+                catch (const CosNaming::NamingContext::CannotProceed&)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -564,7 +556,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       get_opt.opt_arg ()),
                                      -1);
                   }
-                ACE_CATCHANY
+                catch (const CORBA::Exception&)
                   {
                     ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -573,12 +565,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                        argvw[0]),
                                       -1);
                   }
-                ACE_ENDTRY;
 
                 ACE_CString aString;
 
-                aString = orb_var->object_to_string (server_object.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
+                aString = orb_var->object_to_string (server_object.in ());
 
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
@@ -599,7 +589,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                          aString.length () - prefixLength);
                     subString[subString.length ()] = '\0';
                     str = subString.rep ();
-                    b = catior (str ACE_ENV_ARG_PARAMETER);
+                    b = catior (str);
                   }
                 else if (aString.find ("iiop:") == 0)
                   {
@@ -614,7 +604,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                          aString.length () - prefixLength);
                     //subString[subString.length () - 1] = '\0';
                     str = subString.rep ();
-                    b = catiiop (str ACE_ENV_ARG_PARAMETER);
+                    b = catiiop (str);
                   }
                 else if (aString.find (":IR:") > 0)
                   {
@@ -622,7 +612,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                 "decoding an POOP IOR\n"));
 
                     str = aString.rep ();
-                    b = catpoop (str ACE_ENV_ARG_PARAMETER);
+                    b = catpoop (str);
                   }
                 else
                   ACE_ERROR ((LM_ERROR,
@@ -630,7 +620,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                 delete [] str;
               }
-            ACE_CATCHANY
+            catch (const CORBA::Exception&)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "%s cannot be resolved, exception reason = "
@@ -639,7 +629,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                    argvw[0]),
                                   -1);
               }
-            ACE_ENDTRY;
 
             if (b == 1)
               ACE_DEBUG ((LM_DEBUG,
@@ -770,7 +759,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                          aString.length () - prefixLength);
                     subString[subString.length ()] = '\0';
                     str = subString.rep ();
-                    b = catior (str ACE_ENV_ARG_PARAMETER);
+                    b = catior (str);
                   }
                 else if (aString.find ("iiop:") == 0)
                   {
@@ -785,7 +774,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                          aString.length () - prefixLength);
                     //subString[subString.length () - 1] = '\0';
                     str = subString.rep ();
-                    b = catiiop (str ACE_ENV_ARG_PARAMETER);
+                    b = catiiop (str);
                   }
                 else if (aString.find (":IR:") > 0)
                   {
@@ -793,7 +782,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                 "decoding an POOP IOR\n"));
 
                     str = aString.rep ();
-                    b = catpoop (str ACE_ENV_ARG_PARAMETER);
+                    b = catpoop (str);
                   }
                 else
                   ACE_ERROR ((LM_ERROR,
@@ -925,7 +914,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                          aString.length () - prefixLength);
                     subString[subString.length ()] = '\0';
                     str = subString.rep ();
-                    b = catior (str ACE_ENV_ARG_PARAMETER);
+                    b = catior (str);
                   }
                 else if (aString.find ("iiop:") == 0)
                   {
@@ -940,7 +929,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                          aString.length () - prefixLength);
                     //subString[subString.length () - 1] = '\0';
                     str = subString.rep ();
-                    b = catiiop (str ACE_ENV_ARG_PARAMETER);
+                    b = catiiop (str);
                   }
                 else if (aString.find (":IR:") > 0)
                   {
@@ -948,7 +937,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                 "decoding an POOP IOR\n"));
 
                     str = aString.rep ();
-                    b = catpoop (str ACE_ENV_ARG_PARAMETER);
+                    b = catpoop (str);
                   }
                 else
                   ACE_ERROR ((LM_ERROR,

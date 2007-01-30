@@ -46,8 +46,7 @@ main (int argc, char *argv[])
                   argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -88,17 +87,13 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       ACE_Argv_Type_Converter atc (argc, argv);
       CORBA::ORB_var orb =
         CORBA::ORB_init (atc.get_argc (),
                          atc.get_TCHAR_argv (),
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -127,12 +122,11 @@ main (int argc, char *argv[])
           return 1;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR: Some exception was caught in main().\n"));
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

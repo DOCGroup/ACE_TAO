@@ -102,7 +102,7 @@ namespace TAO
 
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant
-                           ACE_ENV_ARG_DECL);
+                          );
 
 
     private:
@@ -145,9 +145,9 @@ namespace TAO
       TP_Queue queue_;
 
       typedef ACE_Array <ACE_thread_t> Thread_Ids;
-            
+
       /// The list of ids for the threads launched by this task.
-      Thread_Ids activated_threads_; 
+      Thread_Ids activated_threads_;
     };
 
   }

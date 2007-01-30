@@ -26,11 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // This is used in the implementation of the _raise methods
-#if defined (TAO_HAS_EXCEPTIONS)
 #define TAO_RAISE(EXCEPTION) throw EXCEPTION
-#else
-#define TAO_RAISE(EXCEPTION)
-#endif /* ACE_HAS_EXCEPTIONS */
 
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
@@ -154,10 +150,10 @@ namespace CORBA
     virtual ACE_CString _info (void) const = 0;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL) const = 0;
+                              ) const = 0;
 
     virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL) = 0;
+                              ) = 0;
 
     /// Used in the non-copying Any insertion operator.
     static void _tao_any_destructor (void *);

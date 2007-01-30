@@ -12,26 +12,19 @@ namespace Test
   try_main (int argc,
             char *argv[])
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
 
-    ACE_TRY
+    try
       {
         CORBA::ORB_var orb =
           CORBA::ORB_init (argc,
                            argv,
-                           ""
-                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                           "");
 
         CORBA::Object_var poa_object =
-          orb->resolve_initial_references("RootPOA"
-                                          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          orb->resolve_initial_references("RootPOA");
 
         PortableServer::POA_var root_poa =
-          PortableServer::POA::_narrow (poa_object.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          PortableServer::POA::_narrow (poa_object.in ());
 
         if (CORBA::is_nil (root_poa.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -39,8 +32,7 @@ namespace Test
                             1);
 
         PortableServer::POAManager_var poa_manager =
-          root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          root_poa->the_POAManager ();
 
         test_i *test_impl;
         ACE_NEW_RETURN (test_impl,
@@ -49,13 +41,10 @@ namespace Test
         PortableServer::ServantBase_var owner_transfer (test_impl);
 
         Hang_var test =
-          test_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          test_impl->_this ();
 
         CORBA::String_var ior =
-          orb->object_to_string (test.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          orb->object_to_string (test.in ());
 
         // If the ior_output_file exists, output the ior to it
         FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -67,8 +56,7 @@ namespace Test
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
 
-        poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        poa_manager->activate ();
 
         ACE_Time_Value tv (10);
 
@@ -78,20 +66,15 @@ namespace Test
                     "(%P|%t) server - event loop finished\n"));
 
         root_poa->destroy (1,
-                           1
-                           ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                           1);
 
-        orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        orb->destroy ();
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "Caught CORBA exception \n");
+        ex._tao_print_exception ("Caught CORBA exception \n");
         return -1;
       }
-    ACE_ENDTRY;
 
     return 0;
   }

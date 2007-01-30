@@ -17,13 +17,11 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 }
 
 void
-Roundtrip::invoke (CORBA::ServerRequest_ptr request
-                   ACE_ENV_ARG_DECL)
+Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 {
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
-      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->shutdown (0);
 
       return;
     }
@@ -31,20 +29,15 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->create_list (0, list);
 
       CORBA::Any type_id;
       type_id._tao_set_typecode (CORBA::_tc_string);
-      list->add_value ("type_id", type_id, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("type_id", type_id, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
-      CORBA::NamedValue_ptr nv = list->item (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (0);
 
       const char *arg;
       *(nv->value ()) >>= arg;
@@ -58,8 +51,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       CORBA::Any result;
       result <<= CORBA::Any::from_boolean (type_matches);
 
-      request->set_result (result ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (result);
 
       return;
     }
@@ -67,32 +59,25 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_octet_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->create_list (0, list);
 
 		  // Set up the argument list
 
 	    CORBA::Any octet_load;
       octet_load._tao_set_typecode (Test::_tc_octet_load);
-	    list->add_value ("octet_load", octet_load, CORBA::ARG_IN
-					     ACE_ENV_ARG_PARAMETER);
+	    list->add_value ("octet_load", octet_load, CORBA::ARG_IN);
 
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
-      list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
 	    // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (1);
 
-      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (*(nv->value ()));
 
       return;
     }
@@ -100,33 +85,25 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_long_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->create_list (0, list);
 
 		  // Set up the argument list
 
 	    CORBA::Any long_load;
       long_load._tao_set_typecode (Test::_tc_long_load);
-	    list->add_value ("long_load", long_load, CORBA::ARG_IN
-					     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+	    list->add_value ("long_load", long_load, CORBA::ARG_IN);
 
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
-      list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
 	    // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (1);
 
-      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (*(nv->value ()));
 
       return;
     }
@@ -134,33 +111,25 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_short_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->create_list (0, list);
 
 		  // Set up the argument list
 
 	    CORBA::Any short_load;
       short_load._tao_set_typecode (Test::_tc_short_load);
-	    list->add_value ("short_load", short_load, CORBA::ARG_IN
-					     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+	    list->add_value ("short_load", short_load, CORBA::ARG_IN);
 
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
-      list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
 	    // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (1);
 
-      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (*(nv->value ()));
 
       return;
     }
@@ -168,33 +137,25 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_char_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->create_list (0, list);
 
 		  // Set up the argument list
 
 	    CORBA::Any char_load;
       char_load._tao_set_typecode (Test::_tc_char_load);
-	    list->add_value ("char_load", char_load, CORBA::ARG_IN
-					     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+	    list->add_value ("char_load", char_load, CORBA::ARG_IN);
 
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
-      list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
 	    // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (1);
 
-      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (*(nv->value ()));
 
       return;
     }
@@ -202,33 +163,25 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_longlong_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-		
+      this->orb_->create_list (0, list);
+
 		  // Set up the argument list
 
 	    CORBA::Any longlong_load;
       longlong_load._tao_set_typecode (Test::_tc_longlong_load);
-	    list->add_value ("longlong_load", longlong_load, CORBA::ARG_IN
-					     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-		  
+	    list->add_value ("longlong_load", longlong_load, CORBA::ARG_IN);
+
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
-      list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
 	    // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (1);
 
-      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (*(nv->value ()));
 
       return;
     }
@@ -236,33 +189,25 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   else if (ACE_OS::strcmp ("test_double_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-		
+      this->orb_->create_list (0, list);
+
 		  // Set up the argument list
 
 	    CORBA::Any double_load;
       double_load._tao_set_typecode (Test::_tc_double_load);
-	    list->add_value ("double_load", double_load, CORBA::ARG_IN
-					     ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-		  
+	    list->add_value ("double_load", double_load, CORBA::ARG_IN);
+
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
-      list->add_value ("send_time", send_time, CORBA::ARG_IN
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->arguments (list);
 
 	    // Set up the return value
 
-      CORBA::NamedValue_ptr nv = list->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr nv = list->item (1);
 
-      request->set_result (*(nv->value ()) ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      request->set_result (*(nv->value ()));
 
       return;
     }
@@ -270,14 +215,12 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
   CORBA::Any bad_operation;
   CORBA::BAD_OPERATION exception;
   bad_operation <<= exception;
-  request->set_exception (bad_operation ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  request->set_exception (bad_operation);
 }
 
 CORBA::RepositoryId
 Roundtrip::_primary_interface (const PortableServer::ObjectId &,
-                               PortableServer::POA_ptr
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                               PortableServer::POA_ptr)
 {
   return CORBA::string_dup ("IDL:Test/Roundtrip:1.0");
 }

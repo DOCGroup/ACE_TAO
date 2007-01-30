@@ -82,8 +82,7 @@ public:
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
-                                                      ACE_ENV_ARG_DECL_NOT_USED);
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec);
   /// Called when a distributor tries to connect to the receiver
 
 private:
@@ -107,8 +106,7 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   /// Initialize data components.
 
   int parse_args (int argc,
@@ -121,7 +119,7 @@ public:
   ACE_CString sender_name (void);
   ACE_CString receiver_name (void);
 
-  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (void);
 
 protected:
   Connection_Manager connection_manager_;

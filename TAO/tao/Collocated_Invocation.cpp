@@ -35,22 +35,20 @@ namespace TAO
 
   Invocation_Status
   Collocated_Invocation::invoke (Collocation_Proxy_Broker *cpb,
-                                 Collocation_Strategy strat
-                                 ACE_ENV_ARG_DECL)
+                                 Collocation_Strategy strat)
   {
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
     /// Start the interception point
 #if TAO_HAS_INTERCEPTORS == 1
     s =
-      this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
-    ACE_TRY
+    try
       {
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
@@ -75,9 +73,7 @@ namespace TAO
 
             dispatcher->dispatch (orb_core,
                                   request,
-                                  this->forwarded_to_.out ()
-                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                                  this->forwarded_to_.out ());
           }
         else
           {
@@ -87,9 +83,7 @@ namespace TAO
                            this->details_.args_num (),
                            this->details_.opname (),
                            this->details_.opname_len (),
-                           strat
-                           ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                           strat);
           }
 
         // Invocation completed succesfully
@@ -102,24 +96,20 @@ namespace TAO
             if (this->forwarded_to_.in ())
               this->reply_received (TAO_INVOKE_RESTART);
 
-            s =
-              this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            s = this->receive_other_interception ();
           }
         // NOTE: Any other condition that needs handling?
         else if (this->response_expected ())
           {
             this->reply_received (TAO_INVOKE_SUCCESS);
 
-            s =
-              this->receive_reply_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            s = this->receive_reply_interception ();
           }
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception& ex)
       {
         // Ignore exceptions for oneways
         if (this->response_expected_ == false)
@@ -127,39 +117,17 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          this->handle_any_exception (&ex);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
+#else
+        ACE_UNUSED_ARG (ex);
 #endif /*TAO_HAS_INTERCEPTORS*/
-          ACE_RE_THROW;
+          throw;
       }
-# if defined (ACE_HAS_EXCEPTIONS) \
-     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-    ACE_CATCHALL
-      {
-        if (this->response_expected () == false)
-          return TAO_INVOKE_SUCCESS;
-#if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus const st =
-          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (st == PortableInterceptor::LOCATION_FORWARD ||
-            st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
-        else
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
-          ACE_RE_THROW;
-      }
-# endif  /* ACE_HAS_EXCEPTIONS &&
-            ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (this->forwarded_to_.in () != 0)
       s =  TAO_INVOKE_RESTART;

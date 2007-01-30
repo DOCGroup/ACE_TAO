@@ -51,7 +51,7 @@ class TAO_CEC_EventChannel;
  * externally.
  * = TODO
  */
-class TAO_Event_Serv_Export TAO_CEC_SupplierAdmin 
+class TAO_Event_Serv_Export TAO_CEC_SupplierAdmin
   : public POA_CosEventChannelAdmin::SupplierAdmin
 {
 public:
@@ -62,41 +62,33 @@ public:
   virtual ~TAO_CEC_SupplierAdmin (void);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker);
 
   /// For each elements call <worker->work()>.
-  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer> *worker
-                 ACE_ENV_ARG_DECL);
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer> *worker);
 
   /// Keep track of connected consumers.
-  virtual void connected (TAO_CEC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPushConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_CEC_ProxyPullConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void reconnected (TAO_CEC_ProxyPullConsumer*
-                            ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_CEC_ProxyPullConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_CEC_ProxyPushConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPushConsumer*);
+  virtual void connected (TAO_CEC_ProxyPullConsumer*);
+  virtual void reconnected (TAO_CEC_ProxyPullConsumer*);
+  virtual void disconnected (TAO_CEC_ProxyPullConsumer*);
 
   /// The event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (void);
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_push_consumer (void)
           ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-      obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_pull_consumer (void)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
 
 private:
   /// The Event Channel we belong to
@@ -105,11 +97,11 @@ private:
   /// The push and pull aspects are implemented using these classes
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
                       TAO_CEC_ProxyPushConsumer,
-                      CosEventChannelAdmin::ProxyPushConsumer> 
+                      CosEventChannelAdmin::ProxyPushConsumer>
     push_admin_;
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
                       TAO_CEC_ProxyPullConsumer,
-                      CosEventChannelAdmin::ProxyPullConsumer> 
+                      CosEventChannelAdmin::ProxyPullConsumer>
     pull_admin_;
 
   /// Store the default POA.

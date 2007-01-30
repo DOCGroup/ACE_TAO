@@ -77,7 +77,7 @@ namespace FTRTEC
 
      ACE_AUTO_PTR_RESET (replication_strategy, strategy, Replication_Strategy);
 
-      ACE_TRY_NEW_ENV
+      try
       {
         PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
           PortableInterceptor::ORBInitializer::_nil ();
@@ -87,21 +87,16 @@ namespace FTRTEC
         ACE_NEW_THROW_EX (temp_orb_initializer,
           FTEC_ORBInitializer,
           CORBA::NO_MEMORY ());
-        ACE_TRY_CHECK;
         orb_initializer = temp_orb_initializer;
 
-        PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
       {
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-          "Unexpected exception caught while "
-          "initializing the TransactionDepth");
+        ex._tao_print_exception (
+          "Unexpected exception caught while ""initializing the TransactionDepth");
         return -1;
       }
-      ACE_ENDTRY;
     return 0;
   }
 
@@ -120,15 +115,14 @@ namespace FTRTEC
     }
   }
 
-  void Replication_Service::check_validity(ACE_ENV_SINGLE_ARG_DECL)
+  void Replication_Service::check_validity(void)
   {
-    replication_strategy->check_validity(ACE_ENV_SINGLE_ARG_PARAMETER);
+    replication_strategy->check_validity();
   }
 
 
   void Replication_Service::replicate_request(const FtRtecEventChannelAdmin::Operation& update,
-    RollbackOperation rollback
-    ACE_ENV_ARG_DECL)
+    RollbackOperation rollback)
   {
     TAO_OutputCDR cdr;
     cdr << update;
@@ -156,15 +150,13 @@ namespace FTRTEC
     replication_strategy->replicate_request(
       state,
       rollback,
-      update.object_id
-      ACE_ENV_ARG_PARAMETER);
+      update.object_id);
   }
 
   void Replication_Service::add_member(const FTRT::ManagerInfo & info,
-                                       CORBA::ULong object_group_ref_version
-                                       ACE_ENV_ARG_DECL)
+                                       CORBA::ULong object_group_ref_version)
   {
-    replication_strategy->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
+    replication_strategy->add_member(info, object_group_ref_version);
   }
 
   int  Replication_Service::acquire_read (void)

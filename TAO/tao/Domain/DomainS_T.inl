@@ -81,7 +81,7 @@ POA_CORBA::DomainManager_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -93,7 +93,7 @@ POA_CORBA::DomainManager_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -111,23 +111,23 @@ POA_CORBA::DomainManager_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::DomainManager_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::DomainManager_tie<T>::_default_POA (void)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->DomainManager::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->DomainManager::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::DomainManager_tie<T>::get_domain_policy  (
     ::CORBA::PolicyType policy_type
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -135,7 +135,7 @@ template <class T> ACE_INLINE
 {
   return this->ptr_->get_domain_policy (
     policy_type
-    ACE_ENV_ARG_PARAMETER
+
   );
 }
 
@@ -192,7 +192,7 @@ POA_CORBA::ConstructionPolicy_tie<T>::_tied_object (T &obj)
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -204,7 +204,7 @@ POA_CORBA::ConstructionPolicy_tie<T>::_tied_object (T *obj, CORBA::Boolean relea
     {
       delete this->ptr_;
     }
-  
+
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -222,72 +222,72 @@ POA_CORBA::ConstructionPolicy_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA::ConstructionPolicy_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+POA_CORBA::ConstructionPolicy_tie<T>::_default_POA (void)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     {
       return PortableServer::POA::_duplicate (this->poa_.in ());
     }
-  
-  return this->ConstructionPolicy::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  return this->ConstructionPolicy::_default_POA ();
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 CORBA::PolicyType POA_CORBA::ConstructionPolicy_tie<T>::policy_type  (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   return this->ptr_->policy_type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
+
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::ConstructionPolicy_tie<T>::copy  (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   return this->ptr_->copy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
+
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_CORBA::ConstructionPolicy_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
+
   );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
     ::CORBA::InterfaceDef_ptr object_type,
     ::CORBA::Boolean constr_policy
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -296,7 +296,7 @@ void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
   this->ptr_->make_domain_manager (
     object_type,
     constr_policy
-    ACE_ENV_ARG_PARAMETER
+
   );
 }
 

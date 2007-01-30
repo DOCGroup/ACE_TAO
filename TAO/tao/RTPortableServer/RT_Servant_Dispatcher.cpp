@@ -37,7 +37,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   CORBA::Short servant_priority,
   TAO_ServerRequest &req,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-  ACE_ENV_ARG_DECL)
+  )
 {
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
@@ -80,8 +80,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     }
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
   const char *priority_model = 0;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
@@ -113,11 +112,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                             context->context_data.length ());
           CORBA::Boolean byte_order;
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            ACE_THROW (CORBA::MARSHAL ());
+            throw ::CORBA::MARSHAL ();
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> target_priority) == 0)
-            ACE_THROW (CORBA::MARSHAL ());
+            throw ::CORBA::MARSHAL ();
 
           // Save the target priority in the response service
           // context to propagate back to the client as specified
@@ -165,9 +164,9 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           if (tph->get_thread_CORBA_and_native_priority (
                 pre_invoke_state.original_CORBA_priority_,
                 pre_invoke_state.original_native_priority_
-                ACE_ENV_ARG_PARAMETER) == -1)
-            ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO));
+               ) == -1)
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO);
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t): %s processing using %s ")
@@ -200,19 +199,17 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       if (tph->get_thread_CORBA_and_native_priority (
             pre_invoke_state.original_CORBA_priority_,
             pre_invoke_state.original_native_priority_
-            ACE_ENV_ARG_PARAMETER) == -1)
-        ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                           CORBA::COMPLETED_NO));
+           ) == -1)
+        throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                           CORBA::COMPLETED_NO);
 
       // Priority needs to be changed temporarily changed for the
       // duration of request.
       if (target_priority != pre_invoke_state.original_CORBA_priority_)
         {
-          if (tph->set_thread_CORBA_priority (target_priority
-                                              ACE_ENV_ARG_PARAMETER)
-              == -1)
-            ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO));
+          if (tph->set_thread_CORBA_priority (target_priority) == -1)
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO);
 
           pre_invoke_state.state_ =
             TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
@@ -221,7 +218,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             {
               CORBA::Short native_priority;
               tph->get_thread_native_priority (native_priority
-                                               ACE_ENV_ARG_PARAMETER);
+                                              );
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("%s processing using %s ")
@@ -255,14 +252,12 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   CORBA::Policy_var policy =
     poa.policies ().get_cached_policy (
       TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+     );
 
   CORBA::Boolean set_server_network_priority =
     tph->set_server_network_priority (req.transport ()->tag (),
                                       policy.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                     );
 
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
@@ -274,7 +269,7 @@ void
 TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
                                                           CORBA::Short servant_priority,
                                                           TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-                                                          ACE_ENV_ARG_DECL)
+                                                          )
 {
   TAO_Thread_Pool *thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
@@ -305,25 +300,19 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   //
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph =
-    poa.orb_core ().get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-  if (tph->get_thread_CORBA_and_native_priority (pre_invoke_state.original_CORBA_priority_,
-                                                 pre_invoke_state.original_native_priority_
-                                                 ACE_ENV_ARG_PARAMETER)
-      == -1)
-    ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                       CORBA::COMPLETED_NO));
+  if (tph->get_thread_CORBA_and_native_priority (
+        pre_invoke_state.original_CORBA_priority_,
+        pre_invoke_state.original_native_priority_) == -1)
+    throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
   // Change the priority of the current thread for the duration of
   // request.
   if (servant_priority != pre_invoke_state.original_CORBA_priority_)
     {
-      if (tph->set_thread_CORBA_priority (servant_priority
-                                          ACE_ENV_ARG_PARAMETER)
-          == -1)
-        ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                           CORBA::COMPLETED_NO));
+      if (tph->set_thread_CORBA_priority (servant_priority) == -1)
+        throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
       pre_invoke_state.state_ =
         TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
@@ -341,9 +330,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
       pre_invoke_state.state_ =
         TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::NO_ACTION_REQUIRED;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_TRY
+      try
         {
           // Reset the priority of the current thread back to its original
           // value.
@@ -351,22 +338,19 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
             poa.orb_core ().get_protocols_hooks ();
 
           if (tph->set_thread_native_priority (
-                 pre_invoke_state.original_native_priority_
-                                               ACE_ENV_ARG_PARAMETER)
+                 pre_invoke_state.original_native_priority_)
               == -1)
-            ACE_THROW (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO));
-          ACE_TRY_CHECK;
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                               CORBA::COMPLETED_NO);
         }
-      ACE_CATCHANY
+      catch (const ::CORBA::Exception& ex)
         {
           // Eat up the exception.
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught: TAO - "
-                               "Priority_Model_Processing::"
-                               "~Priority_Model_Processing");
+          ex._tao_print_exception (
+            "Exception caught: TAO - "
+            "Priority_Model_Processing::"
+            "~Priority_Model_Processing");
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -378,7 +362,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter
-                                            ACE_ENV_ARG_DECL)
+                                            )
 {
   TAO_RT_POA *poa = 0;
 
@@ -391,9 +375,8 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                 thread_lock,
                                 orb_core,
                                 object_adapter
-                                ACE_ENV_ARG_PARAMETER),
+                               ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return poa;
 }

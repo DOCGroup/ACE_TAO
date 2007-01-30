@@ -10,18 +10,13 @@ namespace CIAO
   {
     // @todo make this a private method
     static CORBA::Object_ptr
-    fetch_reference_naming (CORBA::ORB_ptr orb
-                            ACE_ENV_ARG_DECL)
+    fetch_reference_naming (CORBA::ORB_ptr orb)
     {
       CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var pns =
-        CosNaming::NamingContext::_narrow (tmp.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        CosNaming::NamingContext::_narrow (tmp.in ());
 
       if (CORBA::is_nil (pns.in ()))
         {
@@ -33,8 +28,7 @@ namespace CIAO
 
       name[0].id = CORBA::string_dup ("ExecutionManager");
 
-      return pns->resolve (name
-                           ACE_ENV_ARG_PARAMETER);
+      return pns->resolve (name);
     }
 
     Plan_Launcher_i::Plan_Launcher_i ()
@@ -47,8 +41,7 @@ namespace CIAO
                            CORBA::ORB_ptr orb,
                            bool use_repoman,
                            bool rm_use_naming,
-                           const char *rm_name
-                           ACE_ENV_ARG_DECL)
+                           const char *rm_name)
     {
       CORBA::Object_var obj;
 
@@ -62,8 +55,7 @@ namespace CIAO
           obj = orb->string_to_object (em_ior);
         }
 
-      this->em_ = ::CIAO::ExecutionManagerDaemon::_narrow (obj.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+      this->em_ = ::CIAO::ExecutionManagerDaemon::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->em_.in ()))
         {
@@ -95,8 +87,7 @@ namespace CIAO
     Plan_Launcher_i::launch_plan (const char *deployment_plan_uri,
                                   const char *package_uri,
                                   bool use_package_name,
-                                  bool use_repoman
-                                  ACE_ENV_ARG_DECL)
+                                  bool use_repoman)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       if (CIAO::debug_level () > 9)
@@ -126,10 +117,10 @@ namespace CIAO
     }
 
     const char *
-    Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
-      ACE_TRY
+      try
         {
           if (CORBA::is_nil (this->em_.in ()))
             {
@@ -215,7 +206,7 @@ namespace CIAO
           map_.bind_dam_reference (plan.UUID.in (),
                                    Deployment::DomainApplicationManager::_duplicate (dam.in ()));
         }
-      ACE_CATCH (Deployment::ResourceNotAvailable, ex)
+      catch (const Deployment::ResourceNotAvailable& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
@@ -228,53 +219,51 @@ namespace CIAO
                       ex.propertyName.in (),
                       ex.elementName.in (),
                       ex.resourceName.in ()));
-          ACE_THROW (Deployment_Failure (""));
+          throw Deployment_Failure ("");
         }
-      ACE_CATCH (Deployment::StartError, ex)
+      catch (const Deployment::StartError& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: StartError exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          ACE_THROW (Deployment_Failure (""));
+          throw Deployment_Failure ("");
         }
-      ACE_CATCH (Deployment::InvalidProperty, ex)
+      catch (const Deployment::InvalidProperty& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          ACE_THROW (Deployment_Failure (""));
+          throw Deployment_Failure ("");
         }
-      ACE_CATCH (Deployment::InvalidConnection, ex)
+      catch (const Deployment::InvalidConnection& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          ACE_THROW (Deployment_Failure  (""));
+          throw Deployment_Failure  ("");
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "CORBA EXCEPTION: %s\n",
-                      ACE_ANY_EXCEPTION._info().fast_rep()));
-          ACE_THROW (Deployment_Failure  (""));
+                      ex._info().fast_rep()));
+          throw Deployment_Failure  ("");
         }
-      ACE_CATCHALL
+      catch (...)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: non-CORBA exception\n"));
-          ACE_THROW (Deployment_Failure  (""));
+          throw Deployment_Failure  ("");
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
 
       return CORBA::string_dup (plan.UUID.in ());
     }
 
     ::Deployment::DomainApplicationManager_ptr
-    Plan_Launcher_i::get_dam (const char *uuid ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::get_dam (const char *uuid)
     {
       if (!this->map_.is_plan_available (uuid))
         {
@@ -293,7 +282,7 @@ namespace CIAO
       // executable to tear down a plan, so we could NOT rely on the local
       // DAM_Map to fetch DAM obj reference. Instead, we make a remote call
       // on ExecutionManager to fetch it.
-      ACE_TRY
+      try
         {
           ::Deployment::DomainApplicationManager_var dapp_mgr =
               this->em_->getManager (uuid);
@@ -312,7 +301,7 @@ namespace CIAO
               this->destroy_dam_by_plan (uuid);
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // @todo the destroy_dam_by_plan could give a stoperror exception
           // we should handle
@@ -320,14 +309,12 @@ namespace CIAO
                       "for plan with uuid: %s\n", uuid));
           return false;
         }
-      ACE_ENDTRY;
 
       return true;
     }
 
     bool
-    Plan_Launcher_i::teardown_plan (::Deployment::DomainApplicationManager_ptr dam
-                                    ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::teardown_plan (::Deployment::DomainApplicationManager_ptr dam)
     {
       if (CIAO::debug_level ())
         {
@@ -348,8 +335,7 @@ namespace CIAO
     }
 
     void
-    Plan_Launcher_i::destroy_dam (::Deployment::DomainApplicationManager_ptr dam
-                                  ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::destroy_dam (::Deployment::DomainApplicationManager_ptr dam)
     {
       if (CIAO::debug_level ())
         {
@@ -366,8 +352,7 @@ namespace CIAO
     }
 
     void
-    Plan_Launcher_i::destroy_dam_by_plan (const char* plan_uuid
-                                          ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::destroy_dam_by_plan (const char* plan_uuid)
     {
       if (CIAO::debug_level ())
         {
@@ -387,8 +372,7 @@ namespace CIAO
     Plan_Launcher_i::re_launch_plan (const char *deployment_plan_uri,
                                      const char *package_uri,
                                      bool use_package_name,
-                                     bool use_repoman
-                                     ACE_ENV_ARG_DECL)
+                                     bool use_repoman)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
@@ -408,7 +392,7 @@ namespace CIAO
     }
 
     const char *
-    Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
+    Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
 

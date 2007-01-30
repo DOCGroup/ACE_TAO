@@ -72,7 +72,7 @@ namespace CORBA
     typedef CORBA::AbstractBase_out _out_type;
 
     static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                            );
 
     static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _nil (void);
@@ -85,7 +85,7 @@ namespace CORBA
     CORBA::ValueBase *_to_value (void);
 
     virtual CORBA::Boolean _is_a (const char *type_id
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                  );
     virtual const char* _interface_repository_id (void) const;
 
     /// TAO specific operation

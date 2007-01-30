@@ -45,7 +45,7 @@ public:
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR & cdr) const;
 
-  CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const;
+  CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const;
 
   /// Convert to CosNotification::Structured type
   virtual void convert (CosNotification::StructuredEvent& notification) const;
@@ -54,19 +54,19 @@ public:
   virtual const TAO_Notify_EventType& type (void) const;
 
   /// Push event to consumer
-  virtual void push (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL) const;
+  virtual void push (TAO_Notify_Consumer* consumer) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
+  virtual void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
+  virtual void push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
+  virtual void push (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const;
 
   /// Push event to the Event_Forwarder interface
-  virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
+  virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const;
 
   /// unmarshal this event from a CDR buffer (for persistence)
   /// \return the new event, or NULL if this is the wrong type of event.
@@ -74,7 +74,7 @@ public:
 
 protected:
   /// returns a copy of this event allocated on the heap
-  virtual TAO_Notify_Event * copy (ACE_ENV_SINGLE_ARG_DECL) const;
+  virtual TAO_Notify_Event * copy (void) const;
 
   /// Structured Event
   const CosNotification::StructuredEvent* notification_;

@@ -40,7 +40,7 @@ void
 MIF_DT_Creator::yield (int suspend_time,
 		       Thread_Task*)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Time_Value const sus_time_value (suspend_time);
       ACE_Time_Value now (ACE_OS::gettimeofday ());
@@ -53,20 +53,16 @@ MIF_DT_Creator::yield (int suspend_time,
           const char * name = 0;
           current_->update_scheduling_segment (name,
                                                sched_param.in (),
-                                               sched_param.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                               sched_param.in ());
           now = ACE_OS::gettimeofday ();
           if (suspend_time == 1)
             break;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 }
 
 int

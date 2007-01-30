@@ -53,8 +53,7 @@ public:
   /// Creates a Stub Object.
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
-                                 TAO_ORB_Core *orb_core
-                                 ACE_ENV_ARG_DECL);
+                                 TAO_ORB_Core *orb_core);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

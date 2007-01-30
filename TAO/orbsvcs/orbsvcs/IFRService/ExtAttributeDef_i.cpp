@@ -28,21 +28,18 @@ TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i (void)
 
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->get_exceptions_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->get_exceptions_i ();
 }
 
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions_i (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -53,9 +50,7 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
   CORBA::ExcDescriptionSeq_var safe_retval = retval;
 
   this->fill_exceptions (*retval,
-                         "get_excepts"
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                         "get_excepts");
 
   return safe_retval._retn ();
 }
@@ -63,23 +58,19 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
 void
 TAO_ExtAttributeDef_i::get_exceptions (
     const CORBA::ExcDescriptionSeq &get_exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->get_exceptions_i (get_exceptions
-                          ACE_ENV_ARG_PARAMETER);
+  this->get_exceptions_i (get_exceptions);
 }
 
 void
 TAO_ExtAttributeDef_i::get_exceptions_i (
     const CORBA::ExcDescriptionSeq &get_exceptions
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -89,21 +80,18 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
 
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->set_exceptions_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->set_exceptions_i ();
 }
 
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions_i (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -114,9 +102,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   CORBA::ExcDescriptionSeq_var safe_retval = retval;
 
   this->fill_exceptions (*retval,
-                         "put_excepts"
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                         "put_excepts");
 
   return safe_retval._retn ();
 }
@@ -124,23 +110,19 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
 void
 TAO_ExtAttributeDef_i::set_exceptions (
     const CORBA::ExcDescriptionSeq &set_exceptions
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->set_exceptions_i (set_exceptions
-                          ACE_ENV_ARG_PARAMETER);
+  this->set_exceptions_i (set_exceptions);
 }
 
 void
 TAO_ExtAttributeDef_i::set_exceptions_i (
     const CORBA::ExcDescriptionSeq &set_exceptions
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -150,21 +132,18 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
 
 CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_attribute_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_attribute_i ();
 }
 
 CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute_i (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -174,9 +153,7 @@ TAO_ExtAttributeDef_i::describe_attribute_i (
                   0);
   CORBA::ExtAttributeDescription_var safe_retval = retval;
 
-  this->fill_description (*retval
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->fill_description (*retval);
 
   return safe_retval._retn ();
 }
@@ -184,15 +161,12 @@ TAO_ExtAttributeDef_i::describe_attribute_i (
 void
 TAO_ExtAttributeDef_i::fill_description (
     CORBA::ExtAttributeDescription &desc
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  desc.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.name = this->name_i ();
 
-  desc.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.id = this->id_i ();
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -200,29 +174,22 @@ TAO_ExtAttributeDef_i::fill_description (
                                             holder);
   desc.defined_in = holder.fast_rep ();
 
-  desc.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.id = this->id_i ();
 
-  desc.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.type = this->type_i ();
 
-  desc.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  desc.mode = this->mode_i ();
 
   this->fill_exceptions (desc.get_exceptions,
-                         "get_excepts"
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                         "get_excepts");
 
   this->fill_exceptions (desc.put_exceptions,
-                         "put_excepts"
-                         ACE_ENV_ARG_PARAMETER);
+                         "put_excepts");
 }
 
 void
 TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
-                                        const char *sub_section
-                                        ACE_ENV_ARG_DECL)
+                                        const char *sub_section)
 {
   ACE_Configuration_Section_Key excepts_key;
   int status =
@@ -267,8 +234,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 
       TAO_ExceptionDef_i impl (this->repo_);
       impl.section_key (except_key);
-      exceptions[i].type = impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      exceptions[i].type = impl.type_i ();
 
       this->repo_->config ()->get_string_value (except_key,
                                                 "container_id",

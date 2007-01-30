@@ -2,7 +2,6 @@
 #include "tao/default_ports.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
-#include "tao/Environment.h"
 #include "tao/debug.h"
 
 #include "ace/SOCK_Acceptor.h"
@@ -39,8 +38,7 @@ TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 
 CORBA::Object_ptr
 TAO_MCAST_Parser::parse_string (const char *ior,
-                                CORBA::ORB_ptr orb
-                                ACE_ENV_ARG_DECL)
+                                CORBA::ORB_ptr orb)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *mcast_name =
@@ -65,9 +63,7 @@ TAO_MCAST_Parser::parse_string (const char *ior,
                                  this->mcast_ttl_.in (),
                                  this->mcast_nic_.in (),
                                  orb,
-                                 timeout
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                 timeout);
 
   return object;
 }
@@ -79,8 +75,7 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
                                         const char *mcast_ttl,
                                         const char *mcast_nic,
                                         CORBA::ORB_ptr orb,
-                                        ACE_Time_Value *timeout
-                                        ACE_ENV_ARG_DECL)
+                                        ACE_Time_Value *timeout)
 {
   char buf[2048];
   char *ior = buf;
@@ -109,9 +104,7 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
     {
       // Convert IOR to an object reference.
       return_value =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+        orb->string_to_object (ior);
     }
 
   // Return object reference.

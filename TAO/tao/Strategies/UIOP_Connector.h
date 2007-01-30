@@ -74,7 +74,7 @@ public:
   virtual int check_prefix (const char *endpoint);
 
   virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len
-                                      ACE_ENV_ARG_DECL);
+                                     );
 
   virtual char object_key_delimiter (void) const;
 
@@ -112,7 +112,7 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Profile *make_profile (void);
 
   //@}
 

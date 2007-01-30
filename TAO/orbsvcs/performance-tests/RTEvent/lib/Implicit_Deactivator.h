@@ -23,8 +23,7 @@ public:
   /**
    * @param client The client
    */
-  explicit Implicit_Deactivator (PortableServer::Servant servant = 0
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  explicit Implicit_Deactivator (PortableServer::Servant servant = 0);
   Implicit_Deactivator (Implicit_Deactivator& rhs);
   Implicit_Deactivator& operator= (Implicit_Deactivator& rhs);
 

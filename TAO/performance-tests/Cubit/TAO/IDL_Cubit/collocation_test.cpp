@@ -41,33 +41,29 @@ svr_worker (void *arg)
   ACE_OS::strcat (cmd_line, " -f " THE_IOR);
   ACE_ARGV args (cmd_line);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       int result = cubit_server.init (args.argc (),
-                                      args.argv ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      args.argv ());
 
       if (result == -1)
         return (void *) 1;
 
       thread_barrier->server_init_.wait ();
-      cubit_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cubit_server.run ();
 
       thread_barrier->client_fini_.wait ();
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception");
+      sysex._tao_print_exception ("System Exception");
       return (void *) 1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception");
+      userex._tao_print_exception ("User Exception");
       return (void *) 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

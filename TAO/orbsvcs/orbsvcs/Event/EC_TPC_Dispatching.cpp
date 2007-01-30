@@ -39,8 +39,7 @@ TAO_EC_TPC_Dispatching::~TAO_EC_TPC_Dispatching ()
 }
 
 int
-TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -96,8 +95,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
 }
 
 int
-TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consumer
-                                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consumer)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -170,19 +168,17 @@ void
 TAO_EC_TPC_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
                              const RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL)
+                             TAO_EC_QOS_Info& qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
-  this->push_nocopy (proxy, consumer, event_copy, qos_info ACE_ENV_ARG_PARAMETER);
+  this->push_nocopy (proxy, consumer, event_copy, qos_info);
 }
 
 void
 TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                     RtecEventComm::PushConsumer_ptr consumer,
                                     RtecEventComm::EventSet& event,
-                                    TAO_EC_QOS_Info&
-                                    ACE_ENV_ARG_DECL)
+                                    TAO_EC_QOS_Info&)
 {
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
@@ -198,8 +194,7 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
     }
   else
     {
-      dtask->push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      dtask->push (proxy, consumer, event);
     }
 }
 

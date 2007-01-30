@@ -32,8 +32,7 @@ TAO_BiDirGIOP_Loader::init (int,
         PortableInterceptor::ORBInitializer::_nil ();
       PortableInterceptor::ORBInitializer_var bidir_orb_initializer;
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      try
         {
           /// Register the BiDir ORBInitializer.
           ACE_NEW_THROW_EX (tmp_orb_initializer,
@@ -43,27 +42,23 @@ TAO_BiDirGIOP_Loader::init (int,
                                     TAO::VMCID,
                                     ENOMEM),
                                 CORBA::COMPLETED_NO));
-          ACE_TRY_CHECK;
 
           bidir_orb_initializer = tmp_orb_initializer;
 
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ()
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+           );
 
           TAO_BiDirGIOP_Loader::is_activated_ = true;
         }
-      ACE_CATCHANY
+      catch (const ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "Caught exception:");
+              ex._tao_print_exception ("Caught exception:");
             }
           return -1;
         }
-      ACE_ENDTRY;
     }
 
   return 0;
@@ -71,7 +66,7 @@ TAO_BiDirGIOP_Loader::init (int,
 
 void
 TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
-                                              ACE_ENV_ARG_DECL)
+                                              )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Is this true? Does the GIOP protocol version matter here?
@@ -86,7 +81,6 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
                             TAO::VMCID,
                             ENOMEM),
                         CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   // We may be adding another TAO_BiDirPolicy_Validator instance for
   // the same ORB (different POA). In cases where huge numbers of

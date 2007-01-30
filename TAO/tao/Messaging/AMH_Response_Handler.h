@@ -99,14 +99,14 @@ protected:
   /// Sets up the various parameters in anticipation of returning a reply
   /// to the client. return/OUT/INOUT arguments are marshalled into the
   /// Output stream after this method has been called.
-  void _tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL);
+  void _tao_rh_init_reply (void);
 
   /// Sends the marshalled reply back to the client.
-  void _tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL);
+  void _tao_rh_send_reply (void);
 
   /// Send back an exception to the client.
   void _tao_rh_send_exception (CORBA::Exception &ex
-                               ACE_ENV_ARG_DECL);
+                              );
 
 protected:
 

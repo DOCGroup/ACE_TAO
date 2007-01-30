@@ -48,22 +48,21 @@ namespace TAO
   }
 
   char *
-  FT_ClientRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ClientRequest_Interceptor::name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup (this->name_);
   }
 
   void
-  FT_ClientRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  FT_ClientRequest_Interceptor::destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ClientRequest_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Do Nothing
@@ -71,16 +70,14 @@ namespace TAO
 
   void
   FT_ClientRequest_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
   {
     if (TAO_debug_level > 3)
       {
         CORBA::String_var op =
-          ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+          ri->operation ();
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_FT (%P|%t) - %s called for %s\n"),
@@ -89,41 +86,32 @@ namespace TAO
       }
 
     IOP::TaggedComponent_var tp;
-    ACE_TRY
+    try
       {
         tp =
-          ri->get_effective_component (IOP::TAG_FT_GROUP
-                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ri->get_effective_component (IOP::TAG_FT_GROUP);
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
       {
         return;
       }
-    ACE_ENDTRY;
 
     this->group_version_context (ri,
-                                 tp
-                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                                 tp);
 
-    this->request_service_context (ri
-                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->request_service_context (ri);
   }
 
   void
   FT_ClientRequest_Interceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ClientRequest_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
@@ -131,7 +119,7 @@ namespace TAO
 
     if (!tao_ri)
       {
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       }
 
     TimeBase::TimeT expires = tao_ri->tao_ft_expiration_time ();
@@ -144,18 +132,17 @@ namespace TAO
 
     PortableInterceptor::ReplyStatus status = -1;
 
-    ACE_TRY
+    try
     {
-       status = ri->reply_status(ACE_ENV_SINGLE_ARG_PARAMETER);
+       status = ri->reply_status();
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
     {
        // No reply status => Not a location forward.
        return;
     }
-    ACE_ENDTRY;
 
-    if (status ==  PortableInterceptor::LOCATION_FORWARD)
+    if (status == PortableInterceptor::LOCATION_FORWARD)
       {
         // We are in an FT request and a location forward has been received.
 
@@ -171,19 +158,18 @@ namespace TAO
 
             // The spec says throw a SYSTEM_EXCEPTION, but doesn't specify which one.
             // I think a TRANSIENT is the most suitable.
-            ACE_THROW (CORBA::TRANSIENT (
+            throw CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (
-              TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-              errno),
-              CORBA::COMPLETED_NO));
+                TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                errno),
+              CORBA::COMPLETED_NO);
           }
       }
   }
 
   void
   FT_ClientRequest_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
   {
@@ -191,8 +177,7 @@ namespace TAO
     // @@ Will be used later.
     // Do a check for policy in which this can be done..
     PortableInterceptor::ReplyStatus rs =
-      ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->reply_status ();
 
     if (rs != PortableInterceptor::SYSTEM_EXCEPTION)
       {
@@ -200,8 +185,7 @@ namespace TAO
       }
 
     CORBA::Any_var ex =
-      ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      ri->received_exception ();
 
     TAO_OutputCDR cdr;
 
@@ -218,8 +202,7 @@ namespace TAO
     if (!(icdr.read_string (rep_id.out ()) &&
           icdr.read_ulong (min) &&
           icdr.read_ulong (cs)))
-      ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
-                                 CORBA::COMPLETED_MAYBE));
+      throw CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
 
     cs = CORBA::CompletionStatus (cs);
 
@@ -231,21 +214,17 @@ namespace TAO
     // which the ORB should understand
     if (ACE_OS_String::strcmp (rep_id.in (),
                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
-      ACE_THROW (CORBA::TRANSIENT (min,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (min, CORBA::COMPLETED_NO);
     else if (ACE_OS_String::strcmp (rep_id.in (),
                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
-      ACE_THROW (CORBA::COMM_FAILURE (min,
-                                      CORBA::COMPLETED_NO));
+      throw CORBA::COMM_FAILURE (min, CORBA::COMPLETED_NO);
     else if (ACE_OS_String::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/NO_REPONSE:1.0") == 0)
-      ACE_THROW (CORBA::NO_RESPONSE (min,
-                                   CORBA::COMPLETED_NO));
+      throw CORBA::NO_RESPONSE (min, CORBA::COMPLETED_NO);
 
     else if (ACE_OS_String::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
-    ACE_THROW (CORBA::OBJ_ADAPTER (min,
-                                   CORBA::COMPLETED_NO));
+    throw CORBA::OBJ_ADAPTER (min, CORBA::COMPLETED_NO);
     cout << "Didnt throw exception " << endl;
 #endif /*if 0*/
     return;
@@ -255,11 +234,10 @@ namespace TAO
   void
     FT_ClientRequest_Interceptor::group_version_context (
     PortableInterceptor::ClientRequestInfo_ptr ri,
-    IOP::TaggedComponent* tp
-    ACE_ENV_ARG_DECL)
+    IOP::TaggedComponent* tp)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_TRY
+    try
     {
       // Grab the object group version
       // @@ NOTE: This involves an allocation and a dellocation. This is
@@ -276,8 +254,7 @@ namespace TAO
       FT::TagFTGroupTaggedComponent gtc;
 
       if ((cdr >> gtc) == 0)
-        ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-        CORBA::COMPLETED_NO));
+        throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
       IOP::ServiceContext sc;
       sc.context_id = IOP::FT_GROUP_VERSION;
@@ -306,37 +283,30 @@ namespace TAO
 
       // Add this context to the service context list.
       ri->add_request_service_context (sc,
-        0
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        0);
 
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
     {
       // Not much can be done anyway. Just keep quiet
       // ACE_RE_THROW;
     }
-    ACE_ENDTRY;
-    ACE_CHECK;
 
     return;
   }
 
   void
     FT_ClientRequest_Interceptor::request_service_context (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_TRY
+    try
     {
       IOP::ServiceContext sc;
       sc.context_id = IOP::FT_REQUEST;
 
       CORBA::Policy_var policy =
-        ri->get_request_policy (FT::REQUEST_DURATION_POLICY
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ri->get_request_policy (FT::REQUEST_DURATION_POLICY);
 
       FT::FTRequestServiceContext ftrsc;
       ftrsc.client_id =
@@ -346,7 +316,7 @@ namespace TAO
 
       if (!tao_ri)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       if (tao_ri->tao_ft_expiration_time ())
@@ -362,9 +332,7 @@ namespace TAO
 
           ftrsc.retention_id = ++this->retention_id_;
           ftrsc.expiration_time =
-              this->request_expiration_time (policy.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+              this->request_expiration_time (policy.in ());
 
           tao_ri->tao_ft_retention_id (ftrsc.retention_id);
           tao_ri->tao_ft_expiration_time (ftrsc.expiration_time);
@@ -395,32 +363,25 @@ namespace TAO
 
       // Add this context to the service context list.
       ri->add_request_service_context (sc,
-        0
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        0);
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
     {
       // ACE_RE_THROW;
     }
-    ACE_ENDTRY;
-    ACE_CHECK;
     return;
   }
 
   TimeBase::TimeT
   FT_ClientRequest_Interceptor::request_expiration_time (
-    CORBA::Policy *policy
-    ACE_ENV_ARG_DECL)
+    CORBA::Policy *policy)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     FT::RequestDurationPolicy_var p;
 
     if (policy != 0)
       {
-        p =  FT::RequestDurationPolicy::_narrow (policy
-                                                 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        p =  FT::RequestDurationPolicy::_narrow (policy);
       }
 
     TimeBase::TimeT t = 0;
@@ -428,8 +389,7 @@ namespace TAO
     if (p.in ())
       {
         t =
-        p->request_duration_policy_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+        p->request_duration_policy_value ();
       }
     else
       {

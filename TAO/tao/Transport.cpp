@@ -52,7 +52,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
           const char *location)
 {
-  ACE_Log_Msg::instance ()->acquire ();
+  ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
@@ -110,11 +110,16 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("end of data\n"),
               id, ACE_TEXT_CHAR_TO_TCHAR(location)));
-
-  ACE_Log_Msg::instance ()->release ();
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+TAO::Transport::Stats::~Stats ()
+{
+  // no-op
+}
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
@@ -205,6 +210,10 @@ TAO_Transport::~TAO_Transport (void)
   // See the bugzilla bug #2494 for details.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+  delete this->stats_;
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /*
    * Hook to add code that cleans up components
@@ -1217,7 +1226,10 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       ACE_Time_Value *max_wait_time)
 {
   int ret = 0;
-  size_t message_length = message_block->length ();
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+  size_t const message_length = message_block->length ();
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   switch (message_semantics)
     {
@@ -1238,9 +1250,11 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
         break;
     }
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
   // "Count" the message, only if no error was encountered.
   if (ret != -1 && this->stats_ != 0)
     this->stats_->messages_sent (message_length);
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   return ret;
 }
@@ -2212,9 +2226,11 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   // Get the <message_type> that we have received
   const TAO_Pluggable_Message_Type t = qd->msg_type_;
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
   // Update stats, if any
   if (this->stats_ != 0)
     this->stats_->messages_received (qd->msg_block_->length ());
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
     {

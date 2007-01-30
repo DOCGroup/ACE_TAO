@@ -26,39 +26,34 @@ TAO_TypedefDef_i::~TAO_TypedefDef_i (void)
 }
 
 CORBA::Contained::Description *
-TAO_TypedefDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
+TAO_TypedefDef_i::describe (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_TypedefDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_TypedefDef_i::describe_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   CORBA::Contained::Description_var retval = desc_ptr;
 
-  retval->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  retval->kind = this->def_kind ();
 
   CORBA::TypeDescription td;
 
-  ACE_CHECK_RETURN (0);
-  td.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  td.name = this->name_i ();
 
-  td.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  td.id = this->id_i ();
 
   ACE_TString container_id;
 
@@ -68,11 +63,9 @@ TAO_TypedefDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   td.defined_in = container_id.c_str ();
 
-  td.version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  td.version = this->version_i ();
 
-  td.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  td.type = this->type_i ();
 
   retval->value <<= td;
 

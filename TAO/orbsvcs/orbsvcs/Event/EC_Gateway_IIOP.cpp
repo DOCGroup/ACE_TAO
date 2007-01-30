@@ -61,18 +61,16 @@ TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 
 int
 TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
-                           RtecEventChannelAdmin::EventChannel_ptr consumer_ec
-                           ACE_ENV_ARG_DECL)
+                           RtecEventChannelAdmin::EventChannel_ptr consumer_ec)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-  return this->init_i (supplier_ec, consumer_ec ACE_ENV_ARG_PARAMETER);
+  return this->init_i (supplier_ec, consumer_ec);
 }
 
 int
 TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
-                             RtecEventChannelAdmin::EventChannel_ptr consumer_ec
-                             ACE_ENV_ARG_DECL_NOT_USED)
+                             RtecEventChannelAdmin::EventChannel_ptr consumer_ec)
 {
   if (CORBA::is_nil (this->supplier_ec_.in ()) && CORBA::is_nil (this->consumer_ec_.in ()))
   {
@@ -97,15 +95,15 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
 }
 
 void
-TAO_EC_Gateway_IIOP::close (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::close (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->close_i ();
 }
 
 void
-TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -116,22 +114,20 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
-  this->cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->cleanup_consumer_proxies_i ();
 }
 
 void
-TAO_EC_Gateway_IIOP::close_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::close_i (void)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
-  this->disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->disconnect_consumer_proxies_i ();
 
-  this->disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->disconnect_supplier_proxy_i ();
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (void)
 {
   if (this->consumer_proxy_map_.current_size () > 0)
     {
@@ -142,15 +138,13 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
           RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
           if (CORBA::is_nil (consumer))
             continue;
-          ACE_TRY
+          try
             {
-              consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              consumer->disconnect_push_consumer ();
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception&)
             {
             }
-          ACE_ENDTRY;
           CORBA::release (consumer);
         }
       // Remove all the elements on the map.  Calling close() does not
@@ -160,8 +154,7 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
 
   if (!CORBA::is_nil (this->default_consumer_proxy_.in ()))
     {
-      this->default_consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->default_consumer_proxy_->disconnect_push_consumer ();
 
       this->default_consumer_proxy_ =
         RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -169,12 +162,11 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (void)
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
-      this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->supplier_proxy_->disconnect_push_supplier ();
 
       this->supplier_proxy_ =
         RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
@@ -182,7 +174,7 @@ TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EC_Gateway_IIOP::reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::reconnect_consumer_ec(void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -192,13 +184,12 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
-  this->update_consumer_i (c_qos_ ACE_ENV_ARG_PARAMETER);
+  this->update_consumer_i (c_qos_);
 }
 
 void
 TAO_EC_Gateway_IIOP::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos
-    ACE_ENV_ARG_DECL)
+    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (c_qos.dependencies.length () == 0)
@@ -214,11 +205,11 @@ TAO_EC_Gateway_IIOP::update_consumer (
       return;
     }
 
-  this->update_consumer_i (c_qos ACE_ENV_ARG_PARAMETER);
+  this->update_consumer_i (c_qos);
 }
 
 void
-TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (void)
 {
   if (this->consumer_proxy_map_.current_size () > 0)
     {
@@ -246,11 +237,9 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USE
 
 void
 TAO_EC_Gateway_IIOP::update_consumer_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos
-    ACE_ENV_ARG_DECL)
+    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
 {
-  this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->close_i ();
 
   if (CORBA::is_nil (this->consumer_ec_.in ())
       || CORBA::is_nil (this->supplier_ec_.in ()))
@@ -258,19 +247,16 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
 
-  this->open_i (c_qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->open_i (c_qos);
 }
 
 void
 TAO_EC_Gateway_IIOP::open_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos
-    ACE_ENV_ARG_DECL)
+    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
 {
   // = Connect as a supplier to the consumer EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->consumer_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->consumer_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
   sub.is_gateway = 1;
@@ -307,8 +293,7 @@ TAO_EC_Gateway_IIOP::open_i (
           //ACE_DEBUG ((LM_DEBUG,
           //            "ECG (%t)    binding source %d\n",
           //            sid));
-          proxy = supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          proxy = supplier_admin->obtain_push_consumer ();
           this->consumer_proxy_map_.bind (sid, proxy);
         }
     }
@@ -322,8 +307,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
       // Obtain a reference to our supplier personality...
       RtecEventComm::PushSupplier_var supplier_ref =
-        this->supplier_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->supplier_._this ();
 
       // For each subscription by source build the set of publications
       // (they may several, by type, for instance) and connect to the
@@ -365,9 +349,7 @@ TAO_EC_Gateway_IIOP::open_i (
           // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
           // ACE_SupplierQOS_Factory::debug (pub);
           (*j).int_id_->connect_push_supplier (supplier_ref.in (),
-                                               pub
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                               pub);
         }
     }
 
@@ -407,56 +389,46 @@ TAO_EC_Gateway_IIOP::open_i (
 
       // Obtain a reference to our supplier personality...
       RtecEventComm::PushSupplier_var supplier_ref =
-        this->supplier_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        this->supplier_._this ();
 
       // Obtain the consumer....
       this->default_consumer_proxy_ =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        supplier_admin->obtain_push_consumer ();
 
       pub.publications.length (c);
       // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
       // ACE_SupplierQOS_Factory::debug (pub);
       this->default_consumer_proxy_->connect_push_supplier (supplier_ref.in (),
-                                                            pub
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                            pub);
     }
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->supplier_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->supplier_ec_->for_consumers ();
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    consumer_admin->obtain_push_supplier ();
 
   this->consumer_is_active_ = 1;
   RtecEventComm::PushConsumer_var consumer_ref =
-    this->consumer_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->consumer_._this ();
 
   // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer "));
   // ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
-                                                sub
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                sub);
 }
 
 void
 TAO_EC_Gateway_IIOP::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const RtecEventChannelAdmin::SupplierQOS&)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing...
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Gateway_IIOP::disconnect_push_consumer (void)
 {
   // ACE_DEBUG ((LM_DEBUG,
   //             "ECG (%t): Supplier-consumer received "
@@ -464,7 +436,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Gateway_IIOP::disconnect_push_supplier (void)
 {
   // ACE_DEBUG ((LM_DEBUG,
   //            "ECG (%t): Supplier received "
@@ -472,8 +444,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
-                           ACE_ENV_ARG_DECL)
+TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 {
   // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) - \n"));
 
@@ -522,8 +493,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
         out[0].header.ttl--;
 
       // ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
-      this->push_to_consumer(proxy, out ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->push_to_consumer(proxy, out);
     }
 
   {
@@ -534,15 +504,13 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
     if (this->busy_count_ == 0 && this->cleanup_posted_ != 0)
       {
         this->cleanup_posted_ = 0;
-        this->cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        this->cleanup_consumer_proxies_i ();
       }
 
     if (this->busy_count_ == 0 && this->update_posted_ != 0)
       {
         this->update_posted_ = 0;
-        this->update_consumer_i (this->c_qos_ ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        this->update_consumer_i (this->c_qos_);
       }
   }
 }
@@ -550,66 +518,53 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
 void
 TAO_EC_Gateway_IIOP::push_to_consumer (
     RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event
-    ACE_ENV_ARG_DECL)
+    const RtecEventComm::EventSet& event)
 {
-  ACE_TRY
+  try
     {
-      consumer->push (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      consumer->push (event);
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
-      ec_control_->event_channel_not_exist (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_control_->event_channel_not_exist (this);
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (CORBA::SystemException& sysex)
     {
       ec_control_->system_exception (this,
-                                     sysex
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     sysex);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Shouldn't happen.
     }
-  ACE_ENDTRY;
 }
 
 int
-TAO_EC_Gateway_IIOP::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::shutdown (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   ec_control_->shutdown();
 
-  this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->close_i ();
 
   if (this->supplier_is_active_)
     {
       PortableServer::POA_var poa =
-        this->supplier_._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->supplier_._default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->supplier_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        poa->servant_to_id (&this->supplier_);
+      poa->deactivate_object (id.in ());
       this->supplier_is_active_ = 0;
     }
 
   if (this->consumer_is_active_)
     {
       PortableServer::POA_var poa =
-        this->consumer_._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->consumer_._default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->consumer_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        poa->servant_to_id (&this->consumer_);
+      poa->deactivate_object (id.in ());
       this->consumer_is_active_ = 0;
     }
 
@@ -661,15 +616,13 @@ TAO_EC_Gateway_IIOP::is_consumer_ec_connected_i (void) const
 
 CORBA::Boolean
 TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
-      CORBA::Boolean_out disconnected
-      ACE_ENV_ARG_DECL)
+      CORBA::Boolean_out disconnected)
 {
   CORBA::Object_var consumer_ec;
   {
     ACE_GUARD_THROW_EX (
         TAO_SYNCH_MUTEX, ace_mon, this->lock_,
         CORBA::INTERNAL ());
-    ACE_CHECK_RETURN (0);
 
     disconnected = 0;
     if (this->is_consumer_ec_connected_i () == 0)
@@ -682,31 +635,29 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  return consumer_ec->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return consumer_ec->_non_existent ();
 #else
   return 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 void
-TAO_EC_Gateway_IIOP::suspend_supplier_ec (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::suspend_supplier_ec (void)
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 0)
     {
-      this->supplier_proxy_->suspend_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->supplier_proxy_->suspend_connection ();
 
       supplier_ec_suspended_ = 1;
     }
 }
 
 void
-TAO_EC_Gateway_IIOP::resume_supplier_ec (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Gateway_IIOP::resume_supplier_ec (void)
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 1)
     {
-      this->supplier_proxy_->resume_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->supplier_proxy_->resume_connection ();
 
       supplier_ec_suspended_ = 0;
     }

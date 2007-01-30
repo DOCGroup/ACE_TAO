@@ -3,8 +3,8 @@
 #include "orbsvcs/IFRService/EmitsDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 
-ACE_RCSID (IFRService, 
-           EmitsDef_i, 
+ACE_RCSID (IFRService,
+           EmitsDef_i,
            "$Id$")
 
 
@@ -22,7 +22,7 @@ TAO_EmitsDef_i::~TAO_EmitsDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_EmitsDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EmitsDef_i::def_kind (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Emits;

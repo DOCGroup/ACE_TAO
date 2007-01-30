@@ -7,12 +7,11 @@
 int
 ACE_TMAIN (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the base class.
       Notify_Test_Client client;
-      client.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      client.init (argc, argv);
 
       CosNotifyChannelAdmin::EventChannelFactory_ptr ecf = client.notify_factory ();
 
@@ -20,17 +19,15 @@ ACE_TMAIN (int argc, char *argv[])
 
       ACE_DEBUG((LM_DEBUG, "Destroying ECF...\n"));
 
-      ecf_ext->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ecf_ext->destroy ();
 
       ACE_DEBUG((LM_DEBUG, "ECF destroyed.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT("Error: \n"));
+      ex._tao_print_exception (ACE_TEXT("Error: \n"));
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

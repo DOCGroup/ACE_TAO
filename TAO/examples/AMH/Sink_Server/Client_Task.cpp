@@ -84,19 +84,16 @@ Client_Task::try_RT_scheduling (void)
 int
 Client_Task::narrow_servant (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (this->argc_, this->argv_, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (this->argc_, this->argv_, "");
 
       CORBA::Object_var object =
-        orb->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (this->ior_);
 
       this->roundtrip_ =
-        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (this->roundtrip_.in ()))
         {
@@ -106,13 +103,11 @@ Client_Task::narrow_servant (void)
                             0);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught trying to narrow servant\n");
+      ex._tao_print_exception ("Exception caught trying to narrow servant\n");
       return 0;
     }
-  ACE_ENDTRY;
   return 1;
 }
 
@@ -122,27 +117,23 @@ Client_Task::run_test (void)
   ACE_hrtime_t test_start = 0;
   ACE_hrtime_t test_end = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       test_start = ACE_OS::gethrtime ();
 
-      this->roundtrip_->start_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->roundtrip_->start_test ();
 
       this->svc ();
 
-      this->roundtrip_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->roundtrip_->end_test ();
 
       test_end = ACE_OS::gethrtime ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return 0;
     }
-  ACE_ENDTRY;
 
 
   // High resolution timer calibration
@@ -164,25 +155,22 @@ Client_Task::run_test (void)
 int
 Client_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (int i = 0; i != this->iterations_; ++i)
         {
           CORBA::ULongLong start = ACE_OS::gethrtime ();
 
-          (void) this->roundtrip_->test_method (start ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->roundtrip_->test_method (start);
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           this->latency_.sample (now - start);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return 0;
     }
-  ACE_ENDTRY;
   return 1;
 }
 

@@ -49,8 +49,7 @@ public:
   // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAnyFactory::InconsistentTypeCode
@@ -58,7 +57,7 @@ public:
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -67,43 +66,43 @@ public:
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAnyFactory::InconsistentTypeCode,
         DynamicAny::MustTruncate
       ));
-  
+
   virtual DynamicAny::DynAnySeq * create_multiple_dyn_anys (
       const DynamicAny::AnySeq & values,
       ::CORBA::Boolean allow_truncate
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAnyFactory::InconsistentTypeCode,
         DynamicAny::MustTruncate
       ));
-  
+
   virtual DynamicAny::AnySeq * create_multiple_anys (
       const DynamicAny::DynAnySeq & values
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-      
+
   /// TAO-specific methods.
-    
+
   /// Obtain the kind of object, after all aliasing has been removed.
   static CORBA::TCKind unalias (CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL);
+                               );
 
   /// Same as above, but returns type code instead of TCKind. Caller
   /// must release the return value.
   static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc
-                                          ACE_ENV_ARG_DECL);
+                                         );
 
 private:
   // Not allowed.

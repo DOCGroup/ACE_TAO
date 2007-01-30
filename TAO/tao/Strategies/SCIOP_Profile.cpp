@@ -138,7 +138,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
 void
 TAO_SCIOP_Profile::parse_string_i (const char *ior
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -148,11 +148,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Length of host string.
@@ -163,11 +163,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
   if (cp_pos == ior)
     {
       // No hostname specified!  It is required by the spec.
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
   else if (cp_pos != 0)
     {
@@ -217,11 +217,11 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior
                         ACE_TEXT ("cannot determine hostname")));
 
           // @@ What's the right exception to throw here?
-          ACE_THROW (CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
                        CORBA::SystemException::_tao_minor_code (
                          TAO::VMCID,
                          EINVAL),
-                       CORBA::COMPLETED_NO));
+                       CORBA::COMPLETED_NO);
         }
       else
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
@@ -262,7 +262,7 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_SCIOP_Profile::hash (CORBA::ULong max
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        )
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;
@@ -312,7 +312,7 @@ TAO_SCIOP_Profile::add_endpoint (TAO_SCIOP_Endpoint *endp)
 }
 
 char *
-TAO_SCIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SCIOP_Profile::to_string (void)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

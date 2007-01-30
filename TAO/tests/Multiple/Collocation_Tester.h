@@ -41,7 +41,7 @@ public:
   ~Collocation_Tester ();
 
   // -- Command --
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
   // Runs the test.
 
 
@@ -49,19 +49,19 @@ private:
 
   // -- Helper Methods --
 
-  int  test_top (ACE_ENV_SINGLE_ARG_DECL);
+  int  test_top (void);
   // Tests the method accessible thru the
   // Top interface.
 
-  int test_right (ACE_ENV_SINGLE_ARG_DECL);
+  int test_right (void);
   // Tests the method accessible thru the
   // Right interface.
 
-  int test_left (ACE_ENV_SINGLE_ARG_DECL);
+  int test_left (void);
   // Tests the method accessible thru the
   // Left interface.
 
-  int test_bottom (ACE_ENV_SINGLE_ARG_DECL);
+  int test_bottom (void);
   // Tests the method accessible thru the
   // Bottom interface.
 
@@ -74,7 +74,7 @@ private:
   // is no match (actually 1 is returned if there is
   // no match.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
 private:
   CORBA::Object_var object_;
 };

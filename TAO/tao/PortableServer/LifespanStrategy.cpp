@@ -27,16 +27,13 @@ namespace TAO
     }
 
     void
-    LifespanStrategy::strategy_init (
-      TAO_Root_POA *poa
-      ACE_ENV_ARG_DECL_NOT_USED)
+    LifespanStrategy::strategy_init (TAO_Root_POA *poa)
     {
       poa_ = poa;
     }
 
     void
-    LifespanStrategy::strategy_cleanup(
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    LifespanStrategy::strategy_cleanup (void)
     {
       poa_ = 0;
     }

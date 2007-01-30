@@ -28,7 +28,7 @@ FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 FTP_Client_Callback::handle_timeout (void *)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_Message_Block mb (BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::handle_timeout\n"));
@@ -49,11 +49,9 @@ FTP_Client_Callback::handle_timeout (void *)
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
-                  CLIENT::instance ()->streamctrl ()->stop (stop_spec ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
-                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec ACE_ENV_ARG_PARAMETER);
+                  CLIENT::instance ()->streamctrl ()->stop (stop_spec);
+                  //CLIENT::instance ()->streamctrl ()->destroy (stop_spec);
                   TAO_AV_CORE::instance ()->orb ()->shutdown (0);
-                  ACE_TRY_CHECK;
                   return 0;
                 }
               else
@@ -68,12 +66,12 @@ FTP_Client_Callback::handle_timeout (void *)
         ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
       ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Client_Callback::handle_timeout Failed");
+      ex._tao_print_exception (
+        "FTP_Client_Callback::handle_timeout Failed");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -218,8 +216,7 @@ Client::init (int argc,char **argv)
   this->argv_ = argv;
 
   CORBA::String_var ior;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       PortableServer::POAManager_var mgr
@@ -235,14 +232,11 @@ Client::init (int argc,char **argv)
       ACE_NEW_RETURN (this->fep_a_, FTP_Client_Producer, -1 );
       this->flowname_ = "Data";
 
-      sep_a_ = this->streamendpoint_a_->_this( ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sep_a_ = this->streamendpoint_a_->_this();
 
-      fep_a_obj_ = this->fep_a_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fep_a_obj_ = this->fep_a_->_this ();
 
-      CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var s1 = sep_a_->add_fep( fep_a_obj_.in());
 
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
 
@@ -258,21 +252,18 @@ Client::init (int argc,char **argv)
                                        this->filename_), -1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::init\n");
+      ex._tao_print_exception ("Client::init\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
 Client::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       char flow_protocol_str [BUFSIZ];
       if (this->use_sfp_)
@@ -310,35 +301,29 @@ Client::run (void)
 				sep_b.in(),
 				the_qos.inout(),
 				flow_spec
-				ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+ );
 
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();
-      ACE_TRY_CHECK;
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind failed\n"),-1);
 
       AVStreams::flowSpec start_spec (1);
-      this->streamctrl_.start (start_spec ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->streamctrl_.start (start_spec);
 
       // Schedule a timer for the for the flow handler.
       ACE_Time_Value tv (10000,0);
-      this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client::run\n");
+      ex._tao_print_exception ("Client::run\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -346,22 +331,18 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      poa.in ());
 
 
       int result = 0;
@@ -370,24 +351,20 @@ main (int argc,
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      orb->destroy ();
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::run failed\n"),1);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
 
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Client Failed\n");
+    ex._tao_print_exception ("Client Failed\n");
     return -1;
   }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   CLIENT::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

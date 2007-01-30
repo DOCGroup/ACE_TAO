@@ -15,16 +15,13 @@ TAO_EC_Channel_Destroyer_Functor::operator() (
                            TAO_EC_Event_Channel_Base * event_channel)
   ACE_THROW_SPEC (())
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
     }
-  ACE_CATCHALL
+  catch (...)
     {
     }
-  ACE_ENDTRY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

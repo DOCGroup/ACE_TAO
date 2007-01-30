@@ -74,27 +74,24 @@ int
 Distributer_Receiver_Callback::handle_destroy (void)
 {
   // Called when the sender requests the stream to be shutdown.
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Distributer_Callback::end_stream\n"));
 
       // Destroy the receiver stream
       AVStreams::flowSpec stop_spec;
-      DISTRIBUTER::instance ()->receiver_streamctrl ()->destroy (stop_spec
-                                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      DISTRIBUTER::instance ()->receiver_streamctrl ()->destroy (stop_spec);
 
       // We can close down now.
       DISTRIBUTER::instance ()->done (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Distributer_Callback::handle_destroy Failed\n");
+      ex._tao_print_exception (
+        "Distributer_Callback::handle_destroy Failed\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -130,8 +127,7 @@ Distributer::~Distributer (void)
 
 void
 Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-                               const ACE_CString &mmdevice_name
-                               ACE_ENV_ARG_DECL)
+                               const ACE_CString &mmdevice_name)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -140,20 +136,16 @@ Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
 
   // Resolve the mmdevice object reference from the Naming Service
   CORBA::Object_var mmdevice_obj =
-    this->naming_client_->resolve (name
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->naming_client_->resolve (name);
 
   mmdevice =
-    AVStreams::MMDevice::_narrow (mmdevice_obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    AVStreams::MMDevice::_narrow (mmdevice_obj.in ());
 }
 
 int
 Distributer::init (int /*argc*/,
                    char *[] /*argv*/
-                   ACE_ENV_ARG_DECL)
+                   )
 {
   // Initialize the naming services
   int result =
@@ -177,16 +169,12 @@ Distributer::init (int /*argc*/,
   // Bind to the receiver mmdevice
   ACE_CString mmdevice_name ("Receiver");
   this->bind_to_mmdevice (this->receiver_mmdevice_.out (),
-                          mmdevice_name
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                          mmdevice_name);
 
   // Bind to the sender mmdevice
   mmdevice_name = "Sender";
   this->bind_to_mmdevice (this->sender_mmdevice_.out (),
-                          mmdevice_name
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                          mmdevice_name);
 
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
@@ -214,8 +202,7 @@ Distributer::init (int /*argc*/,
     this->distributer_sender_mmdevice_;
 
   AVStreams::MMDevice_var distributer_sender_mmdevice =
-    this->distributer_sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->distributer_sender_mmdevice_->_this ();
 
   ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
                   TAO_MMDevice (&this->receiver_endpoint_strategy_),
@@ -226,8 +213,7 @@ Distributer::init (int /*argc*/,
     this->distributer_receiver_mmdevice_;
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->distributer_receiver_mmdevice_->_this ();
 
   ACE_NEW_RETURN (this->receiver_streamctrl_,
                   TAO_StreamCtrl,
@@ -242,9 +228,7 @@ Distributer::init (int /*argc*/,
     this->receiver_streamctrl_->bind_devs (distributer_sender_mmdevice.in (),
                                            this->receiver_mmdevice_.in (),
                                            the_qos.inout (),
-                                           flow_spec
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                           flow_spec);
 
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry sender_entry ("Data_Sender",
@@ -273,9 +257,7 @@ Distributer::init (int /*argc*/,
     sender_streamctrl->bind_devs (sender_mmdevice_.in (),
                                   distributer_receiver_mmdevice.in (),
                                   the_qos.inout (),
-                                  flow_spec
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                  flow_spec);
 
   if (res == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"Streamctrl::bind_devs failed\n"),-1);
@@ -305,67 +287,51 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       // Initialize the Distributer
       int result =
         DISTRIBUTER::instance ()->init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                        argv);
 
       if (result != 0)
         return result;
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
 
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"main");
+      ex._tao_print_exception ("main");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   DISTRIBUTER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

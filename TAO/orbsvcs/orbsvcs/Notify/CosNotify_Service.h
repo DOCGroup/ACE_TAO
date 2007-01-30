@@ -47,32 +47,32 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Init the service from driver
-  virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  virtual void init_service (CORBA::ORB_ptr orb);
 
   virtual int fini (void);
 
   /// separate dispatching orb Init
-  virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL);
+  virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
 
   /// Create the Channel Factory.
-  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
+  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA);
 
   /// Called by the factory when it is destroyed.
-  virtual void remove (TAO_Notify_EventChannelFactory* ecf ACE_ENV_ARG_DECL);
+  virtual void remove (TAO_Notify_EventChannelFactory* ecf);
 
 protected:
   /// Init the data members
-  virtual void init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  virtual void init_i (CORBA::ORB_ptr orb);
   /// Init the data members separate dispatching orb
-  virtual void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb ACE_ENV_ARG_DECL);
+  virtual void init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
 
 private:
 
   /// Create the Factory for Notify objects.
-  virtual TAO_Notify_Factory* create_factory (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Factory* create_factory (void);
 
   /// Create the Builder for Notify objects.
-  virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Builder* create_builder (void);
 
   /// Set thread options on <qos>.
   void set_threads (CosNotification::QoSProperties &qos, int threads);

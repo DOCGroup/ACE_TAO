@@ -20,13 +20,13 @@ public:
   int shutdown_received (void);
 
   // = The skeleton methods
-  virtual Test::Process_ptr create_new_process (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Test::Process_ptr create_new_process (void)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed));
 
-  virtual void noop (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void noop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

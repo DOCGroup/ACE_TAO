@@ -53,8 +53,7 @@ namespace CIAO
     /// NodeApplicationManager
     Deployment::NodeApplicationManager_ptr
     register_node_application (Deployment::NodeApplication_ptr na,
-                               Deployment::Properties_out properties
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               Deployment::Properties_out properties)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     Deployment::NodeApplication_ptr get_nodeapp_ref (void);

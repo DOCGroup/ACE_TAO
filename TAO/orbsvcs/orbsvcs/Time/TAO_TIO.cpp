@@ -20,7 +20,7 @@ TAO_TIO::~TAO_TIO (void)
 // This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
-TAO_TIO::time_interval (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_TIO::time_interval (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_time_interval;
@@ -34,13 +34,12 @@ TAO_TIO::time_interval (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
-                CosTime::TIO_out overlap
-                ACE_ENV_ARG_DECL)
+                CosTime::TIO_out overlap)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
-  ACE_TRY
+  try
     {
       TimeBase::TimeT lb1 =
         this->time_interval ().lower_bound;
@@ -48,20 +47,16 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
       TimeBase::TimeT up1 =
         this->time_interval ().upper_bound;
 
-      TimeBase::TimeT tmp1 = uto->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TimeBase::TimeT tmp1 = uto->time ();
 
-      TimeBase::TimeT tmp2 = uto->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TimeBase::TimeT tmp2 = uto->inaccuracy ();
 
       TimeBase::TimeT lb2 = tmp1 - tmp2;
 
 
-      tmp1 = uto->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      tmp1 = uto->time ();
 
-      tmp2 = uto->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      tmp2 = uto->inaccuracy ();
 
       TimeBase::TimeT up2 = tmp1 + tmp2;
 
@@ -70,8 +65,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           ACE_NEW_RETURN (tio,
                           TAO_TIO (lb1, up1),
                           CosTime::OTNoOverlap);
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
 
           return CosTime::OTOverlap;
         }
@@ -82,7 +76,6 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           CosTime::OTNoOverlap);
 
           overlap = tio->_this ();
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
           return CosTime::OTContained;
         }
@@ -92,8 +85,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb2, up2),
                           CosTime::OTNoOverlap);
 
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
 
           return CosTime::OTContained;
         }
@@ -105,8 +97,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                               TAO_TIO (0, 0),
                               CosTime::OTNoOverlap);
 
-              overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+              overlap = tio->_this ();
 
               return CosTime::OTNoOverlap;
             }
@@ -115,8 +106,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
               ACE_NEW_RETURN (tio,
                               TAO_TIO (lb2, up1),
                               CosTime::OTNoOverlap);
-              overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+              overlap = tio->_this ();
 
               return CosTime::OTOverlap;
             }
@@ -128,8 +118,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (0, 0),
                           CosTime::OTNoOverlap);
 
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
 
           return CosTime::OTNoOverlap;
         }
@@ -139,16 +128,13 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb1, up2),
                           CosTime::OTNoOverlap);
 
-          overlap = tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio->_this ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
   return CosTime::OTNoOverlap;
 }
@@ -161,8 +147,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
-                   CosTime::TIO_out overlap
-                   ACE_ENV_ARG_DECL)
+                   CosTime::TIO_out overlap)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio_i = 0;
@@ -185,10 +170,8 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
 
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTOverlap;
     }
@@ -197,10 +180,8 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTContained;
     }
@@ -209,10 +190,8 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (lb2, up2),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTContained;
     }
@@ -223,9 +202,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
           ACE_NEW_THROW_EX (tio_i,
                             TAO_TIO (0, 0),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
-          overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio_i->_this ();
 
           return CosTime::OTNoOverlap;
         }
@@ -234,10 +211,8 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
           ACE_NEW_THROW_EX (tio_i,
                             TAO_TIO (lb2, up1),
                             CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-          overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+          overlap = tio_i->_this ();
 
           return CosTime::OTOverlap;
         }
@@ -247,10 +222,8 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (0, 0),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
 
-      overlap = tio_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
+      overlap = tio_i->_this ();
 
       return CosTime::OTNoOverlap;
     }
@@ -259,7 +232,6 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (lb1, up2),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CosTime::OTNoOverlap);
       overlap = tio_i->_this ();
     }
 
@@ -267,7 +239,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 }
 
 CosTime::UTO_ptr
-TAO_TIO::time (ACE_ENV_SINGLE_ARG_DECL)
+TAO_TIO::time (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -280,9 +252,8 @@ TAO_TIO::time (ACE_ENV_SINGLE_ARG_DECL)
                              0),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

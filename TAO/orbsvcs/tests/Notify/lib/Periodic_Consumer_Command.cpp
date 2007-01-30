@@ -86,9 +86,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
-           ACE_DECLARE_NEW_CORBA_ENV;
-           act_mgr->_register (consumer, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-           ACE_CHECK;
+           act_mgr->_register (consumer, this->name_.c_str ());
          }
 
          consumer->init_state (arg_shifter);
@@ -160,9 +158,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
   TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
 
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    act_mgr->resolve (consumer, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    act_mgr->resolve (consumer, this->name_.c_str ());
   }
 
   if (consumer == 0)
@@ -172,102 +168,90 @@ TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos (void)
 {
-  this->consumer ()->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer ()->set_qos (this->qos_);
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_create (void)
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
 
-  consumer->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->connect ();
 
   ACE_DEBUG ((LM_DEBUG, "Consumer %s is connected\n", this->name_.c_str ()));
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (void)
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
     return;
 
-  consumer->subscription_change (this->added_, this->removed_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->subscription_change (this->added_, this->removed_);
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect (void)
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
     return;
 
-  consumer->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->disconnect ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate (void)
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
   if (consumer == 0)
     return;
 
-  consumer->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->deactivate ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_status (void)
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
 
-  consumer->status (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  consumer->status ();
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::execute_i (void)
 {
   if (this->command_ == CREATE)
     {
-      this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_create ();
     }
   else if (this->command_ == SUBSCRIPTION)
     {
-      this->handle_subscriptions (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_subscriptions ();
     }
   else if (this->command_ == DISCONNECT)
     {
-      this->handle_disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_disconnect ();
     }
   else if (this->command_ == DEACTIVATE)
     {
-      this->handle_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_deactivate ();
     }
   else  if (this->command_ == DUMP_STATE)
     {
-      this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_status ();
     }
   else if (this->command_ == SET_QOS)
     {
-      this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_set_qos ();
     }
 }

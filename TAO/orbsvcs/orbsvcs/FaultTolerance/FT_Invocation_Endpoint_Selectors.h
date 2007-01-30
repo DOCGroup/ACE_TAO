@@ -59,32 +59,27 @@ public:
   /// $TAO_ROOT/tao/Invocation_Endpoint_Selectors.h  for details of
   /// documentation.
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL);
+                                ACE_Time_Value *val);
 
 protected:
   /// Select the primary and try connecting to it.
   bool select_primary (TAO::Profile_Transport_Resolver *r,
-                       ACE_Time_Value *val
-                       ACE_ENV_ARG_DECL);
+                       ACE_Time_Value *val);
 
   /// Select the secondary and try connecting to it. Returns true if
   /// successfull.
   bool select_secondary (TAO::Profile_Transport_Resolver *r,
-                         ACE_Time_Value *val
-                         ACE_ENV_ARG_DECL);
+                         ACE_Time_Value *val);
 
   /// Helper method that tries to establish connections with all the
   /// endpoints in the profile.
   bool try_connect (TAO::Profile_Transport_Resolver *r,
                     TAO_Profile *profile,
-                    ACE_Time_Value *max_wait_time
-                    ACE_ENV_ARG_DECL);
+                    ACE_Time_Value *max_wait_time);
 
   /// Helper method that checks whether the profile is a primary or
   /// not.
-  bool check_profile_for_primary (TAO_Profile *
-                                  ACE_ENV_ARG_DECL);
+  bool check_profile_for_primary (TAO_Profile *);
 
 
 };

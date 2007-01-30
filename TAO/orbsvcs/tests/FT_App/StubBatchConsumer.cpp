@@ -27,7 +27,7 @@ int StubBatchConsumer::parse_args (int argc, char * argv[])
 }
 
 
-::PortableServer::POA_ptr StubBatchConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+::PortableServer::POA_ptr StubBatchConsumer::_default_POA (void)
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -41,7 +41,7 @@ PortableServer::ObjectId StubBatchConsumer::objectId()const
 /**
  * register this object
  */
-int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier ACE_ENV_ARG_DECL)
+int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -51,9 +51,7 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,10 +59,8 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
                       -1);
 
   // Get the POA .
-  this->poa_ = PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
+  this->poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
-  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -74,23 +70,18 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
   }
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   // Register with the POA.
 
-  this->object_id_ = this->poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->object_id_ = this->poa_->activate_object (this);
 
   // find my identity as an object
 
   CORBA::Object_var this_obj =
-    this->poa_->id_to_reference (object_id_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->id_to_reference (object_id_.in ());
 
   CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_nil();
 
@@ -112,9 +103,9 @@ const char * StubBatchConsumer::identity () const
 /**
  * Clean house for process shut down.
  */
-void StubBatchConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
+void StubBatchConsumer::fini (void)
 {
-  this->notifier_->disconnect_consumer(this->consumer_id_ ACE_ENV_ARG_PARAMETER);
+  this->notifier_->disconnect_consumer(this->consumer_id_);
 }
 
 
@@ -131,7 +122,6 @@ int StubBatchConsumer::idle(int & result)
 //virtual
 void StubBatchConsumer::push_structured_events (
     const CosNotification::EventBatch & notifications
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -145,7 +135,6 @@ void StubBatchConsumer::push_structured_events (
 void StubBatchConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
@@ -159,7 +148,6 @@ void StubBatchConsumer::offer_change (
 
 //virtual
 void StubBatchConsumer::disconnect_sequence_push_consumer (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

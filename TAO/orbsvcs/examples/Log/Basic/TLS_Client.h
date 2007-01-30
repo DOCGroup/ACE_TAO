@@ -31,20 +31,20 @@ class TLS_Client
   TLS_Client (void);
   ~TLS_Client ();
 
-  void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv []);
   // Init the Client.
 
-  void run_tests (ACE_ENV_SINGLE_ARG_DECL);
+  void run_tests (void);
   // Run the tests..
 
  protected:
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv []);
   // Initializes the ORB.
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (void);
   // Try to get hold of a running naming service.
 
-  void resolve_TLS_Basic_factory (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_TLS_Basic_factory (void);
   // Try to resolve the TLS factory from the Naming service.
 
   // = Data Members
@@ -58,6 +58,6 @@ class TLS_Client
   // The basic log factory from the Log Service.
 
 
- 
+
 };
 #endif /* TLS_CLIENT_H */

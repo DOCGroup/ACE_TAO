@@ -38,10 +38,10 @@ public:
   virtual ~TAO_Notify_RT_Builder ();
 
   /// Apply Thread Pools.
-  virtual void apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL);
+  virtual void apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params);
 
   /// Apply Thread Pools with Lanes.
-  virtual void apply_lane_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL);
+  virtual void apply_lane_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolLanesParams& tpl_params);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

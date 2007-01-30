@@ -169,8 +169,7 @@ Receiver::parse_args (int argc,
 
 int
 Receiver::init (int argc,
-                char ** argv
-                ACE_ENV_ARG_DECL)
+                char ** argv)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -197,8 +196,7 @@ Receiver::init (int argc,
     this->mmdevice_;
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->mmdevice_->_this ();
 
   // Register the mmdevice with the naming service.
   CosNaming::Name name (1);
@@ -215,9 +213,7 @@ Receiver::init (int argc,
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
-                                mmdevice.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                mmdevice.in ());
 
   return 0;
 }
@@ -232,69 +228,52 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       int result =
         RECEIVER::instance ()->init (argc,
-                                     argv
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     argv);
 
       if (result != 0)
         return result;
 
       while (endstream != 2)
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
 
       // Hack for now....
       ACE_OS::sleep (1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"receiver::init");
+      ex._tao_print_exception ("receiver::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   RECEIVER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

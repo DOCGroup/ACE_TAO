@@ -8,8 +8,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID (CosEvent_Service, 
-           CosEvent_Service, 
+ACE_RCSID (CosEvent_Service,
+           CosEvent_Service,
            "$Id$")
 
 int
@@ -17,16 +17,14 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Intialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (command_line.get_argc(), command_line.get_ASCII_argv(), 0);
 
       // Call TAO_CEC_Event_Loader::init (argc, argv) from here.
       TAO_CEC_Event_Loader event_service;
@@ -49,27 +47,24 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       //    Don't worry about this change yet... Let's get all the changes
       //    in and then we can fix the EC shutdown problem...
       //
-      //    As inidicated above, The Typed EC implementation can now be 
-      //    destroyed by passing -d at the command line and 
+      //    As inidicated above, The Typed EC implementation can now be
+      //    destroyed by passing -d at the command line and
       //    calling destroy on the typed EC interface.
       //    Calling fini() completes the destruction, although most of
       //    this is done in TAO_CEC_TypedEventChannel::shutdown().
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       event_service.fini();
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
       // Destroy the ORB
-      orb->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, argv[0]);
+      ex._tao_print_exception (argv[0]);
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }

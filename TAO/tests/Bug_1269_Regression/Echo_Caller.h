@@ -15,11 +15,10 @@ class Echo_Caller : public POA_Test::Echo_Caller
 public:
   Echo_Caller(CORBA::ORB_ptr orb);
 
-  virtual void start_task(Test::Echo_ptr client
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void start_task(Test::Echo_ptr client)
     ACE_THROW_SPEC((CORBA::SystemException));
 
-  virtual void shutdown(ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown(void)
     ACE_THROW_SPEC((CORBA::SystemException));
 
 private:

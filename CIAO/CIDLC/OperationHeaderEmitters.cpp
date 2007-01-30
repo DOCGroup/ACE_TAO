@@ -33,14 +33,13 @@ OperationEmitter::receives_pre (Type&)
 void
 OperationEmitter::receives_none (Type&)
 {
-  os << " (" << endl
-      << STRS[ENV_SNGL_HDR] << ")" << endl;
+  os << " ()" << endl;
 }
 
 void
 OperationEmitter::receives_post (Type&)
 {
-  os << endl << STRS[ENV_HDR] << ")" << endl;
+  os << endl << ")" << endl;
 }
 
 void
@@ -131,8 +130,7 @@ FactoryOperationEmitter::name (SemanticGraph::HomeFactory& t)
 void
 FactoryOperationEmitter::receives_none (SemanticGraph::HomeFactory&)
 {
-  os << " (" << endl
-      << STRS[ENV_SNGL_HDR] << ")" << endl;
+  os << " ()" << endl;
 }
 
 void
@@ -144,7 +142,7 @@ FactoryOperationEmitter::receives_pre (SemanticGraph::HomeFactory&)
 void
 FactoryOperationEmitter::receives_post (SemanticGraph::HomeFactory&)
 {
-  os << endl << STRS[ENV_HDR] << ")" << endl;
+  os << endl << ")" << endl;
 }
 
 void
@@ -218,8 +216,7 @@ FinderOperationEmitter::name (SemanticGraph::HomeFinder& t)
 void
 FinderOperationEmitter::receives_none (SemanticGraph::HomeFinder&)
 {
-  os << " (" << endl
-      << STRS[ENV_SNGL_HDR] << ")" << endl;
+  os << " ()" << endl;
 }
 
 void
@@ -231,7 +228,7 @@ FinderOperationEmitter::receives_pre (SemanticGraph::HomeFinder&)
 void
 FinderOperationEmitter::receives_post (SemanticGraph::HomeFinder&)
 {
-  os << endl << STRS[ENV_HDR] << ")" << endl;
+  os << endl << ")" << endl;
 }
 
 void

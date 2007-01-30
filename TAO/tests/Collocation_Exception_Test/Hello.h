@@ -25,23 +25,23 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string (ACE_ENV_SINGLE_ARG_DECL)
+  virtual char * get_string (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void system_exception_test (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void system_exception_test (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void user_exception_expected (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void user_exception_expected (void)
       ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A));
 
-  virtual void user_exception_not_expected (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void user_exception_not_expected (void)
       ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  void throw_internal_b (ACE_ENV_SINGLE_ARG_DECL);
+  void throw_internal_b (void);
 
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.

@@ -56,8 +56,7 @@ parse_args (int argc, char *argv[])
 void
 run_client (CORBA::ORB_ptr orb,
             PingObject_ptr server,
-            PingObject_ptr callback
-            ACE_ENV_ARG_DECL)
+            PingObject_ptr callback)
 {
   // Run the client requests in a separate routine to isolate the
   // exceptions...
@@ -66,15 +65,13 @@ run_client (CORBA::ORB_ptr orb,
     {
       ACE_Time_Value tv (0, 1000 * period);
       const char* reason = "";
-      ACE_TRY
+      try
         {
           reason = "Exception during ping call";
-          server->ping (callback ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->ping (callback);
 
           // Run for <period> milliseconds, to receive the reply
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->run (tv);
 
           // Terminate the client if:
           //   - This is the last iteration
@@ -84,93 +81,74 @@ run_client (CORBA::ORB_ptr orb,
             {
               ACE_DEBUG ((LM_DEBUG, "Shutting down server\n"));
               reason = "Exception during server shutdown";
-              server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              server->shutdown ();
             }
         }
-      ACE_CATCH (CORBA::TRANSIENT, t)
+      catch (const CORBA::TRANSIENT&)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "Ignoring transient exception\n"));
           // ACE_PRINT_EXCEPTION (t, reason);
           ACE_OS::sleep (tv);
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, f)
+      catch (const CORBA::COMM_FAILURE&)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring comm failure exception\n"));
           // ACE_PRINT_EXCEPTION (f, reason);
           ACE_OS::sleep (tv);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, reason);
+          ex._tao_print_exception (reason);
           ACE_OS::sleep (tv);
         }
-      ACE_ENDTRY;
     }
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // create child poa with PERSISTENT policy
-      ACE_TRY_CHECK;
       CORBA::PolicyList policies;
       policies.length (2);
       policies[0] =
-        root_poa->create_lifespan_policy(PortableServer::PERSISTENT
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
       policies[1] =
-        root_poa->create_implicit_activation_policy(PortableServer::IMPLICIT_ACTIVATION
-                                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_implicit_activation_policy(PortableServer::IMPLICIT_ACTIVATION);
 
       PortableServer::POA_var persistent_poa =
         root_poa->create_POA("persistent",
                              poa_manager.in (),
-                             policies
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      policies[1]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             policies);
+      policies[0]->destroy ();
+      policies[1]->destroy ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       PingObject_var server =
-        PingObject::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PingObject::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -184,30 +162,23 @@ main (int argc, char *argv[])
                             persistent_poa.in ());
 
       PingObject_var callback =
-        callback_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        callback_impl._this ();
 
 
       // If the ior_output_file exists, output the ior to it
       run_client (orb.in (),
                   server.in (),
-                  callback.in ()
-                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                  callback.in ());
 
-      persistent_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      persistent_poa->destroy (1, 1);
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

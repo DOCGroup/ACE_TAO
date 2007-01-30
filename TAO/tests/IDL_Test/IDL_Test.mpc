@@ -25,6 +25,7 @@ project(*Main): taoserver, messaging {
     params.idl
     reopened_modules.idl
     sequence.idl
+    struct.idl
     reopen_include1.idl
     reopen_include2.idl
     typeprefix.idl

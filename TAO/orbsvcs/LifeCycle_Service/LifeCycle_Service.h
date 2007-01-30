@@ -38,11 +38,10 @@ public:
   // Destructor
 
   int init (int argc,
-            ACE_TCHAR *argv[]
-            ACE_ENV_ARG_DECL);
+            ACE_TCHAR *argv[]);
   // Initialize the Server state - parsing arguments and ...
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
   u_int parse_args (int argc,

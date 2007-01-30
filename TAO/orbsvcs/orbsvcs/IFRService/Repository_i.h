@@ -84,44 +84,37 @@ public:
   virtual ~TAO_Repository_i (void);
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Accessor for the readonly attribute.
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // May not be called on a repository - raises BAD_INV_ORDER.
 
   virtual CORBA::Contained_ptr lookup_id (
       const char *search_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Contained_ptr lookup_id_i (
       const char *search_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (
       CORBA::TypeCode_ptr tc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr get_canonical_typecode_i (
       CORBA::TypeCode_ptr tc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PrimitiveDef_ptr get_primitive (
       CORBA::PrimitiveKind kind
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // No locking necessary because the database is not
@@ -129,76 +122,65 @@ public:
 
   virtual CORBA::StringDef_ptr create_string (
       CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::StringDef_ptr create_string_i (
-      CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CORBA::ULong bound)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::WstringDef_ptr create_wstring (
       CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::WstringDef_ptr create_wstring_i (
       CORBA::ULong bound
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
       CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC (( CORBA::SystemException));
 
   CORBA::SequenceDef_ptr create_sequence_i (
       CORBA::ULong bound,
       CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC (( CORBA::SystemException));
 
   virtual CORBA::ArrayDef_ptr create_array (
       CORBA::ULong length,
       CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ArrayDef_ptr create_array_i (
       CORBA::ULong length,
       CORBA::IDLType_ptr element_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::FixedDef_ptr create_fixed (
       CORBA::UShort digits,
       CORBA::Short scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::FixedDef_ptr create_fixed_i (
       CORBA::UShort digits,
       CORBA::Short scale
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   int repo_init (CORBA::Repository_ptr repo_ref,
-                 PortableServer::POA_ptr repo_poa
-                 ACE_ENV_ARG_DECL);
+                 PortableServer::POA_ptr repo_poa);
   // Called at startup to get everything initialized.
 
-  virtual int create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int create_servants_and_poas (void);
   // We create a default servant servant for each IR Object
   // type and its corresponding POA.
 

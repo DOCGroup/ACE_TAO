@@ -25,13 +25,11 @@ class Server_IORInterceptor_ORBInitializer
 
   //@{
   /// The pre-initialization hook.
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The post-initialization hook.
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

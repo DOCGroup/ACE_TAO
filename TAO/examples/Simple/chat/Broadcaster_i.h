@@ -45,16 +45,14 @@ public:
   // Destructor.
 
   virtual void add (Receiver_ptr receiver,
-                    const char *nickname
-                    ACE_ENV_ARG_DECL)
+                    const char *nickname)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotAdd
     ));
   // Saves receiver references in a list.
 
-  virtual void remove (Receiver_ptr receiver
-                       ACE_ENV_ARG_DECL)
+  virtual void remove (Receiver_ptr receiver)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotRemove
@@ -62,8 +60,7 @@ public:
   // Removes receiver references from the list.
 
   virtual void say (Receiver_ptr receiver,
-                    const char *text
-                    ACE_ENV_ARG_DECL)
+                    const char *text)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -73,8 +70,7 @@ public:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  void broadcast (const char* text
-                  ACE_ENV_ARG_DECL);
+  void broadcast (const char* text);
   // Broadcasts the text to all registered clients.
 
   class Receiver_Data

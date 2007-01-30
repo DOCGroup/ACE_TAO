@@ -53,21 +53,21 @@ public:
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc
-             ACE_ENV_ARG_DECL);
+            );
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any
-             ACE_ENV_ARG_DECL);
+            );
 
   // = LocalObject methods.
   static TAO_DynStruct_i *_narrow (
       CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+      );
 
   // = Functions specific to DynStruct.
 
   virtual DynamicAny::FieldName current_member_name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -76,7 +76,7 @@ public:
       ));
 
   virtual CORBA::TCKind current_member_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -85,7 +85,7 @@ public:
       ));
 
   virtual DynamicAny::NameValuePairSeq *get_members (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -93,7 +93,7 @@ public:
 
   virtual void set_members (
       const DynamicAny::NameValuePairSeq& value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -102,7 +102,7 @@ public:
       ));
 
   virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -110,7 +110,7 @@ public:
 
   virtual void set_members_as_dyn_any (
       const DynamicAny::NameDynAnyPairSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -122,7 +122,7 @@ public:
 
   virtual void from_any (
       const CORBA::Any & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -131,7 +131,7 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -139,21 +139,21 @@ public:
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -163,12 +163,12 @@ public:
 private:
   /// Check if the typecode is acceptable.
   void check_typecode (CORBA::TypeCode_ptr tc
-                       ACE_ENV_ARG_DECL);
+                      );
 
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
   void set_from_any (const CORBA::Any &any
-                     ACE_ENV_ARG_DECL);
+                    );
 
   /// Called by both versions of init().
   void init_common (void);

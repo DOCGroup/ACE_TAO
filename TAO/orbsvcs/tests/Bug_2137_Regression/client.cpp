@@ -35,15 +35,13 @@ CORBA::Boolean
 check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expected_result)
 {
   CORBA::Boolean result = 1;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object1 =
-        orb->string_to_object(ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior1);
 
       CORBA::Object_var object2 =
-        orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior2);
 
       const char* expected_result_string = (expected_result ? "true" : "false");
 
@@ -61,14 +59,12 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
           result = 0;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "Vastly unexpected exception comparing %s and %s:\n", ior1, ior2));
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception:");
+      ex._tao_print_exception ("Exception:");
       result = 0;
     }
-  ACE_ENDTRY;
   return result;
 }
 
@@ -76,11 +72,10 @@ int
 main (int argc, char *argv[])
 {
   CORBA::Boolean result = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -297,16 +292,13 @@ main (int argc, char *argv[])
           result = 1;
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return result;
 }

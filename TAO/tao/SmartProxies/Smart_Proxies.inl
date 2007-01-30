@@ -15,9 +15,4 @@ TAO_Smart_Proxy_Base::TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy)
 {
 }
 
-ACE_INLINE
-TAO_Smart_Proxy_Base::~TAO_Smart_Proxy_Base (void)
-{
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -47,23 +47,18 @@ Client_Task::too_big_difference_calls (void) const
 int
 Client_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   int successful_calls = 0;
   int timed_out_calls = 0;
 
-  ACE_TRY
+  try
     {
-      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->validate_connection ();
 
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("PolicyCurrent");
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       TimeBase::TimeT timeout_period = 10 * this->timeout_;
 
@@ -74,19 +69,14 @@ Client_Task::svc (void)
       policy_list.length (1);
       policy_list[0] =
         this->orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                   timeout_as_any
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   timeout_as_any);
 
       policy_current->set_policy_overrides (policy_list,
-                                            CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            CORBA::ADD_OVERRIDE);
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int retval = this->one_iteration ();
 
           if (retval == 1)
             successful_calls++;
@@ -103,13 +93,11 @@ Client_Task::svc (void)
 #endif /* 0 */
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
   this->successful_calls_ += successful_calls;
@@ -119,34 +107,29 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (void)
 {
-  ACE_TRY
+  try
     {
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->sleep_service_->go_to_sleep (0 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (void) this->sleep_service_->go_to_sleep (0);
         }
     }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT& )
     {
       // Ignore transient exceptions
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
-Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
+Client_Task::one_iteration (void)
 {
-  ACE_TRY
+  try
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
 
-      this->sleep_service_->go_to_sleep (this->sleep_time_
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->sleep_service_->go_to_sleep (this->sleep_time_);
 
       ACE_Time_Value end = ACE_OS::gettimeofday ();
 
@@ -190,18 +173,16 @@ Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
 
       return 1;
     }
-  ACE_CATCH(CORBA::TIMEOUT, to_exp)
+  catch (const CORBA::TIMEOUT& )
     {
       // Ignore this exception, it is usually caused by a transient
       // condition
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
     }
-  ACE_ENDTRY;
 
   return -1;
 }

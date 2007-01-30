@@ -64,12 +64,12 @@ namespace TAO
                           const char *orb_id,
                           PortableInterceptor::AdapterName *,
                           PortableServer::POA_ptr poa
-                          ACE_ENV_ARG_DECL) = 0;
+                          ) = 0;
 
     /// Set a different ort_factory to be used.
     virtual int set_obj_ref_factory (
       PortableInterceptor::ObjectReferenceFactory *current_factory
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+      ) = 0;
 
     /// Accessor methods to ObjectReferenceTemplate template
     virtual PortableInterceptor::ObjectReferenceTemplate *
@@ -99,7 +99,7 @@ namespace TAO
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
       const PortableInterceptor::ObjectId & id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;

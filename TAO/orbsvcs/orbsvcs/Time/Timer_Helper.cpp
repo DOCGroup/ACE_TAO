@@ -46,8 +46,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
   CORBA::ULongLong highest_time  = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       IORS::TYPE* value;
       for (IORS::ITERATOR server_iterator (this->clerk_->server_);
@@ -56,8 +55,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
         {
           // This is a remote call.
           CosTime::UTO_var UTO_server =
-            (*value)->universal_time (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            (*value)->universal_time ();
 
 #if defined (ACE_LACKS_LONGLONG_T)
 
@@ -89,8 +87,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 #endif
 
           CORBA::ULongLong curr_server_time =
-            UTO_server->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            UTO_server->time ();
 
           sum += curr_server_time;
 
@@ -139,16 +136,13 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
         static_cast<ACE_UINT32> (10000000) +
         static_cast<CORBA::ULongLong> (timeofday.usec () * 10);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "Exception in handle_timeout()\n");
+        ex._tao_print_exception ("Exception in handle_timeout()\n");
 
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

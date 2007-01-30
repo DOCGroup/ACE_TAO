@@ -34,28 +34,23 @@ ECMS_Driver::ECMS_Driver (void)
 int
 ECMS_Driver::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -114,43 +109,35 @@ ECMS_Driver::run (int argc, char* argv[])
         }
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        naming_context->resolve (name);
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
-                                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      this->connect_suppliers (channel.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->connect_suppliers (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->activate_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -163,20 +150,18 @@ ECMS_Driver::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
 
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->disconnect_suppliers ();
 
       // @@ Deactivate the suppliers (as CORBA Objects?)
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX in Supplier");
+      sys_ex._tao_print_exception ("SYS_EX in Supplier");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX in Supplier");
+      ex._tao_print_exception ("NON SYS EX in Supplier");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -184,8 +169,7 @@ int
 ECMS_Driver::supplier_task (Test_Supplier *supplier,
                             void* /* cookie */)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_Time_Value tv (0, this->event_period_);
 
@@ -269,29 +253,26 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
             }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-          supplier->consumer_proxy ()->push(event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          supplier->consumer_proxy ()->push(event);
 
           // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
           ACE_OS::sleep (tv);
         }
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+      sys_ex._tao_print_exception ("SYS_EX");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
+      ex._tao_print_exception ("NON SYS EX");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel
-                                ACE_ENV_ARG_DECL)
+ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -303,14 +284,12 @@ ECMS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel
       this->suppliers_[i]->connect (buf,
                                     this->event_a_,
                                     this->event_b_,
-                                    channel
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                    channel);
     }
 }
 
 void
-ECMS_Driver::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ECMS_Driver::activate_suppliers (void)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -319,12 +298,11 @@ ECMS_Driver::activate_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ECMS_Driver::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+ECMS_Driver::disconnect_suppliers (void)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->suppliers_[i]->disconnect ();
     }
 }
 
@@ -427,8 +405,7 @@ void
 Test_Supplier::connect (const char* name,
                         int event_a,
                         int event_b,
-                        RtecEventChannelAdmin::EventChannel_ptr ec
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   this->supplier_id_ = ACE::crc32 (name);
   ACE_DEBUG ((LM_DEBUG,
@@ -448,25 +425,20 @@ Test_Supplier::connect (const char* name,
               0, 1);
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_suppliers ();
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
 
   RtecEventComm::PushSupplier_var objref =
-    this->supplier_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->supplier_._this ();
 
   this->consumer_proxy_->connect_push_supplier (objref.in (),
-                                                qos.get_SupplierQOS ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                qos.get_SupplierQOS ());
 }
 
 void
-Test_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Test_Supplier::disconnect (void)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -474,26 +446,24 @@ Test_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();
 
-  ACE_TRY
+  try
     {
-      proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy->disconnect_push_consumer ();
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
-    {
-      // Ignore, the EC can shutdown before we get a chance to
-      // disconnect
-    }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
       // Ignore, the EC can shutdown before we get a chance to
       // disconnect
     }
-  ACE_CATCHANY
+  catch (const CORBA::TRANSIENT&)
     {
-      ACE_RE_THROW;
+      // Ignore, the EC can shutdown before we get a chance to
+      // disconnect
     }
-  ACE_ENDTRY;
+  catch (const CORBA::Exception&)
+    {
+      throw;
+    }
 }
 
 int
@@ -503,7 +473,7 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_Supplier::disconnect_push_supplier (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_proxy_ =

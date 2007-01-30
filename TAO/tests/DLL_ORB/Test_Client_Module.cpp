@@ -65,8 +65,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO client-side ORB initialization code.
   // -----------------------------------------------------------------
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Prepend a "dummy" program name argument to the Service
       // Configurator argument vector.
@@ -89,9 +88,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
-                                    "CLIENT"
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "CLIENT");
 
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
@@ -100,12 +97,10 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var obj =
-        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior);
 
       this->test_ =
-        Test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->test_.in ()))
         {
@@ -115,15 +110,12 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
                             1);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Client_Module::init"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Client_Module::init"));
 
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -161,16 +153,13 @@ Test_Client_Module::fini (void)
 int
 Test_Client_Module::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Invoke an operation on the Test object.
-      this->test_->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->invoke_me ();
 
       /// Shutdown the remote ORB.
-      this->test_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_->shutdown ();
 
       // Make sure the ORB is destroyed here - before the thread
       // exits, because it may be holding global resources, owned by
@@ -183,8 +172,7 @@ Test_Client_Module::svc (void)
       // deleted resources.
       if (!CORBA::is_nil (this->orb_.in ()))
         {
-          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->destroy ();
         }
 
       // This is a bit of a hack.  The ORB Core's lifetime is tied to the
@@ -197,14 +185,11 @@ Test_Client_Module::svc (void)
       (void) this->test_.out ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Client_Module::svc"));
+      ex._tao_print_exception (ACE_TEXT ("Test_Client_Module::svc"));
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

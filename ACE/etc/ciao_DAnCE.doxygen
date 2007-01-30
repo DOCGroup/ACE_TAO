@@ -122,16 +122,7 @@ PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
                         ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
-                        ACE_THROW_SPEC \
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS \
-                        ACE_ENV_ARG_DECL_NOT_USED \
-                        ACE_ENV_SINGLE_ARG_DECL_NOT_USED \
-                        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS \
-                        ACE_ENV_ARG_DECL \
-                        ACE_ENV_SINGLE_ARG_DECL \
-                        ACE_ENV_SINGLE_ARG_PARAMETER \
-                        ACE_ENV_ARG_PARAMETER \
-                        CIAO_NAMESPACE
+                        ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references

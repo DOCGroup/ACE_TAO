@@ -31,8 +31,7 @@ namespace TAO
   }
 
   Invocation_Status
-  LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time
-                                    ACE_ENV_ARG_DECL)
+  LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
     ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
@@ -58,19 +57,14 @@ namespace TAO
       }
 
     TAO_Target_Specification tspec;
-    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    this->init_target_spec (tspec);
 
-    TAO_Transport *transport =
-      this->resolver_.transport ();
+    TAO_Transport *transport = this->resolver_.transport ();
 
     TAO_OutputCDR &cdr = transport->out_stream ();
 
     int const retval =
-      transport->generate_locate_request (tspec,
-                                          this->details_,
-                                          cdr);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      transport->generate_locate_request (tspec, this->details_, cdr);
 
     if (retval == -1)
       return TAO_INVOKE_FAILURE;
@@ -78,11 +72,7 @@ namespace TAO
     countdown.update ();
 
     Invocation_Status s =
-      this->send_message (cdr,
-                          TAO_Transport::TAO_TWOWAY_REQUEST,
-                          max_wait_time
-                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      this->send_message (cdr, TAO_Transport::TAO_TWOWAY_REQUEST, max_wait_time);
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -96,15 +86,9 @@ namespace TAO
       this->resolver_.transport_released ();
 
     s =
-      this->wait_for_reply (max_wait_time,
-                            rd,
-                            dispatch_guard
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      this->wait_for_reply (max_wait_time, rd, dispatch_guard);
 
-    s = this->check_reply (rd
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    s = this->check_reply (rd);
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
@@ -116,8 +100,7 @@ namespace TAO
   }
 
   Invocation_Status
-  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd
-                                         ACE_ENV_ARG_DECL)
+  LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd)
   {
     TAO_InputCDR &cdr =
       rd.reply_cdr ();
@@ -136,7 +119,7 @@ namespace TAO
       case TAO_GIOP_OBJECT_FORWARD:
       case TAO_GIOP_OBJECT_FORWARD_PERM:
         return this->location_forward (cdr
-                                       ACE_ENV_ARG_PARAMETER);
+                                      );
 
       case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
         {
@@ -176,9 +159,7 @@ namespace TAO
 
           // Now set this addressing mode in the profile, so that
           // the next invocation need not go through this.
-          this->resolver_.profile ()->addressing_mode (addr_mode
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO_INVOKE_SUCCESS);
+          this->resolver_.profile ()->addressing_mode (addr_mode);
 
           // Restart the invocation.
           return TAO_INVOKE_RESTART;

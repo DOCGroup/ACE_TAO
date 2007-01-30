@@ -39,8 +39,7 @@ CORBA::LocalObject::_remove_ref (void)
 // create hash tables.
 
 CORBA::ULong
-CORBA::LocalObject::_hash (CORBA::ULong maximum
-                           ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_hash (CORBA::ULong maximum)
 {
   // Note that we reinterpret_cast to an "ptrdiff_t" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -60,8 +59,7 @@ CORBA::LocalObject::_hash (CORBA::ULong maximum
 // such as strcmp(), to allow more comparison algorithms.
 
 CORBA::Boolean
-CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj)
   ACE_THROW_SPEC (())
 {
   return (other_obj == this) ? true : false;
@@ -71,7 +69,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj
 
 
 TAO::ObjectKey *
-CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_key (void)
 {
   if (TAO_debug_level > 0)
     ACE_ERROR ((LM_ERROR,
@@ -87,7 +85,7 @@ CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA::LocalObject::_non_existent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_non_existent (void)
 {
   // Always return false.
   return false;
@@ -99,11 +97,9 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::NVList_ptr,
                                      CORBA::NamedValue_ptr,
                                      CORBA::Request_ptr &,
-                                     CORBA::Flags
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Flags)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 void
@@ -114,16 +110,13 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
                                      CORBA::ExceptionList_ptr,
                                      CORBA::ContextList_ptr,
                                      CORBA::Request_ptr &,
-                                     CORBA::Flags
-                                     ACE_ENV_ARG_DECL)
+                                     CORBA::Flags)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                  CORBA::COMPLETED_NO));
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 CORBA::Request_ptr
-CORBA::LocalObject::_request (const char *
-                              ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_request (const char *)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
                                          CORBA::COMPLETED_NO),
@@ -131,7 +124,7 @@ CORBA::LocalObject::_request (const char *
 }
 
 CORBA::Object_ptr
-CORBA::LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_component (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -139,7 +132,7 @@ CORBA::LocalObject::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 char *
-CORBA::LocalObject::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_repository_id (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -147,7 +140,7 @@ CORBA::LocalObject::_repository_id (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::InterfaceDef_ptr
-CORBA::LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_interface (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -155,7 +148,7 @@ CORBA::LocalObject::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::ImplementationDef_ptr
-CORBA::LocalObject::_get_implementation (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_implementation (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
@@ -165,8 +158,7 @@ CORBA::LocalObject::_get_implementation (ACE_ENV_SINGLE_ARG_DECL)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_policy (CORBA::PolicyType
-                                 ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_get_policy (CORBA::PolicyType)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -174,16 +166,14 @@ CORBA::LocalObject::_get_policy (CORBA::PolicyType
 }
 
 CORBA::Policy_ptr
-CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type
-                                        ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::Object_ptr
 CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
-                                           CORBA::SetOverrideType
-                                           ACE_ENV_ARG_DECL)
+                                           CORBA::SetOverrideType)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -191,8 +181,7 @@ CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
 }
 
 CORBA::PolicyList *
-CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &
-                                           ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -200,8 +189,7 @@ CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &
 }
 
 CORBA::Boolean
-CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
-                                          ACE_ENV_ARG_DECL)
+CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),
@@ -211,7 +199,7 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 CORBA::ORB_ptr
-CORBA::LocalObject::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::LocalObject::_get_orb (void)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
                                          CORBA::COMPLETED_NO),

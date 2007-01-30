@@ -8,6 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+PerlACE::check_privilege_group();
+
 $experiment_timeout = 60;
 $startup_timeout = 60;
 $notifyior = PerlACE::LocalFile ("notify.ior");

@@ -24,12 +24,11 @@ template<class Interface>
 class RIR_Narrow
 {
 public:
-  typedef ACE_TYPENAME Interface::_ptr_type Interface_ptr;
-  typedef ACE_TYPENAME Interface::_var_type Interface_var;
+  typedef typename Interface::_ptr_type Interface_ptr;
+  typedef typename Interface::_var_type Interface_var;
 
   static Interface_ptr resolve (CORBA::ORB_ptr orb,
-                                const char *object_id
-                                ACE_ENV_ARG_DECL);
+                                const char *object_id);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

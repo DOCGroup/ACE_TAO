@@ -26,7 +26,7 @@ Thread_Task::Thread_Task (void)
 int
 Thread_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (TAO_debug_level > 0)
         {
@@ -39,9 +39,7 @@ Thread_Task::svc (void)
       CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());;
       this->current_->begin_scheduling_segment (name,
                                                 sched_param_.in (),
-                                                implicit_sched_param.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param.in ());
 
       ACE_OS::memcpy (&count_,
                       this->current_->id ()->get_buffer (),
@@ -59,18 +57,14 @@ Thread_Task::svc (void)
 
       this->perform_task ();
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
 
       dt_creator_->dt_ended () ;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
   return 0;
 }
 

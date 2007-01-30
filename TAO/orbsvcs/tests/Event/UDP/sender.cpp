@@ -37,19 +37,17 @@ main (int argc, char* argv[])
   // and defined in $ACE_ROOT/ace/CORBA_macros.h.
   // If your platform supports native exceptions, and TAO was compiled
   // with native exception support then you can simply use try/catch
-  // and avoid the ACE_ENV_SINGLE_ARG_PARAMETER argument.
+  // and avoid the argument.
   // Unfortunately many embedded systems cannot use exceptions due to
   // the space and time overhead.
   //
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // **************** HERE STARTS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
@@ -66,16 +64,12 @@ main (int argc, char* argv[])
       // The POA starts in the holding state, if it is not activated
       // it will not process any requests.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // **************** THAT COMPLETS THE ORB SETUP
 
@@ -97,15 +91,13 @@ main (int argc, char* argv[])
       // that may involve creating some threads.
       // But it should always be invoked because several internal data
       // structures are initialized at that point.
-      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ec_impl.activate ();
 
       // The event channel is activated as any other CORBA servant.
       // In this case we use the simple implicit activation with the
       // RootPOA
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec_impl._this ();
 
       // **************** THAT COMPLETES THE LOCAL EVENT CHANNEL SETUP
 
@@ -141,8 +133,7 @@ main (int argc, char* argv[])
       // Now we create and activate the servant
       AddrServer as_impl (addr);
       RtecUDPAdmin::AddrServer_var address_server =
-        as_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        as_impl._this ();
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
@@ -157,9 +148,7 @@ main (int argc, char* argv[])
       TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
       sender->init (event_channel.in (),
                     address_server.in (),
-                    endpoint
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    endpoint);
 
       // Now we connect the sender as a consumer of events, it will
       // receive any event from any source and send it to the "right"
@@ -173,8 +162,7 @@ main (int argc, char* argv[])
       sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-      sender->connect (sub ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->connect (sub);
 
       // **************** THAT COMPLETES THE FEDERATION SETUP
 
@@ -183,11 +171,8 @@ main (int argc, char* argv[])
       // And now create a supplier
       Supplier supplier (valuetype);
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      supplier.connect (supplier_admin.in ()
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        event_channel->for_suppliers ();
+      supplier.connect (supplier_admin.in ());
 
       // **************** THAT COMPLETES THE CLIENT SETUP
 
@@ -199,8 +184,7 @@ main (int argc, char* argv[])
       for (int i = 0; i != 25; ++i)
         {
           CORBA::Boolean there_is_work =
-            orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->work_pending ();
           if (there_is_work)
             {
               // We use a TAO extension. The CORBA mechanism does not
@@ -208,13 +192,11 @@ main (int argc, char* argv[])
               // perform_work() or work_pending(), so just calling
               // them results in a spin loop.
               ACE_Time_Value tv (0, 50000);
-              orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orb->perform_work (tv);
             }
           ACE_Time_Value tv (0, 100000);
           ACE_OS::sleep (tv);
-          supplier.perform_push (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          supplier.perform_push ();
         }
 
       // **************** THAT COMPLETES THE EVENT LOOP
@@ -222,18 +204,15 @@ main (int argc, char* argv[])
       // **************** HERE STARTS THE CLEANUP CODE
 
       // First the easy ones
-      supplier.disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      supplier.disconnect ();
 
       // And also close the sender of events
-      sender->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->shutdown ();
 
       // The event channel must be destroyed, so it can release its
       // resources, and inform all the clients that are still
       // connected that it is going away.
-      event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      event_channel->destroy ();
 
       // Deactivating the event channel implementation is not strictly
       // required, the POA will do it for us, but it is good manners:
@@ -244,37 +223,31 @@ main (int argc, char* argv[])
         // is the root POA, but the code is more robust if we don't
         // rely on that.
         PortableServer::POA_var poa =
-          ec_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          ec_impl._default_POA ();
         // Get the Object Id used for the servant..
         PortableServer::ObjectId_var oid =
-          poa->servant_to_id (&ec_impl ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          poa->servant_to_id (&ec_impl);
         // Deactivate the object
-        poa->deactivate_object (oid.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        poa->deactivate_object (oid.in ());
       }
 
       // Now we can destroy the POA, the flags mean that we want to
       // wait until the POA is really destroyed
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 1);
 
       // Finally destroy the ORB
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       // **************** THAT COMPLETES THE CLEANUP CODE
 
       ACE_DEBUG ((LM_DEBUG,
                   "UDP sender ready\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 

@@ -30,13 +30,12 @@ public:
   FT_ProxyAdmin_Base(PortableServer::ServantBase* servant,
               PortableServer::POA_var poa);
   virtual ~FT_ProxyAdmin_Base();
-  void activate(const FtRtecEventComm::ObjectId& oid
-              ACE_ENV_ARG_DECL);
+  void activate(const FtRtecEventComm::ObjectId& oid);
 
-  const FtRtecEventComm::ObjectId& object_id(ACE_ENV_SINGLE_ARG_DECL) const;
+  const FtRtecEventComm::ObjectId& object_id(void) const;
 
   /// Returns an CORBA object reference when the servant is activated
-  CORBA::Object_var reference(ACE_ENV_SINGLE_ARG_DECL) const;
+  CORBA::Object_var reference(void) const;
 
 protected:
 

@@ -15,7 +15,7 @@ ACE_RCSID(Hello, Hello, "$Id$")
 }
 
 char *
-Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::get_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -58,12 +58,12 @@ Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

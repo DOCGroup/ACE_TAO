@@ -34,8 +34,7 @@ Logging_Svc_Shutdown::operator() (int which_signal)
                 "Notify_Logging_Service: shutting down on signal %d\n",
                 which_signal));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  (void) this->svc_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  (void) this->svc_.shutdown ();
 }
 
 // Driver function for the Notify_Logging_Service.
@@ -48,32 +47,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Logging_Svc_Shutdown killer (service);
   Service_Shutdown kill_contractor (killer);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       int rc;
 
-      rc = service.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      rc = service.init (argc, argv);
       if (rc == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Failed to initialize the Telecom Log Service.\n"),
                           1);
 
-      rc = service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      rc = service.run ();
       if (rc == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Failed to start the Telecom Log Service.\n"),
                           1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start the Telecom Log Service.\n");
+      ex._tao_print_exception ("Failed to start the Telecom Log Service.\n");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

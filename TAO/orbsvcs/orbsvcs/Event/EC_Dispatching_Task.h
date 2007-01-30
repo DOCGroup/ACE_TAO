@@ -50,8 +50,7 @@ public:
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
-                                 RtecEventComm::EventSet& event
-                                 ACE_ENV_ARG_DECL) = 0;
+                                 RtecEventComm::EventSet& event) = 0;
 };
 
 class TAO_RTEvent_Serv_Export TAO_EC_Simple_Queue_Full_Action :
@@ -71,8 +70,7 @@ public:
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
-                                 RtecEventComm::EventSet& event
-                                 ACE_ENV_ARG_DECL);
+                                 RtecEventComm::EventSet& event);
 
 protected:
   int queue_full_action_return_value_;
@@ -109,8 +107,7 @@ public:
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     RtecEventComm::EventSet& event
-                     ACE_ENV_ARG_DECL);
+                     RtecEventComm::EventSet& event);
 
 private:
   /// An per-task allocator
@@ -141,7 +138,7 @@ public:
   virtual ~TAO_EC_Dispatch_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
+  virtual int execute (void) = 0;
 };
 
 // ****************************************************************
@@ -153,7 +150,7 @@ public:
   TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 };
 
 // ****************************************************************
@@ -172,7 +169,7 @@ public:
   virtual ~TAO_EC_Push_Command (void);
 
   /// Command callback
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (void);
 
 private:
   /// The proxy

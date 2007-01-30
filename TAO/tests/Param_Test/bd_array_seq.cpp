@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "bd_array_seq.h"
 
-ACE_RCSID (Param_Test, 
-           bd_array_seq, 
+ACE_RCSID (Param_Test,
+           bd_array_seq,
            "$Id$")
 
 const CORBA::ULong MAX_ARRAYSEQ_LEN = 1;
@@ -52,37 +52,32 @@ Test_Bounded_Array_Sequence::opname (void) const
 }
 
 void
-Test_Bounded_Array_Sequence::dii_req_invoke (CORBA::Request *req
-                                             ACE_ENV_ARG_DECL)
+Test_Bounded_Array_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Bounded_ArraySeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   Param_Test::Bounded_ArraySeq *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_ArraySeq (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Bounded_ArraySeq (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Bounded_ArraySeq (*tmp);
 }
 
 int
-Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr
-                                              ACE_ENV_ARG_DECL_NOT_USED)
+Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -127,29 +122,24 @@ Test_Bounded_Array_Sequence::reset_parameters (void)
 }
 
 int
-Test_Bounded_Array_Sequence::run_sii_test (Param_Test_ptr objref
-                                           ACE_ENV_ARG_DECL)
+Test_Bounded_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       Param_Test::Bounded_ArraySeq_out out (this->out_.out ());
 
       this->ret_ =
         objref->test_bounded_array_sequence (this->in_,
                                              this->inout_.inout (),
-                                             out
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Bounded_Array_Sequence::run_sii_test\n");
+      ex._tao_print_exception ("Test_Bounded_Array_Sequence::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

@@ -42,10 +42,8 @@ class TAO_RTPortableServer_Export TAO_RT_Collocation_Resolver :
   public TAO_Collocation_Resolver
 {
 public:
-
   /// Is @a object collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ACE_ENV_ARG_DECL) const;
+  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -35,7 +35,7 @@ public:
   virtual ~TAO_Notify_Tests_RT_Priority_Mapping (void);
 
   /// Init the Mapping manager.
-  void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  void init (CORBA::ORB_ptr orb);
 
   virtual CORBA::Boolean
       to_native (CORBA::Short corba_priority,

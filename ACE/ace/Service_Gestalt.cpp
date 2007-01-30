@@ -283,6 +283,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , no_static_svcs_ (no_static_svcs)
   , svc_queue_ (0)
   , svc_conf_file_queue_ (0)
+  , repo_ (0)
   , static_svcs_ (0)
   , processed_static_svcs_ (0)
 {
@@ -297,22 +298,29 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
 }
 
 /// Performs the common initialization tasks for a new or previously
-/// closed instance. Must not be virtual, as it is called from the
-/// constructor.
+/// closed instance. Must not be virtual, as it is also called from
+/// the constructor.
 int
 ACE_Service_Gestalt::init_i (void)
 {
-  if (this->svc_repo_is_owned_)
+  // Only initialize the repo_ if (a) we are being constructed, or;
+  // (b) we're being open()-ed, perhaps after previously having been
+  // close()-ed. In both cases: repo_ == 0 and we need a repository.
+  if (this->repo_ == 0)
     {
-      ACE_NEW_NORETURN (this->repo_,
-                        ACE_Service_Repository (this->svc_repo_size_));
+      if (this->svc_repo_is_owned_)
+        {
+          ACE_NEW_NORETURN (this->repo_,
+                            ACE_Service_Repository (this->svc_repo_size_));
+          if (this->repo_ == 0)
+            return -1;
+        }
+      else
+        {
+          this->repo_ =
+            ACE_Service_Repository::instance (this->svc_repo_size_);
+        }
     }
-  else
-    {
-      this->repo_ =
-        ACE_Service_Repository::instance (this->svc_repo_size_);
-    }
-
   return 0;
 }
 
@@ -1299,14 +1307,6 @@ ACE_Service_Gestalt::close (void)
   delete this->svc_conf_file_queue_;
   this->svc_conf_file_queue_ = 0;
 
-#ifndef ACE_NLOGGING
-  // Delete the dynamically allocated static_svcs instance.
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::close - this=%@, repo=%@, pss = %@\n"),
-                this, this->repo_, this->processed_static_svcs_));
-#endif
-
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
     {
@@ -1321,18 +1321,17 @@ ACE_Service_Gestalt::close (void)
   delete this->processed_static_svcs_;
   this->processed_static_svcs_ = 0;
 
-  if (this->svc_repo_is_owned_)
-      delete this->repo_;
-
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::close - complete this=%@, repo=%@\n"),
-                this, this->repo_));
+                ACE_LIB_TEXT ("ACE (%P|%t) SG::close - complete this=%@, repo=%@, owned=%d\n"),
+                this, this->repo_, this->svc_repo_is_owned_));
 #endif
 
-  this->repo_ = 0;
+  if (this->svc_repo_is_owned_)
+      delete this->repo_;
 
+  this->repo_ = 0;
   return 0;
 
 } /* close () */

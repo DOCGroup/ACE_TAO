@@ -121,22 +121,19 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 
   if (!CORBA::is_nil (this->reply_handler_.in ()))
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           // Call the Reply Handler's skeleton.
           reply_handler_skel_ (this->reply_cdr_,
                                this->reply_handler_.in (),
                                reply_error
-                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                               );
         }
-      ACE_CATCHANY
+      catch (const ::CORBA::Exception& ex)
         {
           if (TAO_debug_level >= 4)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "Exception during reply handler");
+            ex._tao_print_exception ("Exception during reply handler");
         }
-      ACE_ENDTRY;
     }
 
   this->decr_refcount ();
@@ -147,7 +144,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 void
 TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (!this->try_dispatch_reply ())
         return;
@@ -166,9 +163,8 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 
       TAO_OutputCDR out_cdr;
 
-      comm_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
+      comm_failure._tao_encode (out_cdr);
 
-      ACE_TRY_CHECK;
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
@@ -178,20 +174,18 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                     );
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Asynch_Reply_Dispacher::connection_closed");
+          ex._tao_print_exception (
+            "Asynch_Reply_Dispacher::connection_closed");
         }
 
     }
-  ACE_ENDTRY;
 
   (void) this->decr_refcount ();
 }
@@ -201,9 +195,8 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 void
 TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Generate a fake exception....
       CORBA::TIMEOUT timeout_failure (
@@ -214,8 +207,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
       TAO_OutputCDR out_cdr;
 
-      timeout_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      timeout_failure._tao_encode (out_cdr);
 
       // This is okay here... Everything relies on our refcount being
       // held by the timeout handler, whose refcount in turn is held
@@ -240,21 +232,17 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                     );
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Asynch_Reply_Dispacher::reply_timed_out");
+          ex._tao_print_exception ("Asynch_Reply_Dispacher::reply_timed_out");
         }
 
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   (void) this->decr_refcount ();
 }
@@ -262,7 +250,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
                                              const ACE_Time_Value &max_wait_time
-                                             ACE_ENV_ARG_DECL)
+                                             )
 {
   if (this->timeout_handler_ == 0)
     {

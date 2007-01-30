@@ -14,22 +14,21 @@ FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
 }
 
 char *
-FOO_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_IORInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_IORInterceptor");
 }
 
 void
-FOO_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_IORInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::IORInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // According to the Portable Interceptors specification,
@@ -38,16 +37,13 @@ FOO_IORInterceptor::establish_components (
   // does the right thing, and ignores any IOR interceptors that throw
   // an exception.
 
-  CORBA::String_var name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var name = this->name ();
 
   CORBA::Any data;
   data <<= name.in ();
 
   CORBA::OctetSeq_var encoded_data =
-    this->codec_->encode_value (data
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->codec_->encode_value (data);
 
   // Construct a tagged component.
   IOP::TaggedComponent component;
@@ -67,9 +63,7 @@ FOO_IORInterceptor::establish_components (
   ACE_ASSERT (component.component_data.length () == length);
 
   // Add the tagged component to all profiles.
-  info->add_ior_component (component
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_ior_component (component);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
@@ -79,9 +73,7 @@ FOO_IORInterceptor::establish_components (
 
   // Add the tagged component to all IIOP profiles.
   info->add_ior_component_to_profile (component,
-                                      IOP::TAG_INTERNET_IOP
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                      IOP::TAG_INTERNET_IOP);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Added tagged component containing the\n"
@@ -89,31 +81,26 @@ FOO_IORInterceptor::establish_components (
               name.in ()));
 
 
-  ACE_TRY
+  try
     {
       // Verify that policy retrieval internals work, and do not cause
       // memory access violations.
       CORBA::Policy_var policy =
-        info->get_effective_policy (PortableServer::THREAD_POLICY_ID
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        info->get_effective_policy (PortableServer::THREAD_POLICY_ID);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Successfully retrieved effective policy.\n"));
     }
-  ACE_CATCH (CORBA::INV_POLICY, ex)
+  catch (const CORBA::INV_POLICY& ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 3))
-        ACE_RE_THROW;
+        throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 FOO_IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::IORInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Construct a dummy tagged component.
@@ -123,34 +110,29 @@ FOO_IORInterceptor::components_established (
   component.component_data.length (1);
 
 
-  ACE_TRY_EX (ALL)
+  try
     {
       // Add the tagged component to all profiles.
       //
       // This call should fail since it shouldn't be possible to add
       // an IOR component after establish_components() has been
       // called.
-      info->add_ior_component (component
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (ALL);
+      info->add_ior_component (component);
 
       // The above call should NOT have succeeded.
-      ACE_TRY_THROW_EX (CORBA::INTERNAL (), ALL);
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+  catch (const CORBA::BAD_INV_ORDER& ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 14))
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "Unexpected exception");
+          ex._tao_print_exception ("Unexpected exception");
 
-          ACE_RE_THROW_EX (ALL);
+          throw;
         }
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
-  ACE_TRY_EX (PROFILE)
+  try
     {
       // Add the tagged component to all profiles.
       //
@@ -158,32 +140,26 @@ FOO_IORInterceptor::components_established (
       // an IOR component after establish_components() has been
       // called.
       info->add_ior_component_to_profile (component,
-                                          IOP::TAG_INTERNET_IOP
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (PROFILE);
+                                          IOP::TAG_INTERNET_IOP);
 
       // The above call should NOT have succeeded.
-      ACE_TRY_THROW_EX (CORBA::INTERNAL (), PROFILE);
+      throw CORBA::INTERNAL ();
     }
-  ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
+  catch (const CORBA::BAD_INV_ORDER& ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 14))
         {
-          ACE_PRINT_EXCEPTION (ex,
-                               "Unexpected exception");
+          ex._tao_print_exception ("Unexpected exception");
 
-          ACE_RE_THROW_EX (PROFILE);
+          throw;
         }
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 FOO_IORInterceptor::adapter_manager_state_changed (
     const char *,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -191,8 +167,7 @@ FOO_IORInterceptor::adapter_manager_state_changed (
 void
 FOO_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

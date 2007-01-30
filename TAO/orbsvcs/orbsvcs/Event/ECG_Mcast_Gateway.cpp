@@ -416,8 +416,7 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
 TAO_ECG_Refcounted_Handler
 TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
                                      RtecEventChannelAdmin::EventChannel_ptr ec,
-                                     ACE_Reactor *reactor
-                                     ACE_ENV_ARG_DECL)
+                                     ACE_Reactor *reactor)
 {
   TAO_ECG_Refcounted_Handler handler;
 
@@ -450,8 +449,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
       h->reactor (reactor);
 
-      h->open (ec ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_ECG_Refcounted_Handler ());
+      h->open (ec);
     }
 
   else if (this->handler_type_ == ECG_HANDLER_UDP)
@@ -490,8 +488,7 @@ TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
 TAO_ECG_Mcast_Gateway::init_sender (
                                RtecEventChannelAdmin::EventChannel_ptr ec,
                                RtecUDPAdmin::AddrServer_ptr address_server,
-                               TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                               ACE_ENV_ARG_DECL)
+                               TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
   TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
     sender (TAO_ECG_UDP_Sender::create ());
@@ -500,9 +497,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
 
   sender->init (ec,
                 address_server,
-                endpoint_rptr
-                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> ());
+                endpoint_rptr);
 
   TAO_EC_Auto_Command<UDP_Sender_Shutdown> sender_shutdown;
   sender_shutdown.set_command (UDP_Sender_Shutdown (sender));
@@ -511,8 +506,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
     {
       // Client supplied consumer qos.  Use it.
       this->consumer_qos_.is_gateway = 1;
-      sender->connect (this->consumer_qos_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> ());
+      sender->connect (this->consumer_qos_);
     }
   else
     {
@@ -526,8 +520,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
         const_cast<RtecEventChannelAdmin::ConsumerQOS &> (consumer_qos_factory.get_ConsumerQOS ());
       qos.is_gateway = 1;
 
-      sender->connect (qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> ());
+      sender->connect (qos);
     }
 
   sender_shutdown.disallow_command ();
@@ -538,8 +531,7 @@ TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
 TAO_ECG_Mcast_Gateway::init_receiver (
                                RtecEventChannelAdmin::EventChannel_ptr ec,
                                RtecUDPAdmin::AddrServer_ptr address_server,
-                               TAO_ECG_Refcounted_Endpoint endpoint_rptr
-                               ACE_ENV_ARG_DECL)
+                               TAO_ECG_Refcounted_Endpoint endpoint_rptr)
 {
   TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
     receiver (TAO_ECG_UDP_Receiver::create ());
@@ -548,9 +540,7 @@ TAO_ECG_Mcast_Gateway::init_receiver (
 
   receiver->init (ec,
                   endpoint_rptr,
-                  address_server
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> ());
+                  address_server);
 
   TAO_EC_Auto_Command<UDP_Receiver_Shutdown> receiver_shutdown;
   receiver_shutdown.set_command (UDP_Receiver_Shutdown (receiver));
@@ -563,8 +553,7 @@ TAO_ECG_Mcast_Gateway::init_receiver (
     const_cast<RtecEventChannelAdmin::SupplierQOS &> (supplier_qos_factory.get_SupplierQOS ());
   qos.is_gateway = 1;
 
-  receiver->connect (qos ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> ());
+  receiver->connect (qos);
 
   receiver_shutdown.disallow_command ();
   return receiver;
@@ -572,33 +561,30 @@ TAO_ECG_Mcast_Gateway::init_receiver (
 
 void
 TAO_ECG_Mcast_Gateway::verify_args (CORBA::ORB_ptr orb,
-                                    RtecEventChannelAdmin::EventChannel_ptr ec
-                                    ACE_ENV_ARG_DECL)
+                                    RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   if (CORBA::is_nil (ec))
     {
       ACE_ERROR ((LM_ERROR,
                   "Nil event channel argument passed to "
                   "TAO_ECG_Mcast_Gateway::run().\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   if (CORBA::is_nil (orb))
     {
       ACE_ERROR ((LM_ERROR,
                   "Nil orb argument passed to "
                   "TAO_ECG_Mcast_Gateway::run().\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }
 
 void
 TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
-                            RtecEventChannelAdmin::EventChannel_ptr ec
-                            ACE_ENV_ARG_DECL)
+                            RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   // Verify args.
-  this->verify_args (orb, ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->verify_args (orb, ec);
 
   // Auto-cleanup objects.
   TAO_EC_Object_Deactivator address_server_deactivator;
@@ -612,21 +598,18 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
     {
       ACE_DEBUG ((LM_ERROR,
                   "Unable to create address server.\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   RtecUDPAdmin::AddrServer_var address_server;
 
   PortableServer::POA_var poa =
-    address_server_servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    address_server_servant->_default_POA ();
 
   activate (address_server,
             poa.in (),
             address_server_servant.in (),
-            address_server_deactivator
-            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+            address_server_deactivator);
 
   TAO_ECG_Refcounted_Endpoint endpoint_rptr;
   TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
@@ -638,17 +621,15 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
       endpoint_rptr = this->init_endpoint ();
       if (endpoint_rptr.get () == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       sender = this->init_sender (ec,
                                   address_server.in (),
-                                  endpoint_rptr
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                  endpoint_rptr);
       if (!sender.in ())
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       sender_shutdown.set_command (UDP_Sender_Shutdown (sender));
@@ -663,12 +644,10 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
 
       receiver = this->init_receiver (ec,
                                       address_server.in (),
-                                      endpoint_rptr
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                      endpoint_rptr);
       if (!receiver.in ())
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       receiver_shutdown.set_command (UDP_Receiver_Shutdown (receiver));
@@ -676,12 +655,10 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
       TAO_ECG_Refcounted_Handler
         handler_rptr (this->init_handler (receiver.in (),
                                           ec,
-                                          reactor
-                                          ACE_ENV_ARG_PARAMETER));
-      ACE_CHECK;
+                                          reactor));
       if (handler_rptr.get () == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
       receiver->set_handler_shutdown (handler_rptr);
     }

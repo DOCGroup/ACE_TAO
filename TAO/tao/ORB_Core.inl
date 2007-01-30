@@ -98,8 +98,7 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   CORBA::Boolean retval = 0;
   if (this->ft_service_.service_callback ())
     {
-      retval =
-        this->ft_service_.service_callback ()->object_is_nil (obj);
+      retval = this->ft_service_.service_callback ()->object_is_nil (obj);
     }
   return retval;
 }
@@ -352,14 +351,13 @@ TAO_ORB_Core::imr_endpoints_in_ior (void)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_typecodefactory (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->typecode_factory_))
     {
-      this->resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_typecodefactory_i ();
     }
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
@@ -367,14 +365,13 @@ TAO_ORB_Core::resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL)
 #if TAO_HAS_INTERCEPTORS == 1
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_picurrent (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->pi_current_))
     {
-      this->resolve_picurrent_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_picurrent_i ();
     }
   return CORBA::Object::_duplicate (this->pi_current_);
 }
@@ -382,27 +379,25 @@ TAO_ORB_Core::resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_codecfactory (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->codec_factory_))
     {
-      this->resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_codecfactory_i ();
     }
   return CORBA::Object::_duplicate (this->codec_factory_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_compression_manager (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_compression_manager (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->compression_manager_))
     {
-      this->resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_compression_manager_i ();
     }
   return CORBA::Object::_duplicate (this->compression_manager_);
 }
@@ -455,40 +450,37 @@ TAO_ORB_Core::policy_factory_registry ()
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_dynanyfactory (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->dynany_factory_))
     {
-      this->resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_dynanyfactory_i ();
     }
   return CORBA::Object::_duplicate (this->dynany_factory_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_ior_manipulation (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->ior_manip_factory_))
     {
-      this->resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_iormanipulation_i ();
     }
   return CORBA::Object::_duplicate (this->ior_manip_factory_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_table (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_ior_table (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->ior_table_))
     {
-      this->resolve_ior_table_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_ior_table_i ();
     }
   return CORBA::Object::_duplicate (this->ior_table_);
 }
@@ -534,14 +526,13 @@ TAO_ORB_Core::policy_current (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ORB_Core::resolve_poa_current (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->poa_current_.in ()))
     {
-      this->resolve_poa_current_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      this->resolve_poa_current_i ();
     }
   return CORBA::Object::_duplicate (this->poa_current_.in ());
 }
@@ -618,7 +609,7 @@ TAO_ORB_Core::is_permanent_forward_condition
   const TAO_Service_Callbacks *service_callback =
       this->fault_tolerance_service ().service_callback ();
 
-  const CORBA::Boolean permanent_forward_condition =
+  CORBA::Boolean const permanent_forward_condition =
       service_callback &&
       service_callback->is_permanent_forward_condition (obj,
                                                         service_context);

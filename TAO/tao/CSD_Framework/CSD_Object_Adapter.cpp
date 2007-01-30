@@ -15,7 +15,7 @@ TAO_CSD_Object_Adapter::TAO_CSD_Object_Adapter (
   TAO_ORB_Core &orb_core)
   :  TAO_Object_Adapter (creation_parameters, orb_core)
 {
-  
+
 }
 
 TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter ()
@@ -26,20 +26,19 @@ void
 TAO_CSD_Object_Adapter::do_dispatch (
   TAO_ServerRequest& req,
   TAO::Portable_Server::Servant_Upcall& upcall
-  ACE_ENV_ARG_DECL)
+  )
 {
   TAO_Root_POA& poa = upcall.poa ();
   TAO_CSD_POA* csd_poa = dynamic_cast<TAO_CSD_POA*> (&poa);
-  
+
   if (csd_poa == 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   TAO::CSD::Strategy_Proxy& proxy
     = csd_poa->servant_dispatching_strategy_proxy ();
-  proxy.dispatch_request (req, upcall ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy.dispatch_request (req, upcall);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

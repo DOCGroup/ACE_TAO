@@ -20,8 +20,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 }
 
 void
-Echo::echo_payload(Test::Payload const &
-                   ACE_ENV_ARG_DECL_NOT_USED)
+Echo::echo_payload(Test::Payload const &)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->abort_counter_--;
@@ -36,8 +35,7 @@ Echo::echo_payload(Test::Payload const &
 
 void
 Echo::echo_payload_out (
-                        Test::Payload_out data
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        Test::Payload_out data)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ))

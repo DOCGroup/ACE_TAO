@@ -11,15 +11,15 @@ Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)
 }
 
 void
-Memory_Growth::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Memory_Growth::ping (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
 
 void
-Memory_Growth::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Memory_Growth::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

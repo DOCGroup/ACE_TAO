@@ -14,8 +14,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 
 void
 Visual_i::normal (CORBA::Long arg,
-                  CORBA::String_out msg
-                  ACE_ENV_ARG_DECL_NOT_USED)
+                  CORBA::String_out msg)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
@@ -24,8 +23,7 @@ Visual_i::normal (CORBA::Long arg,
 
 CORBA::Long
 Visual_i::calculate (CORBA::Long one,
-                     CORBA::Long two
-                     ACE_ENV_ARG_DECL_NOT_USED)
+                     CORBA::Long two)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
@@ -33,7 +31,7 @@ Visual_i::calculate (CORBA::Long one,
 }
 
 Test_Interceptors::Visual::VarLenStruct *
-Visual_i::the_structure (ACE_ENV_SINGLE_ARG_DECL)
+Visual_i::the_structure (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Test_Interceptors::Visual::VarLenStruct * s;
@@ -41,7 +39,6 @@ Visual_i::the_structure (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (s,
                     Test_Interceptors::Visual::VarLenStruct,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   Test_Interceptors::Visual::VarLenStruct_var safe_s = s;
 
@@ -52,23 +49,23 @@ Visual_i::the_structure (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Visual_i::user (ACE_ENV_SINGLE_ARG_DECL)
+Visual_i::user (void)
   ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing Silly\n"));
-  ACE_THROW (Test_Interceptors::Silly ());
+  throw Test_Interceptors::Silly ();
 }
 
 void
-Visual_i::system (ACE_ENV_SINGLE_ARG_DECL)
+Visual_i::system (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
-  ACE_THROW (CORBA::INV_OBJREF ());
+  throw CORBA::INV_OBJREF ();
 }
 
 void
-Visual_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Visual_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();

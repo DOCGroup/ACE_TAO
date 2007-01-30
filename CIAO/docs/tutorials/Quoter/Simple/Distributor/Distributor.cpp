@@ -60,13 +60,11 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     // initialize the ORB
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,""
-                       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      CORBA::ORB_init (argc, argv,"");
 
     if (parse_args (argc, argv) != 0)
     {
@@ -75,15 +73,11 @@ int main (int argc, char* argv[])
 
     // create the factory object reference,
     CORBA::Object_var distributor_obj =
-      orb->string_to_object (distributor_ior
-                                 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb->string_to_object (distributor_ior);
 
     // downcast the object reference to the appropriate type
     Stock::StockDistributor_var distributor =
-      Stock::StockDistributor::_narrow (distributor_obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      Stock::StockDistributor::_narrow (distributor_obj.in ());
 
     if (CORBA::is_nil (distributor.in ()))
     {
@@ -94,35 +88,28 @@ int main (int argc, char* argv[])
 
     if (turn_on)
     {
-      distributor->rate (rate
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      distributor->rate (rate);
 
       ACE_DEBUG ((LM_DEBUG, "Start up the Distribution service\n"));
 
-      distributor->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      distributor->start ();
     }
     else
     {
       ACE_DEBUG ((LM_DEBUG, "Stop the Distribution service\n"));
 
-      distributor->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      distributor->stop ();
     }
 
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    orb->destroy ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Who is the culprit \n");
+    ex._tao_print_exception ("Who is the culprit \n");
     ACE_ERROR_RETURN ((LM_ERROR,
                         "Uncaught CORBA exception\n"),
                       1);
   }
-  ACE_ENDTRY;
 
   return 0;
 }

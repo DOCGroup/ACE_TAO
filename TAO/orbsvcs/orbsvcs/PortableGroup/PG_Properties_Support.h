@@ -73,8 +73,7 @@ namespace TAO
      * @value an Any containing the value.
      */
     void set_default_property (const char * name,
-          const PortableGroup::Value & value
-          ACE_ENV_ARG_DECL)
+          const PortableGroup::Value & value)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -85,8 +84,7 @@ namespace TAO
      *
      * @param props the set of properties to update the defaults.
      */
-    void set_default_properties (const PortableGroup::Properties & props
-         ACE_ENV_ARG_DECL)
+    void set_default_properties (const PortableGroup::Properties & props)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -98,7 +96,7 @@ namespace TAO
      * resource leaks.
      * @returns a newly allocated PortableGroup::Properties.
      */
-    PortableGroup::Properties * get_default_properties (ACE_ENV_SINGLE_ARG_DECL)
+    PortableGroup::Properties * get_default_properties (void)
       ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty));
@@ -113,8 +111,7 @@ namespace TAO
      * @param props a set of propertys to be removed by name.
      */
     void remove_default_properties (
-        const PortableGroup::Properties & props
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Properties & props)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -131,8 +128,7 @@ namespace TAO
      */
     void set_type_properties (
         const char *type_id,
-        const PortableGroup::Properties & overrides
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Properties & overrides)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableGroup::InvalidProperty,
@@ -156,8 +152,7 @@ namespace TAO
      * @returns a newly allocated PortableGroup::Properties that must be released by the caller.
      */
     PortableGroup::Properties * get_type_properties (
-        const char *type_id
-        ACE_ENV_ARG_DECL)
+        const char *type_id)
       ACE_THROW_SPEC ( (CORBA::SystemException));
 
     /**
@@ -174,8 +169,7 @@ namespace TAO
      * @returns a pointer to a Property_Set owned by this Properties_Support object.
      */
     TAO::PG_Property_Set *  find_typeid_properties (
-        const char *type_id
-        ACE_ENV_ARG_DECL)
+        const char *type_id)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -189,8 +183,7 @@ namespace TAO
      */
     void remove_type_properties (
         const char *type_id,
-        const PortableGroup::Properties & props
-        ACE_ENV_ARG_DECL)
+        const PortableGroup::Properties & props)
       ACE_THROW_SPEC ( (CORBA::SystemException));
 
     ///////////////
