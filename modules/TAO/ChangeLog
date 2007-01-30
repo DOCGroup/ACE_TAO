@@ -1,3 +1,13 @@
+Tue Jan 30 18:09:28 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/orbconf.h:
+        
+          Added DiffServ policy specific CACHED policy constants.
+        
+          tao/IOP_IOR.pidl:
+        
+          Added DiffServ policy specific service context entry.
+
 Tue Jan 30 16:59:54 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
