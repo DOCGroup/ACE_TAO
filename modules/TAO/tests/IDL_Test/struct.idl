@@ -1,0 +1,22 @@
+// $Id$
+// Double forward declared struct test, created by Martin Corino <mcorino@remedy.nl>
+
+module Test
+{
+  struct S3;
+
+  struct S1
+  {
+    string hello;
+  };
+
+  struct S3;
+
+  typedef sequence<S3> TS3Seq;
+
+  struct S3
+  {
+    TS3Seq m_seq;
+    boolean m_has_more;
+  };
+};
