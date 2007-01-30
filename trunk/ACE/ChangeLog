@@ -1,3 +1,15 @@
+Tue Jan 30 10:14:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounded_Set.cpp:
+          Initialise pointer with 0.
+
+        * ace/OS_NS_unistd.inl (getpagesize):
+        * ace/config-rtems.h:
+          RTEMS does define _SC_PAGESIZE, but using sysconf with _SC_PAGESIZE
+          results in -1. Added a new define ACE_HAS_BROKEN_SC_PAGESIZE to be
+          able to disable the usage of sysconf (_SC_PAGESIZE) for rtems 4.6,
+          the ::getpagesize() function returns a correct value.
+
 Tue Jan 30 09:46:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OS_Test.cpp:
