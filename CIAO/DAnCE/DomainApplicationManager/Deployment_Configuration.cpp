@@ -55,7 +55,9 @@ CIAO::Deployment_Configuration::init (const char *filename)
       ACE_CString destination (string, dest_end - string);
       // And then the IOR
       ACE_CString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
-      if (this->deployment_info_.bind (destination.c_str (), ior.c_str ()) != 0)
+      int const result =
+        this->deployment_info_.bind (destination.c_str (), ior.c_str ());
+      if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DAnCE (%P|%t) Deployment_Configuration, "
@@ -63,12 +65,24 @@ CIAO::Deployment_Configuration::init (const char *filename)
                              destination.c_str ()),
                              -1);
         }
-
-      if (CIAO::debug_level () > 5)
+      else if (result == 1)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "DAnCE (%P|%t) Deployment_Configuration, "
-                      "read <%s> <%s>\n", destination.c_str (), ior.c_str ()));
+          if (CIAO::debug_level () > 5)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "DAnCE (%P|%t) Deployment_Configuration.cpp, "
+                          "reuse existing node in the cached map: <%s>\n" ,
+                          destination.c_str ()));
+            }
+        }
+      else
+       {
+         if (CIAO::debug_level () > 5)
+           {
+             ACE_DEBUG ((LM_DEBUG,
+                         "DAnCE (%P|%t) Deployment_Configuration, "
+                         "bind <%s> <%s>\n", destination.c_str (), ior.c_str ()));
+           }
         }
 
       if (first)
