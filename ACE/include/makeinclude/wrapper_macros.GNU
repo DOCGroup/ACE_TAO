@@ -781,6 +781,7 @@ pipes ?= 0
 # platform_macros.GNU file.
 ifeq ($(pipes),1)
    CFLAGS += -pipe
+   CCFLAGS += -pipe
 endif # pipes
 
 # RMCast is turned on by default
