@@ -1,4 +1,10 @@
-Tue Jan 30 18:09:28 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 18:12:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy.mpc:
+        
+          Added the MPC file for the Diffserv Policy.
+
+Tue Jan 30 18:09:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/orbconf.h:
         
@@ -8,7 +14,7 @@ Tue Jan 30 18:09:28 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
         
           Added DiffServ policy specific service context entry.
 
-Tue Jan 30 16:59:54 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 16:59:54 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
           tao/Default_Network_Priority_Hooks.h:
