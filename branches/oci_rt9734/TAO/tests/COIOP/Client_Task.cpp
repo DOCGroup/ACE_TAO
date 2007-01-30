@@ -22,16 +22,13 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_
-				       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->corb_->string_to_object (input_);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -42,8 +39,7 @@ Client_Task::svc (void)
         }
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
 		  the_string.in ()));
@@ -54,10 +50,9 @@ Client_Task::svc (void)
           ACE_ERROR ((LM_ERROR, "(%P|%t) - ERROR: get_string should have failed\n"));
         }
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
     }
-  ACE_CATCH (CORBA::TRANSIENT, ex)
+  catch (const CORBA::TRANSIENT& ex)
     {
       if (!this->result_)
         {
@@ -67,16 +62,14 @@ Client_Task::svc (void)
           return 0;
         }
 
-      ACE_PRINT_EXCEPTION (ex, "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 

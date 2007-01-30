@@ -39,9 +39,7 @@ namespace TAO
       virtual ThreadStrategy* create (
         ::PortableServer::ThreadPolicyValue value);
 
-      virtual void destroy (
-        ThreadStrategy *strategy
-        ACE_ENV_ARG_DECL);
+      virtual void destroy (ThreadStrategy *strategy);
     };
   }
 }

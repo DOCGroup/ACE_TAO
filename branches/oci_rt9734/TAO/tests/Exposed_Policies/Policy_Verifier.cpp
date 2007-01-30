@@ -19,12 +19,10 @@ Policy_Verifier::~Policy_Verifier (void)
 
 bool
 Policy_Verifier::init (int argc,
-                       char *argv[]
-                       ACE_ENV_ARG_DECL)
+                       char *argv[])
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+    CORBA::ORB_init (argc, argv, "");
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -35,16 +33,14 @@ Policy_Verifier::init (int argc,
       if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
           this->rt_poa_properties_ =
-            RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+            RT_Properties::read_from (arg);
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
         }
       else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
-            RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+            RT_Properties::read_from (arg);
         }
       else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
@@ -54,7 +50,6 @@ Policy_Verifier::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK_RETURN (false);
             }
           this->rt_poa_properties_->ior_source (arg);
           ACE_OS::strcpy (this->base_object_ref_, "file://");
@@ -69,7 +64,6 @@ Policy_Verifier::init (int argc,
                                 RT_Properties,
                                 CORBA::NO_MEMORY (TAO::VMCID,
                                                   CORBA::COMPLETED_NO));
-              ACE_CHECK_RETURN (false);
             }
           this->rt_object_properties_->ior_source (arg);
           ACE_OS::strcpy (this->overridden_object_ref_, "file://");
@@ -90,28 +84,23 @@ Policy_Verifier::init (int argc,
     }
 
   // Get the Object references.
-  CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_
-                                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_);
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return false;
 
-  this->base_object_ = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->base_object_ = Counter::_narrow (object.in ());
 
   if (!Policy_Verifier::check_reference (this->base_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
     return false;
 
-  object = this->orb_->string_to_object (this->overridden_object_ref_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  object = this->orb_->string_to_object (this->overridden_object_ref_);
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return false;
 
-  this->overridden_object_ = Counter::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->overridden_object_ = Counter::_narrow (object.in ());
 
   if (!Policy_Verifier::check_reference (this->overridden_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
@@ -121,31 +110,24 @@ Policy_Verifier::init (int argc,
 }
 
 void
-Policy_Verifier::run (ACE_ENV_SINGLE_ARG_DECL )
+Policy_Verifier::run ( )
 {
   this->verify_reference (this->base_object_.in (),
-                          this->rt_poa_properties_
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                          this->rt_poa_properties_);
 
   this->verify_reference (this->overridden_object_.in (),
-                          this->rt_object_properties_
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                          this->rt_object_properties_);
 }
 
 void
 Policy_Verifier::verify_reference (Counter_ptr object,
-                                   RT_Properties *rt_properties
-                                   ACE_ENV_ARG_DECL)
+                                   RT_Properties *rt_properties)
 {
 
-  ACE_TRY
+  try
     {
       CORBA::Policy_var policy_var =
-        object->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        object->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
       if (Policy_Verifier::check_reference (policy_var.in (), "Unable to get Priority Policy.\n"))
         {
@@ -153,12 +135,10 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             RTCORBA::PriorityModelPolicy::_narrow (policy_var.in ());
 
           RTCORBA::PriorityModel priority_model =
-            priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            priority_policy->priority_model ();
 
           RTCORBA::Priority priority =
-            priority_policy->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            priority_policy->server_priority ();
 
           if (priority_model == RTCORBA::SERVER_DECLARED)
             ACE_DEBUG ((LM_DEBUG,
@@ -177,18 +157,14 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                         ACE_TEXT ("Priority Value Mismatch.\n")));
         }
 
-      policy_var = object->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policy_var = object->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
 
       if (Policy_Verifier::check_reference (policy_var.in (),
                                           "Unable to get Priority Banded Policy\n"))
         {
 
           RTCORBA::PriorityBandedConnectionPolicy_var priority_banded_policy =
-            RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ());
 
 
           if (Policy_Verifier::check_reference (priority_banded_policy.in (),
@@ -223,20 +199,16 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                 }
             }
         }
-      policy_var = object->_get_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      policy_var = object->_get_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE);
 
       if (Policy_Verifier::check_reference (policy_var.in (),
                                             "Unable to get Client Protocol Policy\n"))
         {
           RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
-            RTCORBA::ClientProtocolPolicy::_narrow (policy_var.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            RTCORBA::ClientProtocolPolicy::_narrow (policy_var.in ());
 
           RTCORBA::ProtocolList_var protocol_list =
-            client_protocol_policy->protocols (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            client_protocol_policy->protocols ();
 
           for (unsigned int  i = 0; i < protocol_list->length (); i++)
             ACE_DEBUG ((LM_DEBUG,
@@ -246,12 +218,11 @@ Policy_Verifier::verify_reference (Counter_ptr object,
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CORBA Exception Raised");
+      ex._tao_print_exception ("CORBA Exception Raised");
     }
 
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean

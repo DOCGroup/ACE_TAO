@@ -52,8 +52,7 @@ static int received_all_replies = 0;
 class Reply_Handler : public POA_AMI_testHandler
 {
 public:
-  void method (CORBA::ULong reply_number
-               ACE_ENV_ARG_DECL_NOT_USED)
+  void method (CORBA::ULong reply_number)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -65,41 +64,35 @@ public:
         received_all_replies = 1;
     }
 
-  void method_excep (::Messaging::ExceptionHolder *holder
-                     ACE_ENV_ARG_DECL)
+  void method_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_TRY
+    try
       {
-        holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        holder->raise_exception ();
       }
-    ACE_CATCH(CORBA::SystemException, ex)
+    catch (const CORBA::SystemException& ex)
       {
-        ACE_PRINT_EXCEPTION (ex, "Reply_Handler::method_excep: ");
+        ex._tao_print_exception ("Reply_Handler::method_excep: ");
       }
-    ACE_ENDTRY;
   }
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
-  void shutdown_excep (::Messaging::ExceptionHolder *holder
-                       ACE_ENV_ARG_DECL)
+  void shutdown_excep (::Messaging::ExceptionHolder *holder)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_TRY
+    try
       {
-        holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        holder->raise_exception ();
       }
-    ACE_CATCH(CORBA::SystemException, ex)
+    catch (const CORBA::SystemException& ex)
       {
-        ACE_PRINT_EXCEPTION (ex, "Reply_Handler::shutdown_excep: ");
+        ex._tao_print_exception ("Reply_Handler::shutdown_excep: ");
       }
-    ACE_ENDTRY;
   }
 };
 
@@ -181,19 +174,14 @@ parse_args (int argc, char **argv)
 }
 
 void
-setup_buffering_constraints (CORBA::ORB_ptr orb
-                             ACE_ENV_ARG_DECL)
+setup_buffering_constraints (CORBA::ORB_ptr orb)
 {
   // Obtain PolicyCurrent.
-  CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent"
-                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent");
 
   // Narrow down to correct type.
   CORBA::PolicyCurrent_var policy_current =
-    CORBA::PolicyCurrent::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CORBA::PolicyCurrent::_narrow (object.in ());
 
   // Start off with no constraints.
   TAO::BufferingConstraint buffering_constraint;
@@ -213,19 +201,14 @@ setup_buffering_constraints (CORBA::ORB_ptr orb
   // Setup the buffering constraint policy.
   buffering_constraint_policy_list[0] =
     orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
-                        buffering_constraint_any
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                        buffering_constraint_any);
 
   // Setup the constraints (at the ORB level).
   policy_current->set_policy_overrides (buffering_constraint_policy_list,
-                                        CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                        CORBA::ADD_OVERRIDE);
 
   // We are done with the policy.
-  buffering_constraint_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  buffering_constraint_policy_list[0]->destroy ();
 
   // Setup the none sync scope policy, i.e., the ORB will buffer AMI
   // calls.
@@ -242,35 +225,27 @@ setup_buffering_constraints (CORBA::ORB_ptr orb
   // Setup the none sync scope policy.
   sync_none_policy_list[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                        sync_none_any
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                        sync_none_any);
 
   // Setup the none sync scope (at the ORB level).
   policy_current->set_policy_overrides (sync_none_policy_list,
-                                        CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                        CORBA::ADD_OVERRIDE);
 
   // We are now done with these policies.
-  sync_none_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  sync_none_policy_list[0]->destroy ();
 }
 
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -278,41 +253,28 @@ main (int argc, char **argv)
         return parse_args_result;
 
       CORBA::Object_var base =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (base.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (base.in ());
 
       // Get an object reference from the argument string.
-      base = orb->string_to_object (IOR
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      base = orb->string_to_object (IOR);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Try to narrow the object reference to a <test> reference.
-      test_var test_object = test::_narrow (base.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var test_object = test::_narrow (base.in ());
 
       Reply_Handler reply_handler_servant;
-      AMI_testHandler_var reply_handler_object = reply_handler_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      AMI_testHandler_var reply_handler_object = reply_handler_servant._this ();
 
       if (setup_buffering)
         {
-          setup_buffering_constraints (orb.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          setup_buffering_constraints (orb.in ());
         }
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
@@ -325,9 +287,7 @@ main (int argc, char **argv)
             {
               // Invoke the AMI method.
               test_object->sendc_method (reply_handler_object.in (),
-                                         i
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                         i);
             }
           else
             {
@@ -335,9 +295,7 @@ main (int argc, char **argv)
 
               // Invoke the regular method.
               test_object->method (i,
-                                   reply_number
-                                   ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                   reply_number);
 
               ACE_DEBUG ((LM_DEBUG,
                           "client: Regular Reply %d @ %T\n",
@@ -348,8 +306,7 @@ main (int argc, char **argv)
           ACE_Time_Value sleep_interval (0,
                                          interval * 1000);
 
-          orb->run (sleep_interval ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->run (sleep_interval);
         }
 
       // Loop until all replies have been received.
@@ -361,14 +318,11 @@ main (int argc, char **argv)
       // Shutdown server.
       if (shutdown_server)
         {
-          test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test_object->shutdown ();
         }
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         1);
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any
@@ -376,18 +330,14 @@ main (int argc, char **argv)
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

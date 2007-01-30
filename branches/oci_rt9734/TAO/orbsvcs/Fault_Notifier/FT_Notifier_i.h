@@ -67,13 +67,13 @@ namespace TAO
      * @param orbManager our ORB -- we keep var to it.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /**
      * Prepare to exit
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
      * Identify this fault notifier.
@@ -86,7 +86,7 @@ namespace TAO
      * @param result [out] status code to return from process
      * @returns 0 to continue; nonzero to quit
      */
-    int idle(int &result ACE_ENV_ARG_DECL);
+    int idle(int &result);
 
     //////////////////
     // CORBA interface
@@ -94,53 +94,47 @@ namespace TAO
 
     virtual void push_structured_fault (
         const CosNotification::StructuredEvent & event
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void push_sequence_fault (
       const CosNotification::EventBatch & events
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
       const char * constraint_grammar
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar));
 
     virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
       CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
       CosNotifyFilter::Filter_ptr filter
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
       CosNotifyComm::SequencePushConsumer_ptr push_consumer,
       CosNotifyFilter::Filter_ptr filter
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void disconnect_consumer (
       FT::FaultNotifier::ConsumerId connection
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
-    virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CORBA::Boolean is_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     /////////////////////////////////////////
     // Override CORBA servant virtual methods
-    virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+    virtual PortableServer::POA_ptr _default_POA (void);
 
-    virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void _remove_ref (void);
 
     /////////////////////////
     // Implementation methods

@@ -47,32 +47,27 @@ public:
   virtual ~FTRT_ClientORB_Interceptor ();
 
   /// Canonical name of the interceptor.
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     PortableInterceptor::ForwardRequest));
 private:

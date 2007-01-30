@@ -66,8 +66,7 @@ int
 Server::init (int argc,
               char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       PortableServer::POAManager_var mgr
@@ -95,35 +94,26 @@ Server::init (int argc,
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice1");
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this ();
 
-      ACE_TRY_EX (bind)
+      try
         {
           // Register the video control object with the naming server.
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bind);
+                                         mmdevice.in ());
         }
-      ACE_CATCH (CosNaming::NamingContext::AlreadyBound,al_ex)
+      catch (const CosNaming::NamingContext::AlreadyBound&)
         {
           server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice2");
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                         mmdevice.in ());
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -131,34 +121,27 @@ int
 Server::run (void)
 {
   CORBA::ORB_ptr orb = TAO_AV_CORE::instance ()->orb();
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       while( !done )
       {
-        CORBA::Boolean wp = orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        CORBA::Boolean wp = orb->work_pending ();
         if (wp)
          {
-              orb->perform_work( ACE_ENV_SINGLE_ARG_PARAMETER );
-              ACE_TRY_CHECK;
+              orb->perform_work( );
          }
       }
-      ACE_TRY_CHECK;
 
-      orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+      orb->shutdown( 1 );
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
 
 
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -203,29 +186,23 @@ main (int argc,
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      poa.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   result = FTP_SERVER::instance ()->init (argc,argv);
   if (result < 0)

@@ -16,7 +16,7 @@ CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 
 
 CORBA::Long
-CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeApplication_Impl::init ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// @todo initialize this NodeApplication properties
@@ -26,7 +26,6 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 CORBA::Long
 CIAO::NodeApplication_Impl::create_all_containers (
     const ::Deployment::ContainerImplementationInfos & container_infos
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -61,8 +60,7 @@ void
 CIAO::NodeApplication_Impl::finishLaunch (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start,
-    CORBA::Boolean add_connection
-    ACE_ENV_ARG_DECL)
+    CORBA::Boolean add_connection)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::InvalidConnection))
@@ -78,15 +76,14 @@ void
 CIAO::NodeApplication_Impl::finishLaunch_i (
     const Deployment::Connections & connections,
     CORBA::Boolean start,
-    CORBA::Boolean add_connection
-    ACE_ENV_ARG_DECL)
+    CORBA::Boolean add_connection)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::InvalidConnection))
 {
   ACE_UNUSED_ARG (start);
 
-  ACE_TRY
+  try
     {
       CORBA::ULong const length = connections.length ();
 
@@ -118,7 +115,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                           "invalid port name [%s] in instance [%s] \n",
                           connections[i].portName.in (),
                           name.c_str ()));
-              ACE_TRY_THROW (Deployment::InvalidConnection ());
+              throw Deployment::InvalidConnection ();
             }
 
           Components::EventConsumerBase_var consumer;
@@ -166,22 +163,20 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                             "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                             "CIAO::NodeApplication_Impl::finishLaunch_i: "
                             "Unsupported event port type encounted\n"));
-                ACE_TRY_THROW (CORBA::NO_IMPLEMENT ());
+                throw CORBA::NO_IMPLEMENT ();
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeApplication_Impl::finishLaunch\t\n");
-      ACE_RE_THROW;
+      ex._tao_print_exception ("NodeApplication_Impl::finishLaunch\t\n");
+      throw;
     }
 
-  ACE_ENDTRY;
 }
 
 void
-CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -192,8 +187,7 @@ CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
   {
     if (((*iter).int_id_).state_ == NEW_BORN)
       {
-        ((*iter).int_id_).objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ((*iter).int_id_).objref_->ciao_preactivate ();
       }
 
     ((*iter).int_id_).state_ = PRE_ACTIVE;
@@ -201,7 +195,7 @@ CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::start ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -212,8 +206,7 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
   {
     if (((*iter).int_id_).state_ == PRE_ACTIVE)
       {
-        ((*iter).int_id_).objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ((*iter).int_id_).objref_->ciao_activate ();
       }
 
     ((*iter).int_id_).state_ = ACTIVE;
@@ -221,7 +214,7 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
@@ -232,8 +225,7 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
   {
     if (((*iter).int_id_).state_ == ACTIVE)
       {
-        ((*iter).int_id_).objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+        ((*iter).int_id_).objref_->ciao_postactivate ();
 
         ((*iter).int_id_).state_ = POST_ACTIVE;
       }
@@ -241,7 +233,7 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::ciao_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
@@ -250,8 +242,7 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
        iter != end;
        ++iter)
   {
-    ((*iter).int_id_).objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    ((*iter).int_id_).objref_->ciao_passivate ();
 
     ((*iter).int_id_).state_ = PASSIVE;
   }
@@ -260,8 +251,7 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
 
 Deployment::ComponentInfos *
 CIAO::NodeApplication_Impl::install (
-    const ::Deployment::NodeImplementationInfo & node_impl_info
-    ACE_ENV_ARG_DECL)
+    const ::Deployment::NodeImplementationInfo & node_impl_info)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::UnknownImplId,
                    Deployment::ImplEntryPointNotFound,
@@ -269,7 +259,7 @@ CIAO::NodeApplication_Impl::install (
                    Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos_var retv;
-  ACE_TRY
+  try
     {
       // Extract ORB resource def here.
       this->configurator_.init_resource_manager (node_impl_info.nodeapp_config);
@@ -280,7 +270,6 @@ CIAO::NodeApplication_Impl::install (
       ACE_NEW_THROW_EX (retv,
                         Deployment::ComponentInfos,
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
 
       retv->length (0UL);
 
@@ -316,9 +305,7 @@ CIAO::NodeApplication_Impl::install (
         {
           Deployment::ComponentInfos_var comp_infos =
             this->container_set_.at(i+old_set_size)->
-                    install (container_infos[i]
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                    install (container_infos[i]);
 
           // Append the return sequence to the *big* return sequence
           CORBA::ULong curr_len = retv->length ();
@@ -354,27 +341,23 @@ CIAO::NodeApplication_Impl::install (
                         "error binding component instance [%s] "
                         "into the map. \n",
                         retv[len].component_instance_name.in ()));
-            ACE_TRY_THROW (
-               Deployment::InstallationFailure ("NodeApplication_Imp::install",
-                                       "Duplicate component instance name"));
+            throw Deployment::InstallationFailure (
+              "NodeApplication_Imp::install",
+              "Duplicate component instance name");
           }
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CIAO_NodeApplication::install error\t\n");
-      ACE_RE_THROW;
+      ex._tao_print_exception ("CIAO_NodeApplication::install error\t\n");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   return retv._retn ();
 }
 
 void
-CIAO::NodeApplication_Impl::remove_component (const char * inst_name
-                                              ACE_ENV_ARG_DECL)
+CIAO::NodeApplication_Impl::remove_component (const char * inst_name)
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Components::RemoveFailure))
 {
@@ -390,7 +373,7 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
                   "CIAO::NodeApplication_Impl::remove_component, "
                   "invalid instance [%s] in the component_container_map.\n",
                   inst_name));
-      ACE_TRY_THROW (::Components::RemoveFailure ());
+      throw ::Components::RemoveFailure ();
     }
 
   // Remove this component instance from the node application
@@ -401,8 +384,7 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
 }
 
 void
-CIAO::NodeApplication_Impl::passivate_component (const char * name
-                                                 ACE_ENV_ARG_DECL)
+CIAO::NodeApplication_Impl::passivate_component (const char * name)
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Components::RemoveFailure))
 {
@@ -415,7 +397,7 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name
                   "CIAO::NodeApplication_Impl::passivate_component, "
                   "invalid instance [%s] \n",
                    name));
-      ACE_TRY_THROW (Components::RemoveFailure ());
+      throw Components::RemoveFailure ();
     }
 
   if (CORBA::is_nil (comp_state.objref_.in ()))
@@ -424,13 +406,11 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name
       throw Components::RemoveFailure ();
     }
 
-  comp_state.objref_->ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_passivate ();
 }
 
 void
-CIAO::NodeApplication_Impl::activate_component (const char * name
-                                                ACE_ENV_ARG_DECL)
+CIAO::NodeApplication_Impl::activate_component (const char * name)
   ACE_THROW_SPEC ((::CORBA::SystemException,
                    ::Deployment::StartError))
 {
@@ -443,7 +423,7 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
                   "CIAO::NodeApplication_Impl::activate_component, "
                   "invalid instance [%s] \n",
                    name));
-      ACE_TRY_THROW (Deployment::StartError ());
+      throw Deployment::StartError ();
     }
 
   if (CORBA::is_nil (comp_state.objref_.in ()))
@@ -454,19 +434,16 @@ CIAO::NodeApplication_Impl::activate_component (const char * name
       throw Deployment::StartError ();
     }
 
-  comp_state.objref_->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_preactivate ();
 
-  comp_state.objref_->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_activate ();
 
-  comp_state.objref_->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  comp_state.objref_->ciao_postactivate ();
 }
 
 
 void
-CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::remove ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If we still have components installed, then do nothing
@@ -483,8 +460,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
           ACE_DEBUG ((LM_DEBUG, "NA: calling remove on container %i\n"));
         }
 
-      this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->container_set_.at(i)->remove ();
     }
 
   // Remove all containers
@@ -504,7 +480,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   // For static deployment, ORB will be shutdown in the Static_NodeManager
   if (this->static_entrypts_maps_ == 0)
     {
-      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      this->orb_->shutdown (0);
       ACE_DEBUG ((LM_DEBUG, "NA: shutdown\n"));
     }
 }
@@ -513,8 +489,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 // Create a container interface, which will be hosted in this NodeApplication.
 ::Deployment::Container_ptr
 CIAO::NodeApplication_Impl::create_container (
-    const ::Deployment::Properties &properties
-    ACE_ENV_ARG_DECL)
+    const ::Deployment::Properties &properties)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Components::CreateFailure,
                   ::Components::InvalidConfiguration))
@@ -533,7 +508,6 @@ CIAO::NodeApplication_Impl::create_container (
                                           this->get_objref (),
                                           this->static_entrypts_maps_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   PortableServer::ServantBase_var safe_servant (container_servant);
 
@@ -542,28 +516,19 @@ CIAO::NodeApplication_Impl::create_container (
   // suggest how to install the components.  Each such data stucture
   // should be correspond to one <process_collocation> tag  in the XML
   // file to describe the deployment plan.
-  container_servant->init (policies.ptr ()
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  container_servant->init (policies.ptr ());
 
   PortableServer::ObjectId_var oid
-    = this->poa_->activate_object (container_servant
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    = this->poa_->activate_object (container_servant);
 
   CORBA::Object_var obj
-    = this->poa_->id_to_reference (oid.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    = this->poa_->id_to_reference (oid.in ());
 
   ::Deployment::Container_var ci
-    = ::Deployment::Container::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    = ::Deployment::Container::_narrow (obj.in ());
 
   // Cached the objref in its servant.
-  container_servant->set_objref (ci.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  container_servant->set_objref (ci.in ());
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
@@ -579,8 +544,7 @@ CIAO::NodeApplication_Impl::create_container (
 
 // Remove a container interface.
 void
-CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
-                                              ACE_ENV_ARG_DECL)
+CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Components::RemoveFailure))
 {
@@ -589,26 +553,21 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
 
   if (this->container_set_.object_in_set (cref) == 0)
     {
-      ACE_THROW (Components::RemoveFailure());
+      throw Components::RemoveFailure();
     }
 
-  cref->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  cref->remove ();
 
   // @@ Deactivate object.
   PortableServer::ObjectId_var oid
-    = this->poa_->reference_to_id (cref
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    = this->poa_->reference_to_id (cref);
 
-  this->poa_->deactivate_object (oid.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->poa_->deactivate_object (oid.in ());
 
   // Should we remove the server still, even if the previous call failed.
   if (this->container_set_.remove (cref) == -1)
     {
-      ACE_THROW (::Components::RemoveFailure ());
+      throw ::Components::RemoveFailure ();
     }
 
   ACE_DEBUG ((LM_DEBUG, "LEAVING: NodeApplication_Impl::remove_container()\n"));
@@ -616,7 +575,7 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
 
 // Get containers
 ::Deployment::Containers *
-CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeApplication_Impl::get_containers ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
@@ -624,12 +583,11 @@ CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CIAO::CIAO_Event_Service *
 CIAO::NodeApplication_Impl::
-install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info
-            ACE_ENV_ARG_DECL)
+install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
 ACE_THROW_SPEC ((::CORBA::SystemException,
                  ::Deployment::InstallationFailure))
 {
-  ACE_TRY
+  try
     {
       ACE_DEBUG ((LM_DEBUG, "\nNodeApplication_Impl::install_es() called.\n\n"));
 
@@ -644,12 +602,12 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
             ::CIAO::CIAO_RT_Event_Service::_narrow (ciao_es.in ());
 
           if (CORBA::is_nil (ciao_rtes.in ()))
-            ACE_THROW (::Deployment::InstallationFailure ());
+            throw ::Deployment::InstallationFailure ();
 
           // Set up the event channel federations
           for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
 		        {
-			        bool retv = 
+			        bool retv =
 			        ciao_rtes->create_addr_serv (
 				        es_info.addr_servs[j].name.in (),
 				        es_info.addr_servs[j].port,
@@ -664,7 +622,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 
 		      for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
 		        {
-			        bool retv = 
+			        bool retv =
 			        ciao_rtes->create_sender (
 				        es_info.senders[j].addr_serv_id.in ());
 
@@ -677,7 +635,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 
 		      for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
 		        {
-			        bool retv = 
+			        bool retv =
 			        ciao_rtes->create_receiver (
 				        es_info.receivers[j].addr_serv_id.in (),
 				        es_info.receivers[j].is_multicast,
@@ -692,14 +650,12 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
         }
       return ciao_es._retn ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeApplication_Impl::finishLaunch\t\n");
+      ex._tao_print_exception ("NodeApplication_Impl::finishLaunch\t\n");
       ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
     }
 
-  ACE_ENDTRY;
 }
 
 
@@ -745,9 +701,7 @@ handle_facet_receptable_connection (
     {
       ::Components::Cookie_var cookie =
         comp->connect (connection.portName.in (),
-                        connection.endpoint.in ()
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                        connection.endpoint.in ());
 
       ACE_CString key = (*create_connection_key (connection));
       if (CIAO::debug_level () > 10)
@@ -779,7 +733,7 @@ handle_facet_receptable_connection (
       if (this->cookie_map_.find (key, cookie) != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error: Cookie Not Found!\n"));
-          ACE_TRY_THROW (Deployment::InvalidConnection ());
+          throw Deployment::InvalidConnection ();
         }
 
       comp->disconnect (connection.portName.in (),
@@ -810,9 +764,7 @@ handle_emitter_consumer_connection (
                    Deployment::InvalidConnection))
 {
   Components::EventConsumerBase_var consumer =
-      Components::EventConsumerBase::_narrow (connection.endpoint.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+      Components::EventConsumerBase::_narrow (connection.endpoint.in ());
 
   if (CORBA::is_nil (consumer.in ()))
     {
@@ -823,7 +775,7 @@ handle_emitter_consumer_connection (
                   "there is an invalid endPoint. \n",
                   connection.portName.in (),
                   connection.instanceName.in ()));
-      ACE_TRY_THROW (Deployment::InvalidConnection ());
+      throw Deployment::InvalidConnection ();
     }
 
   if (CIAO::debug_level () > 11)
@@ -839,9 +791,7 @@ handle_emitter_consumer_connection (
   if (add_connection)
     {
       comp->connect_consumer (connection.portName.in (),
-                              consumer.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              consumer.in ());
 
       if (CIAO::debug_level () > 6)
         {
@@ -860,7 +810,7 @@ handle_emitter_consumer_connection (
 // Operation not implemented by the CIDLC.
 //                  comp->disconnect_consumer (connection.portName.in (),
 //                                             0
-//                                             ACE_ENV_ARG_PARAMETER);
+//);
 //                  ACE_TRY_CHECK;
 
       if (CIAO::debug_level () > 6)
@@ -888,9 +838,7 @@ handle_publisher_consumer_connection (
                    Deployment::InvalidConnection))
 {
   Components::EventConsumerBase_var consumer =
-      Components::EventConsumerBase::_narrow (connection.endpoint.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+      Components::EventConsumerBase::_narrow (connection.endpoint.in ());
 
   if (CORBA::is_nil (consumer.in ()))
     {
@@ -901,7 +849,7 @@ handle_publisher_consumer_connection (
                   "there is an invalid endPoint. \n",
                   connection.portName.in (),
                   connection.instanceName.in ()));
-      ACE_TRY_THROW (Deployment::InvalidConnection ());
+      throw Deployment::InvalidConnection ();
     }
 
   if (CIAO::debug_level () > 11)
@@ -918,9 +866,7 @@ handle_publisher_consumer_connection (
     {
       ::Components::Cookie_var cookie =
         comp->subscribe (connection.portName.in (),
-                          consumer.in ()
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                          consumer.in ());
 
       ACE_CString key = (*create_connection_key (connection));
       this->cookie_map_.rebind (key, cookie);
@@ -948,13 +894,11 @@ handle_publisher_consumer_connection (
       if (this->cookie_map_.find (key, cookie) != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error: Cookie Not Found!\n"));
-          ACE_TRY_THROW (Deployment::InvalidConnection ());
+          throw Deployment::InvalidConnection ();
         }
 
       comp->unsubscribe (connection.portName.in (),
-                        cookie.in ()
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                        cookie.in ());
       this->cookie_map_.unbind (key);
 
       if (CIAO::debug_level () > 6)
@@ -987,7 +931,7 @@ handle_publisher_es_connection (
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                   "CIAO::NodeApplication_Impl::handle_publisher_es_connection: "
                   "Unsupported event connection type\n"));
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      throw CORBA::NO_IMPLEMENT ();
     }
 
   const CIAO::CIAO_Event_Service_ptr event_service =
@@ -996,7 +940,7 @@ handle_publisher_es_connection (
   if (CORBA::is_nil (event_service))
     {
       ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
-      ACE_THROW (Deployment::InvalidConnection ());
+      throw Deployment::InvalidConnection ();
     }
 
   // supplier ID
@@ -1045,7 +989,7 @@ handle_publisher_es_connection (
       if (this->cookie_map_.find (key, cookie) != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error: Cookie Not Found!\n"));
-          ACE_TRY_THROW (Deployment::InvalidConnection ());
+          throw Deployment::InvalidConnection ();
         }
 
       comp->unsubscribe (connection.portName.in (),
@@ -1082,7 +1026,7 @@ handle_es_consumer_connection (
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                   "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
                   "Unsupported event connection type\n"));
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
+      throw CORBA::NO_IMPLEMENT ();
     }
 
   // Get ES object
@@ -1095,7 +1039,7 @@ handle_es_consumer_connection (
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                   "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
                   "NIL event_service\n"));
-      ACE_THROW (Deployment::InvalidConnection ());
+      throw Deployment::InvalidConnection ();
     }
 
   // Get consumer object
@@ -1108,7 +1052,7 @@ handle_es_consumer_connection (
                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
                   "CIAO::NodeApplication_Impl::handle_es_consumer_connection: "
                   "Nil consumer port object reference\n"));
-      ACE_THROW (Deployment::InvalidConnection ());
+      throw Deployment::InvalidConnection ();
     }
 
   // consumer ID
@@ -1186,8 +1130,7 @@ handle_es_consumer_connection (
 void
 CIAO::NodeApplication_Impl::build_event_connection (
     const Deployment::Connection & connection,
-    bool add_or_remove
-    ACE_ENV_ARG_DECL)
+    bool add_or_remove)
   ACE_THROW_SPEC ((Deployment::InvalidConnection,
                    CORBA::SystemException))
 {
@@ -1217,14 +1160,12 @@ CIAO::NodeApplication_Impl::build_event_connection (
 
     // Get the consumer port object reference and put it into "consumer"
     Components::EventConsumerBase_var consumer =
-      Components::EventConsumerBase::_narrow (connection.endpoint.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      Components::EventConsumerBase::_narrow (connection.endpoint.in ());
 
     if (CORBA::is_nil (consumer.in ()))
       {
         ACE_DEBUG ((LM_DEBUG, "Nil consumer port object reference\n"));
-        ACE_THROW (Deployment::InvalidConnection ());
+        throw Deployment::InvalidConnection ();
       }
 
     // Get the supplier component object reference.
@@ -1235,7 +1176,7 @@ CIAO::NodeApplication_Impl::build_event_connection (
     if (this->component_state_map_.find (supplier_comp_name, comp_state) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
-        ACE_THROW (Deployment::InvalidConnection ());
+        throw Deployment::InvalidConnection ();
       }
 
     // Get the consumer component object reference.
@@ -1246,7 +1187,7 @@ CIAO::NodeApplication_Impl::build_event_connection (
     if (CORBA::is_nil (event_service))
       {
         ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
-        ACE_THROW (Deployment::InvalidConnection ());
+        throw Deployment::InvalidConnection ();
       }
 
     // supplier ID

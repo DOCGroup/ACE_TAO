@@ -34,28 +34,25 @@ public:
   TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   virtual void activate (
-     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-     ACE_ENV_ARG_DECL)
+     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos
-                ACE_ENV_ARG_DECL)
+                const RtecEventChannelAdmin::SupplierQOS& qos)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
-  void set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state
-                 ACE_ENV_ARG_DECL);
+  void set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
 
   typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-    (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
+    (const FtRtecEventChannelAdmin::ObjectId&);
 
   static const RollbackOperation rollback_obtain;
 private:

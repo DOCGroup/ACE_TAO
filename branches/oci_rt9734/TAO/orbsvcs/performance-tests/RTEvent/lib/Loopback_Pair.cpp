@@ -13,8 +13,8 @@
 #include "Loopback_Pair.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Loopback_Pair, 
+ACE_RCSID (TAO_PERF_RTEC,
+           Loopback_Pair,
            "$Id$")
 
 void
@@ -33,15 +33,12 @@ Loopback_Pair::init (CORBA::Long experiment_id,
 }
 
 void
-Loopback_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                       ACE_ENV_ARG_DECL)
+Loopback_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  this->loopback_supplier_->connect (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->loopback_supplier_->connect (ec);
   Auto_Disconnect<Loopback_Supplier> loopback_supplier_disconnect (this->loopback_supplier_);
 
-  this->loopback_consumer_->connect (ec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->loopback_consumer_->connect (ec);
   Auto_Disconnect<Loopback_Consumer> loopback_consumer_disconnect (this->loopback_consumer_);
 
   loopback_consumer_disconnect.release ();
@@ -49,7 +46,7 @@ Loopback_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec
 }
 
 void
-Loopback_Pair::disconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Loopback_Pair::disconnect (void)
 {
   Auto_Disconnect<Loopback_Supplier> loopback_supplier_disconnect (this->loopback_supplier_);
   Auto_Disconnect<Loopback_Consumer> loopback_consumer_disconnect (this->loopback_consumer_);

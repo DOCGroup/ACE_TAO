@@ -62,14 +62,13 @@ public:
 
   /// = Servant methods
   // = interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual void connect_structured_push_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -78,7 +77,6 @@ public:
   ));
 
   virtual void disconnect_structured_push_supplier (
-    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

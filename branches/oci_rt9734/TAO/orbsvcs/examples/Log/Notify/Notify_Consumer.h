@@ -56,7 +56,6 @@ protected:
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -64,8 +63,7 @@ protected:
       ));
 
   // = StructuredPushSupplier methods
-virtual void push (const CORBA::Any &event
-                     ACE_ENV_ARG_DECL_NOT_USED)
+virtual void push (const CORBA::Any &event)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -73,7 +71,6 @@ virtual void push (const CORBA::Any &event
 
 
   virtual void disconnect_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException

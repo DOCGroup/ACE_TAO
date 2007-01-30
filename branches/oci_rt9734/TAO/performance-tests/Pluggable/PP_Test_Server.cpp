@@ -49,20 +49,17 @@ PP_Test_Server::parse_args (void)
 
 int
 PP_Test_Server::init (int argc,
-                      char** argv
-                      ACE_ENV_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
+                      char** argv)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -79,9 +76,7 @@ PP_Test_Server::init (int argc,
 
   this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",
-                                                 this->factory_impl_
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                 this->factory_impl_);
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -100,11 +95,10 @@ PP_Test_Server::init (int argc,
 }
 
 int
-PP_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED ACE_ENV_SINGLE_ARG_PARAMETER)
+PP_Test_Server::run ()
 {
-  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  int result = this->orb_manager_.run ();
 
-  ACE_CHECK_RETURN (-1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

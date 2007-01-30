@@ -56,7 +56,7 @@ namespace TAO
 
       /// Update the cached policy values.
       void update (TAO_POA_Policy_Set &policy_set
-                   ACE_ENV_ARG_DECL);
+                  );
 
       /**
        * @name Accessor methods to cached values.
@@ -81,7 +81,7 @@ namespace TAO
 
       /// Helper method to update a particular policy.
       void update_policy (const CORBA::Policy_ptr policy
-                          ACE_ENV_ARG_DECL);
+                         );
 
       ::PortableServer::ThreadPolicyValue thread_;
 

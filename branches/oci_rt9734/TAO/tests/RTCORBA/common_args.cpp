@@ -13,8 +13,7 @@ get_priority_bands (const char *test_type,
                     const char *bands_file,
                     RTCORBA::RTORB_ptr rt_orb,
                     CORBA::PolicyList &policies,
-                    int debug
-                    ACE_ENV_ARG_DECL)
+                    int debug)
 {
   //
   // Read bands from a file.
@@ -97,9 +96,7 @@ get_priority_bands (const char *test_type,
                 "\n\n"));
 
   CORBA::Policy_var banded_connection_policy =
-    rt_orb->create_priority_banded_connection_policy (bands
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    rt_orb->create_priority_banded_connection_policy (bands);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -206,8 +203,7 @@ get_priority_lanes (const char *test_type,
                     CORBA::ULong max_request_buffer_size,
                     CORBA::Boolean allow_borrowing,
                     CORBA::PolicyList &policies,
-                    int debug
-                    ACE_ENV_ARG_DECL)
+                    int debug)
 {
   ULong_Array priorities;
   int result =
@@ -238,14 +234,10 @@ get_priority_lanes (const char *test_type,
                                           allow_borrowing,
                                           allow_request_buffering,
                                           max_buffered_requests,
-                                          max_request_buffer_size
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                          max_request_buffer_size);
 
   CORBA::Policy_var threadpool_policy =
-    rt_orb->create_threadpool_policy (threadpool_id
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    rt_orb->create_threadpool_policy (threadpool_id);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -259,8 +251,7 @@ get_protocols (const char *test_type,
                const char *lanes_file,
                RTCORBA::RTORB_ptr rt_orb,
                CORBA::PolicyList &policies,
-               int debug
-               ACE_ENV_ARG_DECL)
+               int debug)
 {
   ULong_Array protocol_values;
   int result =
@@ -289,9 +280,7 @@ get_protocols (const char *test_type,
     }
 
   CORBA::Policy_var protocol_policy =
-    rt_orb->create_client_protocol_policy (protocols
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    rt_orb->create_client_protocol_policy (protocols);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -311,8 +300,7 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                    CORBA::ULong max_request_buffer_size,
                                    CORBA::Boolean allow_borrowing,
                                    CORBA::PolicyList &policies,
-                                   int debug
-                                   ACE_ENV_ARG_DECL)
+                                   int debug)
 {
   RTCORBA::ThreadpoolLanes lanes;
   lanes.length (number_of_lanes);
@@ -369,20 +357,14 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                           allow_borrowing,
                                           allow_request_buffering,
                                           max_buffered_requests,
-                                          max_request_buffer_size
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                          max_request_buffer_size);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
-    rt_orb->create_priority_banded_connection_policy (bands
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    rt_orb->create_priority_banded_connection_policy (bands);
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
-    rt_orb->create_threadpool_policy (threadpool_id
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    rt_orb->create_threadpool_policy (threadpool_id);
 }
 

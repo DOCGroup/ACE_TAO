@@ -94,12 +94,11 @@ public:
    * sender is no longer needed.  If shutdown () is not called by the
    * user, cleanup activities will be performed by the destructor.
    */
-  void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr
-             ACE_ENV_ARG_DECL)
+  void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Shutdown this component.  Frees up the endpoint.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
   //@}
 
   /// Setters/getters.
@@ -132,8 +131,7 @@ public:
    * to send later via the reactor.
    */
   void send_message (const TAO_OutputCDR &cdr,
-                     const ACE_INET_Addr &addr
-                     ACE_ENV_ARG_DECL)
+                     const ACE_INET_Addr &addr)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -153,8 +151,7 @@ private:
                       CORBA::ULong fragment_id,
                       CORBA::ULong fragment_count,
                       iovec iov[],
-                      int iovcnt
-                      ACE_ENV_ARG_DECL);
+                      int iovcnt);
 
   /**
    * Count the number of fragments that will be required to send the

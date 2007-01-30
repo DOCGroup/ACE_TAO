@@ -52,8 +52,7 @@ main (int argc, char *argv[])
 {
   int status = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 #if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
@@ -65,16 +64,12 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Client ORB");
 
       if (::parse_args (argc, argv) != 0)
         return -1;
@@ -83,12 +78,10 @@ main (int argc, char *argv[])
       // IOR occurs during the various interceptions executed during
       // this test.
       CORBA::Object_var object =
-        orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior1);
 
       ForwardRequestTest::test_var server =
-        ForwardRequestTest::test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ForwardRequestTest::test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -114,9 +107,8 @@ main (int argc, char *argv[])
           if (i > 1)
             old_number = number;
 
-          number = server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
+          number = server->number ();
 
-          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Request %d handled by object %d.\n",
@@ -143,16 +135,13 @@ main (int argc, char *argv[])
             }
         }
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   if (status != -1)
     ACE_DEBUG ((LM_INFO,

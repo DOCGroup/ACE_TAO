@@ -44,16 +44,16 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
   virtual ~TAO_Notify_Container_T ();
 
   /// Init this object.
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /// Insert object to this container.
-  virtual void insert (TYPE* type ACE_ENV_ARG_DECL);
+  virtual void insert (TYPE* type);
 
   /// Remove type from container_
-  virtual void remove (TYPE* type ACE_ENV_ARG_DECL);
+  virtual void remove (TYPE* type);
 
   /// Shutdown
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (void);
 
   /// Collection
   COLLECTION* collection (void);

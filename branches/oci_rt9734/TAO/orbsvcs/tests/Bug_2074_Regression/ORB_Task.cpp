@@ -57,7 +57,7 @@ ORB_Task::svc (void)
   }
   catch ( const CORBA::Exception& e )
   {
-      ACE_PRINT_EXCEPTION (e, "Exception caught");
+      e._tao_print_exception ("Exception caught");
   }
 
   return 0;

@@ -15,8 +15,7 @@ client_i::~client_i (void)
 }
 
 void
-client_i::test_reply (const char *msg
-                      ACE_ENV_ARG_DECL_NOT_USED)
+client_i::test_reply (const char *msg)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_INFO,

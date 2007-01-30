@@ -26,7 +26,7 @@ namespace TAO
     }
 
     ::PortableServer::ThreadPolicyValue
-    ThreadStrategyORBControl::type() const
+    ThreadStrategyORBControl::type () const
     {
       return ::PortableServer::ORB_CTRL_MODEL;
     }

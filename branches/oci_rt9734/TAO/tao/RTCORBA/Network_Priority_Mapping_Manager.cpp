@@ -8,7 +8,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RTCORBA, 
+ACE_RCSID (RTCORBA,
            Network_Priority_Mapping_Manager,
            "$Id$")
 
@@ -22,15 +22,9 @@ TAO_Network_Priority_Mapping_Manager::~TAO_Network_Priority_Mapping_Manager (
 }
 
 TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj
-                                               ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Network_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj)
 {
-  if (CORBA::is_nil (obj))
-    {
-      return TAO_Network_Priority_Mapping_Manager::_nil ();
-    }
-
-  return 
+  return
     TAO_Network_Priority_Mapping_Manager::_duplicate (
         dynamic_cast<TAO_Network_Priority_Mapping_Manager_ptr> (obj)
       );

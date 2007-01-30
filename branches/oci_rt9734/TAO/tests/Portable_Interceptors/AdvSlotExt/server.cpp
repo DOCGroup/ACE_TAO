@@ -124,7 +124,7 @@ public:
   virtual void
   send_reply (ServerRequestInfo_ptr ri) throw (SystemException)
   {
-    CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+    CORBA::String_var op = ri->operation ();
 
     if (ACE_OS::strcmp (op.in (), "number") != 0)
       return; // Don't mess with PICurrent if not invoking test method.
@@ -181,7 +181,7 @@ public:
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) ERROR: Could not resolve PICurrent object.\n"));
 
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
       }
 
     ServerRequestInterceptor_var interceptor (new ReplicaController (pi_current.in ()));

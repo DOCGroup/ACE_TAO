@@ -36,8 +36,7 @@ TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i (void)
 
 DsLogAdmin::RecordList*
 TAO_Hash_Iterator_i::get (CORBA::ULong position,
-                          CORBA::ULong how_many
-                          ACE_ENV_ARG_DECL)
+                          CORBA::ULong how_many)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
@@ -45,7 +44,6 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
                            guard,
                            this->recordstore_->lock (),
                            CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   if (position < current_position_)
     {
@@ -58,9 +56,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
     }
 
   // Use an Interpreter to build an expression tree.
-  TAO_Log_Constraint_Interpreter interpreter (constraint_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  TAO_Log_Constraint_Interpreter interpreter (constraint_.in ());
 
   // Sequentially iterate over all the records and pick the ones that
   // meet the constraints.
@@ -70,7 +66,6 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
   ACE_NEW_THROW_EX (rec_list,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   rec_list->length (how_many);
 
   CORBA::ULong count = 0;
@@ -101,8 +96,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
   if (count == 0 && this->iter_ == this->iter_end_)
     {
       // destroy this object..
-      this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (rec_list);
+      this->destroy ();
     }
 
   return rec_list;

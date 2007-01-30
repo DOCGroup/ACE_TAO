@@ -72,25 +72,21 @@ int
 main (int argc,
       char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   Manager manager;
 
-  ACE_TRY
+  try
     {
       // Initilaize the ORB, POA etc.
       manager.init (argc,
-                    argv
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                    argv);
 
       // the command line arguments
       if (parse_args (argc, argv) == -1)
         return -1;
 
       // Merge the different IORS
-      manager.make_merged_iors (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      manager.make_merged_iors ();
 
       // Write IOR to file
       if (manager.write_to_files ())
@@ -99,16 +95,13 @@ main (int argc,
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());
-      return client_imp.init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      return client_imp.init ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught");
+      ex._tao_print_exception ("Caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -120,56 +113,45 @@ Manager::Manager (void)
 
 void
 Manager::init (int& argc,
-               char**& argv
-               ACE_ENV_ARG_DECL)
+               char**& argv)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                0
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                0);
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
-    this->orb_->resolve_initial_references ("RootPOA"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
-    PortableServer::POA::_narrow (obj_var.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::POA::_narrow (obj_var.in ());
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager_var =
-    root_poa_var->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    root_poa_var->the_POAManager ();
 
-  poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager_var->activate ();
 }
 
 int
-Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
+Manager::make_merged_iors (void)
 {
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var IORM =
 	  this->orb_->resolve_initial_references (
-		  TAO_OBJID_IORMANIPULATION, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  
+		  TAO_OBJID_IORMANIPULATION, 0);
+
   if (CORBA::is_nil (IORM.in()))
 	  return -1;
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
-	  TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+	  TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
   if (CORBA::is_nil (iorm.in()))
 	  return -1;
 
-  CORBA::Object_var first = orb_->string_to_object (first_ior ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var first = orb_->string_to_object (first_ior);
 
   if (CORBA::is_nil (first.in()))
 	  return -1;
@@ -179,8 +161,7 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
   iors.length(1);
   iors [0] = first;
 
-  merged_set_10_ = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  merged_set_10_ = iorm->merge_iors (iors);
 
   if (CORBA::is_nil (merged_set_10_.in()))
     {
@@ -188,14 +169,13 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   int result = set_properties (iorm.in(), merged_set_10_.in(),
-			    first.in(), 10 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+			    first.in(), 10);
 
   if (-1 == result)
     {
       return -1;
     }
-  
+
   first = orb_->string_to_object (first_ior);
   if (CORBA::is_nil (first.in()))
     {
@@ -203,20 +183,19 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::Object_var second = orb_->string_to_object (second_ior);
-  
+
   if (CORBA::is_nil (second.in()))
     {
       return -1;
     }
 
   // Create the list
-  
+
   iors.length(2);
   iors [0] = first;
   iors [1] = second;
 
-  merged_set_11_ = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  merged_set_11_ = iorm->merge_iors (iors);
 
   if (CORBA::is_nil (merged_set_11_.in()))
     {
@@ -224,8 +203,7 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   result = set_properties (iorm.in(), merged_set_11_.in(),
-			    first.in(), 11 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+			    first.in(), 11);
 
   if (-1 == result)
     {
@@ -239,8 +217,7 @@ int
 Manager::set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
 			 CORBA::Object_ptr merged_set,
 			 CORBA::Object_ptr primary,
-			 CORBA::ULong version
-                         ACE_ENV_ARG_DECL)
+			 CORBA::ULong version)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
@@ -266,38 +243,32 @@ Manager::set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   // Set the property
   CORBA::Boolean retval = iorm->set_primary (&iogr_prop,
                                              primary,
-					     merged_set
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+					     merged_set);
 
   // Set the primary
   // See we are setting the second ior as the primary
   if (retval != 0)
     {
       retval = iorm->set_property (&iogr_prop,
-                                    merged_set
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                    merged_set);
     }
 
   return 0;
 }
 
 int
-Manager::run (ACE_ENV_SINGLE_ARG_DECL)
+Manager::run (void)
 {
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "Error in run \n"),
                         -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -344,7 +315,7 @@ Client_i::Client_i (CORBA::ORB_ptr orb)
 {
 }
 
-int run_remote_test (Simple_Server_ptr server, const char* execute_key ACE_ENV_ARG_DECL)
+int run_remote_test (Simple_Server_ptr server, const char* execute_key)
 {
   char expected[1024], received[1024];
   if (execute_key)
@@ -357,12 +328,11 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key ACE_ENV_A
       ACE_OS::strcpy (expected, "CORBA::TRANSIENT");
     }
 
-  ACE_TRY
+  try
     {
       // Make a remote call
       CORBA::String_var s =
-	      server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server->remote_call ();
 
       if (!s.in())
         {
@@ -373,15 +343,14 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key ACE_ENV_A
 	  ACE_OS::strcpy (received, s.in());
         }
     }
-  ACE_CATCH (CORBA::TRANSIENT, te)
+  catch (const CORBA::TRANSIENT&)
     {
       ACE_OS::strcpy (received, "CORBA::TRANSIENT");
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, cf)
+  catch (const CORBA::COMM_FAILURE&)
     {
       ACE_OS::strcpy (received, "CORBA::COMM_FAILURE");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
 	      ACE_TEXT("CLIENT> REMOTE   expected: '%s'"),
@@ -400,7 +369,7 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key ACE_ENV_A
 }
 
 int run_abort_test (Simple_Server_ptr server,
-		    const char* request_key, const char* execute_key ACE_ENV_ARG_DECL)
+		    const char* request_key, const char* execute_key)
 {
   char expected[1024], received[1024];
   if (execute_key)
@@ -414,10 +383,9 @@ int run_abort_test (Simple_Server_ptr server,
       ACE_OS::strcpy (expected, "CORBA::TRANSIENT");
     }
 
-  ACE_TRY
+  try
     {
       CORBA::String_var s = server->abort (request_key);
-      ACE_TRY_CHECK;
 
       if (!s.in())
         {
@@ -428,15 +396,14 @@ int run_abort_test (Simple_Server_ptr server,
 	  ACE_OS::strcpy (received, s.in());
         }
     }
-  ACE_CATCH (CORBA::TRANSIENT, te)
+  catch (const CORBA::TRANSIENT&)
     {
       ACE_OS::strcpy (received, "CORBA::TRANSIENT");
     }
-  ACE_CATCH (CORBA::COMM_FAILURE, cf)
+  catch (const CORBA::COMM_FAILURE&)
     {
       ACE_OS::strcpy (received, "CORBA::COMM_FAILURE");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
 	      ACE_TEXT("CLIENT> ABORT    expected: '%s'"),
@@ -455,32 +422,29 @@ int run_abort_test (Simple_Server_ptr server,
   return 0;
 }
 
-int run_test (Simple_Server_ptr server ACE_ENV_ARG_DECL)
+int run_test (Simple_Server_ptr server)
 {
-  int rv = run_abort_test (server, first_key, second_key ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  
-  if (rv)
-    {
-      return rv;
-    }
-  
-  rv = run_remote_test (server, second_key ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int rv = run_abort_test (server, first_key, second_key);
 
   if (rv)
     {
       return rv;
     }
-  
-  rv = run_abort_test (server, second_key, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+
+  rv = run_remote_test (server, second_key);
+
+  if (rv)
+    {
+      return rv;
+    }
+
+  rv = run_abort_test (server, second_key, 0);
 
   return rv;
 }
 
 int
-Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
+Client_i::init (void)
 {
   char iogrstr[1024];
   ACE_OS::sprintf (iogrstr, "file://%s", first_iogr_file);
@@ -489,21 +453,15 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
   char **argv = 0;
   this->orb_ = CORBA::ORB_init (argc,
 			        argv,
-			        0
-			        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+			        0);
 
   CORBA::Object_var object =
-	  this->orb_->string_to_object (iogrstr
-				        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+	  this->orb_->string_to_object (iogrstr);
 
 
   // Combined IOR stuff
   Simple_Server_var server =
-	  Simple_Server::_narrow (object.in ()
-				  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+	  Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
   {
@@ -513,8 +471,7 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   // run tests
-  int result = run_test (server.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int result = run_test (server.in());
 
   return result;
 }

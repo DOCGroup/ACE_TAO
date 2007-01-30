@@ -45,7 +45,6 @@ void
 TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     PortableGroup::TagGroupTaggedComponent *group_id,
     const TAO::ObjectKey &key
-    ACE_ENV_ARG_DECL
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -65,7 +64,6 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
                                                                                TAO::VMCID,
                                                                                ENOMEM),
                                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   // Fill out the entry.
   new_entry->key = key;
@@ -91,7 +89,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
       if (result != 0)
         {
           delete new_entry;
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // Transfer ownership of group_id to the map.
@@ -101,8 +99,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
 
 void
 TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
-                                                       const TAO::ObjectKey &/*key*/
-                                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                                       const TAO::ObjectKey &/*key*/)
 {
 
 }
@@ -112,8 +109,7 @@ void
 TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_id,
                                   TAO_ORB_Core *orb_core,
                                   TAO_ServerRequest &request,
-                                  CORBA::Object_out forward_to
-                                  ACE_ENV_ARG_DECL)
+                                  CORBA::Object_out forward_to)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -138,9 +134,7 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
         {
           orb_core->adapter_registry ()->dispatch (entry->key,
                                                    request,
-                                                   forward_to
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                                   forward_to);
 
           // Reset the read pointer in the message block.
           msgblk->rd_ptr (read_ptr);

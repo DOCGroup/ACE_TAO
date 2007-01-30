@@ -22,17 +22,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/PI.h"
+#include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
 
 namespace Test
 {
 
   class Current_Test_Export Client_ORBInitializer :
-    public PortableInterceptor::ORBInitializer
+    public virtual PortableInterceptor::ORBInitializer,
+    public virtual TAO_Local_RefCounted_Object
   {
   public:
     Client_ORBInitializer (PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
-    ~Client_ORBInitializer (void);
+    virtual ~Client_ORBInitializer (void);
 
     virtual void pre_init(PortableInterceptor::ORBInitInfo*)
       throw (CORBA::SystemException);

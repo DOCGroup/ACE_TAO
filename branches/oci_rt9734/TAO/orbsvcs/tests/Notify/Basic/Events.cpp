@@ -17,7 +17,6 @@ Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
 void
 Event_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
@@ -58,34 +57,27 @@ Events::~Events (void)
 
 int
 Events::init (int argc,
-                   char* argv []
-                   ACE_ENV_ARG_DECL)
+                   char* argv [])
 {
   // Initialize the base class.
   Notify_Test_Client::init (argc,
-                            argv
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                            argv);
 
   // Create all participents.
-  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->create_EC ();
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   if (use_default_admin_ == 1)
     {
       this->supplier_admin_ =
-        this->ec_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->ec_->default_supplier_admin ();
     }
   else
     {
       this->supplier_admin_ =
         this->ec_->new_for_suppliers (this->ifgop_,
-                                      adminid
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                      adminid);
     }
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
@@ -93,16 +85,13 @@ Events::init (int argc,
   if (use_default_admin_ == 1)
     {
       this->consumer_admin_ =
-        this->ec_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->ec_->default_consumer_admin ();
     }
   else
     {
       this->consumer_admin_ =
         this->ec_->new_for_consumers (this->ifgop_,
-                                      adminid
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                                      adminid);
     }
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
@@ -110,34 +99,22 @@ Events::init (int argc,
   ACE_NEW_RETURN (this->consumer_,
                   Event_StructuredPushConsumer (this),
                   -1);
-  this->consumer_->init (root_poa_.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  this->consumer_->connect (this->consumer_admin_.in ()
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->consumer_->init (root_poa_.in ());
+  this->consumer_->connect (this->consumer_admin_.in ());
 
   Event_StructuredPushConsumer* consumer2 = 0;
   ACE_NEW_RETURN (consumer2,
                   Event_StructuredPushConsumer (this),
                   -1);
-  consumer2->init (root_poa_.in ()
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  consumer2->connect (this->consumer_admin_.in ()
-                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  consumer2->init (root_poa_.in ());
+  consumer2->connect (this->consumer_admin_.in ());
 
   ACE_NEW_RETURN (this->supplier_,
                   Event_StructuredPushSupplier (this),
                   -1);
-  this->supplier_->init (root_poa_.in ()
-                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->supplier_->init (root_poa_.in ());
 
-  this->supplier_->connect (this->supplier_admin_.in ()
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->supplier_->connect (this->supplier_admin_.in ());
 
   consumer_start( 0 );
 
@@ -188,15 +165,13 @@ Events::parse_args (int argc,
 }
 
 void
-Events::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+Events::create_EC (void)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
-                                               id
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                               id);
 
   /****************************************************************/
   /*
@@ -213,8 +188,8 @@ Events::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 
   admin[1].value <<= (CORBA::Long)2;
 
-  ec_->set_admin (admin ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;*/
+  ec_->set_admin (admin);
+  */
 
   /****************************************************************/
   ACE_ASSERT (!CORBA::is_nil (this->ec_.in ()));
@@ -232,14 +207,12 @@ Events::on_event_received (void)
 
   if (this->result_count_ == 2 * this->event_count_)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      this->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->end_test ();
     }
 }
 
 void
-Events::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Events::run_test (void)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -285,14 +258,12 @@ Events::run_test (ACE_ENV_SINGLE_ARG_DECL)
       qos[0].name = CORBA::string_dup (CosNotification::Priority);
       qos[0].value <<= (CORBA::Short)prio++;
 
-      this->supplier_->send_event (event
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->supplier_->send_event (event);
     }
 }
 
 void
-Events::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Events::end_test (void)
 {
   consumer_done( 0 );
 }
@@ -301,9 +272,7 @@ int
 Events::check_results (void)
 {
   // Destroy the channel.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->ec_->destroy ();
 
   if (this->result_count_ == 2 * this->event_count_)
     {
@@ -331,25 +300,20 @@ main (int argc, char* argv[])
       return 1;
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       events.init (argc,
-                   argv
-                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                   argv);
 
-      events.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      events.run_test ();
 
-      events.ORB_run( ACE_ENV_SINGLE_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+      events.ORB_run( );
     }
-  ACE_CATCH (CORBA::Exception, se)
+  catch (const CORBA::Exception& se)
     {
-      ACE_PRINT_EXCEPTION (se, "Error: ");
+      se._tao_print_exception ("Error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return events.check_results ();
 }

@@ -26,14 +26,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace CORBA
-{
-  class Environment;
-}
-
 namespace TAO
 {
-
   /**
    * @class Upcall_Command
    *
@@ -54,7 +48,7 @@ namespace TAO
     virtual ~Upcall_Command (void);
 
     /// Execute the upcall.
-    virtual void execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
+    virtual void execute (void) = 0;
 
   };
 

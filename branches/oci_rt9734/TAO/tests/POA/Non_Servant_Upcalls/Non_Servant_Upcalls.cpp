@@ -49,98 +49,72 @@ test_i::~test_i (void)
 
   if (this->other_)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
-          PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          PortableServer::POA_var poa = this->_default_POA ();
 
-          PortableServer::ObjectId_var id = poa->servant_to_id (this->other_
-                                                                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          PortableServer::ObjectId_var id = poa->servant_to_id (this->other_);
 
           ACE_DEBUG ((LM_DEBUG, "(%t) Deactivating other servant\n"));
 
-          poa->deactivate_object (id.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          poa->deactivate_object (id.in ());
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "test_i::~test_i");
+          ex._tao_print_exception ("test_i::~test_i");
         }
-      ACE_ENDTRY;
     }
 }
 
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       test_i *servant1 = new test_i (0);
       test_i *servant2 = new test_i (servant1);
 
       PortableServer::ObjectId_var id1 =
-        root_poa->activate_object (servant1
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->activate_object (servant1);
 
       // Give ownership to POA.
-      servant1->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      servant1->_remove_ref ();
 
       PortableServer::ObjectId_var id2 =
-        root_poa->activate_object (servant2
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->activate_object (servant2);
 
       // Give ownership to POA.
-      servant2->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      servant2->_remove_ref ();
 
-      root_poa->deactivate_object (id2.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->deactivate_object (id2.in ());
 
       root_poa->destroy (1,
-                         1
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

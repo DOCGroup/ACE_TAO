@@ -48,23 +48,23 @@ public:
   virtual ~TAO_Notify_ProxyConsumer ();
 
   /// init: overrides Topology_Object method
-  virtual void init (TAO_Notify::Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
+  virtual void init (TAO_Notify::Topology_Parent * topology_parent);
 
   /// Connect
-  void connect (TAO_Notify_Supplier* supplier ACE_ENV_ARG_DECL)
+  void connect (TAO_Notify_Supplier* supplier)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosEventChannelAdmin::AlreadyConnected
                      ));
 
   /// Disconnect
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Shutdown  (TAO_Notify_Container_T method)
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (void);
 
   /// Destroy this object.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy (void);
 
 
   /// Return 1 if connected
@@ -78,7 +78,7 @@ protected:
   TAO_Notify_Supplier* supplier (void);
 
   /// Accept an event from the Supplier
-  void push_i (TAO_Notify_Event * event ACE_ENV_ARG_DECL);
+  void push_i (TAO_Notify_Event * event);
 
 private:
   /// Is this part of a reliable channel

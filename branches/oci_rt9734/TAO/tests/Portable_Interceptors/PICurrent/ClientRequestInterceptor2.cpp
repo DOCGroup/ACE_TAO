@@ -17,33 +17,30 @@ ClientRequestInterceptor2::ClientRequestInterceptor2 (
 }
 
 char *
-ClientRequestInterceptor2::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ClientRequestInterceptor2::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ClientRequestInterceptor2");
 }
 
 void
-ClientRequestInterceptor2::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ClientRequestInterceptor2::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientRequestInterceptor2::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "invoke_you") != 0)
     return; // Don't mess with PICurrent if not invoking test method.
 
-  ACE_TRY
+  try
     {
       // The goal of this test is to verify that a request scope
       // current was successfully shallow copied from a TSC that
@@ -55,9 +52,7 @@ ClientRequestInterceptor2::send_request (
       CORBA::Long number = 0;
 
       CORBA::Any_var data =
-        ri->get_slot (this->slot_id_
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ri->get_slot (this->slot_id_);
 
       if (!(data.in () >>= number))
         {
@@ -65,7 +60,7 @@ ClientRequestInterceptor2::send_request (
                       "(%P|%t) ERROR: Unable to extract data from "
                       "CORBA::Any retrieved from RSC.\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -73,20 +68,16 @@ ClientRequestInterceptor2::send_request (
                   number,
                   this->slot_id_));
     }
-  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+  catch (const PortableInterceptor::InvalidSlot& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Exception thrown in "
-                           "send_request()\n");
+      ex._tao_print_exception ("Exception thrown in ""send_request()\n");
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid slot: %u\n",
                   this->slot_id_));
 
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) RSC->TSC->RSC copying appears to be working.\n"));
@@ -94,24 +85,21 @@ ClientRequestInterceptor2::send_request (
 
 void
 ClientRequestInterceptor2::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientRequestInterceptor2::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientRequestInterceptor2::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -119,8 +107,7 @@ ClientRequestInterceptor2::receive_exception (
 
 void
 ClientRequestInterceptor2::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

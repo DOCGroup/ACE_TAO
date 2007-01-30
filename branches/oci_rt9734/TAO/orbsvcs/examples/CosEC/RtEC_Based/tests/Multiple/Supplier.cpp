@@ -43,67 +43,57 @@ Supplier::parse_args (int argc, char *argv [])
 }
 
 void
-Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel
-                     ACE_ENV_ARG_DECL)
+Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
   // = Connect as a consumer.
   this->supplier_admin_ =
-    event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    event_channel->for_suppliers ();
 }
 
 void
-Supplier::close (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::close (void)
 {
-  this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->disconnect ();
 
   this->supplier_admin_ =
     CosEventChannelAdmin::SupplierAdmin::_nil ();
 }
 
 void
-Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::connect (void)
 {
   if (CORBA::is_nil (this->supplier_admin_.in ()))
     return;
 
   this->consumer_proxy_ =
-    this->supplier_admin_->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->supplier_admin_->obtain_push_consumer ();
 
-  CosEventComm::PushSupplier_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosEventComm::PushSupplier_var objref = this->_this ();
 
-  this->consumer_proxy_->connect_push_supplier (objref.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->connect_push_supplier (objref.in ());
 }
 
 void
-Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::disconnect (void)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ())
       || CORBA::is_nil (this->supplier_admin_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->disconnect_push_consumer ();
 
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
-Supplier::send_event (const CORBA::Any & data
-                           ACE_ENV_ARG_DECL)
+Supplier::send_event (const CORBA::Any & data)
 {
-  this->consumer_proxy_->push (data ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->push (data);
 }
 
 void
-Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::disconnect_push_supplier (void)
   ACE_THROW_SPEC ((
         CORBA::SystemException
         ))
@@ -111,35 +101,26 @@ Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   // Deactivate this object.
 
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
 
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
 
-  poa->deactivate_object (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in ());
 }
 
 void
 Supplier::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Create an Any type to pass to the Cos EC.
       CORBA::Any any;
       any <<= CORBA::Long (50);
 
-      this->open (this->cos_ec_
-                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->open (this->cos_ec_);
 
-      this->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->connect ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):sending %d events...\n",
@@ -149,24 +130,18 @@ Supplier::run (void)
            count != 0;
            count--)
         {
-          this->send_event (any
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->send_event (any);
         }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):Done!. exiting now..\n"));
 
-      this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->close ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in CosEC_Multiple::run\n");
+      ex._tao_print_exception ("Exception in CosEC_Multiple::run\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int

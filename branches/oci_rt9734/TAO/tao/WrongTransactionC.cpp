@@ -127,7 +127,6 @@ void CORBA::WrongTransaction::_raise (void) const
 
 void CORBA::WrongTransaction::_tao_encode (
     TAO_OutputCDR &cdr
-    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -135,12 +134,11 @@ void CORBA::WrongTransaction::_tao_encode (
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void CORBA::WrongTransaction::_tao_decode (
     TAO_InputCDR &cdr
-    ACE_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -148,7 +146,7 @@ void CORBA::WrongTransaction::_tao_decode (
       return;
     }
 
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 // TAO extension - the virtual _type method.

@@ -55,29 +55,25 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * name (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// incomming interception point
-    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr
-                                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
     /// outgoing interception point
-    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// outgoing interception point
-    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
     /// outgoing interception point
-    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
     //@}
@@ -86,26 +82,22 @@ namespace Test
 
     /// process incomming requests context
     void inbound_process_context
-    (PortableInterceptor::ServerRequestInfo_ptr ri
-     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    (PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// process outgoing requests context
     void outbound_process_context
-    (PortableInterceptor::ServerRequestInfo_ptr ri
-     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    (PortableInterceptor::ServerRequestInfo_ptr ri)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// saves the incomming request info
-    void push_request_info (size_t requestID
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    void push_request_info (size_t requestID)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// clears the outgoing request info
     void pop_request_info (size_t requestID);
 
-    TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid
-                                                                      ACE_ENV_ARG_DECL)
+    TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:

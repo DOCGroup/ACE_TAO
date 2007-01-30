@@ -17,23 +17,21 @@ FOO_ClientRequestInterceptor::FOO_ClientRequestInterceptor (
 }
 
 char *
-FOO_ClientRequestInterceptor::name (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_ClientRequestInterceptor::name ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_ClientRequestInterceptor");
 }
 
 void
-FOO_ClientRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_ClientRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL)
+      PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -41,9 +39,7 @@ FOO_ClientRequestInterceptor::send_request (
   // into the IOR by the FOO_IORInterceptor is actually in the IOR
   // profile.
   IOP::TaggedComponent_var component =
-    ri->get_effective_component (FOO::COMPONENT_ID
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ri->get_effective_component (FOO::COMPONENT_ID);
 
   // The correct tagged component appears to exist.  Display the
   // contents of the component data, which should be a NULL terminated
@@ -57,7 +53,7 @@ FOO_ClientRequestInterceptor::send_request (
       ACE_ERROR ((LM_ERROR,
                   "Internal test error.  Empty tagged component.\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   CORBA::ULong maximum   = component->component_data.maximum ();
@@ -70,9 +66,7 @@ FOO_ClientRequestInterceptor::send_request (
   // Extract the data from the octet sequence.
   CORBA::Any_var decoded_data =
     this->codec_->decode_value (data,
-                                CORBA::_tc_string
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                CORBA::_tc_string);
 
   const char * name = 0;
 
@@ -82,7 +76,7 @@ FOO_ClientRequestInterceptor::send_request (
                   "ERROR: Unable to extract tagged component "
                   "data from Any.\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -93,24 +87,21 @@ FOO_ClientRequestInterceptor::send_request (
 
 void
 FOO_ClientRequestInterceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::receive_reply (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -118,8 +109,7 @@ FOO_ClientRequestInterceptor::receive_exception (
 
 void
 FOO_ClientRequestInterceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

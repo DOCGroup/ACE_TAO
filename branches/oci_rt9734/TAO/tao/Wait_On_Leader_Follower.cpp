@@ -13,7 +13,8 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transport)
+TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower
+  (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {
 }
@@ -59,19 +60,16 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 
   // Send the request.
 //@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
-  return this->TAO_Wait_Strategy::sending_request (orb_core,
-                                                   two_way);
+  return this->TAO_Wait_Strategy::sending_request (orb_core, two_way);
 }
 
 int
 TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                                    TAO_Synch_Reply_Dispatcher &rd)
 {
-  TAO_Leader_Follower& leader_follower =
+  TAO_Leader_Follower &leader_follower =
     this->transport_->orb_core ()->leader_follower ();
-  return leader_follower.wait_for_event (&rd,
-                                         this->transport_,
-                                         max_wait_time);
+  return leader_follower.wait_for_event (&rd, this->transport_, max_wait_time);
 }
 
 bool

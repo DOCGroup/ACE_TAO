@@ -22,16 +22,14 @@ EC_Wrapper::create (void)
 
 EC_Wrapper::~EC_Wrapper (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->destroy_ec ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // ignore
     }
-  ACE_ENDTRY;
 }
 
 int
@@ -59,46 +57,43 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
                   -1);
   auto_ptr<TAO_EC_Event_Channel> impl_release (impl);
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      impl->activate ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Suppressed the following exception "
-                           "in EC_Wrapper::init:\n");
+      ex._tao_print_exception (
+        "Suppressed the following exception ""in EC_Wrapper::init:\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   this->ec_impl_ = impl_release.release ();
   return 0;
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-EC_Wrapper::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::for_consumers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ec_impl_)
-    return this->ec_impl_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->ec_impl_->for_consumers ();
   else
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::ConsumerAdmin::_nil());
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-EC_Wrapper::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::for_suppliers (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ec_impl_)
-    return this->ec_impl_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->ec_impl_->for_suppliers ();
   else
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::SupplierAdmin::_nil());
 }
 
 void
-EC_Wrapper::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::destroy_ec (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   auto_ptr<TAO_EC_Event_Channel> ec_impl_aptr (this->ec_impl_);
@@ -106,58 +101,52 @@ EC_Wrapper::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
 
   if (ec_impl_aptr.get ())
     {
-      ec_impl_aptr->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ec_impl_aptr->destroy ();
     }
 }
 
 void
-EC_Wrapper::destroy (ACE_ENV_SINGLE_ARG_DECL)
+EC_Wrapper::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister from POA.
   this->deactivator_.deactivate ();
 
-  ACE_TRY
+  try
     {
-      this->destroy_ec (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->destroy_ec ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       this->orb_->shutdown ();
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 
   this->orb_->shutdown ();
 }
 
 RtecEventChannelAdmin::Observer_Handle
-EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer
-                             ACE_ENV_ARG_DECL)
+EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   if (this->ec_impl_)
-    return this->ec_impl_->append_observer (observer ACE_ENV_ARG_PARAMETER);
+    return this->ec_impl_->append_observer (observer);
   else
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 }
 
 void
-EC_Wrapper::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
-                             ACE_ENV_ARG_DECL)
+EC_Wrapper::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
       ACE_THROW_SPEC ((
           CORBA::SystemException,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   if (this->ec_impl_)
-    this->ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
+    this->ec_impl_->remove_observer (handle);
   else
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 }

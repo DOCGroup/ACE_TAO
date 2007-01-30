@@ -45,11 +45,10 @@ public:
   // Destructor.
 
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
   // Initialize the Notifier who plays the role of the server here.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the ORB.
 
    virtual int handle_input (ACE_HANDLE);
@@ -63,7 +62,7 @@ private:
   int parse_args (void);
   // Parses the command line arguments.
 
-  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (void);
   // Initialises the name server and registers the Notifier object
   // name with the name server.
 

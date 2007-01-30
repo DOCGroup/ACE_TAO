@@ -57,24 +57,23 @@ TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 }
 
 TAO_Notify_Event *
-TAO_Notify_StructuredEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::copy (void) const
 {
   TAO_Notify_Event * new_event;
   ACE_NEW_THROW_EX (new_event,
                     TAO_Notify_StructuredEvent (*this->notification_),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
   return new_event;
 }
 
 CORBA::Boolean
-TAO_Notify_StructuredEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::do_match (CosNotifyFilter::Filter_ptr filter) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                 "TAO_Notify_StructuredEvent::do_match ()\n"));
 
-  return filter->match_structured (*this->notification_ ACE_ENV_ARG_PARAMETER);
+  return filter->match_structured (*this->notification_);
 }
 
 void
@@ -84,46 +83,46 @@ TAO_Notify_StructuredEvent_No_Copy::convert (CosNotification::StructuredEvent& n
 }
 
 void
-TAO_Notify_StructuredEvent_No_Copy::push (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::push (TAO_Notify_Consumer* consumer) const
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
                           "TAO_Notify_StructuredEvent::do_push ("
                           "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
 
-  consumer->push (*this->notification_ ACE_ENV_ARG_PARAMETER);
+  consumer->push (*this->notification_);
 }
 
 void
-TAO_Notify_StructuredEvent_No_Copy::push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const
 {
-  forwarder->forward_structured (*this->notification_ ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_structured (*this->notification_);
 }
 
 void
-TAO_Notify_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder) const
 {
-  forwarder->forward_structured_no_filtering (*this->notification_ ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_structured_no_filtering (*this->notification_);
 }
 
 void
-TAO_Notify_StructuredEvent_No_Copy::push (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
-{
-  CORBA::Any any;
-
-  TAO_Notify_Event::translate (*this->notification_, any);
-
-  forwarder->forward_any (any ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const
+TAO_Notify_StructuredEvent_No_Copy::push (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const
 {
   CORBA::Any any;
 
   TAO_Notify_Event::translate (*this->notification_, any);
 
-  forwarder->forward_any_no_filtering (any ACE_ENV_ARG_PARAMETER);
+  forwarder->forward_any (any);
+}
+
+void
+TAO_Notify_StructuredEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const
+{
+  CORBA::Any any;
+
+  TAO_Notify_Event::translate (*this->notification_, any);
+
+  forwarder->forward_any_no_filtering (any);
 }
 
 /*****************************************************************************************************/

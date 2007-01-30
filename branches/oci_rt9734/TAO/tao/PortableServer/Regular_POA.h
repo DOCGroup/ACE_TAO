@@ -46,15 +46,15 @@ public:
                    TAO_SYNCH_MUTEX &thread_lock,
                    TAO_ORB_Core &orb_core,
                    TAO_Object_Adapter *object_adapter
-                   ACE_ENV_ARG_DECL);
+                  );
 
   virtual ~TAO_Regular_POA (void);
 
-  PortableServer::POA_ptr the_parent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::POA_ptr the_parent (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  virtual void remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void remove_from_parent_i (void);
 
   virtual CORBA::Boolean root (void) const;
 

@@ -97,14 +97,12 @@ TAO_Profile::_decr_refcnt (void)
 
 void
 TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
-                                   ACE_ENV_ARG_DECL)
+                                   )
 {
   // Sanity checks.
-  this->verify_orb_configuration (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->verify_orb_configuration ();
 
-  this->verify_profile_version (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->verify_profile_version ();
 
   // ----------------------------------------------------------------
 
@@ -330,7 +328,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
 
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list
-                       ACE_ENV_ARG_DECL)
+                       )
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -362,8 +360,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
     {
       TAO_OutputCDR out_CDR;
       policy_value_seq[i].ptype =
-        (*policy_list)[i]->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        (*policy_list)[i]->policy_type ();
 
       out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       (*policy_list)[i]->_tao_encode (out_CDR);
@@ -417,7 +414,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_UNUSED_ARG (policy_list);
-  ACE_ENV_ARG_NOT_USED;  // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
@@ -426,7 +422,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 
 void
 TAO_Profile::get_policies (CORBA::PolicyList& pl
-                           ACE_ENV_ARG_DECL)
+                           )
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1) && !defined (CORBA_E_MICRO)
 
@@ -462,7 +458,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
 
           if (!(in_cdr >> policy_value_seq))
             {
-              ACE_THROW (CORBA::INV_OBJREF ());
+              throw ::CORBA::INV_OBJREF ();
             }
 
           // Here we extract the Messaging::PolicyValue out of the sequence
@@ -476,13 +472,12 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
 
           for (CORBA::ULong i = 0; i < length; ++i)
             {
-              ACE_TRY_NEW_ENV
+              try
                 {
                   policy =
                     this->orb_core_->orb ()->_create_policy (
                       policy_value_seq[i].ptype
-                      ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                     );
 
                   if (!CORBA::is_nil (policy.in ()))
                     {
@@ -493,7 +488,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                         policy_value_seq[i].pvalue.length ());
 
                       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-                        ACE_TRY_THROW (CORBA::INV_OBJREF ());
+                        throw ::CORBA::INV_OBJREF ();
 
                       in_cdr.reset_byte_order (static_cast <int> (byte_order));
 
@@ -514,7 +509,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                                     ACE_TEXT ("policies.\n")));
                     }
                 }
-              ACE_CATCHANY
+              catch (const ::CORBA::Exception& ex)
                 {
                   // This case should occur when in the IOR are
                   // embedded policies that TAO doesn't support, so as
@@ -522,25 +517,23 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                   // just ignore these un-understood policies.
 
                   if (TAO_debug_level >= 5)
-                    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                                        ACE_TEXT ("IOR contains ")
-                                        ACE_TEXT ("unsupported policies."));
+                    ex._tao_print_exception (
+                      ACE_TEXT ("IOR contains ")
+                      ACE_TEXT ("unsupported policies."));
                 }
-              ACE_ENDTRY;
             }
         }
     }
 
 #else
   ACE_UNUSED_ARG (pl);
-  ACE_ENV_ARG_NOT_USED;    // FUZZ: ignore check_for_ace_check
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
 }
 
 
 void
-TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Profile::verify_orb_configuration (void)
 {
   // If the ORB isn't configured to support tagged components, then
   // throw an exception.
@@ -564,16 +557,16 @@ TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)
       // possible to add components to the profile.
       // @todo: We need the proper minor code as soon as the spec is
       //        updated.
-      ACE_THROW (CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
                       0,
                       EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 }
 
 void
-TAO_Profile::verify_profile_version (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Profile::verify_profile_version (void)
 {
   // GIOP 1.0 does not support tagged components.  Throw an exception
   // if the profile is a GIOP 1.0 profile.
@@ -595,11 +588,11 @@ TAO_Profile::verify_profile_version (ACE_ENV_SINGLE_ARG_DECL)
       // possible to add components to the profile.
       // @todo: We need the proper minor code as soon as the spec is
       //        updated.
-      ACE_THROW (CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 }
 
@@ -618,7 +611,7 @@ TAO_Profile::supports_non_blocking_oneways (void) const
 
 void
 TAO_Profile::addressing_mode (CORBA::Short addr
-                              ACE_ENV_ARG_DECL)
+                              )
 {
   // ** See race condition note about addressing mode in Profile.h **
   switch (addr)
@@ -630,25 +623,25 @@ TAO_Profile::addressing_mode (CORBA::Short addr
       break;
 
     default:
-      ACE_THROW (CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
              CORBA::SystemException::_tao_minor_code (
                0,
                EINVAL),
-             CORBA::COMPLETED_NO));
+             CORBA::COMPLETED_NO);
     }
 }
 
 void
 TAO_Profile::parse_string (const char *ior
-                           ACE_ENV_ARG_DECL)
+                           )
 {
   if (!ior || !*ior)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
@@ -676,15 +669,14 @@ TAO_Profile::parse_string (const char *ior
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
-  this->parse_string_i (ior
-                        ACE_ENV_ARG_PARAMETER);
+  this->parse_string_i (ior);
 }
 
 CORBA::Boolean
@@ -811,14 +803,14 @@ TAO_Unknown_Profile::endpoint_count (void) const
 
 void
 TAO_Unknown_Profile::parse_string (const char *
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+                                   )
 {
   // @@ THROW something????
 }
 
 void
 TAO_Unknown_Profile::parse_string_i (const char *
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+                                     )
 {
   // @@ THROW something????
 }
@@ -830,7 +822,7 @@ TAO_Unknown_Profile::object_key_delimiter (void) const
 }
 
 char *
-TAO_Unknown_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Unknown_Profile::to_string (void)
 {
   // @@ THROW something?
   return 0;
@@ -906,7 +898,7 @@ TAO_Unknown_Profile::is_equivalent_hook (const TAO_Profile * /* other */)
 
 CORBA::ULong
 TAO_Unknown_Profile::hash (CORBA::ULong max
-                           ACE_ENV_ARG_DECL_NOT_USED)
+                           )
 {
   return (ACE::hash_pjw (reinterpret_cast <const char*>
                                           (this->body_.get_buffer ()),

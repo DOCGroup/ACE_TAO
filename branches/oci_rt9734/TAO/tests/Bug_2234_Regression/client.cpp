@@ -12,21 +12,17 @@ main(
   int    argc,
   char** argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   CORBA::Boolean testFailed= 0;
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 (Interceptor arg list with var len out params)\n"));
-  ACE_TRY
+  try
   {
     CORBA::ORB_var
-       orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
+       orb= CORBA::ORB_init( argc, argv, 0 );
     CORBA::Object_var
-       object= orb->string_to_object( "file://server.ior" ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
+       object= orb->string_to_object( "file://server.ior" );
     Test::Foo_var
-       foo= Test::Foo::_narrow( object.in() ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
+       foo= Test::Foo::_narrow( object.in() );
 
     //-----------------------------------------------------------------------
     CORBA::Long
@@ -35,8 +31,7 @@ main(
        cL= 3,
        rL= 0;
     ACE_DEBUG( (LM_INFO, ". Long()            ") );
-    rL= foo->TestLong( aL, bL, cL ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rL= foo->TestLong( aL, bL, cL);
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aL, bL, cL, rL) );
     if (static_cast<CORBA::Long>(1) != aL) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -56,8 +51,7 @@ main(
        cS= CORBA::string_dup("3"),
        rS;
     ACE_DEBUG( (LM_INFO, ". String()          ") );
-    rS= foo->TestString( aS.in(), bS.out(), cS.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rS= foo->TestString( aS.in(), bS.out(), cS.inout());
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aS.in(), bS.in(), cS.in(), rS.in()) );
     if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(aS.in(), "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -79,8 +73,7 @@ main(
     aFS->val= 1;
     cFS->val= 3;
     ACE_DEBUG( (LM_INFO, ". MyNonVarStruct()  ") );
-    rFS= foo->TestNonVarStruct( aFS.in(), bFS.out(), cFS.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rFS= foo->TestNonVarStruct( aFS.in(), bFS.out(), cFS.inout());
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aFS.in().val, bFS.in().val, cFS.in().val, rFS.in().val) );
     if (static_cast<CORBA::Long>(1) != aFS->val) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -102,8 +95,7 @@ main(
     aVS->val= CORBA::string_dup("1");
     cVS->val= CORBA::string_dup("3");
     ACE_DEBUG( (LM_INFO, ". MyVarStruct()     ") );
-    rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout());
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aVS->val.in(), bVS->val.in(), cVS->val.in(), rVS->val.in()) );
     if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val, "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n") ); testFailed= 1;}
@@ -125,8 +117,7 @@ main(
     aFU->valLong( static_cast<CORBA::Long>(1) );
     cFU->valLong( static_cast<CORBA::Long>(3) );
     ACE_DEBUG( (LM_INFO, ". MyNonVarUnion()   ") );
-    rFU= foo->TestNonVarUnion( aFU.in(), bFU.out(), cFU.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rFU= foo->TestNonVarUnion( aFU.in(), bFU.out(), cFU.inout());
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (static_cast<CORBA::Short>(1) != aFU->_d())
        ACE_DEBUG( (LM_INFO, "?") );
@@ -168,8 +159,7 @@ main(
     aVU->valLong( static_cast<CORBA::Long>(1) );
     cVU->valLong( static_cast<CORBA::Long>(3) );
     ACE_DEBUG( (LM_INFO, ". MyVarUnion()      ") );
-    rVU= foo->TestVarUnion( aVU.in(), bVU.out(), cVU.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rVU= foo->TestVarUnion( aVU.in(), bVU.out(), cVU.inout());
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (static_cast<CORBA::Short>(1) != aVU->_d())
        ACE_DEBUG( (LM_INFO, "?") );
@@ -213,8 +203,7 @@ main(
     cSL->length(1);
     cSL[0]= static_cast<CORBA::Long>(3);
     ACE_DEBUG( (LM_INFO, ". MySeqOfLong()     ") );
-    rSL= foo->TestSeqOfLong( aSL.in(), bSL.out(), cSL.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rSL= foo->TestSeqOfLong( aSL.in(), bSL.out(), cSL.inout());
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (1u != aSL->length())
        ACE_DEBUG( (LM_INFO, "?") );
@@ -256,8 +245,7 @@ main(
     aA<<= static_cast<CORBA::Long>(1);
     cA<<= static_cast<CORBA::Long>(3);
     ACE_DEBUG( (LM_INFO, ". Any()             ") );
-    rA= foo->TestAny( aA.in(), bA.out(), cA.inout() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    rA= foo->TestAny( aA.in(), bA.out(), cA.inout());
     CORBA::Boolean
        aB,
        bB,
@@ -296,31 +284,27 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    foo->ShutdownServer( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
+    foo->ShutdownServer( );
 
     //-----------------------------------------------------------------------
-    orb->shutdown( true ACE_ENV_ARG_PARAMETER );
-    ACE_TRY_CHECK;
-    orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
-    ACE_TRY_CHECK;
+    orb->shutdown( true );
+    orb->destroy( );
   }
-  ACE_CATCH( CORBA::SystemException, ex )
+  catch (const CORBA::SystemException& ex)
   {
-    ACE_PRINT_EXCEPTION( ex, "CORBA::SystemException: " );
+    ex._tao_print_exception ("CORBA::SystemException: ");
     testFailed= 1;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION( ACE_ANY_EXCEPTION, "CORBA::Exception: " );
+    ex._tao_print_exception ("CORBA::Exception: ");
     testFailed= 1;
   }
-  ACE_CATCHALL
+  catch (...)
   {
     ACE_DEBUG( (LM_ERROR, "Unexpected general exception!\n") );
     testFailed= 1;
   }
-  ACE_ENDTRY;
 
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 ") );
   if (testFailed)

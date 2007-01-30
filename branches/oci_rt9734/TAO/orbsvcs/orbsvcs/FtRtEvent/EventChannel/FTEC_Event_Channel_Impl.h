@@ -44,26 +44,24 @@ public:
   virtual void activate_object (
     CORBA::ORB_var orb,
     const FtRtecEventComm::ObjectId& supplier_admin_oid,
-    const FtRtecEventComm::ObjectId& consumer_admin_oid
-    ACE_ENV_ARG_DECL);
+    const FtRtecEventComm::ObjectId& consumer_admin_oid);
 
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+      for_consumers (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+      for_suppliers (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void get_state (FtRtecEventChannelAdmin::EventChannelState & s
-                  ACE_ENV_ARG_DECL);
+  void get_state (FtRtecEventChannelAdmin::EventChannelState & s);
 
-  void set_state (const FTRT::State & stat ACE_ENV_ARG_DECL);
+  void set_state (const FTRT::State & stat);
 
-  void set_update (const FTRT::State & s ACE_ENV_ARG_DECL)
+  void set_update (const FTRT::State & s)
       ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate));
 
   /// EventChannelFacade Interface
@@ -71,40 +69,33 @@ public:
    virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
         const RtecEventChannelAdmin::ConsumerQOS & qos
-        ACE_ENV_ARG_DECL
       );
 
 
     virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
         const RtecEventChannelAdmin::SupplierQOS & qos
-        ACE_ENV_ARG_DECL
       );
 
     virtual void disconnect_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL
       );
 
     virtual void disconnect_push_consumer (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL
       );
 
     virtual void suspend_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL
       );
 
     virtual void resume_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL
       );
 
     virtual void push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
         const RtecEventComm::EventSet & data
-        ACE_ENV_ARG_DECL
       );
 
   ////////////////////////////////////////////
@@ -121,8 +112,7 @@ public:
   TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id);
 
 
-  CORBA::Object_var make_iogr(CORBA::Object_ptr obj
-                              ACE_ENV_ARG_DECL);
+  CORBA::Object_var make_iogr(CORBA::Object_ptr obj);
 
 protected:
   TAO_FTEC_Basic_Factory* factory();

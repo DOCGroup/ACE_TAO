@@ -40,11 +40,9 @@ public:
   ~AMI_Replication_Strategy();
   virtual void replicate_request(const FTRT::State& state,
     RollbackOperation rollback,
-    const FtRtecEventChannelAdmin::ObjectId& oid
-    ACE_ENV_ARG_DECL);
+    const FtRtecEventChannelAdmin::ObjectId& oid);
   virtual void add_member(const FTRT::ManagerInfo & info,
-                          CORBA::ULong object_group_ref_version
-                          ACE_ENV_ARG_DECL);
+                          CORBA::ULong object_group_ref_version);
   virtual Replication_Strategy* make_primary_strategy();
 
   virtual int  acquire_read (void);

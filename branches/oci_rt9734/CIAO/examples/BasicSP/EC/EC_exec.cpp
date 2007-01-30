@@ -135,15 +135,14 @@ MyImpl::EC_exec_i::~EC_exec_i ()
 }
 
 CORBA::Long
-MyImpl::EC_exec_i::hertz (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::hertz ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->hertz_;
 }
 
 void
-MyImpl::EC_exec_i::hertz (CORBA::Long hertz
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::hertz (CORBA::Long hertz)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->hertz_ = hertz;
@@ -152,29 +151,29 @@ MyImpl::EC_exec_i::hertz (CORBA::Long hertz
 // Operations from supported interface(s)
 
 void
-MyImpl::EC_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::EC_exec_i::start ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->hertz_ == 0 || this->pulser_.active())
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 
   // @@ Start the rate generator
   this->pulser_.start (this->hertz_);
 }
 
 void
-MyImpl::EC_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::EC_exec_i::stop ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (! this->pulser_.active ())
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 
   // @@ stop the rate generator
   this->pulser_.stop ();
 }
 
 CORBA::Boolean
-MyImpl::EC_exec_i::active (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::active ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->pulser_.active ();
@@ -183,8 +182,7 @@ MyImpl::EC_exec_i::active (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Operations from Components::SessionComponent
 
 void
-MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                        ACE_ENV_ARG_DECL)
+MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -192,25 +190,23 @@ MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::set_session_context\n"));
 
   this->context_ =
-    BasicSP::CCM_EC_Context::_narrow (ctx
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    BasicSP::CCM_EC_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   // Urm, we actually discard exceptions thown from this operation.
 
 }
 
 void
-MyImpl::EC_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::EC_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -221,14 +217,14 @@ MyImpl::EC_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::EC_exec_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::EC_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -238,7 +234,7 @@ MyImpl::EC_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::EC_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::EC_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -249,7 +245,7 @@ MyImpl::EC_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 MyImpl::EC_exec_i::pulse (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (CIAO::debug_level () > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -257,15 +253,12 @@ MyImpl::EC_exec_i::pulse (void)
 
       BasicSP::TimeOut_var ev = new OBV_BasicSP::TimeOut ();
 
-      this->context_->push_timeout (ev.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->context_->push_timeout (ev.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // @@ do nothing?
     }
-  ACE_ENDTRY;
 
 }
 
@@ -278,15 +271,14 @@ MyImpl::ECHome_exec_i::~ECHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz
-                               ACE_ENV_ARG_DECL_NOT_USED)
+MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new MyImpl::EC_exec_i (hertz);
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::ECHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::ECHome_exec_i::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

@@ -163,14 +163,11 @@ run (char* buf, size_t bufsize,
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       int n = 64;
       int lo = 128;
@@ -247,11 +244,10 @@ main (int argc, char *argv[])
         return 1;
       delete[] buf;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "OctetSeq");
+      ex._tao_print_exception ("OctetSeq");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

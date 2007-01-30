@@ -9,8 +9,7 @@ public:
 
   Smart_Test_Factory (void);
 
-  virtual Test_ptr create_proxy (Test_ptr proxy
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual Test_ptr create_proxy (Test_ptr proxy);
   // This method will create the smart_proxy.
 };
 
@@ -21,11 +20,10 @@ public:
 
   virtual bool can_convert_to_ior (void) const;
 
-  virtual char* convert_to_ior (bool use_omg_ior_format,       
+  virtual char* convert_to_ior (bool use_omg_ior_format,
                                 const char* ior_prefix) const;
 
-  virtual CORBA::Short method (CORBA::Short boo
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Short method (CORBA::Short boo)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Oops));
   // "Smartify" the method call!

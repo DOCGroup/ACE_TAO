@@ -47,13 +47,12 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
 
   char ** asciiArgv = command_line.get_ASCII_argv ();
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Initialize the orb
 
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, asciiArgv, name_ ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      CORBA::ORB_init (argc, asciiArgv, name_);
 
     if (! ::CORBA::is_nil(orb.in ()))
     {
@@ -65,8 +64,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       {
         //////////////////////////////////
         // let the servant register itself
-        result = servant.init (orb.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        result = servant.init (orb.in ());
 
         if (result == 0)
         {
@@ -78,24 +76,19 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
           // Run the event loop for the ORB.
           // Initial run to initialize the orb
           ACE_Time_Value tv (1,0);
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->run (tv);
 
           // now run event loop
           int quit = 0;
           while (result == 0 && ! quit )
           {
             ACE_Time_Value work_tv (1,0);
-            orb->perform_work(work_tv ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-            quit = servant.idle (result ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            orb->perform_work(work_tv);
+            quit = servant.idle (result);
           }
-          servant.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          servant.fini ();
 
-          orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->shutdown (1);
 
           ACE_ERROR ((LM_INFO,
                       "%T %s (%P|%t) Terminated normally. %s\n",
@@ -120,13 +113,11 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
       }
     }
   }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      name_);
+    ex._tao_print_exception (name_);
     result = -1;
   }
-  ACE_ENDTRY;
   return result;
 }
 

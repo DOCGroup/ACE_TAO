@@ -47,8 +47,7 @@ Demux_Test_Server::~Demux_Test_Server (void)
 //
 
 int
-Demux_Test_Server::init (int argc, char *argv []
-                         ACE_ENV_ARG_DECL)
+Demux_Test_Server::init (int argc, char *argv [])
 {
   printf ("here\n");
 
@@ -56,67 +55,53 @@ Demux_Test_Server::init (int argc, char *argv []
   this->argv_ = argv;
 
   // Grab the ORB
-  ACE_TRY_EX(GET_ORB)
+  try
     {
       // get the underlying ORB
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(GET_ORB);
+        CORBA::ORB_init (argc, argv, "");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ORB_init");
-      ACE_RE_THROW_EX (GET_ORB);
+      ex._tao_print_exception ("ORB_init");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // Grab the ROOT POA
-  ACE_TRY_EX (GET_ROOT_POA)
+  try
     {
       CORBA::Object_var temp;      // holder for the myriad of times we get
                                    // an object which we then have to narrow.
       // Get the Root POA
 
       temp =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(GET_ROOT_POA);
+        this->orb_->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (temp.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Unable to get root poa reference.\n"),
                           1);
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (temp.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (GET_ROOT_POA);
+        PortableServer::POA::_narrow (temp.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "PortableServer::POA::_narrow");
-      ACE_RE_THROW_EX (GET_ROOT_POA);
+      ex._tao_print_exception ("PortableServer::POA::_narrow");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // grab the POA Manager
-  ACE_TRY_EX (GET_POA_MGR)
+  try
     {
 
       this->poa_mgr_ =
-        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (GET_POA_MGR);
+        this->root_poa_->the_POAManager ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "RootPOA->the_POAManager");
-      ACE_RE_THROW_EX (GET_POA_MGR);
+      ex._tao_print_exception ("RootPOA->the_POAManager");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -133,7 +118,7 @@ Demux_Test_Server::init (int argc, char *argv []
   // init the Policies used by all the POAs
   CORBA::PolicyList policies (2);
 
-  ACE_TRY_EX (POLICY)
+  try
     {
       // The id_uniqueness_policy by default is UNIQUE_ID. So each of our servants
       // will have a unique name
@@ -148,9 +133,7 @@ Demux_Test_Server::init (int argc, char *argv []
                       "Using the USER_ID policy ... \n"));
 
           policies[0] =
-            this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
-                                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (POLICY);
+            this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
         }
       else
         {
@@ -158,9 +141,7 @@ Demux_Test_Server::init (int argc, char *argv []
                       "Using the SYSTEM_ID policy ... \n"));
 
           policies[0] =
-            this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID
-                                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (POLICY);
+            this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID);
         }
 
 
@@ -171,9 +152,7 @@ Demux_Test_Server::init (int argc, char *argv []
                       "Using the TRANSIENT Lifespan policy for the POAs\n"));
 
           policies[1] =
-            this->root_poa_->create_lifespan_policy (PortableServer::TRANSIENT
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (POLICY);
+            this->root_poa_->create_lifespan_policy (PortableServer::TRANSIENT);
         }
       else
         {
@@ -181,20 +160,15 @@ Demux_Test_Server::init (int argc, char *argv []
                       "Using the PERSISTENT Lifespan policy for the POAs\n"));
 
           policies[1] =
-            this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (POLICY);
+            this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "creating policy");
-      ACE_RE_THROW_EX (POLICY);
+      ex._tao_print_exception ("creating policy");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // now create a POA hierarchy of the desired depth and populate each POA with
   // the specified number of objects. Finally, activate these objects.
@@ -228,22 +202,17 @@ Demux_Test_Server::init (int argc, char *argv []
       ACE_OS::memset (poa_name, 0, 128);
       (void) fscanf (this->poa_fp_, "%s", poa_name);
 
-      ACE_TRY_EX (CREATE_POA)
+      try
         {
           this->child_poa_[i] = prev_poa->create_POA (poa_name,
                                                       this->poa_mgr_.in (),
-                                                      policies
-                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (CREATE_POA);
+                                                      policies);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "create_POA");
-          ACE_RE_THROW_EX (CREATE_POA);
+          ex._tao_print_exception ("create_POA");
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (-1);
 
       for (j = 0; j < this->num_objs_; j++)
         {
@@ -252,7 +221,7 @@ Demux_Test_Server::init (int argc, char *argv []
           if (!use_user_id_)
             {
               // activate the object
-              ACE_TRY_EX (ACTIVATE_OBJ)
+              try
                 {
                   Demux_Test_i * demux_test_i_ptr;
                   ACE_NEW_RETURN (demux_test_i_ptr,
@@ -260,41 +229,30 @@ Demux_Test_Server::init (int argc, char *argv []
                                   -1);
 
                   //id = this->child_poa_[i]->activate_object (&this->demux_test_[j],
-                  id = this->child_poa_[i]->activate_object (demux_test_i_ptr
-                                                             ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK_EX (ACTIVATE_OBJ);
+                  id = this->child_poa_[i]->activate_object (demux_test_i_ptr);
                 }
-              ACE_CATCHANY
+              catch (const CORBA::Exception& ex)
                 {
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "poa->activate_obj");
-                  ACE_RE_THROW_EX (ACTIVATE_OBJ);
+                  ex._tao_print_exception ("poa->activate_obj");
+                  throw;
                 }
-              ACE_ENDTRY;
-              ACE_CHECK_RETURN (-1);
 
               // Get the IOR and output it to the file
-              ACE_TRY_EX (IOR)
+              try
                 {
-                  CORBA::Object_var demux_var = this->child_poa_[i]->id_to_reference (id.in ()
-                                                                                      ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK_EX (IOR);
+                  CORBA::Object_var demux_var = this->child_poa_[i]->id_to_reference (id.in ());
 
                   CORBA::String_var ior = this->orb_->object_to_string
-                    (demux_var.in () ACE_ENV_ARG_PARAMETER);
+                    (demux_var.in ());
 
-                  ACE_TRY_CHECK_EX (IOR);
 
                   ACE_OS::fprintf (this->ior_fp_, "%s\n", ior.in ());
                 }
-              ACE_CATCHANY
+              catch (const CORBA::Exception& ex)
                 {
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "object_to_string");
-                  ACE_RE_THROW_EX (IOR);
+                  ex._tao_print_exception ("object_to_string");
+                  throw;
                 }
-              ACE_ENDTRY;
-              ACE_CHECK_RETURN (-1);
             }
           else
             {
@@ -302,7 +260,7 @@ Demux_Test_Server::init (int argc, char *argv []
 
               char servant_name [128];
 
-              ACE_TRY
+              try
                 {
                   Demux_Test_i * demux_test_i_ptr;
                   ACE_NEW_RETURN (demux_test_i_ptr,
@@ -321,31 +279,24 @@ Demux_Test_Server::init (int argc, char *argv []
                     PortableServer::string_to_ObjectId (servant_name);
 
                   this->child_poa_[i]->activate_object_with_id (oid.in (),
-                                                                demux_test_i_ptr
-                                                                ACE_ENV_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                                                                demux_test_i_ptr);
 
                   // Get Object reference for demux_test_i impl object.
-                  CORBA::Object_var demux_var = demux_test_i_ptr->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  CORBA::Object_var demux_var = demux_test_i_ptr->_this ();
 
-                  ACE_TRY_CHECK;
 
                   CORBA::String_var ior = this->orb_->object_to_string
-                    (demux_var.in () ACE_ENV_ARG_PARAMETER);
+                    (demux_var.in ());
 
-                  ACE_TRY_CHECK;
 
                   ACE_OS::fprintf (this->ior_fp_, "%s\n", ior.in ());
 
                 }
-              ACE_CATCHANY
+              catch (const CORBA::Exception& ex)
                 {
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "object_to_string");
-                  ACE_RE_THROW;
+                  ex._tao_print_exception ("object_to_string");
+                  throw;
                 }
-              ACE_ENDTRY;
-              ACE_CHECK_RETURN (-1);
 
             }// end of if (!use_user_id_)
 
@@ -360,20 +311,16 @@ Demux_Test_Server::init (int argc, char *argv []
 
   // now activate the POAs
 
-  ACE_TRY_EX (ACTIVATE)
+  try
     {
-      this->poa_mgr_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->poa_mgr_->activate ();
 
-      ACE_TRY_CHECK_EX (ACTIVATE);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "poa_mgr->activate");
-      ACE_RE_THROW_EX (ACTIVATE);
+      ex._tao_print_exception ("poa_mgr->activate");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   // success
   return 0;
@@ -471,23 +418,20 @@ Demux_Test_Server::init_naming_service (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL)
+Demux_Test_Server::run (void)
 {
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "run failed");
+      ex._tao_print_exception ("run failed");
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) Demux_Test_Server::run - "
                          "Error running the server\n"),
                         -1);
     }
-  ACE_ENDTRY;
 
   ACE_TIMEPROBE_PRINT;
 

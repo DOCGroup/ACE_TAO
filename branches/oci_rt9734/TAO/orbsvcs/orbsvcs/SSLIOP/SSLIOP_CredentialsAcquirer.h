@@ -75,30 +75,27 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * acquisition_method (ACE_ENV_SINGLE_ARG_DECL)
+      virtual char * acquisition_method (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::AcquisitionStatus current_status (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::AcquisitionStatus current_status ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::ULong nth_iteration (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::ULong nth_iteration (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual CORBA::Any * get_continuation_data (ACE_ENV_SINGLE_ARG_DECL)
+      virtual CORBA::Any * get_continuation_data (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::AcquisitionStatus continue_acquisition (
-          const CORBA::Any & acquisition_arguments
-          ACE_ENV_ARG_DECL)
+          const CORBA::Any & acquisition_arguments)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::OwnCredentials_ptr get_credentials (
-          CORBA::Boolean on_list
-          ACE_ENV_ARG_DECL)
+          CORBA::Boolean on_list)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+      virtual void destroy (void)
         ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 
@@ -115,7 +112,7 @@ namespace TAO
 
       /// Verify that this CredentialsAcquirer object is still valid,
       /// i.e. hasn't been destroyed.
-      void check_validity (ACE_ENV_SINGLE_ARG_DECL);
+      void check_validity (void);
 
       /// Create an OpenSSL X.509 certificate data structure.
       static ::X509 * make_X509 (const ::SSLIOP::File &certificate);

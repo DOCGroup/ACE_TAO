@@ -246,7 +246,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 {
   static u_long last_completion = 0;
 
-  ACE_TRY_NEW_ENV
+  try
   {
     Schedule_Viewer_Data **sched_data;
 
@@ -341,7 +341,6 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
                     (*sched_data)->operation_name));
       }
 
-      ACE_TRY_CHECK;
 
 
             if (last_completion > (*sched_data)->completion_time)
@@ -366,12 +365,11 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
     if (schedule_iter.done ())
       schedule_iter.first ();
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR ((LM_ERROR,
                 "(%t)Error in Event_Supplier::insert_event_data.\n"));
   }
-  ACE_ENDTRY;
 }
 
 
@@ -445,15 +443,13 @@ Event_Supplier::get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
       orb_Manager.init (argc,
-                        argv
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                        argv);
 
 
       // Create the demo supplier.
@@ -472,14 +468,12 @@ main (int argc, char *argv [])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      ACE_TRY_CHECK;
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

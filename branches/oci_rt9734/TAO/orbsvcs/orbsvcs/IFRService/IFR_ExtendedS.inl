@@ -36,7 +36,6 @@ POA_CORBA::FixedDef::_get_def_kind_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::FixedDef *> (servant);
@@ -44,7 +43,6 @@ POA_CORBA::FixedDef::_get_def_kind_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -57,7 +55,6 @@ POA_CORBA::FixedDef::destroy_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::FixedDef *> (servant);
@@ -65,7 +62,6 @@ POA_CORBA::FixedDef::destroy_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -75,7 +71,6 @@ POA_CORBA::FixedDef::_get_type_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::FixedDef *> (servant);
@@ -83,7 +78,6 @@ POA_CORBA::FixedDef::_get_type_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -93,7 +87,6 @@ POA_CORBA::ValueMemberDef::_get_def_kind_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -101,7 +94,6 @@ POA_CORBA::ValueMemberDef::_get_def_kind_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -114,7 +106,6 @@ POA_CORBA::ValueMemberDef::destroy_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -122,7 +113,6 @@ POA_CORBA::ValueMemberDef::destroy_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -132,7 +122,6 @@ POA_CORBA::ValueMemberDef::_get_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -140,7 +129,6 @@ POA_CORBA::ValueMemberDef::_get_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -150,7 +138,6 @@ POA_CORBA::ValueMemberDef::_set_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -158,7 +145,6 @@ POA_CORBA::ValueMemberDef::_set_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -168,7 +154,6 @@ POA_CORBA::ValueMemberDef::_get_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -176,7 +161,6 @@ POA_CORBA::ValueMemberDef::_get_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -186,7 +170,6 @@ POA_CORBA::ValueMemberDef::_set_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -194,7 +177,6 @@ POA_CORBA::ValueMemberDef::_set_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -204,7 +186,6 @@ POA_CORBA::ValueMemberDef::_get_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -212,7 +193,6 @@ POA_CORBA::ValueMemberDef::_get_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -222,7 +202,6 @@ POA_CORBA::ValueMemberDef::_set_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -230,7 +209,6 @@ POA_CORBA::ValueMemberDef::_set_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -240,7 +218,6 @@ POA_CORBA::ValueMemberDef::_get_defined_in_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -248,7 +225,6 @@ POA_CORBA::ValueMemberDef::_get_defined_in_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -258,7 +234,6 @@ POA_CORBA::ValueMemberDef::_get_absolute_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -266,7 +241,6 @@ POA_CORBA::ValueMemberDef::_get_absolute_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -276,7 +250,6 @@ POA_CORBA::ValueMemberDef::_get_containing_repository_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -284,7 +257,6 @@ POA_CORBA::ValueMemberDef::_get_containing_repository_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -297,7 +269,6 @@ POA_CORBA::ValueMemberDef::describe_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -305,7 +276,6 @@ POA_CORBA::ValueMemberDef::describe_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -318,7 +288,6 @@ POA_CORBA::ValueMemberDef::move_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueMemberDef *> (servant);
@@ -326,7 +295,6 @@ POA_CORBA::ValueMemberDef::move_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -336,7 +304,6 @@ POA_CORBA::ValueDef::_get_def_kind_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -344,7 +311,6 @@ POA_CORBA::ValueDef::_get_def_kind_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -357,7 +323,6 @@ POA_CORBA::ValueDef::destroy_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -365,7 +330,6 @@ POA_CORBA::ValueDef::destroy_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -378,7 +342,6 @@ POA_CORBA::ValueDef::lookup_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -386,7 +349,6 @@ POA_CORBA::ValueDef::lookup_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -399,7 +361,6 @@ POA_CORBA::ValueDef::contents_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -407,7 +368,6 @@ POA_CORBA::ValueDef::contents_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -420,7 +380,6 @@ POA_CORBA::ValueDef::lookup_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -428,7 +387,6 @@ POA_CORBA::ValueDef::lookup_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -441,7 +399,6 @@ POA_CORBA::ValueDef::describe_contents_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -449,7 +406,6 @@ POA_CORBA::ValueDef::describe_contents_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -462,7 +418,6 @@ POA_CORBA::ValueDef::create_module_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -470,7 +425,6 @@ POA_CORBA::ValueDef::create_module_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -483,7 +437,6 @@ POA_CORBA::ValueDef::create_constant_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -491,7 +444,6 @@ POA_CORBA::ValueDef::create_constant_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -504,7 +456,6 @@ POA_CORBA::ValueDef::create_struct_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -512,7 +463,6 @@ POA_CORBA::ValueDef::create_struct_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -525,7 +475,6 @@ POA_CORBA::ValueDef::create_union_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -533,7 +482,6 @@ POA_CORBA::ValueDef::create_union_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -546,7 +494,6 @@ POA_CORBA::ValueDef::create_enum_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -554,7 +501,6 @@ POA_CORBA::ValueDef::create_enum_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -567,7 +513,6 @@ POA_CORBA::ValueDef::create_alias_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -575,7 +520,6 @@ POA_CORBA::ValueDef::create_alias_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -588,7 +532,6 @@ POA_CORBA::ValueDef::create_interface_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -596,7 +539,6 @@ POA_CORBA::ValueDef::create_interface_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -609,7 +551,6 @@ POA_CORBA::ValueDef::create_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -617,7 +558,6 @@ POA_CORBA::ValueDef::create_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -630,7 +570,6 @@ POA_CORBA::ValueDef::create_value_box_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -638,7 +577,6 @@ POA_CORBA::ValueDef::create_value_box_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -651,7 +589,6 @@ POA_CORBA::ValueDef::create_exception_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -659,7 +596,6 @@ POA_CORBA::ValueDef::create_exception_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -672,7 +608,6 @@ POA_CORBA::ValueDef::create_native_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -680,7 +615,6 @@ POA_CORBA::ValueDef::create_native_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -693,7 +627,6 @@ POA_CORBA::ValueDef::create_abstract_interface_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -701,7 +634,6 @@ POA_CORBA::ValueDef::create_abstract_interface_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -714,7 +646,6 @@ POA_CORBA::ValueDef::create_local_interface_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -722,7 +653,6 @@ POA_CORBA::ValueDef::create_local_interface_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -735,7 +665,6 @@ POA_CORBA::ValueDef::create_ext_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -743,7 +672,6 @@ POA_CORBA::ValueDef::create_ext_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -753,7 +681,6 @@ POA_CORBA::ValueDef::_get_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -761,7 +688,6 @@ POA_CORBA::ValueDef::_get_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -771,7 +697,6 @@ POA_CORBA::ValueDef::_set_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -779,7 +704,6 @@ POA_CORBA::ValueDef::_set_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -789,7 +713,6 @@ POA_CORBA::ValueDef::_get_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -797,7 +720,6 @@ POA_CORBA::ValueDef::_get_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -807,7 +729,6 @@ POA_CORBA::ValueDef::_set_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -815,7 +736,6 @@ POA_CORBA::ValueDef::_set_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -825,7 +745,6 @@ POA_CORBA::ValueDef::_get_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -833,7 +752,6 @@ POA_CORBA::ValueDef::_get_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -843,7 +761,6 @@ POA_CORBA::ValueDef::_set_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -851,7 +768,6 @@ POA_CORBA::ValueDef::_set_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -861,7 +777,6 @@ POA_CORBA::ValueDef::_get_defined_in_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -869,7 +784,6 @@ POA_CORBA::ValueDef::_get_defined_in_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -879,7 +793,6 @@ POA_CORBA::ValueDef::_get_absolute_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -887,7 +800,6 @@ POA_CORBA::ValueDef::_get_absolute_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -897,7 +809,6 @@ POA_CORBA::ValueDef::_get_containing_repository_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -905,7 +816,6 @@ POA_CORBA::ValueDef::_get_containing_repository_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -918,7 +828,6 @@ POA_CORBA::ValueDef::describe_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -926,7 +835,6 @@ POA_CORBA::ValueDef::describe_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -939,7 +847,6 @@ POA_CORBA::ValueDef::move_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -947,7 +854,6 @@ POA_CORBA::ValueDef::move_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -957,7 +863,6 @@ POA_CORBA::ValueDef::_get_type_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::ValueDef *> (servant);
@@ -965,7 +870,6 @@ POA_CORBA::ValueDef::_get_type_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -975,7 +879,6 @@ POA_CORBA::ExtValueDef::_get_def_kind_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -983,7 +886,6 @@ POA_CORBA::ExtValueDef::_get_def_kind_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -996,7 +898,6 @@ POA_CORBA::ExtValueDef::destroy_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1004,7 +905,6 @@ POA_CORBA::ExtValueDef::destroy_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1017,7 +917,6 @@ POA_CORBA::ExtValueDef::lookup_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1025,7 +924,6 @@ POA_CORBA::ExtValueDef::lookup_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1038,7 +936,6 @@ POA_CORBA::ExtValueDef::contents_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1046,7 +943,6 @@ POA_CORBA::ExtValueDef::contents_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1059,7 +955,6 @@ POA_CORBA::ExtValueDef::lookup_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1067,7 +962,6 @@ POA_CORBA::ExtValueDef::lookup_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1080,7 +974,6 @@ POA_CORBA::ExtValueDef::describe_contents_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1088,7 +981,6 @@ POA_CORBA::ExtValueDef::describe_contents_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1101,7 +993,6 @@ POA_CORBA::ExtValueDef::create_module_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1109,7 +1000,6 @@ POA_CORBA::ExtValueDef::create_module_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1122,7 +1012,6 @@ POA_CORBA::ExtValueDef::create_constant_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1130,7 +1019,6 @@ POA_CORBA::ExtValueDef::create_constant_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1143,7 +1031,6 @@ POA_CORBA::ExtValueDef::create_struct_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1151,7 +1038,6 @@ POA_CORBA::ExtValueDef::create_struct_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1164,7 +1050,6 @@ POA_CORBA::ExtValueDef::create_union_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1172,7 +1057,6 @@ POA_CORBA::ExtValueDef::create_union_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1185,7 +1069,6 @@ POA_CORBA::ExtValueDef::create_enum_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1193,7 +1076,6 @@ POA_CORBA::ExtValueDef::create_enum_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1206,7 +1088,6 @@ POA_CORBA::ExtValueDef::create_alias_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1214,7 +1095,6 @@ POA_CORBA::ExtValueDef::create_alias_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1227,7 +1107,6 @@ POA_CORBA::ExtValueDef::create_interface_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1235,7 +1114,6 @@ POA_CORBA::ExtValueDef::create_interface_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1248,7 +1126,6 @@ POA_CORBA::ExtValueDef::create_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1256,7 +1133,6 @@ POA_CORBA::ExtValueDef::create_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1269,7 +1145,6 @@ POA_CORBA::ExtValueDef::create_value_box_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1277,7 +1152,6 @@ POA_CORBA::ExtValueDef::create_value_box_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1290,7 +1164,6 @@ POA_CORBA::ExtValueDef::create_exception_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1298,7 +1171,6 @@ POA_CORBA::ExtValueDef::create_exception_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1311,7 +1183,6 @@ POA_CORBA::ExtValueDef::create_native_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1319,7 +1190,6 @@ POA_CORBA::ExtValueDef::create_native_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1332,7 +1202,6 @@ POA_CORBA::ExtValueDef::create_abstract_interface_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1340,7 +1209,6 @@ POA_CORBA::ExtValueDef::create_abstract_interface_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1353,7 +1221,6 @@ POA_CORBA::ExtValueDef::create_local_interface_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1361,7 +1228,6 @@ POA_CORBA::ExtValueDef::create_local_interface_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1374,7 +1240,6 @@ POA_CORBA::ExtValueDef::create_ext_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Container * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1382,7 +1247,6 @@ POA_CORBA::ExtValueDef::create_ext_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1392,7 +1256,6 @@ POA_CORBA::ExtValueDef::_get_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1400,7 +1263,6 @@ POA_CORBA::ExtValueDef::_get_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1410,7 +1272,6 @@ POA_CORBA::ExtValueDef::_set_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1418,7 +1279,6 @@ POA_CORBA::ExtValueDef::_set_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1428,7 +1288,6 @@ POA_CORBA::ExtValueDef::_get_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1436,7 +1295,6 @@ POA_CORBA::ExtValueDef::_get_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1446,7 +1304,6 @@ POA_CORBA::ExtValueDef::_set_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1454,7 +1311,6 @@ POA_CORBA::ExtValueDef::_set_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1464,7 +1320,6 @@ POA_CORBA::ExtValueDef::_get_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1472,7 +1327,6 @@ POA_CORBA::ExtValueDef::_get_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1482,7 +1336,6 @@ POA_CORBA::ExtValueDef::_set_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1490,7 +1343,6 @@ POA_CORBA::ExtValueDef::_set_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1500,7 +1352,6 @@ POA_CORBA::ExtValueDef::_get_defined_in_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1508,7 +1359,6 @@ POA_CORBA::ExtValueDef::_get_defined_in_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1518,7 +1368,6 @@ POA_CORBA::ExtValueDef::_get_absolute_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1526,7 +1375,6 @@ POA_CORBA::ExtValueDef::_get_absolute_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1536,7 +1384,6 @@ POA_CORBA::ExtValueDef::_get_containing_repository_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1544,7 +1391,6 @@ POA_CORBA::ExtValueDef::_get_containing_repository_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1557,7 +1403,6 @@ POA_CORBA::ExtValueDef::describe_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1565,7 +1410,6 @@ POA_CORBA::ExtValueDef::describe_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1578,7 +1422,6 @@ POA_CORBA::ExtValueDef::move_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1586,7 +1429,6 @@ POA_CORBA::ExtValueDef::move_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1596,7 +1438,6 @@ POA_CORBA::ExtValueDef::_get_type_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1604,7 +1445,6 @@ POA_CORBA::ExtValueDef::_get_type_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1614,7 +1454,6 @@ POA_CORBA::ExtValueDef::_get_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1622,7 +1461,6 @@ POA_CORBA::ExtValueDef::_get_supported_interfaces_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1632,7 +1470,6 @@ POA_CORBA::ExtValueDef::_set_supported_interfaces_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1640,7 +1477,6 @@ POA_CORBA::ExtValueDef::_set_supported_interfaces_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1650,7 +1486,6 @@ POA_CORBA::ExtValueDef::_get_initializers_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1658,7 +1493,6 @@ POA_CORBA::ExtValueDef::_get_initializers_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1668,7 +1502,6 @@ POA_CORBA::ExtValueDef::_set_initializers_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1676,7 +1509,6 @@ POA_CORBA::ExtValueDef::_set_initializers_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1686,7 +1518,6 @@ POA_CORBA::ExtValueDef::_get_base_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1694,7 +1525,6 @@ POA_CORBA::ExtValueDef::_get_base_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1704,7 +1534,6 @@ POA_CORBA::ExtValueDef::_set_base_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1712,7 +1541,6 @@ POA_CORBA::ExtValueDef::_set_base_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1722,7 +1550,6 @@ POA_CORBA::ExtValueDef::_get_abstract_base_values_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1730,7 +1557,6 @@ POA_CORBA::ExtValueDef::_get_abstract_base_values_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1740,7 +1566,6 @@ POA_CORBA::ExtValueDef::_set_abstract_base_values_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1748,7 +1573,6 @@ POA_CORBA::ExtValueDef::_set_abstract_base_values_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1758,7 +1582,6 @@ POA_CORBA::ExtValueDef::_get_is_abstract_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1766,7 +1589,6 @@ POA_CORBA::ExtValueDef::_get_is_abstract_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1776,7 +1598,6 @@ POA_CORBA::ExtValueDef::_set_is_abstract_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1784,7 +1605,6 @@ POA_CORBA::ExtValueDef::_set_is_abstract_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1794,7 +1614,6 @@ POA_CORBA::ExtValueDef::_get_is_custom_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1802,7 +1621,6 @@ POA_CORBA::ExtValueDef::_get_is_custom_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1812,7 +1630,6 @@ POA_CORBA::ExtValueDef::_set_is_custom_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1820,7 +1637,6 @@ POA_CORBA::ExtValueDef::_set_is_custom_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1830,7 +1646,6 @@ POA_CORBA::ExtValueDef::_get_is_truncatable_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1838,7 +1653,6 @@ POA_CORBA::ExtValueDef::_get_is_truncatable_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1848,7 +1662,6 @@ POA_CORBA::ExtValueDef::_set_is_truncatable_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1856,7 +1669,6 @@ POA_CORBA::ExtValueDef::_set_is_truncatable_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1869,7 +1681,6 @@ POA_CORBA::ExtValueDef::is_a_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1877,7 +1688,6 @@ POA_CORBA::ExtValueDef::is_a_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1890,7 +1700,6 @@ POA_CORBA::ExtValueDef::describe_value_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1898,7 +1707,6 @@ POA_CORBA::ExtValueDef::describe_value_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1911,7 +1719,6 @@ POA_CORBA::ExtValueDef::create_value_member_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1919,7 +1726,6 @@ POA_CORBA::ExtValueDef::create_value_member_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1932,7 +1738,6 @@ POA_CORBA::ExtValueDef::create_attribute_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1940,7 +1745,6 @@ POA_CORBA::ExtValueDef::create_attribute_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1953,7 +1757,6 @@ POA_CORBA::ExtValueDef::create_operation_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::ValueDef * const impl = static_cast<POA_CORBA::ExtValueDef *> (servant);
@@ -1961,7 +1764,6 @@ POA_CORBA::ExtValueDef::create_operation_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1971,7 +1773,6 @@ POA_CORBA::ValueBoxDef::_get_def_kind_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -1979,7 +1780,6 @@ POA_CORBA::ValueBoxDef::_get_def_kind_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -1992,7 +1792,6 @@ POA_CORBA::ValueBoxDef::destroy_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IRObject * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2000,7 +1799,6 @@ POA_CORBA::ValueBoxDef::destroy_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2010,7 +1808,6 @@ POA_CORBA::ValueBoxDef::_get_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2018,7 +1815,6 @@ POA_CORBA::ValueBoxDef::_get_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2028,7 +1824,6 @@ POA_CORBA::ValueBoxDef::_set_id_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2036,7 +1831,6 @@ POA_CORBA::ValueBoxDef::_set_id_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2046,7 +1840,6 @@ POA_CORBA::ValueBoxDef::_get_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2054,7 +1847,6 @@ POA_CORBA::ValueBoxDef::_get_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2064,7 +1856,6 @@ POA_CORBA::ValueBoxDef::_set_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2072,7 +1863,6 @@ POA_CORBA::ValueBoxDef::_set_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2082,7 +1872,6 @@ POA_CORBA::ValueBoxDef::_get_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2090,7 +1879,6 @@ POA_CORBA::ValueBoxDef::_get_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2100,7 +1888,6 @@ POA_CORBA::ValueBoxDef::_set_version_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2108,7 +1895,6 @@ POA_CORBA::ValueBoxDef::_set_version_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2118,7 +1904,6 @@ POA_CORBA::ValueBoxDef::_get_defined_in_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2126,7 +1911,6 @@ POA_CORBA::ValueBoxDef::_get_defined_in_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2136,7 +1920,6 @@ POA_CORBA::ValueBoxDef::_get_absolute_name_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2144,7 +1927,6 @@ POA_CORBA::ValueBoxDef::_get_absolute_name_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2154,7 +1936,6 @@ POA_CORBA::ValueBoxDef::_get_containing_repository_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2162,7 +1943,6 @@ POA_CORBA::ValueBoxDef::_get_containing_repository_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2175,7 +1955,6 @@ POA_CORBA::ValueBoxDef::describe_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2183,7 +1962,6 @@ POA_CORBA::ValueBoxDef::describe_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2196,7 +1974,6 @@ POA_CORBA::ValueBoxDef::move_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::Contained * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2204,7 +1981,6 @@ POA_CORBA::ValueBoxDef::move_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 
@@ -2214,7 +1990,6 @@ POA_CORBA::ValueBoxDef::_get_type_skel (
     TAO_ServerRequest & server_request,
     void * servant_upcall,
     void * servant
-    ACE_ENV_ARG_DECL
   )
 {
   POA_CORBA::IDLType * const impl = static_cast<POA_CORBA::ValueBoxDef *> (servant);
@@ -2222,7 +1997,6 @@ POA_CORBA::ValueBoxDef::_get_type_skel (
       server_request,
       servant_upcall,
       impl
-      ACE_ENV_ARG_PARAMETER
     );
 }
 

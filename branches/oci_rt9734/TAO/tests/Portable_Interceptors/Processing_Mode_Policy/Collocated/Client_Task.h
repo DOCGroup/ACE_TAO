@@ -27,8 +27,7 @@ public:
   /// Thread entry point
   int svc (void);
 
-  void run_test (Test_Interceptors::Visual_ptr server
-          ACE_ENV_ARG_DECL);
+  void run_test (Test_Interceptors::Visual_ptr server);
 
   /// The status of the svc loop
   int status (void) const;

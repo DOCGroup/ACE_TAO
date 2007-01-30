@@ -13,7 +13,7 @@ int
 Thread_Task::activate_task (int thr_count)
 {
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_NEW_RETURN (shutdown_lock_,
                       TAO_SYNCH_MUTEX,
@@ -25,67 +25,54 @@ Thread_Task::activate_task (int thr_count)
 
       active_thread_count_ = thr_count;
 
-      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
-									      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
 
-      this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_ = RTScheduling::Current::_narrow (current_obj.in ());
 
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
 
-      ACE_TRY_EX (ESS_out_of_cxt)
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Making an end_scheduling_segment call without first calling begin_scheduling_segment\n"));
-          this->current_->end_scheduling_segment (name
-                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(ESS_out_of_cxt);
+          this->current_->end_scheduling_segment (name);
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+      catch (const CORBA::BAD_INV_ORDER& )
         {
           ACE_DEBUG ((LM_DEBUG,
             "End Scheduling Segment is out of context - Expected Exception\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "\n");
+          ex._tao_print_exception ("\n");
         }
-      ACE_ENDTRY;
 
-      ACE_TRY_EX(USS_out_of_cxt)
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Making an update_scheduling_segment call without first calling begin_scheduling_segment\n"));
 
           this->current_->update_scheduling_segment (name,
                                                      sched_param,
-                                                     implicit_sched_param
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(USS_out_of_cxt);
+                                                     implicit_sched_param);
         }
-      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+      catch (const CORBA::BAD_INV_ORDER& )
         {
         ACE_DEBUG ((LM_DEBUG,
               "Update Scheduling Segment is out of context - Expected Exception\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Update Scheduling Segment is out of context:");
+          ex._tao_print_exception (
+            "Update Scheduling Segment is out of context:");
         }
-      ACE_ENDTRY;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception:");
+      ex._tao_print_exception ("Exception:");
     }
-  ACE_ENDTRY;
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->activate (flags,
@@ -102,7 +89,7 @@ Thread_Task::activate_task (int thr_count)
 int
 Thread_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
@@ -110,9 +97,7 @@ Thread_Task::svc (void)
 
       this->current_->begin_scheduling_segment ("Fellowship of the Rings",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
       size_t count = 0;
       ACE_OS::memcpy (&count,
@@ -126,21 +111,16 @@ Thread_Task::svc (void)
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Two Towers",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("The Return of the King",
                                                 sched_param,
-                                                implicit_sched_param
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                implicit_sched_param);
 
 
       RTScheduling::Current::NameList_var segment_name_list =
-        this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->current_->current_scheduling_segment_names ();
 
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *lock_, -1);
@@ -156,18 +136,12 @@ Thread_Task::svc (void)
           }
       }
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
       //End - Nested Scheduling Segment
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
 
-      this->current_->end_scheduling_segment (name
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->current_->end_scheduling_segment (name);
       //End - Nested Scheduling Segment
 
       ACE_DEBUG ((LM_DEBUG,
@@ -183,18 +157,15 @@ Thread_Task::svc (void)
             // exceptions on fast dual processor machines.
             ACE_OS::sleep (1);
 
-            orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            orb_->shutdown (0);
           }
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

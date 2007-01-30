@@ -60,7 +60,6 @@ TAO_FTEC_Group_Manager::~TAO_FTEC_Group_Manager()
 CORBA::Boolean TAO_FTEC_Group_Manager::start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out cur
-        ACE_ENV_ARG_DECL_NOT_USED
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -74,8 +73,7 @@ CORBA::Boolean TAO_FTEC_Group_Manager::start (
 
 void TAO_FTEC_Group_Manager::create_group (
     const FTRT::ManagerInfoList & info_list,
-    CORBA::ULong object_group_ref_version
-    ACE_ENV_ARG_DECL)
+    CORBA::ULong object_group_ref_version)
 {
   TAO_FTRTEC::Log(1, "create_group\n");
 
@@ -85,11 +83,9 @@ void TAO_FTEC_Group_Manager::create_group (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   GroupInfoPublisherBase::Info_ptr info (
-    publisher->setup_info(impl_->info_list, 
+    publisher->setup_info(impl_->info_list,
                           impl_->my_position,
-                          object_group_ref_version
-                          ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
+                          object_group_ref_version));
 
   publisher->update_info(info);
 
@@ -99,7 +95,7 @@ void TAO_FTEC_Group_Manager::create_group (
     Fault_Detector* detector = Fault_Detector::instance();
     if ( detector->connect(impl_->info_list[impl_->my_position-1].the_location) == -1) {
       ACE_DEBUG((LM_DEBUG, "Cannot connect to predecesor\n"));
-      ACE_THROW(FTRT::PredecessorUnreachable());
+      throw FTRT::PredecessorUnreachable();
     }
   }
 
@@ -107,29 +103,24 @@ void TAO_FTEC_Group_Manager::create_group (
     = publisher->successor();
 
   if (!CORBA::is_nil(successor.in())) {
-    successor->create_group(info_list, object_group_ref_version
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    successor->create_group(info_list, object_group_ref_version);
   }
 }
 
 void TAO_FTEC_Group_Manager::join_group (
-    const FTRT::ManagerInfo & info
-    ACE_ENV_ARG_DECL)
+    const FTRT::ManagerInfo & info)
 {
   TAO_FTRTEC::Log(1, "join group\n");
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    add_member(info, IOGR_Maker::instance()->get_ref_version()+1
-               ACE_ENV_ARG_PARAMETER);
+    add_member(info, IOGR_Maker::instance()->get_ref_version()+1);
   }
 }
 
 void TAO_FTEC_Group_Manager::add_member (
     const FTRT::ManagerInfo & info,
-    CORBA::ULong object_group_ref_version
-    ACE_ENV_ARG_DECL)
+    CORBA::ULong object_group_ref_version)
 {
   TAO_FTRTEC::Log(1, "add_member location = <%s>\n",
     (const char*)info.the_location[0].id);
@@ -146,11 +137,9 @@ void TAO_FTEC_Group_Manager::add_member (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
   GroupInfoPublisherBase::Info_ptr group_info (
-    publisher->setup_info(new_impl->info_list, 
+    publisher->setup_info(new_impl->info_list,
                           new_impl->my_position,
-                          object_group_ref_version
-                    ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
+                          object_group_ref_version));
 
   int last_one = (impl_->my_position == impl_->info_list.length()-1);
 
@@ -158,12 +147,10 @@ void TAO_FTEC_Group_Manager::add_member (
   {
     // I am not the last of replica, tell my successor that
     // a new member has joined in.
-    ACE_TRY_EX(block) {
-      FTRTEC::Replication_Service::instance()->add_member(info, object_group_ref_version
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block);
+    try{
+      FTRTEC::Replication_Service::instance()->add_member(info, object_group_ref_version);
     }
-    ACE_CATCHANY {
+    catch (const CORBA::Exception&){
       // Unable to send request to all the successors.
       // Now this node become the last replica of the object group.
       // update the info list again
@@ -176,15 +163,11 @@ void TAO_FTEC_Group_Manager::add_member (
       GroupInfoPublisherBase::Info_ptr group_info1 (
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position,
-                              object_group_ref_version
-                              ACE_ENV_ARG_PARAMETER));
-      ACE_CHECK;
+                              object_group_ref_version));
       ACE_AUTO_PTR_RESET(group_info, group_info1.release(), GroupInfoPublisherBase::Info);
 
       last_one = true;
     }
-    ACE_ENDTRY;
-    ACE_CHECK;
   }
 
   if (last_one)
@@ -192,7 +175,7 @@ void TAO_FTEC_Group_Manager::add_member (
     // this is the last replica in the list
     // synchornize the state with the newly joined replica.
     FtRtecEventChannelAdmin::EventChannelState state;
-    get_state(state ACE_ENV_ARG_PARAMETER);
+    get_state(state);
 
     TAO_OutputCDR cdr;
     cdr << state;
@@ -239,12 +222,9 @@ void TAO_FTEC_Group_Manager::add_member (
     }
 
     TAO_FTRTEC::Log(2, "Setting state\n");
-    info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    info.ior->set_state(s);
     info.ior->create_group(new_impl->info_list,
-                           object_group_ref_version
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                           object_group_ref_version);
     TAO_FTRTEC::Log(2, "After create_group\n");
   }
 
@@ -266,20 +246,17 @@ void remove_item(SEQ & seq, int position)
 }
 
 void TAO_FTEC_Group_Manager::replica_crashed (
-    const FTRT::Location & location
-    ACE_ENV_ARG_DECL)
+    const FTRT::Location & location)
 {
   TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::replica_crashed\n");
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    remove_member(location, IOGR_Maker::instance()->get_ref_version()+1
-                  ACE_ENV_ARG_PARAMETER);
+    remove_member(location, IOGR_Maker::instance()->get_ref_version()+1);
 }
 
 void TAO_FTEC_Group_Manager::remove_member (
     const FTRT::Location & crashed_location,
-    CORBA::ULong object_group_ref_version
-    ACE_ENV_ARG_DECL)
+    CORBA::ULong object_group_ref_version)
 {
   // find my position of this EventChannel in the group
   unsigned  crashed_pos = find_by_location(impl_->info_list, crashed_location);
@@ -296,11 +273,9 @@ void TAO_FTEC_Group_Manager::remove_member (
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
   GroupInfoPublisherBase::Info_ptr info (
-    publisher->setup_info(impl_->info_list, 
+    publisher->setup_info(impl_->info_list,
                           impl_->my_position,
-                          object_group_ref_version
-                          ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
+                          object_group_ref_version));
   publisher->update_info(info);
 
   FtRtecEventChannelAdmin::EventChannel_var successor =
@@ -308,15 +283,12 @@ void TAO_FTEC_Group_Manager::remove_member (
 
   IOGR_Maker::instance()->set_ref_version(object_group_ref_version);
   if (!CORBA::is_nil(successor.in())) {
-    ACE_TRY {
+    try{
     successor->remove_member(crashed_location,
-                             object_group_ref_version
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             object_group_ref_version);
     }
-    ACE_CATCHALL {
+    catch (...){
     }
-    ACE_ENDTRY;
   }
 
   TAO_FTRTEC::Log(3, "my_position = %d, crashed_pos = %d\n", impl_->my_position, crashed_pos);
@@ -333,45 +305,34 @@ void TAO_FTEC_Group_Manager::connection_closed()
   // crashed_location will be repliaced by its successor.
   FTRT::Location crashed_location = impl_->info_list[impl_->my_position-1].the_location;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (impl_->my_position > 1) {
     // if I am not the new primary, tell the new primary
-    ACE_TRY_EX(block1) {
+    try{
       TAO_IOP::TAO_IOR_Manipulation::IORList iors;
       iors.length(impl_->my_position-1);
       for (size_t i = 0; i < impl_->my_position-1; ++i)
         iors[i] = CORBA::Object::_duplicate(impl_->info_list[i].ior.in());
 
       CORBA::Object_var obj =
-        IOGR_Maker::instance()->merge_iors(iors
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block1);
+        IOGR_Maker::instance()->merge_iors(iors);
 
       FtRtecEventChannelAdmin::EventChannel_var primary =
-        FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block1);
-      primary->replica_crashed(crashed_location
-                          ACE_ENV_ARG_PARAMETER);
+        FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
+      primary->replica_crashed(crashed_location);
 
-      ACE_TRY_CHECK_EX(block1);
       return;
     }
-    ACE_CATCHANY {
+    catch (const CORBA::Exception&){
     }
-    ACE_ENDTRY;
   }
 
-  ACE_TRY_EX(block2) {
+  try{
     remove_member(crashed_location,
-                  IOGR_Maker::instance()->increment_ref_version()
-                  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block2);
+                  IOGR_Maker::instance()->increment_ref_version());
   }
-  ACE_CATCHANY {
+  catch (const CORBA::Exception&){
   }
-  ACE_ENDTRY;
 
 }
 

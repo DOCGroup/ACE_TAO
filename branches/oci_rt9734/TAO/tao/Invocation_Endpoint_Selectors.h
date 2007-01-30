@@ -44,7 +44,6 @@ namespace TAO
 namespace CORBA
 {
   class Exception;
-  class Environment;
 }
 /**
  * @class TAO_Invocation_Endpoint_Selector
@@ -70,7 +69,7 @@ public:
   /// Select the endpoint and set @a r's @c profile_
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL) = 0;
+                                ) = 0;
 
 };
 
@@ -98,7 +97,7 @@ public:
 
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
-                                ACE_ENV_ARG_DECL);
+                               );
 
 };
 

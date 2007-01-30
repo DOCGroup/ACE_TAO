@@ -29,8 +29,7 @@ Timeout_i::~Timeout_i ()
 }
 
 void
-Timeout_i::sendTimeToWait (CORBA::Long msec
-                           ACE_ENV_ARG_DECL_NOT_USED)
+Timeout_i::sendTimeToWait (CORBA::Long msec)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG,
@@ -48,7 +47,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec
 }
 
 void
-Timeout_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Timeout_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   orb_->shutdown ();
@@ -72,7 +71,7 @@ TimeoutHandler_i::~TimeoutHandler_i ()
 }
 
 void
-TimeoutHandler_i::sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TimeoutHandler_i::sendTimeToWait (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -82,29 +81,26 @@ TimeoutHandler_i::sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_holder
-                                        ACE_ENV_ARG_DECL)
+TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   timer_.stop ();
 
-  ACE_TRY
+  try
     {
-      excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      excep_holder->raise_exception ();
     }
-  ACE_CATCH (CORBA::TIMEOUT, timeout)
+  catch (const CORBA::TIMEOUT& )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "timeout"));
       reply_excep_counter_++;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Error: Unexpected exception"));
     }
-  ACE_ENDTRY;
 }
 
 void

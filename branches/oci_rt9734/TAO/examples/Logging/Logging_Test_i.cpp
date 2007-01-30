@@ -11,8 +11,8 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID (Logger, 
-           Logging_Test_i, 
+ACE_RCSID (Logger,
+           Logging_Test_i,
            "$Id$")
 
   // Constructor
@@ -33,8 +33,7 @@ Logger_Client::init (int argc, char *argv[])
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -42,10 +41,8 @@ Logger_Client::init (int argc, char *argv[])
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
                               argv,
-                              "internet"
-                              ACE_ENV_ARG_PARAMETER);
+                              "internet");
 
-      ACE_TRY_CHECK;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\nOrb initialized successfully\n"));
@@ -55,36 +52,32 @@ Logger_Client::init (int argc, char *argv[])
         return -1;
 
       // Initialize the naming service
-      int ret = this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int ret = this->init_naming_service ();
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize naming"
                            "services.\n"),
                           -1);
       // Create the logger instances
-      ret = this->init_loggers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ret = this->init_loggers ();
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize logger"
                            "instances.\n"),
                           -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init");
+      ex._tao_print_exception ("init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 
 }
 
 int
-Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Logger_Client::init_naming_service (void)
 {
   // Initialize the naming services
   if (my_name_client_.init (orb_.in ()) != 0)
@@ -99,8 +92,7 @@ Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   factory_name[0].id = CORBA::string_dup ("Logger_Factory");
 
   CORBA::Object_var factory_ref =
-    my_name_client_->resolve (factory_name
-                              ACE_ENV_ARG_PARAMETER);
+    my_name_client_->resolve (factory_name);
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "\nFactory_ref resolved\n"));
@@ -115,8 +107,7 @@ Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 
   // Narrow the factory and check the success
   factory_ =
-    Logger_Factory::_narrow (factory_ref.in ()
-                             ACE_ENV_ARG_PARAMETER);
+    Logger_Factory::_narrow (factory_ref.in ());
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -131,8 +122,7 @@ Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 
   // If debugging, get the factory's IOR
   CORBA::String_var str =
-    orb_->object_to_string (factory_.in ()
-                            ACE_ENV_ARG_PARAMETER);
+    orb_->object_to_string (factory_.in ());
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "The factory IOR is <%s>\n",
@@ -141,19 +131,15 @@ Logger_Client::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
+Logger_Client::init_loggers (void)
 {
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
-  ACE_TRY
+  try
     {
-      this->logger_1_ = factory_->make_logger ("key1"
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_1_ = factory_->make_logger ("key1");
 
-      this->logger_2_ = factory_->make_logger ("key2"
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_2_ = factory_->make_logger ("key2");
 
       if (CORBA::is_nil (this->logger_1_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -173,9 +159,7 @@ Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "\nTrying to resolve already created logger..."));
-          Logger_var logger_3 = factory_->make_logger ("key1"
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          Logger_var logger_3 = factory_->make_logger ("key1");
 
           if (CORBA::is_nil (logger_3.in ()))
             ACE_DEBUG ((LM_DEBUG,
@@ -185,12 +169,11 @@ Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
                         "\nResolution succeeded."));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init_loggers");
+      ex._tao_print_exception ("init_loggers");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -200,8 +183,7 @@ Logger_Client::init_loggers (ACE_ENV_SINGLE_ARG_DECL)
 int
 Logger_Client::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Create 3 Log_Records for the test
       Logger::Log_Record rec1;
@@ -250,45 +232,36 @@ Logger_Client::run (void)
         }
 
       // Change the verbosity.
-      this->logger_1_->verbosity (Logger::VERBOSE_LITE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_1_->verbosity (Logger::VERBOSE_LITE);
 
       // Log the first Log_Record (VERBOSE_LITE)
-      this->logger_1_->log (rec1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_1_->log (rec1);
 
       // Change the verbosity again.
-      this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_2_->verbosity (Logger::VERBOSE);
 
       // Log the second Log_Record (VERBOSE)
-      this->logger_2_->log (rec2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_2_->log (rec2);
 
       // Change the verbosity again
-      this->logger_2_->verbosity (Logger::SILENT ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_2_->verbosity (Logger::SILENT);
 
       // Log the third log record using logv() (this shows if the
       // verbosity level overrides the logger's verbosity level)
-      this->logger_2_->logv (rec3, Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
+      this->logger_2_->logv (rec3, Logger::VERBOSE);
 
       // Change the verbosity again (so that regular log msgs can be
       // seen again)
-      this->logger_2_->verbosity (Logger::VERBOSE ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_2_->verbosity (Logger::VERBOSE);
 
       // Log the fourth record using log_twoway()
-      this->logger_2_->log_twoway (rec4 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->logger_2_->log_twoway (rec4);
     }
 
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "run");
+      ex._tao_print_exception ("run");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

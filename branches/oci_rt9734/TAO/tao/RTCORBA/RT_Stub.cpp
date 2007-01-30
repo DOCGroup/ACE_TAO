@@ -26,7 +26,7 @@ TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
     priority_model_policy_ (0),
     priority_banded_connection_policy_ (0),
     client_protocol_policy_ (0),
-    are_policies_parsed_ (0)
+    are_policies_parsed_ (false)
 {
 }
 
@@ -43,13 +43,12 @@ TAO_RT_Stub::~TAO_RT_Stub (void)
 }
 
 void
-TAO_RT_Stub::parse_policies (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Stub::parse_policies (void)
 {
   CORBA::PolicyList_var policy_list
-    = this->base_profiles_.policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    = this->base_profiles_.policy_list ();
 
-  CORBA::ULong length = policy_list->length ();
+  CORBA::ULong const length = policy_list->length ();
 
   // Cache away the policies that we'll need later.
   for (CORBA::ULong i = 0; i < length; ++i)
@@ -67,16 +66,15 @@ TAO_RT_Stub::parse_policies (ACE_ENV_SINGLE_ARG_DECL)
         this->exposed_client_protocol (policy_list[i]);
     }
 
-  this->are_policies_parsed_ = 1;
+  this->are_policies_parsed_ = true;
 }
 
 CORBA::Policy *
-TAO_RT_Stub::exposed_priority_model (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Stub::exposed_priority_model (void)
 {
   if (!this->are_policies_parsed_)
     {
-      this->parse_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+      this->parse_policies ();
     }
 
   return CORBA::Policy::_duplicate (this->priority_model_policy_.in ());
@@ -89,12 +87,11 @@ TAO_RT_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
 }
 
 CORBA::Policy *
-TAO_RT_Stub::exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Stub::exposed_priority_banded_connection (void)
 {
   if (!this->are_policies_parsed_)
     {
-      this->parse_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+      this->parse_policies ();
     }
 
   return CORBA::Policy::_duplicate (this->priority_banded_connection_policy_.in ());
@@ -103,17 +100,15 @@ TAO_RT_Stub::exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_RT_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
 {
-  this->priority_banded_connection_policy_ =
-    CORBA::Policy::_duplicate (policy);
+  this->priority_banded_connection_policy_ = CORBA::Policy::_duplicate (policy);
 }
 
 CORBA::Policy *
-TAO_RT_Stub::exposed_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Stub::exposed_client_protocol (void)
 {
   if (!this->are_policies_parsed_)
     {
-      this->parse_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+      this->parse_policies ();
     }
 
   return CORBA::Policy::_duplicate (this->client_protocol_policy_.in ());
@@ -128,85 +123,77 @@ TAO_RT_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-TAO_RT_Stub::get_policy (CORBA::PolicyType type
-                         ACE_ENV_ARG_DECL)
+TAO_RT_Stub::get_policy (CORBA::PolicyType type)
 {
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    return this->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->exposed_priority_model ();
 
   if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
-    return this->effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->effective_priority_banded_connection ();
 
   if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
-    return this->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->effective_client_protocol ();
 
-  return this->TAO_Stub::get_policy (type ACE_ENV_ARG_PARAMETER);
+  return this->TAO_Stub::get_policy (type);
 }
 
 CORBA::Policy_ptr
-TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type
-                                ACE_ENV_ARG_DECL)
+TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
   if (type == TAO_CACHED_POLICY_PRIORITY_MODEL)
-    return this->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->exposed_priority_model ();
 
   if (type == TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION)
-    return this->effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->effective_priority_banded_connection ();
 
   if (type == TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL)
-    return this->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->effective_client_protocol ();
 
-  return this->TAO_Stub::get_cached_policy (type ACE_ENV_ARG_PARAMETER);
+  return this->TAO_Stub::get_cached_policy (type);
 }
 
 
 TAO_Stub *
 TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
-                                   CORBA::SetOverrideType set_add
-                                   ACE_ENV_ARG_DECL)
+                                   CORBA::SetOverrideType set_add)
 {
   // Validity check.  Make sure requested policies are allowed to be
   // set at this scope.
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      if (CORBA::is_nil (policy))
-        continue;
+      if (!CORBA::is_nil (policy))
+        {
+          CORBA::PolicyType const type = policy->policy_type ();
 
-      CORBA::PolicyType type = policy->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE ||
-          type == RTCORBA::THREADPOOL_POLICY_TYPE ||
-          type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-        ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
-
+          if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE ||
+              type == RTCORBA::THREADPOOL_POLICY_TYPE ||
+              type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
+            ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
+        }
     }
 
   // We are not required to check for consistency of <policies> with
   // overrides at other levels or with policies exported in the IOR.
-  return this->TAO_Stub::set_policy_overrides(policies, set_add ACE_ENV_ARG_PARAMETER);
+  return this->TAO_Stub::set_policy_overrides(policies, set_add);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 CORBA::Policy *
-TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Stub::effective_priority_banded_connection (void)
 {
   // Get effective override.
   CORBA::Policy_var override =
-    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    this->TAO_Stub::get_cached_policy (
+      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   // Get the value from the ior.
-  CORBA::Policy_var exposed =
-    this->exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+  CORBA::Policy_var exposed = this->exposed_priority_banded_connection ();
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
@@ -216,17 +203,13 @@ TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
     return exposed._retn ();
 
   RTCORBA::PriorityBandedConnectionPolicy_var override_policy_var =
-    RTCORBA::PriorityBandedConnectionPolicy::_narrow (override.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    RTCORBA::PriorityBandedConnectionPolicy::_narrow (override.in ());
 
   TAO_PriorityBandedConnectionPolicy *override_policy =
     static_cast<TAO_PriorityBandedConnectionPolicy *> (override_policy_var.in ());
 
   RTCORBA::PriorityBandedConnectionPolicy_var exposed_policy_var =
-    RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed.in ());
 
   TAO_PriorityBandedConnectionPolicy *exposed_policy =
     static_cast<TAO_PriorityBandedConnectionPolicy *> (exposed_policy_var.in ());
@@ -241,23 +224,19 @@ TAO_RT_Stub::effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL)
 
   // Both override and exposed have been set and neither has empty
   // priority bands.  This is illegal (ptc/99-05-03, sec. 4.12.1).
-  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                    0);
+  ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
 }
 
 CORBA::Policy *
-TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Stub::effective_client_protocol (void)
 {
   // Get effective override.
   CORBA::Policy_var override =
-    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    this->TAO_Stub::get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL);
 
   // Get the value from the ior.
   CORBA::Policy_var exposed =
-    this->exposed_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    this->exposed_client_protocol ();
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
@@ -267,17 +246,13 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
     return exposed._retn ();
 
   RTCORBA::ClientProtocolPolicy_var override_policy_var =
-    RTCORBA::ClientProtocolPolicy::_narrow (override.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    RTCORBA::ClientProtocolPolicy::_narrow (override.in ());
 
   TAO_ClientProtocolPolicy *override_policy =
     static_cast<TAO_ClientProtocolPolicy *> (override_policy_var.in ());
 
   RTCORBA::ClientProtocolPolicy_var exposed_policy_var =
-    RTCORBA::ClientProtocolPolicy::_narrow (exposed.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    RTCORBA::ClientProtocolPolicy::_narrow (exposed.in ());
 
   TAO_ClientProtocolPolicy *exposed_policy =
     static_cast<TAO_ClientProtocolPolicy *> (exposed_policy_var.in ());
@@ -295,8 +270,7 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
 
   // Both override and exposed have been set and neither has empty
   // protocols.  This is illegal (ptc/99-05-03, sec. 4.15.4).
-  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                    0);
+  ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

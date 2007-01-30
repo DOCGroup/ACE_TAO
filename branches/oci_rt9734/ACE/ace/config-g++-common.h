@@ -13,7 +13,6 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_STDCPP_STL_INCLUDES
 #define ACE_HAS_TEMPLATE_TYPEDEFS
-#define ACE_HAS_TYPENAME_KEYWORD
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
@@ -71,6 +70,10 @@
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
+#  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS)
+#    undef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
+#  endif /* ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
+#  define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 0
 # else
 #  ifndef ACE_HAS_CUSTOM_EXPORT_MACROS
 #    define ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -78,7 +81,7 @@
 #  define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
 #  define ACE_Proper_Import_Flag
 
-# if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2))
+#  if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2))
 // Sadly, G++ 4.x silently ignores visibility attributes on
 // template instantiations, which breaks singletons.
 // As a workaround, we use the GCC visibility pragmas.
@@ -87,10 +90,10 @@
 // This has been fixed in GCC 4.1.1 with FC6 but not with SuSE 10.2
 // that gets shipped with GCC 4.1.2 so we assume that with GCC 4.2
 // this will be fixed on the head. With FC6 just set this define yourself
-#  ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
-#    define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
+#   ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
+#     define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
+#   endif
 #  endif
-# endif
 
 #  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS) && ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS == 1
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
@@ -108,8 +111,8 @@
 
 // Note that the "__extension__" is needed to prevent g++ from issuing
 // an error when using its "-pedantic" command line flag.
-#  define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
-#  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
+# define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
+# define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
 #endif  /* __GNU__ >= 4 */

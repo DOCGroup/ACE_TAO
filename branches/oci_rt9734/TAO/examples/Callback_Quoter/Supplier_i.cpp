@@ -156,28 +156,26 @@ int
 Supplier::send_market_status (const char *stock_name,
                               long value)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
 
       // Make the RMI.
       this->notifier_->market_status (stock_name,
-                                      value
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      value);
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::send_market_status");
+      sysex._tao_print_exception (
+        "System Exception : Supplier::send_market_status");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::send_market_status");
+      userex._tao_print_exception (
+        "User Exception : Supplier::send_market_status");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -214,9 +212,8 @@ Supplier::run (void)
 int
 Supplier::via_naming_service (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -229,28 +226,25 @@ Supplier::via_naming_service (void)
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
 
       CORBA::Object_var notifier_obj =
-        this->naming_services_client_->resolve (notifier_ref_name
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->naming_services_client_->resolve (notifier_ref_name);
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-        Notifier::_narrow (notifier_obj.in ()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Notifier::_narrow (notifier_obj.in ());
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::via_naming_service\n");
+      sysex._tao_print_exception (
+        "System Exception : Supplier::via_naming_service\n");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::via_naming_service\n");
+      userex._tao_print_exception (
+        "User Exception : Supplier::via_naming_service\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -263,16 +257,13 @@ Supplier::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    0);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -294,9 +285,7 @@ Supplier::init (int argc, char **argv)
                            this->argv_[0]),
                           -1);
       CORBA::Object_var notifier_object =
-        this->orb_->string_to_object (this->ior_
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (this->ior_);
 
       if (CORBA::is_nil (notifier_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -305,21 +294,18 @@ Supplier::init (int argc, char **argv)
                           -1);
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
-      this->notifier_ = Notifier::_narrow (notifier_object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->notifier_ = Notifier::_narrow (notifier_object.in ());
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException& sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "System Exception : Supplier::init");
+      sysex._tao_print_exception ("System Exception : Supplier::init");
       return -1;
     }
-  ACE_CATCH (CORBA::UserException, userex)
+  catch (const CORBA::UserException& userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "User Exception : Supplier::init");
+      userex._tao_print_exception ("User Exception : Supplier::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -73,7 +73,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::NamedValue_ptr result,
                          CORBA::Flags flags,
                          CORBA::ExceptionList_ptr exceptions
-                         ACE_ENV_ARG_DECL_NOT_USED)
+                         )
   : target_ (CORBA::Object::_duplicate (obj)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     opname_ (CORBA::string_dup (op)),
@@ -102,7 +102,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
 CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::ORB_ptr orb,
                          const CORBA::Char *op
-                         ACE_ENV_ARG_DECL_NOT_USED)
+                         )
   : target_ (CORBA::Object::_duplicate (obj)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     opname_ (CORBA::string_dup (op)),
@@ -147,7 +147,7 @@ CORBA::Request::~Request (void)
 // flow in some exotic situations.
 
 void
-CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::invoke (void)
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -170,8 +170,7 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 
   _tao_call.invoke (0,
                     0
-                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                   );
 
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -181,7 +180,7 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::send_oneway (void)
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -206,12 +205,11 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 
   _tao_call.invoke (0,
                     0
-                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                   );
 }
 
 void
-CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::send_deferred (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -251,14 +249,12 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
 
   _tao_call.invoke (0,
                     0
-                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                   );
 }
 
 #if defined (TAO_HAS_AMI)
 void
-CORBA::Request::sendc (CORBA::Object_ptr handler
-                       ACE_ENV_ARG_DECL)
+CORBA::Request::sendc (CORBA::Object_ptr handler)
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -280,8 +276,7 @@ CORBA::Request::sendc (CORBA::Object_ptr handler
        );
 
   _tao_call.invoke (dynamic_cast<Messaging::ReplyHandler_ptr>(handler),
-                    &CORBA::Request::_tao_reply_stub
-                    ACE_ENV_ARG_PARAMETER);
+                    &CORBA::Request::_tao_reply_stub);
 
 }
 
@@ -289,11 +284,10 @@ void
 CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
                                  Messaging::ReplyHandler_ptr rh,
                                  CORBA::ULong reply_status
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
   // Retrieve Reply Handler object.
-  TAO_DII_Reply_Handler* reply_handler = dynamic_cast<TAO_DII_Reply_Handler*> (rh);
-  ACE_CHECK;
+  TAO_DII_Reply_Handler* reply_handler = dynamic_cast<TAO_DII_Reply_Handler*> (rh);\
 
   // Exception handling
   switch (reply_status)
@@ -301,7 +295,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
     case TAO_AMI_REPLY_OK:
     case TAO_AMI_REPLY_NOT_OK:
       {
-        reply_handler->handle_response(_tao_in ACE_ENV_ARG_PARAMETER);
+        reply_handler->handle_response(_tao_in);
         break;
       }
     case TAO_AMI_REPLY_USER_EXCEPTION:
@@ -309,7 +303,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
       {
         reply_handler->handle_excep (_tao_in,
                                      reply_status
-                                     ACE_ENV_ARG_PARAMETER);
+                                     );
 
         break;
       }
@@ -318,23 +312,21 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
 #endif /* TAO_HAS_AMI */
 
 void
-CORBA::Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::get_response (void)
 {
   while (!this->response_received_)
     {
-      (void) this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      (void) this->orb_->perform_work ();
     }
 
   if (this->lazy_evaluation_)
     {
-      this->args_->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->args_->evaluate ();
     }
 }
 
 CORBA::Boolean
-CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::Request::poll_response (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
@@ -347,8 +339,7 @@ CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL)
       // and the response never gets received, so let the ORB do an
       // atom of work, if necessary, each time we poll.
       ACE_Time_Value tv (0, 0);
-      (void) this->orb_->perform_work (&tv ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      (void) this->orb_->perform_work (&tv);
     }
 
   return this->response_received_;
@@ -357,7 +348,7 @@ CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL)
 void
 CORBA::Request::handle_response (TAO_InputCDR &incoming,
                                  CORBA::ULong reply_status
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -372,15 +363,13 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
         {
           // We can be sure that the impl is a TAO::Unknown_IDL_Type.
           this->result_->value ()->impl ()->_tao_decode (incoming
-                                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                                        );
         }
 
       this->args_->_tao_incoming_cdr (incoming,
                                       CORBA::ARG_OUT | CORBA::ARG_INOUT,
                                       this->lazy_evaluation_
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                     );
 
       {
         ACE_GUARD (TAO_SYNCH_MUTEX,

@@ -65,11 +65,8 @@ Param_Test_Client<T>::run_sii_test (void)
   this->results_.iterations (opt->loop_count ());
 
   // Declare the Env
-  ACE_DECLARE_NEW_CORBA_ENV;
   // Initialize parameters for the test.
-  int check = this->test_object_->init_parameters (this->param_test_
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int check = this->test_object_->init_parameters (this->param_test_);
 
   if (check == -1)
     {
@@ -84,7 +81,7 @@ Param_Test_Client<T>::run_sii_test (void)
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
-      ACE_TRY
+      try
         {
           this->results_.call_count (this->results_.call_count () + 1);
           if (opt->debug ())
@@ -97,9 +94,7 @@ Param_Test_Client<T>::run_sii_test (void)
           this->results_.start_timer ();
 
           // make the call
-          this->test_object_->run_sii_test (this->param_test_
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->test_object_->run_sii_test (this->param_test_);
 
           // stop the timer.
           this->results_.stop_timer ();
@@ -111,11 +106,11 @@ Param_Test_Client<T>::run_sii_test (void)
               this->test_object_->print_values ();
             }
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
 
           this->results_.error_count (this->results_.error_count () + 1);
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, opname);
+          ex._tao_print_exception (opname);
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) client.cpp - run_sii_test:"
                       "run_sii_test exception in iteration %d",
@@ -123,7 +118,6 @@ Param_Test_Client<T>::run_sii_test (void)
           goto loop_around;
 
         }
-      ACE_ENDTRY;
 
       if (!this->test_object_->check_validity ())
         {
@@ -178,11 +172,8 @@ Param_Test_Client<T>::run_dii_test (void)
   this->results_.iterations (opt->loop_count ());
 
   // Environment variable
-  ACE_DECLARE_NEW_CORBA_ENV;
   // initialize parameters for the test
-  int check = this->test_object_->init_parameters (this->param_test_
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int check = this->test_object_->init_parameters (this->param_test_);
 
   if (check == -1)
     {
@@ -205,11 +196,9 @@ Param_Test_Client<T>::run_dii_test (void)
       // create the request
       CORBA::Request_var req;
 
-      ACE_TRY
+      try
         {
-          req = this->param_test_->_request (opname
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          req = this->param_test_->_request (opname);
 
           if (opt->debug ())
             {
@@ -218,19 +207,15 @@ Param_Test_Client<T>::run_dii_test (void)
             }
 
           // Make the invocation, verify the result.
-          this->test_object_->dii_req_invoke (req.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->test_object_->dii_req_invoke (req.in ());
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           this->results_.error_count (this->results_.error_count () + 1);
 
-          ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
-                                opname);
+          ex._tao_print_exception (opname);
           goto loop_around;
         }
-      ACE_ENDTRY;
 
       if (opt->debug ())
         {

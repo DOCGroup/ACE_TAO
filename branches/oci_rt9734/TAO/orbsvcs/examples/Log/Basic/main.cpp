@@ -11,29 +11,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TLS_Client client; // Telecom Log Service Client
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      client.init (argc, argv
-                   ACE_ENV_ARG_PARAMETER); //Init the Client
-      ACE_TRY_CHECK;
+      client.init (argc, argv); //Init the Client
 
-      client.run_tests (ACE_ENV_SINGLE_ARG_PARAMETER); //Init the Client
+      client.run_tests (); //Init the Client
 
-      ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "TLS_Client user error: ");
+      ue._tao_print_exception ("TLS_Client user error: ");
       return 1;
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
-                           "TLS_Client system error: ");
+      se._tao_print_exception ("TLS_Client system error: ");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

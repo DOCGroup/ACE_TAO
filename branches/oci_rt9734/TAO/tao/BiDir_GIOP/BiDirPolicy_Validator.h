@@ -42,14 +42,11 @@ public:
 
   TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core);
 
-  virtual void validate_impl (TAO_Policy_Set &policies
-                              ACE_ENV_ARG_DECL);
+  virtual void validate_impl (TAO_Policy_Set &policies);
 
-  virtual void merge_policies_impl (TAO_Policy_Set &policies
-                                    ACE_ENV_ARG_DECL);
+  virtual void merge_policies_impl (TAO_Policy_Set &policies);
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

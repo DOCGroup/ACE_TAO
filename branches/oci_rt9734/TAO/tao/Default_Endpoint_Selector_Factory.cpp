@@ -26,7 +26,7 @@ TAO_Default_Endpoint_Selector_Factory::~TAO_Default_Endpoint_Selector_Factory (v
 
 
 TAO_Invocation_Endpoint_Selector *
-TAO_Default_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Default_Endpoint_Selector_Factory::get_selector (void)
 {
   // Trivial endpoint selector.  Just return the default selector.
   return this->default_endpoint_selector_;

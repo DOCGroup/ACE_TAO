@@ -51,10 +51,10 @@ namespace TAO
       virtual ~ImR_Client_Adapter (void);
 
       /// ImplRepo helper method, notify the ImplRepo on startup
-      virtual void imr_notify_startup (TAO_Root_POA* poa ACE_ENV_ARG_DECL) = 0;
+      virtual void imr_notify_startup (TAO_Root_POA* poa ) = 0;
 
       /// ImplRepo helper method, notify the ImplRepo on shutdown
-      virtual void imr_notify_shutdown (TAO_Root_POA* poa ACE_ENV_ARG_DECL) = 0;
+      virtual void imr_notify_shutdown (TAO_Root_POA* poa ) = 0;
     };
   }
 }

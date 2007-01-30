@@ -27,22 +27,20 @@ TAO::PG_Property_Set::PG_Property_Set()
 }
 
 TAO::PG_Property_Set::PG_Property_Set (
-  const PortableGroup::Properties & property_set
-    ACE_ENV_ARG_DECL)
+  const PortableGroup::Properties & property_set)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (0)
 {
-  this->decode (property_set ACE_ENV_ARG_PARAMETER);
+  this->decode (property_set);
 }
 
 TAO::PG_Property_Set::PG_Property_Set (
     const PortableGroup::Properties & property_set,
-    PG_Property_Set * defaults
-    ACE_ENV_ARG_DECL)
+    PG_Property_Set * defaults)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (defaults)
 {
-  this->decode (property_set ACE_ENV_ARG_PARAMETER);
+  this->decode (property_set);
 }
 
 
@@ -58,8 +56,7 @@ TAO::PG_Property_Set::~PG_Property_Set ()
 }
 
 void
-TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
-                              ACE_ENV_ARG_DECL)
+TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
@@ -74,9 +71,7 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     const CosNaming::NameComponent & nc = nsName[0];
 
     this->set_property (static_cast<const char *> (nc.id),
-                        property.val
-                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                        property.val);
 
 #if 0
     ACE_CString name = static_cast<const char *> (nc.id);
@@ -85,7 +80,6 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
     ACE_NEW_THROW_EX (value_copy,
                       PortableGroup::Value (property.val),
                       CORBA::NO_MEMORY ());
-    ACE_CHECK;
 
     const PortableGroup::Value * replaced_value = 0;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
@@ -104,7 +98,7 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set
           ));
       }
       // @@ should throw something here
-      ACE_THROW (CORBA::NO_MEMORY ());
+      throw CORBA::NO_MEMORY ();
     }
 #endif
   }
@@ -150,15 +144,13 @@ void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_se
 
 void TAO::PG_Property_Set::set_property (
   const char * name,
-  const PortableGroup::Value & value
-  ACE_ENV_ARG_DECL)
+  const PortableGroup::Value & value)
 {
   ACE_CString key (name);
   PortableGroup::Value * value_copy;
   ACE_NEW_THROW_EX (
     value_copy, PortableGroup::Value (value),
     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   const PortableGroup::Value * replaced_value = 0;
   if (0 == this->values_.rebind (name, value_copy, replaced_value))
@@ -177,7 +169,7 @@ void TAO::PG_Property_Set::set_property (
         ));
     }
     // @@ should throw something here
-    ACE_THROW (CORBA::NO_MEMORY ());
+    throw CORBA::NO_MEMORY ();
   }
 }
 

@@ -15,22 +15,18 @@
 
 #include "ace/Log_Msg.h"
 
-template<class Interface> ACE_TYPENAME RIR_Narrow<Interface>::Interface_ptr
+template<class Interface> typename RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
-                                const char *object_id
-                                ACE_ENV_ARG_DECL)
+                                const char *object_id)
 {
   Interface_var interface;
 
-  ACE_TRY
+  try
     {
       CORBA::Object_var object =
-        orb->resolve_initial_references (object_id
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references (object_id);
 
-      interface = Interface::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      interface = Interface::_narrow (object.in ());
 
       if (CORBA::is_nil (interface.in ()))
         {
@@ -39,10 +35,9 @@ RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
                       object_id));
           ACE_OS::exit (1);
         }
-    }ACE_CATCHANY{
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception \n");
+    } catch (const CORBA::Exception& ex) {
+      ex._tao_print_exception ("Caught an exception \n");
     }
-  ACE_ENDTRY;
   return interface._retn ();
 }
 

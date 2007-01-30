@@ -53,8 +53,7 @@ namespace TAO
   public:
     ServerRequestDetails (void);
 
-    void apply_policies (const CORBA::PolicyList& policies
-                         ACE_ENV_ARG_DECL);
+    void apply_policies (const CORBA::PolicyList& policies);
 
     /// Returns true if the ProcessingMode setting permits the "firing"
     /// of the associated server request interceptor based upon the

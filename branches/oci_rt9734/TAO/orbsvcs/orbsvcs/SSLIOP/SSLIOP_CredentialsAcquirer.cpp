@@ -90,31 +90,28 @@ TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer (void)
 }
 
 char *
-TAO::SSLIOP::CredentialsAcquirer::acquisition_method (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   return CORBA::string_dup ("SL3TLS");
 }
 
 SecurityLevel3::AcquisitionStatus
-TAO::SSLIOP::CredentialsAcquirer::current_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::current_status (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::AQST_Failed);
+  this->check_validity ();
 
   return SecurityLevel3::AQST_Succeeded;  // @@ Really?
 }
 
 CORBA::ULong
-TAO::SSLIOP::CredentialsAcquirer::nth_iteration (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->check_validity ();
 
   // SSL/TLS credentials is single-step process from the point-of-view
   // of the caller.
@@ -122,8 +119,7 @@ TAO::SSLIOP::CredentialsAcquirer::nth_iteration (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Any *
-TAO::SSLIOP::CredentialsAcquirer::get_continuation_data (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
@@ -132,8 +128,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_continuation_data (
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
-    const CORBA::Any & /* acquisition_arguments */
-    ACE_ENV_ARG_DECL)
+    const CORBA::Any & /* acquisition_arguments */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
@@ -142,12 +137,10 @@ TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
 }
 
 SecurityLevel3::OwnCredentials_ptr
-TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
-                                                   ACE_ENV_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+  this->check_validity ();
 
   ::SSLIOP::AuthData *data;
 
@@ -183,29 +176,24 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
 
   SecurityLevel3::OwnCredentials_var credentials = creds;
 
   if (on_list)
     {
-      this->curator_->_tao_add_own_credentials (creds
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+      this->curator_->_tao_add_own_credentials (creds);
     }
 
-  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (SecurityLevel3::OwnCredentials::_nil ());
+  this->destroy ();
 
   return credentials._retn ();
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->check_validity ();
 
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -221,14 +209,14 @@ TAO::SSLIOP::CredentialsAcquirer::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::check_validity (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::CredentialsAcquirer::check_validity (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
              this->lock_);
 
   if (this->destroyed_)
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 }
 
 ::X509 *

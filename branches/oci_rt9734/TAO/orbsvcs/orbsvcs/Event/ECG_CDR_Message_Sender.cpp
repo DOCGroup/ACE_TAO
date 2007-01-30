@@ -16,8 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_ECG_CDR_Message_Sender::init (
-      TAO_ECG_Refcounted_Endpoint endpoint_rptr
-      ACE_ENV_ARG_DECL)
+      TAO_ECG_Refcounted_Endpoint endpoint_rptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (endpoint_rptr.get () == 0
@@ -25,7 +24,7 @@ TAO_ECG_CDR_Message_Sender::init (
     {
       ACE_ERROR ((LM_ERROR, "TAO_ECG_CDR_Message_Sender::init(): "
                             "nil or unitialized endpoint argument.\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   this->endpoint_rptr_ = endpoint_rptr;
@@ -33,15 +32,14 @@ TAO_ECG_CDR_Message_Sender::init (
 
 void
 TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
-                                           const ACE_INET_Addr &addr
-                                           ACE_ENV_ARG_DECL)
+                                           const ACE_INET_Addr &addr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->endpoint_rptr_.get () == 0)
     {
       ACE_ERROR ((LM_ERROR, "Attempt to invoke send_message() "
                             "on non-initialized sender object.\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   CORBA::ULong max_fragment_payload = this->mtu () -
@@ -99,9 +97,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                fragment_id,
                                fragment_count,
                                iov,
-                               iovcnt
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                               iovcnt);
           ++fragment_id;
           fragment_offset += max_fragment_payload;
 
@@ -127,9 +123,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                fragment_id,
                                fragment_count,
                                iov,
-                               iovcnt
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                               iovcnt);
           ++fragment_id;
           fragment_offset += max_fragment_payload;
 
@@ -148,9 +142,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                fragment_id,
                                fragment_count,
                                iov,
-                               iovcnt
-                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                               iovcnt);
           ++fragment_id;
           fragment_offset += fragment_size;
 
@@ -172,9 +164,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                            fragment_id,
                            fragment_count,
                            iov,
-                           iovcnt
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                           iovcnt);
       ++fragment_id;
       fragment_offset += fragment_size;
 
@@ -197,8 +187,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
                                            CORBA::ULong fragment_id,
                                            CORBA::ULong fragment_count,
                                            iovec iov[],
-                                           int iovcnt
-                                           ACE_ENV_ARG_DECL)
+                                           int iovcnt)
 {
   CORBA::ULong header[TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)
@@ -269,7 +258,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
         {
           ACE_ERROR ((LM_ERROR, "Send of mcast fragment failed (%m).\n"));
           // @@ TODO Use a Event Channel specific exception
-          ACE_THROW (CORBA::COMM_FAILURE ());
+          throw CORBA::COMM_FAILURE ();
         }
       else
         {

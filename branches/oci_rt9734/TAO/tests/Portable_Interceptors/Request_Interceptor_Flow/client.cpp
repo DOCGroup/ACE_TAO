@@ -43,7 +43,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-client_test (Test_ptr server ACE_ENV_ARG_DECL)
+client_test (Test_ptr server)
 {
   // Currently, there are only four scenarios for the client side
   // tests.
@@ -56,10 +56,9 @@ client_test (Test_ptr server ACE_ENV_ARG_DECL)
                   "------------------\n",
                   i));
 
-      ACE_TRY
+      try
         {
-          server->client_test (i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->client_test (i);
 
           if (i == 1)
             {
@@ -68,37 +67,35 @@ client_test (Test_ptr server ACE_ENV_ARG_DECL)
               "operation.\n"));
             }
         }
-      ACE_CATCH (Test::X, ex)
+      catch (const Test::X&)
         {
           // Expected exception.  Ignore it.
         }
-      ACE_CATCH (CORBA::NO_PERMISSION, ex)
+      catch (const CORBA::NO_PERMISSION&)
         {
           // Expected exception.  Ignore it.
         }
-      ACE_CATCH (Test::UnknownScenario, ex)
+      catch (const Test::UnknownScenario& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Unknown scenario <%d> condition "
                       "returned from client_test() "
                       "operation.\n",
                       ex.scenario));
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Exception thrown from client_test() "
                       "operation.\n"));
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
 void
-server_test (Test_ptr server ACE_ENV_ARG_DECL)
+server_test (Test_ptr server)
 {
   // Currently, there are only four scenarios for the server side
   // tests.
@@ -111,11 +108,10 @@ server_test (Test_ptr server ACE_ENV_ARG_DECL)
                   "------------------\n",
                   i));
 
-      ACE_TRY
+      try
         {
           CORBA::ULongSeq_var ulongseq;
-          server->server_test (i, ulongseq.out () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->server_test (i, ulongseq.out ());
 
           if (i == 1)
             {
@@ -124,40 +120,37 @@ server_test (Test_ptr server ACE_ENV_ARG_DECL)
                           "operation.\n"));
             }
         }
-      ACE_CATCH (Test::X, ex)
+      catch (const Test::X&)
         {
           // Expected exception.  Ignore it.
         }
-      ACE_CATCH (CORBA::NO_PERMISSION, ex)
+      catch (const CORBA::NO_PERMISSION&)
         {
           // Expected exception.  Ignore it.
         }
-      ACE_CATCH (Test::UnknownScenario, ex)
+      catch (const Test::UnknownScenario& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Unknown scenario <%d> condition "
                       "returned from server_test() "
                       "operation.\n",
                       ex.scenario));
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           ACE_ERROR ((LM_ERROR,
                       "\nERROR: Exception thrown from server_test() "
                       "operation.\n"));
-          ACE_RE_THROW;
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -168,26 +161,20 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Client ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Client ORB");
 
       if (::parse_args (argc, argv) != 0)
         return -1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test_var server =
-        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -197,25 +184,19 @@ main (int argc, char *argv[])
                             1);
         }
 
-      ::client_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ::client_test (server.in ());
 
-      ::server_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ::server_test (server.in ());
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO,
               "Request interceptor flow test passed.\n"));

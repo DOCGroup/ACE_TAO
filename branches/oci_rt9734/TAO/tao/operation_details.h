@@ -132,8 +132,7 @@ public:
    * is not found in the list of exceptions specified by the operation
    * this call would raise an UNKNOWN exception.
    */
-  CORBA::Exception *corba_exception (const char *ex
-                                     ACE_ENV_ARG_DECL)
+  CORBA::Exception *corba_exception (const char *ex)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**

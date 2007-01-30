@@ -22,7 +22,7 @@ TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
 }
 
 void
-TAO_Notify_Reactive_Task::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Reactive_Task::init (void)
 {
   ACE_ASSERT (this->timer_.get() == 0);
 
@@ -45,9 +45,9 @@ TAO_Notify_Reactive_Task::shutdown (void)
 }
 
 void
-TAO_Notify_Reactive_Task::execute (TAO_Notify_Method_Request& method_request ACE_ENV_ARG_DECL)
+TAO_Notify_Reactive_Task::execute (TAO_Notify_Method_Request& method_request)
 {
-  method_request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+  method_request.execute ();
 }
 
 TAO_Notify_Timer*

@@ -17,17 +17,17 @@ TAO_Notify_Tests_RT_Test_FilterFactory::~TAO_Notify_Tests_RT_Test_FilterFactory 
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_var& filter_poa)
 {
   this->filter_poa_ = filter_poa; // save the filter poa.
 
   PortableServer::ServantBase_var servant_var (this);
 
-  return _this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return _this ();
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_grammar)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::InvalidGrammar
@@ -53,23 +53,17 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_gr
   PortableServer::ServantBase_var filter_var (filter);
 
   PortableServer::ObjectId_var oid =
-    this->filter_poa_->activate_object (filter
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
+    this->filter_poa_->activate_object (filter);
 
   CORBA::Object_var obj =
-    this->filter_poa_->id_to_reference (oid.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
+    this->filter_poa_->id_to_reference (oid.in ());
 
-  return CosNotifyFilter::Filter::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
+  return CosNotifyFilter::Filter::_narrow (obj.in ());
 }
 
 CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_Tests_RT_Test_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
                                                   const CORBA::Any & /*default_value*/
-                                                  ACE_ENV_ARG_DECL
                                                   )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,

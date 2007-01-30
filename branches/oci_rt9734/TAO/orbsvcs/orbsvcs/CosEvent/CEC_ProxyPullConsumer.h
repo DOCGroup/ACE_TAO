@@ -58,12 +58,11 @@ public:
 
   /// Activate in the POA
   virtual void  activate (
-      CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy
-      ACE_ENV_ARG_DECL)
+      CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void deactivate (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no supplier is connected...
@@ -74,20 +73,18 @@ public:
   CosEventComm::PullSupplier_ptr supplier (void) const;
 
   /// Pulls from the supplier, verifies that it is connected.
-  CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event
-                                      ACE_ENV_ARG_DECL);
-  CORBA::Any* pull_from_supplier (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event);
+  CORBA::Any* pull_from_supplier (void);
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
    * it is disconnected then it returns true and sets the
    * <disconnected> flag.
    */
-  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected
-                                        ACE_ENV_ARG_DECL);
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
   /// The event channel is shutting down
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (void);
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
@@ -95,17 +92,16 @@ public:
 
   // = The CosEventChannelAdmin::ProxyPullConsumer methods...
   virtual void connect_pull_supplier (
-                CosEventComm::PullSupplier_ptr pull_supplier
-                ACE_ENV_ARG_DECL_NOT_USED)
+                CosEventComm::PullSupplier_ptr pull_supplier)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
-  virtual void disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_pull_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 protected:
   /// Set the supplier, used by some implementations to change the

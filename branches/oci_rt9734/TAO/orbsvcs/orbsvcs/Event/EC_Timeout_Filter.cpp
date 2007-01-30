@@ -11,8 +11,8 @@
 #include "orbsvcs/Event/EC_Timeout_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Timeout_Filter, 
+ACE_RCSID (Event,
+           EC_Timeout_Filter,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -69,27 +69,23 @@ TAO_EC_Timeout_Filter::~TAO_EC_Timeout_Filter (void)
 
 void
 TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
-                                      TAO_EC_QOS_Info& qos_info
-                                      ACE_ENV_ARG_DECL)
+                                      TAO_EC_QOS_Info& qos_info)
 {
   qos_info.timer_id_ = this->id_;
 
   if (this->supplier_ != 0)
     this->supplier_->filter (event,
-                             qos_info
-                              ACE_ENV_ARG_PARAMETER);
+                             qos_info);
 }
 
 int
 TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet &event,
-                               TAO_EC_QOS_Info &qos_info
-                               ACE_ENV_ARG_DECL)
+                               TAO_EC_QOS_Info &qos_info)
 {
   if (qos_info.timer_id_ == this->id_
       && this->parent () != 0)
     {
-      this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->parent ()->push (event, qos_info);
       return 1;
     }
   return 0;
@@ -97,14 +93,12 @@ TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet &event,
 
 int
 TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet &event,
-                                      TAO_EC_QOS_Info &qos_info
-                                      ACE_ENV_ARG_DECL)
+                                      TAO_EC_QOS_Info &qos_info)
 {
   if (qos_info.timer_id_ == this->id_
       && this->parent () != 0)
     {
-      this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->parent ()->push_nocopy (event, qos_info);
       return 1;
     }
   return 0;
@@ -112,15 +106,13 @@ TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet &event,
 
 void
 TAO_EC_Timeout_Filter::push (const RtecEventComm::EventSet&,
-                          TAO_EC_QOS_Info&
-                          ACE_ENV_ARG_DECL_NOT_USED)
+                          TAO_EC_QOS_Info&)
 {
 }
 
 void
 TAO_EC_Timeout_Filter::push_nocopy (RtecEventComm::EventSet&,
-                                    TAO_EC_QOS_Info&
-                                    ACE_ENV_ARG_DECL_NOT_USED)
+                                    TAO_EC_QOS_Info&)
 {
 }
 
@@ -162,8 +154,7 @@ TAO_EC_Timeout_Filter::can_match (
 int
 TAO_EC_Timeout_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &
-      ACE_ENV_ARG_DECL_NOT_USED)
+      const TAO_EC_QOS_Info &)
 {
   return 0;
 }

@@ -26,23 +26,20 @@ TAO::PG_Properties_Support::~PG_Properties_Support ()
 }
 
 void TAO::PG_Properties_Support::set_default_property (const char * name,
-      const PortableGroup::Value & value
-      ACE_ENV_ARG_DECL)
+      const PortableGroup::Value & value)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->default_properties_.set_property(name, value ACE_ENV_ARG_PARAMETER);
+  this->default_properties_.set_property(name, value);
 }
 
-void TAO::PG_Properties_Support::set_default_properties (const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL)
+void TAO::PG_Properties_Support::set_default_properties (const PortableGroup::Properties & props)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->default_properties_.decode (props ACE_ENV_ARG_PARAMETER);
+  this->default_properties_.decode (props);
 }
 
 PortableGroup::Properties *
-TAO::PG_Properties_Support::get_default_properties (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO::PG_Properties_Support::get_default_properties ()
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     PortableGroup::InvalidProperty,
@@ -50,14 +47,12 @@ TAO::PG_Properties_Support::get_default_properties (
 {
   PortableGroup::Properties_var result;
   ACE_NEW_THROW_EX ( result, PortableGroup::Properties(), CORBA::NO_MEMORY());
-  ACE_CHECK_RETURN (0);
   this->default_properties_.export_properties (*result);
   return result._retn ();
 }
 
 void TAO::PG_Properties_Support::remove_default_properties (
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const PortableGroup::Properties & props)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->default_properties_.remove (props);
@@ -66,8 +61,7 @@ void TAO::PG_Properties_Support::remove_default_properties (
 void
 TAO::PG_Properties_Support::set_type_properties (
     const char *type_id,
-    const PortableGroup::Properties & overrides
-    ACE_ENV_ARG_DECL)
+    const PortableGroup::Properties & overrides)
   ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
@@ -84,13 +78,12 @@ TAO::PG_Properties_Support::set_type_properties (
     this->properties_map_.bind (type_id, typeid_properties);
   }
   typeid_properties->clear ();
-  typeid_properties->decode (overrides ACE_ENV_ARG_PARAMETER);
+  typeid_properties->decode (overrides);
 }
 
 PortableGroup::Properties *
 TAO::PG_Properties_Support::get_type_properties (
-    const char *type_id
-    ACE_ENV_ARG_DECL)
+    const char *type_id)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   PortableGroup::Properties_var result;
@@ -109,8 +102,7 @@ TAO::PG_Properties_Support::get_type_properties (
 void
 TAO::PG_Properties_Support::remove_type_properties (
     const char *type_id,
-    const PortableGroup::Properties & props
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const PortableGroup::Properties & props)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   // NOTE: do not actually delete the properties for this type.
@@ -130,8 +122,7 @@ TAO::PG_Properties_Support::remove_type_properties (
 
 TAO::PG_Property_Set *
 TAO::PG_Properties_Support::find_typeid_properties (
-    const char *type_id
-    ACE_ENV_ARG_DECL)
+    const char *type_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);

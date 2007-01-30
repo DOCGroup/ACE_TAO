@@ -36,18 +36,16 @@ Object_B_i::~Object_B_i (void)
 
 
 void
-Object_B_i::foo (Object_A_ptr theObject_A_ptr
-                 ACE_ENV_ARG_DECL)
+Object_B_i::foo (Object_A_ptr theObject_A_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 
-      theObject_A_ptr->finish (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      theObject_A_ptr->finish ();
 
       // Start to wait on this variable, it is set to true
       // by the method finish ()
@@ -57,10 +55,9 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr
       ACE_OS::sleep(pause);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "calling the initiator");
+      ex._tao_print_exception ("calling the initiator");
     }
-  ACE_ENDTRY;
 
 }

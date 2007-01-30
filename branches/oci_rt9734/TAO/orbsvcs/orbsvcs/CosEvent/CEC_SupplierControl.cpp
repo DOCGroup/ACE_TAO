@@ -27,29 +27,25 @@ TAO_CEC_SupplierControl::shutdown (void)
 }
 
 void
-TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPushConsumer *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPushConsumer *)
 {
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
-TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *)
 {
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 void
-TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPullConsumer *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPullConsumer *)
 {
 }
 
 void
 TAO_CEC_SupplierControl::system_exception (TAO_CEC_ProxyPullConsumer *,
-                                           CORBA::SystemException &
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+                                           CORBA::SystemException &)
 {
 }
 

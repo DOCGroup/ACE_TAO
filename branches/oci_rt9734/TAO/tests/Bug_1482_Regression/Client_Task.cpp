@@ -31,8 +31,7 @@ Client_Task::svc (void)
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (CORBA::Long j = 0;
            j != 1000;
@@ -41,33 +40,28 @@ Client_Task::svc (void)
           // Send 25 messages in every loop..
           for (CORBA::Short i = 0; i != 25; ++i)
             {
-              this->receiver_->sendc_next_prime (this->handler_var_.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->receiver_->sendc_next_prime (this->handler_var_.in ());
             }
 
           CORBA::Short repl = 0;
           while (repl != 25)
             {
               CORBA::Boolean pending =
-                this->orb_->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                this->orb_->work_pending ();
 
               if (pending)
                 {
-                  this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  this->orb_->perform_work ();
 
                   ++repl;
                 }
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }

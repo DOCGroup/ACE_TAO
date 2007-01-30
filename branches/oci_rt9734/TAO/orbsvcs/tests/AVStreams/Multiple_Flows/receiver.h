@@ -96,8 +96,7 @@ public:
   // Destructor.
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Initialize data components.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);

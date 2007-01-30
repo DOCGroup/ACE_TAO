@@ -9,7 +9,7 @@
 
 extern const char* ONEWAY_ARG_TEST_STR;
 
-Foo_B_SimpleClientEngine::Foo_B_SimpleClientEngine(Foo_B_ptr obj, 
+Foo_B_SimpleClientEngine::Foo_B_SimpleClientEngine(Foo_B_ptr obj,
                                                    Callback_ptr callback,
                                                    unsigned client_id,
                                                    bool collocated)
@@ -27,9 +27,9 @@ Foo_B_SimpleClientEngine::~Foo_B_SimpleClientEngine()
 
 
 bool
-Foo_B_SimpleClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
+Foo_B_SimpleClientEngine::execute(void)
 {
-  // Make sure the connection is established before making  
+  // Make sure the connection is established before making
   // remote invocations.
   if (AppHelper::validate_connection (this->obj_.in ()) == false)
     {
@@ -42,7 +42,7 @@ Foo_B_SimpleClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   bool check_validity = true;
 
   // Callback test.
-  ACE_TRY
+  try
   {
     if (CORBA::is_nil(this->callback_.in()))
       {
@@ -50,20 +50,17 @@ Foo_B_SimpleClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
                    "The callback_ objref is nil before op7() call!\n"));
       }
 
-    this->obj_->op7 (this->callback_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->obj_->op7 (this->callback_.in ());
   }
-  ACE_CATCH (FooException, ex)
+  catch (const FooException& )
   {
     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_SimpleClientEngine::execute  " \
                "FooException raised by op7() call.\n"));
     check_validity = false;
   }
-  ACE_ENDTRY;
 
   // Tell the servant that this client is done.
-  this->obj_->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->done();
 
   return check_validity;
 }

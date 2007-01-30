@@ -22,7 +22,7 @@ TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching ()
   TAO_EC_Dispatching* dispatcher = this->event_channel_->dispatching ();
   TAO_EC_TPC_Dispatching* tpcdispatcher =
     dynamic_cast<TAO_EC_TPC_Dispatching*>(dispatcher);
-  return tpcdispatcher;  
+  return tpcdispatcher;
 }
 
 TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
@@ -36,20 +36,15 @@ TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
 }
 
 void
-TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer (
-      ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer ()
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  RtecEventComm::PushConsumer_var emulated_exceptions_suck = 
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  RtecEventComm::PushConsumer_var emulated_exceptions_suck =
+    this->_this ();
 
-  this->tpc_dispatching ()->remove_consumer (emulated_exceptions_suck.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->tpc_dispatching ()->remove_consumer (emulated_exceptions_suck.in ());
 
-  BASECLASS::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  BASECLASS::disconnect_push_consumer ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

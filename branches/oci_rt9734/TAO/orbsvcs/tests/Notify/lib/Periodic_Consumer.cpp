@@ -170,7 +170,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -178,7 +178,6 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   const CosNotification::PropertySeq& prop_seq =
     notification.header.variable_header;

@@ -29,11 +29,10 @@ public:
 
   // = The test interface methods.
   void method (CORBA::ULong request_number,
-               const test::data &
-               ACE_ENV_ARG_DECL_NOT_USED)
+               const test::data &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

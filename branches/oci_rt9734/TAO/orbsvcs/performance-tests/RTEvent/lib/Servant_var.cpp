@@ -22,11 +22,9 @@ Servant_var<SERVANT>::~Servant_var ()
   if (this->ptr_ == 0)
     return;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
-    this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  } ACE_CATCHANY {
+  try{
+    this->ptr_->_remove_ref ();
+  } catch (const CORBA::Exception&) {
     // @@ TODO This event should be logged. Cannot throw because that
     //    would make it impossible to use this class effectively.
     //
@@ -52,7 +50,7 @@ Servant_var<SERVANT>::~Servant_var ()
     // particular implementation, and provides a light-weight,
     // high-performance solution for applications that want to avoid
     // logging.
-  } ACE_ENDTRY;
+  }
 }
 
 #endif /* TAO_PERF_RTEC_SERVANT_VAR_CPP */

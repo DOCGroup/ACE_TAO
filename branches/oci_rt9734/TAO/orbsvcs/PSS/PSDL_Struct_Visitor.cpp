@@ -369,12 +369,12 @@ TAO_PSDL_Struct_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0); ps_si->nl ();
 
   *ps_si << "_tc_" << this->struct_name_ << ""; ps_si->nl ();
-  *ps_si << "ACE_ENV_ARG_PARAMETER";
+  *ps_si << "";
 
   ps_si->decr_indent (0); ps_si->nl ();
 
   *ps_si << ");"; ps_si->nl ();
-  *ps_si << "ACE_TRY_CHECK;"; ps_si->nl ();
+; ps_si->nl ();
 
   *ps_si << "if (result == 0)"; ps_si->nl ();
 

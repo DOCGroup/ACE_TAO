@@ -48,12 +48,12 @@ public:
   /**
    * Initialize.
    */
-  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb);
 
   /**
    * Prepare to exit.
    */
-  int fini (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (void);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
@@ -65,10 +65,10 @@ public:
    * @param result [out] status code to return from process
    * @returns 0 to continue; nonzero to quit
    */
-  int idle(int &result ACE_ENV_ARG_DECL);
+  int idle(int &result);
 
   // override virtuals
-::PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+::PortableServer::POA_ptr _default_POA (void);
 
   PortableServer::ObjectId objectId()const;
 
@@ -76,7 +76,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void shutdown_i (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown_i (void);
 
   ////////////////////////////////
   // CORBA interface FaultNotifier
@@ -84,45 +84,39 @@ public:
 
   virtual void push_structured_fault (
       const CosNotification::StructuredEvent & event
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push_sequence_fault (
     const CosNotification::EventBatch & events
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
     const char * constraint_grammar
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar));
 
   virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean is_alive (void)
   ACE_THROW_SPEC ((CORBA::SystemException));
 
   /////////////////

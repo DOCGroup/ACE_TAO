@@ -62,14 +62,12 @@ namespace CIAO
     /*--------------------  IDL operations (idl) ------------------*/
 
     /// Initialize the container.
-    virtual CORBA::Long init (const CORBA::PolicyList *policies
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual CORBA::Long init (const CORBA::PolicyList *policies)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Install all homes and components
     Deployment::ComponentInfos *
-      install (const ::Deployment::ContainerImplementationInfo & container_impl_info
-               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      install (const ::Deployment::ContainerImplementationInfo & container_impl_info)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::UnknownImplId,
                          Deployment::ImplEntryPointNotFound,
@@ -78,17 +76,17 @@ namespace CIAO
 
     /// Remove all homes and components
     virtual void
-      remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      remove ()
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
 
     /// Deployment::Container interface defined attributes/operations.
     virtual ::Deployment::Properties *
-      properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      properties ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Deployment::NodeApplication_ptr
-      get_node_application (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      get_node_application ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*-------------------------------------------------------------*/
@@ -101,8 +99,7 @@ namespace CIAO
 
     // Install the home of this particular component
     virtual ::Components::CCMHome_ptr
-      install_home (const ::Deployment::ComponentImplementationInfo & impl_info
-                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      install_home (const ::Deployment::ComponentImplementationInfo & impl_info)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::UnknownImplId,
                          Deployment::ImplEntryPointNotFound,
@@ -122,39 +119,34 @@ namespace CIAO
      */
     // Remove the home of this particular component
     virtual void
-      remove_home (const char * comp_ins_name
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      remove_home (const char * comp_ins_name)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
 
     bool
     register_with_ns (const char * obj_name,
                       CORBA::ORB_ptr orb,
-                      Components::CCMObject_ptr obj
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                      Components::CCMObject_ptr obj);
 
     bool
     unregister_with_ns (const char * obj_name,
-                        CORBA::ORB_ptr orb
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                        CORBA::ORB_ptr orb);
 
 
     // ------------------- CIAO Internal Operations ------------------------
     // These below two are helper methods to clean up components
     // should only be called when we are sure that there is no
     // active connection on this component.
-    virtual void remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void remove_components ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
-    virtual void remove_component (const char * comp_ins_name
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void remove_component (const char * comp_ins_name)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::RemoveFailure));
 
     /// Set the cached object reference.
-    void set_objref (Deployment::Container_ptr o
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    void set_objref (Deployment::Container_ptr o);
 
     /// Get the cached object reference.  This operation will invoke
     /// _this if there's no cached reference available.  Notice that
@@ -163,7 +155,7 @@ namespace CIAO
     /// @@ Gan, caller should own memory. In this case you shoudl
     /// return a duplicate OR add a const to the operation
     /// signature. This is simply bad programming.
-    Deployment::Container_ptr get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    Deployment::Container_ptr get_objref ();
 
 protected:
     /// Keep a pointer to the managing ORB serving this servant.

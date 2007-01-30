@@ -48,11 +48,10 @@ namespace TAO
   Asynch_Invocation_Adapter::invoke (
     Messaging::ReplyHandler_ptr reply_handler_ptr,
     const TAO_Reply_Handler_Skeleton &reply_handler_skel
-    ACE_ENV_ARG_DECL)
+    )
   {
     TAO_Stub * stub =
-      this->get_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->get_stub ();
 
     if (TAO_debug_level >= 4)
       {
@@ -99,24 +98,22 @@ namespace TAO
 
         if (rd == 0)
           {
-            ACE_THROW (CORBA::NO_MEMORY ());
+            throw ::CORBA::NO_MEMORY ();
           }
 
         this->safe_rd_.reset (rd);
       }
 
-    Invocation_Adapter::invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    Invocation_Adapter::invoke (0, 0);
   }
 
   void
   Asynch_Invocation_Adapter::invoke (
     TAO::Exception_Data *ex,
     unsigned long ex_count
-    ACE_ENV_ARG_DECL)
+    )
   {
-    Invocation_Adapter::invoke (ex, ex_count  ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    Invocation_Adapter::invoke (ex, ex_count );
   }
 
   Invocation_Status
@@ -125,7 +122,7 @@ namespace TAO
     TAO_Operation_Details &details,
     CORBA::Object_var &effective_target,
     Collocation_Strategy strat
-    ACE_ENV_ARG_DECL)
+    )
   {
     // When doing a collocation asynch invocation we shouldn't use the
     // stub args but use the skel args
@@ -135,7 +132,7 @@ namespace TAO
                                                     details,
                                                     effective_target,
                                                     strat
-                                                    ACE_ENV_ARG_PARAMETER);
+                                                   );
   }
 
   Invocation_Status
@@ -144,7 +141,7 @@ namespace TAO
     CORBA::Object_var &effective_target,
     Profile_Transport_Resolver &r,
     ACE_Time_Value *&max_wait_time
-    ACE_ENV_ARG_DECL)
+    )
   {
     // Simple sanity check
     if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION
@@ -172,8 +169,7 @@ namespace TAO
             this->safe_rd_->schedule_timer (
                 op.request_id (),
                 *max_wait_time
-                ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+               );
           }
       }
 
@@ -186,8 +182,7 @@ namespace TAO
 
     Invocation_Status const s =
       asynch.remote_invocation (max_wait_time
-                                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                               );
 
     if (s == TAO_INVOKE_RESTART &&
         asynch.is_forwarded ())
@@ -204,8 +199,7 @@ namespace TAO
         this->object_forwarded (effective_target,
                                 r.stub (),
                                 permanent_forward
-                                ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+                               );
       }
 
     return s;

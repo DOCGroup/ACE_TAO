@@ -72,21 +72,16 @@ main (int argc, char *argv [])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var manager_object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (manager_object.in ());
 
       CORBA::Any sync_scope;
       sync_scope <<= Messaging::SYNC_WITH_TARGET;
@@ -95,17 +90,12 @@ main (int argc, char *argv [])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_scope
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            sync_scope);
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            CORBA::SET_OVERRIDE);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -113,27 +103,22 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Get the event channel object reference
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Server_var server =
-        Test::Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Server::_narrow (object.in ());
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR ((LM_ERROR,
@@ -145,11 +130,9 @@ main (int argc, char *argv [])
 
       Callback_i callback_i (iterations);
 
-      Test::Callback_var callback = callback_i._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Test::Callback_var callback = callback_i._this ();
 
-      server->set_callback (callback.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->set_callback (callback.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Connected callback\n"));
 
@@ -160,8 +143,7 @@ main (int argc, char *argv [])
       while (!callback_i.done () || !task.done ())
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->run (tv);
         }
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
@@ -190,22 +172,17 @@ main (int argc, char *argv [])
                                              end - start,
                                              stats.samples_count ());
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       PortableServer::ObjectId_var id =
-        root_poa->servant_to_id (&callback_i ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      root_poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->servant_to_id (&callback_i);
+      root_poa->deactivate_object (id.in ());
+      orb->destroy ();
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, argv[0]);
+      ex._tao_print_exception (argv[0]);
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -267,13 +244,12 @@ int
 Task::svc (void)
 {
   Test::Payload payload(1024); payload.length(1024);
-  ACE_TRY_NEW_ENV
+  try
     {
       for (;;)
         {
           Test::TimeStamp creation = ACE_OS::gethrtime ();
-          this->server_->request (creation, payload ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_->request (creation, payload);
 
           // ACE_Time_Value tv (0, 5000);
           // ACE_OS::sleep (tv);
@@ -285,11 +261,10 @@ Task::svc (void)
             return 0;
         }
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Task::svc");
+      ex._tao_print_exception ("Task::svc");
       this->remaining_messages_ = 0;
     }
-  ACE_ENDTRY;
   return 0;
 }

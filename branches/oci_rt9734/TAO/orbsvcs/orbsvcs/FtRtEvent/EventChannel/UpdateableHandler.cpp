@@ -23,35 +23,29 @@ UpdateableHandler::~UpdateableHandler()
 
 FTRT::AMI_UpdateableHandler_ptr UpdateableHandler::activate(
   Update_Manager* mgr, int id,
-  PortableServer::ObjectId& object_id
-  ACE_ENV_ARG_DECL)
+  PortableServer::ObjectId& object_id)
 {
   object_id.length(sizeof(mgr) + sizeof(id));
   memcpy(object_id.get_buffer(), &mgr, sizeof(mgr));
   memcpy(object_id.get_buffer() + sizeof(mgr), &id, sizeof(id));
   strategy_->poa()->activate_object_with_id(object_id,
-                                            this
-                                            ACE_ENV_ARG_PARAMETER);
+                                            this);
   CORBA::Object_var object = strategy_->poa()->id_to_reference(
-    object_id
-    ACE_ENV_ARG_PARAMETER);
+    object_id);
 
-  return FTRT::AMI_UpdateableHandler::_narrow(object.in() ACE_ENV_ARG_PARAMETER);
+  return FTRT::AMI_UpdateableHandler::_narrow(object.in());
 }
 
 
 
-void UpdateableHandler::dispatch(UpdateableHandler::Handler handler ACE_ENV_ARG_DECL)
+void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
 {
   PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(strategy_->orb(),
-    "POACurrent"
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    "POACurrent");
 
   PortableServer::ObjectId_var object_id =
-    current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    current->get_object_id();
 
   Update_Manager* mgr;
   int id;
@@ -67,34 +61,30 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler ACE_ENV_ARG_
 }
 
 void UpdateableHandler::set_update (
-                                    ACE_ENV_SINGLE_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                     ))
 {
   ACE_DEBUG((LM_DEBUG,"Received reply from "));
-  dispatch(&Update_Manager::handle_reply ACE_ENV_ARG_PARAMETER);
+  dispatch(&Update_Manager::handle_reply);
 }
 void UpdateableHandler::set_update_excep (
   ::Messaging::ExceptionHolder * excep_holder
-  ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
   ))
 {
   ACE_DEBUG((LM_DEBUG, "Received Exception from"));
-  ACE_TRY {
+  try{
     excep_holder->raise_exception();
-    ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A corba exception\n");
+  catch (const CORBA::Exception& ex){
+    ex._tao_print_exception ("A corba exception\n");
   }
-  ACE_ENDTRY;
 
-  dispatch(&Update_Manager::handle_exception ACE_ENV_ARG_PARAMETER);
+  dispatch(&Update_Manager::handle_exception);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

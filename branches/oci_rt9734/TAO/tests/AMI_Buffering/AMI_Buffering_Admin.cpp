@@ -13,22 +13,21 @@ AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)
 }
 
 CORBA::ULong
-AMI_Buffering_Admin::request_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Buffering_Admin::request_count (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_count_;
 }
 
 CORBA::ULong
-AMI_Buffering_Admin::bytes_received_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Buffering_Admin::bytes_received_count (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->bytes_received_count_;
 }
 
 void
-AMI_Buffering_Admin::request_received (CORBA::ULong payload_length
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+AMI_Buffering_Admin::request_received (CORBA::ULong payload_length)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->request_count_++;
@@ -36,15 +35,14 @@ AMI_Buffering_Admin::request_received (CORBA::ULong payload_length
 }
 
 void
-AMI_Buffering_Admin::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AMI_Buffering_Admin::flush (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-AMI_Buffering_Admin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+AMI_Buffering_Admin::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (0);
 }

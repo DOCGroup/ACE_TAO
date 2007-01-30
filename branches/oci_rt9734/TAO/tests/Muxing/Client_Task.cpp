@@ -27,20 +27,17 @@ Client_Task::svc (void)
   for (CORBA::ULong j = 0; j != payload.length (); ++j)
     payload[j] = (j % 256);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (int i = 0; i != this->event_count_; ++i)
         {
-          this->receiver_->receive_data (payload ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->receiver_->receive_data (payload);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }

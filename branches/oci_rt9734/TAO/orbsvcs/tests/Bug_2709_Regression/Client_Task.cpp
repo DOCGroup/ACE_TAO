@@ -21,7 +21,7 @@ Client_Task::Client_Task (CORBA::ORB_ptr corb,
 }
 
 CORBA::Object_ptr
-Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version ACE_ENV_ARG_DECL)
+Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version)
 {
   CORBA::Object_var remote_server(
     corb_->string_to_object (ACE_CString(file_prefix + this->server_ior_file_).c_str()));
@@ -29,7 +29,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   if (CORBA::is_nil (remote_server.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Error: Remote server is not started.\n"));
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   CORBA::Object_var collocated_server(
@@ -38,7 +38,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   if (CORBA::is_nil (collocated_server.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Error: Collocated server is not started.\n"));
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   FT::TagFTGroupTaggedComponent ft_tag_component;
@@ -50,8 +50,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
   iors [1] = CORBA::Object::_duplicate (collocated_server.ptr());
 
   CORBA::Object_var new_ref =
-    this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->iorm_->merge_iors (iors);
 
   // Property values
 
@@ -73,17 +72,13 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
 
   // Set the property
   CORBA::Boolean retval = this->iorm_->set_property (&iogr_prop,
-                                              new_ref.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                              new_ref.in ());
 
   // Set the primary
   // See we are setting the second ior as the primary
   retval = this->iorm_->set_primary (&iogr_prop,
                               remote_server.in (),
-                              new_ref.in ()
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                              new_ref.in ());
 
   return new_ref._retn ();
 }
@@ -91,34 +86,27 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
 /// Thread entry point
 int Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Get a ref to the IORManipulation object
       CORBA::Object_var IORM =
         corb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-        0
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        0);
 
       // Narrow
       this->iorm_ =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1);
 
       CORBA::String_var iorgr_string =
-        corb_->object_to_string (iogr.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        corb_->object_to_string (iogr.in ());
 
       CORBA::Object_var object =
-        corb_->string_to_object (iorgr_string.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        corb_->string_to_object (iorgr_string.in ());
 
       Test_var server =
-        Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -130,15 +118,13 @@ int Client_Task::svc (void)
         corb_->string_to_object (ACE_CString(file_prefix + this->server_ior_file_).c_str()));
 
       Test_var remote_server_as_test =
-        Test::_narrow (remote_server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (remote_server.in ());
 
       CORBA::Object_var collocated_server(
         corb_->string_to_object (ACE_CString(file_prefix + this->collocated_ior_file_).c_str()));
 
       Test_var collocated_server_as_test =
-        Test::_narrow (collocated_server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (collocated_server.in ());
 
       if (!collocated_server->_is_collocated())
         { // Collocation is disabled, just skip the test - it has no sense.
@@ -146,37 +132,30 @@ int Client_Task::svc (void)
         }
       else
         {
-          ACE_TRY_NEW_ENV
+          try
           {
             // Following call will fail if the problem is not fixed.
 
             // Because we are using TRANSIENT objects with the SYSTEM_ID policy
             // the object keys won't match so the POA won't be able to dispatch locally.
             // This wouldn't work with 'direct' collocation strategy but the default is 'through poa'.
-            server->myMethod (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            server->myMethod ();
           }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
           {
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-              "Exception caught in client task:");
+            ex._tao_print_exception ("Exception caught in client task:");
           }
-          ACE_ENDTRY;
         }
 
-      remote_server_as_test->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      remote_server_as_test->shutdown();
 
-      collocated_server_as_test->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      collocated_server_as_test->shutdown();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Exception caught in client task:");
+      ex._tao_print_exception ("Exception caught in client task:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

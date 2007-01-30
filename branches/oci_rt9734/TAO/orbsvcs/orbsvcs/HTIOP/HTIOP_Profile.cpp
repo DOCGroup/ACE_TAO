@@ -114,8 +114,7 @@ TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO::HTIOP::Profile::parse_string_i (const char *ior
-                                   ACE_ENV_ARG_DECL)
+TAO::HTIOP::Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port#token/" part of the objref
   // Copy the string because we are going to modify it...
@@ -125,11 +124,11 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
   if (okd == 0 || okd == ior)
     {
       // No object key delimiter or no hostname specified.
-      ACE_THROW (CORBA::INV_OBJREF
-                 (CORBA::SystemException::_tao_minor_code
-                  (TAO::VMCID,
-                   EINVAL),
-                  CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF(
+        CORBA::SystemException::_tao_minor_code(
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Length of host string.
@@ -140,11 +139,11 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
   if (cp_pos == ior)
     {
       // No hostname specified!  It is required by the spec.
-      ACE_THROW (CORBA::INV_OBJREF
-                 (CORBA::SystemException::_tao_minor_code
-                  (TAO::VMCID,
-                   EINVAL),
-                  CORBA::COMPLETED_NO));
+      throw CORBA::INV_OBJREF(
+        CORBA::SystemException::_tao_minor_code(
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
   else if (cp_pos != 0)
     {
@@ -194,11 +193,11 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior
                         ACE_TEXT ("cannot determine hostname")));
 
           // @@ What's the right exception to throw here?
-          ACE_THROW (CORBA::INV_OBJREF
-                     (CORBA::SystemException::_tao_minor_code
-                      (TAO::VMCID,
-                       EINVAL),
-                      CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF(
+            CORBA::SystemException::_tao_minor_code(
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
       else
         this->endpoint_.host_ = CORBA::string_dup (tmp_host);
@@ -236,8 +235,7 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO::HTIOP::Profile::hash (CORBA::ULong max
-                         ACE_ENV_ARG_DECL_NOT_USED)
+TAO::HTIOP::Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -285,7 +283,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
 }
 
 char *
-TAO::HTIOP::Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::HTIOP::Profile::to_string (void)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

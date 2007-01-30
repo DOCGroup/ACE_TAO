@@ -45,8 +45,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   /// = inteface Job method implementation.
   virtual void work (CORBA::ULong work,
-         CORBA::Short importance
-         ACE_ENV_ARG_DECL)
+         CORBA::Short importance)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -56,7 +55,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   void dump_stats (void);
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

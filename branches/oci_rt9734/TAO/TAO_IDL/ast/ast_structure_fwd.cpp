@@ -69,6 +69,9 @@ AST_StructureFwd::set_full_definition (AST_Structure *nfd)
   delete this->pd_full_definition;
   this->pd_full_definition = 0;
   this->pd_full_definition = nfd;
+
+  // In case it's not already set.
+  this->is_defined_ = true;
 }
 
 bool

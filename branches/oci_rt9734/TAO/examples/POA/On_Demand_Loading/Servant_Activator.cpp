@@ -19,8 +19,8 @@
 
 #include "Servant_Activator.h"
 
-ACE_RCSID (On_Demand_Loading, 
-           Servant_Activator, 
+ACE_RCSID (On_Demand_Loading,
+           Servant_Activator,
            "$Id$")
 
 // Initialization.
@@ -34,8 +34,7 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb)
 
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
-                               PortableServer::POA_ptr poa
-                               ACE_ENV_ARG_DECL)
+                               PortableServer::POA_ptr poa)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -62,8 +61,7 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
                                  PortableServer::POA_ptr,
                                  PortableServer::Servant servant,
                                  CORBA::Boolean,
-                                 CORBA::Boolean remaining_activations
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+                                 CORBA::Boolean remaining_activations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated

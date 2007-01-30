@@ -43,8 +43,7 @@ PortableServer::Servant
 Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr /* poa_ptr */,
                             const char * /*operation*/,
-                            PortableServer::ServantLocator::Cookie & /* cookie */
-                            ACE_ENV_ARG_DECL)
+                            PortableServer::ServantLocator::Cookie & /* cookie */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -60,9 +59,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
 
   // Combined IOR stuff
   Simple_Server_var server =
-    Simple_Server::_narrow (this->objref_.in ()
-                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    Simple_Server::_narrow (this->objref_.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "Got the narrowed secondary server too... \n"));
@@ -81,8 +78,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              PortableServer::POA_ptr ,
                              const char *,
                              PortableServer::ServantLocator::Cookie ,
-                             PortableServer::Servant
-                             ACE_ENV_ARG_DECL_NOT_USED)
+                             PortableServer::Servant)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

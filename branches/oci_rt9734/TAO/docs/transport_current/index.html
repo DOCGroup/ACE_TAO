@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
-<!-- $Id:$ -->
+<!-- $Id$ -->
 
 <HTML>
 <HEAD>
@@ -469,13 +469,10 @@ functionality is being used.
 <P>
 It is possible at build time, to
 disable the functionality, so that applications only incur the penalty
-if they require it. The ORB, by default will not support the Transport Current functionality. 
-Use the following #define (in your config.h file) to enable it:
+if they require the features. The ORB, by default enables the Transport::Current 
+functionality. Adding "transport_current=0" to your default.features file will 
+disable it.
 </P>
-
-<PRE>
-#define TAO_HAS_TRANSPORT_CURRENT 1
-</PRE>
 
 <H3>
 Example Code

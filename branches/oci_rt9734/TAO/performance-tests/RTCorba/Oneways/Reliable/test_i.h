@@ -31,19 +31,16 @@ public:
   // ctor
 
   // = The Test methods.
-  void oneway_payload_test (const Test::data &d
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void oneway_payload_test (const Test::data &d)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void oneway_work_test (CORBA::ULong work
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void oneway_work_test (CORBA::ULong work)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_work_test (CORBA::ULong work
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void twoway_work_test (CORBA::ULong work)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

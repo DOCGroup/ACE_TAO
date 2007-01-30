@@ -65,23 +65,22 @@ public:
   // Constructor
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   // Method to initialize the various data components.
 
-  int pace_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int pace_data (void);
   // Method to pace and send data from a file.
 
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
   // Set the protocol object corresponding to the transport protocol chosen.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
 
 private:
   int parse_args (int argc, char **argv);
   // Method to parse the command line arguments.
 
-  int bind_to_receiver (ACE_ENV_SINGLE_ARG_DECL);
+  int bind_to_receiver (void);
   // Method that binds the sender to the receiver.
 
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;

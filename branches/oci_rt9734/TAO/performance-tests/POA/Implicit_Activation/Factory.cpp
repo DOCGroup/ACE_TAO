@@ -12,23 +12,22 @@ Factory::Factory (CORBA::ORB_ptr orb)
 }
 
 Test::Simple_ptr
-Factory::create_simple_object (ACE_ENV_SINGLE_ARG_DECL)
+Factory::create_simple_object (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple *simple_impl;
   ACE_NEW_THROW_EX (simple_impl,
                     Simple,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Simple::_nil ());
 
   PortableServer::ServantBase_var owner_transfer(simple_impl);
 
-  return simple_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return simple_impl->_this ();
 }
 
 void
-Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Factory::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

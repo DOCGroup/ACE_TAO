@@ -37,14 +37,13 @@ public:
   // Destructor.
 
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
   // Initialize the Server state - parsing arguments and waiting.
 
   int add_IOR_to_table (CORBA::String_var ior);
   // Add an IOR to the ORB-IOR table.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
 protected:

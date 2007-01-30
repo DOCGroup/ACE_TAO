@@ -13,14 +13,11 @@ namespace TAO
 
 void CompressionManager::register_factory (
   ::Compression::CompressorFactory_ptr compressor_factory)
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException,
-            ::Compression::FactoryAlreadyRegistered
-          ))
+    ACE_THROW_SPEC ((::CORBA::SystemException, ::Compression::FactoryAlreadyRegistered))
 {
   if (!::CORBA::is_nil (compressor_factory))
     {
-      ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
       CORBA::ULong const length = this->factories_.length ();
 
@@ -31,7 +28,7 @@ void CompressionManager::register_factory (
 
           if (compressor_factory->compressor_id () == current)
             {
-              ACE_THROW (::Compression::FactoryAlreadyRegistered ());
+              throw ::Compression::FactoryAlreadyRegistered ();
             }
         }
       factories_.length (length + 1);
@@ -40,8 +37,7 @@ void CompressionManager::register_factory (
   else
     {
       // @todo Standardize this minor code
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 44,
-                                   CORBA::COMPLETED_YES));
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 44, CORBA::COMPLETED_NO);
     }
 }
 
@@ -53,7 +49,7 @@ CompressionManager::unregister_factory (
             ::Compression::UnknownCompressorId
           ))
 {
-  ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
   CORBA::ULong const length = this->factories_.length ();
 
@@ -74,7 +70,7 @@ CompressionManager::unregister_factory (
     }
 
   // todo exception
-  ACE_THROW (::Compression::UnknownCompressorId ());
+  throw ::Compression::UnknownCompressorId ();
 }
 
 ::Compression::CompressorFactory_ptr
@@ -85,15 +81,15 @@ CompressionManager::get_factory (
             ::Compression::UnknownCompressorId
           ))
 {
-  ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_,
+    ::Compression::CompressorFactory::_nil ());
 
   CORBA::ULong const length = this->factories_.length ();
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       ::Compression::CompressorId const current =
-        this->factories_[i]->compressor_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        this->factories_[i]->compressor_id ();
 
       if (current != compressor_id)
         {
@@ -103,16 +99,13 @@ CompressionManager::get_factory (
       return ::Compression::CompressorFactory::_duplicate (this->factories_[i]);
     }
 
-  ACE_THROW (::Compression::UnknownCompressorId ());
-
-  ACE_NOTREACHED (return ::Compression::CompressorFactory::_nil ());
+  throw ::Compression::UnknownCompressorId ();
 }
 
 ::Compression::Compressor_ptr
 CompressionManager::get_compressor (
             ::Compression::CompressorId compressor_id,
-            ::Compression::CompressionLevel compression_level
-          )
+            ::Compression::CompressionLevel compression_level)
           ACE_THROW_SPEC ((
             ::CORBA::SystemException,
             ::Compression::UnknownCompressorId
@@ -124,11 +117,8 @@ CompressionManager::get_compressor (
 }
 
 ::Compression::CompressorFactorySeq *
-CompressionManager::get_factories (
-          )
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException
-          ))
+CompressionManager::get_factories (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   // todo
   return 0;

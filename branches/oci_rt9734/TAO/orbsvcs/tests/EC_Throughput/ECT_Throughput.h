@@ -43,8 +43,7 @@ public:
   int run (int argc, char* argv[]);
   // Execute the test.
 
-  virtual void shutdown_consumer (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void shutdown_consumer (void* consumer_cookie);
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
@@ -54,18 +53,16 @@ private:
   // parse the command line args
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_consumers (void);
   // Connect and disconnect the consumers.
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
-                          RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          ACE_ENV_ARG_DECL);
-  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec);
+  void disconnect_suppliers (void);
   // Connect the suppliers.
 
-  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers (void);
   // Activate the suppliers, i.e. they start generating events.
 
   void dump_results (void);

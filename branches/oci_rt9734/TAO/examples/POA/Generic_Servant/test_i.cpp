@@ -15,19 +15,19 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-test_i::oneway_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::oneway_method (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -49,8 +49,7 @@ test_i::sleep (CORBA::ULong timeout,
 }
 
 void
-test_i::timed_method (CORBA::ULong timeout
-                      ACE_ENV_ARG_DECL_NOT_USED)
+test_i::timed_method (CORBA::ULong timeout)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->sleep (timeout,
@@ -58,8 +57,7 @@ test_i::timed_method (CORBA::ULong timeout
 }
 
 void
-test_i::timed_oneway_method (CORBA::ULong timeout
-                             ACE_ENV_ARG_DECL_NOT_USED)
+test_i::timed_oneway_method (CORBA::ULong timeout)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->sleep (timeout,
@@ -67,12 +65,10 @@ test_i::timed_oneway_method (CORBA::ULong timeout
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (0);
 }
 
 

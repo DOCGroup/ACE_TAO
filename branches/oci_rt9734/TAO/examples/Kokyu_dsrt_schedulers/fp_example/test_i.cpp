@@ -14,7 +14,7 @@
 ACE_RCSID(MT_Server, test_i, "$Id$")
 
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
+Simple_Server_i::test_method (CORBA::Long exec_duration)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hthread_t thr_handle;
@@ -24,8 +24,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   ACE_OS::
     memcpy (&guid,
-            this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->get_buffer (),
-            sizeof (this->current_->id (ACE_ENV_SINGLE_ARG_PARAMETER)->length ()));
+            this->current_->id ()->get_buffer (),
+            sizeof (this->current_->id ()->length ()));
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -95,15 +95,14 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
             {
               CORBA::Policy_var sched_param_policy =
                 CORBA::Policy::_duplicate (current_->
-                                           scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
+                                           scheduling_parameter());
 
               const char * name = 0;
 
               CORBA::Policy_ptr implicit_sched_param = 0;
               current_->update_scheduling_segment (name,
                                                    sched_param_policy.in (),
-                                                   implicit_sched_param
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                   implicit_sched_param);
               yield_count_down_time = yield_interval;
               yield_count_down.start ();
             }
@@ -122,9 +121,9 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Simple_Server_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

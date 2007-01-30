@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Stub *
-TAO_Local_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Local_ServantBase::_create_stub (void)
 {
   return 0;
 }

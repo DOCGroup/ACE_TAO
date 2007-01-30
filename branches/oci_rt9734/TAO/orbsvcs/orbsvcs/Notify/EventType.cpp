@@ -163,18 +163,16 @@ bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
   // TAO_Notify::Topology_Object
 
 void
-TAO_Notify_EventType::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventType::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   TAO_Notify::NVPList attrs;
   bool changed = true;
 
   attrs.push_back(TAO_Notify::NVP("Domain", this->event_type_.domain_name.in()));
   attrs.push_back(TAO_Notify::NVP("Type", this->event_type_.type_name.in()));
-  saver.begin_object(0, "subscription", attrs, changed ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  saver.begin_object(0, "subscription", attrs, changed);
 
-  saver.end_object(0, "subscription" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  saver.end_object(0, "subscription");
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

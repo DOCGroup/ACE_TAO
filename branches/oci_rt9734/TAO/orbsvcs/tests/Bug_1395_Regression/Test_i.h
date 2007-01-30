@@ -18,12 +18,12 @@ public:
    ~Test_i (void);
 
    /// Try and create a persistant POA
-   int try_and_create_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+   int try_and_create_POA (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
-      
-   void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+
+   void shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
 protected:
    CORBA::ORB_var orb_;
    PortableServer::POA_var root_poa_;

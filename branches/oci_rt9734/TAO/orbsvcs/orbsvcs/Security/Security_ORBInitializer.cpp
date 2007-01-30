@@ -22,16 +22,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Security::ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // allocate_tss_slot_id() TAO extension.
   TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -42,17 +39,15 @@ TAO::Security::ORBInitializer::pre_init (
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo_ptr.\"\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
 //   // Reserve a TSS slot in the ORB core internal TSS resources for the
 //   // thread-specific portion of Security::Current.
 //   size_t old_tss_slot = tao_info->allocate_tss_slot_id (0
-//                                                         ACE_ENV_ARG_PARAMETER);
-//   ACE_CHECK;
+//);
 
-//   CORBA::String_var orb_id = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-//   ACE_CHECK;
+//   CORBA::String_var orb_id = info->orb_id ();
 
 //   // Create the SecurityLevel2::Current object.
 //   SecurityLevel2::Current_ptr current = SecurityLevel2::Current::_nil ();
@@ -63,7 +58,6 @@ TAO::Security::ORBInitializer::pre_init (
 //                         TAO::VMCID,
 //                         ENOMEM),
 //                       CORBA::COMPLETED_NO));
-//   ACE_CHECK;
 
 //   SecurityLevel2::Current_var security_current = current;
 
@@ -71,15 +65,12 @@ TAO::Security::ORBInitializer::pre_init (
 //   // ORB.
 //   info->register_initial_reference ("SecurityCurrent",
 //                                     security_current.in ()
-//                                     ACE_ENV_ARG_PARAMETER);
-//   ACE_CHECK;
+//);
 
   // Reserve a TSS slot in the ORB core internal TSS resources for the
   // thread-specific portion of SecurityLevel3::SecurityCurrent
   // object.
-  size_t tss_slot = tao_info->allocate_tss_slot_id (0
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  size_t tss_slot = tao_info->allocate_tss_slot_id (0);
 
 
   // Create the SecurityLevel3::Current object.
@@ -92,16 +83,13 @@ TAO::Security::ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   SecurityLevel3::SecurityCurrent_var security_current3 = current3;
 
   // Register the SecurityLevel2::Current object reference with the
   // ORB.
   info->register_initial_reference ("SecurityLevel3:SecurityCurrent",
-                                    security_current3.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                    security_current3.in ());
 
   // Create the SecurityLevel3::CredentialsCurator object.
   SecurityLevel3::CredentialsCurator_ptr curator;
@@ -112,16 +100,13 @@ TAO::Security::ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   SecurityLevel3::CredentialsCurator_var credentials_curator = curator;
 
   // Register the SecurityLevel3::CredentialsCurator object reference
   // with the ORB.
   info->register_initial_reference ("SecurityLevel3:CredentialsCurator",
-                                    credentials_curator.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                    credentials_curator.in ());
 
   // Create the SecurityLevel3::SecurityManager object.
   SecurityLevel3::SecurityManager_ptr manager3;
@@ -132,33 +117,26 @@ TAO::Security::ORBInitializer::pre_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   SecurityLevel3::SecurityManager_var security_manager3 = manager3;
 
   // Register the SecurityLevel3::SecurityManager object reference
   // with the ORB.
   info->register_initial_reference ("SecurityLevel3:SecurityManager",
-                                    security_manager3.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                    security_manager3.in ());
 }
 
 void
 TAO::Security::ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 }
 
 void
 TAO::Security::ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Register the security policy factories.
 
@@ -172,7 +150,6 @@ TAO::Security::ORBInitializer::register_policy_factories (
                               TAO::VMCID,
                               ENOMEM),
                             CORBA::COMPLETED_NO));
-      ACE_CHECK;
 
       this->policy_factory_ = policy_factory;
     }
@@ -185,53 +162,37 @@ TAO::Security::ORBInitializer::register_policy_factories (
 
   type = ::Security::SecQOPPolicy;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
   type = ::Security::SecMechanismsPolicy;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
   type = ::Security::SecInvocationCredentialsPolicy;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
   type = ::Security::SecFeaturePolicy;   // Deprecated
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
   type = ::Security::SecDelegationDirectivePolicy;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
   type = ::Security::SecEstablishTrustPolicy;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
 
   type = SecurityLevel3::ContextEstablishmentPolicyType;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
 
   type = SecurityLevel3::ObjectCredentialsPolicyType;
   info->register_policy_factory (type,
-                                 this->policy_factory_.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 this->policy_factory_.in ());
 
 
   // ----------------------------------------------------------------

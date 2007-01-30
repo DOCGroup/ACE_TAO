@@ -55,32 +55,27 @@ TAO_Notify_Lanes_Consumer_Client::parse_args (int argc, char *argv[])
 }
 
 void
-TAO_Notify_Lanes_Consumer_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer_Client::initialize (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Initializing Consumer Client with lane priority = %d, event type = (%s)\n"
               , this->lane_priority_, this->event_type_.c_str ()));
 
   PortableServer::POAManager_var poa_manager =
-    this->orb_objects_.root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_objects_.root_poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager->activate ();
 
   // Resolve the Notification Factory.
-  CosNotifyChannelAdmin::EventChannelFactory_var ecf = this->orb_objects_.notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyChannelAdmin::EventChannelFactory_var ecf = this->orb_objects_.notify_factory ();
 
   // Find the EventChannel created by the supplier.
-  CosNotifyChannelAdmin::ChannelIDSeq_var channel_seq = ecf->get_all_channels (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyChannelAdmin::ChannelIDSeq_var channel_seq = ecf->get_all_channels ();
 
   CosNotifyChannelAdmin::EventChannel_var ec;
 
   if (channel_seq->length() > 0)
     {
-      ec = ecf->get_event_channel (channel_seq[0] ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ec = ecf->get_event_channel (channel_seq[0]);
     }
   else
     {
@@ -92,23 +87,21 @@ TAO_Notify_Lanes_Consumer_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
   CosNotifyChannelAdmin::AdminID adminid = 0;
 
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP, adminid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin.in ()));
 
-  PortableServer::POA_var rt_poa = this->create_rt_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  PortableServer::POA_var rt_poa = this->create_rt_poa ();
 
   // Create a Consumer
   this->consumer_ = new TAO_Notify_Lanes_Consumer (this->orb_objects_);
 
   // Initialize it.
-  this->consumer_->init (rt_poa, consumer_admin, this->event_type_ ACE_ENV_ARG_PARAMETER);
+  this->consumer_->init (rt_poa, consumer_admin, this->event_type_);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Lanes_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer_Client::create_rt_poa (void)
 {
   PortableServer::POA_var rt_poa;
 
@@ -117,15 +110,12 @@ TAO_Notify_Lanes_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Policy_var lanes_policy;
 
   CORBA::Policy_var activation_policy =
-    this->orb_objects_.root_poa_->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rt_poa._retn ());
+    this->orb_objects_.root_poa_->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
   // Create a priority model policy.
   priority_model_policy =
     this->orb_objects_.rt_orb_->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED
-                                                              , 0
-                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rt_poa._retn ());
+                                                              , 0);
 
   RTCORBA::ThreadpoolLanes lanes (1);
   lanes.length (1);
@@ -149,15 +139,11 @@ TAO_Notify_Lanes_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
                                                               allow_borrowing,
                                                               allow_request_buffering,
                                                               max_buffered_requests,
-                                                              max_request_buffer_size
-                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rt_poa._retn ());
+                                                              max_request_buffer_size);
 
   // Create a thread-pool policy.
   lanes_policy =
-    this->orb_objects_.rt_orb_->create_threadpool_policy (threadpool_id
-                                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rt_poa._retn ());
+    this->orb_objects_.rt_orb_->create_threadpool_policy (threadpool_id);
 
   CORBA::PolicyList poa_policy_list;
 
@@ -167,46 +153,38 @@ TAO_Notify_Lanes_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
   poa_policy_list[2] = lanes_policy;
 
   PortableServer::POAManager_var poa_manager =
-    this->orb_objects_.root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rt_poa._retn ());
+    this->orb_objects_.root_poa_->the_POAManager ();
 
   rt_poa = this->orb_objects_.root_poa_->create_POA ("RT POA!",
                                                      poa_manager.in (),
-                                                     poa_policy_list
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (rt_poa._retn ());
+                                                     poa_policy_list);
 
   return rt_poa._retn ();
 }
 
 void
-TAO_Notify_Lanes_Consumer_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer_Client::run (void)
 {
-  this->consumer_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_->run ();
 }
 
 int
 TAO_Notify_Lanes_Consumer_Client::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize this threads priority.
-      this->orb_objects_.current_->the_priority (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_objects_.current_->the_priority (0);
 
-      this->initialize (ACE_ENV_SINGLE_ARG_PARAMETER); //Init the Client
-      ACE_TRY_CHECK;
+      this->initialize (); //Init the Client
 
-      this->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          ACE_TEXT ("Supplier error "));
+      ex._tao_print_exception (ACE_TEXT ("Supplier error "));
 
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -214,19 +192,16 @@ TAO_Notify_Lanes_Consumer_Client::svc (void)
 int
 main (int argc, char *argv [])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize an ORB
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ""
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "");
 
       TAO_Notify_ORB_Objects orb_objects;
 
-      orb_objects.init (orb ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_objects.init (orb);
 
       TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
 
@@ -258,12 +233,10 @@ main (int argc, char *argv [])
       orb_run_task.thr_mgr ()->wait ();
       client.thr_mgr ()->wait ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          ACE_TEXT ("Consumer Client error "));
+      ex._tao_print_exception (ACE_TEXT ("Consumer Client error "));
     }
-  ACE_ENDTRY;
 
   return 0;
 }

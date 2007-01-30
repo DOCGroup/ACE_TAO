@@ -67,8 +67,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    for_each (TAO_ESF_Worker<PROXY> *worker
-              ACE_ENV_ARG_DECL)
+    for_each (TAO_ESF_Worker<PROXY> *worker)
 {
   Read_Guard ace_mon (this->mutex_,
                       this->collection_);
@@ -77,15 +76,13 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   ITERATOR end = ace_mon.collection->collection.end ();
   for (ITERATOR i = ace_mon.collection->collection.begin (); i != end; ++i)
     {
-      worker->work (*i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      worker->work (*i);
     }
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    connected (PROXY *proxy
-               ACE_ENV_ARG_DECL)
+    connected (PROXY *proxy)
 {
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
@@ -94,13 +91,12 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                        this->collection_);
 
   proxy->_incr_refcnt ();
-  ace_mon.copy->collection.connected (proxy ACE_ENV_ARG_PARAMETER);
+  ace_mon.copy->collection.connected (proxy);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    reconnected (PROXY *proxy
-                 ACE_ENV_ARG_DECL)
+    reconnected (PROXY *proxy)
 {
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
@@ -109,13 +105,12 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                        this->collection_);
 
   proxy->_incr_refcnt ();
-  ace_mon.copy->collection.reconnected (proxy ACE_ENV_ARG_PARAMETER);
+  ace_mon.copy->collection.reconnected (proxy);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    disconnected (PROXY *proxy
-                  ACE_ENV_ARG_DECL)
+    disconnected (PROXY *proxy)
 {
   Write_Guard ace_mon (this->mutex_,
                        this->cond_,
@@ -123,12 +118,12 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                        this->writing_,
                        this->collection_);
 
-  ace_mon.copy->collection.disconnected (proxy ACE_ENV_ARG_PARAMETER);
+  ace_mon.copy->collection.disconnected (proxy);
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
 TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    shutdown (void)
 {
   // We need to perform a copy to follow the protocol.
   Write_Guard ace_mon (this->mutex_,
@@ -137,7 +132,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
                        this->writing_,
                        this->collection_);
 
-  ace_mon.copy->collection.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ace_mon.copy->collection.shutdown ();
 }
 
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>

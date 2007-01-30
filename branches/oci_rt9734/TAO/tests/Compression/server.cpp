@@ -14,22 +14,20 @@ bool
 test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Get an invalid compression factory
       Compression::CompressorFactory_var factory =
         cm->get_factory (100);
-      ACE_TRY_CHECK;
     }
-  ACE_CATCH (Compression::UnknownCompressorId, ex)
+  catch (const Compression::UnknownCompressorId& ex)
     {
       ACE_UNUSED_ARG (ex);
       succeed = true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -47,21 +45,19 @@ test_duplicate_compression_factory (
   Compression::CompressorFactory_ptr cf)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Register duplicate
       cm->register_factory (cf);
-      ACE_TRY_CHECK;
     }
-  ACE_CATCH (Compression::FactoryAlreadyRegistered, ex)
+  catch (const Compression::FactoryAlreadyRegistered& ex)
     {
       ACE_UNUSED_ARG (ex);
       succeed = true;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -77,23 +73,21 @@ test_register_nil_compression_factory (
   Compression::CompressionManager_ptr cm)
 {
   bool succeed = false;
-  ACE_TRY_NEW_ENV
+  try
     {
       // Register nil factory
       cm->register_factory (Compression::CompressorFactory::_nil());
-      ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::BAD_PARAM, ex)
+  catch (const CORBA::BAD_PARAM& ex)
     {
       if ((ex.minor() & 0xFFFU) == 44)
         {
           succeed = true;
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (!succeed)
   {
@@ -109,11 +103,10 @@ int
 main (int argc, char *argv[])
 {
   int retval = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var compression_manager =
         orb->resolve_initial_references("CompressionManager");
@@ -171,16 +164,13 @@ main (int argc, char *argv[])
       if (!test_invalid_compression_factory (manager.in ()))
         retval = 1;
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       retval = 1;
     }
-  ACE_ENDTRY;
 
   return retval;
 }

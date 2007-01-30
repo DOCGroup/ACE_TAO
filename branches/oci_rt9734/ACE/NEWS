@@ -3,7 +3,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) OpenVMS 8.3 on IA64 port
 
-PLANNED CHANGES FOR "ACE-5.5.6"
+PLANNED CHANGES FOR "ACE-5.5.7"
 ===============================
 
 . (OO) Minor 64 bit file offset fixes for ACE AIO classes on HP-UX.
@@ -12,8 +12,23 @@ PLANNED CHANGES FOR "ACE-5.5.6"
 
 . (Riverace) Pharlap ETS 13 qualification.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5.5 and ACE-5.5.6
+====================================================
+
+. The ACE_TYPENAME macro has been added to those that are not
+  available when the ACE_LACKS_DEPRECATED_MACROS config option is set
+  (it is not set by default). You are encouraged to replace the use of
+  ACE_TYPENAME with the C++ typename keyword before the ACE_TYPENAME
+  macros is removed from ACE in the future.
+
+. A new script, rm_exception_macros.pl, has been added to help users
+  remove the use of the ACE exception macros from their own code.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.4 and ACE-5.5.5
 ====================================================
+
+. The prebuild MPC keyword is now supported by the gnuace project type.
+  This fixes Bugzilla #2713.
 
 . Support for Windows earlier than NT 4 SP2 was removed. ACE will not build
   for Windows 95, 98, Me, etc. out of the box any longer.

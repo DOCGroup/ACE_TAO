@@ -17,10 +17,10 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void test_method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -34,7 +34,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/* ACE_ENV_SINGLE_ARG_PARAMETER */)
+Test_i::test_method (/* */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -42,10 +42,10 @@ Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/* ACE_ENV_SINGLE_ARG_PARAM
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 //*************************************************************************
@@ -95,24 +95,19 @@ int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
-               const char *filename
-               ACE_ENV_ARG_DECL)
+               const char *filename)
 {
   // Register with poa.
   PortableServer::ObjectId_var id =
-    poa->activate_object (server_impl ACE_ENV_ARG_PARAMETER);
+    poa->activate_object (server_impl);
 
-  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var server =
-    poa->id_to_reference (id.in ()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    poa->id_to_reference (id.in ());
 
   // Print out the IOR.
   CORBA::String_var ior =
-    orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (server.in ());
 
   ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
 
@@ -135,12 +130,11 @@ create_object (PortableServer::POA_ptr poa,
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
@@ -148,18 +142,15 @@ main (int argc, char *argv[])
 
       // RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       // Servant.
       Test_i server_impl (orb.in ());
@@ -169,28 +160,23 @@ main (int argc, char *argv[])
       result = create_object (root_poa.in (),
                               orb.in (),
                               &server_impl,
-                              ior_output_file
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              ior_output_file);
       if (result == -1)
         return -1;
 
       // Run ORB Event loop.
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught in Explicit_Binding test server:");
+      ex._tao_print_exception (
+        "Unexpected exception caught in Explicit_Binding test server:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

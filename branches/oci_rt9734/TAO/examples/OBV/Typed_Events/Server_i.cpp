@@ -103,8 +103,7 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 
 
 void
-Checkpoint_i::put_event (Event *event
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Checkpoint_i::put_event (Event *event)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In general this function would be a dispatcher which looks at the
@@ -134,7 +133,7 @@ Checkpoint_i::put_event (Event *event
 
 
 Event_List *
-Checkpoint_i::get_critical_events (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Checkpoint_i::get_critical_events (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The skeleton should not steal our list by decrementing
@@ -151,7 +150,7 @@ Checkpoint_i::get_critical_events (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Shutdown the server application.
 
 void
-Checkpoint_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Checkpoint_i::shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

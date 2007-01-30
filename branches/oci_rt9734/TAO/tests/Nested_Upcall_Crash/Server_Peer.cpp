@@ -23,8 +23,7 @@ Server_Peer::Server_Peer (ACE_RANDR_TYPE seed,
 void
 Server_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
-                    Test::Payload const &
-                    ACE_ENV_ARG_DECL)
+                    Test::Payload const &)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   int r = ACE_OS::rand_r(this->seed_) % 50;
@@ -38,44 +37,38 @@ Server_Peer::callme(Test::Peer_ptr callback,
 
   if(r == 0)
   {
-    ACE_TRY
+    try
     {
-      callback->crash(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      callback->crash();
     }
-    ACE_CATCHANY
+    catch (const CORBA::Exception&)
     {
     }
-    ACE_ENDTRY;
 
-    // orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-    // ACE_CHECK;
+    // orb_->shutdown (0);
   }
   else if (max_depth > 0)
   {
     Test::Peer_var me =
-      this->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      this->_this();
 
     Test::Payload extra_data(this->payload_size_);
     extra_data.length(this->payload_size_);
     callback->callme(me.in(),
                      max_depth - 1,
-                     extra_data
-                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+                     extra_data);
   }
 }
 
 void
-Server_Peer::crash(ACE_ENV_SINGLE_ARG_DECL)
+Server_Peer::crash(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
-  ACE_THROW(CORBA::NO_IMPLEMENT ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-Server_Peer::noop(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_Peer::noop(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

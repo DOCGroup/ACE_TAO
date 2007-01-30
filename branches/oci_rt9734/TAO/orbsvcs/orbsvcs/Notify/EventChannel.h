@@ -65,39 +65,36 @@ public:
   /// Init
   void init (TAO_Notify_EventChannelFactory* ecf
              , const CosNotification::QoSProperties & initial_qos
-             , const CosNotification::AdminProperties & initial_admin
-             ACE_ENV_ARG_DECL);
+             , const CosNotification::AdminProperties & initial_admin);
 
   /// Init (for reload)
-  void init (TAO_Notify::Topology_Parent * parent
-             ACE_ENV_ARG_DECL);
+  void init (TAO_Notify::Topology_Parent * parent);
 
   /// Remove ConsumerAdmin from its container.
-  void remove (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_ConsumerAdmin* consumer_admin);
 
   /// Remove SupplierAdmin from its container.
-  void remove (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_SupplierAdmin* supplier_admin);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
   // TAO_Notify::Topology_Parent
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_Notify::NVPList& attrs
-                                                   ACE_ENV_ARG_DECL);
-  virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+                                                   const TAO_Notify::NVPList& attrs);
+  virtual void reconnect (void);
 
   virtual TAO_Notify_Object::ID get_id () const {return id();}
 
-  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
+  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
 
   /// Shutdown
-  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (void);
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
 private:
@@ -120,111 +117,105 @@ private:
 
   /// =CosNotifyChannelAdmin::EventChannel methods
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (ACE_ENV_SINGLE_ARG_DECL
+  virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (ACE_ENV_SINGLE_ARG_DECL
-
-  )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
-
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (ACE_ENV_SINGLE_ARG_DECL
+  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (
 
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (
+
+  )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+
+  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                                                        CosNotifyChannelAdmin::AdminID_out id
-                                                                        ACE_ENV_ARG_DECL)
+                                                                        CosNotifyChannelAdmin::AdminID_out id)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                                                                        CosNotifyChannelAdmin::AdminID_out id
-                                                                        ACE_ENV_ARG_DECL)
+                                                                        CosNotifyChannelAdmin::AdminID_out id)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr get_consumeradmin (CosNotifyChannelAdmin::AdminID id
-                                                                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::AdminNotFound
-                     ));
-
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr get_supplieradmin (CosNotifyChannelAdmin::AdminID id
-                                                                        ACE_ENV_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosNotifyChannelAdmin::AdminNotFound
                      ));
 
-  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , CosNotifyChannelAdmin::AdminNotFound
+                     ));
+
+  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosNotification::QoSProperties * get_qos (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotification::QoSProperties * get_qos (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void set_qos (const CosNotification::QoSProperties & qos
-                        ACE_ENV_ARG_DECL)
+  virtual void set_qos (const CosNotification::QoSProperties & qos)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosNotification::UnsupportedQoS
                      ));
 
   virtual void validate_qos (const CosNotification::QoSProperties & required_qos,
-                             CosNotification::NamedPropertyRangeSeq_out available_qos
-                             ACE_ENV_ARG_DECL)
+                             CosNotification::NamedPropertyRangeSeq_out available_qos)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosNotification::UnsupportedQoS
                      ));
 
-  virtual ::CosNotification::AdminProperties * get_admin (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosNotification::AdminProperties * get_admin (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void set_admin (const CosNotification::AdminProperties & admin ACE_ENV_ARG_DECL)
+  virtual void set_admin (const CosNotification::AdminProperties & admin)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , CosNotification::UnsupportedAdmin
                      ));
 
-  virtual ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  virtual ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

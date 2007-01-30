@@ -58,9 +58,9 @@ namespace TAO
 
       void update (Cached_Policies &policies,
                    TAO_Root_POA* poa
-                   ACE_ENV_ARG_DECL);
+                  );
 
-      void cleanup (ACE_ENV_SINGLE_ARG_DECL);
+      void cleanup (void);
 
       ThreadStrategy *thread_strategy (void) const;
 

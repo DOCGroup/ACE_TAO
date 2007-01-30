@@ -64,16 +64,14 @@ public:
 
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr
-                       ACE_ENV_ARG_DECL)
+      append_observer (RtecEventChannelAdmin::Observer_ptr)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
     = 0;
   virtual void remove_observer (
-                        RtecEventChannelAdmin::Observer_Handle
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::Observer_Handle)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
@@ -82,17 +80,13 @@ public:
 
   /// Used by the EC to inform the ObserverStrategy that a Consumer has
   /// connected or disconnected from it.
-  virtual void connected (TAO_EC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void connected (TAO_EC_ProxyPushConsumer*) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushConsumer*) = 0;
 
   /// Used by the EC to inform the ObserverStrategy that a Supplier has
   /// connected or disconnected from it.
-  virtual void connected (TAO_EC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED) = 0;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED) = 0;
+  virtual void connected (TAO_EC_ProxyPushSupplier*) = 0;
+  virtual void disconnected (TAO_EC_ProxyPushSupplier*) = 0;
 };
 
 // ****************************************************************
@@ -113,27 +107,21 @@ public:
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr
-                       ACE_ENV_ARG_DECL)
+      append_observer (RtecEventChannelAdmin::Observer_ptr)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
   virtual void remove_observer (
-                        RtecEventChannelAdmin::Observer_Handle
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::Observer_Handle)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
-  virtual void connected (TAO_EC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_EC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_EC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer*);
+  virtual void connected (TAO_EC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier*);
 };
 
 // ****************************************************************
@@ -166,27 +154,21 @@ public:
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr
-                       ACE_ENV_ARG_DECL)
+      append_observer (RtecEventChannelAdmin::Observer_ptr)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
   virtual void remove_observer (
-                        RtecEventChannelAdmin::Observer_Handle
-                        ACE_ENV_ARG_DECL)
+                        RtecEventChannelAdmin::Observer_Handle)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
-  virtual void connected (TAO_EC_ProxyPushConsumer*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*
-                             ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void connected (TAO_EC_ProxyPushSupplier*
-                          ACE_ENV_ARG_DECL_NOT_USED);
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*
-                             ACE_ENV_ARG_DECL_NOT_USED);
+  virtual void connected (TAO_EC_ProxyPushConsumer*);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer*);
+  virtual void connected (TAO_EC_ProxyPushSupplier*);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier*);
 
   /**
    * @struct Observer_Entry
@@ -230,24 +212,19 @@ protected:
   /// Helpers.
   //@{
   /// Recompute EC consumer subscriptions and send them out to all observers.
-  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
-                                    ACE_ENV_ARG_DECL);
+  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier);
 
   /// Recompute EC supplier publications and send them out to all observers.
-  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
-                                    ACE_ENV_ARG_DECL);
+  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer);
 
   /// Compute consumer QOS.
-  void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos
-                 ACE_ENV_ARG_DECL);
+  void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos);
   /// Compute supplier QOS.
-  void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos
-                 ACE_ENV_ARG_DECL);
+  void fill_qos (RtecEventChannelAdmin::SupplierQOS &qos);
 
   /// Copies all current observers into an array and passes it
   /// back to the caller through @a lst.  Returns the size of the array.
-  int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst
-                            ACE_ENV_ARG_DECL);
+  int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst);
   //@}
 
 protected:
@@ -298,24 +275,20 @@ protected:
   /// Helpers.
   //@{
   /// Recompute EC consumer subscriptions and send them out to all observers.
-  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
-                                    ACE_ENV_ARG_DECL);
+  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier);
 
   /// Recompute EC supplier publications and send them out to all observers.
-  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
-                                    ACE_ENV_ARG_DECL);
+  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer);
 
   /**
    * Copies all current observers into a map and passes it
    * back to the caller through @a map.
    * @return Returns the size of the map.
    */
-  int create_observer_map (Observer_Map &map
-                           ACE_ENV_ARG_DECL);
+  int create_observer_map (Observer_Map &map);
 
   /// The observer doesn't exist anymore
-  void observer_not_exists (Observer_Entry& observer
-                            ACE_ENV_ARG_DECL);
+  void observer_not_exists (Observer_Entry& observer);
   //@}
 };
 
@@ -328,8 +301,7 @@ public:
   /// Constructor
   TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
 
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;
@@ -344,8 +316,7 @@ public:
   /// Constructor
   TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer
-                     ACE_ENV_ARG_DECL);
+  virtual void work (TAO_EC_ProxyPushConsumer *consumer);
 
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;

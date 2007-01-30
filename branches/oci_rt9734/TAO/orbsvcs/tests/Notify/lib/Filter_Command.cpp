@@ -98,44 +98,37 @@ TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (void)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
-  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ec, this->factory_.c_str ());
 
   CosNotifyFilter::FilterFactory_var ff =
-    ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->default_filter_factory ();
 
-  LOOKUP_MANAGER->_register (ff.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->_register (ff.in(), this->name_.c_str ());
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_create_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_create_filter (void)
 {
   CosNotifyFilter::FilterFactory_var ff;
 
-  LOOKUP_MANAGER->resolve (ff , this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (ff , this->factory_.c_str ());
 
   CosNotifyFilter::Filter_var filter =
-    ff->create_filter ("ETCL" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    ff->create_filter ("ETCL");
 
-  LOOKUP_MANAGER->_register (filter.in(), this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->_register (filter.in(), this->name_.c_str ());
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_add_constraint (void)
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter , this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter , this->name_.c_str ());
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
   constraint_list.length (1);
@@ -144,65 +137,54 @@ TAO_Notify_Tests_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
   constraint_list[0].constraint_expr = CORBA::string_dup (this->constraint_.c_str ());
 
   ACE_DEBUG ((LM_DEBUG, "Adding constraint %s\n", this->constraint_.c_str ()));
-  filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  filter->add_constraints (constraint_list);
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_add_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_add_filter (void)
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter , this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter , this->name_.c_str ());
 
   CosNotifyFilter::FilterAdmin_var filter_admin;
 
-  LOOKUP_MANAGER->resolve (filter_admin , this->factory_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter_admin , this->factory_.c_str ());
 
-  filter_admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  filter_admin->add_filter (filter.in ());
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_destroy_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_destroy_filter (void)
 {
   CosNotifyFilter::Filter_var filter;
 
-  LOOKUP_MANAGER->resolve (filter, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  LOOKUP_MANAGER->resolve (filter, this->name_.c_str ());
 
-  filter->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  filter->destroy ();
 }
 
 void
-TAO_Notify_Tests_Filter_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::execute_i (void)
 {
   if (this->command_ == CREATE_FACTORY)
     {
-      this->handle_create_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_create_filter_factory ();
     }
   else if (this->command_ == CREATE_FILTER)
     {
-      this->handle_create_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_create_filter ();
     }
   else if (this->command_ == ADD_CONSTRAINT)
     {
-      this->handle_add_constraint (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_add_constraint ();
     }
   else if (this->command_ == ADD_FILTER)
     {
-      this->handle_add_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_add_filter ();
     }
   else if (this->command_ == DESTROY)
     {
-      this->handle_destroy_filter (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->handle_destroy_filter ();
     }
 }

@@ -21,26 +21,21 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       for (int i = 0; i != 1; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) sending oneways...\n"));
 
-          this->sender_->send_ready_message (this->us_.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->sender_->send_ready_message (this->us_.in ());
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "Caught Exception");
+      ex._tao_print_exception ("Caught Exception");
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }

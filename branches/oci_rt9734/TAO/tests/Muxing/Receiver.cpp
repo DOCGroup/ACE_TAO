@@ -24,8 +24,7 @@ Receiver::dump_results ()
 }
 
 void
-Receiver::receive_data (const Test::Payload &payload
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Receiver::receive_data (const Test::Payload &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -34,7 +33,7 @@ Receiver::receive_data (const Test::Payload &payload
 }
 
 CORBA::Long
-Receiver::get_event_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Receiver::get_event_count (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
@@ -42,8 +41,8 @@ Receiver::get_event_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Receiver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Receiver::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

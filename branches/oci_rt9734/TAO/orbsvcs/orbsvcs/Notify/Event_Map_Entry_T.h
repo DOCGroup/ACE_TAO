@@ -50,13 +50,13 @@ public:
   ~TAO_Notify_Event_Map_Entry_T (void);
 
   /// Init - Allocates collection
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /// Connect
-  void connected (PROXY* proxy ACE_ENV_ARG_DECL);
+  void connected (PROXY* proxy);
 
   /// Disconnect
-  void disconnected (PROXY* proxy ACE_ENV_ARG_DECL);
+  void disconnected (PROXY* proxy);
 
   /// Collection accessor
   COLLECTION* collection (void);

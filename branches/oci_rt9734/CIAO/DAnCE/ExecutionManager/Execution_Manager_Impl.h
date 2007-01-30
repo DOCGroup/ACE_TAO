@@ -52,46 +52,41 @@ namespace CIAO
       /// $CIAO_ROOT/ciao/Deployment.idl for documentation
       virtual Deployment::DomainApplicationManager_ptr
       preparePlan (const Deployment::DeploymentPlan & plan,
-                   CORBA::Boolean commitResources
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                   CORBA::Boolean commitResources)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::ResourceNotAvailable,
                          Deployment::PlanError,
                          Deployment::StartError));
 
       virtual Deployment::DomainApplicationManagers *
-      getManagers (ACE_ENV_SINGLE_ARG_DECL)
+      getManagers ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Below method is CIAO specific extension
       virtual Deployment::DomainApplicationManager_ptr
-      getManager (const char * plan_uuid
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      getManager (const char * plan_uuid)
         ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist));
 
       virtual void
-      destroyManager (Deployment::DomainApplicationManager_ptr manager
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      destroyManager (Deployment::DomainApplicationManager_ptr manager)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::StopError));
 
       // Below method is CIAO specific extension, please see the IDL
       // definition for more details.
       virtual void
-      destroyManagerByPlan (const char * plan_uuid
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      destroyManagerByPlan (const char * plan_uuid)
         ACE_THROW_SPEC ((::CORBA::SystemException,
                          ::Deployment::StopError));
 
-      virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      virtual void shutdown ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // The input parameter is a *new_plan* which has the
       // same UUID of the existing running plan.
       virtual void
       perform_redeployment (
-          const Deployment::DeploymentPlan & plan
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+          const Deployment::DeploymentPlan & plan)
         ACE_THROW_SPEC ((::CORBA::SystemException,
                          ::Deployment::PlanError,
                          ::Deployment::InstallationFailure,
@@ -102,8 +97,7 @@ namespace CIAO
                          ::Components::RemoveFailure));
 
       virtual Deployment::DeploymentPlan * getPlan (
-          const char * plan_uuid
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+          const char * plan_uuid)
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /// ****************** C++ Methods *************************

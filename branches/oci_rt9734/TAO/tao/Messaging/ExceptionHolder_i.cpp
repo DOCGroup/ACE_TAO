@@ -44,7 +44,7 @@ namespace TAO
   }
 
   void ExceptionHolder::raise_exception (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
     )
     {
       TAO_Messaging_Helper::exception_holder_raise (
@@ -54,15 +54,15 @@ namespace TAO
         this->marshaled_exception ().length (),
         this->byte_order (),
         this->is_system_exception ()
-        ACE_ENV_ARG_PARAMETER);
+       );
       }
 
   void ExceptionHolder::raise_exception_with_list (
-      const ::Dynamic::ExceptionList & ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      const ::Dynamic::ExceptionList &
     )
     {
       // todo convert exceptionlist to something we can really use.
-      this->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->raise_exception ();
     }
 
   CORBA::ValueBase*
@@ -72,7 +72,6 @@ namespace TAO
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     // @todo According to the latest corba spec we should be able to
     // pass this to the ExceptionHolder constructor but the TAO_IDL
@@ -86,13 +85,12 @@ namespace TAO
 
   CORBA::ValueBase *
   ExceptionHolderFactory::create_for_unmarshal (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void)
   {
     TAO::ExceptionHolder* ret_val = 0;
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     return ret_val;
   }

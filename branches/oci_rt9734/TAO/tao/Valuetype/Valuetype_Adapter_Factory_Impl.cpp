@@ -16,14 +16,13 @@ TAO_Valuetype_Adapter_Factory_Impl::~TAO_Valuetype_Adapter_Factory_Impl (void)
 }
 
 TAO_Valuetype_Adapter *
-TAO_Valuetype_Adapter_Factory_Impl::create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Valuetype_Adapter_Factory_Impl::create (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Valuetype_Adapter_Impl *nva = 0;
   ACE_NEW_THROW_EX (nva,
                     TAO_Valuetype_Adapter_Impl (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (nva);
 
   return nva;
 }

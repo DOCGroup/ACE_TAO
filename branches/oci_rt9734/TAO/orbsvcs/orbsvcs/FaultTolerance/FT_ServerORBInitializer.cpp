@@ -16,31 +16,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_FT_ServerORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_FT_ServerORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 
-  this->register_server_request_interceptors (info
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_server_request_interceptors (info);
 }
 
 void
 TAO_FT_ServerORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Register the FTCORBA policy factories.
@@ -58,7 +51,6 @@ TAO_FT_ServerORBInitializer::register_policy_factories (
                          TAO::VMCID,
                          ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   policy_factory = temp_factory;
 
@@ -69,16 +61,13 @@ TAO_FT_ServerORBInitializer::register_policy_factories (
 
   CORBA::PolicyType type = FT::HEARTBEAT_ENABLED_POLICY;
   info->register_policy_factory (type,
-                                 policy_factory.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                 policy_factory.in ());
 }
 
 
 void
 TAO_FT_ServerORBInitializer::register_server_request_interceptors (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ServerRequestInterceptor_ptr sri =
@@ -91,9 +80,7 @@ TAO_FT_ServerORBInitializer::register_server_request_interceptors (
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = sri;
 
-  info->add_server_request_interceptor (server_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (server_interceptor.in ());
 }
 
 

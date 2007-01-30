@@ -128,37 +128,25 @@ TAO_DIOP_Connection_Handler::open (void*)
   // for consistency with other protocols.
   TAO_DIOP_Protocol_Properties protocol_properties;
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
+  bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  try
     {
       if (client)
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tph->client_protocol_properties_at_orb_level (protocol_properties);
         }
       else
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   this->udp_socket_.open (this->local_addr_);
 

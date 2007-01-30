@@ -109,9 +109,7 @@ test_codec (IOP::Codec_ptr codec)
 
   // Start out with the encode() method, i.e. the one that
   // includes the TypeCode in the CDR encapsulation.
-  encoded_data = codec->encode (data
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  encoded_data = codec->encode (data);
 
   if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
           % ACE_CDR::MAX_ALIGNMENT) == 0)
@@ -119,9 +117,7 @@ test_codec (IOP::Codec_ptr codec)
                     "\nData for decoding are already aligned "
                     "on MAX_ALIGNMENT.\n\n"));
   // Extract the data from the octet sequence.
-  decoded_data = codec->decode (encoded_data.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  decoded_data = codec->decode (encoded_data.in ());
 
   if (!(decoded_data.in() >>= extracted_value))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -146,9 +142,7 @@ test_codec (IOP::Codec_ptr codec)
 
   // Now use the encode_value() method, i.e. the one that does
   // *not* include the TypeCode in the CDR encapsulation.
-  encoded_data = codec->encode_value (data
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  encoded_data = codec->encode_value (data);
 
   if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
           % ACE_CDR::MAX_ALIGNMENT) == 0)
@@ -159,9 +153,7 @@ test_codec (IOP::Codec_ptr codec)
 
   // Extract the data from the octet sequence.
   decoded_data = codec->decode_value (encoded_data.in (),
-                                      Foo::_tc_Bar
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+                                      Foo::_tc_Bar);
 
   if (!(decoded_data.in() >>= extracted_value))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -185,26 +177,19 @@ int
 main (int argc, char *argv[])
 {
   int retval = 0;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "my_orb"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "my_orb");
 
       // Obtain a reference to the CodecFactory.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("CodecFactory"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("CodecFactory");
 
       IOP::CodecFactory_var codec_factory =
-        IOP::CodecFactory::_narrow (obj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        IOP::CodecFactory::_narrow (obj.in ());
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.
@@ -217,9 +202,7 @@ main (int argc, char *argv[])
 
       // Obtain the CDR encapsulation Codec.
       IOP::Codec_var codec_1_2 =
-        codec_factory->create_codec_with_codesets (encoding_1_2
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        codec_factory->create_codec_with_codesets (encoding_1_2);
 
       retval = test_codec (codec_1_2.in ());
 
@@ -234,19 +217,15 @@ main (int argc, char *argv[])
 
       // Obtain the CDR encapsulation Codec.
       IOP::Codec_var codec =
-        codec_factory->create_codec (encoding
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        codec_factory->create_codec (encoding);
 
       retval = test_codec (codec.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Codec test:");
+      ex._tao_print_exception ("Codec test:");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Codec test passed.\n"));
 

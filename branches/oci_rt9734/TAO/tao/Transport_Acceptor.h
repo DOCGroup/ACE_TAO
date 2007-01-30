@@ -117,7 +117,7 @@ public:
                               CORBA::Short priority) = 0;
 
   /// Return 1 if the @a endpoint has the same address as the acceptor.
-  virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
+  virtual int is_collocated (const TAO_Endpoint *endpoint) = 0;
 
   /**
    * Returns the number of endpoints this acceptor is listening on.  This

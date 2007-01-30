@@ -74,11 +74,11 @@ namespace TAO
        */
       //@{
       Case<StringType, TypeCodeType> * clone (void) const;
-      virtual CORBA::Any * label (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::Any * label (void) const;
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
       virtual bool equal_label (CORBA::ULong index,
                                 CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL) const;
+                                ) const;
       //@}
 
     private:

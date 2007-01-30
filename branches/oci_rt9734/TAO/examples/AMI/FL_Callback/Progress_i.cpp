@@ -15,8 +15,7 @@ Progress_i::Progress_i (Progress_Window *window)
 }
 
 void
-Progress_i::sent_request (CORBA::Long id
-                     ACE_ENV_ARG_DECL_NOT_USED)
+Progress_i::sent_request (CORBA::Long id)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "Progress (%t) - sent request %d\n", id));
@@ -24,20 +23,18 @@ Progress_i::sent_request (CORBA::Long id
 }
 
 void
-Progress_i::recv_reply (CORBA::Long id
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Progress_i::recv_reply (CORBA::Long id)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->window_->recv_reply (id);
 }
 
 CORBA::Long
-Progress_i::bind (Peer_ptr a_peer
-                  ACE_ENV_ARG_DECL)
+Progress_i::bind (Peer_ptr a_peer)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Progress (%t) - peer bound\n"));
-  return this->window_->bind (a_peer ACE_ENV_ARG_PARAMETER);
+  return this->window_->bind (a_peer);
 }
 
 // ****************************************************************
@@ -127,8 +124,7 @@ Progress_Window::recv_reply (CORBA::Long id)
 }
 
 CORBA::Long
-Progress_Window::bind (Peer_ptr a_peer
-                       ACE_ENV_ARG_DECL_NOT_USED)
+Progress_Window::bind (Peer_ptr a_peer)
 {
   CORBA::ULong l = this->peers_.length ();
   this->peers_.length (l + 1);
@@ -151,20 +147,16 @@ Progress_Window::start ()
   if (this->peers_.length () < CORBA::ULong (this->n_peers_))
     return;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   for (CORBA::ULong i = 0; i != this->peers_.length (); ++i)
     {
-      ACE_TRY
+      try
         {
           this->peers_[i]->start (this->peers_,
-                                  this->n_iterations_
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                  this->n_iterations_);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           // Ignore exceptions
         }
-      ACE_ENDTRY;
     }
 }

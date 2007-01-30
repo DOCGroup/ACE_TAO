@@ -19,7 +19,6 @@ TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter (void)
 void
 TAO_Notify_Constraint_Interpreter::build_tree (
     const char *constraints
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
                    CORBA::NO_MEMORY))
@@ -30,13 +29,12 @@ TAO_Notify_Constraint_Interpreter::build_tree (
       ACE_NEW_THROW_EX (this->root_,
                         TAO_ETCL_Literal_Constraint ((CORBA::Boolean) 1),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK;
     }
   else
     {
       // root_ is set in this base class call.
       if (TAO_ETCL_Interpreter::build_tree (constraints) != 0)
-          ACE_THROW (CosNotifyFilter::InvalidConstraint ());
+          throw CosNotifyFilter::InvalidConstraint ();
     }
 }
 

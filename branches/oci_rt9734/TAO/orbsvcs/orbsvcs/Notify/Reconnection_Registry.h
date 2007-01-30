@@ -62,29 +62,25 @@ namespace TAO_Notify
 
     /// add a new callback to the registry
     ::NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
-      ::NotifyExt::ReconnectionCallback_ptr callback
-      ACE_ENV_ARG_DECL);
+      ::NotifyExt::ReconnectionCallback_ptr callback);
 
     ///
-    void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id
-      ACE_ENV_ARG_DECL);
+    void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
-    CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL);
+    CORBA::Boolean is_alive (void);
 
     //////////////////////
     // During topology save
-    virtual void save_persistent (Topology_Saver& saver ACE_ENV_ARG_DECL);
+    virtual void save_persistent (Topology_Saver& saver);
 
     ///////////////////////////////////////
     // During reload of persistent topology
 
     virtual Topology_Object* load_child (const ACE_CString & type,
       CORBA::Long id,
-      const NVPList& attrs
-      ACE_ENV_ARG_DECL);
+      const NVPList& attrs);
 
-    void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory
-      ACE_ENV_ARG_DECL);
+    void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 
   private:
     void release (void);

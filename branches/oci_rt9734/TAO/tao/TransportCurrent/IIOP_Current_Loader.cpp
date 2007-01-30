@@ -13,19 +13,19 @@
 
 
 #include "ace/Service_Config.h"
-
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
-
 #include "tao/PI/PI.h"
-
-#include "tao/TransportCurrent/Current_ORBInitializer.h"
-#include "tao/TransportCurrent/IIOP_Current_Loader.h"
-#include "tao/TransportCurrent/IIOP_Current_Impl.h"
 
 ACE_RCSID (Transport_Current,
            IIOP_Current_Loader,
            "$Id$")
+
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
+#include "tao/TransportCurrent/Current_ORBInitializer.h"
+#include "tao/TransportCurrent/IIOP_Current_Loader.h"
+#include "tao/TransportCurrent/IIOP_Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,13 +45,11 @@ namespace TAO
                           CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                                      ENOMEM),
                                             CORBA::COMPLETED_NO));
-        ACE_TRY_CHECK;
 
         PortableInterceptor::ORBInitializer_var initializer (tmp);
 
         PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                                      );
 
         return 0;
       }
@@ -69,7 +67,6 @@ namespace TAO
   }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 
 #if defined (TAO_AS_STATIC_LIBS)
@@ -108,3 +105,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Transport_IIOP_Current_Loader,
 ACE_FACTORY_NAMESPACE_DEFINE (TAO_Transport_Current,
                               TAO_Transport_IIOP_Current_Loader,
                               TAO::Transport::IIOP::Current_Loader)
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */

@@ -22,8 +22,7 @@ TAO_EndpointPolicy_Initializer::init (void)
   PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       /// Register the EndpointPolicy ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
@@ -33,24 +32,20 @@ TAO_EndpointPolicy_Initializer::init (void)
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_TRY_CHECK;
 
       orb_initializer = temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                    );
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught exception:");
+          ex._tao_print_exception ("Caught exception:");
         }
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Endpoint_Acceptor_Filter_Factory,1); // force replacement

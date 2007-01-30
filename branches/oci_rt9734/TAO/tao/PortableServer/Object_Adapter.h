@@ -92,21 +92,21 @@ public:
   int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,
                         CORBA::Object_out forward_to
-                        ACE_ENV_ARG_DECL);
+                       );
 
   int locate_servant (const TAO::ObjectKey &key
-                      ACE_ENV_ARG_DECL);
+                     );
 
   TAO_SERVANT_LOCATION find_servant (const TAO::ObjectKey &key,
                                      PortableServer::Servant &servant
-                                     ACE_ENV_ARG_DECL);
+                                    );
 
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
                 CORBA::Boolean root,
                 const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                 TAO_Root_POA *&poa
-                ACE_ENV_ARG_DECL);
+               );
 
   int bind_poa (const poa_name &folded_name,
                 TAO_Root_POA *poa,
@@ -118,7 +118,7 @@ public:
 
   int activate_poa (const poa_name &folded_name,
                     TAO_Root_POA *&poa
-                    ACE_ENV_ARG_DECL);
+                   );
 
   ACE_Lock &lock (void);
 
@@ -133,7 +133,7 @@ public:
   TAO_ORB_Core &orb_core (void) const;
 
   /// Wait for non-servant upcalls to complete.
-  void wait_for_non_servant_upcalls_to_complete (ACE_ENV_SINGLE_ARG_DECL);
+  void wait_for_non_servant_upcalls_to_complete (void);
 
   /// Non-exception throwing version.
   void wait_for_non_servant_upcalls_to_complete_no_throw (void);
@@ -155,20 +155,20 @@ public:
 
   /// Initialize the default set of POA policies.
   void init_default_policies (TAO_POA_Policy_Set &policies
-                              ACE_ENV_ARG_DECL);
+                             );
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void open (void);
   virtual void close (int wait_for_completion
-                      ACE_ENV_ARG_DECL);
+                     );
   virtual void check_close (int wait_for_completion
-                            ACE_ENV_ARG_DECL);
+                           );
   virtual int priority (void) const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out forward_to
-                        ACE_ENV_ARG_DECL);
+                       );
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
@@ -179,31 +179,31 @@ public:
 protected:
 
   int locate_servant_i (const TAO::ObjectKey &key
-                        ACE_ENV_ARG_DECL);
+                       );
 
   TAO_SERVANT_LOCATION find_servant_i (const TAO::ObjectKey &key,
                                        PortableServer::Servant &servant
-                                       ACE_ENV_ARG_DECL);
+                                      );
 
   void dispatch_servant_i (const TAO::ObjectKey &key,
                            TAO_ServerRequest &req,
                            void *context
-                           ACE_ENV_ARG_DECL);
+                          );
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
                    TAO_Root_POA *&poa
-                   ACE_ENV_ARG_DECL);
+                  );
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
                           const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
                           TAO_Root_POA *&poa
-                          ACE_ENV_ARG_DECL);
+                         );
 
   int find_persistent_poa (const poa_name &system_name,
                            TAO_Root_POA *&poa
-                           ACE_ENV_ARG_DECL);
+                          );
 
   int bind_transient_poa (TAO_Root_POA *poa,
                           poa_name_out system_name);
@@ -222,7 +222,7 @@ protected:
 
   virtual void do_dispatch (TAO_ServerRequest& req,
                             TAO::Portable_Server::Servant_Upcall& upcall
-                            ACE_ENV_ARG_DECL);
+                           );
 
 public:
 
@@ -242,7 +242,7 @@ public:
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa
-                                     ACE_ENV_ARG_DECL) = 0;
+                                     ) = 0;
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
@@ -277,7 +277,7 @@ public:
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa
-                                     ACE_ENV_ARG_DECL);
+                                    );
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
@@ -315,7 +315,7 @@ public:
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa
-                                     ACE_ENV_ARG_DECL);
+                                    );
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,

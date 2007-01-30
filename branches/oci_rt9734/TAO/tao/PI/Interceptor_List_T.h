@@ -66,14 +66,14 @@ namespace TAO
 
     void add_interceptor (
       InterceptorType_ptr_type i
-      ACE_ENV_ARG_DECL);
+     );
 
     /// Register an interceptor with policies.
     void add_interceptor (InterceptorType_ptr_type i,
                           const CORBA::PolicyList& policies
-                          ACE_ENV_ARG_DECL);
+                         );
 
-    void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+    void destroy_interceptors (void);
 
     /// Return the registered interceptor in sequence element @a index.
     RegisteredInterceptor& registered_interceptor (

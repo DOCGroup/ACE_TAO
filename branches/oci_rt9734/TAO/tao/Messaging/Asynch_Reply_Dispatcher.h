@@ -60,7 +60,7 @@ public:
   /// Install the timeout handler
   long schedule_timer (CORBA::ULong request_id,
                        const ACE_Time_Value &max_wait_time
-                       ACE_ENV_ARG_DECL);
+                      );
 
 private:
   /// Skeleton for the call back method in the Reply Handler.

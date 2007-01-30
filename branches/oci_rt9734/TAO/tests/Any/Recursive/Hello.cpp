@@ -14,8 +14,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 CORBA::Any *
-Hello::get_any (CORBA::Any const & the_any
-                ACE_ENV_ARG_DECL)
+Hello::get_any (CORBA::Any const & the_any)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any * retval = 0;
@@ -23,16 +22,14 @@ Hello::get_any (CORBA::Any const & the_any
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (the_any),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (retval);
 
   return retval;
 }
 
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

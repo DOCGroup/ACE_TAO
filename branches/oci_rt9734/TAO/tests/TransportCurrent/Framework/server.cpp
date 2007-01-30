@@ -85,17 +85,14 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Server: exception raised");
+      ex._tao_print_exception ("Server: exception raised");
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -108,39 +105,30 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
+  try
+    {
+      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
                       Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            ACE_TEXT ("test_orb")
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            ACE_TEXT ("test_orb"));
 
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -149,11 +137,9 @@ server_main (int argc,
                           -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return -1;
@@ -162,13 +148,10 @@ server_main (int argc,
                                      root_poa.in (),
                                      use_collocated_call);
 
-      obj = server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = server_impl._this ();
 
       Test::Transport::CurrentTest_var server =
-        Test::Transport::CurrentTest::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,8 +160,7 @@ server_main (int argc,
                           -1);
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the IOR to it.
       if (ior_output_file != 0)
@@ -205,7 +187,11 @@ server_main (int argc,
                            ACE_TEXT ("Server (%P|%t) Cannot activate %d threads\n"),
                            nthreads),
                           -1);
-      worker.thr_mgr ()->wait ();
+      if(worker.thr_mgr ()->wait () != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Server (%P|%t) wait() Cannot wait for all %d threads\n"),
+                           nthreads),
+                          -1);
 #else
       if (nthreads > 1)
         ACE_ERROR ((LM_WARNING,
@@ -221,22 +207,26 @@ server_main (int argc,
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server (%P|%t) Invoking orb->destroy ()\n")));
+
+      orb->destroy ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Server (%P|%t) ERROR: "));
+      ex._tao_print_exception (ACE_TEXT ("Server (%P|%t) ERROR: "));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Completed successfuly.\n")));
   return 0;
+#else /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Server (%P|%t) Need TAO_HAS_TRANSPORT_CURRENT enabled to run.\n")));
+  return 0;
+#endif /*  TAO_HAS_TRANSPORT_CURRENT == 1 */
 }

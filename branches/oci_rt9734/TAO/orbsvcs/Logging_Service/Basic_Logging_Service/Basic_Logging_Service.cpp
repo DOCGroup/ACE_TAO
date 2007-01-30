@@ -26,31 +26,22 @@ Basic_Logging_Service::~Basic_Logging_Service (void)
 }
 
 void
-Basic_Logging_Service::init_ORB (int& argc, char *argv []
-                                 ACE_ENV_ARG_DECL)
+Basic_Logging_Service::init_ORB (int& argc, char *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                "");
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references("RootPOA");
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  poa_manager->activate ();
 }
 
 int
@@ -102,12 +93,10 @@ Basic_Logging_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
+Basic_Logging_Service::init (int argc, char *argv[])
 {
   // initialize the ORB.
-  this->init_ORB (argc, argv
-                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->init_ORB (argc, argv);
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -115,28 +104,21 @@ Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
   // Activate the basic log factory
   DsLogAdmin::BasicLogFactory_var obj =
     this->basic_log_factory_.activate (this->orb_.in (),
-                                       this->poa_.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                       this->poa_.in ());
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->object_to_string (obj.in ());
 
   if (true)
     {
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ());
-      ACE_CHECK_RETURN (-1);
 
       adapter->bind("BasicLogService", ior.in ());
-      ACE_CHECK_RETURN (-1);
     }
 
   if (this->ior_file_name_ != 0)
@@ -169,42 +151,35 @@ Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
   if (this->bind_to_naming_service_)
     {
       // Resolve the naming service.
-      this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->resolve_naming_service ();
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup (this->service_name_);
 
       this->naming_->rebind (name,
-                             obj.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                             obj.in ());
     }
 
   return 0;
 }
 
 void
-Basic_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Basic_Logging_Service::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    throw CORBA::UNKNOWN ();
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNaming::NamingContext::_narrow (naming_obj.in ());
 }
 
 int
-Basic_Logging_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+Basic_Logging_Service::run (void)
 {
   if (this->nthreads_ > 0)
     {
@@ -215,8 +190,7 @@ Basic_Logging_Service::run (ACE_ENV_SINGLE_ARG_DECL)
       return 0;
     }
 
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run ();
 
   return 0;
 }
@@ -224,23 +198,20 @@ Basic_Logging_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 int
 Basic_Logging_Service::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 void
-Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Basic_Logging_Service::shutdown (void)
 {
   if (this->bind_to_naming_service_)
     {
@@ -248,9 +219,7 @@ Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       name.length (1);
       name[0].id = CORBA::string_dup (this->service_name_);
 
-      this->naming_->unbind (name
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->naming_->unbind (name);
     }
 
   // shutdown the ORB.

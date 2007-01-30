@@ -80,8 +80,7 @@ namespace TAO
      * invocation. This method is also nerve centre for the
      * interceptor invocation points.
      */
-    Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
+    Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time)
       ACE_THROW_SPEC ((CORBA::Exception));
 
   protected:
@@ -92,19 +91,16 @@ namespace TAO
      * example the DII needs a totally different method of
      * user exception exception handling
      */
-    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr
-                                                     ACE_ENV_ARG_DECL)
+    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr)
       ACE_THROW_SPEC ((CORBA::Exception));
 
     /// Helper method used to handle location forwarded replies.
-    Invocation_Status location_forward (TAO_InputCDR &cdr
-                                        ACE_ENV_ARG_DECL)
+    Invocation_Status location_forward (TAO_InputCDR &cdr)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Helper method used to handle system exceptions from the remote
     /// objects.
-    Invocation_Status handle_system_exception (TAO_InputCDR &cdr
-                                               ACE_ENV_ARG_DECL)
+    Invocation_Status handle_system_exception (TAO_InputCDR &cdr)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// As the name suggests waits for a reply from the remote ORB.
@@ -113,8 +109,7 @@ namespace TAO
      */
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
                                       TAO_Synch_Reply_Dispatcher &rd,
-                                      TAO_Bind_Dispatcher_Guard &bd
-                                      ACE_ENV_ARG_DECL)
+                                      TAO_Bind_Dispatcher_Guard &bd)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -124,10 +119,7 @@ namespace TAO
     /**
      * This method returns an exception when there is an error.
      */
-    Invocation_Status check_reply_status (
-        TAO_Synch_Reply_Dispatcher &rd
-        ACE_ENV_ARG_DECL);
-
+    Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
   };
 
   /**
@@ -167,8 +159,7 @@ namespace TAO
 
     /// Method used by the adapter to kickstart an oneway invocation
     /// to the remote object.
-    Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time
-                                     ACE_ENV_ARG_DECL)
+    Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time)
       ACE_THROW_SPEC ((CORBA::Exception));
   };
 
@@ -182,8 +173,7 @@ namespace TAO
   {
   public:
 
-    Reply_Guard (Invocation_Base *s,
-                 Invocation_Status is);
+    Reply_Guard (Invocation_Base *s, Invocation_Status is);
 
     /// The destructor calls Invocation_Base::reply_received with the
     /// right reply status, which is useful for PI's.

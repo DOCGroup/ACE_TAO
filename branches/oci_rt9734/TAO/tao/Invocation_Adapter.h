@@ -43,8 +43,6 @@ namespace  CORBA
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-
-  class Environment;
 }
 
 namespace TAO
@@ -119,7 +117,7 @@ namespace TAO
                         size_t op_len,
                         Collocation_Proxy_Broker *cpb,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,                        
+                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
                         CORBA::Boolean is_dii_request = false);
 
     virtual ~Invocation_Adapter (void);
@@ -136,7 +134,7 @@ namespace TAO
      */
     virtual void invoke (TAO::Exception_Data *ex,
                          unsigned long ex_count
-                         ACE_ENV_ARG_DECL);
+                        );
   protected:
     /**
      * The stub pointer passed to this call has all the details about
@@ -148,7 +146,7 @@ namespace TAO
      */
     virtual void invoke_i (TAO_Stub *stub,
                            TAO_Operation_Details &details
-                           ACE_ENV_ARG_DECL);
+                          );
 
     /**
      * @name Helper methods for making different types of invocations.
@@ -179,7 +177,7 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+       );
 
     /// Make a collocated call.
     /**
@@ -197,7 +195,7 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Collocation_Strategy strat
-        ACE_ENV_ARG_DECL);
+       );
 
     /// Helper method to make a two way invocation.
     /**
@@ -211,7 +209,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+       );
 
     /// Helper method to make a one way invocation.
     /**
@@ -225,7 +223,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
-        ACE_ENV_ARG_DECL);
+       );
     //@}
 
     /// Helper function that extracts the roundtrip timeout policies
@@ -234,14 +232,14 @@ namespace TAO
                       ACE_Time_Value &val);
 
     /// Helper method that extracts TAO_Stub from the target object.
-    TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;
+    TAO_Stub *get_stub (void) const;
 
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
     void object_forwarded (CORBA::Object_var &effective_target,
                            TAO_Stub *stub,
                            CORBA::Boolean permanent_forward
-                           ACE_ENV_ARG_DECL);
+                          );
 
     /// Helper method to set the response flags within @a details
     void set_response_flags (TAO_Stub *stub,

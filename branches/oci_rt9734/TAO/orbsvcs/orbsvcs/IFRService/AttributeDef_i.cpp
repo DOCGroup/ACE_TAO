@@ -28,33 +28,31 @@ TAO_AttributeDef_i::~TAO_AttributeDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_AttributeDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_AttributeDef_i::def_kind (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Attribute;
 }
 
 CORBA::Contained::Description *
-TAO_AttributeDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::describe (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->update_key ();
 
-  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i ();
 }
 
 CORBA::Contained::Description *
-TAO_AttributeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::describe_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   CORBA::Contained::Description_var retval = desc_ptr;
 
@@ -65,28 +63,25 @@ TAO_AttributeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                   CORBA::AttributeDescription,
                   0);
 
-  this->make_description (*ad
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->make_description (*ad);
 
   retval->value <<= ad;
   return retval._retn ();
 }
 
 CORBA::TypeCode_ptr
-TAO_AttributeDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  this->update_key ();
 
-  return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_i ();
 }
 
 CORBA::TypeCode_ptr
-TAO_AttributeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::type_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString type_path;
@@ -98,23 +93,22 @@ TAO_AttributeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO_IFR_Service_Utils::path_to_idltype (type_path,
                                             this->repo_);
 
-  return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl->type_i ();
 }
 
 CORBA::IDLType_ptr
-TAO_AttributeDef_i::type_def (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::type_def (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+  this->update_key ();
 
-  return this->type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->type_def_i ();
 }
 
 CORBA::IDLType_ptr
-TAO_AttributeDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::type_def_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString type_path;
@@ -124,34 +118,26 @@ TAO_AttributeDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (type_path,
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+                                              this->repo_);
 
-  CORBA::IDLType_var retval = CORBA::IDLType::_narrow (obj.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+  CORBA::IDLType_var retval = CORBA::IDLType::_narrow (obj.in ());
 
   return retval._retn ();
 }
 
 void
-TAO_AttributeDef_i::type_def (CORBA::IDLType_ptr type_def
-                              ACE_ENV_ARG_DECL)
+TAO_AttributeDef_i::type_def (CORBA::IDLType_ptr type_def)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->type_def_i (type_def
-                    ACE_ENV_ARG_PARAMETER);
+  this->type_def_i (type_def);
 }
 
 void
-TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def
-                                ACE_ENV_ARG_DECL_NOT_USED)
+TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *type_path =
@@ -163,19 +149,18 @@ TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def
 }
 
 CORBA::AttributeMode
-TAO_AttributeDef_i::mode (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::mode (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ATTR_NORMAL);
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::ATTR_NORMAL);
+  this->update_key ();
 
-  return this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->mode_i ();
 }
 
 CORBA::AttributeMode
-TAO_AttributeDef_i::mode_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_AttributeDef_i::mode_i (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int mode = 0;
@@ -187,22 +172,18 @@ TAO_AttributeDef_i::mode_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_AttributeDef_i::mode (CORBA::AttributeMode mode
-                          ACE_ENV_ARG_DECL)
+TAO_AttributeDef_i::mode (CORBA::AttributeMode mode)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->update_key ();
 
-  this->mode_i (mode
-                ACE_ENV_ARG_PARAMETER);
+  this->mode_i (mode);
 }
 
 void
-TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
@@ -213,15 +194,12 @@ TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode
 void
 TAO_AttributeDef_i::make_description (
     CORBA::AttributeDescription &ad
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ad.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ad.name = this->name_i ();
 
-  ad.id = this->id_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ad.id = this->id_i ();
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -230,18 +208,15 @@ TAO_AttributeDef_i::make_description (
 
   ad.defined_in = container_id.c_str ();
 
-  ad.version = this->version_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ad.version = this->version_i ();
 
-  ad.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ad.type = this->type_i ();
 
-  ad.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ad.mode = this->mode_i ();
 }
 
 CORBA::ExceptionDefSeq *
-TAO_AttributeDef_i::get_exceptions (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::get_exceptions (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -292,7 +267,6 @@ TAO_AttributeDef_i::get_exceptions (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (get_ed_seq,
                     CORBA::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   get_ed_seq->length (size);
   CORBA::ExceptionDefSeq_var retval = get_ed_seq;
@@ -305,20 +279,16 @@ TAO_AttributeDef_i::get_exceptions (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
                                               path.c_str (),
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                              this->repo_);
 
-      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
     }
 
   return retval._retn ();
 }
 
 CORBA::ExceptionDefSeq *
-TAO_AttributeDef_i::put_exceptions (ACE_ENV_SINGLE_ARG_DECL)
+TAO_AttributeDef_i::put_exceptions (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -369,7 +339,6 @@ TAO_AttributeDef_i::put_exceptions (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (put_ed_seq,
                     CORBA::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   put_ed_seq->length (size);
   CORBA::ExceptionDefSeq_var retval = put_ed_seq;
@@ -382,13 +351,9 @@ TAO_AttributeDef_i::put_exceptions (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
                                               path.c_str (),
-                                              this->repo_
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                                              this->repo_);
 
-      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
     }
 
   return retval._retn ();

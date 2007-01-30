@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  An example of using the Event_Logging_Service.
- *  
+ *
  *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
@@ -42,7 +42,7 @@ public:
 
   // = The CosEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

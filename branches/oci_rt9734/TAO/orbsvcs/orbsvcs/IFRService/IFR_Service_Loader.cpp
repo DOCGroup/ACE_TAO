@@ -34,8 +34,7 @@ int
 TAO_IFR_Service_Loader::init (int argc,
                               ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line (argc,
@@ -45,24 +44,19 @@ TAO_IFR_Service_Loader::init (int argc,
       CORBA::ORB_var orb =
         CORBA::ORB_init (command_line.get_argc (),
                          command_line.get_ASCII_argv (),
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       // This function call initializes the IFR_Service Service
       CORBA::Object_var object =
         this->create_object (orb.in (),
                              command_line.get_argc (),
-                             command_line.get_TCHAR_argv ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             command_line.get_TCHAR_argv ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // @@ Should we log this???
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -76,8 +70,7 @@ TAO_IFR_Service_Loader::fini (void)
 CORBA::Object_ptr
 TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
                                        int argc,
-                                       ACE_TCHAR *argv[]
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+                                       ACE_TCHAR *argv[])
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initializes the IFR_Service Service. Returns -1

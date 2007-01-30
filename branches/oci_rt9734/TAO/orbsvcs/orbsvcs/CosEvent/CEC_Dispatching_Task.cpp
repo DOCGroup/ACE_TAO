@@ -24,7 +24,7 @@ TAO_CEC_Dispatching_Task::svc (void)
   int done = 0;
   while (!done)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
           ACE_Message_Block *mb;
           if (this->getq (mb) == -1)
@@ -43,28 +43,24 @@ TAO_CEC_Dispatching_Task::svc (void)
               continue;
             }
 
-          int result = command->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          int result = command->execute ();
 
           ACE_Message_Block::release (mb);
 
           if (result == -1)
             done = 1;
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "EC (%P|%t) exception in dispatching queue");
+          ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }
-      ACE_ENDTRY;
     }
   return 0;
 }
 
 void
 TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
-                                CORBA::Any& event
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Any& event)
 {
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -72,8 +68,7 @@ TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
   void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Push_Command));
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
-                                 CORBA::COMPLETED_NO));
+    throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   ACE_Message_Block *mb =
     new (buf) TAO_CEC_Push_Command (proxy,
@@ -86,8 +81,7 @@ TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 void
 TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                                  TAO_CEC_TypedEvent& typed_event
-                                  ACE_ENV_ARG_DECL)
+                                  TAO_CEC_TypedEvent& typed_event)
 {
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
@@ -95,8 +89,7 @@ TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
   void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Invoke_Command));
 
   if (buf == 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO::VMCID,
-                                 CORBA::COMPLETED_NO));
+    throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   ACE_Message_Block *mb =
     new (buf) TAO_CEC_Invoke_Command (proxy,
@@ -116,7 +109,7 @@ TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command (void)
 // ****************************************************************
 
 int
-TAO_CEC_Shutdown_Task_Command::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_Shutdown_Task_Command::execute (void)
 {
   return -1;
 }
@@ -129,10 +122,9 @@ TAO_CEC_Push_Command::~TAO_CEC_Push_Command (void)
 }
 
 int
-TAO_CEC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_Push_Command::execute (void)
 {
-  this->proxy_->push_to_consumer (this->event_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->proxy_->push_to_consumer (this->event_);
   return 0;
 }
 
@@ -145,10 +137,9 @@ TAO_CEC_Invoke_Command::~TAO_CEC_Invoke_Command (void)
 }
 
 int
-TAO_CEC_Invoke_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_CEC_Invoke_Command::execute (void)
 {
-  this->proxy_->invoke_to_consumer (this->typed_event_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->proxy_->invoke_to_consumer (this->typed_event_);
   return 0;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

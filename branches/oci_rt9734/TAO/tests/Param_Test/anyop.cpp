@@ -26,8 +26,8 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Param_Test, 
-           anyop, 
+ACE_RCSID (Param_Test,
+           anyop,
            "$Id$")
 
 int
@@ -35,13 +35,11 @@ main (int argc, char *argv[])
 {
   int n = 1024;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       ACE_Get_Opt get_opt (argc, argv, "dn:");
       int opt;
@@ -96,16 +94,13 @@ main (int argc, char *argv[])
 
           {
             CORBA::Object_var obj =
-              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
-                                     ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
-            Param_Test_var param_test = 
+            Param_Test_var param_test =
               TAO::Narrow_Utils<Param_Test>::unchecked_narrow (
                   obj.in (),
                   _TAO_Param_Test_Proxy_Broker_Factory_function_pointer
                 );
-            ACE_TRY_CHECK;
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
@@ -119,8 +114,7 @@ main (int argc, char *argv[])
                             "Cannot extract Param_Test (oh the horror)\n"));
               }
             CORBA::Boolean equiv =
-              param_test->_is_equivalent (o ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              param_test->_is_equivalent (o);
 
             if (!equiv)
               {
@@ -272,7 +266,7 @@ main (int argc, char *argv[])
 
             any <<= *i;
             Param_Test::Fixed_Struct *o;
-            
+
             if (!(any >>= o)
                 || o->l != i->l
                 || o->c != i->c
@@ -288,7 +282,7 @@ main (int argc, char *argv[])
               }
 
             any <<= i;
-            
+
             if (!(any >>= o)
                 || o->l != i->l
                 || o->c != i->c
@@ -312,7 +306,7 @@ main (int argc, char *argv[])
                             CORBA::LongSeq (len),
                             -1);
             i->length (len);
-        
+
             for (CORBA::ULong k = 0; k < len; ++k)
               {
                 (*i)[k] = k;
@@ -345,13 +339,11 @@ main (int argc, char *argv[])
           }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "IDL Types");
+      ex._tao_print_exception ("IDL Types");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

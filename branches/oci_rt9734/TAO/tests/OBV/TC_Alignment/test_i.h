@@ -39,11 +39,10 @@ class test_i :public virtual POA_test
 public:
   test_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Any *get_value (CORBA::Long offset
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Any *get_value (CORBA::Long offset)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

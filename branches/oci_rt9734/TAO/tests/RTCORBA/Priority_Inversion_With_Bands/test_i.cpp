@@ -21,34 +21,28 @@ test_i::test_i (CORBA::ORB_ptr orb,
     current_iteration_ (0),
     total_iterations_ (0)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
 
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       this->rt_current_ =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+        RTCORBA::Current::_narrow (object.in ());
 
       this->work_iterations_in_one_sec_ =
         this->estimate_iterations ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 void
 test_i::method (CORBA::ULong work,
-                const char * iteration
-                ACE_ENV_ARG_DECL)
+                const char * iteration)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
@@ -60,8 +54,7 @@ test_i::method (CORBA::ULong work,
     (TAO_Thread_Lane *) tss->lane_;
 
   RTCORBA::Priority current_priority =
-    this->rt_current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->rt_current_->the_priority ();
 
   const char *priority_string = 0;
   if (current_priority == this->low_priority_)
@@ -97,21 +90,18 @@ test_i::method (CORBA::ULong work,
 
   if (this->current_iteration_ == this->total_iterations_)
     {
-      this->orb_->shutdown (0
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->orb_->shutdown (0);
     }
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::initialize (CORBA::ULong total_iterations
-                    ACE_ENV_ARG_DECL_NOT_USED)
+test_i::initialize (CORBA::ULong total_iterations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->total_iterations_ = total_iterations;

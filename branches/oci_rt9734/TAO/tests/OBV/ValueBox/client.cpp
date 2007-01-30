@@ -270,7 +270,7 @@ int test_basic_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
+    try
       {
 
         //============================================================
@@ -292,7 +292,6 @@ int test_basic_invocations (Test * test_object)
 
         VBlong_var result =
           test_object->basic_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->_value () == (53*3));
         OBV_VERITY (p3->_value () == (53*5));
@@ -319,7 +318,6 @@ int test_basic_invocations (Test * test_object)
 
         vb_basic::M_VBlong_var mresult =
           test_object->basic_op2(mp1, mp2, mp3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (mp2->_value () == (53*3));
         OBV_VERITY (mp3->_value () == (53*5));
@@ -335,7 +333,6 @@ int test_basic_invocations (Test * test_object)
         long lresult =
           test_object->basic_op3(p1->_boxed_in(), p2->_boxed_inout(),
                                  p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->_value () == (93*3));
         OBV_VERITY (p3->_value () == (93*5));
@@ -349,18 +346,17 @@ int test_basic_invocations (Test * test_object)
         mp2->_remove_ref ();
         mp3->_remove_ref ();
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_basic_invocations");
+      ex._tao_print_exception ("test_basic_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_basic_invocations: caught a C++ exception \n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -470,7 +466,7 @@ int test_boxed_string_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
+    try
       {
 
         //============================================================
@@ -491,7 +487,6 @@ int test_boxed_string_invocations (Test * test_object)
         OBV_VERITY (strcmp(p2->_value (), "string2") == 0);
 
         VBstring_var result = test_object->string_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (strcmp(p2->_value (), "2string") == 0);
         OBV_VERITY (strcmp(p3->_value (), "2string") == 0);
@@ -506,7 +501,6 @@ int test_boxed_string_invocations (Test * test_object)
         CORBA::String_var sresult =
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                   p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (strcmp(p2->_value (), "2second string") == 0);
         OBV_VERITY (strcmp(p3->_value (), "2second string") == 0);
@@ -517,19 +511,18 @@ int test_boxed_string_invocations (Test * test_object)
         p3->_remove_ref ();
 
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_string_invocations");
+      ex._tao_print_exception ("test_boxed_string_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_string_invocations: "
                   "caught a C++ exception \n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -621,7 +614,7 @@ int test_boxed_sequence_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
+    try
       {
 
         //============================================================
@@ -655,7 +648,6 @@ int test_boxed_sequence_invocations (Test * test_object)
         OBV_VERITY ((*p1)[3] ==  7);
 
         VBseqlong_var result = test_object->seq_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == 100*3);
         OBV_VERITY ((*p2)[1] == 99*3);
@@ -674,7 +666,6 @@ int test_boxed_sequence_invocations (Test * test_object)
 
         test_object->seq_op2(p1->_boxed_in(), p2->_boxed_inout(),
                              p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == 100*3*3);
         OBV_VERITY ((*p2)[1] == 99*3*3);
@@ -688,19 +679,18 @@ int test_boxed_sequence_invocations (Test * test_object)
         p2->_remove_ref ();
         p3->_remove_ref ();
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_sequence_invocations");
+      ex._tao_print_exception ("test_boxed_sequence_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_sequence_invocations: "
                   "caught a C++ exception \n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -814,7 +804,7 @@ int test_boxed_struct_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
+    try
       {
 
         //============================================================
@@ -848,7 +838,6 @@ int test_boxed_struct_invocations (Test * test_object)
         OBV_VERITY ((p1->abstruct()).s2 ==  21);
 
         VBfixed_struct1_var result = test_object->struct_op1(p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->l() == 92*3);
         OBV_VERITY ((p2->abstruct()).s1 == 171*3);
@@ -914,7 +903,6 @@ int test_boxed_struct_invocations (Test * test_object)
         OBV_VERITY (strcmp(p4->str(), "variable1") == 0);
 
         VBvariable_struct1_var result2 = test_object->struct_op3(p4, p5, p6);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->l() == vs2.l*3);
         OBV_VERITY (strcmp(p5->str(), "2variable") == 0);
@@ -933,7 +921,6 @@ int test_boxed_struct_invocations (Test * test_object)
 
         test_object->struct_op4(p4->_boxed_in(), p5->_boxed_inout(),
                                 p6->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->l() == vs2.l*3*3);
         OBV_VERITY (strcmp(p5->str(), "e2variabl") == 0);
@@ -946,19 +933,18 @@ int test_boxed_struct_invocations (Test * test_object)
         p5->_remove_ref ();
         p6->_remove_ref ();
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_struct_invocations");
+      ex._tao_print_exception ("test_boxed_struct_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_struct_invocations: "
                   "caught a C++ exception \n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -1042,7 +1028,7 @@ int test_boxed_array_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
+    try
       {
         //============================================================
         // Array (fixed)
@@ -1076,7 +1062,6 @@ int test_boxed_array_invocations (Test * test_object)
         VBlongarray *p3;
 
         VBlongarray_var result = test_object->array_op1 (p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == (3101*3)
                 && (*p2)[1] == (3202*3)
@@ -1100,7 +1085,6 @@ int test_boxed_array_invocations (Test * test_object)
 #if 0
         test_object->array_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                p3->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY ((*p2)[0] == (3101*3*3)
                 && (*p2)[1] == (3202*3*3)
@@ -1188,19 +1172,18 @@ int test_boxed_array_invocations (Test * test_object)
         p6->_remove_ref ();
 
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_array_invocations");
+      ex._tao_print_exception ("test_boxed_array_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_array_invocations: "
                   "caught a C++ exception \n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -1292,7 +1275,7 @@ int test_boxed_union_invocations (Test * test_object)
 {
     int fail = 0;
 
-    ACE_TRY_NEW_ENV
+    try
       {
         //============================================================
         // Union (fixed)
@@ -1330,7 +1313,6 @@ int test_boxed_union_invocations (Test * test_object)
         VBfixed_union1 * p3;
 
         VBfixed_union1_var result = test_object->union_op1 (p1, p2, p3);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p2->_d () == 2);
         OBV_VERITY (p2->m2 () == 789*3);
@@ -1391,7 +1373,6 @@ int test_boxed_union_invocations (Test * test_object)
         VBvariable_union1 * p6;
 
         VBvariable_union1_var result2 = test_object->union_op3 (p4, p5, p6);
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->_d () == 2);
         OBV_VERITY (strcmp(p5->m2 (), "aabracadabr") == 0);
@@ -1409,7 +1390,6 @@ int test_boxed_union_invocations (Test * test_object)
 
         test_object->union_op4(p4->_boxed_in(), p5->_boxed_inout(),
                                p6->_boxed_out());
-        ACE_TRY_CHECK;
 
         OBV_VERITY (p5->_d () == 2);
         OBV_VERITY (strcmp(p5->m2 (), "raabracadab") == 0);
@@ -1422,19 +1402,18 @@ int test_boxed_union_invocations (Test * test_object)
         p6->_remove_ref ();
 
       }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "test_boxed_union_invocations");
+      ex._tao_print_exception ("test_boxed_union_invocations");
       fail = 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) test_boxed_union_invocations: "
                   "caught a C++ exception \n"));
       fail = 1;
     }
-  ACE_ENDTRY;
 
   return fail;
 }
@@ -1446,22 +1425,18 @@ main (int argc, char *argv[])
   CORBA::ORB_var orb;
 
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY_EX (init)
+  try
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (init);
+      orb = CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (init);
+        orb->string_to_object(ior);
 
-      test_object = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (init);
+      test_object = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test_object.in ()))
       {
@@ -1471,18 +1446,17 @@ main (int argc, char *argv[])
                           1);
       }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION  (ex, "Initialization failure");
+      ex._tao_print_exception ("Initialization failure");
       return 1;
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) Initialization failure: caught a C++ exception \n"));
       return 1;
     }
-  ACE_ENDTRY;
 
   int fail = 0;
 
@@ -1511,23 +1485,19 @@ main (int argc, char *argv[])
   fail += test_boxed_union_invocations (test_object.in ());
 
 
-  ACE_TRY_EX (cleanup)
+  try
     {
-      test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (cleanup);
+      test_object->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (cleanup);
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return (fail) ?  1 : 0;
 }

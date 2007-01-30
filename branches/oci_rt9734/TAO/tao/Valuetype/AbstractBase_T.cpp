@@ -16,7 +16,7 @@ namespace TAO
       CORBA::AbstractBase_ptr obj,
       const char *repo_id,
       Proxy_Broker_Factory pbf
-      ACE_ENV_ARG_DECL)
+      )
   {
     if (CORBA::is_nil (obj))
       {
@@ -26,9 +26,8 @@ namespace TAO
     CORBA::Boolean const is_it =
       obj->_is_a (
           repo_id
-          ACE_ENV_ARG_PARAMETER
+
         );
-    ACE_CHECK_RETURN (T::_nil ());
 
     if (is_it == false)
       {
@@ -39,7 +38,7 @@ namespace TAO
       AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj,
                                                       repo_id,
                                                       pbf
-                                                      ACE_ENV_ARG_PARAMETER);
+                                                     );
   }
 
   template<typename T>  T *
@@ -49,26 +48,22 @@ namespace TAO
   {
     T *proxy = 0;
 
-    ACE_DECLARE_NEW_CORBA_ENV;
 
-    ACE_TRY
+    try
       {
         proxy =
           AbstractBase_Narrow_Utils<T>::unchecked_narrow (
               obj,
               0,
               pbf
-              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+             );
 
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
         // Consume and return proxy
         return proxy;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (proxy);
 
     return proxy;
   }
@@ -78,7 +73,7 @@ namespace TAO
       CORBA::AbstractBase_ptr obj,
       const char *,
       Proxy_Broker_Factory pbf
-      ACE_ENV_ARG_DECL)
+      )
   {
     if (CORBA::is_nil (obj))
       {
@@ -102,7 +97,6 @@ namespace TAO
                              collocated ? 1 : 0,
                              obj->_servant ()),
                           CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (proxy);
       }
     else
       {

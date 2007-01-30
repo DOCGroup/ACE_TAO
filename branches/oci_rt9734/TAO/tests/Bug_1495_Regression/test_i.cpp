@@ -28,7 +28,6 @@ Bug1495_i::~Bug1495_i (void)
 void
 Bug1495_i::get_thread_id (
     CORBA::Long_out thread_id
-    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -39,7 +38,6 @@ Bug1495_i::get_thread_id (
 
 void
 Bug1495_i::shutdown (
-     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -49,10 +47,8 @@ Bug1495_i::shutdown (
                 "Shutting down orb %i\n",
                 ACE_Thread::self()));
 
-    this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    this->_remove_ref ();
 
-    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->orb_->shutdown (0);
 }
 

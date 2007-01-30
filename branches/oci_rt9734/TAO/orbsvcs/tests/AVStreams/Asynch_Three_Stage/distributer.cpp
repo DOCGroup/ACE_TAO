@@ -143,8 +143,7 @@ Distributer::parse_args (int argc,
 
 int
 Distributer::init (int argc,
-                   char ** argv
-                   ACE_ENV_ARG_DECL)
+                   char ** argv)
 {
   // Initialize the connection class.
   int result =
@@ -183,8 +182,7 @@ Distributer::init (int argc,
     this->distributer_sender_mmdevice_;
 
   AVStreams::MMDevice_var distributer_sender_mmdevice =
-    this->distributer_sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->distributer_sender_mmdevice_->_this ();
 
   ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
                   TAO_MMDevice (&this->receiver_endpoint_strategy_),
@@ -192,30 +190,22 @@ Distributer::init (int argc,
 
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->distributer_receiver_mmdevice_->_this ();
 
   // Bind to receivers.
   this->connection_manager_.bind_to_receivers (this->distributer_name_,
-                                               distributer_sender_mmdevice.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                               distributer_sender_mmdevice.in ());
 
   // Connect to receivers
-  this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ()
-												ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ());
 
   // Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
                                             this->distributer_name_,
-                                            distributer_receiver_mmdevice.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                            distributer_receiver_mmdevice.in ());
 
   // Connect to sender.
-  this->connection_manager_.connect_to_sender (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->connection_manager_.connect_to_sender ();
 
   return 0;
 }
@@ -236,67 +226,51 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       // Initialize the Distributer
       int result =
         DISTRIBUTER::instance ()->init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                        argv);
 
       if (result != 0)
         return result;
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
         }
 
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"main");
+      ex._tao_print_exception ("main");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   DISTRIBUTER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 

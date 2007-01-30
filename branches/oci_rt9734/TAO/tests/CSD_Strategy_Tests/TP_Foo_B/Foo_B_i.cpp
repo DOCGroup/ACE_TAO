@@ -11,7 +11,7 @@ Foo_B_i::Foo_B_i()
 {
    for (unsigned i = 0; i < 16; i++)
     {
-      op_count_[i] = 0; 
+      op_count_[i] = 0;
     }
 }
 
@@ -22,7 +22,7 @@ Foo_B_i::~Foo_B_i()
 
 
 void
-Foo_B_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)  
+Foo_B_i::op1(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[0] ++;
@@ -30,7 +30,7 @@ Foo_B_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Foo_B_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_B_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[1] ++;
@@ -39,7 +39,7 @@ Foo_B_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_B_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_B_i::op3(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[2] ++;
@@ -49,7 +49,7 @@ Foo_B_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_B_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_B_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[3] ++;
@@ -58,18 +58,17 @@ Foo_B_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_B_i::op5(ACE_ENV_SINGLE_ARG_DECL)  
+Foo_B_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4] ++;
-  ACE_THROW (FooException());
+  throw FooException();
 }
 
 
-CORBA::Boolean 
-Foo_B_i::op6(const TimeOfDay& t, 
-             char*& message
-             ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::Boolean
+Foo_B_i::op6(const TimeOfDay& t,
+             char*& message)
                         ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[5] ++;
@@ -77,14 +76,13 @@ Foo_B_i::op6(const TimeOfDay& t,
   ACE_OS::sprintf (buf, "%s %d:%d:%d", message, t.hour, t.minute, t.second);
   CORBA::string_free (message);
   message = CORBA::string_dup (buf);
-    
+
   return 1;
 }
 
 
-void 
-Foo_B_i::op7(Callback_ptr cb
-             ACE_ENV_ARG_DECL)  
+void
+Foo_B_i::op7(Callback_ptr cb)
   ACE_THROW_SPEC((CORBA::SystemException,
                   FooException))
 {
@@ -95,45 +93,41 @@ Foo_B_i::op7(Callback_ptr cb
       error_count_ ++;
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::op7  nil callback error_count %u\n",
         error_count_));
-      ACE_THROW (FooException ());
+      throw FooException ();
     }
   else
     {
-      cb->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      cb->test_method ();
     }
 }
 
 
-void 
-Foo_B_i::test_unbounded_string_arg(const char* message
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_unbounded_string_arg(const char* message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[7] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_unbounded_string_arg ")
-  //                     ACE_TEXT("got unbounded string %s\n"), 
+  //                     ACE_TEXT("got unbounded string %s\n"),
   //                     message));
   this->in_string_[7].push_back (message);
 }
 
 
-void 
-Foo_B_i::test_bounded_string_arg(const char* message
-                                 ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_bounded_string_arg(const char* message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[8] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_bounded_string_arg ")
-  //                     ACE_TEXT("got bounded string %s\n"), 
+  //                     ACE_TEXT("got bounded string %s\n"),
   //                     message));
   this->in_string_[8].push_back (message);
 }
 
 
-void 
-Foo_B_i::test_fixed_array_arg(const Fixed_Array message
-                              ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_fixed_array_arg(const Fixed_Array message)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[9] ++;
@@ -141,7 +135,7 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message
   for (unsigned i = 0; i < 19; i++)
     {
       //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_fixed_array_arg ")
-      //                     ACE_TEXT("got fixed array[i] = %d\n"), 
+      //                     ACE_TEXT("got fixed array[i] = %d\n"),
       //                     i, message[i]));
 
       if (message[i] != message[i + 1] -1)
@@ -154,27 +148,25 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message
         }
     }
 
-  
+
   this->in_long_[9].push_back (message[0]);
 }
 
 
-void 
-Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message)
                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[10] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_bounded_var_size_arg ")
-  //                    ACE_TEXT("got var array chars %s\n"), 
+  //                    ACE_TEXT("got var array chars %s\n"),
   //                    message.get_buffer ()));
   this->in_string_[10].push_back (message.get_buffer ());
 }
 
 
-void 
-Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message)
                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[11] ++;
@@ -185,9 +177,8 @@ Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message
 }
 
 
-void 
-Foo_B_i::test_fixed_size_arg(const TimeOfDay& t
-                             ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_fixed_size_arg(const TimeOfDay& t)
                            ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(t);
@@ -199,9 +190,8 @@ Foo_B_i::test_fixed_size_arg(const TimeOfDay& t
 }
 
 
-void 
-Foo_B_i::test_var_array_arg(const Var_Array messages
-                            ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_var_array_arg(const Var_Array messages)
                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[13] ++;
@@ -212,7 +202,7 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_var_array_arg ")
   //                     ACE_TEXT(" %s \n"), messages[2].in ()));
   unsigned cur_client_id = 0;
-  
+
   for (unsigned i = 0 ; i < 3; i ++)
   {
     unsigned client_id = 0;
@@ -231,11 +221,11 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
     {
        cur_client_id = client_id;
     }
-    else if (client_id != cur_client_id) 
+    else if (client_id != cur_client_id)
     {
        error_count_ ++;
        ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::test_var_array_arg:  client_id checking failed "
-        "- client_id=%u cur_client_id=%u error_count_=%u\n", 
+        "- client_id=%u cur_client_id=%u error_count_=%u\n",
         client_id, cur_client_id, error_count_));
     }
   }
@@ -243,10 +233,9 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
 }
 
 
-void 
-Foo_B_i::test_special_basic_arg(CORBA::Boolean value, 
-                                CORBA::Long client_id
-                                ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
+                                CORBA::Long client_id)
                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[14] ++;
@@ -264,9 +253,8 @@ Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
 }
 
 
-void 
-Foo_B_i::test_objref_arg(Callback_ptr cb
-                         ACE_ENV_ARG_DECL_NOT_USED)
+void
+Foo_B_i::test_objref_arg(Callback_ptr cb)
                             ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(cb);
@@ -277,7 +265,7 @@ Foo_B_i::test_objref_arg(Callback_ptr cb
 
 
 void
-Foo_B_i::done(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)  
+Foo_B_i::done(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   TheAppShutdown->client_done();
@@ -285,7 +273,7 @@ Foo_B_i::done(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Foo_B_i::gather_stats (Foo_B_Statistics& stats) 
+Foo_B_i::gather_stats (Foo_B_Statistics& stats)
 {
   for (unsigned i = 0; i < 16; i++)
     {

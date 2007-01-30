@@ -8,8 +8,8 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (RTCORBA, 
-           Priority_Mapping_Manager, 
+ACE_RCSID (RTCORBA,
+           Priority_Mapping_Manager,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -20,15 +20,9 @@ TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager (void)
 }
 
 TAO_Priority_Mapping_Manager_ptr
-TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj)
 {
-  if (CORBA::is_nil (obj))
-    {
-      return TAO_Priority_Mapping_Manager::_nil ();
-    }
-
-  return 
+  return
     TAO_Priority_Mapping_Manager::_duplicate (
         dynamic_cast<TAO_Priority_Mapping_Manager_ptr> (obj)
       );

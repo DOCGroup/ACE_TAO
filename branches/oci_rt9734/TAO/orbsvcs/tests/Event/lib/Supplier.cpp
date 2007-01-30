@@ -26,8 +26,7 @@ EC_Supplier::EC_Supplier (EC_Driver *driver,
 }
 
 void
-EC_Supplier::send_event (int event_number
-                         ACE_ENV_ARG_DECL)
+EC_Supplier::send_event (int event_number)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -48,12 +47,11 @@ EC_Supplier::send_event (int event_number
 
   this->event_type (event_number, event[0]);
 
-  this->send_event (event ACE_ENV_ARG_PARAMETER);
+  this->send_event (event);
 }
 
 void
-EC_Supplier::send_event (const RtecEventComm::EventSet& event
-                         ACE_ENV_ARG_DECL)
+EC_Supplier::send_event (const RtecEventComm::EventSet& event)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -72,8 +70,7 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event
 
   ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-  this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->push (event);
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
   this->throughput_.sample (end - this->throughput_start_,
@@ -109,21 +106,17 @@ EC_Supplier::event_type (int event_number,
 void
 EC_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                       const RtecEventChannelAdmin::SupplierQOS& qos,
-                      int shutdown_event_type
-                      ACE_ENV_ARG_DECL)
+                      int shutdown_event_type)
 {
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    supplier_admin->obtain_push_consumer ();
 
-  this->connect (qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->connect (qos, shutdown_event_type);
 }
 
 void
 EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
-                      int shutdown_event_type
-                      ACE_ENV_ARG_DECL)
+                      int shutdown_event_type)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return; // @@ Throw?
@@ -133,55 +126,47 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
 
   if (CORBA::is_nil (this->myself_.in ()))
     {
-      this->myself_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->myself_ = this->_this ();
     }
   this->is_active_ = 1;
 
   this->consumer_proxy_->connect_push_supplier (this->myself_.in (),
-                                                qos
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                qos);
 }
 
 void
-EC_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+EC_Supplier::disconnect (void)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->consumer_proxy_->disconnect_push_consumer ();
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
-EC_Supplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+EC_Supplier::shutdown (void)
 {
   if (!this->is_active_)
     return;
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (this);
+  poa->deactivate_object (id.in ());
   this->is_active_ = 0;
   this->myself_ = RtecEventComm::PushSupplier::_nil ();
 }
 
 void
-EC_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+EC_Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->driver_->supplier_disconnect (this->cookie_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->driver_->supplier_disconnect (this->cookie_);
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -225,7 +210,6 @@ EC_Supplier_Task::EC_Supplier_Task (EC_Supplier* supplier,
 int
 EC_Supplier_Task::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Initialize a time value to pace the test
   ACE_Time_Value tv (0, this->burst_pause_);
@@ -246,7 +230,7 @@ EC_Supplier_Task::svc (void)
     {
       for (int j = 0; j < this->burst_size_; ++j)
         {
-          ACE_TRY
+          try
             {
               this->supplier_->event_type (j, event[0]);
 
@@ -255,42 +239,38 @@ EC_Supplier_Task::svc (void)
                                              now);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
-              this->supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
+              this->supplier_->send_event (event);
 
-              ACE_TRY_CHECK;
             }
-          ACE_CATCH (CORBA::SystemException, sys_ex)
+          catch (const CORBA::SystemException& sys_ex)
             {
-              ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+              sys_ex._tao_print_exception ("SYS_EX");
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+              ex._tao_print_exception ("SYS_EX");
             }
-          ACE_ENDTRY;
         }
       ACE_OS::sleep (tv);
     }
 
-  ACE_TRY_EX(SHUTDOWN)
+  try
     {
       // Send one event shutdown from each supplier
       event[0].header.type = this->shutdown_event_type_;
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      now);
-      this->supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (SHUTDOWN);
+      this->supplier_->send_event (event);
     }
-  ACE_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
+      sys_ex._tao_print_exception ("SYS_EX");
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
+      ex._tao_print_exception ("SYS_EX");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "Supplier task finished\n"));

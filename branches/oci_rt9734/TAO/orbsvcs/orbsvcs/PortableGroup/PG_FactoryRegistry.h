@@ -88,25 +88,25 @@ namespace TAO
      * @param orbManager our ORB -- we keep var to it.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL);
+    int init (CORBA::ORB_ptr orb);
 
     /**
      * alternative init using designated poa
      */
-    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
     /**
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (ACE_ENV_SINGLE_ARG_DECL);
+    int fini (void);
 
     /**
      * Processing to happen when the ORB's event loop is idle.
      * @param result is a place to return status to be returned by the process
      * @returns 0 to continue.  1 to quit.
      */
-    int idle(int & result ACE_ENV_ARG_DECL);
+    int idle(int & result);
 
     /**
      * Identify this object.
@@ -122,7 +122,7 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+    virtual void _remove_ref (void);
 
     //////////////////
     // CORBA interface
@@ -132,7 +132,6 @@ namespace TAO
         const char * role,
         const char * type_id,
         const PortableGroup::FactoryInfo & factory_info
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -142,33 +141,28 @@ namespace TAO
     virtual void unregister_factory (
         const char * role,
         const PortableGroup::Location & location
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound));
 
     virtual void unregister_factory_by_role (
         const char * role
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual void unregister_factory_by_location (
       const PortableGroup::Location & location
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
         const char * role,
         CORBA::String_out type_id
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
       const PortableGroup::Location & location
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 

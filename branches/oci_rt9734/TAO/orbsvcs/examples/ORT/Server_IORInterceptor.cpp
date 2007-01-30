@@ -21,14 +21,14 @@ Server_IORInterceptor::~Server_IORInterceptor (void)
 
 
 char *
-Server_IORInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_IORInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_IORInterceptor");
 }
 
 void
-Server_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Server_IORInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::release (this->gateway_object_factory_);
@@ -37,40 +37,33 @@ Server_IORInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Server_IORInterceptor::establish_components (
-    PortableInterceptor::IORInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::IORInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr ior_info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::IORInfo_ptr ior_info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Gateway_ObjRef_Factory *my_factory = 0;
 
   PortableInterceptor::ObjectReferenceFactory_var current_factory =
-    ior_info->current_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ior_info->current_factory ();
 
   ACE_NEW_THROW_EX (my_factory,
                     Gateway_ObjRef_Factory (this->gateway_object_factory_,
                                             current_factory.in ()),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
-  ior_info->current_factory (my_factory
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ior_info->current_factory (my_factory);
 }
 
 void
 Server_IORInterceptor::adapter_manager_state_changed (
     const char *,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -78,8 +71,7 @@ Server_IORInterceptor::adapter_manager_state_changed (
 void
 Server_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::AdapterState)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

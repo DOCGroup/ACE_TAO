@@ -22,8 +22,8 @@
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
-ACE_RCSID (LifeCycle_Service, 
-           Factory_Trader, 
+ACE_RCSID (LifeCycle_Service,
+           Factory_Trader,
            "$Id$")
 
 // This const char * is used for adding a new type to the service repository
@@ -38,7 +38,7 @@ Factory_Trader::Factory_Trader (int debug_level)
     support_Attributes_ptr_(0),
     debug_level_ (debug_level)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       int argc = 0;
       // create the trader
@@ -50,18 +50,16 @@ Factory_Trader::Factory_Trader (int debug_level)
 
       // Set the service type repository
       support_Attributes_ptr_->type_repos
-                     (this->repository_._this (ACE_ENV_SINGLE_ARG_PARAMETER));
-      ACE_TRY_CHECK;
+                     (this->repository_._this ());
 
       // Add the "Factory" type to the repository
       this->add_type ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "LifeCycle Server: (Factory_Trader::Factory_Trader) Failed adding a new type.\n");
+      ex._tao_print_exception (
+        "LifeCycle Server: (Factory_Trader::Factory_Trader) Failed adding a new type.\n");
     }
-  ACE_ENDTRY;
   // @@ ACE_CHECK?  No way to pass back any exceptions.
 }
 
@@ -74,7 +72,7 @@ Factory_Trader::~Factory_Trader ()
 void
 Factory_Trader::add_type ()
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // define the new type
       CosTradingRepos::ServiceTypeRepository::PropStruct propStruct_name;
@@ -104,16 +102,12 @@ Factory_Trader::add_type ()
       this->repository_.add_type (CORBA::string_dup("GenericFactory"),
                                   GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
                                   propStructSeq,
-                                  superTypeSeq
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                  superTypeSeq);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "LifeCycle Server: (Factory_Trader::init).\n");
+      ex._tao_print_exception ("LifeCycle Server: (Factory_Trader::init).\n");
     }
-  ACE_ENDTRY;
   // @@ ACE_CHECK
 }
 
@@ -124,7 +118,7 @@ Factory_Trader::_cxx_export (const char * name,
                              const char * description,
                              const CORBA::Object_ptr object_ptr)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (CORBA::is_nil(object_ptr))
         {
@@ -149,18 +143,14 @@ Factory_Trader::_cxx_export (const char * name,
       // invoke the export method on the Register interface of the Trading Service
       register_ptr->_cxx_export (CORBA::Object::_duplicate (object_ptr),
                                  CORBA::string_dup("GenericFactory"),
-                                 propertySeq
-                                 ACE_ENV_ARG_PARAMETER);
+                                 propertySeq);
 
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "LifeCycle Server (Factory_Trader::export): "
-                           "Failed to export factory.\n");
+      ex._tao_print_exception (
+        "LifeCycle Server (Factory_Trader::export): ""Failed to export factory.\n");
     }
-  ACE_ENDTRY;
   // @@ ACE_CHECK*
 }
 
@@ -168,7 +158,7 @@ Factory_Trader::_cxx_export (const char * name,
 CORBA::Object_ptr
 Factory_Trader::query (const char* constraint)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CosTrading::Lookup::SpecifiedProps specifiedProps;
       specifiedProps._d(CosTrading::Lookup::all);
@@ -195,8 +185,7 @@ Factory_Trader::query (const char* constraint)
                          CosTrading::OfferSeq_out(offerSeq_ptr),               // results
                          CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
                          CosTrading::PolicyNameSeq_out(policyNameSeq_ptr)      // Policies
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         );
 
       // Initialize
       CORBA::Object_ptr object_ptr = 0;
@@ -224,11 +213,11 @@ Factory_Trader::query (const char* constraint)
         }
       return object_ptr;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Factory_Trader::query: Failed.\n");
+      ex._tao_print_exception (
+        "Factory_Trader::query: Failed.\n");
     }
-  ACE_ENDTRY;
   // @@ ACE_CHECK_RETURN (?)
   return 0;
 }

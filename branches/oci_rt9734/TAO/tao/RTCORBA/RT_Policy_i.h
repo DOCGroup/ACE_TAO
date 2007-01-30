@@ -68,19 +68,19 @@ public:
    */
   RTCORBA::PriorityModel get_priority_model (void);
 
-  RTCORBA::PriorityModel priority_model (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  RTCORBA::PriorityModel priority_model (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RTCORBA::Priority server_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  RTCORBA::Priority server_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the object state.
@@ -97,8 +97,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -138,16 +137,16 @@ public:
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
 
-  RTCORBA::ThreadpoolId threadpool (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  RTCORBA::ThreadpoolId threadpool (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -158,8 +157,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -195,13 +193,13 @@ public:
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -212,8 +210,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -254,16 +251,16 @@ public:
    */
   RTCORBA::PriorityBands &priority_bands_rep (void);
 
-  RTCORBA::PriorityBands *priority_bands (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  RTCORBA::PriorityBands *priority_bands (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the current object.
@@ -280,8 +277,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -329,16 +325,16 @@ public:
   RTCORBA::ProtocolList & protocols_rep (void);
 
   RTCORBA::ProtocolList *protocols
-  (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
@@ -349,8 +345,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -393,16 +388,16 @@ public:
   RTCORBA::ProtocolList & protocols_rep (void);
 
   RTCORBA::ProtocolList *protocols
-  (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::PolicyType policy_type (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Policy_ptr copy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = CDR Encoder/Decoder.
@@ -421,8 +416,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val
-                                   ACE_ENV_ARG_DECL);
+  static CORBA::Policy_ptr create (const CORBA::Any &val);
 
 protected:
 
@@ -463,46 +457,40 @@ public:
                                CORBA::Boolean no_delay,
                                CORBA::Boolean enable_network_priority);
 
-  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean keep_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void keep_alive (CORBA::Boolean keep_alive)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean dont_route (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void dont_route (CORBA::Boolean dont_route)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean no_delay (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void no_delay (CORBA::Boolean no_delay
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void no_delay (CORBA::Boolean no_delay)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void enable_network_priority (CORBA::Boolean enable)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of TCPProtocolProperties.
@@ -548,18 +536,16 @@ public:
   TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
                                       CORBA::Long recv_buffer_size);
 
-  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -621,63 +607,56 @@ public:
 
   // = IDL interface methods.
 
-  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean keep_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void keep_alive (CORBA::Boolean keep_alive)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean dont_route (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void dont_route (CORBA::Boolean dont_route)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean no_delay (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void no_delay (CORBA::Boolean no_delay
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                 )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long preallocate_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long preallocate_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char *mmap_filename (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  char *mmap_filename (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_filename (const char *mmap_filename
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void mmap_filename (const char *mmap_filename)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char *mmap_lockname (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  char *mmap_lockname (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_lockname (const char *mmap_lockname
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void mmap_lockname (const char *mmap_lockname)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -734,11 +713,10 @@ public:
   /// Constructor.
   TAO_UserDatagram_Protocol_Properties (CORBA::Boolean enable_network_priority);
 
-  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void enable_network_priority (CORBA::Boolean enable)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of UserDatagramProtocolProperties.
@@ -781,46 +759,40 @@ public:
                                          CORBA::Boolean no_delay,
                                          CORBA::Boolean enable_network_priority);
 
-  CORBA::Long send_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long send_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void send_buffer_size (CORBA::Long send_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Long recv_buffer_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void recv_buffer_size (CORBA::Long recv_buffer_size)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean keep_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean keep_alive (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void keep_alive (CORBA::Boolean keep_alive)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean dont_route (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean dont_route (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void dont_route (CORBA::Boolean dont_route)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean no_delay (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean no_delay (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void no_delay (CORBA::Boolean no_delay
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void no_delay (CORBA::Boolean no_delay)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  CORBA::Boolean enable_network_priority (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  void enable_network_priority (CORBA::Boolean enable)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of StreamControlProtocolProperties.

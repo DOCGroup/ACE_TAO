@@ -24,24 +24,22 @@ main(int argc, char* argv[]) \
 \
   APP_TYPE app; \
 \
-  ACE_TRY_NEW_ENV \
+  try\
   { \
-    int ret = app.run(argc,argv ACE_ENV_ARG_PARAMETER); \
-    ACE_TRY_CHECK; \
+    int ret = app.run(argc,argv); \
+\
     return ret; \
   } \
-  ACE_CATCHANY \
+  catch (const CORBA::Exception& ex)\
   { \
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, \
-                           "Caught exception:"); \
+     ex._tao_print_exception ("Caught exception:"); \
   } \
-  ACE_CATCHALL \
+  catch (...)\
   { \
     ACE_ERROR((LM_ERROR, \
                "(%P|%t) Unknown (...) exception caught in main() " \
                "for App [%d].\n", app.name())); \
   } \
-  ACE_ENDTRY; \
   \
   return 1; \
 }

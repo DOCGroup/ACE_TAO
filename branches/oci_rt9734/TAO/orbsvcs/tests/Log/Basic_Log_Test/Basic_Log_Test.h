@@ -48,7 +48,7 @@ class BasicLog_Test
 
 int display_records ();
 
-int 
+int
 delete_records (CORBA::ULongLong numberOfRecords);
 
  int
@@ -111,21 +111,21 @@ private:
   BasicLog_Test& operator=(const BasicLog_Test&);
 
   int
-    init_factory (ACE_ENV_SINGLE_ARG_DECL);
+    init_factory (void);
 
   int
     parse_args(int argc, char *argv[]);
   // command line argument parser
 
-  int write_records(CORBA::ULongLong numberOfRecordsToWrite ACE_ENV_ARG_DECL_NOT_USED);
+  int write_records(CORBA::ULongLong numberOfRecordsToWrite);
   // writes enough records to fill the log. Default write enough to fill log. Hopefully, not infinite.
 
   void
-    resolve_basic_factory (ACE_ENV_SINGLE_ARG_DECL);
+    resolve_basic_factory (void);
   // resolve log factory
 
   void
-    resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+    resolve_naming_service (void);
   // resolve nameing service
 
   void

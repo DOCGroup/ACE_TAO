@@ -34,22 +34,18 @@ MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl ()
 
 void
 MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
-    HUDisplay::tick * /* ev */
-    ACE_ENV_ARG_DECL)
+    HUDisplay::tick * /* ev */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
 
   // Refresh position
   HUDisplay::position_var loc =
-    this->context_->get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->context_->get_connection_GPSLocation ();
 
-  CORBA::Long lx = loc->posx (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Long lx = loc->posx ();
 
-  CORBA::Long ly = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::Long ly = loc->posy ();
 
   mutex_.acquire();
 
@@ -76,8 +72,7 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
 
 // Operations from Components::SessionComponent
 void
-MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext_ptr ctx
-                                            ACE_ENV_ARG_DECL)
+MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -85,24 +80,22 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
     ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::set_session_context\n"));
 
   this->context_ =
-    HUDisplay::CCM_NavDisplay_Context::_narrow (ctx
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    HUDisplay::CCM_NavDisplay_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   // Urm, we actually discard exceptions thown from this operation.
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::NavDisplayGUI_exec_impl::ccm_activate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -115,7 +108,7 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_DEBUG((LM_ERROR,
                "Cannot activate client threads\n"));
-    ACE_THROW(Components::CCMException());
+    throw Components::CCMException();
   }
 
   worker_->waitUntillInitialized();
@@ -131,14 +124,14 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ccm_passivate ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -158,7 +151,7 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ccm_remove ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -187,7 +180,7 @@ MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::NavDisplayGUIHome_exec_impl::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUIHome_exec_impl::create ()
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

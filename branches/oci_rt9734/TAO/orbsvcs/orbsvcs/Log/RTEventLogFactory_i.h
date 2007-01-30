@@ -63,12 +63,11 @@ public:
   /// pointer to it.
   int
   init (CORBA::ORB_ptr orb,
-        PortableServer::POA_ptr poa
-        ACE_ENV_ARG_DECL);
+        PortableServer::POA_ptr poa);
 
   /// Activate this servant
   RTEventLogAdmin::EventLogFactory_ptr
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate (void);
 
   /// Used to create a RTEventLog.
   RTEventLogAdmin::EventLog_ptr create (
@@ -76,7 +75,6 @@ public:
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -90,7 +88,6 @@ public:
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -101,7 +98,6 @@ public:
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -110,10 +106,9 @@ public:
 protected:
   virtual CORBA::RepositoryId
     create_repositoryid ();
-	
+
   virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id
-			ACE_ENV_ARG_DECL);
+    create_log_servant (DsLogAdmin::LogId id);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;

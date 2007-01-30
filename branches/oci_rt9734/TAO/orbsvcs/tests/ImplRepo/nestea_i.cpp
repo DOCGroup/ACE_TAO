@@ -34,8 +34,7 @@ Nestea_i::~Nestea_i (void)
 // Add <cans> number of cans to the bookshelf.
 
 void
-Nestea_i::drink (CORBA::Long cans
-                 ACE_ENV_ARG_DECL_NOT_USED)
+Nestea_i::drink (CORBA::Long cans)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
@@ -50,8 +49,7 @@ Nestea_i::drink (CORBA::Long cans
 // Removes <cans> number of cans from the bookshelf.
 
 void
-Nestea_i::crush (CORBA::Long cans
-                 ACE_ENV_ARG_DECL_NOT_USED)
+Nestea_i::crush (CORBA::Long cans)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
@@ -69,7 +67,7 @@ Nestea_i::crush (CORBA::Long cans
 // Returns the number of cans in the bookshelf.
 
 CORBA::Long
-Nestea_i::bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Nestea_i::bookshelf_size (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
@@ -81,7 +79,7 @@ Nestea_i::bookshelf_size (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 // Returns comments about your collection.
 
 char *
-Nestea_i::get_praise (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Nestea_i::get_praise (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
@@ -100,7 +98,7 @@ Nestea_i::get_praise (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Nestea_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Nestea_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)

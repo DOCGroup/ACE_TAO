@@ -38,8 +38,7 @@ TAO_LB_Pull_Handler::handle_timeout (
   if (begin == end)
     return 0;       // No work to be done.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Iterate over all registered load monitors.
       //
@@ -54,13 +53,10 @@ TAO_LB_Pull_Handler::handle_timeout (
           // LoadManager prevents nil load monitor references from
           // being registered.
           CosLoadBalancing::LoadList_var load_list =
-            monitor->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            monitor->loads ();
 
           this->load_manager_->push_loads (location,
-                                           load_list.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                           load_list.in ());
 
 //           ACE_DEBUG ((LM_DEBUG,
 //                       "LOCATION = %s\tLOAD = %f\n",
@@ -68,15 +64,13 @@ TAO_LB_Pull_Handler::handle_timeout (
 //                       load_list[0].value));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       // Catch the exception and ignore it.
 
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "(%P|%t) PullHandler::handle_timeout()\n");
+        ex._tao_print_exception ("(%P|%t) PullHandler::handle_timeout()\n");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

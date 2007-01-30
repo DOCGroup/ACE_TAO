@@ -57,7 +57,7 @@ main (int argc, char * argv [])
   ACE_CString client_orb;
   client_orb.set ("client_orb");
 
-  ACE_TRY_NEW_ENV
+  try
     {
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -66,17 +66,13 @@ main (int argc, char * argv [])
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
-                         server_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         server_orb.c_str ());
 
       ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc (),
                          catc.get_TCHAR_argv (),
-                         client_orb.c_str ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         client_orb.c_str ());
 
       {
         ACE_Manual_Event me;
@@ -110,16 +106,13 @@ main (int argc, char * argv [])
         ACE_Thread_Manager::instance ()->wait ();
       }
 
-      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sorb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   if (failed)
     {

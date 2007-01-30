@@ -48,17 +48,17 @@ public:
   virtual ~TAO_Adapter (void);
 
   /// Initialize the Adapter
-  virtual void open (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void open (void) = 0;
 
   /// The ORB is shutting down, destroy any resources attached to this
   /// adapter.
   virtual void close (int wait_for_completion
-                      ACE_ENV_ARG_DECL) = 0;
+                      ) = 0;
 
   /// Check if the adapter can be closed in the current context, raise
   /// an exception if not.
   virtual void check_close (int wait_for_completion
-                            ACE_ENV_ARG_DECL) = 0;
+                            ) = 0;
 
   /**
    * Return the priority assigned to this adapter.
@@ -71,7 +71,7 @@ public:
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out forward_to
-                        ACE_ENV_ARG_DECL) = 0;
+                        ) = 0;
 
   enum {
     /// The operation was successfully dispatched, an exception may

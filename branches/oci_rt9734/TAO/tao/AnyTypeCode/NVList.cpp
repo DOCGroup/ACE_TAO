@@ -96,23 +96,22 @@ CORBA::NVList::~NVList (void)
 // add an element and just initialize its flags
 CORBA::NamedValue_ptr
 CORBA::NVList::add (CORBA::Flags flags
-                    ACE_ENV_ARG_DECL)
+                    )
 {
   // call the helper to allocate a NamedValue element (if necessary)
   return this->add_element (flags
-                            ACE_ENV_ARG_PARAMETER);
+                           );
 }
 
 // add an element and just initialize its flags and name
 CORBA::NamedValue_ptr
 CORBA::NVList::add_item (const char *name,
                          CORBA::Flags flags
-                         ACE_ENV_ARG_DECL)
+                         )
 {
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                               );
 
   if (nv)
     {
@@ -131,12 +130,11 @@ CORBA::NamedValue_ptr
 CORBA::NVList::add_value (const char *name,
                           const CORBA::Any &value,
                           CORBA::Flags flags
-                          ACE_ENV_ARG_DECL)
+                          )
 {
   // Call the helper to allocate a NamedValue element.
   CORBA::NamedValue_ptr nv = this->add_element (flags
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                               );
 
   if (nv)
     {
@@ -161,13 +159,12 @@ CORBA::NVList::add_value (const char *name,
 CORBA::NamedValue_ptr
 CORBA::NVList::add_item_consume (char *name,
                                  CORBA::Flags flags
-                                 ACE_ENV_ARG_DECL)
+                                 )
 {
 
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                               );
 
   if (nv)
     {
@@ -188,12 +185,11 @@ CORBA::NamedValue_ptr
 CORBA::NVList::add_value_consume (char * name,
                                   CORBA::Any * value,
                                   CORBA::Flags flags
-                                  ACE_ENV_ARG_DECL)
+                                  )
 {
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                                               );
 
   if (nv)
     {
@@ -216,7 +212,7 @@ CORBA::NVList::add_value_consume (char * name,
 //CORBA::Status
 void
 CORBA::NVList::remove (CORBA::ULong /* n */
-                       ACE_ENV_ARG_DECL_NOT_USED)
+                       )
 {
   // not implemented
   // @@ (ASG) - TODO
@@ -225,10 +221,9 @@ CORBA::NVList::remove (CORBA::ULong /* n */
 // Helper method
 CORBA::NamedValue_ptr
 CORBA::NVList::add_element (CORBA::Flags flags
-                            ACE_ENV_ARG_DECL)
+                            )
 {
-  this->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
+  this->evaluate ();
 
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
@@ -243,7 +238,6 @@ CORBA::NVList::add_element (CORBA::Flags flags
   ACE_NEW_THROW_EX (nv,
                     CORBA::NamedValue,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
 
   // set the flags and enqueue in the queue
   nv->flags_ = flags;
@@ -261,10 +255,9 @@ CORBA::NVList::add_element (CORBA::Flags flags
 // return the item at location n
 CORBA::NamedValue_ptr
 CORBA::NVList::item (CORBA::ULong n
-                     ACE_ENV_ARG_DECL)
+                     )
 {
-  this->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
+  this->evaluate ();
 
   if (n >= this->max_)
     {
@@ -282,7 +275,7 @@ void
 CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
                                   int flag,
                                   bool &lazy_evaluation
-                                  ACE_ENV_ARG_DECL)
+                                  )
 {
   // If the list is empty then using lazy evaluation is the only
   // choice.
@@ -298,7 +291,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
     {
       this->_tao_decode (cdr,
                          flag
-                         ACE_ENV_ARG_PARAMETER);
+                        );
       return;
     }
 
@@ -317,7 +310,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 void
 CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
                             int flag
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              ace_mon,
@@ -368,8 +361,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
           (void) TAO_Marshal_Object::perform_append (tc,
                                                      this->incoming_,
                                                      &cdr
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                                    );
         }
 
       delete this->incoming_;
@@ -402,7 +394,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
 void
 CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
                             int flag
-                            ACE_ENV_ARG_DECL)
+                            )
 {
   if (TAO_debug_level > 3)
     {
@@ -438,8 +430,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
 
       CORBA::Any_ptr any = nv->value ();
       any->impl ()->_tao_decode (incoming
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                );
     }
 }
 
@@ -468,7 +459,7 @@ CORBA::NVList::_tao_target_alignment (void)
 }
 
 void
-CORBA::NVList::evaluate (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::NVList::evaluate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -482,7 +473,7 @@ CORBA::NVList::evaluate (ACE_ENV_SINGLE_ARG_DECL)
 
   this->_tao_decode (*(incoming.get ()),
                      this->incoming_flag_
-                     ACE_ENV_ARG_PARAMETER);
+                    );
 }
 
 CORBA::Boolean

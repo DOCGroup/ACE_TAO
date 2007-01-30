@@ -52,8 +52,7 @@ public:
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-      ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
 
 private:
 

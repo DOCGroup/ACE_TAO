@@ -68,8 +68,7 @@ class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
   typedef ACE_Guard< TAO_SYNCH_MUTEX > Routing_Slip_Guard;
 public:
   /// "Factory" method for normal use.
-  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event
-    ACE_ENV_ARG_DECL);
+  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event);
 
   /// "Factory" method for use during reload from persistent storage.
   static Routing_Slip_Ptr create (
@@ -78,7 +77,7 @@ public:
 
   void set_rspm (Routing_Slip_Persistence_Manager * rspm);
 
-  void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void reconnect (void);
 
   /// destructor (should be private but that inspires compiler wars)
   virtual ~Routing_Slip ();
@@ -89,12 +88,12 @@ public:
   /// Route this event to destinations
   /// must be the Action request after
   /// the routing slip is created.
-  void route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV_ARG_DECL);
+  void route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel);
 
   /// \brief Schedule delivery to a consumer via a proxy supplier
   /// \param proxy_supplier the proxy supplier that will deliver the event
   /// \param filter should consumer-based filtering be applied?
-  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter ACE_ENV_ARG_DECL);
+  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
 
   /////////////////////////////////////////

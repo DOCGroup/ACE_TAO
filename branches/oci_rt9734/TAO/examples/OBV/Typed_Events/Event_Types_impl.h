@@ -51,7 +51,7 @@ class Event_impl : public virtual OBV_Event,
   Event_impl ();
   virtual ~Event_impl ();
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
   // Implementation of the do_print () operation the valuetype should have.
   // All operations in valuetypes are virtual.
 
@@ -89,7 +89,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Event) create_for_unmarshal (void);
 };
 #endif /* is not defined */
 
@@ -127,7 +127,7 @@ public:
 
   virtual ~Temperature_impl ();
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
   // Overrides Event_impl::do_print (). Note that a new declaration
   // in IDL in a derived class is not allowed.
 };
@@ -145,7 +145,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Temperature) create_for_unmarshal (void);
 };
 
 
@@ -159,15 +159,15 @@ public:
   Position_impl (Point &p);
   virtual ~Position_impl ();
 
-  virtual CORBA::Float x (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void x (CORBA::Float ACE_ENV_ARG_DECL);
-  virtual CORBA::Float y (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void y (CORBA::Float ACE_ENV_ARG_DECL);
-  virtual CORBA::Float z (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void z (CORBA::Float ACE_ENV_ARG_DECL);
+  virtual CORBA::Float x (void);
+  virtual void x (CORBA::Float);
+  virtual CORBA::Float y (void);
+  virtual void y (CORBA::Float);
+  virtual CORBA::Float z (void);
+  virtual void z (CORBA::Float);
   //These are the attributes
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
 };
 
 class Position_factory : public CORBA::ValueFactoryBase
@@ -182,7 +182,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Position)  create_for_unmarshal (void);
 };
 
 
@@ -196,7 +196,7 @@ public:
   Log_Msg_impl (CORBA::Short urgency_p, const char *message_p);
   virtual ~Log_Msg_impl ();
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
 };
 
 class Log_Msg_factory : public CORBA::ValueFactoryBase
@@ -211,7 +211,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)  create_for_unmarshal (void);
 };
 
 
@@ -232,12 +232,12 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
   Event_List_Link_impl (Event *e);
   virtual ~Event_List_Link_impl ();
 
-  Event *get_event (ACE_ENV_SINGLE_ARG_DECL);
+  Event *get_event (void);
 
  private:
-  Event_List_Link *get_next_link (ACE_ENV_SINGLE_ARG_DECL);
+  Event_List_Link *get_next_link (void);
 
-  void attach_next_link (Event_List_Link * chain ACE_ENV_ARG_DECL);
+  void attach_next_link (Event_List_Link * chain);
   // Attach a chain at the end.
 };
 
@@ -252,7 +252,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)  create_for_unmarshal (void);
 };
 
 
@@ -266,9 +266,9 @@ class Event_List_impl : public virtual OBV_Event_List,
   Event_List_impl ();
   virtual ~Event_List_impl ();
 
-  void store_event (Event* e ACE_ENV_ARG_DECL);
+  void store_event (Event* e);
 
-  Event_List_Link *get_first_link(ACE_ENV_SINGLE_ARG_DECL);
+  Event_List_Link *get_first_link(void);
   // The iterator needs it.
 
  private:
@@ -294,7 +294,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Event_List)  create_for_unmarshal (void);
 
 };
 
@@ -349,9 +349,9 @@ public:
 
   virtual ~Temperature_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event* e);
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
 };
 
 class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
@@ -359,7 +359,7 @@ class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
   friend class Temperature;
 private:
   virtual ~Temperature_Criterion_factory ();
-  TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion) create_for_unmarshal (void);
 };
 
 
@@ -376,9 +376,9 @@ public:
                            Position *tr);
   virtual ~Position_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event* e);
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
 };
 
 class Position_Criterion_factory : public CORBA::ValueFactoryBase
@@ -390,7 +390,7 @@ protected:
 
 private:
 
-  TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)  create_for_unmarshal (void);
 };
 
 
@@ -403,9 +403,9 @@ public:
   Log_Msg_Criterion_impl ();
   virtual ~Log_Msg_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event* e);
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void do_print (void);
 };
 
 class Log_Msg_Criterion_factory : public CORBA::ValueFactoryBase
@@ -416,7 +416,7 @@ protected:
   virtual ~Log_Msg_Criterion_factory ();
 
 private:
-  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)  create_for_unmarshal (void);
 };
 
 
@@ -427,8 +427,8 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
   Criterion_List_impl ();
   virtual ~Criterion_List_impl ();
 
-  void store_criterion (Criterion *c ACE_ENV_ARG_DECL);
-  CORBA::Boolean is_critical (Event *e ACE_ENV_ARG_DECL);
+  void store_criterion (Criterion *c);
+  CORBA::Boolean is_critical (Event *e);
 };
 
 

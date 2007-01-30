@@ -20,8 +20,7 @@ ACE_RCSID(RTPortableServer,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
-                                            ACE_ENV_ARG_DECL) const
+TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
 {
   // Make sure that the servant is in the same ORB that created this
   // object.
@@ -37,8 +36,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   TAO::Portable_Server::Servant_Upcall servant_upcall (orb_core);
   TAO_Root_POA *poa =
     servant_upcall.lookup_POA (object->_stubobj ()->object_key ()
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                              );
 
   // Get the thread pool associated with this POA.
   TAO_Thread_Pool *target_thread_pool =
@@ -98,7 +96,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
 
   if (-1 == poa->find_servant_priority (servant_upcall.system_id_,
                                         target_priority
-                                        ACE_ENV_ARG_PARAMETER))
+                                       ))
   {
     return false;
   };

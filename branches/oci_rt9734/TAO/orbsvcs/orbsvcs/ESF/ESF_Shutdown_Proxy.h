@@ -29,8 +29,7 @@ class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Shutdown_Proxy (void);
 
-  void work (PROXY *proxy
-             ACE_ENV_ARG_DECL);
+  void work (PROXY *proxy);
 };
 
 // ****************************************************************

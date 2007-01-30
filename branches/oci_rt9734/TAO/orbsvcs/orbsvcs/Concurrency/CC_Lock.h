@@ -60,18 +60,17 @@ public:
   ~CC_Lock (void);
 
   /// Acquires this lock. Blocks until lock is obtained
-  void lock (ACE_ENV_SINGLE_ARG_DECL);
+  void lock (void);
 
   /// Tries to acquire this lock. If it is not possible to acquire the
   /// lock, false is returned
-  CORBA::Boolean try_lock (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Boolean try_lock (void);
 
   /// Releases this lock.
-  void unlock (ACE_ENV_SINGLE_ARG_DECL);
+  void unlock (void);
 
   /// Changes the mode of this lock.
-  void change_mode (CosConcurrencyControl::lock_mode new_mode
-                   ACE_ENV_ARG_DECL);
+  void change_mode (CosConcurrencyControl::lock_mode new_mode);
 
   /// Sets the mode_ of the lock. Used in initialization
   void set_mode (CosConcurrencyControl::lock_mode mode);
@@ -130,7 +129,7 @@ public:
 
   /// Advance the iterator to the next element
   /// Throws exception if out of range
-  void Next(ACE_ENV_SINGLE_ARG_DECL);
+  void Next(void);
 
   /// Returns true if the iterator has reached the last element
   CORBA::Boolean IsDone(void);

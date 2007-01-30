@@ -69,15 +69,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       // Initialize orb
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       if (parse_args (argc, argv) != 0)
         {
@@ -85,14 +83,10 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (rategen_ior_
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (rategen_ior_);
 
       HUDisplay::RateGen_var pulser =
-        HUDisplay::RateGen::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        HUDisplay::RateGen::_narrow (obj.in ());
 
       if (CORBA::is_nil (pulser.in ()))
         {
@@ -103,34 +97,27 @@ main (int argc, char *argv[])
 
       if (turn_on)
         {
-          pulser->hertz (rate
-                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->hertz (rate);
 
           ACE_DEBUG ((LM_DEBUG, "Start up the Rate Generator\n"));
 
-          pulser->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->start ();
         }
       else
         {
-          pulser->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          pulser->stop ();
 
           ACE_DEBUG ((LM_DEBUG, "Rate Generator stopped\n"));
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Who is the culprit \n");
+      ex._tao_print_exception ("Who is the culprit \n");
       cerr << "Uncaught CORBA exception" << endl;
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

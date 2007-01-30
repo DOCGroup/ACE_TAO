@@ -74,10 +74,10 @@ TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, T
 }
 
 void
-TAO_Notify_Tests_Command_Builder::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Command_Builder::execute (void)
 {
   if (this->start_command_)
-    this->start_command_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->start_command_->execute ();
 }
 
 ACE_STATIC_SVC_DEFINE(TAO_Notify_Tests_Command_Builder,

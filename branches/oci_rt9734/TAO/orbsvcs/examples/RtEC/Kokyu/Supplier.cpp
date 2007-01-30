@@ -15,7 +15,7 @@ Supplier::Supplier (RtecEventComm::EventSourceID id,
 }
 
 void
-Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
+Supplier::timeout_occured (void)
 {
   RtecEventComm::EventSet event (1);
   if (id_ == 1)
@@ -33,11 +33,11 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       event[0].header.ttl    = 1;
     }
 
-  consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
+  consumer_proxy_->push (event);
 }
 
 void
-Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Supplier::disconnect_push_supplier (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -48,8 +48,7 @@ Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
 }
 
 void
-Timeout_Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL)
+Timeout_Consumer::push (const RtecEventComm::EventSet& events)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
@@ -60,11 +59,11 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Timeout Event received\n"));
-  supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
+  supplier_impl_->timeout_occured ();
 }
 
 void
-Timeout_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Timeout_Consumer::disconnect_push_consumer (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

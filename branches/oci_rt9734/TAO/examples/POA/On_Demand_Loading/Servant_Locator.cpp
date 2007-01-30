@@ -19,8 +19,8 @@
 
 #include "Servant_Locator.h"
 
-ACE_RCSID (On_Demand_Activation, 
-           Servant_Locator, 
+ACE_RCSID (On_Demand_Activation,
+           Servant_Locator,
            "$Id$")
 
 // Initialization.
@@ -36,8 +36,7 @@ PortableServer::Servant
 ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa,
                              const char * /* operation */,
-                             PortableServer::ServantLocator::Cookie &cookie
-                             ACE_ENV_ARG_DECL)
+                             PortableServer::ServantLocator::Cookie &cookie)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -74,8 +73,7 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
                               PortableServer::POA_ptr /* poa */,
                               const char * /* operation */,
                               PortableServer::ServantLocator::Cookie cookie,
-                              PortableServer::Servant servant
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              PortableServer::Servant servant)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

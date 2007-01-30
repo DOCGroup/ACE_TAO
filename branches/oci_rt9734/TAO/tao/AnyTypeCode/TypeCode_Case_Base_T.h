@@ -78,7 +78,7 @@ namespace TAO
 
       /// Return the IDL @c union case label value embedded within a
       /// @c CORBA::Any.
-      virtual CORBA::Any * label (ACE_ENV_SINGLE_ARG_DECL) const = 0;
+      virtual CORBA::Any * label (void) const = 0;
 
       /// Get the name of the @c union case/member.
       char const * name (void) const;
@@ -110,14 +110,14 @@ namespace TAO
       /// index" in the given @c TypeCode @a tc.
       bool equal (CORBA::ULong index,
                   CORBA::TypeCode_ptr tc
-                  ACE_ENV_ARG_DECL) const;
+                  ) const;
 
       /// Check for equivalence of the @c case attributes contained by
       /// this class and the corresponding member attributes at index
       /// "@a index" in the given @c TypeCode @a tc.
       bool equivalent (CORBA::ULong index,
                        CORBA::TypeCode_ptr tc
-                       ACE_ENV_ARG_DECL) const;
+                       ) const;
 
     protected:
 
@@ -141,7 +141,7 @@ namespace TAO
        */
       virtual bool equal_label (CORBA::ULong index,
                                 CORBA::TypeCode_ptr tc
-                                ACE_ENV_ARG_DECL) const = 0;
+                                ) const = 0;
 
     private:
 

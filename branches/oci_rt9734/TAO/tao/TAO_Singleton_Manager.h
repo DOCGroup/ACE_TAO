@@ -8,7 +8,7 @@
  *  $Id$
  *
  *   Header file for the TAO-specific Singleton Manager.  Based
- *   entirely on ace/Object_Manager.{h,i,cpp}.
+ *   entirely on ace/Object_Manager.{h,inl,cpp}.
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
@@ -30,9 +30,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_EXCEPTIONS)
 typedef void (*TAO_unexpected_handler)(void);
-#endif  /* ACE_HAS_EXCEPTIONS */
 
 /**
  * @class TAO_Singleton_Manager
@@ -122,7 +120,6 @@ public:
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
 
-#if defined (ACE_HAS_EXCEPTIONS)
   /// Set a new unexpected exception handler.
   /**
    * The old one will be stored for restoration later on.
@@ -131,7 +128,6 @@ public:
    *       old unexpected exception handler pointer to be lost.
    */
   void _set_unexpected (TAO_unexpected_handler u);
-#endif /* ACE_HAS_EXCEPTIONS */
 
 protected:
 
@@ -173,7 +169,6 @@ private:
   TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_HAS_EXCEPTIONS)
   /// The old unexpected exception handler.
   /**
    * A pointer to the old unexpected exception handler is stored so
@@ -183,7 +178,6 @@ private:
    * TAO was unloaded.
    */
   TAO_unexpected_handler old_unexpected_;
-#endif  /* ACE_HAS_EXCEPTIONS */
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -18,8 +18,7 @@ ACE_RCSID (AMI_Observer,
 Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
   (const char *pathname,
-   Web_Server::Callback_ptr client_callback
-   ACE_ENV_ARG_DECL)
+   Web_Server::Callback_ptr client_callback)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
@@ -44,14 +43,12 @@ Push_Iterator_Factory_i::register_callback
                     Callback_Handler (pathname,
                                       client_callback),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   // Transfer ownership to the POA.
   PortableServer::ServantBase_var tmp (handler);
 
   // Start sending data to the client callback object.
-  handler->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  handler->run ();
 
   ACE_stat file_status;
   if (ACE_OS::stat (pathname,
@@ -64,7 +61,6 @@ Push_Iterator_Factory_i::register_callback
   ACE_NEW_THROW_EX (meta_tmp,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   Web_Server::Metadata_Type_var metadata = meta_tmp;
 

@@ -66,7 +66,6 @@ public:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -141,10 +140,10 @@ public:
 
   int parse_args(int argc, char *argv[]) ;
 
-  int init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  int init (int argc, char *argv []);
   // initialization.
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
   // Run the test.
 
   void peer_done (void);
@@ -155,7 +154,7 @@ public:
 
   Worker worker_;
 protected:
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create participants.
 
   CORBA::Boolean collocated_ec_;

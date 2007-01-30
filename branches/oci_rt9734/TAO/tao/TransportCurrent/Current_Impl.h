@@ -9,6 +9,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 #include "tao/TransportCurrent/TCC.h"
 #include "tao/LocalObject.h"
 
@@ -47,22 +49,22 @@ namespace TAO
          * PortableInterceptor::Current interface.
          */
         //@{
-        virtual CORBA::Long id (ACE_ENV_SINGLE_ARG_DECL)
+        virtual CORBA::Long id (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT bytes_sent (ACE_ENV_SINGLE_ARG_DECL)
+        virtual CounterT bytes_sent (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT bytes_received (ACE_ENV_SINGLE_ARG_DECL)
+        virtual CounterT bytes_received (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT messages_sent (ACE_ENV_SINGLE_ARG_DECL)
+        virtual CounterT messages_sent (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT messages_received (ACE_ENV_SINGLE_ARG_DECL)
+        virtual CounterT messages_received (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual ::TimeBase::TimeT open_since (ACE_ENV_SINGLE_ARG_DECL)
+        virtual ::TimeBase::TimeT open_since (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
         //@}
 
@@ -73,13 +75,13 @@ namespace TAO
          */
         //@{
         /// A (strategy) method used to obtain the transport ptr
-        const TAO_Transport* transport (ACE_ENV_SINGLE_ARG_DECL) const
+        const TAO_Transport* transport (void) const
           ACE_THROW_SPEC ((NoContext));
 
         /// A Stats instance. If protocol is unavailable (0) or the
         /// TAO_HAS_TRANSPORT_CURRENT macro is defined as anything but
         /// 1, a single static instance will be used.
-        const TAO::Transport::Stats* transport_stats (ACE_ENV_SINGLE_ARG_DECL) const
+        const TAO::Transport::Stats* transport_stats (void) const
           ACE_THROW_SPEC ((NoContext));
         //@}
 
@@ -105,7 +107,6 @@ namespace TAO
 
         // The ORB's TSS slot id for the Transport ptr
         size_t tss_slot_id_;
-
       };
 
   }
@@ -113,6 +114,9 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+
 
 #include /**/ "ace/post.h"
 

@@ -62,8 +62,7 @@ TAO::SL3::CredentialsCurator::_duplicate (TAO::SL3::CredentialsCurator_ptr obj)
 }
 
 TAO::SL3::CredentialsCurator_ptr
-TAO::SL3::CredentialsCurator::_narrow (CORBA::Object_ptr obj
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+TAO::SL3::CredentialsCurator::_narrow (CORBA::Object_ptr obj)
 {
   return TAO::SL3::CredentialsCurator::_duplicate (
              dynamic_cast<TAO::SL3::CredentialsCurator *> (obj));
@@ -76,7 +75,7 @@ TAO::SL3::CredentialsCurator::_nil (void)
 }
 
 SecurityLevel3::AcquisitionMethodList *
-TAO::SL3::CredentialsCurator::supported_methods (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::CredentialsCurator::supported_methods (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::AcquisitionMethodList * list;
@@ -108,8 +107,7 @@ TAO::SL3::CredentialsCurator::supported_methods (ACE_ENV_SINGLE_ARG_DECL)
 SecurityLevel3::CredentialsAcquirer_ptr
 TAO::SL3::CredentialsCurator::acquire_credentials (
     const char * acquisition_method,
-    const CORBA::Any & acquisition_arguments
-    ACE_ENV_ARG_DECL)
+    const CORBA::Any & acquisition_arguments)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SL3::CredentialsAcquirerFactory * factory;
@@ -118,8 +116,7 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
                                       factory) == 0)
     {
       return factory->make (this,
-                            acquisition_arguments
-                            ACE_ENV_ARG_PARAMETER);
+                            acquisition_arguments);
     }
 
   ACE_THROW_RETURN (CORBA::BAD_PARAM (),
@@ -128,14 +125,13 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::CredentialsCurator::default_creds_list (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::CredentialsCurator::default_creds_list (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentialsList * list;
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::OwnCredentialsList,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   SecurityLevel3::OwnCredentialsList_var creds_list = list;
 
@@ -161,7 +157,7 @@ TAO::SL3::CredentialsCurator::default_creds_list (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel3::CredentialsIdList *
-TAO::SL3::CredentialsCurator::default_creds_ids (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SL3::CredentialsCurator::default_creds_ids (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::CredentialsIdList * list;
@@ -192,8 +188,7 @@ TAO::SL3::CredentialsCurator::default_creds_ids (ACE_ENV_SINGLE_ARG_DECL)
 
 SecurityLevel3::OwnCredentials_ptr
 TAO::SL3::CredentialsCurator::get_own_credentials (
-    const char * credentials_id
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const char * credentials_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Credentials_Table::ENTRY * entry;
@@ -214,8 +209,7 @@ TAO::SL3::CredentialsCurator::get_own_credentials (
 
 void
 TAO::SL3::CredentialsCurator::release_own_credentials (
-    const char * credentials_id
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const char * credentials_id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Credentials_Table::ENTRY * entry;
@@ -234,11 +228,10 @@ TAO::SL3::CredentialsCurator::release_own_credentials (
 void
 TAO::SL3::CredentialsCurator:: register_acquirer_factory (
   const char * acquisition_method,
-  TAO::SL3::CredentialsAcquirerFactory * factory
-  ACE_ENV_ARG_DECL)
+  TAO::SL3::CredentialsAcquirerFactory * factory)
 {
   if (acquisition_method == 0 || factory == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   CORBA::String_var method = CORBA::string_dup (acquisition_method);
 
@@ -248,9 +241,9 @@ TAO::SL3::CredentialsCurator:: register_acquirer_factory (
     this->acquirer_factories_.bind (method.in (), factory);
 
   if (result == 1)  // Entry already exists in table.
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
   else if (result == -1)  // Failure.
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
 
 
   // CredentialsCurator now owns the acquisition method id.
@@ -261,12 +254,10 @@ TAO::SL3::CredentialsCurator:: register_acquirer_factory (
 
 void
 TAO::SL3::CredentialsCurator::_tao_add_own_credentials (
-  SecurityLevel3::OwnCredentials_ptr credentials
-  ACE_ENV_ARG_DECL)
+  SecurityLevel3::OwnCredentials_ptr credentials)
 {
   CORBA::String_var credentials_id =
-    credentials->creds_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    credentials->creds_id ();
 
   SecurityLevel3::OwnCredentials_var creds =
     SecurityLevel3::OwnCredentials::_duplicate (credentials);
@@ -274,7 +265,7 @@ TAO::SL3::CredentialsCurator::_tao_add_own_credentials (
   if (this->credentials_table_.bind (credentials_id.in (),
                                      creds) != 0)
     {
-      ACE_THROW (CORBA::NO_RESOURCES ());
+      throw CORBA::NO_RESOURCES ();
     }
 
  // CredentialsCurator nows owns the id.

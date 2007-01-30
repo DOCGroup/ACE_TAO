@@ -16,8 +16,7 @@ CORBA::Object_ptr
 Factory::create_object (
     const char * /*type_id*/,
     const PortableGroup::Criteria & /*the_criteria*/,
-    PortableGroup::GenericFactory::FactoryCreationId_out fcid
-    ACE_ENV_ARG_DECL)
+    PortableGroup::GenericFactory::FactoryCreationId_out fcid)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::NoFactory,
                    PortableGroup::ObjectNotCreated,
@@ -31,7 +30,6 @@ Factory::create_object (
 		    Simple,
 		    CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   PortableServer::ServantBase_var safe_servant = servant;
 
@@ -53,29 +51,24 @@ Factory::create_object (
   ACE_NEW_THROW_EX (my_fcid,
 		    PortableGroup::GenericFactory::FactoryCreationId,
 		    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   fcid = my_fcid;
 
   *my_fcid <<= tmp_fcid;
 
   this->poa_ =
-    servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    servant->_default_POA ();
 
-  this->oid_ = this->poa_->servant_to_id (servant
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  this->oid_ = this->poa_->servant_to_id (servant);
 
-  return servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return servant->_this ();
 
 }
 
 void
 Factory::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
-      fcid
-    ACE_ENV_ARG_DECL)
+      fcid)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableGroup::ObjectNotFound))
 {
@@ -88,20 +81,18 @@ Factory::delete_object (
       if (this->factory_map_.find (my_fcid, entry) == 0)
         {
 	  if (this->factory_map_.unbind (my_fcid) != 0)
-	    ACE_THROW (CORBA::INTERNAL ());
+	    throw CORBA::INTERNAL ();
 	}
     }
   else
-    ACE_THROW (PortableGroup::ObjectNotFound ());
+    throw PortableGroup::ObjectNotFound ();
 
   if (my_fcid == this->fcid_)
     {
-      this->poa_->deactivate_object (this->oid_.in ()
-		                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->poa_->deactivate_object (this->oid_.in ());
     }
   else
     {
-      ACE_THROW (PortableGroup::ObjectNotFound ());
+      throw PortableGroup::ObjectNotFound ();
     }
 }

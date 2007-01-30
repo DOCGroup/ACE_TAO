@@ -35,11 +35,6 @@ class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
 
-namespace CORBA
-{
-  class Environment;
-}
-
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 
 /**
@@ -77,7 +72,7 @@ public:
   /// MProfile.
   int make_mprofile (const char *ior,
                      TAO_MProfile &mprofile
-                     ACE_ENV_ARG_DECL);
+                    );
 
   /// Create a profile based on the contents of @a cdr
   TAO_Profile* create_profile (TAO_InputCDR& cdr);

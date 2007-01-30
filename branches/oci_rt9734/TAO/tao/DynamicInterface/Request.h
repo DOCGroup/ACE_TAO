@@ -128,7 +128,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void invoke (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void invoke (void);
 
     /// Send a oneway request.
     /**
@@ -136,7 +136,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void send_oneway (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void send_oneway (void);
 
     /**
      * @name The 'deferred synchronous' methods.
@@ -144,15 +144,15 @@ namespace CORBA
      * The 'deferred synchronous' methods.
      */
     //@{
-    void send_deferred (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    void get_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    CORBA::Boolean poll_response (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    void send_deferred (void);
+    void get_response (void);
+    CORBA::Boolean poll_response (void);
     //@}
 
     /// Callback method for deferred synchronous requests.
   void handle_response (TAO_InputCDR &incoming,
                         CORBA::ULong reply_status
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                        );
 
 #if defined (TAO_HAS_AMI)
   // The 'asychronous' send method. The object is a DSI based callback
@@ -216,12 +216,12 @@ namespace CORBA
              CORBA::NamedValue_ptr result,
              CORBA::Flags flags,
              CORBA::ExceptionList_ptr exceptions
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             );
 
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
              const CORBA::Char *op
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             );
 
     ~Request (void);
 

@@ -310,6 +310,8 @@ ACE_HAS_DLFCN_H_BROKEN_EXTERN_C         For platforms, e.g., RedHat
                                         extern "C" in dlfcn.h.
 ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
+ACE_HAS_EBCDIC                          Compile in the ACE code set classes
+                                        that support EBCDIC.
 ACE_HAS_EXCEPTIONS                      Compiler supports C++
                                         exception handling
 ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS    Compiler does not call

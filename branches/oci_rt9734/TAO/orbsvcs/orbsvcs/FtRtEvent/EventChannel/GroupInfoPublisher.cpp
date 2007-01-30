@@ -66,8 +66,7 @@ GroupInfoPublisherBase::backups() const
 GroupInfoPublisherBase::Info*
 GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
                                    int my_position,
-                                   CORBA::ULong object_group_ref_version
-                                   ACE_ENV_ARG_DECL)
+                                   CORBA::ULong object_group_ref_version)
 {
   Info_ptr result(new Info);
 
@@ -85,14 +84,10 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   }
 
   CORBA::Object_var obj =
-    IOGR_Maker::instance()->make_iogr(iors,object_group_ref_version
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    IOGR_Maker::instance()->make_iogr(iors,object_group_ref_version);
 
   result->iogr =
-    ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
 
   ACE_DEBUG((LM_DEBUG, "In setup_info\n"));
   //log_obj_endpoints(result->iogr.in());
@@ -107,14 +102,10 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       iors[i] = CORBA::Object::_duplicate(info_list[i+ my_position+1].ior.in());
     }
 
-    obj =  IOGR_Maker::instance()->merge_iors(iors
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    obj =  IOGR_Maker::instance()->merge_iors(iors);
 
     result->successor =
-      FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+      FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
   }
   /*
   else {
@@ -133,11 +124,9 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   for (i = 0; i < successors_length; ++i)  {
     result->backups[i] =
       FtRtecEventChannelAdmin::EventChannel::_narrow(
-      info_list[i+ my_position+1].ior.in()
-      ACE_ENV_ARG_PARAMETER);
+      info_list[i+ my_position+1].ior.in());
     //CORBA::PolicyList_var pols;
     //result->backups[i]->_validate_connection (pols.out ());
-    ACE_CHECK_RETURN(0);
   }
   return result.release();
 }
@@ -154,15 +143,13 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
 
     if (!CORBA::is_nil(naming_context_.in())) {
       TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
-      ACE_TRY_NEW_ENV {
+      try{
         naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
-          info->iogr.in() ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          info->iogr.in());
       }
-      ACE_CATCHALL {
+      catch (...){
         /// there's nothing we can do if the naming service is down
       }
-      ACE_ENDTRY;
     }
   }
   info_ = info;

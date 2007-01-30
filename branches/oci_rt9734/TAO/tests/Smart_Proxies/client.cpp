@@ -55,22 +55,18 @@ int
 main (int argc, char *argv[])
 {
   int status = 0;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
        CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       // To use the smart proxy it is necessary to allocate the
       // user-defined smart factory on the heap as the smart proxy
@@ -87,9 +83,7 @@ main (int argc, char *argv[])
       ACE_UNUSED_ARG (test_factory);
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -113,15 +107,12 @@ main (int argc, char *argv[])
       catch (const CORBA::MARSHAL& ex)
         {
           status = 1;
-          ACE_PRINT_EXCEPTION (ex,
-                               "Unexpected MARSHAL exception:");
+          ex._tao_print_exception ("Unexpected MARSHAL exception:");
         }
 
-      server->method (0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->method (0);
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       // The following sleep is a hack to make sure the above oneway
       // request gets sent before we exit. Otherwise, at least on
@@ -129,16 +120,13 @@ main (int argc, char *argv[])
       ACE_Time_Value tv (0, 100000);
       ACE_OS::sleep(tv);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       status = 1;
     }
-  ACE_ENDTRY;
 
   return status;
 }

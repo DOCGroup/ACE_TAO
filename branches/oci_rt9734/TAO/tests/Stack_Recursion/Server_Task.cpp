@@ -22,23 +22,20 @@ int
 Server_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       while (!this->sender_->is_done ())
         {
           // run the test for at most 120 seconds...
           ACE_Time_Value tv (240, 0);
-          this->orb_->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->orb_->run (tv);
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server task finished\n"));
   return 0;
 }

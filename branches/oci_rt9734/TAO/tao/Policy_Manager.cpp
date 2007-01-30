@@ -16,23 +16,21 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::PolicyList *
-TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts
-                                          ACE_ENV_ARG_DECL)
+TAO_Policy_Manager::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.get_policy_overrides (ts ACE_ENV_ARG_PARAMETER);
+  return this->impl_.get_policy_overrides (ts);
 }
 
 void
 TAO_Policy_Manager::set_policy_overrides (const CORBA::PolicyList & policies,
-                                          CORBA::SetOverrideType set_add
-                                          ACE_ENV_ARG_DECL)
+                                          CORBA::SetOverrideType set_add)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::InvalidPolicies))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->impl_.set_policy_overrides (policies, set_add ACE_ENV_ARG_PARAMETER);
+  this->impl_.set_policy_overrides (policies, set_add);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

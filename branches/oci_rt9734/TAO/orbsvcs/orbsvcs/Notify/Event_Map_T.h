@@ -48,33 +48,33 @@ public:
   ~TAO_Notify_Event_Map_T ();
 
   /// Init
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void init (void);
 
   /// Connect a PROXY
-  void connect (PROXY* proxy ACE_ENV_ARG_DECL);
+  void connect (PROXY* proxy);
 
   /// Disconnect a PROXY
-  void disconnect (PROXY* proxy ACE_ENV_ARG_DECL);
+  void disconnect (PROXY* proxy);
 
   /// Associate PROXY and event_type.
   /// Returns 1 if <event_type> is being seem for the 1st time otherwise returns 0.
   /// Returns -1 on error.
-  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
+  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type);
 
   /// Remove association of PROXY and event_type.
   /// Returns 1 if <event_type> is being seem for the last time otherwise returns 0.
   /// Returns -1 on error.
-  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
+  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type);
 
   /// Find the collection mapped to the <event_type>
   /// The usage_count on the entry returned is incremented.
-  ENTRY* find (const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
+  ENTRY* find (const TAO_Notify_EventType& event_type);
 
   /// Find the default broadcast list.
-  ACE_TYPENAME ENTRY::COLLECTION* broadcast_collection (void);
+  typename ENTRY::COLLECTION* broadcast_collection (void);
 
   /// Find the update list. This is all the PROXYS connected to this Map.
-  ACE_TYPENAME ENTRY::COLLECTION* updates_collection (void);
+  typename ENTRY::COLLECTION* updates_collection (void);
 
   /// Release the usage count on this entry.
   void release (ENTRY* entry);

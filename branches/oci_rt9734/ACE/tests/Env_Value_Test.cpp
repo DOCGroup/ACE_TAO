@@ -90,18 +90,14 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
     ACE_START_TEST (ACE_TEXT ("Env_Value_Test"));
 
       TEST_THIS (int, ACE_TEXT ("TEST_VALUE_POSITIVE"), 4, 10);
-#if !defined (ACE_LACKS_FLOATING_POINT)
       TEST_THIS (double, ACE_TEXT ("TEST_VALUE_POSITIVE"), -1.0, 10.2);
-#endif /* ! ACE_LACKS_FLOATING_POINT */
       TEST_THIS (long, ACE_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
       TEST_THIS (unsigned long, ACE_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
       TEST_THIS (short, ACE_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
       TEST_THIS (unsigned short, ACE_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
 
       TEST_THIS (int, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 4, -10);
-#if !defined (ACE_LACKS_FLOATING_POINT)
       TEST_THIS (double, ACE_TEXT ("TEST_VALUE_NEGATIVE"), -1.0, -10.2);
-#endif /* ! ACE_LACKS_FLOATING_POINT */
       TEST_THIS (long, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10L);
       TEST_THIS (unsigned long, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, (unsigned long) -10);
       TEST_THIS (short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10);

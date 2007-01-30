@@ -22,17 +22,14 @@ TAO_LB_MemberLocator::preinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr /* adapter */,
     const char * /* operation */,
-    PortableServer::ServantLocator::Cookie & /* the_cookie */
-    ACE_ENV_ARG_DECL)
+    PortableServer::ServantLocator::Cookie & /* the_cookie */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  ACE_TRY
+  try
     {
       CORBA::Object_var member =
-        this->load_manager_->next_member (oid
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->load_manager_->next_member (oid);
 
 //       ACE_DEBUG ((LM_DEBUG, "%N:%l\n"));
 //       ACE_DEBUG ((LM_DEBUG,
@@ -41,22 +38,18 @@ TAO_LB_MemberLocator::preinvoke (
       ACE_ASSERT (!CORBA::is_nil (member.in ()));
       // Throw a forward exception to force the client to redirect its
       // requests to the member chosen by the LoadBalancer.
-      ACE_TRY_THROW (PortableServer::ForwardRequest (member.in ()));
+      throw PortableServer::ForwardRequest (member.in ());
     }
-  ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
+  catch (const PortableGroup::ObjectGroupNotFound& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "LoadManager::next_member()");
+        ex._tao_print_exception ("LoadManager::next_member()");
     }
-  ACE_CATCH (PortableGroup::MemberNotFound, ex)
+  catch (const PortableGroup::MemberNotFound& ex)
     {
       if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex,
-                             "LoadManager::next_member()");
+        ex._tao_print_exception ("LoadManager::next_member()");
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 }
@@ -67,8 +60,7 @@ TAO_LB_MemberLocator::postinvoke (
     PortableServer::POA_ptr /* adapter */,
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie /* the_cookie */,
-    PortableServer::Servant /* the_servant */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableServer::Servant /* the_servant */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

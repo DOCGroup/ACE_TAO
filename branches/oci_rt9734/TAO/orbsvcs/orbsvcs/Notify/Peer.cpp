@@ -25,26 +25,25 @@ TAO_Notify_Peer::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/
 }
 
 void
-TAO_Notify_Peer::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Peer::shutdown (void)
 {
   // NOP.
 }
 
 void
-TAO_Notify_Peer::handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Peer::handle_dispatch_exception (void)
 {
   // Sever all association when a remote client misbehaves. Other strategies like reties are possible but not implemented.
-  this->proxy ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy ()->destroy ();
 }
 
 void
-TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const TAO_Notify_EventTypeSeq & removed ACE_ENV_ARG_DECL)
+TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const TAO_Notify_EventTypeSeq & removed)
 {
   TAO_Notify_EventTypeSeq subscribed_types ;
-  this->proxy ()->subscribed_types (subscribed_types ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy ()->subscribed_types (subscribed_types);
 
-  ACE_TRY
+  try
     {
       CosNotification::EventTypeSeq cos_added;
       CosNotification::EventTypeSeq cos_removed;
@@ -84,30 +83,26 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
           // Protect this object from being destroyed in this scope.
           TAO_Notify_Proxy::Ptr proxy_guard(this->proxy ());
 
-          this->dispatch_updates_i (cos_added, cos_removed ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->dispatch_updates_i (cos_added, cos_removed);
         }
     }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_exist)
+  catch (const CORBA::OBJECT_NOT_EXIST&)
     {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->handle_dispatch_exception ();
     }
-  ACE_CATCH (CORBA::NO_IMPLEMENT, no_impl)
+  catch (const CORBA::NO_IMPLEMENT&)
     {
       // The peer does not implement the offer/subscription_change method
       // Do nothing. Later, perhaps set a flag that helps us decide if we should dispatch_updates_i.
     }
-  ACE_CATCH (CORBA::SystemException, sysex)
+  catch (const CORBA::SystemException&)
     {
-      this->handle_dispatch_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->handle_dispatch_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Do nothing
     }
-  ACE_ENDTRY;
 }
 
 CORBA::ULong

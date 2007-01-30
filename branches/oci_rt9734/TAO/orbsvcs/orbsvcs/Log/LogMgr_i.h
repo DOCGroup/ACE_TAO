@@ -52,33 +52,30 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (ACE_ENV_SINGLE_ARG_DECL)
+    list_logs_by_id (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id
-              ACE_ENV_ARG_DECL)
+    find_log (DsLogAdmin::LogId id)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Returns true if log exists, otherwise false
-  bool exists (DsLogAdmin::LogId id
-               ACE_ENV_ARG_DECL);
-  
+  bool exists (DsLogAdmin::LogId id);
+
   /// Remove the given entry from the container.
-  int remove (DsLogAdmin::LogId id
-	      ACE_ENV_ARG_DECL);
+  int remove (DsLogAdmin::LogId id);
 
   /// @brief Create ObjectId
   ///
@@ -88,7 +85,7 @@ public:
   ///
   /// @return object id
   ///
-  virtual PortableServer::ObjectId* 
+  virtual PortableServer::ObjectId*
     create_objectid (DsLogAdmin::LogId id);
 
   /// @brief Create log reference
@@ -99,9 +96,8 @@ public:
   ///
   /// @return object reference
   ///
-  virtual DsLogAdmin::Log_ptr 
-    create_log_reference (DsLogAdmin::LogId id
-			  ACE_ENV_ARG_DECL);
+  virtual DsLogAdmin::Log_ptr
+    create_log_reference (DsLogAdmin::LogId id);
 
   /// @brief Create log object
   ///
@@ -111,9 +107,8 @@ public:
   ///
   /// @return object reference
   ///
-  virtual DsLogAdmin::Log_ptr 
-    create_log_object (DsLogAdmin::LogId id
-		       ACE_ENV_ARG_DECL);
+  virtual DsLogAdmin::Log_ptr
+    create_log_object (DsLogAdmin::LogId id);
 
   /// @brief Create log repository id
   ///
@@ -132,18 +127,16 @@ public:
   ///
   /// @return pointer to servant
   virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id
-			ACE_ENV_ARG_DECL)			= 0;
-  
-  /// @brief Get log record store 
+    create_log_servant (DsLogAdmin::LogId id)			= 0;
+
+  /// @brief Get log record store
   ///
   /// Get/Create a log record store for log channel @a id.
   ///
   /// @param id log id
   ///
   TAO_LogRecordStore*
-    get_log_record_store (DsLogAdmin::LogId id
-		          ACE_ENV_ARG_DECL);
+    get_log_record_store (DsLogAdmin::LogId id);
 
   CORBA::ORB_ptr orb();
 
@@ -156,30 +149,27 @@ protected:
   ///
   /// Creates factory and log channel POAs, and obtains the LogStore
   /// from a dynamically loaded Log_Persistence_Strategy (if one was
-  /// specified in the service config file, otherwise the default 
+  /// specified in the service config file, otherwise the default
   /// Hash_Persistence_Strategy is used.)
   ///
   /// @param orb ORB
   /// @param poa Parent POA
   ///
   void init (CORBA::ORB_ptr orb,
-	     PortableServer::POA_ptr poa
-	     ACE_ENV_ARG_DECL);
+	     PortableServer::POA_ptr poa);
 
   /// @brief Create log
   void create_i (DsLogAdmin::LogFullActionType full_action,
 		 CORBA::ULongLong max_size,
 		 const DsLogAdmin::CapacityAlarmThresholdList* thresholds,
-		 DsLogAdmin::LogId_out id_out
-		 ACE_ENV_ARG_DECL);
+		 DsLogAdmin::LogId_out id_out);
 
   /// @brief Create log
   void create_with_id_i (DsLogAdmin::LogId id,
 			 DsLogAdmin::LogFullActionType full_action,
 			 CORBA::ULongLong max_size,
-			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-			 ACE_ENV_ARG_DECL);
-  
+			 const DsLogAdmin::CapacityAlarmThresholdList* thresholds);
+
   /// ORB.
   CORBA::ORB_var                orb_;
 

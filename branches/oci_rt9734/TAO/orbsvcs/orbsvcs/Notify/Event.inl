@@ -24,7 +24,7 @@ TAO_Notify_Event::reliable (void) const
 
 ACE_INLINE
 TAO_Notify_Event*
-TAO_Notify_Event::queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const
+TAO_Notify_Event::queueable_copy (void) const
 {
   if ( is_on_heap_ )
   {
@@ -32,8 +32,7 @@ TAO_Notify_Event::queueable_copy (ACE_ENV_SINGLE_ARG_DECL) const
   }
   else if (this->clone_.get() == 0)
   {
-    TAO_Notify_Event* copied = this->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN(0);
+    TAO_Notify_Event* copied = this->copy ();
     copied->is_on_heap_ = true;
     this->clone_.reset( copied );
   }

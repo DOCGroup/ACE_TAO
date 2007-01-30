@@ -41,13 +41,13 @@ protected:
   virtual int activate (void);
 
   /// activates the stream_endpoint with the POA
-  virtual int activate_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual int activate_stream_endpoint (void) = 0;
 
   /// activates the vdev with the POA
-  virtual int activate_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_vdev (void);
 
   /// activates the media controller with the POA
-  virtual int activate_mediactrl (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_mediactrl (void);
 
   /// Bridge method to create a vdev, a la Acceptor. Applications
   /// can override this
@@ -62,7 +62,7 @@ protected:
   virtual int make_mediactrl (T_MediaCtrl *&media_ctrl);
 
 
-  char* activate_with_poa (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  char* activate_with_poa (PortableServer::Servant servant);
 
   CORBA::ORB_var orb_;
 
@@ -101,12 +101,11 @@ public:
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// an "A" type endpoint
-  virtual int activate_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_stream_endpoint (void);
 
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 
 };
 
@@ -132,12 +131,11 @@ public:
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// a "B" type endpoint
-  virtual int activate_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int activate_stream_endpoint (void);
 
   /// Called by the MMDevice, when it needs to create a B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                        AVStreams::VDev_ptr &vdev
-                        ACE_ENV_ARG_DECL);
+                        AVStreams::VDev_ptr &vdev);
 };
 
 // ----------------------------------------------------------------------
@@ -173,23 +171,22 @@ protected:
    * return them to the client
    */
   int activate_objects (int argc,
-                        char **argv
-                        ACE_ENV_ARG_DECL);
+                        char **argv);
 
   ///activate the servant with the poa
-  char* activate_with_poa (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+  char* activate_with_poa (PortableServer::Servant servant);
 
   /// Removes the vdev and streamendpoint names from the naming service.
   int unbind_names (void);
 
   /// Binds to the naming service
-  int bind_to_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int bind_to_naming_service (void);
 
   /// Registers vdev with the naming service
-  int register_vdev (ACE_ENV_SINGLE_ARG_DECL);
+  int register_vdev (void);
 
   /// Registers stream_endpoint with the naming service
-  int register_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL);
+  int register_stream_endpoint (void);
 
   /// Releases the semaphore on which the parent is waiting on
   int release_semaphore ();

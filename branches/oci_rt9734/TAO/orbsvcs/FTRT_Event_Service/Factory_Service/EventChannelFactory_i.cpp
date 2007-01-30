@@ -24,7 +24,6 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-  ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -40,11 +39,11 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   FILE* file = 0;
   char *id_str=0, *prog=0;
 
-  ACE_TRY {
+  try{
 
     file = fopen(conf_file, "r");
     if (file == 0)
-      ACE_TRY_THROW (PortableGroup::NoFactory());
+      throw PortableGroup::NoFactory();
 
     ACE_Read_Buffer read_buf(file);
 
@@ -56,21 +55,18 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
       }
     }
   }
-  ACE_CATCHALL {
+  catch (...){
     if (file) fclose(file);
     if (id_str) ACE_Allocator::instance()->free(id_str);
     if (prog) ACE_Allocator::instance()->free(prog);
-    ACE_RE_THROW;
+    throw;
   }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN(CORBA::Object::_nil());
 
     ACE_THROW_RETURN(PortableGroup::ObjectNotCreated(), CORBA::Object::_nil());
 }
 
 void EventChannelFactory_i::delete_object (
   const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-  ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -83,7 +79,7 @@ void EventChannelFactory_i::delete_object (
   CORBA::Object_var obj;
   if (objects.find(object_id, obj) == 0) {
     objects.unbind(object_id);
-    //obj->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
+    //obj->shutdown();
   }
 }
 
@@ -185,18 +181,15 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   if (strlen(ior)  ==0)
     return result;
 
-  ACE_TRY_NEW_ENV {
-    CORBA::Object_var result  = orb->string_to_object(ior
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+  try{
+    CORBA::Object_var result  = orb->string_to_object(ior);
 
     if (objects.bind(id, result) ==0){
       return result._retn();
     }
   }
-  ACE_CATCHALL {
+  catch (...){
   }
-  ACE_ENDTRY;
 
   return 0;
 }

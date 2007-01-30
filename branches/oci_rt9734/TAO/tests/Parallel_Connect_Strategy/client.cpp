@@ -41,18 +41,16 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       ACE_High_Res_Timer hrt;
       ACE_hrtime_t elapsed;
@@ -61,8 +59,7 @@ main (int argc, char *argv[])
       hrt.start();
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(tmp.in ());
       hrt.stop();
       hrt.elapsed_microseconds (elapsed);
       hrt.reset();
@@ -80,16 +77,14 @@ main (int argc, char *argv[])
         }
       if (kill_server)
         {
-          hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          hello->shutdown ();
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,"Starting invocation 1 - "));
           hrt.start();
           CORBA::String_var the_string =
-            hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            hello->get_string ();
           hrt.stop();
           hrt.elapsed_microseconds (elapsed);
           ACE_DEBUG ((LM_DEBUG,
@@ -98,24 +93,20 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,"Starting invocation 2 - "));
           hrt.reset();
           hrt.start();
-          the_string = hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          the_string = hello->get_string ();
           hrt.stop();
           hrt.elapsed_microseconds (elapsed);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("call completed in %d usec\n"),
                       elapsed ));
         }
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -23,14 +23,13 @@ class Activator_Export ImR_Activator_Loader : public TAO_Object_Loader
 public:
   ImR_Activator_Loader(void);
 
-  virtual int init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   virtual int fini (void);
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[]
-                                           ACE_ENV_ARG_DECL)
+                                           ACE_TCHAR *argv[])
      ACE_THROW_SPEC ((CORBA::SystemException));
 
  // Unlike other service objects, we have our own orb.

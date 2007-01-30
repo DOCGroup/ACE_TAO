@@ -24,16 +24,13 @@ Client_Task::Client_Task (const char *input,
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        corb_->string_to_object (input_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        corb_->string_to_object (input_);
 
       Bug1495_Regression::Bug1495_var server =
-        Bug1495_Regression::Bug1495::_narrow (object.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Bug1495_Regression::Bug1495::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -50,8 +47,7 @@ Client_Task::svc (void)
           // call the thread_id function on the test object
           CORBA::Long remote_thread_id;
 
-          server->get_thread_id (remote_thread_id ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->get_thread_id (remote_thread_id);
 
           ACE_DEBUG ((LM_INFO,
                       "Remote thread ID was %i\n",
@@ -76,13 +72,11 @@ Client_Task::svc (void)
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception in client task:");
+      ex._tao_print_exception ("Caught exception in client task:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

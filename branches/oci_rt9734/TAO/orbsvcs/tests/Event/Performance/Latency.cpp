@@ -47,22 +47,17 @@ main (int argc, char *argv [])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::Object_var manager_object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("ORBPolicyManager");
 
       CORBA::PolicyManager_var policy_manager =
-        CORBA::PolicyManager::_narrow (manager_object.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::PolicyManager::_narrow (manager_object.in ());
 
       CORBA::Any sync_scope;
       sync_scope <<= Messaging::SYNC_WITH_TARGET;
@@ -71,13 +66,9 @@ main (int argc, char *argv [])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            sync_scope
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            sync_scope);
       policy_manager->set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            CORBA::SET_OVERRIDE);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "CORBA Messaging disabled in this configuration,"
@@ -85,8 +76,7 @@ main (int argc, char *argv [])
 #endif /* TAO_HAS_MESSAGING */
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,28 +84,22 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Get the event channel object reference
       CORBA::Object_var object =
-        orb->string_to_object (ec_ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ec_ior);
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RtecEventChannelAdmin::EventChannel::_narrow (object.in ());
       if (CORBA::is_nil (ec.in ()))
         {
           ACE_ERROR ((LM_ERROR,
@@ -136,16 +120,13 @@ main (int argc, char *argv [])
       // Connect the consumer
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->for_consumers ();
 
       RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier =
-        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer_admin->obtain_push_supplier ();
 
       RtecEventComm::PushConsumer_var consumer_reference =
-        consumer._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        consumer._this ();
 
       // Simple subscription, but usually the helper classes in
       // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
@@ -162,9 +143,7 @@ main (int argc, char *argv [])
       h1.source = ACE_ES_EVENT_SOURCE_ANY;
 
       proxy_supplier->connect_push_consumer (consumer_reference.in (),
-                                             consumer_qos
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             consumer_qos);
 
       ACE_DEBUG ((LM_DEBUG, "Connected consumer\n"));
 
@@ -173,16 +152,13 @@ main (int argc, char *argv [])
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ec->for_suppliers ();
 
       RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer =
-        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier_admin->obtain_push_consumer ();
 
       RtecEventComm::PushSupplier_var supplier_reference =
-        supplier._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        supplier._this ();
 
       // Simple publication, but usually the helper classes in
       // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
@@ -194,9 +170,7 @@ main (int argc, char *argv [])
       sh0.source = 1;                      // first free event source
 
       proxy_consumer->connect_push_supplier (supplier_reference.in (),
-                                             supplier_qos
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                             supplier_qos);
 
       ACE_DEBUG ((LM_DEBUG, "Connected supplier\n"));
 
@@ -208,8 +182,7 @@ main (int argc, char *argv [])
       while (!task.done () || !consumer.done ())
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->run (tv);
         }
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
@@ -239,31 +212,24 @@ main (int argc, char *argv [])
 
       ACE_DEBUG ((LM_DEBUG, "Throughtput: %f\n", throughput));
 
-      proxy_supplier->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy_supplier->disconnect_push_supplier ();
 
-      proxy_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      proxy_consumer->disconnect_push_consumer ();
 
       PortableServer::ObjectId_var id;
 
-      id = root_poa->servant_to_id (&consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      root_poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      id = root_poa->servant_to_id (&consumer);
+      root_poa->deactivate_object (id.in ());
 
-      id = root_poa->servant_to_id (&supplier ACE_ENV_ARG_PARAMETER);
-      root_poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      id = root_poa->servant_to_id (&supplier);
+      root_poa->deactivate_object (id.in ());
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, argv[0]);
+      ex._tao_print_exception (argv[0]);
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -323,8 +289,7 @@ EC_Latency_Consumer::done (void)
 }
 
 void
-EC_Latency_Consumer::push (const RtecEventComm::EventSet& events
-                           ACE_ENV_ARG_DECL_NOT_USED)
+EC_Latency_Consumer::push (const RtecEventComm::EventSet& events)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t creation;
@@ -344,7 +309,7 @@ EC_Latency_Consumer::push (const RtecEventComm::EventSet& events
 }
 
 void
-EC_Latency_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Latency_Consumer::disconnect_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -356,7 +321,7 @@ EC_Latency_Supplier::EC_Latency_Supplier (void)
 }
 
 void
-EC_Latency_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Latency_Supplier::disconnect_push_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -380,7 +345,7 @@ Task::done (void)
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       RtecEventComm::EventSet event (1);
       event.length (1);
@@ -394,8 +359,7 @@ Task::svc (void)
           ACE_hrtime_t creation = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                          creation);
-          this->consumer_->push (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->consumer_->push (event);
 
           // ACE_Time_Value tv (0, 5000);
           // ACE_OS::sleep (tv);
@@ -412,10 +376,9 @@ Task::svc (void)
             return 0;
         }
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  catch (const CORBA::SystemException& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Task::svc");
+      ex._tao_print_exception ("Task::svc");
     }
-  ACE_ENDTRY;
   return 0;
 }

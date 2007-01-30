@@ -29,10 +29,9 @@ TAO::CSD::TP_Corba_Request::do_clone()
 
 ACE_INLINE
 void
-TAO::CSD::TP_Corba_Request::do_dispatch(ACE_ENV_SINGLE_ARG_DECL)
+TAO::CSD::TP_Corba_Request::do_dispatch(void)
 {
-  this->server_request_.dispatch(this->servant() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->server_request_.dispatch(this->servant());
 }
 
 ACE_INLINE

@@ -12,8 +12,7 @@ const char *cert_file = "cacert.pem";
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_TString env ("SSL_CERT_FILE=");
       env += cert_file;
@@ -23,29 +22,22 @@ main (int argc, char *argv[])
       // Initialize the ORB
       //
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       //
       // Get the Root POA.
       //
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       //
       // Get a reference to the server.
       //
       obj = orb->string_to_object ("file://server.ior"
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   );
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -59,9 +51,7 @@ main (int argc, char *argv[])
       // Downcast the IOR to the appropriate object type.
       //
       server_var server_obj =
-        server::_narrow (obj.in ()
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        server::_narrow (obj.in ());
 
       if (CORBA::is_nil (server_obj.in ()))
         {
@@ -79,57 +69,41 @@ main (int argc, char *argv[])
                       -1);
       PortableServer::ServantBase_var theClient = servant;
 
-      client_var client_ref = servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      client_var client_ref = servant->_this ();
 
       //
       // Activate the POA manager.
       //
       PortableServer::POAManager_var mgr =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       //
       // Set the server's callback and invoke the test request.
       //
-      server_obj->set_client (client_ref.in ()
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_obj->set_client (client_ref.in ());
 
-      server_obj->test_request ("first secure callback to client"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_obj->test_request ("first secure callback to client");
 
       //
       // Repeat the callback test.
       //
-      server_obj->set_client (client_ref.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      server_obj->test_request ("second secure callback to client"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_obj->set_client (client_ref.in ());
+      server_obj->test_request ("second secure callback to client");
 
-      server_obj->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server_obj->shutdown ();
 
-      poa->destroy (1, 1
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught exception\n"));
+      ex._tao_print_exception (ACE_TEXT ("Caught exception\n"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

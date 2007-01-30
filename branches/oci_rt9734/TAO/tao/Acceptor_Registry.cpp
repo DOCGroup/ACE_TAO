@@ -4,7 +4,6 @@
 #include "tao/Profile.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/Protocol_Factory.h"
-#include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/params.h"
 #include "tao/MProfile.h"
@@ -123,8 +122,7 @@ int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
                              const TAO_EndpointSet &endpoint_set,
-                             bool ignore_address
-                             ACE_ENV_ARG_DECL)
+                             bool ignore_address)
 {
   if (endpoint_set.is_empty ()
       // No endpoints were specified, we let each protocol pick its
@@ -231,7 +229,6 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                             TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (-1);
     }
 
   TAO_EndpointSetIterator endpoints (endpoint_set);
@@ -293,9 +290,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                                reactor,
                                                addrs,
                                                factory,
-                                               ignore_address
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (-1);
+                                               ignore_address);
 
               if (result != 0)
                 {
@@ -683,8 +678,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                ACE_Reactor *reactor,
                                ACE_CString &addrs,
                                TAO_ProtocolFactorySetItor &factory,
-                               bool ignore_address
-                               ACE_ENV_ARG_DECL)
+                               bool ignore_address)
 {
   ACE_CString options_tmp;
   this->extract_endpoint_options (addrs,

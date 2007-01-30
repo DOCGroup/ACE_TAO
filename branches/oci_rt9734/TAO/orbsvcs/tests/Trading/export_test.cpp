@@ -15,11 +15,10 @@ ACE_RCSID (Trading,
 int
 main (int argc, char** argv)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_manager.init (argc, argv);
 
       // Command line argument interpretation.
       TT_Parse_Args parse_args (argc, argv);
@@ -31,8 +30,7 @@ main (int argc, char** argv)
       char* ior = parse_args.ior ();
       CORBA::Object_var trading_obj = (ior == 0) ?
         orb->resolve_initial_references ("TradingService") :
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       if (CORBA::is_nil (trading_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,87 +40,64 @@ main (int argc, char** argv)
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
       CosTrading::Lookup_var lookup_if =
-        CosTrading::Lookup::_narrow (trading_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosTrading::Lookup::_narrow (trading_obj.in ());
 
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter (lookup_if.in (),
-                                               ! parse_args.quiet ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                               ! parse_args.quiet ());
 
-      type_exporter.remove_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.remove_all_types ();
 
-      type_exporter.add_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.add_all_types ();
 
-      type_exporter.remove_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.remove_all_types ();
 
-      type_exporter.add_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.add_all_types ();
 
       if (parse_args.federated ())
         {
-          type_exporter.add_all_types_to_all (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          type_exporter.add_all_types_to_all ();
         }
 
-      type_exporter.list_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.list_all_types ();
 
-      type_exporter.describe_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.describe_all_types ();
 
-      type_exporter.fully_describe_all_types (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      type_exporter.fully_describe_all_types ();
 
       ACE_DEBUG ((LM_DEBUG, "*** Service Type Exporter tests complete.\n"));
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
-      TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet ());
 
       // = Test series.
 
-      offer_exporter.withdraw_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers ();
 
-      offer_exporter.export_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.export_offers ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
-      offer_exporter.modify_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.modify_offers ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
-      offer_exporter.withdraw_offers_using_constraints (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers_using_constraints ();
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
-      offer_exporter.withdraw_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.withdraw_offers ();
 
-      offer_exporter.export_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.export_offers ();
 
       if (parse_args.federated ())
         {
-          offer_exporter.export_offers_to_all (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          offer_exporter.export_offers_to_all ();
         }
 
-      offer_exporter.describe_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      offer_exporter.describe_offers ();
 
       ACE_DEBUG ((LM_DEBUG, "*** Offer Exporter tests complete.\n"));
       ACE_DEBUG ((LM_DEBUG, "*** Now serving dynamic properties.\n"));
@@ -145,14 +120,12 @@ main (int argc, char** argv)
         ACE_DEBUG ((LM_WARNING, "Unable to open %s for output.\n", file));
       }
 
-      orb_manager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_manager.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trader Export Tests Failed"), -1);
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -53,36 +53,32 @@ TAO_Thread_Pool_Threads::svc (void)
     return 0;
 
   // Set TSS resources for this thread.
-  TAO_Thread_Pool_Threads::set_tss_resources (orb_core,
-                                              this->lane_);
+  TAO_Thread_Pool_Threads::set_tss_resources (orb_core, this->lane_);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Do the work
       this->run (orb_core);
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception& ex)
     {
       // No point propagating this exception.  Print it out.
       ACE_ERROR ((LM_ERROR,
                   "orb->run() raised exception for thread %t\n"));
 
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "");
+      ex._tao_print_exception ("");
     }
-  ACE_ENDTRY;
 
   return 0;
 }
 
 int
-TAO_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core ACE_ENV_ARG_PARAMETER)
+TAO_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 {
   CORBA::ORB_ptr orb = orb_core.orb ();
 
   // Run the ORB.
-  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  orb->run ();
 
   return 0;
 }
@@ -105,15 +101,14 @@ TAO_Dynamic_Thread_Pool_Threads::TAO_Dynamic_Thread_Pool_Threads (TAO_Thread_Lan
 }
 
 int
-TAO_Dynamic_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core ACE_ENV_ARG_PARAMETER)
+TAO_Dynamic_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 {
   CORBA::ORB_ptr orb = orb_core.orb ();
 
   if (this->lane_.dynamic_thread_idle_timeout () == ACE_Time_Value::zero)
     {
       // No timeout specified, run the ORB until it shutdowns
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
   else
     {
@@ -146,7 +141,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
                                   CORBA::ULong static_threads,
                                   CORBA::ULong dynamic_threads,
                                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                                  )
   : pool_ (pool),
     id_ (id),
     lane_priority_ (lane_priority),
@@ -224,11 +219,11 @@ TAO_Thread_Lane::shutting_down (void)
 }
 
 void
-TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Thread_Lane::validate_and_map_priority (void)
 {
   // Make sure that static_threads_number_ is not zero.
   if (this->static_threads_number_ == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw ::CORBA::BAD_PARAM ();
 
   // Check that the priority is in bounds.
   if (this->lane_priority_ < RTCORBA::minPriority
@@ -238,7 +233,7 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
 //      || this->lane_priority_ > RTCORBA::maxPriority
      )
     {
-      ACE_THROW (CORBA::BAD_PARAM ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   CORBA::ORB_ptr orb =
@@ -247,13 +242,11 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
   // Get the priority mapping manager.
   CORBA::Object_var obj =
     orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                    );
 
   TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                          );
 
   RTCORBA::PriorityMapping *pm =
     mapping_manager.in ()->mapping ();
@@ -264,7 +257,7 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
                    this->native_priority_);
 
   if (!result)
-    ACE_THROW (CORBA::DATA_CONVERSION ());
+    throw ::CORBA::DATA_CONVERSION ();
 
   if (TAO_debug_level > 3)
     {
@@ -277,11 +270,10 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Thread_Lane::open (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Thread_Lane::open (void)
 {
   // Validate and map priority.
-  this->validate_and_map_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->validate_and_map_priority ();
 
   // Create a string with the pool:thread id.
   char pool_lane_id[10];
@@ -318,19 +310,17 @@ TAO_Thread_Lane::open (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Open the acceptor registry.
-  int result = 0;
-  result =
+  int const result =
     this->resources_.open_acceptor_registry (endpoint_set,
                                              ignore_address
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                            );
 
   if (result == -1)
-    ACE_THROW (CORBA::INTERNAL (
+    throw ::CORBA::INTERNAL (
                  CORBA::SystemException::_tao_minor_code (
                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                    0),
-                 CORBA::COMPLETED_NO));
+                 CORBA::COMPLETED_NO);
 }
 
 TAO_Thread_Lane::~TAO_Thread_Lane (void)
@@ -468,7 +458,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
                                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  ACE_ENV_ARG_DECL)
+                                  )
   : manager_ (manager),
     id_ (id),
     stack_size_ (stack_size),
@@ -483,7 +473,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
 {
   // No support for buffering.
   if (allow_request_buffering)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    throw ::CORBA::NO_IMPLEMENT ();
 
   // Create one lane.
   ACE_NEW (this->lanes_,
@@ -495,7 +485,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                             static_threads,
                             dynamic_threads,
                             dynamic_thread_idle_timeout
-                            ACE_ENV_ARG_PARAMETER));
+                           ));
 }
 
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -507,7 +497,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
                                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  ACE_ENV_ARG_DECL)
+                                  )
   : manager_ (manager),
     id_ (id),
     stack_size_ (stack_size),
@@ -523,7 +513,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
   // No support for buffering or borrowing.
   if (allow_borrowing ||
       allow_request_buffering)
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    throw ::CORBA::NO_IMPLEMENT ();
 
   // Create multiple lane.
   ACE_NEW (this->lanes_,
@@ -538,19 +528,18 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                               lanes[i].static_threads,
                               lanes[i].dynamic_threads,
                               dynamic_thread_idle_timeout
-                              ACE_ENV_ARG_PARAMETER));
+                             ));
 }
 
 void
-TAO_Thread_Pool::open (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Thread_Pool::open (void)
 {
   // Open all the lanes.
   for (CORBA::ULong i = 0;
        i != this->number_of_lanes_;
        ++i)
     {
-      this->lanes_[i]->open (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->lanes_[i]->open ();
     }
 }
 
@@ -728,11 +717,10 @@ TAO_Thread_Pool_Manager::create_threadpool (CORBA::ULong stacksize,
                                             CORBA::ULong max_buffered_requests,
                                             CORBA::ULong max_request_buffer_size,
                                             ACE_Time_Value const &dynamic_thread_idle_timeout
-                                            ACE_ENV_ARG_DECL)
+                                            )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
-  ACE_CHECK_RETURN (0);
 
   return this->create_threadpool_i (stacksize,
                                     static_threads,
@@ -742,7 +730,7 @@ TAO_Thread_Pool_Manager::create_threadpool (CORBA::ULong stacksize,
                                     max_buffered_requests,
                                     max_request_buffer_size,
                                     dynamic_thread_idle_timeout
-                                    ACE_ENV_ARG_PARAMETER);
+                                   );
 }
 
 RTCORBA::ThreadpoolId
@@ -753,11 +741,10 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                        CORBA::ULong max_buffered_requests,
                                                        CORBA::ULong max_request_buffer_size,
                                                        ACE_Time_Value const &dynamic_thread_idle_timeout
-                                                       ACE_ENV_ARG_DECL)
+                                                       )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
-  ACE_CHECK_RETURN (0);
 
   return this->create_threadpool_with_lanes_i (stacksize,
                                                lanes,
@@ -766,12 +753,12 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                max_buffered_requests,
                                                max_request_buffer_size,
                                                dynamic_thread_idle_timeout
-                                               ACE_ENV_ARG_PARAMETER);
+                                              );
 }
 
 void
 TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                             ACE_ENV_ARG_DECL)
+                                             )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
@@ -783,7 +770,6 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
   // results in a deadlock
   {
     TAO_THREAD_POOL_MANAGER_GUARD;
-    ACE_CHECK;
 
     // Unbind the thread pool from the map.
     int result =
@@ -792,7 +778,7 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
 
     // If the thread pool is not found in our map.
     if (result != 0)
-      ACE_THROW (RTCORBA::RTORB::InvalidThreadpool ());
+      throw RTCORBA::RTORB::InvalidThreadpool ();
   }
 
   // Mark the thread pool that we are shutting down.
@@ -821,7 +807,7 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
                                               CORBA::ULong max_buffered_requests,
                                               CORBA::ULong max_request_buffer_size,
                                               ACE_Time_Value const &dynamic_thread_idle_timeout
-                                              ACE_ENV_ARG_DECL)
+                                              )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create the thread pool.
@@ -838,12 +824,11 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
                                      max_buffered_requests,
                                      max_request_buffer_size,
                                      dynamic_thread_idle_timeout
-                                     ACE_ENV_ARG_PARAMETER),
+                                    ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return this->create_threadpool_helper (thread_pool
-                                         ACE_ENV_ARG_PARAMETER);
+                                        );
 }
 
 RTCORBA::ThreadpoolId
@@ -854,7 +839,7 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                                          CORBA::ULong max_buffered_requests,
                                                          CORBA::ULong max_request_buffer_size,
                                                          ACE_Time_Value const &dynamic_thread_idle_timeout
-                                                         ACE_ENV_ARG_DECL)
+                                                         )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create the thread pool.
@@ -870,25 +855,23 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                      max_buffered_requests,
                                      max_request_buffer_size,
                                      dynamic_thread_idle_timeout
-                                     ACE_ENV_ARG_PARAMETER),
+                                    ),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return this->create_threadpool_helper (thread_pool
-                                         ACE_ENV_ARG_PARAMETER);
+                                        );
 }
 
 RTCORBA::ThreadpoolId
 TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
-                                                   ACE_ENV_ARG_DECL)
+                                                   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Make sure of safe deletion in case of errors.
   auto_ptr<TAO_Thread_Pool> safe_thread_pool (thread_pool);
 
   // Open the pool.
-  thread_pool->open (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  thread_pool->open ();
 
   // Create the static threads.
   int result =
@@ -931,10 +914,9 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
 }
 
 TAO_Thread_Pool *
-TAO_Thread_Pool_Manager::get_threadpool (RTCORBA::ThreadpoolId thread_pool_id ACE_ENV_ARG_DECL)
+TAO_Thread_Pool_Manager::get_threadpool (RTCORBA::ThreadpoolId thread_pool_id )
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
-  ACE_CHECK_RETURN (0);
 
   TAO_Thread_Pool *thread_pool = 0;
   int result =

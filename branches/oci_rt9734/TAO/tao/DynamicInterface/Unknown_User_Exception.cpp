@@ -89,17 +89,17 @@ CORBA::UnknownUserException::_tao_duplicate (void) const
 void
 CORBA::UnknownUserException::_tao_encode (
     TAO_OutputCDR &
-    ACE_ENV_ARG_DECL
+
   ) const
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 void
 CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &
-                                         ACE_ENV_ARG_DECL)
+                                         )
 {
-  ACE_THROW (CORBA::MARSHAL ());
+  throw ::CORBA::MARSHAL ();
 }
 
 CORBA::TypeCode_ptr

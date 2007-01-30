@@ -6,10 +6,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
   ACE_INLINE RtecEventChannelAdmin::EventChannel_ptr
-    FTEC_Gateway::_this(ACE_ENV_SINGLE_ARG_DECL)
+    FTEC_Gateway::_this(void)
   {
     PortableServer::POA_var poa = _default_POA();
-    return activate(poa.in() ACE_ENV_ARG_PARAMETER);
+    return activate(poa.in());
   }
 }
 

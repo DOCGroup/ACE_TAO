@@ -71,33 +71,31 @@ public:
                   DsLogAdmin::LogId id);
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
-                                    ACE_ENV_ARG_DECL)
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id
-                                            ACE_ENV_ARG_DECL)
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Destroy the log object and all contained records.
   void
-  destroy (ACE_ENV_SINGLE_ARG_DECL)
+  destroy (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Activate the EventLog.
   void
-  activate (ACE_ENV_SINGLE_ARG_DECL);
+  activate (void);
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (ACE_ENV_SINGLE_ARG_DECL)
+  for_consumers (void)
         ACE_THROW_SPEC ((
                 CORBA::SystemException
         ));
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+  for_suppliers (void)
         ACE_THROW_SPEC ((
                 CORBA::SystemException
         ));

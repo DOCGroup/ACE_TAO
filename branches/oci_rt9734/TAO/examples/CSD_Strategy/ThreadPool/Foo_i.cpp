@@ -24,7 +24,7 @@ Foo_i::~Foo_i()
 
 
 void
-Foo_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)  
+Foo_i::op1(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op1_;
@@ -34,7 +34,7 @@ Foo_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op2_;
@@ -43,7 +43,7 @@ Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_i::op3(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)  
+Foo_i::op3(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op3_;
@@ -52,7 +52,7 @@ Foo_i::op3(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)  
+Foo_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op4_;
@@ -71,7 +71,7 @@ Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op5(ACE_ENV_SINGLE_ARG_DECL)  
+Foo_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   ++this->count_op5_;
@@ -80,7 +80,7 @@ Foo_i::op5(ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-Foo_i::done(ACE_ENV_SINGLE_ARG_DECL)  
+Foo_i::done(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   unsigned num_left = --this->num_clients_;
@@ -102,7 +102,7 @@ Foo_i::done(ACE_ENV_SINGLE_ARG_DECL)
                  this->count_op3_,
                  this->count_op4_,
                  this->count_op5_));
-      
+
       if (TheOrbShutdownTask::instance()->open(0) != 0)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t)Foo_i::done: failed to create orb "\

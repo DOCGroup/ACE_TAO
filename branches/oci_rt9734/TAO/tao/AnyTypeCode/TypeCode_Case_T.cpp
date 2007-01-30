@@ -114,11 +114,10 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::equal_label (CORBA::ULong index,
                                                   CORBA::TypeCode_ptr tc
-                                                  ACE_ENV_ARG_DECL) const
+                                                  ) const
 {
   CORBA::Any_var const any = tc->member_label (index
-                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+                                              );
 
   // The equality operator == below is guaranteed to be defined for
   // the discriminator type since an IDL union discriminator type must
@@ -142,14 +141,13 @@ template <typename DiscriminatorType,
 CORBA::Any *
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
-                      TypeCodeType>::label (ACE_ENV_SINGLE_ARG_DECL) const
+                      TypeCodeType>::label (void) const
 {
   CORBA::Any * value = 0;
 
   ACE_NEW_THROW_EX (value,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   CORBA::Any_var safe_value (value);
 

@@ -106,17 +106,14 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result =
@@ -126,19 +123,13 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (IOR);
 
       // Try to narrow the object reference to a test reference.
-      test_var test = test::_narrow (object.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var test = test::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (test.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nConnecting to: %s\n\n",
@@ -156,25 +147,19 @@ main (int argc, char **argv)
         {
           if (oneway && timed_method)
             {
-              test->timed_oneway_method (timeout
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              test->timed_oneway_method (timeout);
             }
           else if (oneway)
             {
-              test->oneway_method (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              test->oneway_method ();
             }
           else if (!oneway && timed_method)
             {
-              test->timed_method (timeout
-                                  ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              test->timed_method (timeout);
             }
           else
             {
-              test->method (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              test->method ();
             }
         }
 
@@ -187,17 +172,14 @@ main (int argc, char **argv)
 
       if (shutdown_server)
         {
-          test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          test->shutdown ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      ex._tao_print_exception ("Error!");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

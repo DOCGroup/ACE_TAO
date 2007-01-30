@@ -40,7 +40,6 @@ public:
 
   void push (
              const CORBA::Any & data
-             ACE_ENV_ARG_DECL
              )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -60,7 +59,6 @@ public:
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      ACE_ENV_ARG_DECL
                                       )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -79,7 +77,6 @@ public:
   // = SequencePushConsumer methods
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -108,14 +105,13 @@ public:
                   char *argv[]);
 
   int init (int argc,
-            char *argv []
-            ACE_ENV_ARG_DECL);
+            char *argv []);
   // initialization.
 
-  void run_test (ACE_ENV_SINGLE_ARG_DECL);
+  void run_test (void);
   // Run the test.
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL);
+  void end_test (void);
   // End the test.
 
   int check_results (void);
@@ -125,7 +121,7 @@ protected:
   // Wait to receive events.
   void wait_for_all_consumers (int expected_count_per_consumer);
 
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create EC.
 
   CosNotifyChannelAdmin::EventChannel_var ec_;

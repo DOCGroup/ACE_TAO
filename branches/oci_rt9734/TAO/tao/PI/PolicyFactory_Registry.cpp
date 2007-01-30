@@ -34,15 +34,15 @@ void
 TAO_PolicyFactory_Registry::register_policy_factory (
   CORBA::PolicyType type,
   PortableInterceptor::PolicyFactory_ptr policy_factory
-  ACE_ENV_ARG_DECL)
+  )
 {
   if (CORBA::is_nil (policy_factory))
     {
-      ACE_THROW (CORBA::BAD_PARAM (
+      throw ::CORBA::BAD_PARAM (
                    CORBA::SystemException::_tao_minor_code (
                      0,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   PortableInterceptor::PolicyFactory_ptr factory =
@@ -59,13 +59,13 @@ TAO_PolicyFactory_Registry::register_policy_factory (
       if (result == 1)
         {
           // PolicyFactory of given type already exists.
-          ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
-                                           CORBA::COMPLETED_NO));
+          throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
+                                           CORBA::COMPLETED_NO);
         }
       else
         {
           // Could not add PolicyFactory due to internal bind failures.
-          ACE_THROW (CORBA::INTERNAL ());
+          throw ::CORBA::INTERNAL ();
         }
     }
 }
@@ -73,7 +73,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
 CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
                                            const CORBA::Any &value
-                                           ACE_ENV_ARG_DECL)
+                                           )
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
@@ -89,12 +89,12 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
 
   return policy_factory->create_policy (type,
                                         value
-                                        ACE_ENV_ARG_PARAMETER);
+                                       );
 }
 
 CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
-                                            ACE_ENV_ARG_DECL)
+                                            )
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
@@ -110,7 +110,7 @@ TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
     }
 
   return policy_factory->_create_policy (type
-                                         ACE_ENV_ARG_PARAMETER);
+                                        );
 }
 
 bool

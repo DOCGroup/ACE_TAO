@@ -23,7 +23,7 @@ TAO_Notify_ThreadPool_Supplier::~TAO_Notify_ThreadPool_Supplier ()
 
 void
 TAO_Notify_ThreadPool_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count ,int max_events,
-                       int proxy_consumer_thread_count ACE_ENV_ARG_DECL)
+                       int proxy_consumer_thread_count)
 {
   // First initialize the class members.
   this->admin_ = admin;
@@ -31,11 +31,11 @@ TAO_Notify_ThreadPool_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& 
   this->max_events_ = max_events;
   this->proxy_consumer_thread_count_ = proxy_consumer_thread_count;
 
-  this->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->connect ();
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::run (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
@@ -56,34 +56,32 @@ TAO_Notify_ThreadPool_Supplier::run (ACE_ENV_SINGLE_ARG_DECL)
       for (int j = 0; j < this->expected_consumer_count_; ++j)
         {
           // send the event
-          this->send_event (this->event_[j] ACE_ENV_ARG_PARAMETER);
+          this->send_event (this->event_[j]);
         }
     }
 
   // Disconnect from the EC
-  this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->disconnect ();
 
   // Deactivate this object.
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate ();
 
   // we're done. shutdown the ORB to exit the process.
   this->orb_objects_.orb_->shutdown (1);
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::connect (void)
 {
   // Activate the supplier object.
-  CosNotifyComm::StructuredPushSupplier_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CosNotifyComm::StructuredPushSupplier_var objref = this->_this ();
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer;
 
   if (this->proxy_consumer_thread_count_ != 0)
     {
       // Narrow to the extended interface.
-      NotifyExt::SupplierAdmin_var admin_ext = NotifyExt::SupplierAdmin::_narrow (this->admin_.in ()ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      NotifyExt::SupplierAdmin_var admin_ext = NotifyExt::SupplierAdmin::_narrow (this->admin_.in ());
 
       NotifyExt::ThreadPoolParams tp_params = { NotifyExt::CLIENT_PROPAGATED, 0,
                                                 0, this->proxy_consumer_thread_count_, 0, 0, 0, 0, 0 };
@@ -95,62 +93,52 @@ TAO_Notify_ThreadPool_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
 
       // Obtain the proxy. The QoS is applied to the POA in which the Proxy is hosted.
       proxyconsumer = admin_ext->obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                                   , proxy_consumer_id_, qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                                                   , proxy_consumer_id_, qos);
     }
   else
     {
       // Obtain the proxy.
       proxyconsumer = this->admin_->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                       , proxy_consumer_id_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                                                       , proxy_consumer_id_);
     }
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in ());
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
   // connect to the proxyconsumer.
-  proxy_consumer_->connect_structured_push_supplier (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy_consumer_->connect_structured_push_supplier (objref.in ());
 
   ACE_DEBUG ((LM_DEBUG, "(%P,%t) Created Supplier %d with %d threads at the ProxyConsumer\n", proxy_consumer_id_,
               this->proxy_consumer_thread_count_));
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::disconnect (void)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_structured_push_consumer();
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::deactivate (void)
 {
-  PortableServer::POA_var poa (this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER));
-  ACE_CHECK;
+  PortableServer::POA_var poa (this->_default_POA ());
 
-  PortableServer::ObjectId_var id (poa->servant_to_id (this
-                                                       ACE_ENV_ARG_PARAMETER));
-  ACE_CHECK;
+  PortableServer::ObjectId_var id (poa->servant_to_id (this));
 
-  poa->deactivate_object (id.in()
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  poa->deactivate_object (id.in());
 }
 
 void
 TAO_Notify_ThreadPool_Supplier::subscription_change (const CosNotification::EventTypeSeq & added,
                                       const CosNotification::EventTypeSeq & /*removed */
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+                                      )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
@@ -176,19 +164,18 @@ TAO_Notify_ThreadPool_Supplier::subscription_change (const CosNotification::Even
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::send_event (const CosNotification::StructuredEvent& event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  proxy_consumer_->push_structured_event (event);
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Supplier::disconnect_structured_push_supplier (void)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->deactivate ();
 }

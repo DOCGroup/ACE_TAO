@@ -56,86 +56,71 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::InterfaceDefSeq *base_interfaces (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDefSeq *base_interfaces_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_interfaces (
       const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_interfaces_i (
       const CORBA::InterfaceDefSeq &base_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -145,7 +130,6 @@ public:
       const char *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -155,7 +139,6 @@ public:
       const char *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -168,7 +151,6 @@ public:
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions,
       const CORBA::ContextIdSeq &contexts
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -181,7 +163,6 @@ public:
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions,
       const CORBA::ContextIdSeq &contexts
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -190,7 +171,6 @@ public:
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Gathers the attributes and operations of all the ancestors.
@@ -220,8 +200,7 @@ private:
   // the base interfaces.
 
   void check_inherited (const char *name,
-                        CORBA::DefinitionKind kind
-                        ACE_ENV_ARG_DECL)
+                        CORBA::DefinitionKind kind)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // When creating a new attribute, check for a clash with an inherited
   // attribute name.

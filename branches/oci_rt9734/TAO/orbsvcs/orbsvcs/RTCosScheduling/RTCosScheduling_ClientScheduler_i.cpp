@@ -31,7 +31,7 @@ namespace TAO
       char *node_name,
       char *file)
   {
-    ACE_TRY_NEW_ENV
+    try
       {
         /// Read the resources and ceilings from the config file
         /// and put them into the activity_map_
@@ -54,7 +54,6 @@ namespace TAO
             ACE_NEW_THROW_EX (this->client_interceptor_,
                               RTCosScheduling_ClientScheduler_Interceptor(orb),
                               CORBA::NO_MEMORY());
-          ACE_CHECK;
 
           TAO_ORB_Core *orb_core = orb->orb_core();
 
@@ -93,41 +92,30 @@ namespace TAO
          /// another POA then register it now
          if (unregistered)
            {
-             orb_core->add_interceptor(this->client_interceptor_
-                                       ACE_ENV_ARG_PARAMETER);
+             orb_core->add_interceptor(this->client_interceptor_);
            }
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
          /// Now resolve a reference to the Real Time ORB
          CORBA::Object_var rt_obj =
-           orb->resolve_initial_references("RTORB"
-                                           ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
+           orb->resolve_initial_references("RTORB");
 
          // Get a reference to the real time orb
          RTCORBA::RTORB_var rt_orb =
-           RTCORBA::RTORB::_narrow (rt_obj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
+           RTCORBA::RTORB::_narrow (rt_obj.in ());
 
          /// resolve a reference to RT Current
          rt_obj =
-           orb->resolve_initial_references ("RTCurrent"
-                                            ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
+           orb->resolve_initial_references ("RTCurrent");
 
          this->current_ =
-           RTCORBA::Current::_narrow (rt_obj.in () ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK
+           RTCORBA::Current::_narrow (rt_obj.in ());
 
          /// Resolve a reference to the Linear Priority Mapping Manager
          rt_obj =
-           orb->resolve_initial_references("PriorityMappingManager"
-                                           ACE_ENV_ARG_PARAMETER);
+           orb->resolve_initial_references("PriorityMappingManager");
          RTCORBA::PriorityMappingManager_var mapping_manager =
-           RTCORBA::PriorityMappingManager::_narrow(rt_obj.in()
-                                                    ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
+           RTCORBA::PriorityMappingManager::_narrow(rt_obj.in());
 
          /// Create the Linear Priority Mapping Manager
          ACE_NEW_THROW_EX(this->pm_,
@@ -137,15 +125,13 @@ namespace TAO
          // WHERE the parameter is one of SCHED_OTHER, SCHED_FIFO, or SCHED_RR
 
          mapping_manager->mapping(this->pm_);
-         ACE_TRY_CHECK;
        }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
         ACE_ERROR((LM_ERROR, "Could not configure the orb"));
         ACE_OS::exit(1);
     }
- ACE_ENDTRY;
 }
 
 
@@ -160,8 +146,7 @@ RTCosScheduling_ClientScheduler_i::~RTCosScheduling_ClientScheduler_i (void)
 
 
 void  RTCosScheduling_ClientScheduler_i::schedule_activity (
-  const char * activity_name
-  ACE_ENV_ARG_DECL)
+  const char * activity_name)
   ACE_THROW_SPEC ((
     CORBA::SystemException,
     RTCosScheduling::UnknownName))
@@ -176,14 +161,12 @@ void  RTCosScheduling_ClientScheduler_i::schedule_activity (
   /// appropriate priority.
   if (result != -1)
     {
-      this->current_->the_priority(priority
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->current_->the_priority(priority);
     }
   /// If the activity was not found, throw an UnknownName exception.
   else
     {
-      ACE_THROW (RTCosScheduling::UnknownName());
+      throw RTCosScheduling::UnknownName();
     }
 }
 
@@ -314,18 +297,15 @@ RTCosScheduling_ClientScheduler_i::tasks(
 
 RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor() : name_("RTCosScheduling_Client_Interceptor")
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       /// resolve a reference to RT Current
       int argc = 0;
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             0,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
+                                            0);
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RTCurrent"
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RTCurrent");
       if (CORBA::is_nil(obj.in()))
         {
           ACE_OS::exit(1);
@@ -333,13 +313,11 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
       else
         {
           this->current_ =
-             RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+             RTCORBA::Current::_narrow (obj.in ());
         }
-      ACE_CHECK;
 
       obj =
-        orb->resolve_initial_references("CodecFactory"
-                                        ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("CodecFactory");
 
       IOP::CodecFactory_var codec_factory;
       if (CORBA::is_nil(obj.in()))
@@ -361,26 +339,23 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
 
       this->codec_ = codec_factory->create_codec(encoding);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          "There was an error constructing the "
-                          "ClientScheduler Interceptor\n");
+      ex._tao_print_exception (
+        "There was an error constructing the "
+        "ClientScheduler Interceptor\n");
     }
-  ACE_ENDTRY;
 }
 
 
 RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor(
   const CORBA::ORB_var orb)  : name_("RTCosScheduling_Client_Interceptor")
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       /// resolve a reference to RT Current
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        orb->resolve_initial_references ("RTCurrent");
       if (CORBA::is_nil(obj.in()))
         {
           ACE_OS::exit(1);
@@ -388,13 +363,11 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
       else
         {
           this->current_ =
-             RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+             RTCORBA::Current::_narrow (obj.in ());
         }
-      ACE_TRY_CHECK;
 
       obj =
-        orb->resolve_initial_references("CodecFactory"
-                                        ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("CodecFactory");
 
       // set up the codec factory to create the codec necessary to
       // encode the octet stream for the service context
@@ -418,46 +391,39 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
 
       // Create the codec
       this->codec_ = codec_factory->create_codec(encoding);
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          "Error in creating Client Interceptor\n");
+      ex._tao_print_exception ("Error in creating Client Interceptor\n");
     }
-  ACE_ENDTRY;
 }
 
 char *
-RTCosScheduling_ClientScheduler_Interceptor::name (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RTCosScheduling_ClientScheduler_Interceptor::name ()
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 return CORBA::string_dup(this->name_);
 }
 
 void
-RTCosScheduling_ClientScheduler_Interceptor::destroy (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+RTCosScheduling_ClientScheduler_Interceptor::destroy ()
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::send_request (
-    PortableInterceptor::ClientRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ACE_TRY
+  try
     {
 
       // Get the Corba priority that the activity is currently running at
       CORBA::Any the_priority_as_any;
       the_priority_as_any <<=
         this->current_->the_priority();
-      ACE_TRY_CHECK;
 
       // Set up a service context to hold the priority
       IOP::ServiceContext sc;
@@ -467,42 +433,35 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
       // (that is how service contexts send data)
       sc.context_data =
         reinterpret_cast<CORBA::OctetSeq &> (*this->codec_->encode (the_priority_as_any));
-      ACE_TRY_CHECK;
 
       // add the service context
       ri->add_request_service_context(sc, 0);
-      ACE_TRY_CHECK;
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "ERROR - in Client interceptor\n");
-      ACE_TRY_THROW (CORBA::INTERNAL ());
+      ex._tao_print_exception ("ERROR - in Client interceptor\n");
+      throw CORBA::INTERNAL ();
     }
-   ACE_ENDTRY;
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::send_poll (
-  PortableInterceptor::ClientRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ClientRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::receive_reply (
-  PortableInterceptor::ClientRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ClientRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::receive_exception (
-  PortableInterceptor::ClientRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ClientRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -510,8 +469,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::receive_other (
-  PortableInterceptor::ClientRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ClientRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {

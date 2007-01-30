@@ -54,29 +54,23 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     // initialize the ORB
     CORBA::ORB_var orb =
-      CORBA::ORB_init (argc, argv,""
-                       ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_init (argc, argv,"");
 
-    ACE_TRY_CHECK;
 
     if (parse_args (argc, argv) != 0)
       return -1;
 
     // create the factory object reference of StockBrokerHome
     CORBA::Object_var broker_obj =
-      orb->string_to_object (broker_ior
-                             ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      orb->string_to_object (broker_ior);
 
     // downcast the object reference to the appropriate type
     Stock::StockBroker_var broker =
-    Stock::StockBroker::_narrow (broker_obj.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    Stock::StockBroker::_narrow (broker_obj.in ());
 
     if (CORBA::is_nil (broker.in ()))
     {
@@ -88,36 +82,29 @@ int main (int argc, char* argv[])
 
     if (subscribe_name != 0)
     {
-      broker->stock_subscribe (subscribe_name
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      broker->stock_subscribe (subscribe_name);
 
       ACE_DEBUG ((LM_DEBUG, "Subscribe successful!\n"));
     }
 
     if (unsubscribe_name != 0)
     {
-      broker->stock_unsubscribe (unsubscribe_name
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      broker->stock_unsubscribe (unsubscribe_name);
 
       ACE_DEBUG ((LM_DEBUG, "Unsubscribe successful!\n"));
     }
 
     // Finally destroy the ORB
-    orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->destroy ();
 
-    ACE_TRY_CHECK;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Who is the culprit \n");
+    ex._tao_print_exception ("Who is the culprit \n");
     ACE_ERROR_RETURN ((LM_ERROR,
                         "Uncaught CORBA exception\n"),
                       1);
   }
-  ACE_ENDTRY;
 
   return 0;
 }

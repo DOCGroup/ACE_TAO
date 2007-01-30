@@ -13,16 +13,14 @@ ACE_RCSID (Request_Interceptor_Flow,
 
 void
 Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -36,14 +34,11 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ClientRequestInterceptor_var ci_interceptor =
     ci;
 
-  info->add_client_request_interceptor (ci_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_client_request_interceptor (ci_interceptor.in ());
 
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT B"),
@@ -52,13 +47,10 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   ci_interceptor = ci;
 
-  info->add_client_request_interceptor (ci_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_client_request_interceptor (ci_interceptor.in ());
 
   ACE_NEW_THROW_EX (ci,
                     Client_Request_Interceptor ("CLIENT C"),
@@ -67,11 +59,8 @@ Client_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   ci_interceptor = ci;
 
-  info->add_client_request_interceptor (ci_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_client_request_interceptor (ci_interceptor.in ());
 }

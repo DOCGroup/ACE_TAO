@@ -85,31 +85,23 @@ Notifier_Handler::init (int argc,
   // set the callback
  shutdowncallback = _shutdowncallback;
 
- ACE_TRY_NEW_ENV
+ try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    0);
 
       CORBA::Object_var poa_object  =
-        this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Initialization of the naming service.
       if (this->naming_client_.init (orb_.in ()) != 0)
@@ -124,25 +116,19 @@ Notifier_Handler::init (int argc,
       CORBA::string_dup (NOTIFIER_BIND_NAME);
 
       CORBA::Object_var notifier_obj =
-       this->naming_client_->resolve (notifier_ref_name
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       this->naming_client_->resolve (notifier_ref_name);
 
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
-         Event_Comm::Notifier::_narrow (notifier_obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+         Event_Comm::Notifier::_narrow (notifier_obj.in ());
   }
- ACE_CATCHANY
+ catch (const CORBA::Exception& ex)
    {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "Notifier_Handler::init\n");
+     ex._tao_print_exception ("Notifier_Handler::init\n");
      return -1;
    }
- ACE_ENDTRY;
 
  return 0;
 }

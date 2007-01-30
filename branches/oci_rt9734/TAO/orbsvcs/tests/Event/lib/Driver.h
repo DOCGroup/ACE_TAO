@@ -64,15 +64,13 @@ public:
   virtual int run (int argc, char* argv[]);
 
   /// The initialization section
-  virtual void run_init (int& argc, char* argv[]
-                         ACE_ENV_ARG_DECL);
+  virtual void run_init (int& argc, char* argv[]);
 
   /// The cleanup section
-  virtual void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void run_cleanup (void);
 
   /// Initialize the ORB and obtain the RootPOA object
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       ACE_ENV_ARG_DECL);
+  virtual void initialize_orb_and_poa (int& argc, char* argv[]);
 
   /// Parse the common command-line arguments for all tests
   virtual int parse_args (int& argc, char* argv[]);
@@ -88,56 +86,52 @@ public:
 
   /// Construct the EC and its helper objects, also activates the EC in
   /// the RootPOA.
-  virtual void initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void initialize_ec_impl (void);
 
   /// By default connect the consumers and then the suppliers, other
   /// orders should work too.
-  virtual void connect_clients (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connect_clients (void);
 
   /// By default disconnect the suppliers and then the consumers, other
   /// orders should work too.
-  virtual void disconnect_clients (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_clients (void);
 
   /// By default deactivate the suppliers and then the consumers, other
   /// orders should work too.
-  virtual void shutdown_clients (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_clients (void);
 
   /// Connect all the consumers, by default it lets each consumer
   /// connect itself.
-  virtual void connect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connect_consumers (void);
 
   /// Connect consumer number <i> using the consumer_admin provided.
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
 
   /// Build the QoS requirements for consumer <i>
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED);
+      int& shutdown_event_type);
 
   /// Connect all the suppliers, by default it lets each supplier
   /// connect itself.
-  virtual void connect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connect_suppliers (void);
 
   /// Connect supplier number <i> using the supplier_admin provided.
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int i
-    ACE_ENV_ARG_DECL);
+    int i);
 
   /// Build the QoS requirements for supplier <i>
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type
-      ACE_ENV_ARG_DECL_NOT_USED);
+      int& shutdown_event_type);
 
   /// Execute the test, by default simply call activate_suppliers()
-  virtual void execute_test (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_test (void);
 
   /**
    * Dump the results, i.e. invoke dump_results on all the suppliers
@@ -147,22 +141,22 @@ public:
   virtual void dump_results (void);
 
   /// Disconnect all the consumers.
-  virtual void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_consumers (void);
 
   /// Disconnect all the suppliers.
-  virtual void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_suppliers (void);
 
   /// Deactivate all the consumers.
-  virtual void shutdown_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_consumers (void);
 
   /// Deactivate all the suppliers.
-  virtual void shutdown_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_suppliers (void);
 
   /// Call EC->destroy
-  virtual void destroy_ec (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void destroy_ec (void);
 
   /// De-activate the EC (and its helper classes).
-  virtual void deactivate_ec (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate_ec (void);
 
   /// Cleanup the resources
   virtual void cleanup_ec (void);
@@ -181,31 +175,27 @@ public:
 
   /// One of the consumers in the test has received an event
   virtual void consumer_push (void* consumer_cookie,
-                              const RtecEventComm::EventSet& event
-                              ACE_ENV_ARG_DECL);
+                              const RtecEventComm::EventSet& event);
 
   /// One of the consumers has received a shutdown event
-  virtual void consumer_shutdown (void* consumer_cookie
-                                  ACE_ENV_ARG_DECL);
+  virtual void consumer_shutdown (void* consumer_cookie);
 
   /// One of the consumers in the test has been disconnected from the EC
-  virtual void consumer_disconnect (void* consumer_cookie
-                                    ACE_ENV_ARG_DECL);
+  virtual void consumer_disconnect (void* consumer_cookie);
 
   /// One of the suppliers in the test has been disconnected from the EC
-  virtual void supplier_disconnect (void* supplier_cookie
-                                    ACE_ENV_ARG_DECL);
+  virtual void supplier_disconnect (void* supplier_cookie);
 
 #if !defined(EC_DISABLE_REMOTE_EC)
   /// Obtain the EC from the Naming service
-  virtual void obtain_remote_ec (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void obtain_remote_ec (void);
 
   virtual CosNaming::NamingContext_ptr
-       get_naming_context (ACE_ENV_SINGLE_ARG_DECL);
+       get_naming_context (void);
 #endif
 
   /// Initialize the EC using the new implementation
-  virtual void initialize_new_ec (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void initialize_new_ec (void);
 
   /// Allocate the suppliers and the consumers
   virtual int allocate_consumers (void);
@@ -221,7 +211,7 @@ public:
 
   /// Activate all the tasks, by default runs each supplier on its
   /// own thread.
-  virtual void activate_tasks (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void activate_tasks (void);
 
 protected:
   /// The ORB

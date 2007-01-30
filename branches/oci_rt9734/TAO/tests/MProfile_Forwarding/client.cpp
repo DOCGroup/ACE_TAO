@@ -35,26 +35,22 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_test (Simple_Server_ptr server
-          ACE_ENV_ARG_DECL);
+run_test (Simple_Server_ptr server);
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) == -1)
         return -1;
 
       CORBA::Object_var objref =
         orb->string_to_object (ior_input_file);
-      ACE_TRY_CHECK;
 
       if (objref.in () == 0)
         {
@@ -64,8 +60,7 @@ main (int argc, char *argv[])
         }
 
       Simple_Server_var server =
-        Simple_Server::_narrow (objref.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Simple_Server::_narrow (objref.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -74,32 +69,28 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      run_test (server.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      run_test (server.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception \n");
+      ex._tao_print_exception ("Caught an exception \n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
-void run_test (Simple_Server_ptr server
-               ACE_ENV_ARG_DECL)
+void run_test (Simple_Server_ptr server)
 {
   for (int loop = 0; loop < 10; loop++)
     {
-      ACE_TRY
+      try
         {
           ACE_DEBUG ((LM_DEBUG,
                       "About to make remote call \n"));
           ACE_OS::sleep (2);
 
           // Make a remote call
-          server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->remote_call ();
 
           /*ACE_DEBUG ((LM_DEBUG,
                       "Kill  the primary . . . "));
@@ -107,31 +98,27 @@ void run_test (Simple_Server_ptr server
           ACE_DEBUG ((LM_DEBUG, " hope you did\n")); */
           ACE_DEBUG ((LM_DEBUG,
                       "I am going to shutdown \n"));
-          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          server->shutdown ();
           ACE_OS::sleep (23);
         }
-      ACE_CATCH (CORBA::UserException, x)
+      catch (const CORBA::UserException& x)
         {
-          ACE_PRINT_EXCEPTION (x, "Caught an ");
+          x._tao_print_exception ("Caught an ");
         }
-      ACE_CATCH (CORBA::TRANSIENT, t)
+      catch (const CORBA::TRANSIENT& t)
         {
-          ACE_PRINT_EXCEPTION (t, "Caught Exception");
+          t._tao_print_exception ("Caught Exception");
         }
-      ACE_CATCH (CORBA::COMM_FAILURE, f)
+      catch (const CORBA::COMM_FAILURE& f)
         {
-          ACE_PRINT_EXCEPTION (f, "A (sort of) expected COMM_FAILURE");
+          f._tao_print_exception ("A (sort of) expected COMM_FAILURE");
           ACE_DEBUG ((LM_DEBUG,
                       "Automagically re-issuing request on COMM_FAILURE\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Unexpected exception");
-          ACE_RE_THROW;
+          ex._tao_print_exception ("Unexpected exception");
+          throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }

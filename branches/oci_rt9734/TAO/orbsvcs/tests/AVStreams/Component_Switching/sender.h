@@ -109,14 +109,13 @@ public:
   ~Sender (void);
   /// Destructor
 
-  void shut_down (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shut_down (void);
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL_NOT_USED);
+            char **argv);
   /// Method to initialize the various data components.
 
-  int pace_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int pace_data (void);
   /// Method to pace and send data from a file.
 
   Connection_Manager &connection_manager (void);

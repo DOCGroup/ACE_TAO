@@ -26,7 +26,7 @@ u_int update_freq = 1;
 // A flag that indicates use of the Naming Service.
 bool use_naming = false;
 
-static int 
+static int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:r:u:c");
@@ -65,7 +65,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-static int 
+static int
 set_distributor_reference (CORBA::ORB_ptr orb,
                            CORBA::Object_ptr obj)
 {
@@ -116,7 +116,7 @@ set_distributor_reference (CORBA::ORB_ptr orb,
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   try
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
       // extract -ORB options first.
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       // Get the RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
@@ -140,7 +140,7 @@ main (int argc, char *argv[])
       // Create the factory object. Create a <Stock::StockDistributor>.
       StockDistributorHome_i stock_distributor_home (orb.in ());
 
-      Stock::StockDistributor_var stock_distributor = stock_distributor_home.create (); 
+      Stock::StockDistributor_var stock_distributor = stock_distributor_home.create ();
 
       if (CORBA::is_nil (stock_distributor.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
       STOCK_DATABASE->update_rate (update_freq);
 
       // Enter into the event looping.
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "*** message: ready for transmission...\n"));
       orb->run ();
 
@@ -171,7 +171,7 @@ main (int argc, char *argv[])
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Admin: ");
+      ex._tao_print_exception ("Admin: ");
 
       return 1;
     }

@@ -33,8 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class Environment;
-
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
@@ -63,9 +61,7 @@ namespace TAO
       int num_args,
       const char * op,
       size_t op_len,
-      TAO::Collocation_Strategy strategy
-      ACE_ENV_ARG_DECL
-    )
+      TAO::Collocation_Strategy strategy)
     ACE_THROW_SPEC ((CORBA::Exception));
   };
 

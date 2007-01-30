@@ -31,8 +31,7 @@ WriteAttributeHeaderEmitter::name (SemanticGraph::ReadWriteAttribute& a)
 
   Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
 
-  os << " " << a.name () << endl
-     << STRS[ENV_HDR] << ")" << endl;
+  os << " " << a.name () << ")" << endl;
 }
 
 void
@@ -99,8 +98,7 @@ AttributeHeaderEmitter::pre (SemanticGraph::ReadWriteAttribute& a)
 void
 AttributeHeaderEmitter::name (SemanticGraph::ReadWriteAttribute& a)
 {
-  os << a.name () << " (" << endl
-     << STRS[ENV_SNGL_HDR] << ")" << endl;
+  os << a.name () << " ()" << endl;
 }
 
 void
@@ -157,8 +155,7 @@ AttributeHeaderEmitter::pre (SemanticGraph::ReadAttribute& a)
 void
 AttributeHeaderEmitter::name (SemanticGraph::ReadAttribute& a)
 {
-  os << a.name () << " (" << endl
-     << STRS[ENV_SNGL_HDR] << ")" << endl;
+  os << a.name () << " ()" << endl;
 }
 
 void

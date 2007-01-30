@@ -73,8 +73,7 @@ public:
            CORBA::ULong how_many,
            CosTrading::OfferSeq_out offers,
            CosTrading::OfferIterator_out offer_itr,
-           CosTrading::PolicyNameSeq_out limits_applied
-           ACE_ENV_ARG_DECL)
+           CosTrading::PolicyNameSeq_out limits_applied)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalServiceType,
                     CosTrading::UnknownServiceType,
@@ -180,8 +179,7 @@ private:
                             CosTradingRepos::ServiceTypeRepository_ptr rep,
                             TAO_Constraint_Interpreter& constr_inter,
                             TAO_Preference_Interpreter& pref_inter,
-                            TAO_Offer_Filter& offer_filter
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                            TAO_Offer_Filter& offer_filter);
 
   /// Check if offers of a type fit the constraints and order them
   /// according to the preferences submitted.
@@ -204,8 +202,7 @@ private:
                         TAO_Policies& policies,
                         TAO_Preference_Interpreter& pref_inter,
                         CosTrading::OfferSeq& offers,
-                        CosTrading::OfferIterator_ptr& offer_itr
-                        ACE_ENV_ARG_DECL)
+                        CosTrading::OfferIterator_ptr& offer_itr)
     ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                     CosTrading::DuplicatePropertyName));
 
@@ -220,8 +217,7 @@ private:
                       CORBA::ULong how_many,
                       CosTrading::OfferSeq_out offers,
                       CosTrading::OfferIterator_out offer_itr,
-                      CosTrading::PolicyNameSeq_out limits_applied
-                      ACE_ENV_ARG_DECL)
+                      CosTrading::PolicyNameSeq_out limits_applied)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -242,8 +238,7 @@ private:
    */
   CORBA::Boolean retrieve_links (TAO_Policies& policies,
                                  CORBA::ULong offer_returned,
-                                 CosTrading::LinkNameSeq_out links
-                                 ACE_ENV_ARG_DECL)
+                                 CosTrading::LinkNameSeq_out links)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -263,8 +258,7 @@ private:
                         CORBA::ULong how_many,
                         CosTrading::OfferSeq& offers,
                         CosTrading::OfferIterator_ptr& offer_itr,
-                        CosTrading::PolicyNameSeq& limits_applied
-                        ACE_ENV_ARG_DECL)
+                        CosTrading::PolicyNameSeq& limits_applied)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -282,8 +276,7 @@ private:
                               CosTrading::OfferSeq& offers);
 
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
-                                  CosTrading::Admin::OctetSeq*& seq
-                                  ACE_ENV_ARG_DECL)
+                                  CosTrading::Admin::OctetSeq*& seq)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Lookup::PolicyTypeMismatch));
 
@@ -323,8 +316,7 @@ public:
 
   virtual CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
                                            const char *type,
-                                           const CosTrading::PropertySeq& properties
-                                           ACE_ENV_ARG_DECL)
+                                           const CosTrading::PropertySeq& properties)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::Register::InvalidObjectRef,
                     CosTrading::IllegalServiceType,
@@ -390,7 +382,7 @@ public:
   // parameter, the DuplicatePropertyName exception is raised.
   // END SPEC
 
-  virtual void withdraw (const char *id ACE_ENV_ARG_DECL)
+  virtual void withdraw (const char *id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalOfferId,
                      CosTrading::UnknownOfferId,
@@ -410,8 +402,7 @@ public:
   // END SPEC
 
   virtual CosTrading::Register::OfferInfo*
-    describe (const char * id
-              ACE_ENV_ARG_DECL)
+    describe (const char * id)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalOfferId,
                      CosTrading::UnknownOfferId,
@@ -433,8 +424,7 @@ public:
 
   virtual void modify (const char * id,
                        const CosTrading::PropertyNameSeq& del_list,
-                       const CosTrading::PropertySeq& modify_list
-                       ACE_ENV_ARG_DECL)
+                       const CosTrading::PropertySeq& modify_list)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::NotImplemented,
                      CosTrading::IllegalOfferId,
@@ -502,8 +492,7 @@ public:
   // END SPEC
 
   virtual void withdraw_using_constraint (const char *type,
-                                          const char *constr
-                                          ACE_ENV_ARG_DECL)
+                                          const char *constr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -534,8 +523,7 @@ public:
   // END SPEC
 
   virtual CosTrading::Register_ptr
-    resolve (const CosTrading::TraderName &name
-             ACE_ENV_ARG_DECL)
+    resolve (const CosTrading::TraderName &name)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::Register::IllegalTraderName,
                      CosTrading::Register::UnknownTraderName,
@@ -568,8 +556,7 @@ public:
 
   void validate_properties (const char* type,
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-                            const CosTrading::PropertySeq& properties
-                            ACE_ENV_ARG_DECL)
+                            const CosTrading::PropertySeq& properties)
     ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                      CosTrading::PropertyTypeMismatch,
                      CosTrading::ReadonlyDynamicProperty,
@@ -623,92 +610,74 @@ public:
 
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
-  virtual CORBA::ULong set_def_search_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_def_search_card (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_search_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_max_search_card (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
-  virtual CORBA::ULong set_def_match_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_def_match_card (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_match_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_max_match_card (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return card is the cardinality of the offers returned from
   /// Lookup.
-  virtual CORBA::ULong set_def_return_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_def_return_card (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_return_card (CORBA::ULong value
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_max_return_card (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Types of offers available for consideration. Ween out those
   /// offers with modifiable properties
-  virtual CORBA::ULong set_max_list (CORBA::ULong value
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_max_list (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Boolean
-    set_supports_modifiable_properties (CORBA::Boolean value
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+    set_supports_modifiable_properties (CORBA::Boolean value)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Boolean
-    set_supports_dynamic_properties (CORBA::Boolean value
-                                     ACE_ENV_ARG_DECL_NOT_USED)
+    set_supports_dynamic_properties (CORBA::Boolean value)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CORBA::Boolean
-    set_supports_proxy_offers (CORBA::Boolean value
-                               ACE_ENV_ARG_DECL_NOT_USED)
+    set_supports_proxy_offers (CORBA::Boolean value)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = Link Interface parameters
 
-  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_def_hop_count (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CORBA::ULong set_max_hop_count (CORBA::ULong value)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::FollowOption
-    set_def_follow_policy (CosTrading::FollowOption policy
-                           ACE_ENV_ARG_DECL_NOT_USED)
+    set_def_follow_policy (CosTrading::FollowOption policy)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CosTrading::FollowOption
-    set_max_follow_policy (CosTrading::FollowOption policy
-                           ACE_ENV_ARG_DECL_NOT_USED)
+    set_max_follow_policy (CosTrading::FollowOption policy)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CosTrading::FollowOption
-    set_max_link_follow_policy (CosTrading::FollowOption policy
-                                ACE_ENV_ARG_DECL_NOT_USED)
+    set_max_link_follow_policy (CosTrading::FollowOption policy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = Set Type Repository
 
   virtual CosTrading::TypeRepository_ptr
-    set_type_repos (CosTrading::TypeRepository_ptr repository
-                    ACE_ENV_ARG_DECL_NOT_USED)
+    set_type_repos (CosTrading::TypeRepository_ptr repository)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::Admin::OctetSeq*
-    request_id_stem (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    request_id_stem (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTrading::Admin::OctetSeq*
-    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem
-                         ACE_ENV_ARG_DECL_NOT_USED)
+    set_request_id_stem (const CosTrading::Admin::OctetSeq& stem)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void list_offers (CORBA::ULong how_many,
                             CosTrading::OfferIdSeq_out ids,
-                            CosTrading::OfferIdIterator_out id_itr
-                            ACE_ENV_ARG_DECL)
+                            CosTrading::OfferIdIterator_out id_itr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::NotImplemented));
 
@@ -733,8 +702,7 @@ public:
 
   virtual void list_proxies (CORBA::ULong,
                              CosTrading::OfferIdSeq_out,
-                             CosTrading::OfferIdIterator_out
-                             ACE_ENV_ARG_DECL)
+                             CosTrading::OfferIdIterator_out)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::NotImplemented));
 
@@ -780,8 +748,7 @@ public:
   virtual void add_link (const char *name,
                          CosTrading::Lookup_ptr target,
                          CosTrading::FollowOption def_pass_on_follow_rule,
-                         CosTrading::FollowOption limiting_follow_rule
-                         ACE_ENV_ARG_DECL)
+                         CosTrading::FollowOption limiting_follow_rule)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::Link::IllegalLinkName,
                     CosTrading::Link::DuplicateLinkName,
@@ -825,8 +792,7 @@ public:
   // creation of the link.
   // END SPEC
 
-  virtual void remove_link (const char *name
-                            ACE_ENV_ARG_DECL)
+  virtual void remove_link (const char *name)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::Link::IllegalLinkName,
                     CosTrading::Link::UnknownLinkName));
@@ -842,8 +808,7 @@ public:
   // not in the trader.
   // END SPEC
 
-  virtual CosTrading::Link::LinkInfo* describe_link (const char *name
-                                                     ACE_ENV_ARG_DECL_NOT_USED)
+  virtual CosTrading::Link::LinkInfo* describe_link (const char *name)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::Link::IllegalLinkName,
                     CosTrading::Link::UnknownLinkName));
@@ -871,7 +836,7 @@ public:
   // state.
   // END SPEC
 
-  virtual CosTrading::LinkNameSeq* list_links (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CosTrading::LinkNameSeq* list_links (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // BEGIN SPEC
@@ -883,8 +848,7 @@ public:
 
   virtual void modify_link (const char *name,
                             CosTrading::FollowOption def_pass_on_follow_rule,
-                            CosTrading::FollowOption limiting_follow_rule
-                            ACE_ENV_ARG_DECL)
+                            CosTrading::FollowOption limiting_follow_rule)
     ACE_THROW_SPEC ((CosTrading::Link::IllegalLinkName,
                     CosTrading::Link::UnknownLinkName,
                     CosTrading::Link::DefaultFollowTooPermissive,
@@ -957,8 +921,7 @@ public:
                   const CosTrading::PropertySeq &,
                   CORBA::Boolean if_match_all,
                   const char *,
-                  const CosTrading::PolicySeq &
-                  ACE_ENV_ARG_DECL)
+                  const CosTrading::PolicySeq &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalServiceType,
                     CosTrading::UnknownServiceType,
@@ -971,16 +934,14 @@ public:
                     CosTrading::DuplicatePropertyName,
                     CosTrading::DuplicatePolicyName));
 
-  virtual void withdraw_proxy (const char *
-                               ACE_ENV_ARG_DECL)
+  virtual void withdraw_proxy (const char *)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId,
                     CosTrading::Proxy::NotProxyOfferId));
 
   virtual CosTrading::Proxy::ProxyInfo *
-  describe_proxy (const char *
-                  ACE_ENV_ARG_DECL)
+  describe_proxy (const char *)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::IllegalOfferId,
                     CosTrading::UnknownOfferId,
@@ -990,8 +951,7 @@ public:
 
   virtual void list_proxies (CORBA::ULong,
                              CosTrading::OfferIdSeq *&,
-                             CosTrading::OfferIdIterator_ptr &
-                             ACE_ENV_ARG_DECL)
+                             CosTrading::OfferIdIterator_ptr &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     CosTrading::NotImplemented));
 

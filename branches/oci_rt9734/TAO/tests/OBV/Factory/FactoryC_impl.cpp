@@ -47,13 +47,12 @@ Value2_init_impl::create (
 }
 
 CORBA::ValueBase *
-Value2_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+Value2_init_impl::create_for_unmarshal (void)
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
                     Value2_impl,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   return ret_val;
 }

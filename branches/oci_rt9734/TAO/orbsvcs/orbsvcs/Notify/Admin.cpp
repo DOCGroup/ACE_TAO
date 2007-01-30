@@ -47,7 +47,7 @@ TAO_Notify_Admin::~TAO_Notify_Admin ()
 }
 
 void
-TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent ACE_ENV_ARG_DECL)
+TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 {
   ACE_ASSERT (this->ec_.get() == 0);
 
@@ -55,33 +55,29 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent ACE_ENV_ARG_DECL)
   ACE_ASSERT (this->ec_.get() != 0);
 
   // this-> on the following line confuses VC6
-  initialize (parent ACE_ENV_ARG_PARAMETER);
+  initialize (parent);
 
   TAO_Notify_Proxy_Container* proxy_container = 0;
   ACE_NEW_THROW_EX (proxy_container,
                     TAO_Notify_Proxy_Container (),
                     CORBA::INTERNAL ());
-  ACE_CHECK;
   this->proxy_container_.reset (proxy_container);
 
-  this->proxy_container().init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_container().init ();
 
 }
 
 void
-TAO_Notify_Admin::remove (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Admin::remove (TAO_Notify_Proxy* proxy)
 {
-  this->proxy_container().remove (proxy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_container().remove (proxy);
 }
 
 void
-TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL)
+TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
-  ACE_CHECK;
 
   // Adopt the Admin's subscription.
   TAO_Notify_EventTypeSeq added (this->subscribed_types_), removed;
@@ -92,27 +88,25 @@ TAO_Notify_Admin::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types AC
 }
 
 int
-TAO_Notify_Admin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Admin::shutdown (void)
 {
-  int sd_ret = TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  int sd_ret = TAO_Notify_Object::shutdown ();
   if (sd_ret == 1)
     return 1;
 
-  this->proxy_container().shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (1);
+  this->proxy_container().shutdown ();
 
   return 0;
 }
 
 void
-TAO_Notify_Admin::insert (TAO_Notify_Proxy* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Admin::insert (TAO_Notify_Proxy* proxy)
 {
-  this->proxy_container().insert (proxy ACE_ENV_ARG_PARAMETER);
+  this->proxy_container().insert (proxy);
 }
 
 void
-TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   bool changed = this->children_changed_;
   this->children_changed_ = false;
@@ -126,28 +120,22 @@ TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG
       const char* type = this->get_admin_type_name();
 
       bool want_all_children =
-        saver.begin_object(this->id(), type, attrs, changed
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        saver.begin_object(this->id(), type, attrs, changed);
 
       if (want_all_children || this->filter_admin_.is_changed ())
         {
-          this->filter_admin_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->filter_admin_.save_persistent(saver);
         }
       if (want_all_children || this->subscribed_types_.is_changed ())
         {
-          this->subscribed_types_.save_persistent(saver ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->subscribed_types_.save_persistent(saver);
         }
 
       TAO_Notify::Save_Persist_Worker<TAO_Notify_Proxy>
         wrk(saver, want_all_children);
-      this->proxy_container().collection()->for_each(&wrk
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->proxy_container().collection()->for_each(&wrk);
 
-      saver.end_object(this->id(), type ACE_ENV_ARG_PARAMETER);
+      saver.end_object(this->id(), type);
     }
 }
 
@@ -182,8 +170,7 @@ TAO_Notify_Admin::load_attrs(const TAO_Notify::NVPList& attrs)
 TAO_Notify::Topology_Object*
 TAO_Notify_Admin::load_child (const ACE_CString &type,
                               CORBA::Long id,
-                              const TAO_Notify::NVPList& attrs
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              const TAO_Notify::NVPList& attrs)
 {
   ACE_UNUSED_ARG (attrs);
   TAO_Notify::Topology_Object* result = this;
@@ -212,11 +199,10 @@ TAO_Notify_Admin::load_child (const ACE_CString &type,
 }
 
 void
-TAO_Notify_Admin::reconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Admin::reconnect (void)
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_Proxy> wrk;
-  this->proxy_container().collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->proxy_container().collection()->for_each(&wrk);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

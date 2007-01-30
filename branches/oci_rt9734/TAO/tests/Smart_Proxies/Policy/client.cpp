@@ -63,27 +63,21 @@ run_test (CORBA::ORB_ptr orb_ptr,
 {
   CORBA::ORB_var orb = CORBA::ORB::_duplicate (orb_ptr);
   CORBA::Object_var object;
-  ACE_TRY_NEW_ENV
+  try
     {
       if (target == 1)
         {
           object =
-            orb->string_to_object (ior1
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->string_to_object (ior1);
         }
       else
         {
           object =
-            orb->string_to_object (ior2
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            orb->string_to_object (ior2);
         }
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -92,29 +86,24 @@ run_test (CORBA::ORB_ptr orb_ptr,
 
       server->method (0);
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
     }
-  ACE_ENDTRY;
 return 0;
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -139,15 +128,12 @@ main (int argc, char *argv[])
       run_test (orb.in (), 1);
       run_test (orb.in (), 2);
 
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

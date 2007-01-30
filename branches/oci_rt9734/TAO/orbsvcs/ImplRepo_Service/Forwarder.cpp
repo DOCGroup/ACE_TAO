@@ -33,26 +33,22 @@ ImR_Forwarder::ImR_Forwarder (ImR_Locator_i& imr_impl)
 }
 
 void
-ImR_Forwarder::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+ImR_Forwarder::init (CORBA::ORB_ptr orb)
 {
   ACE_ASSERT (! CORBA::is_nil(orb));
   this->orb_ = orb;
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var tmp =
-        orb->resolve_initial_references ("POACurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("POACurrent");
 
       this->poa_current_var_ =
-        PortableServer::Current::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::Current::_narrow (tmp.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       ACE_DEBUG ((LM_DEBUG, "ImR_Forwarder::init() Exception ignored.\n"));
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
   ACE_ASSERT (!CORBA::is_nil (this->poa_current_var_.in ()));
 }
 
@@ -68,14 +64,13 @@ PortableServer::Servant
 ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           PortableServer::POA_ptr poa,
                           const char *,
-                          PortableServer::ServantLocator::Cookie &
-                          ACE_ENV_ARG_DECL)
+                          PortableServer::ServantLocator::Cookie &)
     ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
   ACE_ASSERT (! CORBA::is_nil(poa));
   CORBA::Object_var forward_obj;
 
-  ACE_TRY
+  try
     {
       CORBA::String_var server_name = poa->the_name();
 
@@ -85,8 +80,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       // The activator stores a partial ior with each server. We can
       // just tack on the current ObjectKey to get a valid ior for
       // the desired server.
-      CORBA::String_var pior = locator_.activate_server_by_name (server_name.in (), false ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var pior = locator_.activate_server_by_name (server_name.in (), false);
 
       ACE_CString ior = pior.in ();
 
@@ -95,9 +89,11 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       if (ior.find ("corbaloc:") != 0 || ior[ior.length () - 1] != '/')
         {
           ACE_ERROR ((LM_ERROR, "ImR_Forwarder::preinvoke () Invalid corbaloc ior.\n\t<%s>\n", ior.c_str()));
-          ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST (
-            CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-            CORBA::COMPLETED_NO));
+          throw CORBA::OBJECT_NOT_EXIST (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_IMPLREPO_MINOR_CODE,
+              0),
+            CORBA::COMPLETED_NO);
         }
 
       CORBA::String_var key_str;
@@ -115,30 +111,33 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
         ACE_DEBUG ((LM_DEBUG, "ImR: Forwarding invocation on <%s> to <%s>\n", server_name.in(), ior.c_str()));
 
       forward_obj =
-        this->orb_->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->string_to_object (ior.c_str ());
     }
-  ACE_CATCH (ImplementationRepository::CannotActivate, ex)
+  catch (const ImplementationRepository::CannotActivate&)
     {
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-        CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_IMPLREPO_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
-  ACE_CATCH (ImplementationRepository::NotFound, ex)
+  catch (const ImplementationRepository::NotFound&)
     {
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-        CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_IMPLREPO_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Forwarder");
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-        CORBA::COMPLETED_NO));
+      ex._tao_print_exception ("Forwarder");
+      throw CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_IMPLREPO_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   if (!CORBA::is_nil (forward_obj.in ()))
     ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj.in ()), 0);
@@ -155,7 +154,6 @@ ImR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            const char *,
                            PortableServer::ServantLocator::Cookie,
                            PortableServer::Servant
-                           ACE_ENV_ARG_DECL_NOT_USED
                            ) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

@@ -45,45 +45,45 @@ public:
   ~TAO_DynValue_i (void);
 
   virtual char * current_member_name (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual CORBA::TCKind current_member_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual DynamicAny::NameValuePairSeq * get_members (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-  
+
   virtual void set_members (
       const DynamicAny::NameValuePairSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      void)
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-  
+
   virtual void set_members_as_dyn_any (
       const DynamicAny::NameDynAnyPairSeq & value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,

@@ -14,26 +14,24 @@ CIAO::Container_Impl::Container_Impl (CORBA::ORB_ptr o,
 }
 
 ACE_INLINE void
-CIAO::Container_Impl::set_objref (Deployment::Container_ptr o
-                                  ACE_ENV_ARG_DECL)
+CIAO::Container_Impl::set_objref (Deployment::Container_ptr o)
 {
   CIAO_TRACE("CIAO::Container_Imp::set_objref");
 
   if (!CORBA::is_nil (this->objref_.in ()))
-    ACE_THROW (CORBA::BAD_INV_ORDER ());
+    throw CORBA::BAD_INV_ORDER ();
 
   this->objref_ = Deployment::Container::_duplicate (o);
 }
 
 ACE_INLINE ::Deployment::Container_ptr
-CIAO::Container_Impl::get_objref (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Container_Impl::get_objref ()
 {
   CIAO_TRACE("CIAO::Container_Imp::get_objref");
 
   if (CORBA::is_nil (this->objref_.in ()))
     {
-      this->objref_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      this->objref_ = this->_this ();
     }
   return this->objref_.in ();
 }

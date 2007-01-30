@@ -40,41 +40,41 @@ class FilterClient
   ~FilterClient ();
   // Destructor
 
-  void init (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv []);
   // Init the Client.
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
   // Run the demo.
 
   void done (void);
   // Consumer calls done, We're done.
 
  protected:
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv []);
   // Initializes the ORB.
 
-  void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_naming_service (void);
   // Try to get hold of a running naming service.
 
-  void resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_Notify_factory (void);
   // Try to resolve the Notify factory from the Naming service.
 
-  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
+  void create_EC (void);
   // Create an EC.
 
-  void create_supplieradmin(ACE_ENV_SINGLE_ARG_DECL);
+  void create_supplieradmin(void);
   // Create the Supplier Admin.
 
-  void create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL);
+  void create_consumeradmin (void);
   // Create the Consumer Admin.
 
-  void create_consumers (ACE_ENV_SINGLE_ARG_DECL);
+  void create_consumers (void);
   // Create and initialize the consumers.
 
-  void create_suppliers (ACE_ENV_SINGLE_ARG_DECL);
+  void create_suppliers (void);
   // create and initialize the suppliers.
 
-  void send_events (ACE_ENV_SINGLE_ARG_DECL);
+  void send_events (void);
   // send the events.
 
   // = Data Members
@@ -140,11 +140,11 @@ class Filter_StructuredPushConsumer
   Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect the Consumer to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  virtual void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect (void);
   // Disconnect from the supplier.
 
 protected:
@@ -170,7 +170,6 @@ protected:
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -180,7 +179,6 @@ protected:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -188,7 +186,6 @@ protected:
        ));
 
   virtual void disconnect_structured_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL
         )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -211,16 +208,14 @@ class Filter_StructuredPushSupplier
   Filter_StructuredPushSupplier (const char* my_name);
   // Constructor.
 
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin
-                ACE_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
   // Disconnect from the supplier.
 
-  virtual void send_event (const CosNotification::StructuredEvent& event
-                           ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
   // Send one event.
 
 protected:
@@ -242,7 +237,6 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -251,7 +245,6 @@ protected:
 
   // = StructuredPushSupplier method
     virtual void disconnect_structured_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -14,14 +14,11 @@ ACE_RCSID(Forwarding, Servant_Activator, "$Id$")
 
 PortableServer::Servant
 ServantActivator::incarnate (const PortableServer::ObjectId &,
-                             PortableServer::POA_ptr
-                             ACE_ENV_ARG_DECL)
+                             PortableServer::POA_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  this->orb_->shutdown (0);
 
   // Throw forward exception
   ACE_THROW_RETURN (
@@ -35,16 +32,15 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
                                PortableServer::POA_ptr,
                                PortableServer::Servant servant,
                                CORBA::Boolean,
-                               CORBA::Boolean
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                               CORBA::Boolean)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;
 }
 
 void
-ServantActivator::forward_requests (ACE_ENV_SINGLE_ARG_DECL)
+ServantActivator::forward_requests (void)
 {
   if (CORBA::is_nil (this->forward_to_.in ()))
-    ACE_THROW (test::Cannot_Forward ());
+    throw test::Cannot_Forward ();
 }

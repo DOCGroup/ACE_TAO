@@ -42,9 +42,9 @@ namespace TAO
      * @brief Represents a "queue-able", synchronous, collocated,
      *        CORBA request.
      *
-     * This kind request is the two-way or oneway(with SYNC_WITH_TARGET 
-     * policy applied) collocated request. It is NOT cloned before 
-     * enqueuing and the "enqueuing" thread will block until the request  
+     * This kind request is the two-way or oneway(with SYNC_WITH_TARGET
+     * policy applied) collocated request. It is NOT cloned before
+     * enqueuing and the "enqueuing" thread will block until the request
      * is dispatched/handled or cancelled.
      */
     class TAO_CSD_TP_Export TP_Collocated_Synch_Request
@@ -66,9 +66,9 @@ namespace TAO
 
       /// Wait until the request has been dispatched (and completed), or
       /// until it has been cancelled.
-      /// Returns true if the request has been dispatched, and returns 
+      /// Returns true if the request has been dispatched, and returns
       /// false if the request has been cancelled.
-      bool wait(ACE_ENV_SINGLE_ARG_DECL);
+      bool wait(void);
 
 
     protected:

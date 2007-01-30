@@ -36,22 +36,17 @@ TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
 }
 
 int
-TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
-                                     ACE_ENV_ARG_DECL)
+TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv [])
 {
   // Copy command line parameter.
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->orb_ = CORBA::ORB_init (command_line.get_argc(),
                                 command_line.get_ASCII_argv(),
-                                ""
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                "");
 
   CORBA::Object_var object =
-    this->orb_->resolve_initial_references("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references("RootPOA");
 
   if (CORBA::is_nil (object.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -59,46 +54,37 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
                       -1);
 
   this->poa_ =
-    PortableServer::POA::_narrow (object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    PortableServer::POA::_narrow (object.in ());
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->poa_->the_POAManager ();
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  poa_manager->activate ();
 
   return 0;
 }
 
 int
-TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv []
-                              ACE_ENV_ARG_DECL)
+TAO_Notify_Service_Driver::init_dispatching_ORB (int& argc, ACE_TCHAR *argv [])
 {
   // Copy command line parameter.
   ACE_Argv_Type_Converter command_line(argc, argv);
 
   this->dispatching_orb_ = CORBA::ORB_init (command_line.get_argc(),
                                 command_line.get_ASCII_argv(),
-                                "dispatcher"
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                "dispatcher");
 
   return 0;
 }
 
 int
-TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
-                                 ACE_ENV_ARG_DECL)
+TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args(argc, argv) != 0)
     return -1;
 
   // initalize the ORB.
-  if (this->init_ORB (argc, argv
-                      ACE_ENV_ARG_PARAMETER) != 0)
+  if (this->init_ORB (argc, argv) != 0)
     return -1;
 
   this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
@@ -116,19 +102,16 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
   if (this->separate_dispatching_orb_)
     {
-      if (this->init_dispatching_ORB (argc, argv
-                                      ACE_ENV_ARG_PARAMETER) != 0)
+      if (this->init_dispatching_ORB (argc, argv) != 0)
         {
           return -1;
         }
 
-      this->notify_service_->init_service2 (this->orb_.in (), this->dispatching_orb_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->notify_service_->init_service2 (this->orb_.in (), this->dispatching_orb_.in());
     }
   else
     {
-      this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      this->notify_service_->init_service (this->orb_.in ());
     }
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
@@ -156,8 +139,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
   if (this->use_name_svc_)
     {
       // Resolve the naming service.
-      int ns_ret = this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      int ns_ret = this->resolve_naming_service ();
 
       if (ns_ret != 0)
         return -1;
@@ -168,21 +150,17 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
   // Activate the factory
   this->notify_factory_ =
-    notify_service_->create (this->poa_.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    notify_service_->create (this->poa_.in ());
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
   if (this->bootstrap_) // Enable corbaloc usage
     {
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->orb_->resolve_initial_references ("IORTable");
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        IORTable::Table::_narrow (table_object.in ());
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable. corbaloc support not enabled.\n"));
@@ -190,12 +168,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       else
         {
           CORBA::String_var ior =
-            this->orb_->object_to_string (this->notify_factory_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-          adapter->bind (this->notify_factory_name_.c_str (), ior.in ()
-                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+            this->orb_->object_to_string (this->notify_factory_.in ());
+          adapter->bind (this->notify_factory_name_.c_str (), ior.in ());
         }
     }
 
@@ -206,15 +180,11 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
       CosNaming::Name_var name =
-        this->naming_->to_name (this->notify_factory_name_.c_str ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        this->naming_->to_name (this->notify_factory_name_.c_str ());
 
 
       this->naming_->rebind (name.in (),
-                             this->notify_factory_.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                             this->notify_factory_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Registered with the naming service as: %s\n",
@@ -231,18 +201,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
           CosNotifyChannelAdmin::EventChannel_var ec =
             this->notify_factory_->create_channel (initial_qos,
                                                    initial_admin,
-                                                   id
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+                                                   id);
 
-          name = this->naming_->to_name (this->notify_channel_name_.c_str ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          name = this->naming_->to_name (this->notify_channel_name_.c_str ());
 
           this->naming_->rebind (name.in (),
-                                 ec.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+                                 ec.in ());
 
           ACE_DEBUG ((LM_DEBUG,
                       "Registered an Event Channel with the naming service as: %s\n",
@@ -254,9 +218,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
   // Write IOR to a file, if asked.
   // Note: do this last to ensure that we're up and running before the file is written
   CORBA::String_var str =
-    this->orb_->object_to_string (this->notify_factory_.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->object_to_string (this->notify_factory_.in ());
 
   if (this->ior_output_file_)
     {
@@ -275,12 +237,10 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 }
 
 int
-TAO_Notify_Service_Driver::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service_Driver::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references ("NameService"
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->orb_->resolve_initial_references ("NameService");
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -289,14 +249,13 @@ TAO_Notify_Service_Driver::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
   return 0;
 }
 
 int
-TAO_Notify_Service_Driver::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service_Driver::run (void)
 {
   if (TAO_debug_level > 0 )
     ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
@@ -308,27 +267,22 @@ TAO_Notify_Service_Driver::run (ACE_ENV_SINGLE_ARG_DECL)
       return 0;
     }
 
-  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->orb_->run ();
 
   return 0;
 }
 
 void
-TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Service_Driver::shutdown (void)
 {
   // Deactivate.
   if (this->use_name_svc_ && !CORBA::is_nil (this->naming_.in ()))
     {
       // Unbind from the naming service.
       CosNaming::Name_var name =
-        this->naming_->to_name (this->notify_factory_name_.c_str ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->naming_->to_name (this->notify_factory_name_.c_str ());
 
-      this->naming_->unbind (name.in ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->naming_->unbind (name.in ());
     }
 
   // shutdown the ORB.
@@ -478,7 +432,7 @@ Worker::svc (void)
   // just disabling it altogether.  It doesn't provide much value, and
   // makes service startup needlessly more verbose.  See bugzilla 2477
   // for details.
-  
+
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -492,16 +446,13 @@ Worker::svc (void)
   ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
 #endif
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
   return 0;
 }

@@ -59,13 +59,10 @@ parse_args (int argc, char *argv[])
 
 int
 write_ior_to_file (CORBA::ORB_ptr orb,
-                   test_ptr test
-                   ACE_ENV_ARG_DECL)
+                   test_ptr test)
 {
   CORBA::String_var ior =
-    orb->object_to_string (test
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->object_to_string (test);
 
   char filename[BUFSIZ];
   ACE_OS::sprintf (filename,
@@ -98,8 +95,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
                                  PortableServer::POAManager_ptr poa_manager,
                                  PortableServer::POA_ptr root_poa,
                                  CORBA::ORB_ptr orb,
-                                 RTCORBA::RTORB_ptr rt_orb
-                                 ACE_ENV_ARG_DECL)
+                                 RTCORBA::RTORB_ptr rt_orb)
 {
   // Policies for the firstPOA to be created.
   CORBA::PolicyList policies (3); policies.length (3);
@@ -107,9 +103,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   // Implicit_activation policy.
   policies[0] =
     root_poa->create_implicit_activation_policy
-    (PortableServer::IMPLICIT_ACTIVATION
-     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    (PortableServer::IMPLICIT_ACTIVATION);
 
   // Thread pool policy.
   policies[1] =
@@ -118,25 +112,20 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   // Priority Model policy.
   policies[2] =
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                          0
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                          0);
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
     root_poa->create_POA (poa_name,
                           poa_manager,
-                          policies
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                          policies);
 
   // Creation of POAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
        i < policies.length ();
        ++i)
     {
-      policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      policies[i]->destroy ();
     }
 
   test_i *servant =
@@ -148,14 +137,11 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   ACE_UNUSED_ARG (safe_servant);
 
   test_var test =
-    servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    servant->_this ();
 
   int result =
     write_ior_to_file (orb,
-                       test.in ()
-                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                       test.in ());
 
   return result;
 }
@@ -183,64 +169,46 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 int
 Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       object =
-        this->orb_->resolve_initial_references ("RTORB"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTORB");
 
       RTCORBA::RTORB_var rt_orb =
-        RTCORBA::RTORB::_narrow (object.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::RTORB::_narrow (object.in ());
 
       object =
-        this->orb_->resolve_initial_references ("RTCurrent"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
       RTCORBA::Priority default_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       test_i servant (this->orb_.in (),
                       root_poa.in (),
                       nap_time);
       test_var test =
-        servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant._this ();
 
       int result =
         write_ior_to_file (this->orb_.in (),
-                           test.in ()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                           test.in ());
 
       if (result != 0)
         return result;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       CORBA::ULong stacksize = 0;
       CORBA::Boolean allow_request_buffering = 0;
@@ -254,14 +222,10 @@ Task::svc (void)
                                    default_thread_priority,
                                    allow_request_buffering,
                                    max_buffered_requests,
-                                   max_request_buffer_size
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                   max_request_buffer_size);
 
       CORBA::Policy_var threadpool_policy_1 =
-        rt_orb->create_threadpool_policy (threadpool_id_1
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rt_orb->create_threadpool_policy (threadpool_id_1);
 
       CORBA::Boolean allow_borrowing = 0;
       RTCORBA::ThreadpoolLanes lanes (1);
@@ -277,14 +241,10 @@ Task::svc (void)
                                               allow_borrowing,
                                               allow_request_buffering,
                                               max_buffered_requests,
-                                              max_request_buffer_size
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              max_request_buffer_size);
 
       CORBA::Policy_var threadpool_policy_2 =
-        rt_orb->create_threadpool_policy (threadpool_id_2
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rt_orb->create_threadpool_policy (threadpool_id_2);
 
       result =
         create_POA_and_register_servant (threadpool_policy_1.in (),
@@ -292,9 +252,7 @@ Task::svc (void)
                                          poa_manager.in (),
                                          root_poa.in (),
                                          this->orb_.in (),
-                                         rt_orb.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         rt_orb.in ());
       if (result != 0)
         return result;
 
@@ -304,25 +262,19 @@ Task::svc (void)
                                          poa_manager.in (),
                                          root_poa.in (),
                                          this->orb_.in (),
-                                         rt_orb.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                         rt_orb.in ());
       if (result != 0)
         return result;
 
-      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->run ();
 
-      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -330,14 +282,12 @@ Task::svc (void)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       int result =
         parse_args (argc, argv);
@@ -386,12 +336,11 @@ main (int argc, char *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

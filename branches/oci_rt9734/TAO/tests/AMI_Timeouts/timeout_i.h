@@ -31,11 +31,10 @@ public:
 
   ~Timeout_i ();
 
-  virtual void sendTimeToWait (CORBA::Long msec
-                               ACE_ENV_ARG_DECL)
+  virtual void sendTimeToWait (CORBA::Long msec)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -51,12 +50,11 @@ public:
 
   ~TimeoutHandler_i ();
 
-  virtual void sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void sendTimeToWait (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void sendTimeToWait_excep (
-      ::Messaging::ExceptionHolder * excep_holder
-      ACE_ENV_ARG_DECL)
+      ::Messaging::ExceptionHolder * excep_holder)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void reset_reply_counter ();

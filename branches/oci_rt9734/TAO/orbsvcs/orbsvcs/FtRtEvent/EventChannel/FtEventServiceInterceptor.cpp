@@ -81,11 +81,9 @@ void
 retrieve_ft_request_context(
                             PortableInterceptor::ServerRequestInfo_ptr ri,
                             IOP::ServiceContext_var& service_context,
-                            FT::FTRequestServiceContext& ft_request_service_context
-                            ACE_ENV_ARG_DECL)
+                            FT::FTRequestServiceContext& ft_request_service_context)
 {
-  service_context = ri->get_request_service_context(IOP::FT_REQUEST ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  service_context = ri->get_request_service_context(IOP::FT_REQUEST);
 
   const char * buf =
     reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
@@ -96,33 +94,29 @@ retrieve_ft_request_context(
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
 
   if ((cdr >> ft_request_service_context) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    throw CORBA::BAD_PARAM ();
 
 }
 
 FTRT::TransactionDepth
 get_transaction_depth_context(
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   IOP::ServiceContext_var service_context;
-  ACE_TRY {
-    service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+  try{
+    service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH);
   }
-  ACE_CATCH  (CORBA::BAD_PARAM, ex)
+  catch (const CORBA::BAD_PARAM&)
   {
     ACE_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
     return -1;
   }
-  ACE_ENDTRY;
 
   const char * buf =
     reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
@@ -145,14 +139,11 @@ get_transaction_depth_context(
 
 FTRT::SequenceNumber
 get_sequence_number_context(
-                            PortableInterceptor::ServerRequestInfo_ptr ri
-                            ACE_ENV_ARG_DECL)
+                            PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   FTRT::SequenceNumber result;
   IOP::ServiceContext_var service_context;
-  service_context = ri->get_request_service_context(FTRT::FT_SEQUENCE_NUMBER
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  service_context = ri->get_request_service_context(FTRT::FT_SEQUENCE_NUMBER);
 
   const char * buf =
     reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
@@ -193,22 +184,21 @@ FtEventServiceInterceptor::instance()
 }
 
 char *
-FtEventServiceInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FtEventServiceInterceptor::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FtEventServiceInterceptor");
 }
 
 void
-FtEventServiceInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+FtEventServiceInterceptor::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FtEventServiceInterceptor::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
@@ -216,26 +206,22 @@ FtEventServiceInterceptor::receive_request_service_contexts (
 
 
 void
-FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                            ACE_ENV_ARG_DECL)
+FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
                                             ACE_THROW_SPEC ((CORBA::SystemException,
                                             PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
   if (ACE_OS::strcmp(operation.in(), "push") == 0) {
     TAO_FTRTEC::Log(3, "Received push command\n");
     return;
   }
 
-  ACE_TRY_EX(block1) {
+  try{
     FT::FTRequestServiceContext ft_request_service_context;
     IOP::ServiceContext_var service_context;
     retrieve_ft_request_context(ri,
       service_context,
-      ft_request_service_context
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
+      ft_request_service_context);
 
     bool is_new_request = request_table_.is_new_request(
       ft_request_service_context.client_id.in(),
@@ -247,60 +233,43 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
         request_table_.get_result(ft_request_service_context.client_id.in());
     }
 
-    Request_Context_Repository().set_cached_result(ri, cached_result
-                                           ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
-    Request_Context_Repository().set_ft_request_service_context(ri, service_context
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
+    Request_Context_Repository().set_cached_result(ri, cached_result);
+    Request_Context_Repository().set_ft_request_service_context(ri, service_context);
 
-    ACE_TRY_EX(block2) {
+    try{
 
       FTRT::TransactionDepth transaction_depth =
-        get_transaction_depth_context(ri
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block2);
+        get_transaction_depth_context(ri);
 
-      Request_Context_Repository().set_transaction_depth(ri, transaction_depth
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(block2);
+      Request_Context_Repository().set_transaction_depth(ri, transaction_depth);
     }
-    ACE_CATCH  (CORBA::BAD_PARAM, ex)   {
+    catch (const CORBA::BAD_PARAM&){
     }
-    ACE_ENDTRY;
 
     FTRT::SequenceNumber sequence_no =
-      get_sequence_number_context(ri ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
+      get_sequence_number_context(ri);
 
-    Request_Context_Repository().set_sequence_number(ri, sequence_no
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK_EX(block1);
+    Request_Context_Repository().set_sequence_number(ri, sequence_no);
   }
-  ACE_CATCH  (CORBA::BAD_PARAM, ex)   {
+  catch (const CORBA::BAD_PARAM&){
   }
-  ACE_ENDTRY;
 }
 
 void
-FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                                       ACE_ENV_ARG_DECL)
+FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                                        ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::FTRequestServiceContext ft_request_service_context;
   IOP::ServiceContext_var service_context;
 
-  ACE_TRY {
+  try{
     retrieve_ft_request_context(ri,
       service_context,
-      ft_request_service_context
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      ft_request_service_context);
   }
-  ACE_CATCH (CORBA::BAD_PARAM, ex) {
+  catch (const CORBA::BAD_PARAM&){
     return;
   }
-  ACE_ENDTRY;
 
   request_table_.update(ft_request_service_context.client_id.in(),
     ft_request_service_context.retention_id,
@@ -309,16 +278,14 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
 
 void
 FtEventServiceInterceptor::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
-FtEventServiceInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+FtEventServiceInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
                                        ACE_THROW_SPEC ((CORBA::SystemException,
                                        PortableInterceptor::ForwardRequest))
 {

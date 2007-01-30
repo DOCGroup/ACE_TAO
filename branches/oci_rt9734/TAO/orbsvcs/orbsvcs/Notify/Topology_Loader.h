@@ -60,7 +60,7 @@ public:
    * call the load_child method of the object passed in, then do the same
    * loading process on the returned object.
    */
-  virtual void load (Topology_Object *root ACE_ENV_ARG_DECL) = 0;
+  virtual void load (Topology_Object *root) = 0;
 
   /**
    * \brief Close the loader after loading is complete.
@@ -72,7 +72,7 @@ public:
    * vary based on the type of loader, so we can't include it in the
    * interface.
    */
-  virtual void close (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void close (void);
 };
 
 } // namespace TAO_Notify

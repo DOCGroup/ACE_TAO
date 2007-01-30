@@ -38,8 +38,7 @@ namespace CIAO
 
   bool
   Servant_Activator::update_port_activator (
-    const PortableServer::ObjectId &oid
-    ACE_ENV_ARG_DECL_NOT_USED)
+    const PortableServer::ObjectId &oid)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var str =
@@ -66,8 +65,7 @@ namespace CIAO
 
   PortableServer::Servant
   Servant_Activator::incarnate (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr
-                                ACE_ENV_ARG_DECL)
+                                PortableServer::POA_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
@@ -114,8 +112,7 @@ namespace CIAO
                 ACE_DEBUG ((LM_DEBUG, "Activating Port %s\n",
                             str.in ()));
 
-              return this->pa_[t]->activate (oid
-                                             ACE_ENV_ARG_PARAMETER);
+              return this->pa_[t]->activate (oid);
             }
         }
     }
@@ -128,8 +125,7 @@ namespace CIAO
                                   PortableServer::POA_ptr ,
                                   PortableServer::Servant servant,
                                   CORBA::Boolean ,
-                                  CORBA::Boolean
-                                  ACE_ENV_ARG_DECL)
+                                  CORBA::Boolean)
       ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var str =
@@ -157,9 +153,7 @@ namespace CIAO
           {
             ACE_DEBUG ((LM_DEBUG, "Deactivating Port %s\n",
                         str.in ()));
-            this->pa_[t]->deactivate (servant
-                                      ACE_ENV_ARG_PARAMETER);
-            ACE_CHECK;
+            this->pa_[t]->deactivate (servant);
           }
       }
   }

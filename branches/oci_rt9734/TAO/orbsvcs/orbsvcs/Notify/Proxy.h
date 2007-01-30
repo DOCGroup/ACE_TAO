@@ -52,40 +52,35 @@ public:
   virtual ~TAO_Notify_Proxy ();
 
   /// Activate
-  virtual CORBA::Object_ptr activate (PortableServer::Servant servant
-                                      ACE_ENV_ARG_DECL);
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant);
 
   /// Activate with a given ID
   virtual CORBA::Object_ptr activate (
       PortableServer::Servant servant,
-      CORBA::Long id
-      ACE_ENV_ARG_DECL);
+      CORBA::Long id);
 
   /// Deactivate
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   /// Obtain the Proxy's subscribed types.
-  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types
-                         ACE_ENV_ARG_DECL);
+  void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types);
 
   /// Check if this event passes the admin and proxy filters.
   CORBA::Boolean check_filters (
       const TAO_Notify_Event* event,
       TAO_Notify_FilterAdmin& parent_filter_admin,
       CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-      ACE_ENV_ARG_DECL
     );
 
   /// Inform this proxy that the following types are being advertised.
   void types_changed (const TAO_Notify_EventTypeSeq& added,
-                      const TAO_Notify_EventTypeSeq& removed
-                      ACE_ENV_ARG_DECL);
+                      const TAO_Notify_EventTypeSeq& removed);
 
   /// Have updates been turned off.
   CORBA::Boolean updates_off (void);
 
   /// Destroy this object.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void destroy (void) = 0;
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer (void) = 0;
@@ -94,14 +89,12 @@ public:
   virtual CosNotification::EventTypeSeq* obtain_types (
       CosNotifyChannelAdmin::ObtainInfoMode mode,
       const TAO_Notify_EventTypeSeq& types
-      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Notification of subscriptions/offers set at the admin.
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed
-                                    ACE_ENV_ARG_DECL) = 0;
+                                    const CosNotification::EventTypeSeq & removed) = 0;
 
 
   /// Override, TAO_Notify_Object::qos_changed
@@ -109,12 +102,12 @@ public:
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual void save_attrs(TAO_Notify::NVPList& attrs);
   virtual const char * get_proxy_type_name (void) const = 0;
 
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
+    const TAO_Notify::NVPList& attrs);
 
 protected:
 

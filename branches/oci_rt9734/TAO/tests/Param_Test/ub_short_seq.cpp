@@ -20,7 +20,7 @@
 #include "ub_short_seq.h"
 
 ACE_RCSID (Param_Test,
-           ub_short_seq, 
+           ub_short_seq,
            "$Id$")
 
 // ************************************************************************
@@ -49,8 +49,7 @@ Test_Short_Sequence::opname (void) const
 }
 
 void
-Test_Short_Sequence::dii_req_invoke (CORBA::Request *req
-                                     ACE_ENV_ARG_DECL)
+Test_Short_Sequence::dii_req_invoke (CORBA::Request *req)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
@@ -58,29 +57,25 @@ Test_Short_Sequence::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (CORBA::_tc_ShortSeq);
 
-  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  req->invoke ();
 
   CORBA::ShortSeq *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::ShortSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
-    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (1);
   *o2->value () >>= tmp;
   this->inout_ = new CORBA::ShortSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
-    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    req->arguments ()->item (2);
   *o3->value () >>= tmp;
   this->out_ = new CORBA::ShortSeq (*tmp);
 }
 
 int
-Test_Short_Sequence::init_parameters (Param_Test_ptr
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+Test_Short_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -111,28 +106,23 @@ Test_Short_Sequence::reset_parameters (void)
 }
 
 int
-Test_Short_Sequence::run_sii_test (Param_Test_ptr objref
-                                   ACE_ENV_ARG_DECL)
+Test_Short_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  ACE_TRY
+  try
     {
       CORBA::ShortSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_short_sequence (this->in_.in (),
                                                 this->inout_.inout (),
-                                                out
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                out);
 
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Test_Short_Sequence::run_sii_test\n");
+      ex._tao_print_exception ("Test_Short_Sequence::run_sii_test\n");
 
     }
-  ACE_ENDTRY;
   return -1;
 }
 

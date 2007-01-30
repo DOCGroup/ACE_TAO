@@ -117,22 +117,18 @@ main (int argc, char *argv[])
                     "client (%P|%t): sched_params failed\n"));
     }
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
        CORBA::Object_var object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
       if (register_smart_proxy == 1)
         {
           // To use the smart proxy it is necessary to allocate the
@@ -152,9 +148,7 @@ main (int argc, char *argv[])
         }
 
       Test_var server =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,8 +171,7 @@ main (int argc, char *argv[])
            // Record current time.
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-           price = server->box_prices (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_TRY_CHECK;
+           price = server->box_prices ();
 
            if (price < 300)
              cost = server->tickets (5);
@@ -190,21 +183,17 @@ main (int argc, char *argv[])
            marker.sample (now - throughput_base,
                           now - latency_base);
 
-           ACE_TRY_CHECK;
            if (TAO_debug_level > 0 && i % 100 == 0)
              ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
          }
 
        marker.dump_stats ("buying tickets ", gsf);
 
-       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       server->shutdown ();
       /*
 
       Test_var server1 =
-        Test::_narrow (object.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server1.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -227,8 +216,7 @@ main (int argc, char *argv[])
            // Record current time.
            ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
-           price1 = server1->box_prices (ACE_ENV_SINGLE_ARG_PARAMETER);
-           ACE_TRY_CHECK;
+           price1 = server1->box_prices ();
 
            if (price1 < 300)
              cost = server1->tickets (5);
@@ -240,24 +228,20 @@ main (int argc, char *argv[])
            marker.sample (now - throughput_base1,
                           now - latency_base);
 
-           ACE_TRY_CHECK;
            if (TAO_debug_level > 0 && i % 100 == 0)
              ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
          }
 
        marker1.dump_stats ("buying tickets using a default proxy ", gsf1);
 
-       server1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+       server1->shutdown ();
       */
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Client-side exception:");
+      ex._tao_print_exception ("Client-side exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

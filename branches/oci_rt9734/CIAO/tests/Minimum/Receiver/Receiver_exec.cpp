@@ -45,27 +45,23 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx
-  ACE_ENV_ARG_DECL)
+  ::Components::SessionContext_ptr ctx)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
   {
     this->context_ =
     Receiver_Context::_narrow (
-    ctx
-    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ctx);
 
     if (this->context_ == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
   }
 
   void
-  Receiver_exec_i::ciao_preactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ciao_preactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -74,8 +70,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ciao_postactivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ciao_postactivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -84,8 +79,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_activate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_activate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -94,8 +88,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_passivate (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_passivate ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -104,8 +97,7 @@ namespace CIDL_Receiver_Impl
   }
 
   void
-  Receiver_exec_i::ccm_remove (
-  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  Receiver_exec_i::ccm_remove ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -136,8 +128,7 @@ namespace CIDL_Receiver_Impl
   // Implicit operations.
 
   ::Components::EnterpriseComponent_ptr
-  ReceiverHome_exec_i::create (
-  ACE_ENV_SINGLE_ARG_DECL)
+  ReceiverHome_exec_i::create ()
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
   ::Components::CCMException))
@@ -149,7 +140,6 @@ namespace CIDL_Receiver_Impl
     retval,
     Receiver_exec_i,
     CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
     return retval;
   }

@@ -31,11 +31,11 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Safe way to shutdown
 
-  void callback_method (ACE_ENV_SINGLE_ARG_DECL)
+  void callback_method (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback method
 
@@ -58,18 +58,16 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Boolean do_callback
-                           ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Long test_method (CORBA::Boolean do_callback)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void callback_object (Callback_ptr callback
-                        ACE_ENV_ARG_DECL_NOT_USED)
+  void callback_object (Callback_ptr callback)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  int call_client (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int call_client (void);
 
 private:
   CORBA::ORB_var orb_;

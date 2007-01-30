@@ -11,8 +11,7 @@ ObjectGroupManagerHandler::ObjectGroupManagerHandler(
 
 void
 ObjectGroupManagerHandler::start (CORBA::Boolean ami_return_val,
-                                  const FTRT::Location & the_location
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                                  const FTRT::Location & the_location)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ami_return_val);
@@ -20,27 +19,25 @@ ObjectGroupManagerHandler::start (CORBA::Boolean ami_return_val,
 }
 
 void
-ObjectGroupManagerHandler::start_excep (::Messaging::ExceptionHolder *
-                                        ACE_ENV_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::start_excep (::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
-void ObjectGroupManagerHandler::create_group (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+void ObjectGroupManagerHandler::create_group (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 
 void
-ObjectGroupManagerHandler::create_group_excep (::Messaging::ExceptionHolder *
-                                               ACE_ENV_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::create_group_excep (::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-ObjectGroupManagerHandler::add_member (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::add_member (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (--num_backups_ ==0)
@@ -48,22 +45,20 @@ ObjectGroupManagerHandler::add_member (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ObjectGroupManagerHandler::add_member_excep (::Messaging::ExceptionHolder *
-                                             ACE_ENV_ARG_DECL)
+ObjectGroupManagerHandler::add_member_excep (::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->add_member(ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->add_member();
 }
 
 void
-ObjectGroupManagerHandler::set_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::set_state (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-ObjectGroupManagerHandler::set_state_excep (::Messaging::ExceptionHolder *
-                                            ACE_ENV_ARG_DECL_NOT_USED)
+ObjectGroupManagerHandler::set_state_excep (::Messaging::ExceptionHolder *)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

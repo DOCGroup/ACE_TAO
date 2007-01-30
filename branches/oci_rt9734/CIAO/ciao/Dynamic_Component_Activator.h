@@ -65,8 +65,7 @@ namespace CIAO
      */
     PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL)
+      PortableServer::POA_ptr poa)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::ForwardRequest));
 
@@ -74,8 +73,7 @@ namespace CIAO
                       PortableServer::POA_ptr adapter,
                       PortableServer::Servant servant,
                       CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations
-                      ACE_ENV_ARG_DECL)
+                      CORBA::Boolean remaining_activations)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void add_servant_map (PortableServer::ObjectId &oid,

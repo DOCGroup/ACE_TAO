@@ -14,22 +14,21 @@ ServerRequestInterceptor::~ServerRequestInterceptor (void)
 }
 
 char *
-ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+ServerRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -38,8 +37,7 @@ ServerRequestInterceptor::receive_request_service_contexts (
 
 void
 ServerRequestInterceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -47,16 +45,14 @@ ServerRequestInterceptor::receive_request (
 
 void
 ServerRequestInterceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerRequestInterceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -64,8 +60,7 @@ ServerRequestInterceptor::send_exception (
 
 void
 ServerRequestInterceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

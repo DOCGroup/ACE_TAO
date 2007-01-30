@@ -220,8 +220,8 @@ int CIAO::DomainDataManager::call_all_node_managers ()
           catch (CORBA::Exception& ex)
             {
               ACE_DEBUG ((LM_DEBUG , "TM::Error in calling Join Domain==\n"));
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in "
-                                   "DomainDataManager::joinDomain");
+              ex._tao_print_exception (
+                "Exception caught in ""DomainDataManager::joinDomain");
             }
         }
     }
@@ -579,8 +579,8 @@ void CIAO::DomainDataManager::stop_monitors ()
           catch (CORBA::Exception& ex)
             {
               ACE_DEBUG ((LM_DEBUG , "TM::Error in calling Leave Domain\n"));
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in "
-                                   "DomainDataManager::leaveDomain");
+              ex._tao_print_exception (
+                "Exception caught in ""DomainDataManager::leaveDomain");
             }
         }
     }
@@ -644,7 +644,7 @@ find_in_initial_domain (const char* node_name,
     }
   }
 
-  // not found the node , retunr a node with an empty name
+  // not found the node , return a node with an empty name
   return false;
 }
 
@@ -664,7 +664,7 @@ find_in_provisioned_domain (const char* node_name,
     }
   }
 
-  // not found the node , retunr a node with an empty name
+  // not found the node , return a node with an empty name
   return false;
 }
 

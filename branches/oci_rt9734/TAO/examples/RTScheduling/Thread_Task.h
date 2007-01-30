@@ -25,8 +25,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   virtual int activate_task (RTScheduling::Current_ptr current,
                              CORBA::Policy_ptr sched_param,
                              long flags,
-                             ACE_Time_Value* base_time
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                             ACE_Time_Value* base_time) = 0;
 
   virtual int perform_task (void);
 

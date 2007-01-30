@@ -35,12 +35,10 @@ namespace CIAO
             typename COMP_SERV>
   void
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::deactivate (
-      const PortableServer::Servant servant
-      ACE_ENV_ARG_DECL)
+      const PortableServer::Servant servant)
   {
     SERVANT *s = dynamic_cast<SERVANT *> (servant);
-    s->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    s->_remove_ref ();
   }
 
   template <typename SERV,
@@ -49,8 +47,7 @@ namespace CIAO
             typename COMP_SERV>
   PortableServer::Servant
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::activate (
-      const PortableServer::ObjectId &oid
-      ACE_ENV_ARG_DECL)
+      const PortableServer::ObjectId &oid)
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);

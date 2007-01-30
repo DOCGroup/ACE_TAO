@@ -247,11 +247,10 @@ type_repos (CosTrading::TypeRepository_ptr new_value)
   // @@ Seth, There is no way to propagate the exception out.
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   this->type_repos_ = new_value;
   // @@ What can we do even if we catch this?
   this->service_type_repos_ =
-    CosTradingRepos::ServiceTypeRepository::_narrow (new_value ACE_ENV_ARG_PARAMETER);
+    CosTradingRepos::ServiceTypeRepository::_narrow (new_value);
 }
 
 CosTradingRepos::ServiceTypeRepository_ptr

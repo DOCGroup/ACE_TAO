@@ -13,34 +13,27 @@ ACE_RCSID (ORT,
 
 void
 ServerORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Object_var obj =
-    info->resolve_initial_references ("POACurrent"
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    info->resolve_initial_references ("POACurrent");
 
   PortableServer::Current_var poa_current =
-    PortableServer::Current::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    PortableServer::Current::_narrow (obj.in ());
 
   ACE_ASSERT (!CORBA::is_nil (poa_current.in ()));
 
 
-  CORBA::String_var orb_id = info->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var orb_id = info->orb_id ();
 
   // Create and register the test's ServerRequestInterceptor
 
@@ -53,13 +46,10 @@ ServerORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor = tmp;
 
-  info->add_server_request_interceptor (server_interceptor.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_server_request_interceptor (server_interceptor.in ());
 
 
   // Create and register the test's IORInterceptor
@@ -72,12 +62,9 @@ ServerORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::IORInterceptor_var ior_interceptor =
     ort_test_interceptor;
 
-  info->add_ior_interceptor (ior_interceptor.in ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  info->add_ior_interceptor (ior_interceptor.in ());
 }

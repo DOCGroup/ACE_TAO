@@ -45,34 +45,34 @@ public:
   ~TAO_DynValueBox_i (void);
 
   virtual CORBA::Any * get_boxed_value (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void set_boxed_value (
       const CORBA::Any & boxed
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      void
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
       ));
-  
+
   virtual void set_boxed_value_as_dyn_any (
       DynamicAny::DynAny_ptr boxed
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
     )
     ACE_THROW_SPEC ((
         CORBA::SystemException,

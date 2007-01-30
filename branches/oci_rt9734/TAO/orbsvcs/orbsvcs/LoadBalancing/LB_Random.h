@@ -50,45 +50,39 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual char * name (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosLoadBalancing::Properties * get_properties (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CosLoadBalancing::Properties * get_properties ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const CosLoadBalancing::LoadList & loads)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosLoadBalancing::StrategyNotAdaptive));
 
   virtual CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const PortableGroup::Location & the_location)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosLoadBalancing::LocationNotFound));
 
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CosLoadBalancing::LoadManager_ptr load_manager)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
 
   virtual void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      CosLoadBalancing::LoadManager_ptr load_manager)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
   /// TAO-specific underlying implementation of this Random load
@@ -96,8 +90,7 @@ public:
   static CORBA::Object_ptr _tao_next_member (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Locations & locations
-      ACE_ENV_ARG_DECL)
+      const PortableGroup::Locations & locations)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));

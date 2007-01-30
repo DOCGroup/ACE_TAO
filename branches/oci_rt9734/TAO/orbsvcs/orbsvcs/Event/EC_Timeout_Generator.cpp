@@ -8,8 +8,8 @@
 #include "orbsvcs/Event/EC_Timeout_Generator.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Timeout_Generator, 
+ACE_RCSID (Event,
+           EC_Timeout_Generator,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,7 +35,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
   if (filter == 0)
     return 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       RtecEventComm::Event e;
       e.header.type = filter->type ();
@@ -45,15 +45,12 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
 
       TAO_EC_QOS_Info qos_info = filter->qos_info ();
       filter->push_to_proxy (single_event,
-                             qos_info
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             qos_info);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -21,16 +21,14 @@ Client_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Now get the big replies..
-  ACE_TRY
+  try
     {
       for (int i = 0; i != this->event_count_; ++i)
         {
           Test::Octet_Seq_var seq =
-              this->reply_gen_->get_big_reply (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+              this->reply_gen_->get_big_reply ();
 
           CORBA::ULong length = seq->length ();
           for(CORBA::ULong i = 0; i < length; ++i)
@@ -47,13 +45,11 @@ Client_Task::svc (void)
 //          ACE_OS::sleep(tv);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception Caught \n");
+      ex._tao_print_exception ("Exception Caught \n");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;

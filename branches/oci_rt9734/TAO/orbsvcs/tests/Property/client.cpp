@@ -27,14 +27,11 @@ ACE_RCSID(CosPropertyService, client, "$Id$")
 
 int
 Client::init (int argc,
-              char *argv[]
-              ACE_ENV_ARG_DECL)
+              char *argv[])
 {
   // Init the ORB.
   manager_.init (argc,
-                 argv
-                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                 argv);
 
   // Initialize the naming services
   if (my_name_client_.init (manager_.orb()) != 0)
@@ -48,13 +45,9 @@ Client::init (int argc,
   CosNaming::Name propsetdef_name (1);
   propsetdef_name.length (1);
   propsetdef_name [0].id = CORBA::string_dup ("PropertySetDef");
-  CORBA::Object_var propsetdef_obj = my_name_client_->resolve (propsetdef_name
-                                                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var propsetdef_obj = my_name_client_->resolve (propsetdef_name);
 
-  this->propsetdef_ = CosPropertyService::PropertySetDef::_narrow (propsetdef_obj.in ()
-                                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->propsetdef_ = CosPropertyService::PropertySetDef::_narrow (propsetdef_obj.in ());
 
   if (CORBA::is_nil (this->propsetdef_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -67,63 +60,50 @@ Client::init (int argc,
 // Testing the methods of the property service.
 
 int
-Client::property_tester (ACE_ENV_SINGLE_ARG_DECL)
+Client::property_tester (void)
 {
   // = Testing PropertySet & Iterators.
 
   // Testing define_property () of PropertySet interface.
-  this->test_define_property (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_define_property ();
 
   // Test the number of properties.
-  this->test_get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_number_of_properties ();
 
   // Testing get_all_property_names.
-  this->test_get_all_property_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_all_property_names ();
 
   // Test get_property_value.
-  this->test_get_property_value (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_property_value ();
 
   // Testing delete property.
-  this->test_delete_property ("no_property" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_delete_property ("no_property");
 
   // Testing get_properties.
-  this->test_get_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_properties ();
 
   // Testing delete_properties.
-  this->test_delete_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_delete_properties ();
 
   // Test the number of properties.
-  this->test_get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_number_of_properties ();
 
   // Testing define_properties.
-  this->test_define_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_define_properties ();
 
   // Test the number of properties.
-  this->test_get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_number_of_properties ();
 
   // Testing get_all_property_names.
-  this->test_get_all_property_names (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_all_property_names ();
 
   // Testing get_all_properties.
-  this->test_get_all_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_get_all_properties ();
 
   // = Testing PropertySetDef & Iterators.
 
   // Testing define_property_with_mode.
-  this->test_define_property_with_mode (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  this->test_define_property_with_mode ();
 
   return 0;
 }
@@ -131,7 +111,7 @@ Client::property_tester (ACE_ENV_SINGLE_ARG_DECL)
 // Testing define_property.
 
 int
-Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_define_property (void)
 {
   CORBA::Any anyval;
 
@@ -142,9 +122,7 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   anyval >>= CORBA::Any::to_char (ch);
 
   this->propsetdef_->define_property ("char_property",
-                                      anyval
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                      anyval);
 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -153,9 +131,7 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   anyval >>= s;
 
   propsetdef_->define_property ("short_property",
-                                anyval
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                anyval);
 
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
@@ -164,9 +140,7 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   anyval >>= l;
   CORBA::Any newany(anyval);
   propsetdef_->define_property ("long_property",
-                                anyval
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                anyval);
 
   // Prepare a Float and "define" that in the PropertySet.
   CORBA::Float f = 3.14F;
@@ -175,10 +149,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   anyval >>= f;
 
   propsetdef_->define_property ("float_property",
-                                anyval
-                                ACE_ENV_ARG_PARAMETER);
+                                anyval);
 
-  ACE_CHECK_RETURN (-1);
 
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
@@ -186,10 +158,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   const char * newstr;
   anyval >>= newstr;
   propsetdef_->define_property ("string_property",
-                                anyval
-                                ACE_ENV_ARG_PARAMETER);
+                                anyval);
 
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -197,12 +167,11 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
 // Testing get_all_property_names of the PropertySet.
 
 int
-Client::test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_get_all_property_names (void)
 {
   // Get the size.
   CORBA::ULong num_of_properties =
-    propsetdef_->get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    propsetdef_->get_number_of_properties ();
 
   // Get half on the names and half of on the iterator.
   CORBA::ULong how_many = num_of_properties / 2;
@@ -219,9 +188,7 @@ Client::test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL)
 
   propsetdef_->get_all_property_names (how_many,
                                        names_out,
-                                       iterator_out
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                       iterator_out);
 
   // Get the values back to var.
   names_var = names_out.ptr ();
@@ -249,8 +216,7 @@ Client::test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL)
           CosPropertyService::PropertyName_out name_out (name_ptr);
 
           // Call the function.
-          CORBA::Boolean next_one_result = iterator_var->next_one (name_out ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          CORBA::Boolean next_one_result = iterator_var->next_one (name_out);
 
           // Get the values back on a _var variable.
           CosPropertyService::PropertyName_var name_var = name_out.ptr ();
@@ -260,14 +226,12 @@ Client::test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL)
               ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
 
               // Call the function to iterate again.
-              next_one_result = iterator_var->next_one (name_out ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (-1);
+              next_one_result = iterator_var->next_one (name_out);
 
               // Get the values back on a _var variable.
               name_var = name_out.ptr ();
             }
 
-          ACE_CHECK_RETURN (-1);
         }
     }
   return 0;
@@ -277,7 +241,7 @@ Client::test_get_all_property_names (ACE_ENV_SINGLE_ARG_DECL)
 // properties.
 
 int
-Client::test_get_properties (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_get_properties (void)
 {
   // Get float_property, string_property and no_property. If return
   // value is false and type is tc_void then that name is not there in
@@ -303,10 +267,8 @@ Client::test_get_properties (ACE_ENV_SINGLE_ARG_DECL)
 
   // Get the properties.
   CORBA::Boolean return_val = propsetdef_->get_properties (names.in (),
-                                                           properties_out
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                           properties_out);
   ACE_UNUSED_ARG (return_val);
-  ACE_CHECK_RETURN (-1);
 
 
   if (TAO_debug_level > 0)
@@ -369,10 +331,9 @@ Client::test_get_properties (ACE_ENV_SINGLE_ARG_DECL)
 // Testing, get_number_of_properties.
 
 int
-Client::test_get_number_of_properties (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_get_number_of_properties (void)
 {
-  CORBA::ULong nproperties = this->propsetdef_->get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::ULong nproperties = this->propsetdef_->get_number_of_properties ();
 
   if (TAO_debug_level > 0)
     {
@@ -386,29 +347,24 @@ Client::test_get_number_of_properties (ACE_ENV_SINGLE_ARG_DECL)
 // Test delete_property.
 
 int
-Client::test_delete_property (const char *property_name
-                              ACE_ENV_ARG_DECL)
+Client::test_delete_property (const char *property_name)
 {
-  ACE_TRY
+  try
     {
       CORBA::String_var property_name_var (property_name);
 
-      this->propsetdef_->delete_property (property_name_var.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->propsetdef_->delete_property (property_name_var.in ());
     }
-  ACE_CATCH (CORBA::UserException, ex)
+  catch (const CORBA::UserException&)
     {
       // For no property, it is ok to get the user exception.
       return 0;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Not an user exception");
+      ex._tao_print_exception ("Not an user exception");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -419,7 +375,7 @@ Client::test_delete_property (const char *property_name
 // properties.
 
 int
-Client::test_delete_properties (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_delete_properties (void)
 {
   CosPropertyService::PropertyNames prop_names;
   prop_names.length (3);
@@ -427,9 +383,7 @@ Client::test_delete_properties (ACE_ENV_SINGLE_ARG_DECL)
   prop_names [1] = CORBA::string_dup ("short_property");
   prop_names [2] = CORBA::string_dup ("long_property");
   // prop_names [3] = CORBA::string_dup ("no_property");
-  this->propsetdef_->delete_properties (prop_names
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( 0);
+  this->propsetdef_->delete_properties (prop_names);
 
   return 0;
 }
@@ -438,7 +392,7 @@ Client::test_delete_properties (ACE_ENV_SINGLE_ARG_DECL)
 // float in the property set.
 
 int
-Client::test_define_properties (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_define_properties (void)
 {
   CosPropertyService::Properties nproperties;
   nproperties.length (4);
@@ -476,8 +430,7 @@ Client::test_define_properties (ACE_ENV_SINGLE_ARG_DECL)
   nproperties[3].property_value <<= f;
 
   // Define this sequence of properties now.
-  this->propsetdef_->define_properties (nproperties ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( -1);
+  this->propsetdef_->define_properties (nproperties);
 
   return 0;
 }
@@ -485,12 +438,11 @@ Client::test_define_properties (ACE_ENV_SINGLE_ARG_DECL)
 // Test get_all_properties.
 
 int
-Client::test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_get_all_properties (void)
 {
   // Get the number of current properties.
   CORBA::ULong num_of_properties =
-    this->propsetdef_->get_number_of_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( -1);
+    this->propsetdef_->get_number_of_properties ();
   ACE_UNUSED_ARG (num_of_properties);
 
   // Get half on the properties and half of on the iterator.
@@ -504,9 +456,7 @@ Client::test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL)
 
   propsetdef_->get_all_properties (how_many,
                                    properties_out,
-                                   iterator_out
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( -1);
+                                   iterator_out);
 
   // Get these values to the _var's.
   CosPropertyService::Properties_var properties = properties_out.ptr ();
@@ -561,15 +511,13 @@ Client::test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL)
           CosPropertyService::Property_out property_out (property_ptr);
 
           // Call the funtion.
-          CORBA::Boolean next_one_result = iterator->next_one (property_out
-                                                               ACE_ENV_ARG_PARAMETER);
+          CORBA::Boolean next_one_result = iterator->next_one (property_out);
 
           // Get the value to the _var variable.
           CosPropertyService::Property_var property = property_out.ptr ();
 
           while (next_one_result != 0)
             {
-              ACE_CHECK_RETURN ( -1);
               ACE_DEBUG ((LM_DEBUG,
                           "%s : ",
                           property->property_name.in ()));
@@ -611,13 +559,11 @@ Client::test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL)
                 }
 
               // Call the function for the next iteraton.
-              next_one_result = iterator->next_one (property_out
-                                                    ACE_ENV_ARG_PARAMETER);
+              next_one_result = iterator->next_one (property_out);
 
               // Get the value to the _var variable.
               property = property_out.ptr ();
             }
-          ACE_CHECK_RETURN ( -1);
         }
     }
   return 0;
@@ -626,7 +572,7 @@ Client::test_get_all_properties (ACE_ENV_SINGLE_ARG_DECL)
 // Testing define property with mode.
 // Defines char, short, long and float properties with different modes.
 int
-Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_define_property_with_mode (void)
 {
   CORBA::Any anyval;
 
@@ -638,9 +584,7 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
 
   this->propsetdef_->define_property_with_mode ("char_property",
                                                 anyval,
-                                                CosPropertyService::normal
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                                CosPropertyService::normal);
 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -650,9 +594,7 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
 
   propsetdef_->define_property_with_mode ("short_property",
                                           anyval,
-                                          CosPropertyService::read_only
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                          CosPropertyService::read_only);
 
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
@@ -662,9 +604,7 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Any newany(anyval);
   propsetdef_->define_property_with_mode ("long_property",
                                           anyval,
-                                          CosPropertyService::fixed_normal
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( -1);
+                                          CosPropertyService::fixed_normal);
 
 
   // Prepare a Float and "define" that in the PropertySet.
@@ -674,9 +614,7 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   anyval >>= f;
   propsetdef_->define_property_with_mode ("float_property",
                                           anyval,
-                                          CosPropertyService::fixed_readonly
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( -1);
+                                          CosPropertyService::fixed_readonly);
 
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
@@ -685,79 +623,63 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   anyval >>= newstr;
 
   propsetdef_->define_property  ("string_property",
-                                 anyval
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN ( -1);
+                                 anyval);
 
   return 0;
 }
 
 int
-Client::test_get_property_value (ACE_ENV_SINGLE_ARG_DECL)
+Client::test_get_property_value (void)
 {
-  ACE_TRY
+  try
     {
       // Get the ior property.
-      CORBA::Any_ptr any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR"
-                                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Any_ptr any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR");
 
       // Check whether the IOR is fine.
       CORBA::Object_var propsetdef_object;
       (*any_ptr) >>= CORBA::Any::to_object (propsetdef_object.out ());
 
       CosPropertyService::PropertySetDef_var propsetdef =
-        CosPropertyService::PropertySetDef::_narrow (propsetdef_object.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosPropertyService::PropertySetDef::_narrow (propsetdef_object.in ());
 
       if (CORBA::is_nil (propsetdef.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid object reference\n"),
                           -1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "get_property_value");
+      ex._tao_print_exception ("get_property_value");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       Client client;
 
       if (client.init (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER) == -1)
+                       argv) == -1)
         return 1;
-      ACE_TRY_CHECK;
 
-      //  client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      int ret = client.property_tester (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      //  client.run ();
+      int ret = client.property_tester ();
       if (ret != 0)
         ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
       else
         ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "PropertyService Test : client");
+      ex._tao_print_exception ("PropertyService Test : client");
       return -1;
     }
- ACE_ENDTRY;
- ACE_CHECK_RETURN (-1);
 
   return 0;
 }

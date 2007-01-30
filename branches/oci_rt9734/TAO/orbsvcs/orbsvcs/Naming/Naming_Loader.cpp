@@ -35,8 +35,7 @@ TAO_Naming_Loader::~TAO_Naming_Loader (void)
 int
 TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
@@ -45,24 +44,19 @@ TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (command_line.get_argc(),
                          command_line.get_ASCII_argv(),
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       // This function call initializes the Naming Service
       CORBA::Object_var object =
         this->create_object (orb.in (),
                              command_line.get_argc(),
-                             command_line.get_TCHAR_argv ()
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                             command_line.get_TCHAR_argv ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // @@ Should we log this???
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -76,17 +70,14 @@ TAO_Naming_Loader::fini (void)
 CORBA::Object_ptr
 TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
                                   int argc,
-                                  ACE_TCHAR *argv[]
-                                  ACE_ENV_ARG_DECL_NOT_USED)
+                                  ACE_TCHAR *argv[])
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int result;
-
   // Initializes the Naming Service. Returns -1
   // on an error.
-  result = this->naming_server_.init_with_orb (argc,
-                                               argv,
-                                               orb);
+  int result = this->naming_server_.init_with_orb (argc,
+                                                   argv,
+                                                   orb);
   if (result == -1)
     return CORBA::Object::_nil ();
 

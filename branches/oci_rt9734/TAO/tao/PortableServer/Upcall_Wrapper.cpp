@@ -29,41 +29,30 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              TAO::Argument * const args[],
                              size_t nargs,
                              TAO::Upcall_Command & command
-
 #if TAO_HAS_INTERCEPTORS == 1
                              , void * servant_upcall
                              , CORBA::TypeCode_ptr const * exceptions
                              , CORBA::ULong nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-                             ACE_ENV_ARG_DECL
                              )
 {
   if (server_request.collocated ()
     && server_request.operation_details ()->is_dii_request ())
     {
-      TAO_DII_Arguments_Converter* dii_arguments_converter 
+      TAO_DII_Arguments_Converter* dii_arguments_converter
           = ACE_Dynamic_Service<TAO_DII_Arguments_Converter>::instance ("DII_Arguments_Converter");
-      
+
       if (dii_arguments_converter != 0)
-        {  
-          dii_arguments_converter->convert (server_request,
-                                            args,
-                                            nargs 
-                                            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+        {
+          dii_arguments_converter->convert (server_request, args, nargs);
         }
       else
-        ACE_THROW (CORBA::NO_IMPLEMENT ());
+        throw ::CORBA::NO_IMPLEMENT ();
     }
 
   if (server_request.incoming ())
     {
-      this->pre_upcall (*server_request.incoming (),
-                        args,
-                        nargs
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->pre_upcall (*server_request.incoming (), args, nargs);
     }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -97,7 +86,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
   TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
     server_request.orb_core ()->serverrequestinterceptor_adapter ();
 
-  ACE_TRY
+  try
     {
       {
         if (interceptor_adapter != 0)
@@ -108,9 +97,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                   the_nargs,
                                                   servant_upcall,
                                                   exceptions,
-                                                  nexceptions
-                                                  ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                                                  nexceptions);
           }
 
         // Don't bother performing the upcall if an interceptor caused a
@@ -120,17 +107,13 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           {
             if (interceptor_adapter != 0)
               {
-                interceptor_adapter->execute_command (server_request,
-                                                      command
-                                                      ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                interceptor_adapter->execute_command (server_request, command);
               }
             else
 #endif /* TAO_HAS_INTERCEPTORS */
               {
                 // The actual upcall.
-                command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-                TAO_INTERCEPTOR_CHECK;
+                command.execute ();
               }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -163,13 +146,11 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                the_nargs,
                                                servant_upcall,
                                                exceptions,
-                                               nexceptions
-                                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                               nexceptions);
             }
         }
     }
-  ACE_CATCHANY
+  catch ( ::CORBA::Exception& ex)
     {
       // Just assume the current exception is a system exception, the
       // status can only change when the interceptor changes this
@@ -177,42 +158,6 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       // don't have an sri_adapter we just rethrow the exception
       PortableInterceptor::ReplyStatus status =
         PortableInterceptor::SYSTEM_EXCEPTION;
-
-      server_request.caught_exception (&ACE_ANY_EXCEPTION);
-
-      if (interceptor_adapter != 0)
-        {
-          interceptor_adapter->send_exception (server_request,
-                                               the_args,
-                                               the_nargs,
-                                               servant_upcall,
-                                               exceptions,
-                                               nexceptions
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          status =
-            server_request.reply_status ();
-        }
-
-      if (status == PortableInterceptor::SYSTEM_EXCEPTION
-          || status == PortableInterceptor::USER_EXCEPTION)
-        {
-          ACE_RE_THROW;
-        }
-    }
-# if defined (ACE_HAS_EXCEPTIONS) \
-  && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-  ACE_CATCHALL
-    {
-      // Just assume the current exception is a system exception, the
-      // status can only change when the interceptor changes this
-      // and this is only done when the sri_adapter is available. If we
-      // don't have an sri_adapter we just rethrow the exception
-      PortableInterceptor::ReplyStatus status =
-        PortableInterceptor::SYSTEM_EXCEPTION;
-
-      CORBA::UNKNOWN ex;
 
       server_request.caught_exception (&ex);
 
@@ -223,20 +168,17 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                the_nargs,
                                                servant_upcall,
                                                exceptions,
-                                               nexceptions
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                               nexceptions);
 
-          status =
-            server_request.reply_status ();
+          status = server_request.reply_status ();
         }
 
-      if (status == PortableInterceptor::SYSTEM_EXCEPTION)
-        ACE_TRY_THROW (ex);
+      if (status == PortableInterceptor::SYSTEM_EXCEPTION
+          || status == PortableInterceptor::USER_EXCEPTION)
+        {
+          throw;
+        }
     }
-# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-  ACE_ENDTRY;
-  ACE_CHECK;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   if (server_request.response_expected ()
@@ -254,11 +196,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
     {
       if (server_request.outgoing ())
         {
-          this->post_upcall (*server_request.outgoing (),
-                             args,
-                             nargs
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->post_upcall (*server_request.outgoing (), args, nargs);
         }
     }
 }
@@ -266,8 +204,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 void
 TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
                                  TAO::Argument * const * args,
-                                 size_t nargs
-                                 ACE_ENV_ARG_DECL)
+                                 size_t nargs)
 {
   // Demarshal the operation "in" and "inout" arguments, if any.
 
@@ -284,9 +221,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
     {
       if (!(*i)->demarshal (cdr))
         {
-          TAO_InputCDR::throw_skel_exception (errno
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          TAO_InputCDR::throw_skel_exception (errno);
         }
     }
 }
@@ -294,8 +229,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
 void
 TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
                                   TAO::Argument * const * args,
-                                  size_t nargs
-                                  ACE_ENV_ARG_DECL)
+                                  size_t nargs)
 {
   // Marshal the operation "inout" and "out" arguments and return
   // value, if any.
@@ -307,9 +241,7 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
     {
       if (!(*i)->marshal (cdr))
         {
-          TAO_OutputCDR::throw_skel_exception (errno
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          TAO_OutputCDR::throw_skel_exception (errno);
         }
     }
 

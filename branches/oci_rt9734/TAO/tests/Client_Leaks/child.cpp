@@ -8,18 +8,16 @@ ACE_RCSID(Client_Leaks, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (argc < 2)
         {
           // Paranoia, we should have an auto_ptr-like gadget for
           // this.
-          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->destroy ();
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: %s <ior>\n",
@@ -27,11 +25,9 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (argv[1]);
       Test::Startup_Callback_var startup_callback =
-        Test::Startup_Callback::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Startup_Callback::_narrow (object.in ());
       if (CORBA::is_nil (startup_callback.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,12 +36,10 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,8 +47,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       Process *process_impl;
       ACE_NEW_RETURN (process_impl,
@@ -63,32 +56,25 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(process_impl);
 
       Test::Process_var process =
-        process_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        process_impl->_this ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      startup_callback->started (process.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      startup_callback->started (process.in ());
 
       ACE_Time_Value tv (50, 0);
-      orb->run (tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run (tv);
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // Do not print error messages, they only make the test output
       // confusing.
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

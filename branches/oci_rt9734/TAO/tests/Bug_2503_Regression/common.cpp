@@ -31,7 +31,7 @@ void report_exception()
   }
   catch(CORBA::Exception & ex)
   {
-    ACE_PRINT_EXCEPTION (ex, "CORBA Exception raised:");
+    ex._tao_print_exception ("CORBA Exception raised:");
   }
   catch(char const * msg)
   {

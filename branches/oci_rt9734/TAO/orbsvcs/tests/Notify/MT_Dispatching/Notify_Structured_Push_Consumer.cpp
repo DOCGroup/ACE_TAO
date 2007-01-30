@@ -18,8 +18,7 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& /*event*/
-  ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+  const CosNotification::StructuredEvent& /*event*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG, "-"));
@@ -30,7 +29,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: too many events received.\n")));
   }
- 
+
   if (this->count_ >= this->expected_)
   {
     this->client_.consumer_done (this);

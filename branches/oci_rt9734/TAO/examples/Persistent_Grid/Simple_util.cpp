@@ -72,21 +72,18 @@ Server<Servant>::parse_args (void)
 template <class Servant> int
 Server<Servant>::init (const char *servant_name,
                        int argc,
-                       char *argv[]
-                       ACE_ENV_ARG_DECL)
+                       char *argv[])
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+                                         "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
 
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -108,13 +105,11 @@ Server<Servant>::init (const char *servant_name,
 
   // Make sure that you check for failures here via the ACE_TRY
   // macros?!
-  ACE_TRY
+  try
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa (servant_name,
-                                                     &this->servant_
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                     &this->servant_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -129,24 +124,20 @@ Server<Servant>::init (const char *servant_name,
         }
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "\tException in activation of POA");
+      ex._tao_print_exception ("\tException in activation of POA");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 template <class Servant> int
-Server<Servant>::run (ACE_ENV_SINGLE_ARG_DECL)
+Server<Servant>::run (void)
 {
     // Run the main event loop for the ORB.
-  int ret = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int ret = this->orb_manager_.run ();
 
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -249,16 +240,13 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    0);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -267,8 +255,7 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
       if(this->ior_ != 0)
         {
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_->string_to_object (this->ior_);
 
 
           if (CORBA::is_nil (server_object.in ()))
@@ -276,9 +263,7 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
                                "invalid ior <%s>\n",
                                this->ior_),
                               -1);
-          this->server_ = InterfaceObj::_narrow (server_object.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->server_ = InterfaceObj::_narrow (server_object.in ());
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -287,12 +272,11 @@ Client<InterfaceObj, Var>::init (const char * /*name*/,
 
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");
+      ex._tao_print_exception ("Client_i::init");
       return -1;
     }
-  ACE_ENDTRY;
 
 
   return 0;

@@ -60,11 +60,10 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
 {
   int result = 0;
 
-  ACE_TRY_NEW_ENV
+  try
   {
     // Initialize the ORB.
-    this->orb_ = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->orb_ = CORBA::ORB_init (argc, argv, "");
 
     // Parse arguments.
     result = this->parse_args (argc, argv);
@@ -74,18 +73,15 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
       if (this->rm_ior_ != 0)
       {
         obj = this->orb_->string_to_object (
-          this->rm_ior_ ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          this->rm_ior_);
       }
       else
       {
         obj = this->orb_->resolve_initial_references (
-          "ReplicationManager" ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          "ReplicationManager");
       }
       this->replication_manager_ = FT::ReplicationManager::_narrow (
-        obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        obj.in());
       if (CORBA::is_nil (this->replication_manager_.in()))
       {
         ACE_ERROR ((LM_ERROR,
@@ -97,16 +93,13 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
       }
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       ACE_TEXT (
-        "TAO_FT_ReplicationManagerController::init: \n")
-    );
+        "TAO_FT_ReplicationManagerController::init: \n"));
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }
@@ -162,26 +155,22 @@ int TAO_FT_ReplicationManagerController::run ()
 {
   int result = 0;
 
-  ACE_TRY_NEW_ENV
+  try
   {
     if (this->shutdown_ == 1)
     {
-      this->replication_manager_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->replication_manager_->shutdown ();
       ACE_Time_Value tv (0, 500000);
       ACE_OS::sleep (tv);
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION (
-      ACE_ANY_EXCEPTION,
+    ex._tao_print_exception (
       ACE_TEXT (
-        "TAO_FT_ReplicationManagerController::run: \n")
-    );
+        "TAO_FT_ReplicationManagerController::run: \n"));
     result = -1;
   }
-  ACE_ENDTRY;
 
   return result;
 }

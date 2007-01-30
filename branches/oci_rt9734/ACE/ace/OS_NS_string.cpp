@@ -22,7 +22,7 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if !defined (ACE_HAS_MEMCHR)
+#if defined (ACE_LACKS_MEMCHR)
 const void *
 ACE_OS::memchr_emulation (const void *s, int c, size_t len)
 {
@@ -37,7 +37,7 @@ ACE_OS::memchr_emulation (const void *s, int c, size_t len)
 
   return 0;
 }
-#endif /*ACE_HAS_MEMCHR*/
+#endif /* ACE_LACKS_MEMCHR */
 
 #if (defined (ACE_LACKS_STRDUP) && !defined (ACE_STRDUP_EQUIVALENT)) \
   || defined (ACE_HAS_STRDUP_EMULATION)
@@ -172,14 +172,14 @@ const char *
 ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 {
   // Substring length
-  const size_t len1 = ACE_OS::strlen (s1);
+  size_t const len1 = ACE_OS::strlen (s1);
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
     return 0;
 
   // Go upto <len>
-  const size_t len = len1 - len2;
+  size_t const len = len1 - len2;
 
   for (size_t i = 0; i <= len; i++)
     {
@@ -244,25 +244,6 @@ ACE_OS::fast_memcpy (void *t, const void *s, size_t len)
     }
 }
 #endif /* ACE_HAS_MEMCPY_LOOP_UNROLL */
-
-#if defined (ACE_LACKS_STRPBRK)
-char *
-ACE_OS::strpbrk_emulation (const char *string,
-                           const char *charset)
-{
-  const char *scanp;
-  int c, sc;
-
-  while ((c = *string++) != 0)
-    {
-      for (scanp = charset; (sc = *scanp++) != 0;)
-        if (sc == c)
-          return const_cast<char *> (string - 1);
-    }
-
-  return 0;
-}
-#endif /* ACE_LACKS_STRPBRK */
 
 #if defined (ACE_LACKS_STRRCHR)
 char *
@@ -341,25 +322,6 @@ ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
     }
   return dst;
 }
-
-#if defined (ACE_LACKS_STRSPN)
-size_t
-ACE_OS::strspn_emulation (const char *string,
-                          const char *charset)
-{
-  const char *p = string;
-  const char *spanp;
-  wchar_t c, sc;
-
-  // Skip any characters in charset, excluding the terminating \0.
- cont:
-  c = *p++;
-  for (spanp = charset; (sc = *spanp++) != 0;)
-    if (sc == c)
-      goto cont;
-  return (p - 1 - string);
-}
-#endif /* ACE_LACKS_STRSPN */
 
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)
 char *

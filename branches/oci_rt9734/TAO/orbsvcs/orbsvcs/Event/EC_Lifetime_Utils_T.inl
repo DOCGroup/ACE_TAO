@@ -55,16 +55,14 @@ TAO_EC_Auto_Command<T>::execute (void)
     {
       this->allow_command_ = 0;
 
-      ACE_TRY_NEW_ENV
+      try
         {
-          this->command_.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->command_.execute ();
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           // ignore.
         }
-      ACE_ENDTRY;
     }
 }
 
@@ -101,12 +99,11 @@ TAO_EC_Shutdown_Command<T>::TAO_EC_Shutdown_Command (T target)
 
 template <class T>
 ACE_INLINE void
-TAO_EC_Shutdown_Command<T>::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Shutdown_Command<T>::execute (void)
 {
   if (this->target_.in ())
     {
-      this->target_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->target_->shutdown ();
     }
 }
 
@@ -138,16 +135,14 @@ TAO_EC_Servant_Var(TAO_EC_Servant_Var<T> const & rhs)
 {
   if (ptr_)
     {
-      ACE_TRY_NEW_ENV
+      try
         {
-          ptr_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ptr_->_add_ref ();
         }
-      ACE_CATCHALL
+      catch (...)
         {
-	  ACE_RE_THROW;
+	  throw;
         }
-	ACE_ENDTRY;
     }
 }
 
@@ -189,15 +184,13 @@ ACE_INLINE TAO_EC_Servant_Var<T>::
   // destructor.
   if (ptr_ != 0)
   {
-    ACE_TRY_NEW_ENV
+    try
     {
-      ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ptr_->_remove_ref ();
     }
-    ACE_CATCHALL
+    catch (...)
     {
     }
-    ACE_ENDTRY;
   }
 }
 

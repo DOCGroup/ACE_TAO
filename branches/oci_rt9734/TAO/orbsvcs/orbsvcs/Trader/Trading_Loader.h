@@ -49,13 +49,12 @@ public:
   // Called by the Service Configurator framework to remove the
   // Event Service. Defined in <ace/Service_Config.h>
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the Trading Service
 
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
-                                   ACE_TCHAR *argv[]
-                                   ACE_ENV_ARG_DECL)
+                                   ACE_TCHAR *argv[])
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This function call initializes the Trading Service given a reference to the
   // ORB and the command line parameters.
@@ -66,7 +65,7 @@ protected:
   // Enable the Trading Service to answer multicast requests for its
   // IOR.
 
-  int bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL);
+  int bootstrap_to_federation (void);
   // Bootstrap to another trader, and attach to its trader network.
 
   int parse_args (int &argc, ACE_TCHAR *argv []);

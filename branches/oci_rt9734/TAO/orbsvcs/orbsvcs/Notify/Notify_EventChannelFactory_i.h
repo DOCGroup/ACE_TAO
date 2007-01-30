@@ -35,7 +35,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory_i
 public:
   /// Create a factory servant and activates it with the default POA.
   /// Also creates a resource factory and assigns it this default_POA.
-  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
+  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -178,19 +178,18 @@ TAO_Notify_Tests_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::send_warmup_events (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier::send_warmup_events (void)
 {
   int WARMUP_COUNT = 10;
 
   for (int i = 0; i < WARMUP_COUNT ; ++i)
     {
-      this->send_event (this->event_.event () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->send_event (this->event_.event ());
     }
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::send_prologue (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier::send_prologue (void)
 {
   // populate event.
   // send the base time and max count.
@@ -211,15 +210,13 @@ TAO_Notify_Tests_Periodic_Supplier::send_prologue (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
 
-  this->send_event (zeroth_event.event () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->send_event (zeroth_event.event ());
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier::handle_svc (void)
 {
-  this->send_prologue (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  this->send_prologue ();
 
   ACE_hrtime_t before, after;
   TimeBase::TimeT time_t;
@@ -253,8 +250,7 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
         ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
                     this->name_.c_str (), i));
 
-      this->send_event (this->event_.event () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      this->send_event (this->event_.event ());
 
       after = ACE_OS::gethrtime ();
 
@@ -306,11 +302,10 @@ TAO_Notify_Tests_Periodic_Supplier::svc (void)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // First, send warmup events.
-      this->send_warmup_events (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->send_warmup_events ();
 
       // Next, wait for other threads.
       this->barrier_->wait ();
@@ -321,20 +316,18 @@ TAO_Notify_Tests_Periodic_Supplier::svc (void)
       // now wait till the phase_ period expires.
       ACE_OS::sleep (ACE_Time_Value (0, phase_));
 
-      this->handle_svc (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->handle_svc ();
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
     {
-      ACE_PRINT_EXCEPTION (ue,
+      ue._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
     {
-      ACE_PRINT_EXCEPTION (se,
+      se._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

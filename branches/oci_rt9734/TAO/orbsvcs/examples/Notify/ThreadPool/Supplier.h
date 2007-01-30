@@ -38,26 +38,26 @@ public:
 
   /// Init
   void init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count, int max_events,
-             int proxy_consumer_thread_count ACE_ENV_ARG_DECL);
+             int proxy_consumer_thread_count);
 
   /// Run
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
 
 protected:
   // = Protected Methods
 
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy consumer and connects to it.
-  void connect (ACE_ENV_SINGLE_ARG_DECL);
+  void connect (void);
 
   /// Disconnect the supplier.
-  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void disconnect (void);
 
   /// Deactivate.
-  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (void);
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
+  virtual void send_event (const CosNotification::StructuredEvent& event);
 
   /// Destructor
   virtual ~TAO_Notify_ThreadPool_Supplier ();
@@ -66,7 +66,6 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -74,7 +73,7 @@ protected:
       ));
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_structured_push_supplier (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));

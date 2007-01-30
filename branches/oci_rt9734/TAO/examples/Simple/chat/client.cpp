@@ -21,7 +21,7 @@
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       Client_i client_i;
 
@@ -29,15 +29,12 @@ main (int argc, char *argv[])
 	  || client_i.run () == -1)
 	return -1;
 
-      ACE_TRY_CHECK;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "client::main\t\n");
+      ex._tao_print_exception ("client::main\t\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

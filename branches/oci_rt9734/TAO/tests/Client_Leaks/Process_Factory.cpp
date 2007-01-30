@@ -20,24 +20,21 @@ Process_Factory::shutdown_received (void)
 }
 
 Test::Process_ptr
-Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
+Process_Factory::create_new_process (void)
   ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
 {
   Startup_Callback *startup_callback_impl;
   ACE_NEW_THROW_EX (startup_callback_impl,
                     Startup_Callback,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Test::Process::_nil ());
 
   PortableServer::ServantBase_var owner_transfer(startup_callback_impl);
 
   Test::Startup_Callback_var startup_callback =
-    startup_callback_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Test::Process::_nil ());
+    startup_callback_impl->_this ();
 
   CORBA::String_var ior =
-    this->orb_->object_to_string (startup_callback.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Test::Process::_nil ());
+    this->orb_->object_to_string (startup_callback.in ());
 
   const char* argv[3] = {
     "child",
@@ -68,28 +65,23 @@ Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i != 500 && !process_has_started; ++i)
     {
       ACE_Time_Value interval (0, 10000);
-      this->orb_->perform_work (interval ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (Test::Process::_nil ());
+      this->orb_->perform_work (interval);
 
       process_has_started =
         startup_callback_impl->process_has_started (the_process.out ());
     }
 
-  ACE_TRY
+  try
     {
       PortableServer::POA_var poa =
-        startup_callback_impl->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        startup_callback_impl->_default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (startup_callback_impl ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->servant_to_id (startup_callback_impl);
+      poa->deactivate_object (id.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (process_has_started == 0)
     {
@@ -104,15 +96,15 @@ Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Process_Factory::noop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Process_Factory::noop (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-Process_Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Process_Factory::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown_received_ = 1;
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

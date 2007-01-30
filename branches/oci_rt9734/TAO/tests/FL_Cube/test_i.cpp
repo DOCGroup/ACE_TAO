@@ -14,21 +14,21 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
 }
 
 void
-Simple_Server_i::set_x_angle (CORBA::Long x ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::set_x_angle (CORBA::Long x)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->window_->set_x_angle (x);
 }
 
 void
-Simple_Server_i::set_y_angle (CORBA::Long y ACE_ENV_ARG_DECL_NOT_USED)
+Simple_Server_i::set_y_angle (CORBA::Long y)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->window_->set_y_angle (y);
 }
 
 void
-Simple_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Simple_Server_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);

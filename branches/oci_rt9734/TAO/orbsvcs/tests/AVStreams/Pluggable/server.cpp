@@ -74,8 +74,7 @@ Server::~Server (void)
 
 int
 Server::init (int,
-              char **
-              ACE_ENV_ARG_DECL)
+              char **)
 {
   int result =
     this->reactive_strategy_.init (TAO_AV_CORE::instance ()->orb (),
@@ -94,8 +93,7 @@ Server::init (int,
   server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice");
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+    this->mmdevice_->_this ();
 
   // Initialize the naming services
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -106,9 +104,7 @@ Server::init (int,
 
   // Register the server object with the naming server.
   this->my_naming_client_->rebind (server_mmdevice_name,
-                                   mmdevice.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                   mmdevice.in ());
 
   return 0;
 }
@@ -143,15 +139,12 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       int result =
         parse_args (argc,
@@ -173,58 +166,44 @@ main (int argc,
                        "File Opened Successfully\n"));
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       Server server;
       result =
         server.init (argc,
-                     argv
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                     argv);
 
       if (result != 0)
         return result;
 
       while ( !done )
       {
-        if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
+        if ( orb->work_pending( ) )
 	{
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          orb->perform_work ();
 	}
       }
 
-      orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
-      ACE_TRY_CHECK;
+      orb->shutdown( 1 );
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      ex._tao_print_exception ("server::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (output_file);
 

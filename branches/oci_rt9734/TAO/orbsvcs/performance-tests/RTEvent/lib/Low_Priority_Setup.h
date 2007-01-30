@@ -49,8 +49,7 @@ public:
                       PortableServer::POA_ptr supplier_poa,
                       PortableServer::POA_ptr consumer_poa,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
-                      ACE_Barrier *barrier
-                      ACE_ENV_ARG_DECL);
+                      ACE_Barrier *barrier);
 
   /// Stop all running threads
   void stop_all_threads (void);

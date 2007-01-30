@@ -21,12 +21,11 @@ public:
 
   void callme(Test::Peer_ptr callback,
               CORBA::ULong max_depth,
-              Test::Payload const & extra_data
-              ACE_ENV_ARG_DECL)
+              Test::Payload const & extra_data)
     ACE_THROW_SPEC((CORBA::SystemException));
-  void crash(ACE_ENV_SINGLE_ARG_DECL)
+  void crash(void)
     ACE_THROW_SPEC((CORBA::SystemException));
-  void noop(ACE_ENV_SINGLE_ARG_DECL)
+  void noop(void)
     ACE_THROW_SPEC((CORBA::SystemException));
 
 private:

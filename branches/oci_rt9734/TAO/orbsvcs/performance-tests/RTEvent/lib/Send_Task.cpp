@@ -87,7 +87,6 @@ Send_Task::svc (void)
   event[0].header.source = this->event_source_;
   event[0].header.ttl    = 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
   for (int i = start_i; i != this->iterations_; ++i)
     {
       if ((i + 1) % 1000 == 0)
@@ -111,18 +110,15 @@ Send_Task::svc (void)
       ACE_hrtime_t creation = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      creation);
-      ACE_TRY
+      try
         {
           // push one event...
-          this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->supplier_->push (event);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught exception:");
+          ex._tao_print_exception ("Caught exception:");
         }
-      ACE_ENDTRY;
     }
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - Thread finished\n"));

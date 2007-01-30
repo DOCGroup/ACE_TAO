@@ -82,8 +82,7 @@ namespace TAO
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions,
-        CORBA::OctetSeq_out oc
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::OctetSeq_out oc) = 0;
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
     /// This method implements the "intermediate" server side
@@ -99,8 +98,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method an "intermediate" server side interception point.
     virtual void receive_request (
@@ -109,8 +107,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -120,8 +117,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -131,8 +127,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -142,22 +137,20 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions
-        ACE_ENV_ARG_DECL) = 0;
+        CORBA::ULong nexceptions) = 0;
     //@}
 
     /// Register an interceptor.
     virtual void add_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-      ACE_ENV_ARG_DECL) = 0;
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor) = 0;
 
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      ACE_ENV_ARG_DECL) = 0;
+      ) = 0;
 
-    virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
+    virtual void destroy_interceptors (void) = 0;
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void) = 0;
 
@@ -167,7 +160,7 @@ namespace TAO
     virtual void execute_command (
         TAO_ServerRequest &server_request,
         TAO::Upcall_Command &command
-        ACE_ENV_ARG_DECL) = 0;
+        ) = 0;
   };
 }
 

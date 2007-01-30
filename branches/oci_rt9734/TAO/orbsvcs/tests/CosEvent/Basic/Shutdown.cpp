@@ -10,101 +10,80 @@ ACE_RCSID( CEC_Tests_Basic,
            "$Id$")
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int with_callbacks
-                      ACE_ENV_ARG_DECL);
+                      int with_callbacks);
 
 int
 main (int argc, char* argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa->the_POAManager ();
+      poa_manager->activate ();
 
       // ****************************************************************
 
-      run_test (poa.in (), 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      run_test (poa.in (), 0);
 
-      run_test (poa.in (), 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      run_test (poa.in (), 1);
 
       // ****************************************************************
 
-      poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Service");
+      ex._tao_print_exception ("Service");
       return 1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
 void
-deactivate_servant (PortableServer::Servant servant
-                    ACE_ENV_ARG_DECL)
+deactivate_servant (PortableServer::Servant servant)
 {
   PortableServer::POA_var poa =
-    servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    servant->_default_POA ();
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    poa->servant_to_id (servant);
+  poa->deactivate_object (id.in ());
 }
 
 static void
 run_test (PortableServer::POA_ptr poa,
-          int with_callbacks
-          ACE_ENV_ARG_DECL)
+          int with_callbacks)
 {
   TAO_CEC_EventChannel_Attributes attributes (poa,
                                               poa);
   attributes.disconnect_callbacks = with_callbacks;
 
   TAO_CEC_EventChannel ec_impl (attributes);
-  ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ec_impl.activate ();
 
   CosEventChannelAdmin::EventChannel_var event_channel =
-    ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec_impl._this ();
 
   // ****************************************************************
 
   // Obtain the consumer admin..
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    event_channel->for_consumers ();
 
   // Obtain the supplier admin..
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    event_channel->for_suppliers ();
 
   // ****************************************************************
 
@@ -128,19 +107,16 @@ run_test (PortableServer::POA_ptr poa,
 
   for (i = 0; i != n; ++i)
     {
-      consumer[i]->connect (consumer_admin.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      consumer[i]->connect (consumer_admin.in ());
 
-      supplier[i]->connect (supplier_admin.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      supplier[i]->connect (supplier_admin.in ());
     }
 
   // ****************************************************************
 
   // Destroy the event channel, *before* disconnecting the
   // clients.
-  event_channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  event_channel->destroy ();
 
   // ****************************************************************
 
@@ -165,17 +141,14 @@ run_test (PortableServer::POA_ptr poa,
 
   for (i = 0; i != n; ++i)
     {
-      deactivate_servant (supplier[i] ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      deactivate_servant (supplier[i]);
       delete supplier[i];
 
-      deactivate_servant (consumer[i] ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      deactivate_servant (consumer[i]);
       delete consumer[i];
     }
   delete[] supplier;
   delete[] consumer;
 
-  deactivate_servant (&ec_impl ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  deactivate_servant (&ec_impl);
 }

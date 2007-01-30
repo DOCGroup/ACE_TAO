@@ -37,10 +37,10 @@ public:
   ~TAO_Notify_Tests_Relay_Consumer ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void connect (void);
 
   void push_structured_event (const CosNotification::StructuredEvent &/*notification*/
-                              ACE_ENV_ARG_DECL_NOT_USED)
+                              )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventComm::Disconnected));
 

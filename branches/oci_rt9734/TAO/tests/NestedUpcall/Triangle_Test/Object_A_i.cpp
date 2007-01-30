@@ -37,28 +37,25 @@ Object_A_i::~Object_A_i (void)
 
 
 void
-Object_A_i::foo (Initiator_ptr theInitiator_ptr
-                    ACE_ENV_ARG_DECL)
+Object_A_i::foo (Initiator_ptr theInitiator_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
-      theInitiator_ptr->foo_object_B (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      theInitiator_ptr->foo_object_B ();
 
       while (!this->finish_two_way_call_)
         TAO_ORB_Core_instance ()->reactor ()->handle_events ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "calling the initiator");
+      ex._tao_print_exception ("calling the initiator");
     }
-  ACE_ENDTRY;
 
 }
 
 void
-Object_A_i::finish (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Object_A_i::finish (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->finish_two_way_call_ = 1;

@@ -51,11 +51,10 @@ public:
   // read in the IOR's for the two objects A and B
 
   int init (int argc,
-            char **argv
-            ACE_ENV_ARG_DECL);
+            char **argv);
   // Initialize the Initiator_Server state - parsing arguments and ...
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb
 
 private:

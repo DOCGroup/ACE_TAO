@@ -30,22 +30,21 @@ TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 (void)
 
 
 char *
-TAO249_ServerRequest_Interceptor2::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO249_ServerRequest_Interceptor2::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_TAO249_ServerRequest_Interceptor2");
 }
 
 void
-TAO249_ServerRequest_Interceptor2::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO249_ServerRequest_Interceptor2::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -53,27 +52,23 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request (
-  PortableInterceptor::ServerRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr ri)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "drop_down_dead"))
   {
-    // bail if not the op we are interested in - 
+    // bail if not the op we are interested in -
     // avoid excess spurious error clutter when client calls ::shutdown
     return;
   }
 
-  ACE_CHECK;
-  ACE_TRY
+  try
   {
     IOP::ServiceContext_var sc =
-      ri->get_request_service_context (IOP::FT_REQUEST
-                                       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      ri->get_request_service_context (IOP::FT_REQUEST);
 
     TAO_InputCDR cdr (reinterpret_cast <const char*>
                                        (sc->context_data.get_buffer ()
@@ -84,23 +79,19 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
     if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
       {
-        ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                               CORBA::COMPLETED_NO));
+        throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
       }
-    ACE_TRY_CHECK;
 
     cdr.reset_byte_order (static_cast <int>(byte_order));
 
     FT::FTRequestServiceContext ftrsc;
 
     if ((cdr >> ftrsc) == 0)
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                               CORBA::COMPLETED_NO));
-    ACE_TRY_CHECK;
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
     FILE* last_exp_time_file = ACE_OS::fopen ("last_expiration_time", "r+");
     TimeBase::TimeT last_exp_time = 0;
-    
+
     if (!last_exp_time_file)
       {
         // file does not exist ... we're the first server
@@ -126,14 +117,14 @@ ACE_THROW_SPEC ((CORBA::SystemException,
         return;
       }
 
-    
+
     // This is the offset from UTC to posix - a value less than than this will
     // indicate posix is (mistakenly) being used
     TimeBase::TimeT the_seventies = ACE_UINT64_LITERAL (0x1B21DD213814000);
-    
+
     // @warning - this test is fragile. It will break in 2358 A.D. :-)
     if (last_exp_time <= the_seventies)
-      {  
+      {
         ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Expiration time is in wrong format - it is before 1970 A.D. !!\n"));
         ACE_DEBUG ((LM_DEBUG, "Expiration time: %Q\n", last_exp_time));
         ACE_DEBUG ((LM_DEBUG, "1970 A.D.      : %Q\n", the_seventies));
@@ -148,7 +139,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       }
 
     TimeBase::TimeT now = get_now ();
-    
+
     if (now > last_exp_time)
       {
         // We have passed the exp time... there should be no more retries received after this point...
@@ -158,7 +149,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
             TimeBase::TimeT last_expired_attempt = 0;
             ACE_OS::fread (&last_expired_attempt, 1, sizeof (TimeBase::TimeT), no_more_retries);
             ACE_OS::fclose (no_more_retries);
-            
+
             // There has already been an attempt after the last server passed the expiration time
             ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Client ORB is still retrying after the expiration time!!\n"));
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), last_exp_time));
@@ -175,7 +166,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
             ACE_OS::fclose (no_more_retries);
           }
       }
-          
+
     // Everthing is fine so far. Write out the expiration time for the next server to check
     ACE_OS::fwrite (&ftrsc.expiration_time, 1, sizeof (TimeBase::TimeT), last_exp_time_file);
     ACE_OS::fflush (last_exp_time_file);
@@ -184,15 +175,13 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     // Goodbye cruel world !!
     ACE_OS::abort ();
   }
-ACE_CATCHANY
+catch (const CORBA::Exception& ex)
   {
     ACE_DEBUG ((LM_ERROR, "Unexpected (non regression problem) error - test failed\n"));
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Exception in TAO249_ServerRequest_Interceptor2::receive_request \n");
-    ACE_RE_THROW;
+    ex._tao_print_exception (
+      "Exception in TAO249_ServerRequest_Interceptor2::receive_request \n");
+    throw;
   }
-ACE_ENDTRY;
-ACE_CHECK;
 
 }
 
@@ -204,7 +193,7 @@ TAO249_ServerRequest_Interceptor2::get_now (void)
 
   // Now in posix
   ACE_Time_Value time_value = ACE_OS::gettimeofday ();
-  
+
   TimeBase::TimeT sec_part  = time_value.sec ();
   sec_part = sec_part  * 10000000;
   TimeBase::TimeT usec_part = time_value.usec ();
@@ -214,16 +203,14 @@ TAO249_ServerRequest_Interceptor2::get_now (void)
 
 void
 TAO249_ServerRequest_Interceptor2::send_reply (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::send_exception (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
@@ -231,10 +218,9 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 void
 TAO249_ServerRequest_Interceptor2::send_other (
-  PortableInterceptor::ServerRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ServerRequestInfo_ptr)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
 }
-  
+

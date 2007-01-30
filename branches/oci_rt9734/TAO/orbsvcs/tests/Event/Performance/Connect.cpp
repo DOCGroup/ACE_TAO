@@ -27,9 +27,9 @@ EC_Connect::EC_Connect (void)
 }
 
 void
-EC_Connect::execute_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EC_Connect::execute_test (void)
 {
-  // this->EC_Driver::execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // this->EC_Driver::execute_test ();
 }
 
 int
@@ -111,13 +111,11 @@ EC_Connect::dump_results (void)
 void
 EC_Connect::connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_consumer (consumer_admin,
-                                     i
-                                     ACE_ENV_ARG_PARAMETER);
+                                     i);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->consumer_connect_.sample (now - this->start_time_,
                                   now - start);
@@ -126,13 +124,11 @@ EC_Connect::connect_consumer (
 void
 EC_Connect::connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int i
-    ACE_ENV_ARG_DECL)
+    int i)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Driver::connect_supplier (supplier_admin,
-                                     i
-                                     ACE_ENV_ARG_PARAMETER);
+                                     i);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->supplier_connect_.sample (now - this->start_time_,
                                   now - start);
@@ -151,24 +147,20 @@ EC_Connect::allocate_supplier (int i)
 }
 
 void
-EC_Connect::connect_clients (ACE_ENV_SINGLE_ARG_DECL)
+EC_Connect::connect_clients (void)
 {
   this->start_time_ = ACE_OS::gethrtime ();
   switch (this->order_)
     {
     default:
     case 0:
-      this->connect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      this->connect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->connect_consumers ();
+      this->connect_suppliers ();
       return;
 
     case 1:
-      this->connect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      this->connect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->connect_suppliers ();
+      this->connect_consumers ();
       return;
 
     case 2:
@@ -180,47 +172,39 @@ EC_Connect::connect_clients (ACE_ENV_SINGLE_ARG_DECL)
     max = this->n_suppliers_;
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_consumers ();
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_suppliers ();
 
   for (int i = 0; i != max; ++i)
     {
       if (i < this->n_consumers_)
         {
-          this->connect_consumer (consumer_admin.in (), i ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->connect_consumer (consumer_admin.in (), i);
         }
       if (i < this->n_suppliers_)
         {
-          this->connect_supplier (supplier_admin.in (), i ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->connect_supplier (supplier_admin.in (), i);
         }
     }
 
 }
 
 void
-EC_Connect::disconnect_clients (ACE_ENV_SINGLE_ARG_DECL)
+EC_Connect::disconnect_clients (void)
 {
   switch (this->order_)
     {
     default:
     case 0:
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->disconnect_suppliers ();
+      this->disconnect_consumers ();
       return;
 
     case 1:
-      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-      this->disconnect_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->disconnect_consumers ();
+      this->disconnect_suppliers ();
       return;
 
     case 2:
@@ -232,12 +216,10 @@ EC_Connect::disconnect_clients (ACE_ENV_SINGLE_ARG_DECL)
     max = this->n_suppliers_;
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_consumers ();
 
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->event_channel_->for_suppliers ();
 
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i != max; ++i)
@@ -246,8 +228,7 @@ EC_Connect::disconnect_clients (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->suppliers_[i]->disconnect ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           this->supplier_disconnect_.sample (now - start_time,
@@ -257,8 +238,7 @@ EC_Connect::disconnect_clients (ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-          this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          this->consumers_[i]->disconnect ();
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
           this->consumer_disconnect_.sample (now - start_time,
@@ -271,15 +251,14 @@ EC_Connect::disconnect_clients (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Connect::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Connect::disconnect_consumers (void)
 {
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-      this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->consumers_[i]->disconnect ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->consumer_disconnect_.sample (now - start_time,
@@ -293,15 +272,14 @@ EC_Connect::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Connect::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
+EC_Connect::disconnect_suppliers (void)
 {
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-      this->suppliers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      this->suppliers_[i]->disconnect ();
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       this->supplier_disconnect_.sample (now - start_time,
@@ -326,25 +304,21 @@ void
 ECC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   this->EC_Consumer::connect (consumer_admin,
                               qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
 }
 
 void
 ECC_Consumer::connect (
     const RtecEventChannelAdmin::ConsumerQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Consumer::connect (qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }
@@ -368,25 +342,21 @@ void
 ECC_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     const RtecEventChannelAdmin::SupplierQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   this->EC_Supplier::connect (supplier_admin,
                               qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
 }
 
 void
 ECC_Supplier::connect (
     const RtecEventChannelAdmin::SupplierQOS& qos,
-    int shutdown_event_type
-    ACE_ENV_ARG_DECL)
+    int shutdown_event_type)
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->EC_Supplier::connect (qos,
-                              shutdown_event_type
-                              ACE_ENV_ARG_PARAMETER);
+                              shutdown_event_type);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   this->connect_time_.sample (now, now - start);
 }

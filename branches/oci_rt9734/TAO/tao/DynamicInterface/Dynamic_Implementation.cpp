@@ -20,24 +20,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_DynamicImplementation::_is_a (const char *logical_type_id
-                                  ACE_ENV_ARG_DECL)
+                                  )
 {
   CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_id_from_primary_interface ();
 
   return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
 }
 
 CORBA::Object_ptr
-TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_this (void)
 {
   // The _this() function returns a CORBA::Object_ptr for the target
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  TAO_Stub *stub = this->_create_stub ();
 
   // Create a object.
   CORBA::Object_ptr retval = CORBA::Object::_nil ();
@@ -51,7 +49,7 @@ TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_DynamicImplementation::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_get_interface (void)
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -65,14 +63,13 @@ TAO_DynamicImplementation::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->get_id_from_primary_interface ();
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
                                  id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+                                );
 }
 
 const char *
@@ -92,7 +89,7 @@ TAO_DynamicImplementation::_downcast (const char *repository_id)
 }
 
 TAO_Stub *
-TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_create_stub (void)
 {
   // If DynamicImplementation::_this() is invoked outside of the
   // context of a request invocation on a target object being served
@@ -115,27 +112,24 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
         poa_current_impl->priority ()
-        ACE_ENV_ARG_PARAMETER
       );
-  ACE_CHECK_RETURN (0);
 
   CORBA::RepositoryId_var pinterface =
     this->_primary_interface (poa_current_impl->object_id (),
                               poa.in ()
-                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+                             );
 
   return
     poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
                                            pinterface.in (),
                                            poa_current_impl->priority ()
-                                           ACE_ENV_ARG_PARAMETER);
+                                          );
 }
 
 void
 TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
                                       void * /* context */
-                                      ACE_ENV_ARG_DECL)
+                                      )
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
@@ -163,21 +157,19 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
 
-  ACE_TRY
+  try
     {
       // Delegate to user.
       this->invoke (dsi_request
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                   );
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
         {
-          dsi_request->dsi_marshal (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          dsi_request->dsi_marshal ();
         }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  catch (const ::CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -185,14 +177,13 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
           request.tao_send_reply_exception (ex);
         }
     }
-  ACE_ENDTRY;
 
   ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId
 TAO_DynamicImplementation::get_id_from_primary_interface (
-    ACE_ENV_SINGLE_ARG_DECL
+
   )
 {
   // If this method is called outside of the
@@ -215,7 +206,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
 
   return this->_primary_interface (poa_current_impl->object_id (),
                                    poa.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+                                  );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

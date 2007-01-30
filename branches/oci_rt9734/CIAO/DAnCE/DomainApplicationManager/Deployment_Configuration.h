@@ -98,8 +98,7 @@ namespace CIAO
      * @retval nil if no valid name were found.
      */
     ::Deployment::NodeManager_ptr
-    get_node_manager (const char *name
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    get_node_manager (const char *name);
 
     /**
      * Return the reference to the default NodeManager the
@@ -109,7 +108,7 @@ namespace CIAO
      * @retval nil if no valid daemon is configured.
      */
     ::Deployment::NodeManager_ptr
-    get_default_node_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    get_default_node_manager ();
 
   protected:
     CORBA::ORB_var orb_;

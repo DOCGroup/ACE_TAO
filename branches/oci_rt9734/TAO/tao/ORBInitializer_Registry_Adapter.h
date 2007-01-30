@@ -55,8 +55,7 @@ namespace TAO
       /// Register an ORBInitializer with the underlying ORBInitializer
       /// array.
       virtual void register_orb_initializer (
-        PortableInterceptor::ORBInitializer_ptr init
-        ACE_ENV_ARG_DECL) = 0;
+        PortableInterceptor::ORBInitializer_ptr init) = 0;
 
       /**
        * Begin initialization of all registered ORBInitializers before
@@ -70,8 +69,7 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ACE_ENV_ARG_DECL) = 0;
+        PortableInterceptor::SlotId &slotid) = 0;
 
       /**
        * Complete initialization of all registered ORBInitializers after
@@ -92,8 +90,7 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId slotid
-        ACE_ENV_ARG_DECL) = 0;
+        PortableInterceptor::SlotId slotid) = 0;
   };
 }
 

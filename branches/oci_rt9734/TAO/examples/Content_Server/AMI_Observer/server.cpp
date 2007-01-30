@@ -7,53 +7,42 @@
 #include "Push_Web_ServerS.h"
 #include "Push_Iterator_Factory_i.h"
 
-ACE_RCSID (AMI_Observer, 
-           server, 
+ACE_RCSID (AMI_Observer,
+           server,
            "$Id$")
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            "Mighty ORB"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            "Mighty ORB");
 
       // Get the Root POA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       // Activate the POA manager.
       PortableServer::POAManager_var mgr = poa->the_POAManager ();
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Create the Iterator_Factory servant and object.
       Push_Iterator_Factory_i factory_servant;
       Web_Server::Iterator_Factory_var factory =
-        factory_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        factory_servant._this ();
 
       // Get a reference to the Name Service.
-      obj = orb->resolve_initial_references ("NameService"
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      obj = orb->resolve_initial_references ("NameService");
 
       // Narrow to a Naming Context
       CosNaming::NamingContext_var nc =
-        CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (obj.in ());
 
       // Create a name.
       CosNaming::Name name;
@@ -61,13 +50,10 @@ main (int argc, char *argv[])
       name[0].id = CORBA::string_dup ("Push_Iterator_Factory");
       name[0].kind = CORBA::string_dup ("");
 
-      nc->bind (name, factory.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      nc->bind (name, factory.in ());
 
       // Some debugging output.
-      CORBA::String_var IOR = orb->object_to_string (factory.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var IOR = orb->object_to_string (factory.in ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Bound <%s> to <%s> in Name Service.\n"),
                   name[0].id.in (),
@@ -77,17 +63,14 @@ main (int argc, char *argv[])
                   ACE_TEXT ("Accepting requests.\n")));
 
       // Accept requests.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Caught unexpected exception:"));
+      ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

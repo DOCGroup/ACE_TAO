@@ -87,8 +87,7 @@ namespace TAO
 
       static CredentialsCurator_ptr _duplicate (CredentialsCurator_ptr obj);
       static CredentialsCurator_ptr _nil (void);
-      static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj
-                                             ACE_ENV_ARG_DECL);
+      static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj);
 
       /**
        * @name SecurityLevel3::CredentialsCurator Methods
@@ -97,31 +96,25 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::AcquisitionMethodList * supported_methods (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::AcquisitionMethodList * supported_methods ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
           const char * acquisition_method,
-          const CORBA::Any & acquisition_arguments
-          ACE_ENV_ARG_DECL)
+          const CORBA::Any & acquisition_arguments)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::OwnCredentialsList * default_creds_list (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::OwnCredentialsList * default_creds_list ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::CredentialsIdList * default_creds_ids (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel3::CredentialsIdList * default_creds_ids ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::OwnCredentials_ptr get_own_credentials (
-          const char * credentials_id
-          ACE_ENV_ARG_DECL)
+          const char * credentials_id)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual void release_own_credentials (const char * credentials_id
-                                            ACE_ENV_ARG_DECL)
+      virtual void release_own_credentials (const char * credentials_id)
         ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 
@@ -132,14 +125,12 @@ namespace TAO
        */
       void register_acquirer_factory (
         const char * acquisition_method,
-        TAO::SL3::CredentialsAcquirerFactory * factory
-        ACE_ENV_ARG_DECL);
+        TAO::SL3::CredentialsAcquirerFactory * factory);
 
       /// TAO-specific means of adding credentials to this
       /// CredentialsCurator's "own credentials" list.
       void _tao_add_own_credentials (
-        SecurityLevel3::OwnCredentials_ptr credentials
-        ACE_ENV_ARG_DECL);
+        SecurityLevel3::OwnCredentials_ptr credentials);
 
     protected:
 

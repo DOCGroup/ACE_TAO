@@ -77,13 +77,10 @@ Identity_Client::init (int argc,
 {
   int result;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       result = this->orb_manager_.init (argc,
-                                        argv
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                        argv);
       if (result == -1)
         return result;
 
@@ -92,26 +89,22 @@ Identity_Client::init (int argc,
       if (result < 0)
         return result;
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Client::init");
+      ex._tao_print_exception ("Identity_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+Identity_Client::run (void)
 {
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
-    orb->string_to_object (this->group_factory_ior_
-                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    orb->string_to_object (this->group_factory_ior_);
 
   if (obj.in () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -120,9 +113,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
                       -1);
 
   Load_Balancer::Object_Group_Factory_var factory =
-    Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    Load_Balancer::Object_Group_Factory::_narrow (obj.in ());
 
   if (CORBA::is_nil (factory.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,9 +147,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 #endif /*TAO_MEASURE_STATS*/
       // Remote call
       object_group =
-        factory->resolve (group_name
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        factory->resolve (group_name);
 
       CORBA::String_var iorstring =
         orb->object_to_string (object_group.in ());
@@ -187,14 +176,12 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // List <Object_Group>'s id.
-  CORBA::String_var id = object_group->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::String_var id = object_group->id ();
   ACE_DEBUG ((LM_DEBUG, "Object Group's id is: %s\n\n", id.in ()));
 
   // List all <Object_Group>s members.
   Load_Balancer::Member_ID_List_var id_list =
-    object_group->members (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    object_group->members ();
   ACE_DEBUG ((LM_DEBUG,
               "The group contains %d members:\n",
               id_list->length ()));
@@ -211,16 +198,11 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 
   for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
     {
-      objref = object_group->resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      objref = object_group->resolve ();
 
-      obj = orb->string_to_object (objref.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      obj = orb->string_to_object (objref.in ());
 
-      identity_object = Identity::_narrow (obj.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      identity_object = Identity::_narrow (obj.in ());
 
       if (CORBA::is_nil (identity_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -228,12 +210,10 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
                            "<Object_Group::resolve> to <Identity>\n"),
                           -1);
       identity_object->get_name (identity.out ());
-      ACE_CHECK_RETURN (-1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Invocation  %s\n",
                   identity.in ()));
-      ACE_CHECK_RETURN (-1);
 
     }
 
@@ -253,19 +233,15 @@ main (int argc, char *argv[])
   if (client.init (argc, argv) == -1)
     return 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      result = client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      result = client.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Identity_Client");
+      ex._tao_print_exception ("Identity_Client");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   if (result == -1)
     return 1;

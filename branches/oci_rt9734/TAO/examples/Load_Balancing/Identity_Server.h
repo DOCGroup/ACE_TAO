@@ -49,7 +49,7 @@ public:
   // Performs all the initializations necessary before going into the
   // ORB event loop.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the server.
 
 private:
@@ -57,8 +57,7 @@ private:
   // Parses the commandline arguments.
 
   void create_objects (size_t number_of_objects,
-                       Load_Balancer::Object_Group_ptr group
-                       ACE_ENV_ARG_DECL);
+                       Load_Balancer::Object_Group_ptr group);
   // Creates the specified number of identity objects, and registers
   // each one with the provided <Object_Group>.  Identity servants are
   // given names

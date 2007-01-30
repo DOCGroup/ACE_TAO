@@ -38,8 +38,8 @@ This document describes how to compile/run the BasicSP (HUDisplay) example with 
 
   <LI> Generate the project/make files for the <em> BasicSP </em> example directory:
     <UL>
-    <LI> <em> linux: </em> <code> [in $CIAO_ROOT/DAnCE/examples/BasicSP] mwc.pl </code> </LI>
-    <LI> <em> windows: </em> <code> [in %CIAO_ROOT%/DAnCE/examples/BasicSP] mwc.pl -type vc71</code> </LI>
+    <LI> <em> linux: </em> <code> [in $CIAO_ROOT/examples/BasicSP] mwc.pl -type gnuace</code> </LI>
+    <LI> <em> windows: </em> <code> [in %CIAO_ROOT%/examples/BasicSP] mwc.pl -type vc71</code> </LI>
     </UL>
   </LI>
 
@@ -51,7 +51,7 @@ This document describes how to compile/run the BasicSP (HUDisplay) example with 
 
 <UL>
 
-  <LI> Change into the $CIAO_ROOT/DAnCE/examples/BasicSP/descriptors directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
+  <LI> Change into the $CIAO_ROOT/examples/BasicSP/descriptors directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
   
   <LI> Start the execution manager:
   <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat </code>
@@ -60,7 +60,7 @@ This document describes how to compile/run the BasicSP (HUDisplay) example with 
   <LI> Start the executor:
   <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattern_deploymentplan.cdp -k file://EM.ior </code>
   
-  <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/DAnCE/examples/BasicSP/EC/controller to start the application.
+  <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/examples/BasicSP/EC/controller to start the application.
        Please make sure that the component IOR file for the EC component is present when you run this client.
 
   <BR/>

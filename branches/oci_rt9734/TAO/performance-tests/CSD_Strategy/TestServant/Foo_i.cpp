@@ -22,7 +22,7 @@ Foo_i::~Foo_i()
 
 
 void
-Foo_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Foo_i::op1(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[0]++;
@@ -30,7 +30,7 @@ Foo_i::op1(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_i::op2(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(value);
@@ -39,7 +39,7 @@ Foo_i::op2(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 CORBA::Long
-Foo_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_i::op3(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[2]++;
@@ -48,7 +48,7 @@ Foo_i::op3(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
+Foo_i::op4(CORBA::Long value)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(value);
@@ -57,16 +57,16 @@ Foo_i::op4(CORBA::Long value ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void
-Foo_i::op5(ACE_ENV_SINGLE_ARG_DECL)
+Foo_i::op5(void)
   ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4]++;
-  ACE_THROW (FooException());
+  throw FooException();
 }
 
 
 void
-Foo_i::done(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Foo_i::done(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   TheAppShutdown->client_done();

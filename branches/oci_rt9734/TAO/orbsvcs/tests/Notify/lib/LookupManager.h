@@ -47,7 +47,7 @@ public:
   ~TAO_Notify_Tests_LookupManager ();
 
   /// Init
-  void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
+  void init (CORBA::ORB_ptr orb);
 
   ///= Register Objects
 
@@ -57,7 +57,7 @@ public:
   void _register (TAO_Notify_Tests_Priority_Mapping *priority_mapping);
 
   /// Register Objects with Naming Service
-  void _register(CORBA::Object_ptr obj, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register(CORBA::Object_ptr obj, const char* obj_name);
 
   ///= Resolve methods
 
@@ -75,17 +75,17 @@ public:
   /// Return the default Naming context.
   void resolve (CosNaming::NamingContextExt_var& naming);
 
-  void resolve (PortableServer::POA_var& poa, const char *poa_name ACE_ENV_ARG_DECL);
-  void resolve (CosNaming::NamingContextExt_var& naming, const char *naming_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyChannelAdmin::EventChannelFactory_var& ecf, const char *factory_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyChannelAdmin::EventChannel_var& ec, const char *channel_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, const char *admin_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , const char *admin_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char *consumer_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name ACE_ENV_ARG_DECL);
-  void resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name ACE_ENV_ARG_DECL);
+  void resolve (PortableServer::POA_var& poa, const char *poa_name);
+  void resolve (CosNaming::NamingContextExt_var& naming, const char *naming_name);
+  void resolve (CosNotifyChannelAdmin::EventChannelFactory_var& ecf, const char *factory_name);
+  void resolve (CosNotifyChannelAdmin::EventChannel_var& ec, const char *channel_name);
+  void resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, const char *admin_name);
+  void resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , const char *admin_name);
+  void resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name);
+  void resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char *consumer_name);
+  void resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name);
+  void resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name);
+  void resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name);
 
 protected:
   /// Application Starter
@@ -95,7 +95,7 @@ protected:
   TAO_Notify_Tests_Activation_Manager* activation_manager_;
 
   /// Resolve to CORBA::Object
-  CORBA::Object_ptr resolve_object (const char* obj_name ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr resolve_object (const char* obj_name);
 
   // The ORB that we use.
   CORBA::ORB_var orb_;

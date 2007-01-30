@@ -23,30 +23,26 @@ int
 main (int argc, char *argv[])
 {
 
-  ACE_TRY_NEW_ENV
+  try
     {
       Server_i server_i;
 
-      int ret = server_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int ret = server_i.init (argc, argv);
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\n error in init.\n"),
                           1);
-      ret = server_i.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ret = server_i.run ();
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\n error in run.\n"),
                           1);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server::main\t\n");
+      ex._tao_print_exception ("server::main\t\n");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

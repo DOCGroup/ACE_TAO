@@ -15,7 +15,7 @@ class CSD_PT_TestInf_Export TestAppBase
     virtual ~TestAppBase();
 
     // Returns 0 for success, and -1 for failure.
-    int run(int argc, char* argv[] ACE_ENV_ARG_DECL);
+    int run(int argc, char* argv[]);
 
     const char* name() const;
 
@@ -25,7 +25,7 @@ class CSD_PT_TestInf_Export TestAppBase
     TestAppBase(const char* name);
 
     // Returns -1 for failure, 0 for success
-    virtual int run_i(int argc, char* argv[] ACE_ENV_ARG_DECL) = 0;
+    virtual int run_i(int argc, char* argv[]) = 0;
 
 
   private:

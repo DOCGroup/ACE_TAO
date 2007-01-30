@@ -35,19 +35,16 @@ TAO_DynEnum_i::init_common (void)
 }
 
 void
-TAO_DynEnum_i::init (const CORBA::Any &any
-                     ACE_ENV_ARG_DECL)
+TAO_DynEnum_i::init (const CORBA::Any &any)
 {
   CORBA::TypeCode_var tc = any.type ();
 
   CORBA::TCKind kind =
-    TAO_DynAnyFactory::unalias (tc.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_enum)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   this->type_ = tc;
@@ -76,16 +73,13 @@ TAO_DynEnum_i::init (const CORBA::Any &any
 }
 
 void
-TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc
-                     ACE_ENV_ARG_DECL)
+TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_enum)
     {
-      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+      throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
     }
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
@@ -98,8 +92,7 @@ TAO_DynEnum_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynEnum_i *
-TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref
-                        ACE_ENV_ARG_DECL_NOT_USED)
+TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {
@@ -112,30 +105,25 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref
 // ****************************************************************
 
 char *
-TAO_DynEnum_i::get_as_string (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynEnum_i::get_as_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *retval =
-    this->type_.in ()->member_name (this->value_
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    this->type_.in ()->member_name (this->value_);
 
   return CORBA::string_dup (retval);
 }
 
 void
 TAO_DynEnum_i::set_as_string (const char *value_as_string
-                              ACE_ENV_ARG_DECL)
+                              )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
     ))
 {
   CORBA::ULong count =
-    this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->type_.in ()->member_count ();
 
   CORBA::ULong i;
   const char *temp = 0;
@@ -143,8 +131,7 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string
   for (i = 0; i < count; ++i)
     {
       temp = this->type_.in ()->member_name (i
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+                                            );
 
       if (!ACE_OS::strcmp (value_as_string,
                            temp))
@@ -159,12 +146,12 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 }
 
 CORBA::ULong
-TAO_DynEnum_i::get_as_ulong (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_DynEnum_i::get_as_ulong (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -174,15 +161,14 @@ TAO_DynEnum_i::get_as_ulong (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
-                             ACE_ENV_ARG_DECL)
+                             )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
     ))
 {
   CORBA::ULong max =
-    this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->type_.in ()->member_count ();
 
   if (value_as_ulong < max)
     {
@@ -190,7 +176,7 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 }
 
@@ -198,7 +184,7 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
 
 void
 TAO_DynEnum_i::from_any (const CORBA::Any& any
-                         ACE_ENV_ARG_DECL)
+                         )
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -206,9 +192,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
     ))
 {
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind == CORBA::tk_enum)
     {
@@ -235,12 +219,12 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 }
 
 CORBA::Any_ptr
-TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynEnum_i::to_any (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -253,7 +237,6 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   TAO_InputCDR in_cdr (out_cdr);
   TAO::Unknown_IDL_Type *unk = 0;
@@ -261,33 +244,27 @@ TAO_DynEnum_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
 
   retval->replace (unk);
   return retval;
 }
 
 CORBA::Boolean
-TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
-                      ACE_ENV_ARG_DECL)
+TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  CORBA::TypeCode_var tc = rhs->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::TypeCode_var tc = rhs->type ();
 
-  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ());
 
   if (!equivalent)
     {
-      return 0;
+      return false;
     }
 
-  CORBA::Any_var any = rhs->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  CORBA::Any_var any = rhs->to_any ();
 
   TAO::Any_Impl *impl = any->impl ();
   CORBA::ULong value;
@@ -314,24 +291,24 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
 }
 
 void
-TAO_DynEnum_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynEnum_i::destroy (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
   if (this->destroyed_)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynEnum_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
+TAO_DynEnum_i::current_component (void)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch

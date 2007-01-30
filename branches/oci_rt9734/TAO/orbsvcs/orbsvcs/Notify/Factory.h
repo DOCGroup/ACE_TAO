@@ -75,58 +75,58 @@ class /*TAO_Notify_Serv_Export*/ TAO_Notify_Factory : public ACE_Service_Object
 {
 public:
   /// Create ProxySupplier Collection
-  virtual void create (TAO_Notify_ProxySupplier_Collection*& collection ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_ProxySupplier_Collection*& collection) = 0;
 
   /// Create ProxyConsumer Collection
-  virtual void create (TAO_Notify_ProxyConsumer_Collection*& collection ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_ProxyConsumer_Collection*& collection) = 0;
 
   /// Create EventChannel Collection
-  virtual void create (TAO_Notify_EventChannel_Collection*& collection ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_EventChannel_Collection*& collection) = 0;
 
   /// Create ConsumerAdmin Collection
-  virtual void create (TAO_Notify_ConsumerAdmin_Collection*& collection ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_ConsumerAdmin_Collection*& collection) = 0;
 
   /// Create SupplierAdmin Collection
-  virtual void create (TAO_Notify_SupplierAdmin_Collection*& collection ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_SupplierAdmin_Collection*& collection) = 0;
 
   /// Create Proxy Collection
-  virtual void create (TAO_Notify_Proxy_Collection*& collection ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_Proxy_Collection*& collection) = 0;
 
   /// Create EventChannelFactory
-  virtual void create (TAO_Notify_EventChannelFactory*& channel_factory ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_EventChannelFactory*& channel_factory) = 0;
 
   /// Create EventChannel
-  virtual void create (TAO_Notify_EventChannel*& channel ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_EventChannel*& channel) = 0;
 
   /// Create SupplierAdmin
-  virtual void create (TAO_Notify_SupplierAdmin*& admin ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_SupplierAdmin*& admin) = 0;
 
   /// Create ConsumerAdmin
-  virtual void create (TAO_Notify_ConsumerAdmin*& admin ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_ConsumerAdmin*& admin) = 0;
 
   /// Create ProxyPushConsumer
-  virtual void create (TAO_Notify_ProxyPushConsumer*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_ProxyPushConsumer*& proxy) = 0;
 
   /// Create ProxyPushSupplier
-  virtual void create (TAO_Notify_ProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_ProxyPushSupplier*& proxy) = 0;
 
   /// Create CosEC_ProxyPushConsumer
-  virtual void create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_CosEC_ProxyPushConsumer*& proxy) = 0;
 
   /// Create CosEC_ProxyPushSupplier
-  virtual void create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_CosEC_ProxyPushSupplier*& proxy) = 0;
 
   /// Create StructuredProxyPushConsumer
-  virtual void create (TAO_Notify_StructuredProxyPushConsumer*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_StructuredProxyPushConsumer*& proxy) = 0;
 
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy) = 0;
 
   /// Create SequenceProxyPushConsumer
-  virtual void create (TAO_Notify_SequenceProxyPushConsumer*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_SequenceProxyPushConsumer*& proxy) = 0;
 
   /// Create SequenceProxyPushSupplier
-  virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
+  virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

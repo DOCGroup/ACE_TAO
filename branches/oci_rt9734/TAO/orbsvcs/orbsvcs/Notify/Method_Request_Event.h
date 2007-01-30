@@ -93,7 +93,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Event_Queueable ();
 
   /// satisfy the pure virtual method.  Should never be called.
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int execute (void);
 private:
   TAO_Notify_Event::Ptr event_var_;
 };

@@ -43,8 +43,7 @@ Broadcaster_i::~Broadcaster_i (void)
 
 void
 Broadcaster_i::add (Receiver_ptr receiver,
-                    const char *nickname
-                    ACE_ENV_ARG_DECL)
+                    const char *nickname)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotAdd
@@ -58,7 +57,7 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   // Insert the Receiver reference to the set
   if (receiver_set_.insert (receiver_data) == -1)
-    ACE_THROW (Broadcaster::CannotAdd ("failed to add to the receiver set\n"));
+    throw Broadcaster::CannotAdd ("failed to add to the receiver set\n");
 
   // Tell everyone which person just joined the chat.
   ACE_CString broadcast_string =
@@ -66,24 +65,18 @@ Broadcaster_i::add (Receiver_ptr receiver,
     + ACE_CString (nickname)
     + ACE_CString (" has joined the chat ****\n");
 
-  ACE_TRY
+  try
     {
-      this->broadcast (broadcast_string.fast_rep ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->broadcast (broadcast_string.fast_rep ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Broadcaster_i::broadcast failed.\t\n");
+      ex._tao_print_exception ("Broadcaster_i::broadcast failed.\t\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
-Broadcaster_i::remove (Receiver_ptr receiver
-                       ACE_ENV_ARG_DECL)
+Broadcaster_i::remove (Receiver_ptr receiver)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotRemove
@@ -110,7 +103,7 @@ Broadcaster_i::remove (Receiver_ptr receiver
 
   // Remove the reference from our list.
   if (this->receiver_set_.remove (receiver_data_to_remove) == -1)
-    ACE_THROW(Broadcaster::CannotRemove ("failed to remove from receiver set\n"));
+    throw Broadcaster::CannotRemove ("failed to remove from receiver set\n");
 
   // Tell everyone, which person left the chat.
   ACE_CString broadcast_string = "**** "
@@ -118,20 +111,17 @@ Broadcaster_i::remove (Receiver_ptr receiver
     + " left the chat"
     + " ****\n";
 
-  this->broadcast (broadcast_string.fast_rep ()
-                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->broadcast (broadcast_string.fast_rep ());
 }
 
 void
 Broadcaster_i::say (Receiver_ptr receiver,
-                    const char *text
-                    ACE_ENV_ARG_DECL)
+                    const char *text)
  ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
-  ACE_TRY
+  try
     {
       ACE_CString sender_nickname ("Sender Unknown");
 
@@ -152,22 +142,16 @@ Broadcaster_i::say (Receiver_ptr receiver,
       // Broadcast the message to all registered clients
       ACE_CString broadcast_string ("[" + sender_nickname + "] " + text);
 
-      this->broadcast (broadcast_string.fast_rep ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->broadcast (broadcast_string.fast_rep ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Broadcaster_i::say\t\n");
+      ex._tao_print_exception ("Broadcaster_i::say\t\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
-Broadcaster_i::broadcast (const char *text
-                          ACE_ENV_ARG_DECL)
+Broadcaster_i::broadcast (const char *text)
 {
   // Broadcast the message to all registered clients.
 
@@ -175,18 +159,15 @@ Broadcaster_i::broadcast (const char *text
        iter != this->receiver_set_.end ();
        iter++)
     {
-      ACE_TRY
+      try
         {
-          (*iter).receiver_->message (text
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          (*iter).receiver_->message (text);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Failed to send a message\n");
+          ex._tao_print_exception (
+            "Failed to send a message\n");
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     }
 }
 

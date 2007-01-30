@@ -116,7 +116,7 @@ namespace CIAO
      *
      * @@ What else do we need to initialize here?
      */
-    void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void init ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,
@@ -141,8 +141,7 @@ namespace CIAO
      * Fetch the NodeApplication object reference based on the NodeManager name.
      */
     virtual Deployment::NodeApplication_ptr get_node_app (
-        const char * node_name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        const char * node_name)
       ACE_THROW_SPEC ((
         ::CORBA::SystemException,
         ::Deployment::NoSuchName));
@@ -160,8 +159,7 @@ namespace CIAO
      */
     virtual void
       startLaunch (const ::Deployment::Properties & configProperty,
-                   ::CORBA::Boolean start
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                   ::CORBA::Boolean start)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::ResourceNotAvailable,
                        ::Deployment::StartError,
@@ -174,8 +172,7 @@ namespace CIAO
      * launching or starting the application fails.
      */
     virtual void finishLaunch (CORBA::Boolean start,
-                               CORBA::Boolean is_ReDAC
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               CORBA::Boolean is_ReDAC)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
 
@@ -203,7 +200,7 @@ namespace CIAO
      * Starts the application. Raises the StartError exception if
      * starting the application fails.
      */
-    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void start ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
 
@@ -213,14 +210,14 @@ namespace CIAO
      * InvalidReference exception if the appliction reference is
      * unknown.
      */
-    virtual void destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroyApplication ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StopError));
 
     /**
      * Returns the DeploymentPlan associated with this ApplicationManager.
      */
-    virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual ::Deployment::DeploymentPlan * getPlan ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -230,7 +227,7 @@ namespace CIAO
      * op invoked on it. This is part of the result for merging DAM
      * with DA.
      */
-    virtual void destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroyManager ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError));
 
@@ -238,8 +235,7 @@ namespace CIAO
     // same UUID of the existing running plan.
     virtual void
     perform_redeployment (
-      const Deployment::DeploymentPlan & plan
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const Deployment::DeploymentPlan & plan)
       ACE_THROW_SPEC ((CORBA::SystemException,
                         Deployment::PlanError,
                         Deployment::InstallationFailure,
@@ -333,16 +329,14 @@ namespace CIAO
     get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                               bool is_getting_all_connections = true,
                               bool is_search_new_plan = true,
-                              Connection_Search_Type t = Internal_Connections
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                              Connection_Search_Type t = Internal_Connections);
 
     /// This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
                                 Deployment::Connections & retv,
                                 bool is_ReDAC,
-                                bool is_search_new_plan
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                bool is_search_new_plan)
       ACE_THROW_SPEC ((Deployment::StartError));
 
     bool

@@ -43,26 +43,26 @@ namespace TAO
 #if (TAO_HAS_MINIMUM_POA == 0)
 
       PortableServer::ServantManager_ptr
-      get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+      get_servant_manager (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
       void
       set_servant_manager (PortableServer::ServantManager_ptr imgr
-                           ACE_ENV_ARG_DECL)
+                           )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
       void
       set_servant (PortableServer::Servant servant
-                   ACE_ENV_ARG_DECL)
+                   )
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       PortableServer::Servant
-      get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      get_servant (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
@@ -70,7 +70,7 @@ namespace TAO
       TAO_SERVANT_LOCATION
       locate_servant (const PortableServer::ObjectId &system_id,
                       PortableServer::Servant &servant
-                      ACE_ENV_ARG_DECL);
+                     );
 
       virtual
       PortableServer::Servant
@@ -79,15 +79,15 @@ namespace TAO
                       TAO::Portable_Server::Servant_Upcall &servant_upcall,
                       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                       bool &wait_occurred_restart_call
-                      ACE_ENV_ARG_DECL);
+                     );
 
       virtual PortableServer::Servant system_id_to_servant (
         const PortableServer::ObjectId &system_id
-        ACE_ENV_ARG_DECL);
+       );
 
       virtual PortableServer::Servant id_to_servant (
         const PortableServer::ObjectId &id
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ObjectNotActive,
                            PortableServer::POA::WrongPolicy));
@@ -95,13 +95,13 @@ namespace TAO
       virtual void cleanup_servant (
         PortableServer::Servant servant,
         const PortableServer::ObjectId &user_id
-        ACE_ENV_ARG_DECL);
+       );
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy));

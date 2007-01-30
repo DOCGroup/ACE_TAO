@@ -43,19 +43,16 @@ ORB_Thread(CORBA::ORB_var orb) : orb_(orb)
 
 int
 svc(void) {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
-      orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb_->run();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "svc");
+      ex._tao_print_exception ("svc");
       return 1;
     }
-  ACE_ENDTRY;
 
   exit(0);
   return 0;
@@ -116,8 +113,7 @@ parse_args (int argc, char *argv[])
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       if (parse_args (argc, argv) != 0)
         {
@@ -127,25 +123,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       CORBA::ORB_var orb=
         CORBA::ORB_init (argc,
                          argv,
-                         "testORB"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "testORB");
 
       /// get the root poa
       CORBA::Object_var object=
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var rootPOA=
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       /// Create a manager for the POA
       PortableServer::POAManager_var poa_manager =
-        rootPOA->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        rootPOA->the_POAManager ();
 
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
@@ -168,31 +157,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
         server_sched->create_POA(rootPOA.in(),
                                  "my_RT_POA",
                                  poa_manager.in(),
-                                 poa_policy_list
-                                 ACE_ENV_ARG_PARAMETER);
+                                 poa_policy_list);
 
 
       Object1_impl * servant = 0;
       ACE_NEW_THROW_EX(servant,
                        Object1_impl(),
                        CORBA::NO_MEMORY());
-      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
-        RTPOA->activate_object(servant
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTPOA->activate_object(servant);
 
       CORBA::Object_var testObject =
-        RTPOA->id_to_reference(id.in()
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTPOA->id_to_reference(id.in());
 
 
       CORBA::String_var testObject_IORString =
-        orb->object_to_string (testObject.in ()
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (testObject.in ());
 
 
       // If the ior_output_file exists, output the ior to it
@@ -208,22 +189,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       if (use_realtime_)
         {
           /// Schedule the object
-          ACE_TRY_EX(INNER)
+          try
             {
               server_sched->schedule_object(testObject.inout(),
-                                            object_ ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(INNER);
+                                            object_);
             }
-          ACE_CATCH(RTCosScheduling::UnknownName, ex)
+          catch (const RTCosScheduling::UnknownName& ex)
             {
-              ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                                 "Unknown object passed to schedule_object\n");
+              ex._tao_print_exception (
+                "Unknown object passed to schedule_object\n");
             }
-          ACE_ENDTRY;
         }
 
       // Activate the manager and run the event loop
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate ();
 
       // Need to set the main thread pthread scope and pthread policy to
       // the values that are specified in svc.conf.  This change was
@@ -252,16 +231,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       delete server_sched;
 
       /// clean up
-      rootPOA->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      rootPOA->destroy (1, 1);
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                            "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

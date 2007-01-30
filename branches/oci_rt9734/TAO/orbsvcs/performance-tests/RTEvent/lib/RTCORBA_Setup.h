@@ -32,8 +32,7 @@ public:
   /// Constructor
   RTCORBA_Setup (CORBA::ORB_ptr orb,
                  const RT_Class &rtclass,
-                 int nthreads
-                 ACE_ENV_ARG_DECL);
+                 int nthreads);
 
   /// Return the thread pool lanes appropriate for the benchamrks
   const RTCORBA::ThreadpoolLanes & lanes (void) const;
@@ -43,7 +42,7 @@ public:
 
 private:
   void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane
-		  ACE_ENV_ARG_DECL_WITH_DEFAULTS );
+ );
 
 private:
   RTCORBA::PriorityMappingManager_var priority_mapping_manager_;

@@ -5,6 +5,8 @@
 #include "tao/IIOP_Transport.h"
 #include "tao/Transport_Selection_Guard.h"
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 #include "IIOP_Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,7 +24,7 @@ namespace TAO
     /// throw NoContext, if no transport has been selected yet.
 
     TAO_IIOP_Connection_Handler*
-    IIOP_Current_Impl::handler (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    IIOP_Current_Impl::handler (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -56,7 +58,7 @@ namespace TAO
     }
 
     CORBA::Long
-    IIOP_Current_Impl::id (ACE_ENV_SINGLE_ARG_DECL)
+    IIOP_Current_Impl::id (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -69,7 +71,7 @@ namespace TAO
     }
 
     ::SSLIOP::Current_ptr
-    IIOP_Current_Impl::ssliop_current (ACE_ENV_SINGLE_ARG_DECL)
+    IIOP_Current_Impl::ssliop_current (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
         ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
@@ -77,7 +79,7 @@ namespace TAO
 
 
     CORBA::Long
-    IIOP_Current_Impl::remote_port (ACE_ENV_SINGLE_ARG_DECL)
+    IIOP_Current_Impl::remote_port (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -94,7 +96,7 @@ namespace TAO
     }
 
     char*
-    IIOP_Current_Impl::remote_host (ACE_ENV_SINGLE_ARG_DECL)
+    IIOP_Current_Impl::remote_host (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -111,7 +113,7 @@ namespace TAO
     }
 
     CORBA::Long
-    IIOP_Current_Impl::local_port (ACE_ENV_SINGLE_ARG_DECL)
+    IIOP_Current_Impl::local_port (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -128,7 +130,7 @@ namespace TAO
     }
 
     char*
-    IIOP_Current_Impl::local_host (ACE_ENV_SINGLE_ARG_DECL)
+    IIOP_Current_Impl::local_host (void)
       ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -149,3 +151,6 @@ namespace TAO
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */

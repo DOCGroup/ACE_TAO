@@ -49,27 +49,23 @@ namespace CIAO
 
       void
       Interactive_Input_Adapter_exec_i::set_session_context (
-      ::Components::SessionContext_ptr ctx
-      ACE_ENV_ARG_DECL)
+      ::Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
       {
         this->context_ =
         Interactive_Input_Adapter_Context::_narrow (
-        ctx
-        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        ctx);
 
         if (this->context_ == 0)
         {
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
       }
 
       void
-      Interactive_Input_Adapter_exec_i::ciao_preactivate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Interactive_Input_Adapter_exec_i::ciao_preactivate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -78,8 +74,7 @@ namespace CIAO
       }
 
       void
-      Interactive_Input_Adapter_exec_i::ciao_postactivate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Interactive_Input_Adapter_exec_i::ciao_postactivate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -88,8 +83,7 @@ namespace CIAO
       }
 
       void
-      Interactive_Input_Adapter_exec_i::ccm_activate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Interactive_Input_Adapter_exec_i::ccm_activate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -98,8 +92,7 @@ namespace CIAO
       }
 
       void
-      Interactive_Input_Adapter_exec_i::ccm_passivate (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Interactive_Input_Adapter_exec_i::ccm_passivate ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -108,8 +101,7 @@ namespace CIAO
       }
 
       void
-      Interactive_Input_Adapter_exec_i::ccm_remove (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      Interactive_Input_Adapter_exec_i::ccm_remove ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -140,8 +132,7 @@ namespace CIAO
       // Implicit operations.
 
       ::Components::EnterpriseComponent_ptr
-      Interactive_Input_Adapter_Home_exec_i::create (
-      ACE_ENV_SINGLE_ARG_DECL)
+      Interactive_Input_Adapter_Home_exec_i::create ()
       ACE_THROW_SPEC ((
       ::CORBA::SystemException,
       ::Components::CCMException))
@@ -153,7 +144,6 @@ namespace CIAO
         retval,
         Interactive_Input_Adapter_exec_i,
         CORBA::NO_MEMORY ());
-        ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 
         return retval;
       }

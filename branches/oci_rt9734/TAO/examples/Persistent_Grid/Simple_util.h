@@ -46,8 +46,7 @@ public:
 
   int init (const char *servant_name,
             int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 
@@ -55,7 +54,7 @@ public:
   // After calling <init>, this method will register the server with
   // the TAO Naming Service using the servant_name passed to <init>.
 
-  int run (ACE_ENV_SINGLE_ARG_DECL);
+  int run (void);
   // Run the orb.
 
  protected:
@@ -120,7 +119,7 @@ public:
   void shutdown (int);
   // Fills in the shutdwon flag.
 
-  int obtain_initial_references (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int obtain_initial_references (void);
   // Initialize naming service
 
 protected:

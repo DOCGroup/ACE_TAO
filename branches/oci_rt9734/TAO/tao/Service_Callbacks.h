@@ -40,8 +40,6 @@ namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
-
-  class Environment;
 }
 
 namespace IOP
@@ -103,14 +101,14 @@ public:
   virtual TAO::Invocation_Status raise_comm_failure (
       IOP::ServiceContextList &clist,
       TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+     );
 
   /// Allow the service layer to decide whether the TRANSIENT
   /// exception should be thrown or a reinvocation is needed
   virtual TAO::Invocation_Status raise_transient_failure (
       IOP::ServiceContextList &clist,
       TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+     );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

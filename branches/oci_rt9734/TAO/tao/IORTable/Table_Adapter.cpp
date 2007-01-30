@@ -65,21 +65,20 @@ TAO_Table_Adapter::create_lock (bool enable_locking,
 }
 
 void
-TAO_Table_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Table_Adapter::open (void)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-  TAO_IOR_Table_Impl *impl;
+  TAO_IOR_Table_Impl *impl = 0;
   ACE_NEW_THROW_EX (impl,
                     TAO_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   this->root_ = impl;
   this->closed_ = false;
 }
 
 void
-TAO_Table_Adapter::close (int  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Table_Adapter::close (int)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   this->closed_ = true;
@@ -88,7 +87,7 @@ TAO_Table_Adapter::close (int  ACE_ENV_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_Table_Adapter::check_close (int  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Table_Adapter::check_close (int)
 {
 }
 
@@ -101,8 +100,7 @@ TAO_Table_Adapter::priority (void) const
 int
 TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              TAO_ServerRequest &,
-                             CORBA::Object_out forward_to
-                             ACE_ENV_ARG_DECL)
+                             CORBA::Object_out forward_to)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IOR_Table_Impl_var rootref;
@@ -156,7 +154,7 @@ TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
 }
 
 CORBA::Long
-TAO_Table_Adapter::initialize_collocated_object (TAO_Stub * stub)
+TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
 {
   // Get the effective profile set.
   const TAO_MProfile &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
@@ -169,14 +167,13 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub * stub)
   CORBA::Object_var forward_to = CORBA::Object::_nil ();
   CORBA::Boolean found = false;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       found = this->find_object (key, forward_to.out ());
     }
-  ACE_CATCHANY
+  catch (const ::CORBA::Exception&)
     {
     }
-  ACE_ENDTRY;
 
   if (found)
     {
@@ -192,28 +189,20 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub * stub)
 
 CORBA::Long
 TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
-                                CORBA::Object_out forward_to
-                                ACE_ENV_ARG_DECL)
+                                CORBA::Object_out forward_to)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_key;
-  TAO::ObjectKey::encode_sequence_to_string (object_key.out (),
-                                            key);
-  ACE_TRY
+  TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
+  try
     {
-      CORBA::String_var ior = root_->find (object_key.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      forward_to =
-        this->orb_core_.orb ()->string_to_object (ior.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var ior = root_->find (object_key.in ());
+      forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
-  ACE_CATCH (IORTable::NotFound, nf_ex)
+  catch (const ::IORTable::NotFound&)
     {
       return 0;
     }
-  ACE_ENDTRY;
   return 1;
 }
 

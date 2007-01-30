@@ -55,14 +55,12 @@ int main (int argc, char *argv[])
   char buf[1000];
   int error_count = 0;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Init the orb
       CORBA::ORB_var orb= CORBA::ORB_init (argc,
                                            argv,
-                                           ""
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                           "");
 
       // Get IOR from command line (or file)
       if (argc != 2)
@@ -76,14 +74,10 @@ int main (int argc, char *argv[])
 
       // The first arg should be the IOR
       CORBA::Object_var object =
-        orb->string_to_object (buf
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (buf);
 
       // Get the server
-      simple_var server = simple::_narrow (object.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      simple_var server = simple::_narrow (object.in ());
 
       const char *bare_string = "Hello World";
 
@@ -96,9 +90,7 @@ int main (int argc, char *argv[])
       CORBA::String_var reply =
         server->op1 (bare_string,
                      inarg,
-                     outarg.out ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                     outarg.out ());
 
       const char *any_reply;
       outarg >>= any_reply;
@@ -130,13 +122,11 @@ int main (int argc, char *argv[])
 
       server->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught in client:");
+      ex._tao_print_exception ("Exception caught in client:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return error_count;
 }

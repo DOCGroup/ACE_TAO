@@ -29,8 +29,7 @@ TAO::SSLIOP::OwnCredentials::_duplicate (TAO::SSLIOP::OwnCredentials_ptr obj)
 }
 
 TAO::SSLIOP::OwnCredentials_ptr
-TAO::SSLIOP::OwnCredentials::_narrow (CORBA::Object_ptr obj
-                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO::SSLIOP::OwnCredentials::_narrow (CORBA::Object_ptr obj)
 {
   return  TAO::SSLIOP::OwnCredentials::_duplicate (
               dynamic_cast<TAO::SSLIOP::OwnCredentials *> (obj));
@@ -44,14 +43,14 @@ TAO::SSLIOP::OwnCredentials::_nil (void)
 }
 
 SecurityLevel3::CredentialsType
-TAO::SSLIOP::OwnCredentials::creds_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::OwnCredentials::creds_type (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CT_OwnCredentials;
 }
 
 SecurityLevel3::CredsInitiator_ptr
-TAO::SSLIOP::OwnCredentials::creds_initiator (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::OwnCredentials::creds_initiator (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
@@ -59,7 +58,7 @@ TAO::SSLIOP::OwnCredentials::creds_initiator (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel3::CredsAcceptor_ptr
-TAO::SSLIOP::OwnCredentials::creds_acceptor (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::OwnCredentials::creds_acceptor (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
@@ -67,8 +66,7 @@ TAO::SSLIOP::OwnCredentials::creds_acceptor (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO::SSLIOP::OwnCredentials::release_credentials (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::SSLIOP::OwnCredentials::release_credentials ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->creds_state_ = SecurityLevel3::CS_PendingRelease;

@@ -24,26 +24,22 @@ namespace TAO
   CORBA::Boolean
   NamedValue_Argument::demarshal (TAO_InputCDR &cdr)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         if (this->x_ !=0 && this->x_->value ()->impl ())
           {
             this->x_->value ()->impl ()->_tao_decode (cdr
-                                                      ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+                                                     );
           }
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
-        return 0;
+        return false;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
     this->byte_order_ = cdr.byte_order ();
 
-    return 1;
+    return true;
   }
 
   void
@@ -57,30 +53,25 @@ namespace TAO
   CORBA::Boolean
   NVList_Argument::marshal (TAO_OutputCDR &cdr)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         this->x_->_tao_encode (cdr,
                                CORBA::ARG_IN | CORBA::ARG_INOUT
-                               ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                              );
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
-        return 0;
+        return false;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
-    return 1;
+    return true;
   }
 
   CORBA::Boolean
   NVList_Argument::demarshal (TAO_InputCDR &cdr)
   {
 
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         // Now, get all the "return", "out", and "inout" parameters
         // from the response message body ... return parameter is
@@ -92,17 +83,14 @@ namespace TAO
             cdr,
             CORBA::ARG_OUT | CORBA::ARG_INOUT,
             this->lazy_evaluation_
-            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+           );
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
-        return 0;
+        return false;
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (false);
 
-    return 1;
+    return true;
   }
 
   void

@@ -45,8 +45,7 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 
 Bank::Account_ptr
 AccountManager_i::open (const char *name,
-                        CORBA::Float initial_balance
-                        ACE_ENV_ARG_DECL)
+                        CORBA::Float initial_balance)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Account_i *result = 0;
@@ -65,7 +64,6 @@ AccountManager_i::open (const char *name,
                         Account_i (name,
                                    initial_balance),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (Bank::Account::_nil ());
 
       // Enter the new Account in the hash map. If the <bind> fails
       // throw an UNKNOWN exception. <result> may be valid but since
@@ -93,16 +91,14 @@ AccountManager_i::open (const char *name,
 // Shutdown.
 
 void
-AccountManager_i::close (Bank::Account_ptr account
-                         ACE_ENV_ARG_DECL)
+AccountManager_i::close (Bank::Account_ptr account)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       CORBA::String_var name =
-        CORBA::string_dup (account->name (ACE_ENV_SINGLE_ARG_PARAMETER));
+        CORBA::string_dup (account->name ());
 
-      ACE_TRY_CHECK;
 
       if (hash_map_.unbind (name.in ()) == -1)
         {
@@ -115,17 +111,14 @@ AccountManager_i::close (Bank::Account_ptr account
                    "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
                    (char *) name));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unable to close Account\n");
+      ex._tao_print_exception ("Unable to close Account\n");
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
-AccountManager_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+AccountManager_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

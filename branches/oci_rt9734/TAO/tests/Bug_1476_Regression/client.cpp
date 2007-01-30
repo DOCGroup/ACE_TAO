@@ -53,15 +53,13 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -69,20 +67,16 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        orb->resolve_initial_references ("PolicyCurrent");
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+        CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
         {
@@ -95,27 +89,20 @@ main (int argc, char *argv[])
       CORBA::PolicyList policies (1); policies.length (1);
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+                            scope_as_any);
+      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
-      policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      policies[0]->destroy ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Get the sender reference..
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Test::Sender_var sender =
-        Test::Sender::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Sender::_narrow(tmp.in ());
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -137,8 +124,7 @@ main (int argc, char *argv[])
       // will have two threads that would make invocations..
       // this is the first oneway we do, so after this we would have a queue
       // on one of the transports
-      sender->active_objects ((CORBA::Short) number_of_client_tasks ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sender->active_objects ((CORBA::Short) number_of_client_tasks);
 
       TAO::Transport_Cache_Manager& manager = orb->orb_core()->lane_resources ().transport_cache ();
 
@@ -182,21 +168,18 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Event Loop finished\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       if (tranportwithqueue == false)
       {
         return 1;
       }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

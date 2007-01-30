@@ -23,29 +23,27 @@ TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor (void)
 }
 
 char *
-TAO_LB_ServerRequestInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_ServerRequestInterceptor::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_LB_ServerRequestInterceptor");
 }
 
 void
-TAO_LB_ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_ServerRequestInterceptor::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   if (this->load_alert_.alerted ())
     {
-      CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::String_var op = ri->operation ();
 
       if (ACE_OS::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
           || ACE_OS::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
@@ -53,12 +51,10 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
         return;  // Do not redirect.
 
 #if 0
-      ACE_TRY
+      try
         {
           IOP::ServiceContext_var service_context =
-            ri->get_request_service_context (CosLoadBalancing::LOAD_MANAGED
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            ri->get_request_service_context (CosLoadBalancing::LOAD_MANAGED);
 
           /*
           // Use TAO-specific "compiled marshaling" instead of
@@ -71,25 +67,25 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
 
           CORBA::Boolean byte_order;
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            ACE_TRY_THROW (CORBA::BAD_PARAM ());
+            throw CORBA::BAD_PARAM ();
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           CORBA::Object_var object_group;
           if (cdr >> object_group.out ())
-            ACE_TRY_THROW (PortableInterceptor::ForwardRequest (object_group.in (),
+            throw PortableInterceptor::ForwardRequest (object_group.in (,
                                                             0));
           else
-            ACE_TRY_THROW (CORBA::BAD_PARAM ());
+            throw CORBA::BAD_PARAM ();
           */
 
           // A ServiceContext of the given ServiceId exists.  This
           // means that the target is load balanced.  Force the client
           // to try another profile since this location is currently
           // overloaded.
-          ACE_TRY_THROW (CORBA::TRANSIENT ());
+          throw CORBA::TRANSIENT ();
         }
-      ACE_CATCH (CORBA::BAD_PARAM, ex)
+      catch (const CORBA::BAD_PARAM& ex)
         {
           // No CosLoadBalancing::LB_GROUP_REF ServiceContext.  This
           // probably means that the target object is not
@@ -106,25 +102,22 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // Make sure we get a CORBA::BAD_PARAM for the right
           // reason.
           if (ex.minor () != (CORBA::OMGVMCID | 26))
-            ACE_RE_THROW;
+            throw;
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
 #else
       // Force the client to try another profile since this location
       // is currently overloaded.
       //
       // NOTE: This applies to both load balanced and non-load
       // balanced targets.
-      ACE_THROW (CORBA::TRANSIENT ());
+      throw CORBA::TRANSIENT ();
 #endif  /* 0 */
     }
 }
 
 void
 TAO_LB_ServerRequestInterceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -132,16 +125,14 @@ TAO_LB_ServerRequestInterceptor::receive_request (
 
 void
 TAO_LB_ServerRequestInterceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ServerRequestInterceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -158,8 +149,7 @@ TAO_LB_ServerRequestInterceptor::send_exception (
 
 void
 TAO_LB_ServerRequestInterceptor::send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    ACE_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -169,8 +159,7 @@ TAO_LB_ServerRequestInterceptor::send_other (
       // LoadAlert object that its member is overloaded, for example.
 
       const PortableInterceptor::ReplyStatus status =
-        ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        ri->reply_status ();
 
       if (status == PortableInterceptor::LOCATION_FORWARD)
         ACE_DEBUG ((LM_INFO,

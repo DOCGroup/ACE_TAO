@@ -20,11 +20,11 @@ INS_Locator::INS_Locator (ImR_Locator_i& loc)
 }
 
 char *
-INS_Locator::locate (const char* object_key ACE_ENV_ARG_DECL)
+INS_Locator::locate (const char* object_key)
 ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_ASSERT (object_key != 0);
-  ACE_TRY
+  try
     {
       ACE_CString key (object_key);
       ssize_t poaidx = key.find ('/');
@@ -37,8 +37,7 @@ ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
         ACE_DEBUG ((LM_DEBUG, "ImR: Activating server <%s>.\n", key.c_str ()));
 
       CORBA::String_var located =
-        this->imr_locator_.activate_server_by_object (key.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->imr_locator_.activate_server_by_object (key.c_str ());
 
       ACE_CString tmp = located.in ();
       tmp += object_key;
@@ -48,17 +47,20 @@ ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 
       return CORBA::string_dup (tmp.c_str ());
     }
-  ACE_CATCH (ImplementationRepository::CannotActivate, ex)
+  catch (const ImplementationRepository::CannotActivate&)
     {
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-        CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_IMPLREPO_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
-  ACE_CATCH (ImplementationRepository::NotFound, ex)
+  catch (const ImplementationRepository::NotFound&)
     {
-      ACE_TRY_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-        CORBA::COMPLETED_NO));
+      throw CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_IMPLREPO_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
-  ACE_ENDTRY;
 }

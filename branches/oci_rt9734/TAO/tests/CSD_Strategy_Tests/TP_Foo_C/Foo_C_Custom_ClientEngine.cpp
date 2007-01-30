@@ -21,9 +21,9 @@ Foo_C_Custom_ClientEngine::~Foo_C_Custom_ClientEngine()
 
 
 bool
-Foo_C_Custom_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
+Foo_C_Custom_ClientEngine::execute(void)
 {
-  // Make sure the connection is established before making  
+  // Make sure the connection is established before making
   // remote invocations.
   if (this->proxy_.validate_connection () == false)
     {
@@ -35,12 +35,9 @@ Foo_C_Custom_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   bool check_validity = true;
   CORBA::Long i = this->client_id_;
 
-  this->proxy_.op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
-  this->proxy_.op2(i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
-  CORBA::Long value = this->proxy_.op3(i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->proxy_.op1();
+  this->proxy_.op2(i);
+  CORBA::Long value = this->proxy_.op3(i);
 
   if (value != i)
     {
@@ -50,22 +47,19 @@ Foo_C_Custom_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   for (CORBA::Long j = 1; j <= 5; j++)
     {
-      this->proxy_.op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      this->proxy_.op4(495 + (i * 5) + j);
     }
 
   bool caught_exception = false;
-  ACE_TRY_EX (op5)
+  try
     {
-      this->proxy_.op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (op5);
+      this->proxy_.op5();
     }
-  ACE_CATCH (FooException, ex)
+  catch (const FooException& )
     {
       // Expected
       caught_exception = true;
     }
-  ACE_ENDTRY;
 
   if (! caught_exception)
     {
@@ -74,12 +68,9 @@ Foo_C_Custom_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   long cust_i = this->client_id_;
 
-  this->proxy_.cust_op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
-  this->proxy_.cust_op2(cust_i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
-  long cust_value = this->proxy_.cust_op3(cust_i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->proxy_.cust_op1();
+  this->proxy_.cust_op2(cust_i);
+  long cust_value = this->proxy_.cust_op3(cust_i);
 
   if (cust_value != i)
     {
@@ -88,32 +79,28 @@ Foo_C_Custom_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   for (long cust_j = 1; cust_j <= 5; cust_j++)
     {
-      this->proxy_.cust_op4(495 + (cust_i * 5) + cust_j ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      this->proxy_.cust_op4(495 + (cust_i * 5) + cust_j);
     }
 
   caught_exception = false;
 
-  ACE_TRY_EX (cust_op5)
+  try
     {
-      this->proxy_.cust_op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX (cust_op5)
+      this->proxy_.cust_op5();
     }
-  ACE_CATCHANY //(CustomException, ex)
+  catch (const CORBA::Exception&)//(CustomException, ex)
     {
       // Expected
       caught_exception = true;
     }
-  ACE_ENDTRY;
 
   if (! caught_exception)
     {
       check_validity = false;
     }
 
-  this->proxy_.done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
-  
+  this->proxy_.done();
+
   return check_validity;
 }
 

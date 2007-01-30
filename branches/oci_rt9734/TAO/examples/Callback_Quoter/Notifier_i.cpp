@@ -37,8 +37,7 @@ Notifier_i::~Notifier_i (void)
 void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
-                               Callback_Quoter::Consumer_ptr consumer_handler
-                               ACE_ENV_ARG_DECL)
+                               Callback_Quoter::Consumer_ptr consumer_handler)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Callback_Quoter::Invalid_Stock))
 {
@@ -64,7 +63,8 @@ Notifier_i::register_callback (const char *stock_name,
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
      if ( consumers->insert (consumer_data) == -1)
-       ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
+       throw Callback_Quoter::Invalid_Stock (
+         "Insertion failed! Invalid Stock!\n");
      else
       ACE_DEBUG ((LM_DEBUG,
                   "Inserted map entry: stockname %s threshold %d",
@@ -75,12 +75,12 @@ Notifier_i::register_callback (const char *stock_name,
     {
       // the unbounded set entry is created.
       ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY ());
-      ACE_CHECK;
 
       // When a new entry is tried to be inserted into the unbounded set and it
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-        ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
+        throw Callback_Quoter::Invalid_Stock (
+          "Insertion failed! Invalid Stock!\n");
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>
       // is fused.
@@ -106,8 +106,7 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 // Remove the client handler.
 
 void
-Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer
-                                 ACE_ENV_ARG_DECL)
+Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Callback_Quoter::Invalid_Handle))
 {
@@ -141,7 +140,8 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer
        // removed an exception is raised.
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
-         ACE_THROW (Callback_Quoter::Invalid_Handle ( "Unregistration failed! Invalid Consumer Handle!\n"));
+         throw Callback_Quoter::Invalid_Handle (
+           "Unregistration failed! Invalid Consumer Handle!\n");
        else
         ACE_DEBUG ((LM_DEBUG,
                     "unregister_callback:consumer removed\n"));
@@ -153,8 +153,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer
 
 void
 Notifier_i::market_status (const char *stock_name,
-                           CORBA::Long stock_value
-                           ACE_ENV_ARG_DECL_NOT_USED)
+                           CORBA::Long stock_value)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -202,7 +201,7 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Notifier_i::shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ( this->consumer_map_.close () > 0)

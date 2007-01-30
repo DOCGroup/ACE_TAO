@@ -17,6 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+
 #include "tao/TransportCurrent/TC_IIOPC.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
@@ -49,22 +51,22 @@ namespace TAO
         IIOP_Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
 
         //@{
-        virtual ::CORBA::Long id (ACE_ENV_SINGLE_ARG_DECL)
+        virtual ::CORBA::Long id (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual ::SSLIOP::Current_ptr ssliop_current (ACE_ENV_SINGLE_ARG_DECL)
+        virtual ::SSLIOP::Current_ptr ssliop_current (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual ::CORBA::Long remote_port (ACE_ENV_SINGLE_ARG_DECL)
+        virtual ::CORBA::Long remote_port (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual char* remote_host (ACE_ENV_SINGLE_ARG_DECL)
+        virtual char* remote_host (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual ::CORBA::Long local_port (ACE_ENV_SINGLE_ARG_DECL)
+        virtual ::CORBA::Long local_port (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual char* local_host (ACE_ENV_SINGLE_ARG_DECL)
+        virtual char* local_host (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
         //@}
 
@@ -85,7 +87,7 @@ namespace TAO
         /// Transport. Will throw NO_IMPLEMENT if the (selected) transport
         /// () == 0, or if transport->connection_handler () == 0. Will
         /// throw NoContext, if no transport has been selected yet.
-        TAO_IIOP_Connection_Handler* handler (ACE_ENV_SINGLE_ARG_DECL)
+        TAO_IIOP_Connection_Handler* handler (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
       private:
@@ -103,6 +105,8 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 #include /**/ "ace/post.h"
 

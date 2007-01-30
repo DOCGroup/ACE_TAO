@@ -52,7 +52,7 @@ main (int argc, char *argv[])
   std::vector<NodeAppTest::NodeAppTest_RoundTrip_var> comp_list;
   //std::vector<NodeAppTest::NodeAppTest_RoundTrip_var>::const_iterator iter;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -61,19 +61,15 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "CompNum: %d\n",comp_num));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CIAO::Client_init (orb.in ());
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Deployment::NodeApplication_var node_app =
-        Deployment::NodeApplication::_narrow (tmp.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Deployment::NodeApplication::_narrow (tmp.in ());
 
       if (CORBA::is_nil (node_app.in ()))
         {
@@ -191,15 +187,13 @@ main (int argc, char *argv[])
 
       // Install test component and its home on NodeApplication
       Deployment::ComponentInfos_var comp_info =
-        node_app->install (node_info ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        node_app->install (node_info);
 
       // store the component refs
       for (i = 0; i < comp_num; ++i)
         {
           comp_list.push_back (NodeAppTest::NodeAppTest_RoundTrip::_narrow
                                (comp_info[i].component_ref.in ()));
-          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (comp_list[i].in ()))
             {
@@ -214,7 +208,6 @@ main (int argc, char *argv[])
 
       // Before we can start we have to start.
       node_app->start ();
-      ACE_CHECK_RETURN (1);
 
       // Invoke Operation on the components
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
@@ -225,8 +218,7 @@ main (int argc, char *argv[])
           CORBA::Long input = i;
 
           CORBA::Long output =
-            (comp_list[i])->cube_long (input ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            (comp_list[i])->cube_long (input);
 
           if (input*input*input == output)
             {
@@ -245,22 +237,18 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Try removing everything\n"));
       node_app->remove ();
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Homes and components removed successfully\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Test success!!\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

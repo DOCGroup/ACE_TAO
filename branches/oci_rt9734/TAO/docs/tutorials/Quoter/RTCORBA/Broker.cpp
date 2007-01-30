@@ -23,7 +23,7 @@ static std::string ior = "file://StockDistributor.ior";
 static std::string distributor_name = "StockDistributor";
 
 // Default priority level for running the broker.
-static Priority_Mapping::Priority priority_level 
+static Priority_Mapping::Priority priority_level
     = Priority_Mapping::MEDIUM;
 
 // Default stock name.
@@ -32,7 +32,7 @@ static std::string stock_name = "IBM";
 // A flag that indicates use of the Naming Service.
 bool use_naming = false;
 
-static int 
+static int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:p:n:c");
@@ -51,28 +51,28 @@ parse_args (int argc, char *argv[])
             case 0:
               priority_level = Priority_Mapping::VERY_LOW;
               break;
-              
+
             case 1:
               priority_level = Priority_Mapping::LOW;
               break;
-              
+
             case 2:
               priority_level = Priority_Mapping::MEDIUM;
               break;
-              
+
             case 3:
               priority_level = Priority_Mapping::HIGH;
               break;
-              
+
             case 4:
               priority_level = Priority_Mapping::VERY_HIGH;
               break;
-              
+
             default:
               std::cerr << "Warning: Invalid priority detected, defaulting to very low.\n";
               priority_level = Priority_Mapping::VERY_LOW;
               break;
-              
+
             }
           break;
 
@@ -82,7 +82,7 @@ parse_args (int argc, char *argv[])
         case 'c':
           use_naming = true;
           break;
-          
+
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,7 +122,7 @@ get_distributor_reference (CORBA::ORB_ptr orb)
     return orb->string_to_object (ior.c_str ());
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   try
@@ -160,7 +160,7 @@ main (int argc, char *argv[])
 
       // Create the factory object. Create a <Stock::StockBroker>.
       Stock_StockBrokerHome_i stock_broker_home (orb);
-      Stock::StockBroker_var stock_broker = 
+      Stock::StockBroker_var stock_broker =
         stock_broker_home.create (stock_distributor.in (),
                                   stock_name.c_str ());
 
@@ -169,15 +169,15 @@ main (int argc, char *argv[])
                            "Nil StockBroker object reference <%s>\n",
                            ior.c_str ()),
                           1);
-      
+
       // Create a new consumer and initialize it.
       Stock::StockNameConsumer_var consumer =
         stock_broker->get_consumer_notifier ();
 
       // Subscribe the consumer with the distributor.
-      ::Stock::Cookie_var cookie = 
+      ::Stock::Cookie_var cookie =
           stock_distributor->subscribe_notifier (consumer, priority_level);
-      
+
       consumer->cookie (cookie.in ());
 
       // Get the object reference to a StockQuoter that's been
@@ -194,19 +194,18 @@ main (int argc, char *argv[])
       stock_broker->connect_quoter_info (stock_quoter);
 
       // Run the event loop.
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "running the event loop:\n"
                   "*** message: ready to receieve stock information...\n\n"));
       orb->run ();
-      
+
       // Cleanup the POA and ORB.
       poa->destroy (1, 1);
       orb->destroy ();
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
   catch (...)

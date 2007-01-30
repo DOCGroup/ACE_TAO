@@ -19,49 +19,39 @@ template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void
 FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface,State>::obtain_proxy (
-  const FtRtecEventChannelAdmin::Operation& op
-  ACE_ENV_ARG_DECL)
+  const FtRtecEventChannelAdmin::Operation& op)
 {
-  Request_Context_Repository().set_object_id(op.object_id
-                                     ACE_ENV_ARG_PARAMETER);
+  Request_Context_Repository().set_object_id(op.object_id);
 
   ProxyInterface_var result
-    =  admin_->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    =  admin_->obtain();
 
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-  ACE_TRY   {
+  try{
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(op,
-      Proxy::rollback_obtain
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      Proxy::rollback_obtain);
   }
-  ACE_CATCHALL {
+  catch (...){
     admin_->disconnect(result.in());
-    ACE_RE_THROW;
+    throw;
   }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 typename FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::ProxyInterface_ptr
-FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_ENV_SINGLE_ARG_DECL)
+FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (void)
 {
-  CORBA::Any_var any = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  CORBA::Any_var any = Request_Context_Repository().get_cached_result();
 
   CORBA::Object_var obj;
   if (any >>= CORBA::Any::to_object(obj))
-    return ProxyInterface::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+    return ProxyInterface::_narrow(obj.in());
 
   FtRtecEventChannelAdmin::ObjectId oid;
-  Request_Context_Repository().generate_object_id(oid
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+  Request_Context_Repository().generate_object_id(oid);
 
   FtRtecEventChannelAdmin::Operation update;
 
@@ -69,29 +59,22 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_E
   update.param._d(EC_PROXY_ADMIN::OBTAIN_ID);
 
   ProxyInterface_var result
-    =  admin_->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN(0);
+    =  admin_->obtain();
 
-  ACE_TRY {
+  try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
-    obj = IOGR_Maker::instance()->forge_iogr(result.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    obj = IOGR_Maker::instance()->forge_iogr(result.in());
 
-    result = ProxyInterface::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    result = ProxyInterface::_narrow(obj.in());
 
     svc->replicate_request(update,
-      Proxy::rollback_obtain
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      Proxy::rollback_obtain);
   }
-  ACE_CATCHALL {
+  catch (...){
     admin_->disconnect(result.in());
-    ACE_RE_THROW;
+    throw;
   }
-  ACE_ENDTRY;
 
   return result._retn();
 }
@@ -100,47 +83,37 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_E
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::get_state(
-  State& state
-  ACE_ENV_ARG_DECL)
+  State& state)
 {
   typename EC_PROXY_ADMIN::StateWorker worker(state.proxies);
-  admin_->for_each(&worker ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  admin_->for_each(&worker);
 }
 
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
-  const State& state
-  ACE_ENV_ARG_DECL)
+  const State& state)
 {
   for (size_t i =0; i < state.proxies.length(); ++i)
   {
     const typename Proxy::State& proxy_state
       = state.proxies[i];
 
-    Request_Context_Repository().set_object_id(proxy_state.object_id
-                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    Request_Context_Repository().set_object_id(proxy_state.object_id);
 
     ProxyInterface_var
-      proxy_ior = admin_->obtain(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      proxy_ior = admin_->obtain();
 
     typedef typename Proxy::Skeleton Skeleton;
     const void *temp = &proxy_state.object_id;
     const PortableServer::ObjectId *oid =
       reinterpret_cast<const PortableServer::ObjectId *> (temp);
-    const PortableServer::Servant servant = 
-      poa_->id_to_servant (*oid ACE_ENV_ARG_PARAMETER);
+    const PortableServer::Servant servant =
+      poa_->id_to_servant (*oid);
 
-    ACE_CHECK;
     Skeleton skeleton = dynamic_cast<Skeleton> (servant);
-    ACE_CHECK;
 
-    static_cast<Proxy*> (skeleton)->set_state(proxy_state
-                                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    static_cast<Proxy*> (skeleton)->set_state(proxy_state);
   }
 }
 

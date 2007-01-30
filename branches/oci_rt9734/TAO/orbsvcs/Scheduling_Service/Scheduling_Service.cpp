@@ -50,23 +50,19 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
   CORBA::ORB_var orb;
   PortableServer::POAManager_ptr poa_manager;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
       // Initialize ORB manager.
-      this->orb_manager_.init (command_line.get_argc(), command_line.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.init (command_line.get_argc(), command_line.get_ASCII_argv());
 
       orb = this->orb_manager_.orb ();
-      ACE_TRY_CHECK;
 
       poa_manager = this->orb_manager_.poa_manager ();
-      ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       // Check the non-ORB arguments.  this needs to come before we
       // initialize the scheduler implementation so that we know which
@@ -79,26 +75,16 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       // Construct a scheduler implementation of the specified type.
       switch (this->scheduler_type_)
         {
-
-// The templatized method parameters needed by the reconfig scheduler
-// class template are hopelessly broken on pre-2.8 versions of g++.
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-
           case RECONFIG:
             ACE_NEW_THROW_EX (scheduler_impl_,
                               RECONFIG_SCHED_TYPE,
                               CORBA::NO_MEMORY ());
-            ACE_TRY_CHECK;
             break;
-
-#endif  /* __GNUC__ */
 
           case CONFIG:
             ACE_NEW_THROW_EX (scheduler_impl_,
                               CONFIG_SCHED_TYPE,
                               CORBA::NO_MEMORY ());
-            ACE_TRY_CHECK;
             break;
 
           default:
@@ -109,24 +95,20 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 
       // Locate the naming service.
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to locate the Naming Service.\n"),
                           -1);
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       RtecScheduler::Scheduler_var scheduler =
-        this->scheduler_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->scheduler_impl_->_this ();
 
       CORBA::String_var scheduler_ior_string =
-        orb->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (scheduler.in ());
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%s>\n"),
                             ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ())));
@@ -135,8 +117,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (this->service_name_.rep());
-      naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_context->rebind (schedule_name, scheduler.in ());
 
       if (this->ior_file_name_.rep() != 0)
         {
@@ -162,12 +143,11 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Scheduling_Service::init");
+      ex._tao_print_exception ("TAO_Scheduling_Service::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -176,10 +156,10 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 // Runs the TAO_Scheduling_Service.
 
 int
-TAO_Scheduling_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Scheduling_Service::run (void)
 {
   // Run the ORB manager.
-  return this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->orb_manager_.run ();
 }
 
 
@@ -207,11 +187,6 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
           this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
-// The templatized method parameters needed by the reconfig scheduler
-// class template are hopelessly broken on pre-2.8 versions of g++.
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
-
         case 's':
           if (ACE_OS::strcasecmp (ACE_TEXT("CONFIG"), get_opt.optarg) == 0)
             {
@@ -236,15 +211,8 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
             }
           break;
 
-#endif /* __GNUC__ */
-
         case '?':
         default:
-
-// The templatized method parameters needed by the reconfig scheduler
-// class template are hopelessly broken on pre-2.8 versions of g++.
-#if (! defined (__GNUC__)) || (__GNUC__ > 2) || \
-(__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
@@ -255,18 +223,6 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
                       "\n",
                       argv[0]));
 
-#else /* __GNUC__ <= 2.8 */
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      "[-n service_name] "
-                      "[-p pid_file_name] "
-                      "[-o ior_file_name] "
-                      "\n",
-                      argv[0]));
-
-#endif /* __GNUC__ */
-
           return -1;
         }
     }
@@ -276,7 +232,7 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       TAO_Scheduling_Service scheduling_service;
 
@@ -289,15 +245,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "%s; running scheduling service\n", __FILE__));
 
-      scheduling_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      scheduling_service.run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "schedule_service");
+      ex._tao_print_exception ("schedule_service");
           return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

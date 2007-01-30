@@ -9,8 +9,8 @@
 #include "Loopback_Supplier.h"
 #include "Implicit_Deactivator.h"
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           Loopback_Supplier, 
+ACE_RCSID (TAO_PERF_RTEC,
+           Loopback_Supplier,
            "$Id$")
 
 Loopback_Supplier::Loopback_Supplier (CORBA::Long experiment_id,
@@ -24,12 +24,10 @@ Loopback_Supplier::Loopback_Supplier (CORBA::Long experiment_id,
 }
 
 void
-Loopback_Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                            ACE_ENV_ARG_DECL)
+Loopback_Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    ec->for_suppliers ();
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -37,13 +35,11 @@ Loopback_Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec
       return;
 
     this->proxy_consumer_ =
-      supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+      supplier_admin->obtain_push_consumer ();
   }
 
   RtecEventComm::PushSupplier_var supplier =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->_this ();
 
   RtecEventChannelAdmin::SupplierQOS supplier_qos;
   supplier_qos.is_gateway = 0;
@@ -54,13 +50,11 @@ Loopback_Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec
   sh0.source = this->experiment_id_;
 
   this->proxy_consumer_->connect_push_supplier (supplier.in (),
-                                                supplier_qos
-                                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                                supplier_qos);
 }
 
 void
-Loopback_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+Loopback_Supplier::disconnect (void)
 {
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
@@ -70,20 +64,16 @@ Loopback_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
     proxy = this->proxy_consumer_._retn ();
   }
 
-  Implicit_Deactivator deactivator (this
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  Implicit_Deactivator deactivator (this);
 
-  ACE_TRY {
-    proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-  } ACE_CATCHANY {
-  } ACE_ENDTRY;
+  try{
+    proxy->disconnect_push_consumer ();
+  } catch (const CORBA::Exception&) {
+  }
 }
 
 void
-Loopback_Supplier::push (const RtecEventComm::EventSet &source
-                         ACE_ENV_ARG_DECL)
+Loopback_Supplier::push (const RtecEventComm::EventSet &source)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Loopback_Supplier pushing\n"));
@@ -114,11 +104,11 @@ Loopback_Supplier::push (const RtecEventComm::EventSet &source
       events[i].header.source = this->experiment_id_;
     }
 
-  proxy->push (events ACE_ENV_ARG_PARAMETER);
+  proxy->push (events);
 }
 
 void
-Loopback_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Loopback_Supplier::disconnect_push_supplier (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -127,7 +117,7 @@ Loopback_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 PortableServer::POA_ptr
-Loopback_Supplier::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Loopback_Supplier::_default_POA (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());

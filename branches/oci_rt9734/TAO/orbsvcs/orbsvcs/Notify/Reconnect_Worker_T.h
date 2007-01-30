@@ -35,7 +35,7 @@ namespace TAO_Notify
     Reconnect_Worker();
 
     // override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o ACE_ENV_ARG_DECL);
+    virtual void work (TOPOOBJ* o);
   };
 } // namespace TAO_Notify
 

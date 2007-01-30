@@ -95,12 +95,10 @@ namespace CORBA
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        ACE_ENV_ARG_DECL
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        ACE_ENV_ARG_DECL
       );
 
     // TAO_IDL - Generated from

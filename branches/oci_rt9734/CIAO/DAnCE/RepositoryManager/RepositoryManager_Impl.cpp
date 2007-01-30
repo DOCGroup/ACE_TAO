@@ -220,7 +220,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
     {
       if (!replace)
-        ACE_THROW (Deployment::NameExists ());
+        throw Deployment::NameExists ();
       else
         deletePackage (installationName);
     }
@@ -253,20 +253,19 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
       //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
       ACE_Message_Block* mb = 0;
       ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
 
       //get the remote file
       if (!HTTP_Get (location, *mb))
         {
           mb->release ();
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       // Write file to designated location on disk
       if (!RM_Helper::write_to_disk (package_path.c_str (), *mb))
         {
           mb->release ();
-          ACE_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       mb->release ();
@@ -274,7 +273,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   else
     {
       if (!RM_Helper::copy_from_disk_to_disk (location, package_path.c_str ()))
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
     }
 
 
@@ -297,7 +296,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     //remove the package
     remove (package_path.c_str ());
 
-    ACE_THROW (Deployment::PackageError ());
+    throw Deployment::PackageError ();
   }
 
   //TODO: move exception throwing out of this func. User boolean error handling!!!
@@ -314,7 +313,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     //remove the package
     remove (package_path.c_str ());
 
-    ACE_THROW (Deployment::NameExists ());
+    throw Deployment::NameExists ();
   }
 
   //forming the server path info
@@ -329,7 +328,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     //remove the package
     remove (package_path.c_str ());
 
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   PC_Updater updater (server_path, package_path);
@@ -342,7 +341,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     remove_extracted_package (package_path.c_str (), path.c_str ());
     //remove the package
     remove (package_path.c_str ());
-    ACE_THROW (Deployment::PackageError ());
+    throw Deployment::PackageError ();
   }
 
 
@@ -366,7 +365,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     remove (pc_path.c_str ());
 
     //throw exception
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   }
 
   //ALSO NEED THE UUID here
@@ -387,7 +386,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
      remove (pc_path.c_str ());
 
      //throw exception
-     ACE_THROW (CORBA::INTERNAL ());
+     throw CORBA::INTERNAL ();
   }
 
   //now add the type interface
@@ -426,19 +425,19 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   if (this->names_.find (ACE_CString (installationName), entry) == 0)
     {
       if (!replace)
-        ACE_THROW (Deployment::NameExists ());
+        throw Deployment::NameExists ();
       else
         deletePackage (installationName);
     }
 
   // Find if there is a PackageConfiguration with the same uuid.
   if (this->uuids_.find (ACE_CString (pc.UUID), entry) == 0)
-    ACE_THROW (Deployment::NameExists ());
+    throw Deployment::NameExists ();
 
   // Find if the PackageConfiguration has a basePackage.
   // NOTE: ComponentPackageReferences are currently NOT supported.
   if (!(pc.basePackage.length () > 0))
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    throw CORBA::NO_IMPLEMENT ();
 
   // Form the path for the local file
   ACE_CString path (this->install_root_);
@@ -457,20 +456,19 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
     //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
     ACE_Message_Block* mb;
     ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     //get the remote file
     if (!HTTP_Get (baseLocation, *mb))
     {
       mb->release ();
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
     // Write file to designated location on disk
     if (!RM_Helper::write_to_disk (package_path.c_str (), *mb))
     {
       mb->release ();
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
     mb->release ();
@@ -478,7 +476,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   else
   {
     if (!RM_Helper::copy_from_disk_to_disk (baseLocation, package_path.c_str ()))
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
   }
 
 
@@ -501,7 +499,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
     remove_extracted_package (package_path.c_str (), path.c_str ());
     //remove the package
     remove (package_path.c_str ());
-    ACE_THROW (Deployment::PackageError ());
+    throw Deployment::PackageError ();
   }
 
   // Externalize the PackageConfiguration, so that we can access it later on
@@ -524,7 +522,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
     remove (pc_path.c_str ());
 
     //throw exception
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   }
 
   // Insert the UUID of the package.
@@ -545,7 +543,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
      remove (pc_path.c_str ());
 
      //throw exception
-     ACE_THROW (CORBA::INTERNAL ());
+     throw CORBA::INTERNAL ();
   }
 
   //now add the type interface
@@ -580,7 +578,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
   PCEntry *entry = 0;
 
   if (this->names_.find (ACE_CString (name), entry) != 0)
-    ACE_THROW (Deployment::NoSuchName ());
+    throw Deployment::NoSuchName ();
   //PackageConfiguration was not found
 
   ACE_CString pc_path (entry->int_id_.c_str ());
@@ -591,7 +589,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
                     Deployment::PackageConfiguration (),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -621,7 +618,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
   PCEntry *entry = 0;
 
   if (this->uuids_.find (ACE_CString (UUID), entry) != 0)
-    ACE_THROW (Deployment::NoSuchName ());
+    throw Deployment::NoSuchName ();
   //PackageConfiguration was not found
 
   ACE_CString pc_path (entry->int_id_.c_str ());
@@ -632,7 +629,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
                     Deployment::PackageConfiguration (),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -662,7 +658,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
     //return an empty sequence
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (0);
 
     return seq._retn ();
   }
@@ -721,7 +716,6 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
   CORBA::StringSeq_var seq;
   ACE_NEW_THROW_EX (seq, CORBA::StringSeq (num_entries), CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   seq->length (num_entries);
 
@@ -769,7 +763,6 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
                     CORBA::StringSeq (num_entries),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   seq->length (num_entries);
 
@@ -807,7 +800,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   PCEntry *entry = 0;
 
   if (this->names_.find (ACE_CString (installationName), entry) != 0)
-    ACE_THROW (Deployment::NoSuchName ());
+    throw Deployment::NoSuchName ();
 
   //cache the package path
   ACE_CString path (entry->int_id_.c_str ());
@@ -834,7 +827,6 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
                     Deployment::PackageConfiguration (),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (0);
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
   {
@@ -867,7 +859,7 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   this->dump ();
 
   if (internal_err)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw CORBA::INTERNAL ();
   else
     ACE_DEBUG ((LM_INFO, "Successfully deleted \'%s\'\n", installationName));
 
@@ -898,26 +890,25 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_package (char* package)
       ACE_OS::chdir (this->cwd_);
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) RepositoryManager: error extracting necessary files\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   Deployment::PackageConfiguration_var pc;
   //parse the PCD to make sure that there are no package errors
-  ACE_TRY
+  try
     {
       //CIAO::Config_Handlers::STD_PC_Intf intf (pcd_name.c_str ());
       //pc = intf.get_PC ();
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) RepositoryManager: Error parsing the PCD\n"));
 
       //change back the the old working dir
       ACE_OS::chdir (this->cwd_);
-      ACE_THROW (Deployment::PackageError ());
+      throw Deployment::PackageError ();
     }
-  ACE_ENDTRY;
   //able to parse the PC. So lets install the package in the repo
 
   //we no longer need the descriptors, so lets erase them!
@@ -981,20 +972,19 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
 
   Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
   //parse the PCD to make sure that there are no package errors
-  ACE_TRY
+  try
     {
        CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
     }
-  ACE_CATCHALL
+  catch (...)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
       //change back the the old working dir
       ACE_OS::chdir (this->cwd_);
-      ACE_THROW (Deployment::PackageError ());
+      throw Deployment::PackageError ();
     }
-  ACE_ENDTRY;
   //able to parse the PC. So lets install the package in the repo
 
   //change back the the old working dir

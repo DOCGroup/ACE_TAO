@@ -14,39 +14,33 @@ ACE_RCSID (IOR_Endpoint_Hostnames, generate_ior, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var rp =
-        PortableServer::POA::_narrow(poa_object.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow(poa_object.in());
       if  (CORBA::is_nil (rp.in()))
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) panic: nil root poa\n"), 1);
 
       bogus* bogus_impl = new bogus();
       PortableServer::ServantBase_var owner_transfer(bogus_impl);
-      Test::bogus_var b = bogus_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      Test::bogus_var b = bogus_impl->_this();
       CORBA::String_var ior =
-        orb->object_to_string (b.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (b.in());
 
       printf ("%s\n", ior.in());
-  
+
       orb->shutdown();
       orb->destroy();
     }
-  ACE_CATCH (CORBA::Exception, e)
+  catch (const CORBA::Exception& e)
     {
-      ACE_PRINT_EXCEPTION (e, "Caught exception:");
+      e._tao_print_exception ("Caught exception:");
     }
-  ACE_ENDTRY;
 
   return 0;
 }

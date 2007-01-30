@@ -28,8 +28,7 @@ public:
   Quoter_Factory_Finder_i (int debug_level = 1);
   ~Quoter_Factory_Finder_i (void);
 
-  virtual CosLifeCycle::Factories * find_factories (const CosLifeCycle::Key &factory_key
-                                                    ACE_ENV_ARG_DECL)
+  virtual CosLifeCycle::Factories * find_factories (const CosLifeCycle::Key &factory_key)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory));
   // Returns a sequence of Factories if factories matching the

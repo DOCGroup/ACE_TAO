@@ -362,21 +362,18 @@ CC_Client::print_usage (void)
 int
 CC_Client::init_naming_service (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       ACE_NEW_RETURN (naming_service_,
                       CC_naming_service,
                       -1);
 
-      this->naming_service_->Init (this->orb_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->naming_service_->Init (this->orb_);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -387,15 +384,12 @@ CC_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    "internet"
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    "internet");
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -417,16 +411,13 @@ CC_Client::init (int argc, char **argv)
 
 
           CORBA::Object_var factory_object =
-            this->orb_->string_to_object (this->cc_factory_key_
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->orb_->string_to_object (this->cc_factory_key_);
 
 #if 0
           // The test cannot currently run without the naming service.
           this->factory_ =
             CosConcurrencyControl::LockSetFactory::_narrow
-            (factory_object.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            (factory_object.in ());
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -440,12 +431,11 @@ CC_Client::init (int argc, char **argv)
                   "Factory received OK\n"));
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CC_Client::init");
+      ex._tao_print_exception ("CC_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

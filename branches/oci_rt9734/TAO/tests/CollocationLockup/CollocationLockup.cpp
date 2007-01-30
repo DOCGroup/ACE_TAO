@@ -28,7 +28,6 @@ namespace
   const size_t N_THREADS = 20;
 #endif
   const size_t N_ITERATIONS = 100;
-  const char* nameString = "myBobject";
 
   CORBA::ORB_var g_pOrb;
   PortableServer::POA_var g_pPoa;

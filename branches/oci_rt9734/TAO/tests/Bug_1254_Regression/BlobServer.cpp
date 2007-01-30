@@ -11,11 +11,10 @@ BlobServerImpl::BlobServerImpl (CORBA::ORB_ptr orb)
 }
 
 /// Implement the BlobServer interface
-void 
+void
 BlobServerImpl::test(
             BlobType1& blob1,
             BlobType2& blob2
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -35,8 +34,8 @@ BlobServerImpl::test(
 }
 
 void
-BlobServerImpl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+BlobServerImpl::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

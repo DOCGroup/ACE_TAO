@@ -46,7 +46,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -54,33 +54,33 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_Notify_Event* event)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
                      ));
 
-  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
+  virtual void remove_filter (CosNotifyFilter::FilterID filter)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::FilterNotFound
                      ));
 
-  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
+  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::FilterNotFound
                      ));
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
-  virtual void remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void remove_all_filters (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
@@ -88,9 +88,9 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
+    const TAO_Notify::NVPList& attrs);
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
 

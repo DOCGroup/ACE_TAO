@@ -72,13 +72,12 @@ public:
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
-    TAO_InputCDR & cdr
-    ACE_ENV_ARG_DECL);
+    TAO_InputCDR & cdr);
 
 
 protected:
   /// Execute the dispatch operation.
-  int execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  int execute_i (void);
 
 protected:
   /// The Proxy
@@ -120,7 +119,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int execute (void);
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -156,10 +155,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
 
   /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int execute (void);
 
   /// Create a copy of this method request
-  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
+  virtual TAO_Notify_Method_Request_Queueable* copy (void);
 };
 
 /*****************************************************************************/

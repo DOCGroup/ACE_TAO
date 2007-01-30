@@ -51,20 +51,17 @@ public:
   size_t size (void) const;
 
   /// Insert a new element to the collection
-  void connected (PROXY *
-                  ACE_ENV_ARG_DECL_NOT_USED);
+  void connected (PROXY *);
 
   /// Insert a new element that could be there already.
-  void reconnected (PROXY *
-                    ACE_ENV_ARG_DECL_NOT_USED);
+  void reconnected (PROXY *);
 
   /// Remove an element from the collection
-  void disconnected (PROXY *
-                     ACE_ENV_ARG_DECL_NOT_USED);
+  void disconnected (PROXY *);
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void shutdown (void);
 
 private:
   /// The underlying implementation object

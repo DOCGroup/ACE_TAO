@@ -43,41 +43,32 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-static void test_synchronous (Test::Echo_ptr echo
-                              ACE_ENV_ARG_DECL);
+static void test_synchronous (Test::Echo_ptr echo);
 
 static void test_ami (CORBA::ORB_ptr orb,
-                      Test::Echo_ptr echo
-                      ACE_ENV_ARG_DECL);
+                      Test::Echo_ptr echo);
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       {
         PortableInterceptor::ORBInitializer_var initializer (
             new Client_ORBInitializer);
-        PortableInterceptor::register_orb_initializer (initializer.in()
-                                                       ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        PortableInterceptor::register_orb_initializer (initializer.in());
       }
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -85,19 +76,15 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       Test::Echo_var echo =
-        Test::Echo::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Echo::_narrow (tmp.in ());
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (CORBA::is_nil (echo.in ()))
         {
@@ -107,20 +94,14 @@ main (int argc, char *argv[])
                             1);
         }
 
-      test_synchronous (echo.in ()
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_synchronous (echo.in ());
 
       test_ami (orb.in (),
-                echo.in ()
-                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                echo.in ());
 
-      echo->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      echo->shutdown ();
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
 
       unsigned long request_count =
         Echo_Client_Request_Interceptor::request_count;
@@ -149,20 +130,17 @@ main (int argc, char *argv[])
                       "ERROR: No response handled "));
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return exit_status;
 }
 
 static void
-test_synchronous (Test::Echo_ptr echo
-                  ACE_ENV_ARG_DECL)
+test_synchronous (Test::Echo_ptr echo)
 {
   unsigned long initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
@@ -172,9 +150,7 @@ test_synchronous (Test::Echo_ptr echo
   for (unsigned long i = 0; i != ITERATIONS; ++i)
     {
       CORBA::String_var s =
-        echo->echo_operation ("dummy message"
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        echo->echo_operation ("dummy message");
     }
 
   unsigned long total_request_count =
@@ -207,8 +183,7 @@ test_synchronous (Test::Echo_ptr echo
 
 static void
 test_ami (CORBA::ORB_ptr orb,
-          Test::Echo_ptr echo
-          ACE_ENV_ARG_DECL)
+          Test::Echo_ptr echo)
 {
   Test::AMI_EchoHandler_var echo_handler;
   Echo_Handler * echo_handler_impl = new Echo_Handler;
@@ -216,8 +191,7 @@ test_ami (CORBA::ORB_ptr orb,
   PortableServer::ServantBase_var safe_echo_handler = echo_handler_impl;
 
   echo_handler =
-    echo_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    echo_handler_impl->_this ();
 
   unsigned long initial_request_count =
     Echo_Client_Request_Interceptor::request_count;
@@ -228,9 +202,7 @@ test_ami (CORBA::ORB_ptr orb,
     {
       echo->sendc_echo_operation (
         echo_handler.in (),
-        "dummy message"
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        "dummy message");
     }
 
   unsigned long total_request_count =
@@ -256,13 +228,11 @@ test_ami (CORBA::ORB_ptr orb,
   while (echo_handler_impl->replies () != ITERATIONS)
     {
       CORBA::Boolean pending =
-        orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        orb->work_pending ();
 
       if (pending)
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          orb->perform_work ();
         }
 
     }
@@ -286,34 +256,28 @@ test_ami (CORBA::ORB_ptr orb,
 #if 0
 static void
 wait_for_exception (CORBA::ORB_ptr orb,
-                    Test::Echo_ptr echo
-                    ACE_ENV_ARG_DECL)
+                    Test::Echo_ptr echo)
 {
   ACE_Time_Value tv (1, 0);
-  orb->run (tv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  orb->run (tv);
 
   bool exception_detected = false;
 
   while(!exception_detected)
     {
-      ACE_TRY
+      try
         {
           CORBA::String_var dummy =
-            echo->echo_operation ("foo"
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            echo->echo_operation ("foo");
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           exception_detected = true;
         }
-      ACE_ENDTRY;
     }
 
   tv = ACE_Time_Value (1, 0);
-  orb->run (tv ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  orb->run (tv);
 }
 
 #endif /*if 0*/

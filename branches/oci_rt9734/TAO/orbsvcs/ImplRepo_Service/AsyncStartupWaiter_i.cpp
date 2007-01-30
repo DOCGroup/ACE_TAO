@@ -24,7 +24,7 @@ void AsyncStartupWaiter_i::debug (bool dbg)
 }
 
 void AsyncStartupWaiter_i::wait_for_startup (AMH_AsyncStartupWaiterResponseHandler_ptr rh,
-   const char* name ACE_ENV_ARG_DECL_NOT_USED) ACE_THROW_SPEC ((CORBA::SystemException))
+   const char* name) ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PendingListPtr plst;
   pending_.find(name, plst);
@@ -64,18 +64,16 @@ AsyncStartupWaiter_i::send_response (ImplementationRepository::AMH_AsyncStartupW
   si->partial_ior = partial_ior;
   si->ior = ior;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
-      rh.wait_for_startup (si.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      rh.wait_for_startup (si.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
       if (debug_)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "AsyncStartupWaiter_i::send_response ()");
+        ex._tao_print_exception (
+          "AsyncStartupWaiter_i::send_response ()");
     }
-  ACE_ENDTRY;
 }
 
 void
@@ -118,20 +116,18 @@ AsyncStartupWaiter_i::unblock_all (const char* name) {
 
   for (size_t i = 0; i < tmp.size(); ++i)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
+    try
       {
         ImplementationRepository::AMH_AsyncStartupWaiterResponseHandler_var& rh = tmp[i];
 
-        rh->wait_for_startup (si.in () ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        rh->wait_for_startup (si.in ());
       }
-    ACE_CATCHANY
+    catch (const CORBA::Exception& ex)
       {
         if (debug_)
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "AsyncStartupWaiter_i::unblock_all ()");
+          ex._tao_print_exception (
+            "AsyncStartupWaiter_i::unblock_all ()");
       }
-    ACE_ENDTRY;
   }
 }
 

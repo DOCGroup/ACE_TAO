@@ -71,14 +71,14 @@ public:
 private:
 
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  void disconnect_push_consumer (void)
     ACE_THROW_SPEC ((
             CORBA::SystemException
     ));
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const CORBA::Any& data ACE_ENV_ARG_DECL)
+  void push (const CORBA::Any& data)
     ACE_THROW_SPEC ((
             CORBA::SystemException,
             CosEventComm::Disconnected

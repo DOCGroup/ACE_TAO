@@ -61,7 +61,7 @@ namespace CIAO
   public:
     virtual ~Map_Key_Cookie_init (void);
 
-    virtual CORBA::ValueBase *create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL);
+    virtual CORBA::ValueBase *create_for_unmarshal ();
   };
 }
 

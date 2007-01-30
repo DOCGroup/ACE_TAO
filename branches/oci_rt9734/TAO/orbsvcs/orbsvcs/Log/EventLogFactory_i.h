@@ -65,14 +65,12 @@ public:
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
   CosEventChannelAdmin::EventChannel_ptr
-    init (PortableServer::POA_ptr poa
-              ACE_ENV_ARG_DECL);
+    init (PortableServer::POA_ptr poa);
 
   /// Activate this servant with the ORB and POA passed in.
   DsEventLogAdmin::EventLogFactory_ptr
     activate (CORBA::ORB_ptr orb,
-              PortableServer::POA_ptr poa
-              ACE_ENV_ARG_DECL);
+              PortableServer::POA_ptr poa);
 
   /// Used to create an EventLog.
   DsEventLogAdmin::EventLog_ptr create (
@@ -80,7 +78,6 @@ public:
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -94,7 +91,6 @@ public:
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -105,14 +101,12 @@ public:
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -121,10 +115,9 @@ public:
 protected:
   virtual CORBA::RepositoryId
     create_repositoryid ();
-	
+
   virtual PortableServer::ServantBase*
-    create_log_servant (DsLogAdmin::LogId id
-			ACE_ENV_ARG_DECL);
+    create_log_servant (DsLogAdmin::LogId id);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;

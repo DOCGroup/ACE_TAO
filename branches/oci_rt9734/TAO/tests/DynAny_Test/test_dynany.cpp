@@ -43,7 +43,7 @@ Test_DynAny::run_test (void)
 {
   Data data (this->orb_);
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
@@ -53,14 +53,10 @@ Test_DynAny::run_test (void)
                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA::Object_var factory_obj =
-        this->orb_->resolve_initial_references ("DynAnyFactory"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("DynAnyFactory");
 
       DynamicAny::DynAnyFactory_var dynany_factory =
-        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ());
 
       if (CORBA::is_nil (dynany_factory.in ()))
         {
@@ -76,16 +72,12 @@ Test_DynAny::run_test (void)
       CORBA::Any in1;
       in1 <<= data.m_double2;
       DynamicAny::DynAny_var fa1 =
-        dynany_factory->create_dyn_any (in1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        dynany_factory->create_dyn_any (in1);
 
-      fa1->insert_double (data.m_double1
-                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fa1->insert_double (data.m_double1);
 
       CORBA::Double d_out =
-        fa1->get_double (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        fa1->get_double ();
 
       if (d_out == data.m_double1)
         {
@@ -102,18 +94,12 @@ Test_DynAny::run_test (void)
 
       d_out = data.m_double2;
       DynamicAny::DynAny_var ftc1 =
-        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_double
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_double);
       CORBA::Any in_any1;
       in_any1 <<= data.m_double1;
-      ftc1->from_any (in_any1
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      analyzer.analyze (ftc1.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ftc1->from_any (in_any1);
+      analyzer.analyze (ftc1.in());
+      CORBA::Any_var out_any1 = ftc1->to_any ();
       out_any1 >>= d_out;
 
       if (d_out == data.m_double1)
@@ -126,10 +112,8 @@ Test_DynAny::run_test (void)
           ++this->error_count_;
         }
 
-      fa1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fa1->destroy ();
+      ftc1->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
@@ -141,18 +125,12 @@ Test_DynAny::run_test (void)
       CORBA::Any in;
       in <<= data.m_typecode2;
       DynamicAny::DynAny_var fa2 =
-        dynany_factory->create_dyn_any (in
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      fa2->insert_typecode (data.m_typecode1
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        dynany_factory->create_dyn_any (in);
+      fa2->insert_typecode (data.m_typecode1);
       CORBA::TypeCode_var tc_out =
-        fa2->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        fa2->get_typecode ();
 
-      if (tc_out->equal (data.m_typecode1
-                         ACE_ENV_ARG_PARAMETER))
+      if (tc_out->equal (data.m_typecode1))
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -162,30 +140,21 @@ Test_DynAny::run_test (void)
           ++this->error_count_;
         }
 
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc2 =
-        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_TypeCode
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_TypeCode);
       CORBA::Any in_any2;
       in_any2 <<= data.m_typecode1;
-      ftc2->from_any (in_any2
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      analyzer.analyze (ftc2.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Any_var out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ftc2->from_any (in_any2);
+      analyzer.analyze (ftc2.in());
+      CORBA::Any_var out_any2 = ftc2->to_any ();
       CORBA::TypeCode_ptr out_tc;
       out_any2 >>= out_tc;
 
-      CORBA::Boolean equal = out_tc->equal (data.m_typecode1
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Boolean equal = out_tc->equal (data.m_typecode1);
 
       if (equal)
         {
@@ -197,13 +166,10 @@ Test_DynAny::run_test (void)
           ++this->error_count_;
         }
 
-      ACE_TRY_CHECK;
 
-      fa2->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ftc2->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+      fa2->destroy ();
+      ftc2->destroy ();
+
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
                  data.labels[16]));
@@ -216,19 +182,14 @@ Test_DynAny::run_test (void)
       ss.length (0UL);
       in3 <<= ss;
       DynamicAny::DynAny_var fa3 =
-        dynany_factory->create_dyn_any (in3
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      fa3->insert_short_seq (data.m_shortseq1
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        dynany_factory->create_dyn_any (in3);
+      fa3->insert_short_seq (data.m_shortseq1);
       data.m_shortseq2 =
-        fa3->get_short_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+        fa3->get_short_seq ();
+
       bool good =
         data.m_shortseq2->length () == data.m_shortseq1.length ();
-        
+
       if (good)
         {
           for (CORBA::ULong i = 0; i < data.m_shortseq1.length (); ++i)
@@ -251,31 +212,24 @@ Test_DynAny::run_test (void)
           ++this->error_count_;
         }
 
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc3 =
-        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_ShortSeq
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_ShortSeq);
       CORBA::Any in_any3;
       in_any3 <<= data.m_shortseq1;
-      ftc3->from_any (in_any3
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      analyzer.analyze (ftc3.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CORBA::Any_var out_any3 = ftc3->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+      ftc3->from_any (in_any3);
+      analyzer.analyze (ftc3.in ());
+      CORBA::Any_var out_any3 = ftc3->to_any ();
+
       CORBA::ShortSeq *outseq = 0;
       out_any3.in () >>= outseq;
 
       good =
         outseq->length () == data.m_shortseq1.length ();
-        
+
       if (good)
         {
           for (CORBA::ULong i = 0; i < data.m_shortseq1.length (); ++i)
@@ -298,20 +252,15 @@ Test_DynAny::run_test (void)
           ++this->error_count_;
         }
 
-      ACE_TRY_CHECK;
 
-      fa3->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ftc3->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fa3->destroy ();
+      ftc3->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "test_dynany::run_test");
+      ex._tao_print_exception ("test_dynany::run_test");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",

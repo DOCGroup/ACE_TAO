@@ -65,35 +65,32 @@ public:
 		   const char *protocol,
 		   CORBA::ULong invocation_rate,
 		   CORBA::ULong message_size,
-		   CORBA::ULong iterations
-                   ACE_ENV_ARG_DECL)
+		   CORBA::ULong iterations)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL)
+  void end_test (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void oneway_sync (ACE_ENV_SINGLE_ARG_DECL)
+  void oneway_sync (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_sync (ACE_ENV_SINGLE_ARG_DECL)
+  void twoway_sync (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void oneway_method (CORBA::Long session_id,
 		      CORBA::ULong iteration,
-		      const ::test::octets &payload
-		      ACE_ENV_ARG_DECL)
+		      const ::test::octets &payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void twoway_method (CORBA::Long &session_id,
 		      CORBA::ULong &iteration,
-		      ::test::octets &payload
-		      ACE_ENV_ARG_DECL)
+		      ::test::octets &payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -129,8 +126,7 @@ test_i::start_test (CORBA::Long session_id,
 		    const char *protocol,
 		    CORBA::ULong invocation_rate,
 		    CORBA::ULong message_size,
-		    CORBA::ULong iterations
-                    ACE_ENV_ARG_DECL_NOT_USED)
+		    CORBA::ULong iterations)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
@@ -173,7 +169,7 @@ test_i::start_test (CORBA::Long session_id,
 }
 
 void
-test_i::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::end_test (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Record end time.
@@ -198,7 +194,7 @@ test_i::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 	      this->number_of_invocations_received_,
 	      this->iterations_ - this->number_of_invocations_received_,
   	      (this->iterations_ - this->number_of_invocations_received_) / (double) this->iterations_ * 100));
-  
+
   if (print_missed_invocations)
     {
       ACE_DEBUG ((LM_DEBUG, "\nFollowing invocations were never received:\n"));
@@ -220,10 +216,10 @@ test_i::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "Session id ends %d\n",
 		  this->session_id_));
-      
+
       stats.dump_results ("Inter-arrival times", gsf);
 
       ACE_Throughput_Stats::dump_throughput ("Inter-arrival times", gsf,
@@ -237,13 +233,13 @@ test_i::end_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-test_i::oneway_sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::oneway_sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
-test_i::twoway_sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::twoway_sync (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -251,15 +247,14 @@ test_i::twoway_sync (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 test_i::oneway_method (CORBA::Long session_id,
 		       CORBA::ULong iteration,
-		       const ::test::octets &payload
-		       ACE_ENV_ARG_DECL_NOT_USED)
+		       const ::test::octets &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->session_id_ != session_id)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "Late message with iteration id = %d: will not count message\n",
-		  iteration));		
+		  iteration));
       return;
     }
 
@@ -289,15 +284,14 @@ test_i::oneway_method (CORBA::Long session_id,
 void
 test_i::twoway_method (CORBA::Long &session_id,
 		       CORBA::ULong &iteration,
-		       ::test::octets &payload
-		       ACE_ENV_ARG_DECL_NOT_USED)
+		       ::test::octets &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->session_id_ != session_id)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "Late message with iteration id = %d: will not count message\n",
-		  iteration));		
+		  iteration));
       return;
     }
 
@@ -325,21 +319,19 @@ test_i::twoway_method (CORBA::Long &session_id,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (0);
 }
 
 int
@@ -347,14 +339,12 @@ main (int argc, char **argv)
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       int parse_args_result =
         parse_args (argc, argv);
@@ -362,18 +352,13 @@ main (int argc, char **argv)
         return parse_args_result;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
       test_i *servant =
 	new test_i (orb.in (),
@@ -383,12 +368,10 @@ main (int argc, char **argv)
       ACE_UNUSED_ARG (safe_servant);
 
       test_var test =
-        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        servant->_this ();
 
       CORBA::String_var ior =
-        orb->object_to_string (test.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->object_to_string (test.in ());
 
       FILE *output_file =
         ACE_OS::fopen (ior_file, "w");
@@ -403,18 +386,15 @@ main (int argc, char **argv)
 
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ex._tao_print_exception ("Exception caught");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

@@ -26,25 +26,21 @@ Client_Task::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting big reply\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Now get the big replies..
-  ACE_TRY
+  try
     {
       for (int i = 0; i != this->event_count_; ++i)
         {
           Test::Octet_Seq_var dummy =
-          this->reply_gen_->get_big_reply (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->reply_gen_->get_big_reply ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception Caught\n");
+      ex._tao_print_exception ("Exception Caught\n");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
@@ -55,7 +51,6 @@ Client_Task::validate_connection (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Validating connection ..\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Try to setup a connection to the remote server, ignoring all the
   // exceptions that are expected (see bug 189 on why it is so). We
@@ -63,13 +58,11 @@ Client_Task::validate_connection (void)
   // to work with Minimum CORBA builds too..
   for (int i = 0; i != 100; ++i)
     {
-      ACE_TRY
+      try
         {
 
-          this->reply_gen_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->reply_gen_->ping ();
         }
-      ACE_CATCHANY {}
-      ACE_ENDTRY;
+      catch (const CORBA::Exception&){}
     }
 }

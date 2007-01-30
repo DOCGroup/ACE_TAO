@@ -60,29 +60,23 @@ public:
 
   /// Callback from the Timeout_Generator
   void push_to_proxy (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info
-                      ACE_ENV_ARG_DECL);
+                      TAO_EC_QOS_Info& qos_info);
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info
-                      ACE_ENV_ARG_DECL);
+                      TAO_EC_QOS_Info& qos_info);
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info
-                             ACE_ENV_ARG_DECL);
+                             TAO_EC_QOS_Info& qos_info);
   virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info
-                     ACE_ENV_ARG_DECL);
+                     TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info
-                            ACE_ENV_ARG_DECL);
+                            TAO_EC_QOS_Info& qos_info);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info
-                                ACE_ENV_ARG_DECL);
+                                const TAO_EC_QOS_Info &qos_info);
 
 private:
   TAO_EC_Timeout_Filter (const TAO_EC_Timeout_Filter&);

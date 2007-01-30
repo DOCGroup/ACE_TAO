@@ -67,10 +67,10 @@ ACE_OS::wcscat_emulation (wchar_t *destination,
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCHR)
 wchar_t *
-ACE_OS::wcschr_emulation (const wchar_t *string, wint_t c)
+ACE_OS::wcschr_emulation (const wchar_t *string, wchar_t c)
 {
   for (;*string ; ++string)
-    if (*string == static_cast<wchar_t> (c))
+    if (*string == c)
       return const_cast<wchar_t *> (string);
 
   return 0;
@@ -105,8 +105,8 @@ ACE_OS::wcscpy_emulation (wchar_t *destination,
 size_t
 ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 {
-  const wchar_t *scan;
-  const wchar_t *rej_scan;
+  const wchar_t *scan = 0;
+  const wchar_t *rej_scan = 0;
   int count = 0;
 
   for (scan = s; *scan; scan++)

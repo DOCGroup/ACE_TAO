@@ -31,118 +31,110 @@ TAO_Naming_Context::~TAO_Naming_Context (void)
 }
 
 PortableServer::POA_ptr
-TAO_Naming_Context::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/*env*/)
+TAO_Naming_Context::_default_POA (/*env*/)
 {
   return impl_->_default_POA ();
 }
 
 void
 TAO_Naming_Context::bind (const CosNaming::Name &n,
-                          CORBA::Object_ptr obj
-                          ACE_ENV_ARG_DECL)
+                          CORBA::Object_ptr obj)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNaming::NamingContext::NotFound,
                      CosNaming::NamingContext::CannotProceed,
                      CosNaming::NamingContext::InvalidName,
                      CosNaming::NamingContext::AlreadyBound))
 {
-  impl_->bind (n, obj ACE_ENV_ARG_PARAMETER);
+  impl_->bind (n, obj);
 }
 
 void
 TAO_Naming_Context::rebind (const CosNaming::Name &n,
-                            CORBA::Object_ptr obj
-                            ACE_ENV_ARG_DECL)
+                            CORBA::Object_ptr obj)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
                        CosNaming::NamingContext::InvalidName))
 {
-  impl_->rebind (n, obj ACE_ENV_ARG_PARAMETER);
+  impl_->rebind (n, obj);
 }
 
 void
 TAO_Naming_Context::bind_context (const CosNaming::Name &n,
-                                  CosNaming::NamingContext_ptr nc
-                                  ACE_ENV_ARG_DECL)
+                                  CosNaming::NamingContext_ptr nc)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
                        CosNaming::NamingContext::InvalidName,
                        CosNaming::NamingContext::AlreadyBound))
 {
-  impl_->bind_context (n, nc ACE_ENV_ARG_PARAMETER);
+  impl_->bind_context (n, nc);
 }
 
 void
 TAO_Naming_Context::rebind_context (const CosNaming::Name &n,
-                                    CosNaming::NamingContext_ptr nc
-                                    ACE_ENV_ARG_DECL)
+                                    CosNaming::NamingContext_ptr nc)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
                        CosNaming::NamingContext::InvalidName))
 {
-  impl_->rebind_context (n, nc ACE_ENV_ARG_PARAMETER);
+  impl_->rebind_context (n, nc);
 }
 
 CORBA::Object_ptr
-TAO_Naming_Context::resolve (const CosNaming::Name &n
-                             ACE_ENV_ARG_DECL)
+TAO_Naming_Context::resolve (const CosNaming::Name &n)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
                        CosNaming::NamingContext::InvalidName))
 {
-  return impl_->resolve (n ACE_ENV_ARG_PARAMETER);
+  return impl_->resolve (n);
 }
 
 void
-TAO_Naming_Context::unbind (const CosNaming::Name &n
-                            ACE_ENV_ARG_DECL)
+TAO_Naming_Context::unbind (const CosNaming::Name &n)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
                        CosNaming::NamingContext::InvalidName))
 {
-  impl_->unbind (n ACE_ENV_ARG_PARAMETER);
+  impl_->unbind (n);
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Context::new_context (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return impl_->new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return impl_->new_context ();
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Context::bind_new_context (const CosNaming::Name &n
-                                      ACE_ENV_ARG_DECL)
+TAO_Naming_Context::bind_new_context (const CosNaming::Name &n)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::AlreadyBound,
                        CosNaming::NamingContext::CannotProceed,
                        CosNaming::NamingContext::InvalidName))
 {
-  return impl_->bind_new_context (n ACE_ENV_ARG_PARAMETER);
+  return impl_->bind_new_context (n);
 }
 
 void
-TAO_Naming_Context::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Naming_Context::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotEmpty))
 {
-  impl_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  impl_->destroy ();
 }
 
 void
 TAO_Naming_Context::list (CORBA::ULong how_many,
                           CosNaming::BindingList_out bl,
-                          CosNaming::BindingIterator_out bi
-                          ACE_ENV_ARG_DECL)
+                          CosNaming::BindingIterator_out bi)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  impl_->list (how_many, bl, bi ACE_ENV_ARG_PARAMETER);
+  impl_->list (how_many, bl, bi);
 }
 
 void
@@ -177,8 +169,7 @@ to_string_helper_assign (char * &k, const char * &src)
 }
 
 char *
-TAO_Naming_Context::to_string (const CosNaming::Name &n
-                               ACE_ENV_ARG_DECL)
+TAO_Naming_Context::to_string (const CosNaming::Name &n)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNaming::NamingContext::InvalidName))
 {
@@ -292,8 +283,7 @@ to_name_helper (char *dest, const char*& src, Hint hint)
 }
 
 CosNaming::Name *
-TAO_Naming_Context::to_name (const char *sn
-                             ACE_ENV_ARG_DECL)
+TAO_Naming_Context::to_name (const char *sn)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNaming::NamingContext::InvalidName))
 {
@@ -411,8 +401,7 @@ TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
 size_t
 TAO_Naming_Context::to_url_validate_and_compute_size (
     const char *addr,
-    const char *sn
-    ACE_ENV_ARG_DECL)
+    const char *sn)
 {
   size_t addr_len = ACE_OS::strlen (addr);
 
@@ -442,17 +431,14 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
 
 char *
 TAO_Naming_Context::to_url (const char * addr,
-                            const char * sn
-                            ACE_ENV_ARG_DECL)
+                            const char * sn)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNaming::NamingContextExt::InvalidAddress,
                    CosNaming::NamingContext::InvalidName))
 {
   /// Compute how many characters will be required for the URL
   size_t no_char =
-    TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn
-                                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn);
 
 
   // The 'corbaname:' tag is to be prepended at the starting of the
@@ -513,8 +499,7 @@ TAO_Naming_Context::to_url (const char * addr,
 }
 
 CORBA::Object_ptr
-TAO_Naming_Context::resolve_str (const char * n
-                                 ACE_ENV_ARG_DECL)
+TAO_Naming_Context::resolve_str (const char * n)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNaming::NamingContext::NotFound,
                    CosNaming::NamingContext::CannotProceed,
@@ -525,11 +510,10 @@ TAO_Naming_Context::resolve_str (const char * n
   // argument instead of a Name.
 
   // Get the unstrigified name.
-  CosNaming::Name_var name = this->to_name (n ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  CosNaming::Name_var name = this->to_name (n);
 
   // Pass this unstringified name to resolve and return an Object_ptr
-  return this->resolve (name.in () ACE_ENV_ARG_PARAMETER);
+  return this->resolve (name.in ());
 }
 
 TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)

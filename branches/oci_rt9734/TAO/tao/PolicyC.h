@@ -143,12 +143,12 @@ namespace CORBA
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        ACE_ENV_ARG_DECL
+
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        ACE_ENV_ARG_DECL
+
       );
 
     // TAO_IDL - Generated from
@@ -196,12 +196,12 @@ namespace CORBA
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        ACE_ENV_ARG_DECL
+
       ) const;
 
     virtual void _tao_decode (
         TAO_InputCDR &
-        ACE_ENV_ARG_DECL
+
       );
 
     // TAO_IDL - Generated from
@@ -264,12 +264,12 @@ namespace CORBA
 
     static Policy_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static Policy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static Policy_ptr _nil (void)
@@ -283,7 +283,7 @@ namespace CORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::PolicyType policy_type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -293,7 +293,7 @@ namespace CORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -303,7 +303,7 @@ namespace CORBA
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -314,7 +314,7 @@ namespace CORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -407,12 +407,12 @@ namespace CORBA
 
     static PolicyManager_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PolicyManager_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PolicyManager_ptr _nil (void)
@@ -427,7 +427,7 @@ namespace CORBA
 
     virtual ::CORBA::PolicyList * get_policy_overrides (
         const ::CORBA::PolicyTypeSeq & ts
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -439,7 +439,7 @@ namespace CORBA
     virtual void set_policy_overrides (
         const ::CORBA::PolicyList & policies,
         ::CORBA::SetOverrideType set_add
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -451,7 +451,7 @@ namespace CORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;
@@ -516,12 +516,12 @@ namespace CORBA
 
     static PolicyCurrent_ptr _narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PolicyCurrent_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     static PolicyCurrent_ptr _nil (void)
@@ -536,7 +536,7 @@ namespace CORBA
 
     virtual CORBA::Boolean _is_a (
         const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+
       );
 
     virtual const char* _interface_repository_id (void) const;

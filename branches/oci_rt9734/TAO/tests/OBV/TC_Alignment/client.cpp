@@ -3,8 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (TC_Alignment, 
-           client, 
+ACE_RCSID (TC_Alignment,
+           client,
            "$Id$")
 
 static const char *ior_input_file = "file://test.ior";
@@ -18,8 +18,7 @@ int debug = 0;
 int do_shutdown = 0;
 
 int
-register_factories (CORBA::ORB_ptr orb
-                    ACE_ENV_ARG_DECL)
+register_factories (CORBA::ORB_ptr orb)
 {
   // Create and register factories.
 
@@ -29,9 +28,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory1->tao_repository_id (),
-                               factory1
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                               factory1);
 
   factory1->_remove_ref ();
 
@@ -41,9 +38,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory3->tao_repository_id (),
-                               factory3
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                               factory3);
 
   factory3->_remove_ref ();
 
@@ -53,9 +48,7 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory5->tao_repository_id (),
-                               factory5
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                               factory5);
 
   factory5->_remove_ref ();
 
@@ -65,22 +58,17 @@ register_factories (CORBA::ORB_ptr orb
                   -1);
 
   orb->register_value_factory (factory7->tao_repository_id (),
-                               factory7
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                               factory7);
 
   factory7->_remove_ref ();
   return 0;
 }
 
 int
-run_test (test_ptr objref, 
-          CORBA::Long offset
-          ACE_ENV_ARG_DECL)
+run_test (test_ptr objref,
+          CORBA::Long offset)
 {
-  CORBA::Any_var result = objref->get_value (offset
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Any_var result = objref->get_value (offset);
 
   CORBA::Boolean status = 0;
   CORBA::Long member_value = 0;
@@ -159,30 +147,24 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int 
+int
 main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            "" 
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            "");
 
       if (parse_args (argc, argv) != 0)
         {
           return 1;
         }
 
-      CORBA::Object_var obj = 
-        orb->string_to_object (ior_input_file
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var obj =
+        orb->string_to_object (ior_input_file);
 
-      int status = register_factories (orb.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int status = register_factories (orb.in ());
 
       if (status != 0)
         {
@@ -195,14 +177,11 @@ main (int argc, char* argv[])
           return -1;
         }
 
-      test_var objref = test::_narrow (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      test_var objref = test::_narrow (obj.in ());
 
       for (CORBA::Long i = 1; i < 8; i += 2)
         {
-          status = run_test (objref.in (), i ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          status = run_test (objref.in (), i);
 
           if (status == 0)
             {
@@ -218,21 +197,17 @@ main (int argc, char* argv[])
         }
 
       if (do_shutdown)
-        { 
-          objref->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+        {
+          objref->shutdown ();
         }
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "exception:");
+      ex._tao_print_exception ("exception:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

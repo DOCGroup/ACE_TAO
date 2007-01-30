@@ -4,7 +4,6 @@ ACE_RCSID (PortableServer,
            POA,
            "$Id$")
 
-//
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Regular_POA.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -19,7 +18,7 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   TAO_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
                   TAO_Object_Adapter *object_adapter
-                  ACE_ENV_ARG_DECL)
+                  )
   : TAO_Root_POA (name,
                   poa_manager,
                   policies,
@@ -28,7 +27,7 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   thread_lock,
                   orb_core,
                   object_adapter
-                  ACE_ENV_ARG_PARAMETER),
+                 ),
      parent_ (parent)
 {
 }
@@ -38,7 +37,7 @@ TAO_Regular_POA::~TAO_Regular_POA (void)
 }
 
 void
-TAO_Regular_POA::remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Regular_POA::remove_from_parent_i (void)
 {
   // Remove POA from the parent
   if (this->parent_ != 0)
@@ -46,7 +45,7 @@ TAO_Regular_POA::remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL)
       int result = this->parent_->delete_child (this->name_);
       if (result != 0)
         {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
     }
 }

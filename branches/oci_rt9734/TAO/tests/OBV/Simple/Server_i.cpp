@@ -42,8 +42,7 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 
 
 void
-Checkpoint_i::put_event (Event *event
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Checkpoint_i::put_event (Event *event)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Let us see what event has arrived
@@ -55,7 +54,7 @@ Checkpoint_i::put_event (Event *event
 // Shutdown the server application.
 
 void
-Checkpoint_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Checkpoint_i::shutdown (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

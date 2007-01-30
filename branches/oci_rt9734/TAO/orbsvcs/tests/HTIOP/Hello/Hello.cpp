@@ -11,7 +11,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::get_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "in get_string\n"));
@@ -19,9 +19,9 @@ Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Hello::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
   ACE_DEBUG ((LM_DEBUG,"in shutdown\n"));
 }

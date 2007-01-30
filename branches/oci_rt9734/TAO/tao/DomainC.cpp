@@ -175,7 +175,7 @@ TAO::Collocation_Proxy_Broker *
 
 ::CORBA::Policy_ptr CORBA::DomainManager::get_domain_policy (
     ::CORBA::PolicyType policy_type
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -209,8 +209,7 @@ TAO::Collocation_Proxy_Broker *
       this->the_TAO_DomainManager_Proxy_Broker_
     );
 
-  _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (_tao_retval.excp ());
+  _tao_call.invoke (0, 0);
 
   return _tao_retval.retn ();
 }
@@ -245,7 +244,7 @@ CORBA::DomainManager::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::DomainManager_ptr
 CORBA::DomainManager::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+
   )
 {
   return
@@ -253,14 +252,14 @@ CORBA::DomainManager::_narrow (
         _tao_objref,
         "IDL:omg.org/CORBA/DomainManager:1.0",
         CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer
-        ACE_ENV_ARG_PARAMETER
+
       );
 }
 
 CORBA::DomainManager_ptr
 CORBA::DomainManager::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+
   )
 {
   return
@@ -268,7 +267,7 @@ CORBA::DomainManager::_unchecked_narrow (
         _tao_objref,
         "IDL:omg.org/CORBA/DomainManager:1.0",
         CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer
-        ACE_ENV_ARG_PARAMETER
+
       );
 }
 
@@ -292,7 +291,7 @@ CORBA::DomainManager::_tao_release (DomainManager_ptr obj)
 CORBA::Boolean
 CORBA::DomainManager::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL
+
   )
 {
   if (
@@ -312,7 +311,7 @@ CORBA::DomainManager::_is_a (
     {
       return this->::CORBA::Object::_is_a (
           value
-          ACE_ENV_ARG_PARAMETER
+
         );
     }
 }
@@ -376,7 +375,7 @@ TAO::Collocation_Proxy_Broker *
 void CORBA::ConstructionPolicy::make_domain_manager (
     ::CORBA::InterfaceDef_ptr object_type,
     ::CORBA::Boolean constr_policy
-    ACE_ENV_ARG_DECL
+
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -412,8 +411,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
       this->the_TAO_ConstructionPolicy_Proxy_Broker_
     );
 
-  _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  _tao_call.invoke (0, 0);
 }
 
 CORBA::ConstructionPolicy::ConstructionPolicy (void)
@@ -448,7 +446,7 @@ CORBA::ConstructionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+
   )
 {
   return
@@ -456,14 +454,14 @@ CORBA::ConstructionPolicy::_narrow (
         _tao_objref,
         "IDL:omg.org/CORBA/ConstructionPolicy:1.0",
         CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer
-        ACE_ENV_ARG_PARAMETER
+
       );
 }
 
 CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL
+
   )
 {
   return
@@ -471,7 +469,7 @@ CORBA::ConstructionPolicy::_unchecked_narrow (
         _tao_objref,
         "IDL:omg.org/CORBA/ConstructionPolicy:1.0",
         CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer
-        ACE_ENV_ARG_PARAMETER
+
       );
 }
 
@@ -495,7 +493,7 @@ CORBA::ConstructionPolicy::_tao_release (ConstructionPolicy_ptr obj)
 CORBA::Boolean
 CORBA::ConstructionPolicy::_is_a (
     const char *value
-    ACE_ENV_ARG_DECL
+
   )
 {
   if (
@@ -519,7 +517,7 @@ CORBA::ConstructionPolicy::_is_a (
     {
       return this->::CORBA::Object::_is_a (
           value
-          ACE_ENV_ARG_PARAMETER
+
         );
     }
 }

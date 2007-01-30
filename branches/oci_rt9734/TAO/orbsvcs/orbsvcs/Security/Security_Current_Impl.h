@@ -61,8 +61,7 @@ namespace TAO
       /// the given attribute type list associated with the current
       /// request.
       virtual ::Security::AttributeList * get_attributes (
-          const ::Security::AttributeTypeList & attributes
-          ACE_ENV_ARG_DECL)
+          const ::Security::AttributeTypeList & attributes)
         ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
       //@}
 
@@ -75,8 +74,7 @@ namespace TAO
       //@{
       /// Return the Credentials received from the client associate with
       /// the current request.
-      virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
-          ACE_ENV_SINGLE_ARG_DECL)
+      virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ()
         ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
       //@}
 

@@ -23,8 +23,7 @@ public:
   CORBA::Long get_event_count (void);
 
   // = The skeleton methods
-  virtual void receive_payload (const Receiver::Payload &payload
-                                ACE_ENV_ARG_DECL)
+  virtual void receive_payload (const Receiver::Payload &payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

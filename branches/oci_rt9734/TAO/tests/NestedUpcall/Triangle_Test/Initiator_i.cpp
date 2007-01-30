@@ -36,25 +36,22 @@ Initiator_i::~Initiator_i (void)
 }
 
 void
-Initiator_i::foo_object_B (ACE_ENV_SINGLE_ARG_DECL)
+Initiator_i::foo_object_B (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Initiator_i::foo_object_B ()\n"));
 
-  ACE_TRY
+  try
     {
-      this->object_B_var_->foo (this->object_A_var_.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->object_B_var_->foo (this->object_A_var_.in ());
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Initiator_i::foo_object_B: Returned from call.\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "calling the server");
+      ex._tao_print_exception ("calling the server");
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) END Initiator_i::foo_object_B ()\n"));

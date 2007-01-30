@@ -74,8 +74,7 @@ public:
     ~Handler (void) {};
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l
-            ACE_ENV_ARG_DECL_NOT_USED)
+            CORBA::Long out_l)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       if (debug)
@@ -87,37 +86,32 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder
-                  ACE_ENV_ARG_DECL)
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"
                   "Testing proper exception handling ...\n"));
-      ACE_TRY
+      try
         {
-          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          excep_holder->raise_exception ();
         }
-      ACE_CATCH (A::DidTheRightThing, ex)
+      catch (const A::DidTheRightThing& )
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR");
+          ex._tao_print_exception ("ERROR");
           ACE_ERROR ((LM_ERROR,
                       "... caught the wrong exception -> ERROR\n"));
         }
-      ACE_ENDTRY;
-      ACE_CHECK;
     };
 
 
-  void get_yadda (CORBA::Long result
-                  ACE_ENV_ARG_DECL_NOT_USED)
+  void get_yadda (CORBA::Long result)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -125,23 +119,21 @@ public:
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *
-                  ACE_ENV_ARG_DECL_NOT_USED)
+  void get_yadda_excep (::Messaging::ExceptionHolder *)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
-  void set_yadda (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void set_yadda (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called: \n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *
-                  ACE_ENV_ARG_DECL_NOT_USED)
+  void set_yadda_excep (::Messaging::ExceptionHolder *)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -150,7 +142,6 @@ public:
 
   void inout_arg_test (
       const char *
-      ACE_ENV_ARG_DECL_NOT_USED
       )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -158,8 +149,7 @@ public:
                 "Callback method <set_yadda_excep> called: \n"));
   }
 
-  void inout_arg_test_excep (::Messaging::ExceptionHolder *
-                             ACE_ENV_ARG_DECL_NOT_USED)
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -169,39 +159,31 @@ int
 main (int argc, char *argv[])
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object_var =
-        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa_var =
-        PortableServer::POA::_narrow (object_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (object_var.in ());
 
       PortableServer::POAManager_var poa_manager_var =
-        poa_var->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        poa_var->the_POAManager ();
 
-      poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager_var->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // We reuse the object_var smart pointer!
-      object_var = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object_var = orb->string_to_object (ior);
 
       A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (object_var.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        A::AMI_Test::_narrow (object_var.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {
@@ -214,17 +196,14 @@ main (int argc, char *argv[])
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
       A::AMI_AMI_TestHandler_var the_handler_var =
-        handler._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        handler._this ();
 
       // Try out sending asynchronous messages without a reply handler
       // registered. Things fail if we get an exception.
 
       ami_test_var->sendc_foo (A::AMI_AMI_TestHandler::_nil (),
                                0,
-                               ""
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               "");
 
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
@@ -233,9 +212,7 @@ main (int argc, char *argv[])
 
       ami_test_var->sendc_foo (the_handler_var.in (),
                                0,
-                               "Let's talk AMI."
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                               "Let's talk AMI.");
 
       CORBA::Long l = 931247;
 
@@ -247,24 +224,16 @@ main (int argc, char *argv[])
 
           ami_test_var->sendc_foo (the_handler_var.in (),
                                    l,
-                                   "Let's talk AMI."
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                                   "Let's talk AMI.");
         }
 
       // Begin test of attributes
-      ami_test_var->sendc_get_yadda (the_handler_var.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ami_test_var->sendc_get_yadda (the_handler_var.in ());
 
       ami_test_var->sendc_set_yadda (the_handler_var.in (),
-                                     4711
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     4711);
 
-      ami_test_var->sendc_get_yadda (the_handler_var.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ami_test_var->sendc_get_yadda (the_handler_var.in ());
 
       // End test of attributes
 
@@ -287,9 +256,7 @@ main (int argc, char *argv[])
 
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
-                                              "Let's talk SMI."
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                              "Let's talk SMI.");
 
       if (debug)
         {
@@ -300,26 +267,20 @@ main (int argc, char *argv[])
 
       if (shutdown_flag)
         {
-          ami_test_var->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ami_test_var->shutdown ();
         }
 
       poa_var->destroy (1,  // ethernalize objects
                         0  // wait for completion
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       );
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

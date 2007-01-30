@@ -37,11 +37,10 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -49,13 +48,10 @@ main (int argc, char *argv[])
       CIAO::Client_init (orb.in ());
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object(ior);
 
       Deployment::NodeApplication_var node_app =
-        Deployment::NodeApplication::_narrow(tmp.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Deployment::NodeApplication::_narrow(tmp.in ());
 
       if (CORBA::is_nil (node_app.in ()))
         {
@@ -96,8 +92,7 @@ main (int argc, char *argv[])
 
       // Install test component and its home on NodeApplication
       Deployment::ComponentInfos_var comp_info =
-        node_app->install (node_info ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        node_app->install (node_info);
 
       assert (comp_info->length () == 1); //return 1 component objeref
 
@@ -105,9 +100,7 @@ main (int argc, char *argv[])
       Components::CCMObject_var objref = (comp_info[i]).component_ref;
 
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
-        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref.in ());
 
       if (CORBA::is_nil (roundtrip_var.in ()))
         {
@@ -118,12 +111,10 @@ main (int argc, char *argv[])
 
       // initialize the component
       roundtrip_var->ciao_postactivate ();
-      ACE_CHECK_RETURN (1);
 
       //get the provided facets info.
       Components::FacetDescriptions_var facets_info =
-        roundtrip_var->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER) ;
-      ACE_TRY_CHECK;
+        roundtrip_var->get_all_facets () ;
 
       if ( facets_info->length () != 2 )
         {
@@ -141,7 +132,6 @@ main (int argc, char *argv[])
             = NodeAppTest::LatencyTest::_narrow ( (facets_info[i]->facet_ref ()));
           ACE_DEBUG((LM_DEBUG, "Calling on facet %s\n", (facets_info[i]->name ())));
 
-          ACE_TRY_CHECK;
 
           if ( CORBA::is_nil (latency_var.in ()) )
             {
@@ -151,8 +141,7 @@ main (int argc, char *argv[])
 
           CORBA::Long input = 1L;
           CORBA::Long output =
-            latency_var->cube_long (input ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            latency_var->cube_long (input);
 
           if (input == output)
             ACE_DEBUG ((LM_DEBUG, "Retrun values matched!!\n"));
@@ -167,17 +156,14 @@ main (int argc, char *argv[])
       node_app->remove ();
       ACE_DEBUG ((LM_DEBUG, "Component and Home removed successfully\n"));
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
       ACE_DEBUG ((LM_DEBUG, "Test success!!\n"));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

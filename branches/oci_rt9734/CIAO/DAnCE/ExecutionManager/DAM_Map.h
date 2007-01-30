@@ -48,7 +48,7 @@ namespace CIAO
         ::Deployment::DomainApplicationManager_ptr tmp);
 
       Deployment::DomainApplicationManagers *
-      get_dams (ACE_ENV_SINGLE_ARG_DECL);
+      get_dams ();
 
       bool unbind_dam (const ACE_CString &str);
 

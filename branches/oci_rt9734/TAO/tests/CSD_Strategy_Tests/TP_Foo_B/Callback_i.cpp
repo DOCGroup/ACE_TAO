@@ -12,8 +12,8 @@ Callback_i::~Callback_i ()
 }
 
 
-void 
-Callback_i::test_method(ACE_ENV_SINGLE_ARG_DECL_NOT_USED) 
+void
+Callback_i::test_method(void)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->num_callbacks_ ++;
@@ -21,7 +21,7 @@ Callback_i::test_method(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 
 void
-Callback_i::gather_stats(Foo_B_Statistics& stats) 
+Callback_i::gather_stats(Foo_B_Statistics& stats)
 {
   stats.actual_callbacks(this->num_callbacks_);
 }

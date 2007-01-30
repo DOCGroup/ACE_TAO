@@ -39,11 +39,10 @@ public:
  // Destructor.
 
  int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
  // Initialize the server.
 
- int run (ACE_ENV_SINGLE_ARG_DECL);
+ int run (void);
  // Run the ORB.
 
 private:

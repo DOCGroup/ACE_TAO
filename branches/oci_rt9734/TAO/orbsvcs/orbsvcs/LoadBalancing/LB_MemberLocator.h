@@ -61,8 +61,7 @@ public:
       const PortableServer::ObjectId & oid,
       PortableServer::POA_ptr adapter,
       const char * operation,
-      PortableServer::ServantLocator::Cookie & the_cookie
-      ACE_ENV_ARG_DECL)
+      PortableServer::ServantLocator::Cookie & the_cookie)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -72,8 +71,7 @@ public:
       PortableServer::POA_ptr adapter,
       const char * operation,
       PortableServer::ServantLocator::Cookie the_cookie,
-      PortableServer::Servant the_servant
-      ACE_ENV_ARG_DECL)
+      PortableServer::Servant the_servant)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}

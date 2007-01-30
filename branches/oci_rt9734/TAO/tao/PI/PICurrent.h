@@ -72,20 +72,20 @@ namespace TAO
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
     virtual CORBA::Any *get_slot (PortableInterceptor::SlotId id
-                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                  )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
 
     /// Set information in the slot table at the given SlotId.
     virtual void set_slot (PortableInterceptor::SlotId identifier,
                            const CORBA::Any & data
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                           )
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
     //@}
 
     virtual CORBA::ORB_ptr _get_orb (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        void
       );
 
     /// Number of slots allocated in the slot table.
@@ -97,10 +97,10 @@ namespace TAO
 
     /// Verify the validity of the given SlotId.
     void check_validity (const PortableInterceptor::SlotId &identifier
-                         ACE_ENV_ARG_DECL);
+                        );
 
     /// Initialize the PICurrent object.
-    void initialize (PortableInterceptor::SlotId sc ACE_ENV_ARG_DECL);
+    void initialize (PortableInterceptor::SlotId sc);
 
   protected:
     /// Destructor

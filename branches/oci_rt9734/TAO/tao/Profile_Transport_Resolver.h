@@ -40,7 +40,6 @@ class TAO_Transport_Descriptor_Interface;
 
 namespace CORBA
 {
-  class Environment;
   class Object;
   class PolicyList;
 
@@ -90,7 +89,7 @@ namespace TAO
      * the profile.
      */
     void resolve (ACE_Time_Value *val
-                  ACE_ENV_ARG_DECL)
+                  )
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@{
@@ -141,11 +140,11 @@ namespace TAO
     /// method will return false.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
                       ACE_Time_Value *val
-                      ACE_ENV_ARG_DECL);
+                     );
 
     bool try_parallel_connect (TAO_Transport_Descriptor_Interface *desc,
                                ACE_Time_Value *val
-                               ACE_ENV_ARG_DECL);
+                              );
 
     /// This method wraps a call to the orb core to see if parallel
     /// connection attempts are even desired. This is controlled by
@@ -154,7 +153,7 @@ namespace TAO
 
     /// Initialize the inconsistent policy list that this object has
     /// cached.
-    void init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
+    void init_inconsistent_policies (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     CORBA::PolicyList *inconsistent_policies (void) const;
@@ -170,7 +169,7 @@ namespace TAO
     bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *val,
                         bool parallel
-                        ACE_ENV_ARG_DECL);
+                       );
 
     /// Target object
     mutable CORBA::Object *obj_;

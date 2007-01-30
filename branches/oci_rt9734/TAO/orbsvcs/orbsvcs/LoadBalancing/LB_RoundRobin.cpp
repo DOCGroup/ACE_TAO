@@ -25,14 +25,14 @@ TAO_LB_RoundRobin::~TAO_LB_RoundRobin (void)
 }
 
 char *
-TAO_LB_RoundRobin::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_RoundRobin::name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("RoundRobin");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_RoundRobin::get_properties (ACE_ENV_SINGLE_ARG_DECL)
+TAO_LB_RoundRobin::get_properties (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // There are no RoundRobin properties.  Return an empty property
@@ -46,7 +46,6 @@ TAO_LB_RoundRobin::get_properties (ACE_ENV_SINGLE_ARG_DECL)
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (props);
 
   return props;
 }
@@ -54,33 +53,29 @@ TAO_LB_RoundRobin::get_properties (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_LB_RoundRobin::push_loads (
     const PortableGroup::Location & /* the_location */,
-    const CosLoadBalancing::LoadList & /* loads */
-    ACE_ENV_ARG_DECL)
+    const CosLoadBalancing::LoadList & /* loads */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLoadBalancing::StrategyNotAdaptive))
 {
-  ACE_THROW (CosLoadBalancing::StrategyNotAdaptive ());
+  throw CosLoadBalancing::StrategyNotAdaptive ();
 }
 
 CosLoadBalancing::LoadList *
 TAO_LB_RoundRobin::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                              const PortableGroup::Location & the_location
-                              ACE_ENV_ARG_DECL)
+                              const PortableGroup::Location & the_location)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
-  return load_manager->get_loads (the_location
-                                  ACE_ENV_ARG_PARAMETER);
+  return load_manager->get_loads (the_location);
 }
 
 CORBA::Object_ptr
 TAO_LB_RoundRobin::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    CosLoadBalancing::LoadManager_ptr load_manager
-    ACE_ENV_ARG_DECL)
+    CosLoadBalancing::LoadManager_ptr load_manager)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberNotFound))
@@ -89,9 +84,7 @@ TAO_LB_RoundRobin::next_member (
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
 
   const PortableGroup::ObjectGroupId id =
-    load_manager->get_object_group_id (object_group
-                                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    load_manager->get_object_group_id (object_group);
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     monitor,
@@ -104,9 +97,7 @@ TAO_LB_RoundRobin::next_member (
   //
   // There is a race condition here.  The
   PortableGroup::Locations_var locations =
-    load_manager->locations_of_members (object_group
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    load_manager->locations_of_members (object_group);
 
   const CORBA::ULong len = locations->length ();
 
@@ -126,9 +117,7 @@ TAO_LB_RoundRobin::next_member (
       // collocated.
       CORBA::Object_var member =
         load_manager->get_member_ref (object_group,
-                                      locations[i]
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                      locations[i]);
 
       // Increment index to point to next location.
       i++;
@@ -149,21 +138,19 @@ TAO_LB_RoundRobin::next_member (
     ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
 
   return load_manager->get_member_ref (object_group,
-                                       locations[index]
-                                       ACE_ENV_ARG_PARAMETER);
+                                       locations[index]);
 }
 
 void
 TAO_LB_RoundRobin::analyze_loads (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    CosLoadBalancing::LoadManager_ptr /* load_manager */
-    ACE_ENV_ARG_DECL_NOT_USED)
+    CosLoadBalancing::LoadManager_ptr /* load_manager */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 PortableServer::POA_ptr
-TAO_LB_RoundRobin::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_LB_RoundRobin::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

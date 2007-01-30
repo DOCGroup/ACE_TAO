@@ -40,15 +40,14 @@ parse_args (int argc, char *argv[])
 }
 
 void
-check_loads (const CosLoadBalancing::LoadList & loads
-             ACE_ENV_ARG_DECL)
+check_loads (const CosLoadBalancing::LoadList & loads)
 {
   if (loads.length () != 1)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Load list length is not equal to one.\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 
   if (loads[0].id != LOAD_ID
@@ -57,33 +56,26 @@ check_loads (const CosLoadBalancing::LoadList & loads
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Returned load is not a CPU load.\n"));
 
-      ACE_THROW (CORBA::INTERNAL ());
+      throw CORBA::INTERNAL ();
     }
 }
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "");
 
       // Obtain a reference to the LoadManager.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("LoadManager"
-					 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("LoadManager");
 
       CosLoadBalancing::LoadManager_var lm =
-        CosLoadBalancing::LoadManager::_narrow (obj.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosLoadBalancing::LoadManager::_narrow (obj.in ());
 
       CosLoadBalancing::Location the_location (1);
       the_location.length (1);
@@ -102,15 +94,13 @@ main (int argc, char *argv[])
       // Try a few times until a load is capable of being retrieved.
       for (int i = 0; i < MAX_RETRIES && retrieved_load == 0; ++i)
         {
-          ACE_TRY_EX (foo)
+          try
             {
-              loads = lm->get_loads (the_location
-                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX (foo);
+              loads = lm->get_loads (the_location);
 
               retrieved_load = 1;
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception&)
             {
               ACE_DEBUG ((LM_DEBUG, ".")); // Show some progress.
 
@@ -118,8 +108,6 @@ main (int argc, char *argv[])
               // LoadManager.
               ACE_OS::sleep (2);
             }
-          ACE_ENDTRY;
-          ACE_TRY_CHECK;
         }
 
       if (retrieved_load == 0)
@@ -131,48 +119,38 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_INFO,
                     " DONE\n"));
 
-      ::check_loads (loads.in ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ::check_loads (loads.in ());
 
       // Attempt to get loads directly from the LoadMonitor.
       CosLoadBalancing::LoadMonitor_var monitor =
-        lm->get_load_monitor (the_location
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        lm->get_load_monitor (the_location);
 
       CosLoadBalancing::Location_var cpu_mon_location =
-        monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        monitor->the_location ();
 
       if (cpu_mon_location.in () != the_location)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Mismatched CPU load monitor location\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       ACE_DEBUG ((LM_INFO,
                   "Retrieving loads directly from LoadMonitor ..."));
 
-      loads = monitor->loads (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      loads = monitor->loads ();
 
       ACE_DEBUG ((LM_INFO,
                   " DONE\n"));
 
-      ::check_loads (loads.in ()
-                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ::check_loads (loads.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "CPU Load Monitor test:");
+      ex._tao_print_exception ("CPU Load Monitor test:");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_INFO, "CPU Load Monitor test passed.\n\n"));
 

@@ -26,8 +26,7 @@ TAO::SSLIOP::Current_Impl::~Current_Impl (void)
 }
 
 SecurityLevel3::ClientCredentials_ptr
-TAO::SSLIOP::Current_Impl::client_credentials (
-    ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::Current_Impl::client_credentials ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
@@ -45,13 +44,12 @@ TAO::SSLIOP::Current_Impl::client_credentials (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (SecurityLevel3::ClientCredentials::_nil ());
 
   return creds;
 }
 
 CORBA::Boolean
-TAO::SSLIOP::Current_Impl::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::Current_Impl::request_is_local (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);

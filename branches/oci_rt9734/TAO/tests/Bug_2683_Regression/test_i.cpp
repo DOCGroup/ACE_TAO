@@ -10,14 +10,14 @@ test_i::test_i (ORB_Killer *k)
 }
 
 void
-test_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::ping (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
-test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) requesting shutdown \n"));

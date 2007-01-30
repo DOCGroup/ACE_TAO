@@ -15,17 +15,14 @@ namespace TAO
   T *
   Narrow_Utils<T>::narrow (CORBA::Object_ptr obj,
                            const char *repo_id,
-                           Proxy_Broker_Factory pbf
-                           ACE_ENV_ARG_DECL)
+                           Proxy_Broker_Factory pbf)
   {
     if (CORBA::is_nil (obj))
       {
         return T::_nil ();
       }
 
-    CORBA::Boolean const is_it = obj->_is_a (repo_id
-                                             ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (T::_nil ());
+    CORBA::Boolean const is_it = obj->_is_a (repo_id);
 
     if (is_it == false)
       {
@@ -34,33 +31,26 @@ namespace TAO
 
     return TAO::Narrow_Utils<T>::unchecked_narrow (obj,
                                                    repo_id,
-                                                   pbf
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                   pbf);
   }
 
   template<typename T> T *
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
                                      Proxy_Broker_Factory pbf)
   {
-    ACE_DECLARE_NEW_CORBA_ENV;
-
     T *proxy = 0;
-    ACE_TRY
+    try
       {
         proxy =
           TAO::Narrow_Utils<T>::unchecked_narrow (obj,
                                                   0,
-                                                  pbf
-                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                                                  pbf);
       }
-    ACE_CATCHANY
+    catch (const ::CORBA::Exception&)
       {
         // Swallow the exception
         return T::_nil ();
       }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (proxy);
 
     return proxy;
   }
@@ -68,8 +58,7 @@ namespace TAO
   template<typename T> T *
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
                                      const char *,
-                                     Proxy_Broker_Factory pbf
-                                     ACE_ENV_ARG_DECL)
+                                     Proxy_Broker_Factory pbf)
   {
     if (CORBA::is_nil (obj))
       {

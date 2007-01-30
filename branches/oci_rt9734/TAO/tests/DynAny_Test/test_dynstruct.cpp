@@ -50,21 +50,17 @@ Test_DynStruct::run_test (void)
   ts.es.f = data.m_float2;
   ts.es.s = data.m_short2;
 
-  ACE_TRY_NEW_ENV
+  try
     {
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(Any)/insert/get/next/seek/"
                   "rewind/current_component\n"));
 
       CORBA::Object_var factory_obj =
-        this->orb_->resolve_initial_references ("DynAnyFactory"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("DynAnyFactory");
 
       DynamicAny::DynAnyFactory_var dynany_factory =
-        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ()
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in ());
 
       if (CORBA::is_nil (dynany_factory.in ()))
         {
@@ -80,72 +76,50 @@ Test_DynStruct::run_test (void)
       CORBA::Any in_any1;
       in_any1 <<= ts;
       DynamicAny::DynAny_var dp1 =
-        dynany_factory->create_dyn_any (in_any1
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+        dynany_factory->create_dyn_any (in_any1);
+
       DynamicAny::DynStruct_var fa1 =
-        DynamicAny::DynStruct::_narrow (dp1.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      fa1->insert_char (data.m_char1
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      fa1->next (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      fa1->insert_short_seq (data.m_shortseq1
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      fa1->next (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DynamicAny::DynStruct::_narrow (dp1.in ());
+
+      fa1->insert_char (data.m_char1);
+
+      fa1->next ();
+
+      fa1->insert_short_seq (data.m_shortseq1);
+
+      fa1->next ();
 
       DynamicAny::DynAny_var cc =
-        fa1->current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      cc->insert_float (data.m_float1
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      cc->next (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      cc->insert_short (data.m_short1
-                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      cc->rewind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        fa1->current_component ();
+
+      cc->insert_float (data.m_float1);
+
+      cc->next ();
+
+      cc->insert_short (data.m_short1);
+      cc->rewind ();
 
       // To show that calling destroy() on a component does
       // nothing, as required by the spec.
-      cc->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cc->destroy ();
 
-      fa1->rewind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      CORBA::Char c = fa1->get_char (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fa1->rewind ();
+
+      CORBA::Char c = fa1->get_char ();
 
       if (c != data.m_char1)
         {
           ++this->error_count_;
         }
 
-      fa1->next (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+      fa1->next ();
+
       data.m_shortseq2 =
-        fa1->get_short_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        fa1->get_short_seq ();
 
       bool good =
         data.m_shortseq2->length () == data.m_shortseq1.length ();
-        
+
       if (good)
         {
           for (CORBA::ULong i = 0; i < data.m_shortseq1.length (); ++i)
@@ -162,17 +136,13 @@ Test_DynStruct::run_test (void)
           ++this->error_count_;
         }
 
-      fa1->next (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fa1->next ();
 
-      cc = fa1->current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
-      cc->seek (1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cc = fa1->current_component ();
 
-      CORBA::Short s = cc->get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      cc->seek (1);
+
+      CORBA::Short s = cc->get_short ();
 
       if (s != data.m_short1)
         {
@@ -191,14 +161,10 @@ Test_DynStruct::run_test (void)
       DynamicAny::DynAny_var ftc1_base =
         dynany_factory->create_dyn_any_from_type_code (
                             DynAnyTests::_tc_test_struct
-                            ACE_ENV_ARG_PARAMETER
                           );
-      ACE_TRY_CHECK;
 
       DynamicAny::DynStruct_var ftc1 =
-        DynamicAny::DynStruct::_narrow (ftc1_base.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DynamicAny::DynStruct::_narrow (ftc1_base.in ());
 
       if (CORBA::is_nil (ftc1.in ()))
         {
@@ -213,16 +179,12 @@ Test_DynStruct::run_test (void)
       ts.es.s = data.m_short1;
       CORBA::Any in_any2;
       in_any2 <<= ts;
-      ftc1->from_any (in_any2
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ftc1->from_any (in_any2);
 
-      analyzer.analyze (ftc1.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      analyzer.analyze (ftc1.in ());
 
       CORBA::Any_var out_any1 =
-        ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ftc1->to_any ();
 
       DynAnyTests::test_struct* ts_out;
       out_any1.in () >>= ts_out;
@@ -245,18 +207,14 @@ Test_DynStruct::run_test (void)
       CORBA::Any_var out_any2 ;
       DynamicAny::DynStruct_var ftc2;
 
-      ACE_TRY_EX (bad_kind)
+      try
         {
           DynamicAny::DynAny_var ftc2_base =
             dynany_factory->create_dyn_any_from_type_code (
                                 DynAnyTests::_tc_test_struct_alias
-                                ACE_ENV_ARG_PARAMETER
                               );
-          ACE_TRY_CHECK_EX (bad_kind);
 
-          ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
+          ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ());
 
           if (CORBA::is_nil (ftc2.in ()))
             {
@@ -271,29 +229,23 @@ Test_DynStruct::run_test (void)
           ts.es.s = data.m_short1;
           CORBA::Any in_any3;
           in_any3 <<= ts;
-          ftc2->from_any (in_any3
-                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
+          ftc2->from_any (in_any3);
 
 //          char c = ftc2->get_char ();
 //          CORBA::Boolean status = ftc2->next ();
 //          CORBA::Long lo = ftc2->get_long ();
-//          analyzer.analyze (ftc2.in () ACE_ENV_ARG_PARAMETER);
-//          ACE_TRY_CHECK;
+//          analyzer.analyze (ftc2.in ());
 
-          out_any2 = ftc2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (bad_kind);
+          out_any2 = ftc2->to_any ();
 
           if (!(out_any2.in () >>= ts_out2)) // problem
             {
               ts_out2 = 0;
             }
         }
-      ACE_CATCH (CORBA::TypeCode::BadKind, ex)
+      catch (const CORBA::TypeCode::BadKind& )
         {
         }
-      ACE_ENDTRY;
-      ACE_TRY_CHECK;
 
       if (ts_out2 != 0 && ts_out2->es.s == data.m_short1)
         {
@@ -309,12 +261,10 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   "testing: current_member_name/current_member_kind\n"));
 
-      ftc1->seek (2 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      
+      ftc1->seek (2);
+
       DynamicAny::FieldName_var fn =
-        ftc1->current_member_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ftc1->current_member_name ();
 
       if (ACE_OS::strcmp (fn.in (), "es"))
         {
@@ -322,8 +272,7 @@ Test_DynStruct::run_test (void)
         }
 
       CORBA::TCKind tk =
-        ftc1->current_member_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ftc1->current_member_kind ();
 
       if (tk != CORBA::tk_struct)
         {
@@ -339,13 +288,10 @@ Test_DynStruct::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   "testing: current_member_name/current_member_kind "
                   "with alias\n"));
-      ftc2->seek (2
-                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ftc2->seek (2);
 
       DynamicAny::FieldName_var fn2 =
-        ftc2->current_member_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ftc2->current_member_name ();
 
       if (ACE_OS::strcmp (fn2.in (), "es"))
         {
@@ -353,8 +299,7 @@ Test_DynStruct::run_test (void)
         }
 
       CORBA::TCKind tk2 =
-        ftc2->current_member_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        ftc2->current_member_kind ();
 
       if (tk2 != CORBA::tk_struct)
         {
@@ -371,20 +316,15 @@ Test_DynStruct::run_test (void)
                   "testing: get_members/set_members\n"));
 
       DynamicAny::NameValuePairSeq_var nvps =
-        fa1->get_members (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        fa1->get_members ();
 
       DynamicAny::DynAny_var sm_base =
         dynany_factory->create_dyn_any_from_type_code (
             DynAnyTests::_tc_test_struct
-            ACE_ENV_ARG_PARAMETER
           );
-      ACE_TRY_CHECK;
 
       DynamicAny::DynStruct_var sm =
-        DynamicAny::DynStruct::_narrow (sm_base.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        DynamicAny::DynStruct::_narrow (sm_base.in ());
 
       if (CORBA::is_nil (sm.in ()))
         {
@@ -393,13 +333,10 @@ Test_DynStruct::run_test (void)
                             -1);
         }
 
-      sm->set_members (nvps.in ()
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sm->set_members (nvps.in ());
 
       DynamicAny::NameValuePairSeq_var gm =
-        sm->get_members (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        sm->get_members ();
 
       CORBA::ULong index = 2;
 
@@ -408,22 +345,17 @@ Test_DynStruct::run_test (void)
           ++this->error_count_;
         }
 
-      fa1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fa1->destroy ();
 
-      ftc1->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ftc1->destroy ();
 
-      sm->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      sm->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "test_dynstruct::run_test");
+      ex._tao_print_exception ("test_dynstruct::run_test");
       return -1;
     }
-  ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",

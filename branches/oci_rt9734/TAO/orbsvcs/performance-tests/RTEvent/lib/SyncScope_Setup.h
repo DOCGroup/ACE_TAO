@@ -26,12 +26,10 @@ class TAO_RTEC_Perf_Export SyncScope_Setup
 {
 public:
   /// Constructor
-  SyncScope_Setup (CORBA::ORB_ptr orb
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  SyncScope_Setup (CORBA::ORB_ptr orb);
 
   SyncScope_Setup (CORBA::ORB_ptr orb,
-                   Messaging::SyncScope value
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                   Messaging::SyncScope value);
 
   /// Destructor
   /**
@@ -42,8 +40,7 @@ public:
 private:
   /// Implement the shared code between both constructors
   void init (CORBA::ORB_ptr orb,
-             Messaging::SyncScope value
-             ACE_ENV_ARG_DECL);
+             Messaging::SyncScope value);
 };
 
 #if defined(__ACE_INLINE__)

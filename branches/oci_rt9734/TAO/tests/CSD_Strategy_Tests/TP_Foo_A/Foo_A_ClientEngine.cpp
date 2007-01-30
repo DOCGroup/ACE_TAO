@@ -5,8 +5,8 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-Foo_A_ClientEngine::Foo_A_ClientEngine(Foo_A_ptr obj, 
-                                       unsigned  client_id, 
+Foo_A_ClientEngine::Foo_A_ClientEngine(Foo_A_ptr obj,
+                                       unsigned  client_id,
                                        bool collocated)
   : obj_(Foo_A::_duplicate(obj)),
     client_id_ (client_id),
@@ -21,9 +21,9 @@ Foo_A_ClientEngine::~Foo_A_ClientEngine()
 
 
 bool
-Foo_A_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
+Foo_A_ClientEngine::execute(void)
 {
-  // Make sure the connection is established before making  
+  // Make sure the connection is established before making
   // remote invocations.
   if (AppHelper::validate_connection (this->obj_.in ()) == false)
     {
@@ -37,14 +37,11 @@ Foo_A_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Long i = this->client_id_;
 
-  this->obj_->op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->op1();
 
-  this->obj_->op2(i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->op2(i);
 
-  CORBA::Long value = this->obj_->op3(i ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  CORBA::Long value = this->obj_->op3(i);
 
   if (value != i)
     {
@@ -53,31 +50,27 @@ Foo_A_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   for (CORBA::Long j = 1; j <= 5; j++)
     {
-      this->obj_->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      this->obj_->op4(495 + (i * 5) + j);
     }
 
   bool caught_exception = false;
 
-  ACE_TRY
+  try
   {
-    this->obj_->op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    this->obj_->op5();
   }
-  ACE_CATCH (FooException, ex)
+  catch (const FooException& )
   {
     // Expected
     caught_exception = true;
   }
-  ACE_ENDTRY;
-  
+
   if (! caught_exception)
     {
       check_validity = false;
     }
 
-  this->obj_->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->done();
 
   return check_validity;
 }

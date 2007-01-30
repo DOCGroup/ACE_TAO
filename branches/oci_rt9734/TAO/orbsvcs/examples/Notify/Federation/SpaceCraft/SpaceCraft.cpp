@@ -35,7 +35,7 @@ using namespace CosNotifyChannelAdmin;
 int
 main (int argc, char* argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
   {
     ORB_var orb (ORB_init (argc, argv));
 
@@ -50,9 +50,7 @@ main (int argc, char* argv[])
     // Activate the root POA.
     //
     CORBA::Object_var obj (
-      orb->resolve_initial_references ("RootPOA"
-                                       ACE_ENV_ARG_PARAMETER));
-    ACE_TRY_CHECK;
+      orb->resolve_initial_references ("RootPOA"));
 
     PortableServer::POA_var root_poa (PortableServer::POA::_narrow (obj.in ()));
 
@@ -82,14 +80,11 @@ main (int argc, char* argv[])
     }
 
 
-    ns->init_service (orb.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ns->init_service (orb.in ());
 
     // Create the channel factory.
     //
-    EventChannelFactory_var factory (ns->create (root_poa.in ()
-                                                 ACE_ENV_ARG_PARAMETER));
-    ACE_TRY_CHECK;
+    EventChannelFactory_var factory (ns->create (root_poa.in ()));
 
     if (is_nil (factory.in ()))
     {
@@ -179,19 +174,16 @@ main (int argc, char* argv[])
 
     return 0;
   }
-  ACE_CATCH (CORBA::UserException, ue)
+  catch (const CORBA::UserException& ue)
   {
-    ACE_PRINT_EXCEPTION (ue,
-                         "User exception: ");
+    ue._tao_print_exception ("User exception: ");
     return 1;
   }
-  ACE_CATCH (CORBA::SystemException, se)
+  catch (const CORBA::SystemException& se)
   {
-    ACE_PRINT_EXCEPTION (se,
-                         "System exception: ");
+    se._tao_print_exception ("System exception: ");
     return 1;
   }
-  ACE_ENDTRY;
 
   return 1;
 }

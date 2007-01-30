@@ -102,19 +102,17 @@ read_IOR_from_file (void)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   char str [255];
   // Initialize the ORB
-  ACE_TRY
+  try
     {
       ACE_OS::strcpy (str,
                       "CORBA::ORB_init");
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
 
-                                            0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       // Parse the command-line arguments to get the location of the
       // IOR
@@ -135,18 +133,14 @@ main (int argc, char **argv)
                       "CORBA::ORB::string_to_object");
 
       // Get the object reference with the IOR
-      CORBA::Object_var object = orb->string_to_object (IOR
-                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->string_to_object (IOR);
 
       ACE_OS::strcpy (str,
                       "Database::Agent::_narrow");
 
       // Narrow the object reference to a Database::Agent
       Database::Agent_var database_agent =
-        Database::Agent::_narrow (object.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Database::Agent::_narrow (object.in ());
 
       Database::NVPairSequence employee_attributes (2);
       employee_attributes.length (2);
@@ -171,16 +165,12 @@ main (int argc, char **argv)
       Database::Entry_var entry =
         database_agent->create_entry ("irfan",
                                       "Employee",
-                                      employee_attributes
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      employee_attributes);
 
       ACE_OS::strcpy (str, "Database::Employee::_narrow");
 
       Database::Employee_var employee =
-        Database::Employee::_narrow (entry.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Database::Employee::_narrow (entry.in ());
 
       /*
        *
@@ -192,42 +182,34 @@ main (int argc, char **argv)
 #if 0
       // Reset the id
       ACE_OS::strcpy (str, "Database::Employee::id");
-      employee->id (666 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      employee->id (666);
 #endif /* 0 */
 
       ACE_OS::strcpy (str, "Database::Entry::find");
       // Find the employee
       entry = database_agent->find_entry ("irfan",
-                                          "Employee"
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                          "Employee");
 
       ACE_OS::strcpy (str, "Database::Entry::destroy");
       // Destroy the employee
       database_agent->destroy_entry ("irfan",
-                                     "Employee"
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     "Employee");
 
       ACE_OS::strcpy (str, "Shutdown server");
 
       if (shutdown_server)
         {
-          database_agent->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          database_agent->shutdown ();
         }
 
       ACE_OS::free (IOR);
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, str);
+      ex._tao_print_exception (str);
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

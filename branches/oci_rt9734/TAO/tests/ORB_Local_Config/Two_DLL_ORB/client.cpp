@@ -44,13 +44,12 @@ Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 {
 
   ACE_Argv_Type_Converter cvt (argc, argv);
 
-  CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv ());
 
   if (parse_args (cvt.get_argc (), cvt.get_ASCII_argv ()) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -65,10 +64,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
                 ACE_TEXT ("(%P|%t) Client is ready to proceed - awaiting the server ...\n")));
     ACE_OS::sleep (1);
 
-    ACE_TRY
+    try
     {
-      co = orb->string_to_object(ior_file_.c_str () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      co = orb->string_to_object(ior_file_.c_str ());
 
       if (co == 0)
         {
@@ -79,8 +77,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
       CORBA::Object_var tmp (co);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -94,39 +91,34 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
                   ACE_TEXT ("(%P|%t) Successfuly narrowed the Hello interface\n")));
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) String returned from the server <%s>\n"),
                   the_string.in ()));
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
 
       attempts_left = 0; // We're done here!
 
     }
-    ACE_CATCH (CORBA::TRANSIENT, ex)
+    catch (const CORBA::TRANSIENT& ex)
     {
       if (!attempts_left)
-        ACE_RE_THROW;
+        throw;
 
-      ACE_PRINT_EXCEPTION (ex, "Temporary problem encountered");
+      ex._tao_print_exception ("Temporary problem encountered");
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Client was too quick. Pausing ")
                   ACE_TEXT ("while the server gets ready.\n")));
       ACE_OS::sleep (5);
     }
-    ACE_ENDTRY;
   }
 
-  orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  orb->shutdown (0);
 
-  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  orb->destroy ();
 
   return 0;
 }

@@ -49,32 +49,29 @@ public:
   virtual ~TAO_EC_Default_ProxyPushConsumer (void);
 
  virtual void activate (
-     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-     ACE_ENV_ARG_DECL)
+     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos
-                ACE_ENV_ARG_DECL)
+                const RtecEventChannelAdmin::SupplierQOS& qos)
       ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecEventChannelAdmin::AlreadyConnected));
-  virtual void push (const RtecEventComm::EventSet& event
-                     ACE_ENV_ARG_DECL)
+  virtual void push (const RtecEventComm::EventSet& event)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (void)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void _add_ref (void);
+  virtual void _remove_ref (void);
 
 private:
 
   virtual PortableServer::ObjectId
-         object_id (ACE_ENV_SINGLE_ARG_DECL)
+         object_id (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

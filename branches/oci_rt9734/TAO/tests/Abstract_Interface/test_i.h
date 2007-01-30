@@ -7,15 +7,13 @@
 
 class foo_i : public virtual POA_foo
 {
-  virtual char * foo_op (const char * inarg
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual char * foo_op (const char * inarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       BadInput
     ));
 
-  virtual char * base_op (const char * inarg
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual char * base_op (const char * inarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       BadInput
@@ -24,14 +22,12 @@ class foo_i : public virtual POA_foo
 
 class passer_i : public virtual POA_passer
 {
-  virtual void pass_ops (base_out outarg
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void pass_ops (base_out outarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual void pass_state (base_out outarg
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void pass_state (base_out outarg)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));

@@ -29,30 +29,26 @@ public:
            PortableServer::POA_ptr poa);
   ~Cubit_i (void);
 
-  virtual CORBA::Octet cube_octet (CORBA::Octet o
-                                   ACE_ENV_ARG_DECL)
+  virtual CORBA::Octet cube_octet (CORBA::Octet o)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Short cube_short (CORBA::Short s
-                                   ACE_ENV_ARG_DECL)
+  virtual CORBA::Short cube_short (CORBA::Short s)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long cube_long (CORBA::Long l
-                                 ACE_ENV_ARG_DECL)
+  virtual CORBA::Long cube_long (CORBA::Long l)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Cubit::Many cube_struct (const Cubit::Many &values
-                                   ACE_ENV_ARG_DECL)
+  virtual Cubit::Many cube_struct (const Cubit::Many &values)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void noop (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void noop (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableServer::POA_ptr
-      _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+      _default_POA (void);
   // The default POA
 
 protected:

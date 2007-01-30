@@ -14,38 +14,37 @@ ACE_RCSID (ObjRefTemplate,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
-TAO::ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO::ORT_Adapter_Impl::tao_server_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
-  return this->ort_template_->server_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ort_template_->server_id ();
 }
 
 char *
-TAO::ORT_Adapter_Impl::tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO::ORT_Adapter_Impl::tao_orb_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
-  return this->ort_template_->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ort_template_->orb_id ();
 }
 
 PortableInterceptor::AdapterName *
-TAO::ORT_Adapter_Impl::tao_adapter_name (ACE_ENV_SINGLE_ARG_DECL)
+TAO::ORT_Adapter_Impl::tao_adapter_name (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
-  return this->ort_template_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->ort_template_->adapter_name ();
 }
 
 CORBA::Object_ptr
 TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
-                                    const PortableInterceptor::ObjectId &id
-                                    ACE_ENV_ARG_DECL)
+                                    const PortableInterceptor::ObjectId &id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ort_factory_->make_object (repo_id,
                                           id
-                                          ACE_ENV_ARG_PARAMETER);
+                                         );
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
@@ -66,8 +65,7 @@ TAO::ORT_Adapter_Impl::get_obj_ref_factory (void)
 
 int
 TAO::ORT_Adapter_Impl::set_obj_ref_factory (
-  PortableInterceptor::ObjectReferenceFactory *cf
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ObjectReferenceFactory *cf)
 {
   this->ort_factory_ = cf;
 
@@ -88,8 +86,7 @@ TAO::ORT_Adapter_Impl::activate (
   const char *server_id,
   const char *orb_id,
   PortableInterceptor::AdapterName *adapter_name,
-  PortableServer::POA_ptr poa
-  ACE_ENV_ARG_DECL)
+  PortableServer::POA_ptr poa)
 {
   // No need to lock here, there is one instance for each POA and
   // when the POA creates and actives an ORT_Adapter it will lock
@@ -102,7 +99,6 @@ TAO::ORT_Adapter_Impl::activate (
                                              adapter_name,
                                              poa),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
 
   this->ort_template_ = t;
 

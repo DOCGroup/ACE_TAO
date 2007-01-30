@@ -26,12 +26,10 @@ public:
    virtual bool begin_object (CORBA::Long id,
       const ACE_CString &type,
       const TAO_Notify::NVPList& attrs,
-      bool changed
-      ACE_ENV_ARG_DECL);
+      bool changed);
 
     virtual void end_object (CORBA::Long id,
-      const ACE_CString &type
-      ACE_ENV_ARG_DECL);
+      const ACE_CString &type);
 };
 
 

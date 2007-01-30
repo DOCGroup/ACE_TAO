@@ -187,7 +187,7 @@ public:
   //@}
 
   /// Get the connector registry
-  TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
+  TAO_Connector_Registry *connector_registry (void);
 
   /// Get the IOR parser registry
   TAO_Parser_Registry *parser_registry (void);
@@ -214,7 +214,7 @@ public:
   ACE_Thread_Manager *thr_mgr (void);
 
   /// Return the RootPOA, or try to load it if not initialized already.
-  CORBA::Object_ptr root_poa (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr root_poa (void);
 
   /// Get the adapter registry
   TAO_Adapter_Registry *adapter_registry (void);
@@ -243,7 +243,7 @@ public:
    */
   static
   TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
-                                                  ACE_ENV_ARG_DECL);
+                                                 );
   //@}
 
   /// Set/get the collocation flags
@@ -419,24 +419,20 @@ public:
 
   /// Get a policy.  First, check the ORB-level Policy Manager, then
   /// check the ORB defaults.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
 
   /// Get a policy.  First, check the thread current, then check the
   /// ORB-level Policy Manager, then check the ORB defaults.
-  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type
-                                                  ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy_including_current (CORBA::PolicyType type);
 
   /// Get a cached policy.  First, check the ORB-level Policy Manager,
   /// then check the ORB defaults.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   /// Get a cached policy.  First, check the thread current, then
   /// check the ORB-level Policy Manager, then check the ORB defaults.
   CORBA::Policy_ptr get_cached_policy_including_current (
-      TAO_Cached_Policy_Type type
-      ACE_ENV_ARG_DECL);
+      TAO_Cached_Policy_Type type);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -571,8 +567,7 @@ public:
   /// Register a TSS cleanup function.  The slot ID for the
   /// corresponding ORB core TSS resource is returned by the reference
   /// argument.  This method return 0 on success, and -1 on failure.
-  int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
-                            size_t &slot_id);
+  int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id);
 
   /// Return the underlying TSS cleanup function registry.
   TAO_Cleanup_Func_Registry *tss_cleanup_funcs (void);
@@ -587,22 +582,19 @@ public:
   TAO_Thread_Lane_Resources &lane_resources (void);
 
   /// Run the event loop.
-  int run (ACE_Time_Value *tv,
-           int perform_work
-           ACE_ENV_ARG_DECL);
+  int run (ACE_Time_Value *tv, int perform_work);
 
   /// End the event loop
-  void shutdown (CORBA::Boolean wait_for_completion
-                 ACE_ENV_ARG_DECL);
+  void shutdown (CORBA::Boolean wait_for_completion);
 
   /// Get the shutdown flag value
   bool has_shutdown (void) const;
 
   /// Shutdown the ORB and free resources
-  void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  void destroy (void);
 
   /// Check if ORB has shutdown.  If it has, throw an exception.
-  void check_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void check_shutdown (void);
 
   /// Returns the <timeout> value used by the server threads to poll
   /// the shutdown flag. If the return value is zero then the server
@@ -613,16 +605,14 @@ public:
   /// based on the endpoint.
   TAO_Stub *create_stub_object (TAO_MProfile &mprofile,
                                 const char *type_id,
-                                CORBA::PolicyList *policy_list
-                                ACE_ENV_ARG_DECL);
+                                CORBA::PolicyList *policy_list);
 
   /// Factory method that create the "right" Stub depending on
   /// wheather RTCORBA is loaded or not. The factory used to create
   /// the stub, is loaded at ORB initialization, and its type depends
   /// on the fact that RTCORBA is being used or not.
   TAO_Stub *create_stub (const char *repository_id,
-                         const TAO_MProfile &profiles
-                         ACE_ENV_ARG_DECL);
+                         const TAO_MProfile &profiles);
 
   /// Create a new object, use the adapter registry to create a
   /// collocated object, if not possible then create a regular
@@ -636,8 +626,7 @@ public:
   /// user decides to use lazy initialization of CORBA object, then
   /// this is the route that we have to take to do the
   /// initialization.
-  CORBA::Long initialize_object (TAO_Stub *the_stub,
-                                 CORBA::Object_ptr obj);
+  CORBA::Long initialize_object (TAO_Stub *the_stub, CORBA::Object_ptr obj);
 
   /// Reinitialise a stub after the effective profile has changed.
   /// This will happen after a location forward has been received
@@ -660,35 +649,34 @@ public:
   CORBA::Boolean imr_endpoints_in_ior (void);
 
   /// Resolve the TypeCodeFactory DLL.
-  CORBA::Object_ptr resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_typecodefactory (void);
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// Resolve the PICurrent.
-  CORBA::Object_ptr resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_picurrent (void);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   /// Resolve POA Current.
-  CORBA::Object_ptr resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_poa_current (void);
 
   /// Resolve the CodecFactory DLL.
-  CORBA::Object_ptr resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_codecfactory (void);
 
   /// Resolve the Compression DLL.
-  CORBA::Object_ptr resolve_compression_manager (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_compression_manager (void);
 
   /// Resolve the Dynamic Any Factory
-  CORBA::Object_ptr resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_dynanyfactory (void);
 
   /// Resolve the IOR Manipulation reference for this ORB.
-  CORBA::Object_ptr resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_ior_manipulation (void);
 
   /// Resolve the IOR Table reference for this ORB.
-  CORBA::Object_ptr resolve_ior_table (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Object_ptr resolve_ior_table (void);
 
   /// Resolve an initial reference via the -ORBInitRef and
   // -ORBDefaultInitRef options.
-  CORBA::Object_ptr resolve_rir (const char *name
-                                 ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr resolve_rir (const char *name);
 
   /// Resolve the RT ORB reference for this ORB.
   CORBA::Object_ptr resolve_rt_orb (void);
@@ -698,9 +686,7 @@ public:
   const char *server_id (void) const;
 
   /// List all the service known by the ORB
-  CORBA::ORB_ObjectIdList *list_initial_references (
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-    );
+  CORBA::ORB_ObjectIdList *list_initial_references (void);
 
   /// Reference counting...
   unsigned long _incr_refcnt (void);
@@ -754,15 +740,13 @@ public:
   /**
    * For details on how this is used please see the FT service
    */
-  CORBA::ULong hash_service (TAO_Profile *this_p,
-                             CORBA::ULong max);
+  CORBA::ULong hash_service (TAO_Profile *this_p, CORBA::ULong max);
 
   /// Call the service layers with the Service Context to check
   /// whether they would like to add something to the list.
   void service_context_list (TAO_Stub *stub,
                              TAO_Service_Context &service_context,
-                             CORBA::Boolean retstart
-                             ACE_ENV_ARG_DECL);
+                             CORBA::Boolean retstart);
 
   /// Return a reference to the Fault Tolerant service object.
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
@@ -772,16 +756,14 @@ public:
   /// this case.
   TAO::Invocation_Status service_raise_comm_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+      TAO_Profile *profile);
 
   /// Raise a transient failure exception if a service is not loaded,
   /// else delegate to the service to see what the service has to do
   /// for this case.
   TAO::Invocation_Status service_raise_transient_failure (
       IOP::ServiceContextList &clist,
-      TAO_Profile *profile
-      ACE_ENV_ARG_DECL);
+      TAO_Profile *profile);
 
   //@}
 
@@ -803,25 +785,21 @@ public:
 
   /// Register a client request interceptor.
   void add_interceptor (
-    PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL);
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
 
   /// Register a server request interceptor.
   void add_interceptor (
-    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL);
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
 
   /// Register a client request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL);
+    const CORBA::PolicyList& policies);
 
   /// Register a server request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    ACE_ENV_ARG_DECL);
+    const CORBA::PolicyList& policies);
 
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.
@@ -834,9 +812,7 @@ public:
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// Register an IOR interceptor.
-  void add_interceptor (
-    PortableInterceptor::IORInterceptor_ptr interceptor
-    ACE_ENV_ARG_DECL);
+  void add_interceptor (PortableInterceptor::IORInterceptor_ptr interceptor);
   //@}
 
   /// Return the valuetype adapter
@@ -871,8 +847,7 @@ public:
 
   /// Call the libraries to handover the validators if they havent
   /// registered yet with the list of validators.
-  void load_policy_validators (TAO_Policy_Validator &validator
-                               ACE_ENV_ARG_DECL);
+  void load_policy_validators (TAO_Policy_Validator &validator);
 
   /// Return the flushing strategy
   /**
@@ -924,7 +899,7 @@ protected:
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
   /// called by <CORBA::ORB_init>.
-  int init (int &argc, char **argv ACE_ENV_ARG_DECL);
+  int init (int &argc, char **argv);
 
   /// Final termination hook, typically called by CORBA::ORB's
   /// destructor.
@@ -937,14 +912,14 @@ protected:
                                        ACE_Lock *lock);
 
   /// Obtain and cache the typecode factory object reference.
-  void resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_typecodefactory_i (void);
 
   /// Obtain and cache the poa current.
-  void resolve_poa_current_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_poa_current_i (void);
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// Obtain and cache the picurrent factory object reference.
-  void resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_picurrent_i (void);
 
   /// Get the Client Request Interceptor adapter.
   /// If not created, this method will try to create one if needed.
@@ -957,16 +932,16 @@ protected:
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// Obtain and cache the codec factory object reference.
-  void resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_codecfactory_i (void);
 
   /// Obtain and cache the compression manager object reference.
-  void resolve_compression_manager_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_compression_manager_i (void);
 
   /// Obtain and cache the dynamic any factory object reference.
-  void resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_dynanyfactory_i (void);
 
   /// Obtain and cache the IORManipulation factory object reference.
-  void resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_iormanipulation_i (void);
 
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
@@ -975,14 +950,13 @@ protected:
   /// Helper method that invokes Interceptor::destroy() on all
   /// registered interceptors when ORB::destroy() is called. Prevents
   /// exceptions from propagating up the call chain.
-  void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+  void destroy_interceptors (void);
 
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
   /// -ORBListenEndpoint options.
   int set_endpoint_helper (const ACE_CString &lane,
-                           const ACE_CString &endpoints
-                           ACE_ENV_ARG_DECL);
+                           const ACE_CString &endpoints);
 
   /// Return pointer to the policy factory registry associated with
   /// this ORB core.
@@ -1005,7 +979,7 @@ private:
   //@}
 
   /// Obtain and cache the dynamic any factory object reference.
-  void resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL);
+  void resolve_ior_table_i (void);
 
   /// Checks to see whether collocation optimizations have to be
   /// applied on objects in the @a other_orb

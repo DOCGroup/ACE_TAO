@@ -47,24 +47,24 @@ namespace TAO
       virtual TAO_SERVANT_LOCATION servant_present (
         const PortableServer::ObjectId &system_id,
         PortableServer::Servant &servant
-        ACE_ENV_ARG_DECL) = 0;
+        ) = 0;
 
       virtual PortableServer::Servant find_servant (
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
-        ACE_ENV_ARG_DECL) = 0;
+        ) = 0;
 
       virtual int find_servant_priority (
         const PortableServer::ObjectId &system_id,
         CORBA::Short &priority
-        ACE_ENV_ARG_DECL) = 0;
+        ) = 0;
 
       virtual PortableServer::ObjectId *activate_object (
         PortableServer::Servant servant,
         CORBA::Short priority,
         bool &wait_occurred_restart_call
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantAlreadyActive,
                            PortableServer::POA::WrongPolicy)) = 0;
@@ -75,7 +75,7 @@ namespace TAO
         PortableServer::Servant servant,
         CORBA::Short priority,
         bool &wait_occurred_restart_call
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantAlreadyActive,
                            PortableServer::POA::ObjectAlreadyActive,
@@ -83,22 +83,22 @@ namespace TAO
 #endif
 
       virtual void deactivate_object (const PortableServer::ObjectId &id
-                                      ACE_ENV_ARG_DECL) = 0;
+                                      ) = 0;
 
       virtual PortableServer::Servant find_servant (
         const PortableServer::ObjectId &system_id
-        ACE_ENV_ARG_DECL) = 0;
+        ) = 0;
 
       virtual PortableServer::ObjectId *system_id_to_object_id (
         const PortableServer::ObjectId &system_id
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongAdapter,
                            PortableServer::POA::WrongPolicy)) = 0;
 
       virtual PortableServer::Servant user_id_to_servant (
         const PortableServer::ObjectId &id
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ObjectNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
@@ -106,25 +106,25 @@ namespace TAO
       virtual CORBA::Object_ptr id_to_reference (
         const PortableServer::ObjectId &id,
         bool indirect
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ObjectNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual void deactivate_all_objects (ACE_ENV_SINGLE_ARG_DECL)
+      virtual void deactivate_all_objects (void)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy)) = 0;
 
       virtual PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
 
       virtual CORBA::Object_ptr servant_to_reference (
         PortableServer::Servant servant
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy)) = 0;
@@ -132,7 +132,7 @@ namespace TAO
       virtual CORBA::Object_ptr create_reference (
         const char *intf,
         CORBA::Short priority
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy)) = 0;
 
@@ -140,7 +140,7 @@ namespace TAO
         const PortableServer::ObjectId &oid,
         const char *intf,
         CORBA::Short priority
-        ACE_ENV_ARG_DECL)
+        )
           ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
       virtual int rebind_using_user_id_and_system_id (

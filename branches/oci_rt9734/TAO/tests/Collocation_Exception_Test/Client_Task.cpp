@@ -17,89 +17,77 @@ Client_Task::Client_Task (const char *ior,
 
 void
 Client_Task::test_system_exception (
-  Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL)
+  Test::Hello_ptr hello_ptr)
 {
-  ACE_TRY
+  try
     {
-      hello_ptr->system_exception_test (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello_ptr->system_exception_test ();
     }
-  ACE_CATCH (CORBA::INTERNAL, ex)
+  catch (const CORBA::INTERNAL& )
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Caught internal exception as expected\n"));
       // ignore
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-         "Unexpected exception caught in test_system_exception:");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "Unexpected exception caught in test_system_exception:");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 Client_Task::test_user_exception_expected (
-  Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL)
+  Test::Hello_ptr hello_ptr)
 {
-  ACE_TRY
+  try
     {
-      hello_ptr->user_exception_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello_ptr->user_exception_expected ();
     }
-  ACE_CATCH (::Test::Hello::A, ex)
+  catch (const ::Test::Hello::A& )
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Caught user A exception as expected\n"));
       // ignore
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-         "Unexpected exception caught in test_user_exception_expected:");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "Unexpected exception caught in test_user_exception_expected:");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 void
 Client_Task::test_user_exception_not_expected (
-  Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL)
+  Test::Hello_ptr hello_ptr)
 {
-  ACE_TRY
+  try
     {
-      hello_ptr->user_exception_not_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello_ptr->user_exception_not_expected ();
     }
-  ACE_CATCH (CORBA::UNKNOWN, ex)
+  catch (const CORBA::UNKNOWN& )
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Caught unknown exception as expected\n"));
       // ignore
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-         "Unexpected exception caught in user_exception_not_expected:");
-      ACE_RE_THROW;
+      ex._tao_print_exception (
+        "Unexpected exception caught in user_exception_not_expected:");
+      throw;
     }
-  ACE_ENDTRY;
-  ACE_CHECK;
 }
 
 int
 Client_Task::svc (void)
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_
-				       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->corb_->string_to_object (input_);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -110,31 +98,24 @@ Client_Task::svc (void)
         }
 
       CORBA::String_var the_string =
-        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
 		  the_string.in ()));
 
-      this->test_system_exception (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_system_exception (hello.in ());
 
-      this->test_user_exception_expected (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_user_exception_expected (hello.in ());
 
-      this->test_user_exception_not_expected (hello.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->test_user_exception_not_expected (hello.in ());
 
-      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      hello->shutdown ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-         "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 

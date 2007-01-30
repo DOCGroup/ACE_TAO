@@ -128,7 +128,7 @@ TAO_SHMIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
 void
 TAO_SHMIOP_Profile::parse_string_i (const char *string
-                                    ACE_ENV_ARG_DECL)
+                                    )
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -140,11 +140,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   if (cp == 0)
     {
       // No host/port delimiter!
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
@@ -152,11 +152,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   if (okd == 0)
     {
       // No object key delimiter!
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   // Don't increment the pointer 'cp' directly since we still need
@@ -180,11 +180,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
       ACE_INET_Addr ia;
       if (ia.string_to_addr (tmp.in ()) == -1)
         {
-          ACE_THROW (CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
               CORBA::SystemException::_tao_minor_code (
                   TAO::VMCID,
                   EINVAL),
-              CORBA::COMPLETED_NO));
+              CORBA::COMPLETED_NO);
         }
       else
         {
@@ -222,11 +222,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
                           ACE_TEXT ("cannot determine hostname")));
 
             // @@ What's the right exception to throw here?
-            ACE_THROW (CORBA::INV_OBJREF (
+            throw ::CORBA::INV_OBJREF (
                          CORBA::SystemException::_tao_minor_code (
                            TAO::VMCID,
                            EINVAL),
-                         CORBA::COMPLETED_NO));
+                         CORBA::COMPLETED_NO);
           }
         else
           this->endpoint_.host_ = tmp;
@@ -248,11 +248,11 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         }
 
       // @@ What's the right exception to throw here?
-      ACE_THROW (CORBA::INV_OBJREF (
+      throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
-                   CORBA::COMPLETED_NO));
+                   CORBA::COMPLETED_NO);
     }
 
   start = ++okd;  // increment past the object key separator
@@ -291,7 +291,7 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_SHMIOP_Profile::hash (CORBA::ULong max
-                          ACE_ENV_ARG_DECL_NOT_USED)
+                          )
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
@@ -329,7 +329,7 @@ TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
 }
 
 char *
-TAO_SHMIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SHMIOP_Profile::to_string (void)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

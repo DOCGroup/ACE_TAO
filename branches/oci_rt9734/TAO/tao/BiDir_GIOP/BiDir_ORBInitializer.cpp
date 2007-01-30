@@ -13,29 +13,23 @@ ACE_RCSID (BiDir_GIOP,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_BiDir_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
 }
 
 void
-TAO_BiDir_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
+TAO_BiDir_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 }
 
 void
 TAO_BiDir_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
-  ACE_ENV_ARG_DECL)
+  )
 {
   /// Register the BiDir policy factories.
   PortableInterceptor::PolicyFactory_ptr temp_factory =
@@ -48,7 +42,6 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
                          TAO::VMCID,
                          ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
   PortableInterceptor::PolicyFactory_var policy_factory = temp_factory;
 
@@ -60,10 +53,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
 
   type = BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE;
   info->register_policy_factory (type,
-                                 policy_factory.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
+                                 policy_factory.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

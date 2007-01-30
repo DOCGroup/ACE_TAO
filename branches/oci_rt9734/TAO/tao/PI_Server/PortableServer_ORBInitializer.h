@@ -40,13 +40,10 @@ public:
    * PortableInterceptor::ORBInitializer interface.
    */
   //@{
-
-  void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                 ACE_ENV_ARG_DECL)
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                  ACE_ENV_ARG_DECL)
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
@@ -54,8 +51,7 @@ public:
 private:
 
   /// Register PortableServer policy factories.
-  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
-                                  ACE_ENV_ARG_DECL);
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

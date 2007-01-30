@@ -41,8 +41,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -53,30 +52,22 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "client_orb"
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         "client_orb");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Get the PICurrent object.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("PICurrent"
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("PICurrent");
 
       PortableInterceptor::Current_var pi_current =
-        PortableInterceptor::Current::_narrow (obj.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableInterceptor::Current::_narrow (obj.in ());
 
       if (CORBA::is_nil (pi_current.in ()))
         {
@@ -95,18 +86,14 @@ main (int argc, char *argv[])
       // Now reset the contents of our slot in the thread-scope
       // current (TSC).
       pi_current->set_slot (::slot_id,
-                            data
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            data);
 
       // Resolve the target object, and perform the invocation.
       obj =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->string_to_object (ior);
 
       PICurrentTest::test_var server =
-        PICurrentTest::test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PICurrentTest::test::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -125,7 +112,7 @@ main (int argc, char *argv[])
         {
             ACE_ERROR ((LM_ERROR,
                         "(%P|%t) _get_policy_overrides returned nill pointer\n"));
-            ACE_TRY_THROW (CORBA::INTERNAL ());
+            throw CORBA::INTERNAL ();
         }
       else
         {
@@ -134,17 +121,14 @@ main (int argc, char *argv[])
             {
               ACE_ERROR ((LM_ERROR,
                           "(%P|%t) _get_policy_overrides returned list with size not equal 0\n"));
-              ACE_TRY_THROW (CORBA::INTERNAL ());
+              throw CORBA::INTERNAL ();
             }
         }
 
-      server->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->invoke_me ();
 
       CORBA::Any_var new_data =
-        pi_current->get_slot (::slot_id
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        pi_current->get_slot (::slot_id);
 
       // The original data in the TSC was of type CORBA::Long.  If the
       // following extraction from the CORBA::Any fails, then the
@@ -163,26 +147,21 @@ main (int argc, char *argv[])
                       "(%P|%t) Unable to extract data (a string) "
                       "from the TSC.\n"));
 
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
-      server->invoke_we (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->invoke_we ();
 
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      server->shutdown ();
 
       ACE_OS::sleep(1);
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "PICurrent test (client-side):");
+      ex._tao_print_exception ("PICurrent test (client-side):");
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

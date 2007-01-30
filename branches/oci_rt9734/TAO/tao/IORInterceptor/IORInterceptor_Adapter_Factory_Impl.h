@@ -43,9 +43,7 @@ class TAO_IORInterceptor_Export TAO_IORInterceptor_Adapter_Factory_Impl
 public:
   virtual ~TAO_IORInterceptor_Adapter_Factory_Impl (void);
 
-  virtual TAO_IORInterceptor_Adapter * create (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
+  virtual TAO_IORInterceptor_Adapter * create (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Used to force the initialization of the ORB code.

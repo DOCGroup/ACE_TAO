@@ -46,18 +46,16 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
   CORBA::TypeCode_var type = any_ref.type ();
   CORBA::TCKind corba_type = CORBA::tk_null;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      corba_type = type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      corba_type = type->kind ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       // @@ Seth: Don't know what else to do. Make sure we can tell
       // when this constructor fails.
       return;
     }
-  ACE_ENDTRY;
 
   this->type_ =
     TAO_ETCL_Literal_Constraint::comparable_type (type.in ());
@@ -329,27 +327,23 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   TAO_Literal_Type return_value = TAO_UNKNOWN;
   CORBA::TCKind kind = CORBA::tk_null;
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      kind = type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      kind = type->kind ();
 
       CORBA::TypeCode_var tmp = CORBA::TypeCode::_duplicate (type);
 
       while (kind == CORBA::tk_alias)
         {
-          tmp = tmp->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          tmp = tmp->content_type ();
 
-          kind = tmp->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          kind = tmp->kind ();
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
     {
       return return_value;
     }
-  ACE_ENDTRY;
   // Since this is a "top level try block, no need to check again.
 
   switch (kind)

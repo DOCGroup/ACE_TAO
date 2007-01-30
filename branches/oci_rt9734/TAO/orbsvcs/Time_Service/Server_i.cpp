@@ -81,8 +81,7 @@ Server_i::init_naming_service ()
 int
 Server_i::create_server (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
 
       // Create a new server object.
@@ -93,21 +92,15 @@ Server_i::create_server (void)
       // Register a servant with the child poa.
       CORBA::String_var server_str =
         this->orb_manager_.activate_under_child_poa ("server",
-                                                     this->time_service_server_impl_
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                     this->time_service_server_impl_);
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("server");
 
       CORBA::Object_var server_ref =
-        this->orb_manager_.child_poa ()->id_to_reference (id.in ()
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_manager_.child_poa ()->id_to_reference (id.in ());
 
-      this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ()
-                                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ());
 
       // All this !! just to register a servant with the child poa.
       // Instead of using _this ().
@@ -115,9 +108,7 @@ Server_i::create_server (void)
       //Convert the server reference to a string.
 
       CORBA::String_var objref_server =
-        this->orb_->object_to_string (server_ref.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->object_to_string (server_ref.in ());
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -136,13 +127,12 @@ Server_i::create_server (void)
           ACE_OS::fclose (this->ior_output_file_);
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT("Exception in Server_i::create_server ()"));
+      ex._tao_print_exception (
+        ACE_TEXT ("Exception in Server_i::create_server ()"));
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
 }
 
@@ -153,25 +143,21 @@ Server_i::create_server (void)
 int
 Server_i::register_server (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       CosNaming::Name server_context_name;
       server_context_name.length (1);
       server_context_name[0].id = CORBA::string_dup ("ServerContext");
 
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY_EX(bind_new_context)
+      try
         {
           CosNaming::NamingContext_var server_context =
 	    this->naming_client_->bind_new_context(server_context_name);
-          ACE_TRY_CHECK_EX(bind_new_context);
         }
-      ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+      catch (const CosNaming::NamingContext::AlreadyBound& )
         {
 	  // OK, naming context already exists.
 	}
-      ACE_ENDTRY;
 
       char host_name[MAXHOSTNAMELEN];
       char server_mc_name[MAXHOSTNAMELEN];
@@ -188,21 +174,18 @@ Server_i::register_server (void)
       // to the Naming Server.
 
       this->naming_client_->rebind (server_name,
-                                    this->time_service_server_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                    this->time_service_server_.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Binding ServerContext -> %s\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(server_name[1].id.in ())));
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT("(%P|%t) Exception from Register Server ()\n"));
+      ex._tao_print_exception (
+        ACE_TEXT ("(%P|%t) Exception from Register Server ()\n"));
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -213,10 +196,9 @@ Server_i::register_server (void)
 
 int
 Server_i::init (int argc,
-                ACE_TCHAR *argv[]
-                ACE_ENV_ARG_DECL)
+                ACE_TCHAR *argv[])
 {
-  ACE_TRY
+  try
     {
       // Make a copy of command line parameter.
       ACE_Argv_Type_Converter command(argc, argv);
@@ -227,9 +209,7 @@ Server_i::init (int argc,
       int retval = this->orb_manager_.init_child_poa (
                       command.get_argc(),
                       command.get_ASCII_argv(),
-                      "time_server"
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                      "time_server");
 
       if (retval == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -238,8 +218,7 @@ Server_i::init (int argc,
                            -1);
 
       // Activate the POA Manager.
-      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      this->orb_manager_.activate_poa_manager ();
 
       int result = this->parse_args (command.get_argc(), command.get_TCHAR_argv());
 
@@ -259,12 +238,11 @@ Server_i::init (int argc,
       this->register_server ();
 
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT("Exception:"));
+      ex._tao_print_exception (ACE_TEXT("Exception:"));
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -273,10 +251,9 @@ Server_i::init (int argc,
 // Run the event loop for ORB.
 
 int
-Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::run (void)
 {
-  int retval = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  int retval = this->orb_manager_.run ();
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

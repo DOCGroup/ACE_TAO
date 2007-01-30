@@ -18,17 +18,15 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 }
 
 void
-Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
+Foo_i::baz (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Foo::Bar::NoSecurityAttributes))
 {
   SecurityLevel3::ClientCredentials_var credentials =
-    this->current_->client_credentials (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    this->current_->client_credentials ();
 
   CORBA::String_var id =
-    credentials->creds_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    credentials->creds_id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"
@@ -39,8 +37,8 @@ Foo_i::baz (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Foo_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Foo_i::shutdown (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

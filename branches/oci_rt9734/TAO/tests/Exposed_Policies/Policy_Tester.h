@@ -35,17 +35,16 @@ public:
   Policy_Tester (void);
   ~Policy_Tester (void);
 
-  void run (ACE_ENV_SINGLE_ARG_DECL);
+  void run (void);
   // Runs the test.
 
   int init (int argc,
-            char *argv[]
-            ACE_ENV_ARG_DECL);
+            char *argv[]);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  void shutdown (void);
 private:
   // Helper method used internally.
-  int create_objects (ACE_ENV_SINGLE_ARG_DECL);
+  int create_objects (void);
 
   CORBA::Boolean check_reference (CORBA::Object_ptr object,
                                    const char *msg);

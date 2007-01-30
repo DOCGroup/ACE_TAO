@@ -36,13 +36,11 @@ ACE_RCSID (CDR,
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                            0);
 
       static const CORBA::TypeCode_ptr tcs[]=
       {
@@ -112,8 +110,7 @@ main (int argc, char *argv[])
         {
           CORBA::TypeCode_ptr tc = *i;
 
-          CORBA::TCKind k = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          CORBA::TCKind k = tc->kind ();
 
           switch (k)
             {
@@ -124,15 +121,12 @@ main (int argc, char *argv[])
             case CORBA::tk_alias:
             case CORBA::tk_except:
               {
-                const char *id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                const char *id = tc->id ();
 
-                const char *name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_TRY_CHECK;
+                const char *name = tc->name ();
 
                 CORBA::ULong length = 0;
                 // tc->length (TAO_TRY_ENV);
-                // ACE_TRY_CHECK;
 
                 if (TAO_debug_level > 0)
                   {
@@ -160,12 +154,11 @@ main (int argc, char *argv[])
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TC");
+      ex._tao_print_exception ("TC");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

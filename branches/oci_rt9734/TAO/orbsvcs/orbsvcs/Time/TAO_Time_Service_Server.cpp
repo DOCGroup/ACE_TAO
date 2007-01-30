@@ -27,7 +27,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 // inaccuracy in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Time_Service_Server::universal_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -43,13 +43,12 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
                              0),
                     CORBA::NO_MEMORY ());
 
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Returning a UTO\n"));
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This method returns the current time in a UTO only if the time can
@@ -57,7 +56,7 @@ TAO_Time_Service_Server::universal_time (ACE_ENV_SINGLE_ARG_DECL)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Time_Service_Server::secure_universal_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
@@ -70,8 +69,7 @@ TAO_Time_Service_Server::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
 CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                                              TimeBase::InaccuracyT inaccuracy,
-                                             TimeBase::TdfT tdf
-                                             ACE_ENV_ARG_DECL)
+                                             TimeBase::TdfT tdf)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -81,16 +79,14 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                              inaccuracy,
                              tdf),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This creates a new UTO given a time in the UtcT form.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc
-                                       ACE_ENV_ARG_DECL)
+TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
@@ -100,17 +96,15 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc
                              utc.inacclo + utc.inacchi,
                              utc.tdf),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
-  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return uto->_this ();
 }
 
 // This creates a new TIO with the given parameters.
 
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
-                                       TimeBase::TimeT upper
-                                       ACE_ENV_ARG_DECL)
+                                       TimeBase::TimeT upper)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
@@ -119,9 +113,8 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                     TAO_TIO (lower,
                              upper),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
 
-  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return tio->_this ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

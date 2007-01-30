@@ -191,7 +191,7 @@ tracker ()
 }
 
 void Gate::
-push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
+push_structured_event (StructuredEvent const& e)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
 {
@@ -249,7 +249,7 @@ push_structured_event (StructuredEvent const& e ACE_ENV_ARG_DECL_NOT_USED)
 
 
 void Gate::
-disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+disconnect_structured_push_consumer (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We don't care.
@@ -257,8 +257,7 @@ disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void Gate::
 offer_change (EventTypeSeq const&,
-              EventTypeSeq const&
-              ACE_ENV_ARG_DECL_NOT_USED)
+              EventTypeSeq const&)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyComm::InvalidEventType))
 {

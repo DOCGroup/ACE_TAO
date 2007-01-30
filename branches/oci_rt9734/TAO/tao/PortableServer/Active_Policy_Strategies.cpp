@@ -65,7 +65,7 @@ namespace TAO
     void
     Active_Policy_Strategies::update (Cached_Policies &policies,
                                       ::TAO_Root_POA *poa
-                                      ACE_ENV_ARG_DECL)
+                                      )
     {
       this->thread_strategy_factory_ =
         ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategyFactory");
@@ -134,103 +134,89 @@ namespace TAO
 
       if (this->lifespan_strategy_ != 0)
         {
-          this->lifespan_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->lifespan_strategy_->strategy_init (poa);
         }
 
       if (this->request_processing_strategy_ != 0)
         {
-          this->request_processing_strategy_->strategy_init (poa, policies.servant_retention() ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->request_processing_strategy_->strategy_init (poa, policies.servant_retention());
         }
 
       if (this->id_uniqueness_strategy_ != 0)
         {
-          this->id_uniqueness_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->id_uniqueness_strategy_->strategy_init (poa);
         }
 
       if (this->implicit_activation_strategy_ != 0)
         {
-          this->implicit_activation_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->implicit_activation_strategy_->strategy_init (poa);
         }
 
       if (this->thread_strategy_ != 0)
         {
-          this->thread_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->thread_strategy_->strategy_init (poa);
         }
 
       if (this->servant_retention_strategy_ != 0)
         {
-          this->servant_retention_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->servant_retention_strategy_->strategy_init (poa);
         }
 
       if (this->id_assignment_strategy_ != 0)
         {
-          this->id_assignment_strategy_->strategy_init (poa ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->id_assignment_strategy_->strategy_init (poa);
         }
     }
 
     void
-    Active_Policy_Strategies::cleanup (ACE_ENV_SINGLE_ARG_DECL)
+    Active_Policy_Strategies::cleanup (void)
     {
 
       if (this->lifespan_strategy_ != 0)
         {
-          this->lifespan_strategy_factory_->destroy (lifespan_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->lifespan_strategy_factory_->destroy (lifespan_strategy_);
 
           this->lifespan_strategy_ = 0;
         }
 
       if (this->request_processing_strategy_ != 0)
         {
-          this->request_processing_strategy_factory_->destroy (request_processing_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->request_processing_strategy_factory_->destroy (request_processing_strategy_);
 
           this->request_processing_strategy_ = 0;
         }
 
       if (this->id_uniqueness_strategy_ != 0)
         {
-          this->id_uniqueness_strategy_factory_->destroy (id_uniqueness_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->id_uniqueness_strategy_factory_->destroy (id_uniqueness_strategy_);
 
           this->id_uniqueness_strategy_ = 0;
         }
 
       if (this->implicit_activation_strategy_ != 0)
         {
-          this->implicit_activation_strategy_factory_->destroy (implicit_activation_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->implicit_activation_strategy_factory_->destroy (implicit_activation_strategy_);
 
           this->implicit_activation_strategy_ = 0;
         }
 
       if (this->thread_strategy_ != 0)
         {
-          this->thread_strategy_factory_->destroy (thread_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->thread_strategy_factory_->destroy (thread_strategy_);
 
           this->thread_strategy_ = 0;
         }
 
       if (this->servant_retention_strategy_ != 0)
         {
-          this->servant_retention_strategy_factory_->destroy (servant_retention_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->servant_retention_strategy_factory_->destroy (servant_retention_strategy_);
 
           this->servant_retention_strategy_ = 0;
         }
 
       if (this->id_assignment_strategy_ != 0)
         {
-          this->id_assignment_strategy_factory_->destroy (id_assignment_strategy_ ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          this->id_assignment_strategy_factory_->destroy (id_assignment_strategy_);
 
           this->id_assignment_strategy_ = 0;
         }

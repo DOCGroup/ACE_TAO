@@ -31,21 +31,17 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
 
       CORBA::Any *value = 0;
       // Retrieve the value of the property from the Property_Evaluator
-      ACE_TRY
+      try
         {
-          value = this->prop_eval_.property_value (prop_index ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          value = this->prop_eval_.property_value (prop_index);
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception&)
         {
           return -1;
         }
-      ACE_ENDTRY;
-      //      ACE_CHECK_RETURN (-1);
 
       if (value != 0)
         {

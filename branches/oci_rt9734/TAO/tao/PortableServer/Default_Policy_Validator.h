@@ -45,12 +45,10 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate_impl (TAO_Policy_Set &policies
-                      ACE_ENV_ARG_DECL);
+  void validate_impl (TAO_Policy_Set &policies);
 
   /// Add/merge policies.
-  void merge_policies_impl (TAO_Policy_Set &policies
-                            ACE_ENV_ARG_DECL);
+  void merge_policies_impl (TAO_Policy_Set &policies);
 
   /**
    * Return whether the specified policy type is legal for the

@@ -20,8 +20,7 @@ PortableGroup_Request_Dispatcher::~PortableGroup_Request_Dispatcher (void)
 void
 PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                             TAO_ServerRequest &request,
-                                            CORBA::Object_out forward_to
-                                            ACE_ENV_ARG_DECL)
+                                            CORBA::Object_out forward_to)
 {
   // Check if the request contains a tagged profile
   if (request.profile ().discriminator () == GIOP::ProfileAddr)
@@ -40,9 +39,7 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
           this->group_map_.dispatch (&group,
                                      orb_core,
                                      request,
-                                     forward_to
-                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                     forward_to);
 
           return;
         }
@@ -53,9 +50,7 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
   // Dispatch based on object key.
   orb_core->adapter_registry ()->dispatch (request.object_key (),
                                            request,
-                                           forward_to
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+                                           forward_to);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

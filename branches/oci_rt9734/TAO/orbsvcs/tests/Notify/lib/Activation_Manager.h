@@ -55,21 +55,21 @@ public:
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void start (void)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Register Supplier
-  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);
   /// Register Consumer
-  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name);
 
   /// Resolve Supplier
-  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name);
 
   /// Resolve Consumer
-  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name);
 
   // Activate the tasks for each supplier.
   int activate_suppliers (void);
@@ -96,9 +96,9 @@ public:
   // Returns 1 if the file could be opened for read.
   int ior_input_file (const ACE_TCHAR *file_name);
 
-  void write_ior (ACE_ENV_SINGLE_ARG_DECL);
-  void wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL);
-  void signal_peer (ACE_ENV_SINGLE_ARG_DECL);
+  void write_ior (void);
+  void wait_for_start_signal (void);
+  void signal_peer (void);
 
 protected:
   /// Lock to serialize internal state.

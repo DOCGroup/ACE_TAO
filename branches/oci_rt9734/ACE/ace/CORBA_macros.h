@@ -413,7 +413,7 @@
       } while (0); \
     } while (0)
 
-#endif /* ! ACE_CORBA_HAS_EXCEPTIONS */
+#endif /* ! ACE_USES_NATIVE_EXCEPTIONS */
 
 // ACE_HAS_EXCEPTIONS is not the same as ACE_NEW_THROWS_EXCEPTIONS.
 #if defined(ACE_NEW_THROWS_EXCEPTIONS)
@@ -545,7 +545,7 @@
 #  define ACE_ENV_RAISE(ex) ACE_TRY_ENV.exception (ex)
 #else
 #  define ACE_ENV_RAISE(ex) (ex)->_raise ()
-#endif /* ACE_CORBA_HAS_EXCEPTIONS */
+#endif /* ACE_USES_NATIVE_EXCEPTIONS */
 
 // ============================================================
 

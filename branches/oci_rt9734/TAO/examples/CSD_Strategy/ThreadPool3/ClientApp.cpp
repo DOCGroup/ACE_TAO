@@ -16,11 +16,10 @@ ClientApp::~ClientApp()
 
 
 int
-ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
+ClientApp::run(int argc, char* argv[])
 {
-  CORBA::ORB_var orb 
-    = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::ORB_var orb
+    = CORBA::ORB_init(argc, argv, "");
 
   // Parse the command-line args for this application.
   // * Raises -1 if problems are encountered.
@@ -32,9 +31,8 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       return result;
     }
 
-  CORBA::Object_var obj 
-    = orb->string_to_object(this->ior_.c_str() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var obj
+    = orb->string_to_object(this->ior_.c_str());
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -43,8 +41,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       ACE_THROW_RETURN (TestException(), -1);
     }
 
-  Foo_var foo = Foo::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  Foo_var foo = Foo::_narrow(obj.in());
 
   if (CORBA::is_nil(foo.in()))
     {
@@ -55,12 +52,9 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   for (CORBA::Long i = 1; i <= 100; i++)
     {
-      foo->op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      foo->op2(i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      CORBA::Long value = foo->op3(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      foo->op1();
+      foo->op2(i);
+      CORBA::Long value = foo->op3();
 
       ACE_DEBUG((LM_DEBUG,
                  "(%P|%t) ===> Value retrieved from op3() == %d\n",
@@ -68,29 +62,25 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
       for (CORBA::Long j = 1; j <= 5; j++)
         {
-          foo->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          foo->op4(495 + (i * 5) + j);
         }
 
-      ACE_TRY_NEW_ENV
+      try
       {
-        foo->op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        foo->op5();
       }
-      ACE_CATCH (FooException, ex)
+      catch (const FooException& )
       {
         ACE_DEBUG((LM_DEBUG,
                   "(%P|%t) ===> Caught FooException - as expected.\n"));
-        
+
       }
-      ACE_ENDTRY;
     }
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ===> Tell server that we are done().\n"));
 
-  foo->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  foo->done();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ===> Back from done().\n"));

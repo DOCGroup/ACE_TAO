@@ -33,15 +33,13 @@ public:
   // Destructor
   virtual ~TX_Object_i (void);
 
-  virtual void send (const DataSeq & data
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void send (const DataSeq & data)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void recv (DataSeq_out data
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void recv (DataSeq_out data)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

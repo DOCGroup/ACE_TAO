@@ -60,10 +60,10 @@ namespace TAO
     void set_exception_data (::TAO::Exception_Data* data,
                              ::CORBA::ULong exceptions_count);
 
-    virtual void raise_exception (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    virtual void raise_exception (void);
 
     virtual void raise_exception_with_list (
-        const ::Dynamic::ExceptionList & exc_list ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const ::Dynamic::ExceptionList & exc_list
       );
 
     virtual CORBA::ValueBase* _copy_value (void);
@@ -91,7 +91,7 @@ namespace TAO
   {
   public:
     virtual CORBA::ValueBase * create_for_unmarshal (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      void);
   };
 
 }

@@ -41,11 +41,10 @@ public:
 
   /// Create a new PortableServer::POA.
   void init (PortableServer::POA_ptr parent_poa,
-             const char* poa_name
-             ACE_ENV_ARG_DECL);
+             const char* poa_name);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
-  void init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr parent_poa);
 
   /// Destructor
   virtual ~TAO_Notify_POA_Helper ();
@@ -54,47 +53,41 @@ public:
   PortableServer::POA_ptr poa (void);
 
   /// Destroy underlying POA.
-  void destroy (ACE_ENV_SINGLE_ARG_DECL);
+  void destroy (void);
 
   /// Activate Object, the POA will assign an ID and return its value.
   CORBA::Object_ptr activate (PortableServer::Servant servant,
-                              CORBA::Long& id
-                              ACE_ENV_ARG_DECL);
+                              CORBA::Long& id);
 
   /// Activate Object, using existing ID
-  CORBA::Object_ptr activate_with_id (PortableServer::Servant servant, CORBA::Long id ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr activate_with_id (PortableServer::Servant servant, CORBA::Long id);
 
   /// Deactivate Object with ID
-  void deactivate (CORBA::Long id
-                   ACE_ENV_ARG_DECL) const;
+  void deactivate (CORBA::Long id) const;
 
   /// Convert ID to reference.
-  CORBA::Object_ptr id_to_reference (CORBA::Long id
-                                     ACE_ENV_ARG_DECL) const;
+  CORBA::Object_ptr id_to_reference (CORBA::Long id) const;
 
   /// Convert reference to pointer to servant
-  PortableServer::ServantBase * reference_to_servant (CORBA::Object_ptr ptr
-                                                      ACE_ENV_ARG_DECL) const;
+  PortableServer::ServantBase * reference_to_servant (CORBA::Object_ptr ptr) const;
 
-  CORBA::Object_ptr servant_to_reference (PortableServer::ServantBase * servant  ACE_ENV_ARG_DECL) const;
+  CORBA::Object_ptr servant_to_reference (PortableServer::ServantBase * servant) const;
 
 protected:
   /// Set default POA policies.
   virtual void set_policy (PortableServer::POA_ptr parent_poa,
-                           CORBA::PolicyList &policy_list
-                           ACE_ENV_ARG_DECL);
+                           CORBA::PolicyList &policy_list);
 
   /// Apply the polices and create child POA.
   void create_i (PortableServer::POA_ptr parent_poa,
                  const char* poa_name,
-                 CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL);
+                 CORBA::PolicyList &policy_list);
 
   /// Generate a unique id for each POA created.
   ACE_CString get_unique_id (void);
 
   /// Convert id to ObjectID
-  PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id
-                                              ACE_ENV_ARG_DECL) const;
+  PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id) const;
 
 protected:
   /// POA

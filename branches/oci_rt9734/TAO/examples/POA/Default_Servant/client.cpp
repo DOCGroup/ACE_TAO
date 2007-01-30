@@ -73,13 +73,11 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
 
-  ACE_TRY
+  try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Parse the command-line arguments to get the IOR
       parse_args (argc, argv);
@@ -106,20 +104,14 @@ main (int argc, char **argv)
       ior_buffer.alloc ()-> free (data);
       ACE_OS::close (input_file);
 
-      CORBA::Object_var object = orb->string_to_object (ior.c_str ()
-                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var object = orb->string_to_object (ior.c_str ());
 
       // Narrow the object reference to a File::System
-      File::System_var file_system = File::System::_narrow (object.in ()
-                                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      File::System_var file_system = File::System::_narrow (object.in ());
 
       // Creat the file filename i.e "test"
       File::Descriptor_var fd = file_system->open (filename,
-                                                   O_CREAT | O_RDWR
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                                   O_CREAT | O_RDWR);
 
       int message_length = ACE_OS::strlen (message) + 1;
       CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
@@ -127,17 +119,13 @@ main (int argc, char **argv)
       File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, 1);
 
       // write the message to the file
-      fd->write (data_sent ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fd->write (data_sent);
 
       //seek to the beginning of the file
-      fd->lseek (0, SEEK_SET ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fd->lseek (0, SEEK_SET);
 
       // Read back the written message
-      File::Descriptor::DataBuffer_var data_received = fd->read (message_length
-                                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      File::Descriptor::DataBuffer_var data_received = fd->read (message_length);
 
       char *result = (char *) &data_received[0];
 
@@ -146,16 +134,13 @@ main (int argc, char **argv)
                  result));
 
       // close the file
-      fd->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      fd->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught in main");
+      ex._tao_print_exception ("Exception caught in main");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

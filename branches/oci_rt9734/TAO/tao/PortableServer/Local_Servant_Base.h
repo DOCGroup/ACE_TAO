@@ -43,12 +43,10 @@ class TAO_PortableServer_Export TAO_Local_ServantBase
 protected:
   /// This is an auxiliary method for _this().  Make sure *not* to
   /// register with the default POA.
-  TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  TAO_Stub *_create_stub (void);
 
   /// Throws CORBA::BAD_OPERATION exception.
-  void _dispatch (TAO_ServerRequest &request,
-                  void *servant_upcall
-                  ACE_ENV_ARG_DECL);
+  void _dispatch (TAO_ServerRequest &request, void *servant_upcall);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

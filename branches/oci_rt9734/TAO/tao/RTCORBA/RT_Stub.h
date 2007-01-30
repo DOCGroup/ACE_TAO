@@ -63,22 +63,19 @@ public:
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
 
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                  CORBA::SetOverrideType set_add
-                                  ACE_ENV_ARG_DECL);
+                                  CORBA::SetOverrideType set_add);
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 private:
 
   /// Helper method used to parse the policies.
-  void parse_policies (ACE_ENV_SINGLE_ARG_DECL);
+  void parse_policies (void);
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
 
@@ -89,17 +86,17 @@ private:
   /// Returns the CORBA::Policy (which will be narrowed to be
   /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_model (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_priority_model (void);
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_priority_banded_connection (void);
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_client_protocol (void);
 
   // = Methods for obtaining effective policies.
   //
@@ -108,8 +105,8 @@ private:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  CORBA::Policy *effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL);
-  CORBA::Policy *effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy *effective_priority_banded_connection (void);
+  CORBA::Policy *effective_client_protocol (void);
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to

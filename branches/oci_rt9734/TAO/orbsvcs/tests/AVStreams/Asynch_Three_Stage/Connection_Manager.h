@@ -51,34 +51,29 @@ public:
   // Initialize this class.
 
   void bind_to_receivers (const ACE_CString &sender_name,
-                          AVStreams::MMDevice_ptr sender
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                          AVStreams::MMDevice_ptr sender);
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
-  void connect_to_receivers (AVStreams::MMDevice_ptr sender
-			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_receivers (AVStreams::MMDevice_ptr sender);
   // Connect to the receivers that we found.
 
   void bind_to_sender (const ACE_CString &sender_name,
                        const ACE_CString &receiver_name,
-                       AVStreams::MMDevice_ptr receiver
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       AVStreams::MMDevice_ptr receiver);
   // Bind receiver to the sender.
 
-  void connect_to_sender (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_sender (void);
   // Connect to the sender that we found.
 
-  void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void destroy (void);
   // Destroy all streams.
 
-  void destroy (const ACE_CString &flowname
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void destroy (const ACE_CString &flowname);
   // Destroy streams associated with <flowname>.
 
   void add_streamctrl (const ACE_CString &flowname,
-                       TAO_StreamEndPoint *endpoint
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                       TAO_StreamEndPoint *endpoint);
   // Add new streamctrl.
 
   // Map of receivers.
@@ -93,7 +88,7 @@ public:
                                ACE_Null_Mutex>
           Protocol_Objects;
 
-  
+
 
   // Map of streamctrl.
   typedef ACE_Hash_Map_Manager<ACE_CString,
@@ -113,15 +108,14 @@ public:
   StreamCtrls &streamctrls (void);
 
   void load_ep_addr (const char* file_name);
-  
+
 protected:
 
 
 
-  void find_receivers (ACE_ENV_SINGLE_ARG_DECL);
+  void find_receivers (void);
 
-  void add_to_receivers (CosNaming::BindingList &binding_list
-                         ACE_ENV_ARG_DECL);
+  void add_to_receivers (CosNaming::BindingList &binding_list);
 
   TAO_Naming_Client naming_client_;
   // The Naming Service client.

@@ -29,8 +29,7 @@ class TAO_RTEC_Perf_Export PriorityBand_Setup
 public:
   /// Constructor
   PriorityBand_Setup (CORBA::ORB_ptr orb,
-                      const RTCORBA_Setup &rtcorba_setup
-                      ACE_ENV_ARG_DECL);
+                      const RTCORBA_Setup &rtcorba_setup);
 
   /// Destructor
   /**

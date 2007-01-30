@@ -54,7 +54,7 @@ public:
    virtual CORBA::Object_ptr
    parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                         ACE_CString &key_string
-                                        ACE_ENV_ARG_DECL)
+                                        )
      ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -12,16 +12,20 @@ ACE_RCSID (ace,
            Task,
            "$Id$")
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
     thr_mgr_ (thr_man),
     flags_ (0),
-    grp_id_ (-1),
-    last_thread_id_ (0)
+    grp_id_ (-1)
+#if !defined (ACE_MVS)
+    ,last_thread_id_ (0)
+#endif /* !defined (ACE_MVS) */
 {
+#if defined (ACE_MVS)
+   ACE_OS::memset( &this->last_thread_id_, '\0', sizeof( this->last_thread_id_ ));
+#endif /* defined (ACE_MVS) */
 }
 
 ACE_Task_Base::~ACE_Task_Base (void)
@@ -192,7 +196,11 @@ ACE_Task_Base::activate (long flags,
   if (this->grp_id_ == -1)
     this->grp_id_ = grp_spawned;
 
+#if defined (ACE_MVS)
+  ACE_OS::memcpy( &this->last_thread_id_, '\0', sizeof(this->last_thread_id_));
+#else
   this->last_thread_id_ = 0;    // Reset to prevent inadvertant match on ID
+#endif /* defined (ACE_MVS) */
 
   return 0;
 

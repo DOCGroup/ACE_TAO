@@ -41,12 +41,11 @@ namespace CIDL_Sender_Impl
     virtual ~Sender_exec_i ();
 
     /// Operation to set the value of the attribute
-    virtual void local_message (const char * local_message
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void local_message (const char * local_message)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Operation to get the value of the attribute
-    virtual char * local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * local_message ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /* Operations for obtaining the interface reference. */
@@ -56,37 +55,36 @@ namespace CIDL_Sender_Impl
      */
     // Note: You can specify the return type as ::Hello::CCM_message *
     virtual Hello::CCM_ReadMessage_ptr
-    get_push_message (ACE_ENV_SINGLE_ARG_DECL)
+    get_push_message ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     // Operation inside of the trigger interface.
-    virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void start ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    virtual void set_session_context (Components::SessionContext_ptr ctx
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void set_session_context (Components::SessionContext_ptr ctx)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void ciao_preactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_activate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
+    virtual void ciao_postactivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_passivate ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void ccm_remove ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
@@ -114,7 +112,7 @@ namespace CIDL_Sender_Impl
     }
 
     virtual char *
-    get_message (ACE_ENV_SINGLE_ARG_DECL)
+    get_message ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -142,11 +140,11 @@ namespace CIDL_Sender_Impl
     ~SenderSwap_exec_i ();
 
     virtual ::Components::EnterpriseComponent_ptr
-    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    incarnate ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::EnterpriseComponent_ptr
-    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    etherealize ()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void  consumers (::Components::ConsumerDescriptions *p)
@@ -179,7 +177,7 @@ namespace CIDL_Sender_Impl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    create ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 

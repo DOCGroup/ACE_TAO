@@ -21,22 +21,21 @@ TAO_Set_Update_Interceptor::~TAO_Set_Update_Interceptor (void)
 }
 
 char *
-TAO_Set_Update_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Set_Update_Interceptor::name (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-TAO_Set_Update_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Set_Update_Interceptor::destroy (void)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_Set_Update_Interceptor::send_poll (
-                                   PortableInterceptor::ClientRequestInfo_ptr
-                                   ACE_ENV_ARG_DECL_NOT_USED)
+                                   PortableInterceptor::ClientRequestInfo_ptr)
                                    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
@@ -44,40 +43,35 @@ TAO_Set_Update_Interceptor::send_poll (
 
 void
 TAO_Set_Update_Interceptor::send_request (
-                                      PortableInterceptor::ClientRequestInfo_ptr ri
-                                      ACE_ENV_ARG_DECL)
+                                      PortableInterceptor::ClientRequestInfo_ptr ri)
                                       ACE_THROW_SPEC ((CORBA::SystemException,
                                       PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  CORBA::String_var operation = ri->operation ();
 
   if (strcmp(operation.in(), "set_update")==0 ||
     strcmp(operation.in(), "oneway_set_update") ==0) {
-      CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 
       IOP::ServiceContext* sc;
 
       if ((a.in() >>= sc) ==0)
         return;
 
-      ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ri->add_request_service_context (*sc, 0);
 
       FTRT::TransactionDepth transaction_depth =
-        Request_Context_Repository().get_transaction_depth(ri ACE_ENV_ARG_PARAMETER);
+        Request_Context_Repository().get_transaction_depth(ri);
       TAO_OutputCDR cdr;
       ACE_Message_Block mb;
 
       if (transaction_depth) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
-          ACE_THROW (CORBA::MARSHAL ());
+          throw CORBA::MARSHAL ();
 
         // Add Transaction Depth Context
         if ((cdr << transaction_depth) == 0)
-          ACE_THROW (CORBA::MARSHAL ());
+          throw CORBA::MARSHAL ();
         sc->context_id = FTRT::FT_TRANSACTION_DEPTH;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
@@ -97,8 +91,7 @@ TAO_Set_Update_Interceptor::send_request (
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        ri->add_request_service_context (*sc, 0);
 
         cdr.reset();
       }
@@ -106,14 +99,14 @@ TAO_Set_Update_Interceptor::send_request (
       // Add Sequence Number Context
 
       FTRT::SequenceNumber sequence_number =
-        Request_Context_Repository().get_sequence_number(ri ACE_ENV_ARG_PARAMETER);
+        Request_Context_Repository().get_sequence_number(ri);
 
       ACE_DEBUG((LM_DEBUG, "send_request : sequence_number = %d\n", sequence_number));
       if (sequence_number != 0) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
-          ACE_THROW (CORBA::MARSHAL ());
+          throw CORBA::MARSHAL ();
         if ((cdr << sequence_number) == 0)
-          ACE_THROW (CORBA::MARSHAL ());
+          throw CORBA::MARSHAL ();
         sc->context_id = FTRT::FT_SEQUENCE_NUMBER;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
@@ -133,24 +126,21 @@ TAO_Set_Update_Interceptor::send_request (
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        ri->add_request_service_context (*sc, 0);
       }
     }
 }
 
 void
 TAO_Set_Update_Interceptor::receive_reply (
-  PortableInterceptor::ClientRequestInfo_ptr
-  ACE_ENV_ARG_DECL_NOT_USED)
+  PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_Set_Update_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -158,8 +148,7 @@ TAO_Set_Update_Interceptor::receive_other (
 
 void
 TAO_Set_Update_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

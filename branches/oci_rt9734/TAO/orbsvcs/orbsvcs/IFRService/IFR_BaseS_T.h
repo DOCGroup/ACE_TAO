@@ -80,14 +80,12 @@ namespace POA_CORBA
     void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -97,7 +95,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -150,14 +147,12 @@ namespace POA_CORBA
     void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -167,7 +162,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -177,7 +171,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -188,7 +181,6 @@ namespace POA_CORBA
 
     void id (
         const char * id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -198,7 +190,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -209,7 +200,6 @@ namespace POA_CORBA
 
     void name (
         const char * name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -219,7 +209,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * version (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -230,7 +219,6 @@ namespace POA_CORBA
 
     void version (
         const char * version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -240,7 +228,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Container_ptr defined_in (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -250,7 +237,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * absolute_name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -260,7 +246,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Repository_ptr containing_repository (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -270,7 +255,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained::Description * describe (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -283,7 +267,6 @@ namespace POA_CORBA
         ::CORBA::Container_ptr new_container,
         const char * new_name,
         const char * new_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -336,14 +319,12 @@ namespace POA_CORBA
     void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -353,7 +334,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -364,7 +344,6 @@ namespace POA_CORBA
 
     ::CORBA::Contained_ptr lookup (
         const char * search_name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -376,7 +355,6 @@ namespace POA_CORBA
     ::CORBA::ContainedSeq * contents (
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -390,7 +368,6 @@ namespace POA_CORBA
         ::CORBA::Long levels_to_search,
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -403,7 +380,6 @@ namespace POA_CORBA
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited,
         ::CORBA::Long max_returned_objs
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -416,7 +392,6 @@ namespace POA_CORBA
         const char * id,
         const char * name,
         const char * version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -431,7 +406,6 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         const ::CORBA::Any & value
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -445,7 +419,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::StructMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -460,7 +433,6 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr discriminator_type,
         const ::CORBA::UnionMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -474,7 +446,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::EnumMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -488,7 +459,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         ::CORBA::IDLType_ptr original_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -502,7 +472,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::InterfaceDefSeq & base_interfaces
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -522,7 +491,6 @@ namespace POA_CORBA
         const ::CORBA::ValueDefSeq & abstract_base_values,
         const ::CORBA::InterfaceDefSeq & supported_interfaces,
         const ::CORBA::InitializerSeq & initializers
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -536,7 +504,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         ::CORBA::IDLType_ptr original_type_def
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -550,7 +517,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::StructMemberSeq & members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -563,7 +529,6 @@ namespace POA_CORBA
         const char * id,
         const char * name,
         const char * version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -577,7 +542,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -591,7 +555,6 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::InterfaceDefSeq & base_interfaces
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -611,7 +574,6 @@ namespace POA_CORBA
         const ::CORBA::ValueDefSeq & abstract_base_values,
         const ::CORBA::InterfaceDefSeq & supported_interfaces,
         const ::CORBA::ExtInitializerSeq & initializers
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -664,14 +626,12 @@ namespace POA_CORBA
     void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -681,7 +641,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -691,7 +650,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -744,14 +702,12 @@ namespace POA_CORBA
     void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -761,7 +717,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -771,7 +726,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -782,7 +736,6 @@ namespace POA_CORBA
 
     void id (
         const char * id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -792,7 +745,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -803,7 +755,6 @@ namespace POA_CORBA
 
     void name (
         const char * name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -813,7 +764,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * version (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -824,7 +774,6 @@ namespace POA_CORBA
 
     void version (
         const char * version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -834,7 +783,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Container_ptr defined_in (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -844,7 +792,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * absolute_name (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -854,7 +801,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Repository_ptr containing_repository (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -864,7 +810,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained::Description * describe (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -877,7 +822,6 @@ namespace POA_CORBA
         ::CORBA::Container_ptr new_container,
         const char * new_name,
         const char * new_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
@@ -887,7 +831,6 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException

@@ -19,7 +19,7 @@ test_multiple_orbs (const char *test_name,
   RTCORBA::RTORB_var *rt_orbs =
     new RTCORBA::RTORB_var[iterations];
 
-  ACE_TRY_NEW_ENV
+  try
     {
       for (int i = 0;
            i < iterations;
@@ -31,21 +31,15 @@ test_multiple_orbs (const char *test_name,
           orbs[i] =
             CORBA::ORB_init (argc,
                              argv,
-                             name
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                             name);
 
           if (rt_orb)
             {
               CORBA::Object_var object =
-                orbs[i]->resolve_initial_references ("RTORB"
-                                                     ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                orbs[i]->resolve_initial_references ("RTORB");
 
               rt_orbs[i] =
-                RTCORBA::RTORB::_narrow (object.in ()
-                                         ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                RTCORBA::RTORB::_narrow (object.in ());
 
               ACE_ASSERT (rt_orbs[i].in () != RTCORBA::RTORB::_nil ());
             }
@@ -57,18 +51,15 @@ test_multiple_orbs (const char *test_name,
                i < iterations;
                ++i)
             {
-              orbs[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              orbs[i]->destroy ();
             }
         }
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception caught in ORB_init");
+      ex._tao_print_exception ("Unexpected exception caught in ORB_init");
       return -1;
     }
-  ACE_ENDTRY;
 
   delete[] rt_orbs;
   delete[] orbs;

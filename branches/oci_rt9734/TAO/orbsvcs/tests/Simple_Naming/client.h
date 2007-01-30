@@ -171,18 +171,12 @@ private:
   // the following functions isolate specific tests due to the
   // limitation of only 1 TAO_TRY being allowed per function.
 
-  void invalid_name_test (TAO_Naming_Client &root_context
-                          ACE_ENV_ARG_DECL);
-  void already_bound_test (TAO_Naming_Client &root_context
-                           ACE_ENV_ARG_DECL);
-  void already_bound_test2 (TAO_Naming_Client &root_context
-                            ACE_ENV_ARG_DECL);
-  void not_found_test (TAO_Naming_Client &root_context
-                       ACE_ENV_ARG_DECL);
-  void not_found_test2 (TAO_Naming_Client &root_context
-                        ACE_ENV_ARG_DECL);
-  void not_found_test3 (TAO_Naming_Client &root_context
-                        ACE_ENV_ARG_DECL);
+  void invalid_name_test (TAO_Naming_Client &root_context);
+  void already_bound_test (TAO_Naming_Client &root_context);
+  void already_bound_test2 (TAO_Naming_Client &root_context);
+  void not_found_test (TAO_Naming_Client &root_context);
+  void not_found_test2 (TAO_Naming_Client &root_context);
+  void not_found_test3 (TAO_Naming_Client &root_context);
 };
 
 class Destroy_Test : public Naming_Test
@@ -205,10 +199,8 @@ public:
 
 private:
   // = The following functions isolate specific tests.
-  void not_empty_test (CosNaming::NamingContext_var &ref
-                       ACE_ENV_ARG_DECL);
-  void not_exist_test (CosNaming::NamingContext_var &ref
-                       ACE_ENV_ARG_DECL);
+  void not_empty_test (CosNaming::NamingContext_var &ref);
+  void not_exist_test (CosNaming::NamingContext_var &ref);
 };
 
 class Persistent_Test_Begin : public Naming_Test

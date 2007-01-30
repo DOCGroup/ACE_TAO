@@ -14,40 +14,32 @@ Manager_Handler::Manager_Handler (Test::Manager_ptr manager,
 }
 
 void
-Manager_Handler::start_workers (ACE_ENV_SINGLE_ARG_DECL)
+Manager_Handler::start_workers (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
       this->manager_->start_workers (CORBA::Short(10),
                                      CORBA::Long(1000),
-                                     this->controller_.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                     this->controller_.in ());
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised in nested start workers: ");
+      ex._tao_print_exception ("Exception raised in nested start workers: ");
     }
-  ACE_ENDTRY;
 }
 
 void
-Manager_Handler::start_workers_excep (::Messaging::ExceptionHolder * holder
-                                      ACE_ENV_ARG_DECL)
+Manager_Handler::start_workers_excep (::Messaging::ExceptionHolder * holder)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  try
     {
-      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      holder->raise_exception ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised in asynch start workers: ");
+      ex._tao_print_exception ("Exception raised in asynch start workers: ");
     }
-  ACE_ENDTRY;
 }
 

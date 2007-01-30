@@ -40,12 +40,11 @@ namespace TAO
 
   Invocation_Status
   Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value *max_wait_time
-                                               ACE_ENV_ARG_DECL)
+                                               )
     ACE_THROW_SPEC ((CORBA::Exception))
   {
     TAO_Target_Specification tspec;
-    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    this->init_target_spec (tspec);
 
     TAO_OutputCDR &cdr =
       this->resolver_.transport ()->messaging_object ()->out_stream ();
@@ -54,8 +53,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
     s =
-      this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -64,7 +62,7 @@ namespace TAO
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
     // try block is to take care of the cases when things go wrong.
-    ACE_TRY
+    try
       {
         // Oneway semantics.  See comments for below send_message()
         // call.
@@ -75,12 +73,10 @@ namespace TAO
 
         this->write_header (tspec,
                             cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                           );
 
         this->marshal_data (cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                           );
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
@@ -115,8 +111,7 @@ namespace TAO
           this->send_message (cdr,
                               TAO_Transport::TAO_ONEWAY_REQUEST,
                               max_wait_time
-                              ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+                             );
 
 #if TAO_HAS_INTERCEPTORS == 1
         // NOTE: We don't need to do the auto_ptr <> trick. We got here
@@ -132,8 +127,7 @@ namespace TAO
         // proper send, we are supposed to call receiver_other ()
         // interception point. So we do that here
         Invocation_Status tmp =
-          this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          this->receive_other_interception ();
 
         // We got an error during the interception.
         if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)
@@ -152,42 +146,22 @@ namespace TAO
           (void) this->resolver_.transport_released ();
 
       }
-    ACE_CATCHANY
+    catch ( ::CORBA::Exception& ex)
       {
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          this->handle_any_exception (&ex);
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
+#else
+        ACE_UNUSED_ARG (ex);
 #endif /*TAO_HAS_INTERCEPTORS*/
-          ACE_RE_THROW;
+          throw;
       }
-# if defined (ACE_HAS_EXCEPTIONS) \
-     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-    ACE_CATCHALL
-      {
-#if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus st =
-          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        if (st == PortableInterceptor::LOCATION_FORWARD ||
-            st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
-        else
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
-          ACE_RE_THROW;
-      }
-# endif  /* ACE_HAS_EXCEPTIONS &&
-            ACE_HAS_BROKEN_UNEXPECTED_EXCEPTION*/
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     return s;
   }

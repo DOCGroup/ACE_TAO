@@ -69,14 +69,12 @@ namespace TAO
       virtual int close (void);
       virtual TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface *desc,
-                                      ACE_Time_Value *timeout
-                                      ACE_ENV_ARG_DECL);
+                                      ACE_Time_Value *timeout);
 
       virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
       virtual int check_prefix (const char *endpoint);
       virtual TAO_Profile * corbaloc_scan (const char *ior,
-                                           size_t &len
-                                           ACE_ENV_ARG_DECL);
+                                           size_t &len);
 
       //@}
 
@@ -90,12 +88,12 @@ namespace TAO
        * @see @c TAO_Connector
        */
       //@{
-      virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
+      virtual TAO_Profile * make_profile (void);
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
       //@}
 
       /// SSL-specific profile
-      TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
+      TAO_Profile * make_secure_profile (void);
 
       /// IIOP-specific connection establishment.
       /**
@@ -103,8 +101,7 @@ namespace TAO
        */
       TAO_Transport* iiop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
                                    TAO::Profile_Transport_Resolver *r,
-                                   ACE_Time_Value *timeout
-                                   ACE_ENV_ARG_DECL);
+                                   ACE_Time_Value *timeout);
 
       /// SSLIOP-specific connection establishment.
       TAO_Transport* ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
@@ -112,15 +109,13 @@ namespace TAO
                                      const ::Security::EstablishTrust &trust,
                                      TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface *desc,
-                                     ACE_Time_Value *timeout
-                                     ACE_ENV_ARG_DECL);
+                                     ACE_Time_Value *timeout);
 
       /// Retrieve SSLIOP credentials from the policy overrides list
       /// and set up the underlying SSL connection to use the X.509
       /// certificates stored within them.
       TAO::SSLIOP::OwnCredentials * retrieve_credentials (TAO_Stub *stub,
-                                                          SSL *ssl
-                                                          ACE_ENV_ARG_DECL);
+                                                          SSL *ssl);
 
     public:
 

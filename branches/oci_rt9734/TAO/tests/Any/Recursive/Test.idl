@@ -2,6 +2,8 @@
 // $Id$
 //
 
+#include "tao/OctetSeq.pidl"
+
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
 {
@@ -16,6 +18,18 @@ module Test
     RecursiveStructSeq recursive_structs;
     long i;
     RecursiveStructSeq recursive_structs_second;
+  };
+
+  struct NestedRecursiveStruct;
+  typedef sequence<NestedRecursiveStruct> NestedRecursiveStructSeq;
+
+  struct NestedRecursiveStruct
+  {
+    struct InnerStruct
+    {
+      NestedRecursiveStructSeq recursive_structs;
+    }    ins;
+    long i;
   };
 
   // --------------------------
@@ -99,6 +113,25 @@ module Test
   };
 
   // --------------------------
+
+  enum PositionEnum { unknownpos };
+
+  struct Position {
+    PositionEnum type;
+  };
+  typedef CORBA::OctetSeq OctetSeq;
+
+  enum ValueSort {
+    POSITION_TYPE,
+    OCTET_SEQ_TYPE
+  };
+
+  union NonRecursiveUnionWithEnum switch (ValueSort) {
+  case POSITION_TYPE:
+    Position position_val;
+  case OCTET_SEQ_TYPE:
+    OctetSeq octet_seq_val;
+  };
 
   /// Simple test interface.
   interface Hello

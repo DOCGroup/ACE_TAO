@@ -20,33 +20,32 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    ImplicitActivationPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+    ImplicitActivationPolicy::copy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ImplicitActivationPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
                         ImplicitActivationPolicy (this->value_),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
       return copy;
     }
 
     void
-    ImplicitActivationPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ImplicitActivationPolicy::destroy (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::ImplicitActivationPolicyValue
-    ImplicitActivationPolicy::value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ImplicitActivationPolicy::value (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
-    ImplicitActivationPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ImplicitActivationPolicy::policy_type (void)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::IMPLICIT_ACTIVATION_POLICY_ID;

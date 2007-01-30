@@ -19,9 +19,9 @@ Foo_ClientEngine::~Foo_ClientEngine()
 
 
 bool
-Foo_ClientEngine::execute(unsigned num_loops ACE_ENV_ARG_DECL)
+Foo_ClientEngine::execute(unsigned num_loops)
 {
-  // Make sure the connection is established before making  
+  // Make sure the connection is established before making
   // remote invocations.
   if (AppHelper::validate_connection(this->obj_.in()) == false)
     {
@@ -38,40 +38,33 @@ Foo_ClientEngine::execute(unsigned num_loops ACE_ENV_ARG_DECL)
     {
       CORBA::Long i = this->client_id_;
 
-      this->obj_->op1(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
-      this->obj_->op2(i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      this->obj_->op1();
+      this->obj_->op2(i);
 
-      CORBA::Long value = this->obj_->op3(i ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (false);
+      CORBA::Long value = this->obj_->op3(i);
       success = (value != i) ? false : success;
 
       for (CORBA::Long j = 1; j <= 5; j++)
         {
-          this->obj_->op4(495 + (i * 5) + j ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (false);
+          this->obj_->op4(495 + (i * 5) + j);
         }
 
       bool caught_exception = false;
 
-      ACE_TRY_NEW_ENV
+      try
       {
-        this->obj_->op5(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        this->obj_->op5();
       }
-      ACE_CATCH (FooException, ex)
+      catch (const FooException&)
       {
         // Expected
         caught_exception = true;
       }
-      ACE_ENDTRY;
 
       success = (!caught_exception) ? false : success;
     }
 
-  this->obj_->done(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (false);
+  this->obj_->done();
   return success;
 }
 

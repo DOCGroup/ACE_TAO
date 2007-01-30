@@ -135,7 +135,7 @@ namespace
 
       os << "_ptr" << endl
          << "get_" << p.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl;
     }
 
@@ -148,7 +148,7 @@ namespace
       Traversal::ConsumerData::belongs (c, belongs_);
 
       os << " *ev" << endl
-         << STRS[ENV_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl;
    }
 
@@ -307,42 +307,42 @@ namespace
       os << "virtual void" << endl
          << "set_session_context (" << endl
          << STRS[COMP_SC] << "_ptr ctx" << endl
-         << STRS[ENV_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;
 
       os << "virtual void" << endl
          << "ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;
 
       os << "virtual void" << endl
          << "ciao_postactivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;
 
       os << "virtual void" << endl
          << "ccm_activate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;
 
       os << "virtual void" << endl
          << "ccm_passivate (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;
 
       os << "virtual void" << endl
          << "ccm_remove (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;
@@ -591,7 +591,7 @@ namespace
       os << "// Implicit operations." << endl << endl
          << "virtual " << STRS[COMP_EC] << "_ptr" << endl
          << "create (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "));" << endl;

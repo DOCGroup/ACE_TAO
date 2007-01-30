@@ -77,8 +77,7 @@ set_rt_scheduling (void)
 
 void
 object_creation_test (PortableServer::POA_ptr poa,
-                      int create_reference_with_id
-                      ACE_ENV_ARG_DECL)
+                      int create_reference_with_id)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nCreating %d object references with %s\n",
@@ -104,16 +103,12 @@ object_creation_test (PortableServer::POA_ptr poa,
         {
           object =
             poa->create_reference_with_id (oid.in (),
-                                           "IDL:Test/Simple:1.0"
-                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+                                           "IDL:Test/Simple:1.0");
         }
       else
         {
           object =
-            poa->create_reference ("IDL:Test/Simple:1.0"
-                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+            poa->create_reference ("IDL:Test/Simple:1.0");
         }
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -135,17 +130,13 @@ main (int argc, char *argv[])
 {
   set_rt_scheduling ();
 
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA"
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -153,16 +144,12 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager ();
 
-      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -170,41 +157,32 @@ main (int argc, char *argv[])
       CORBA::PolicyList policies(1); policies.length (1);
 
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("TestPOA",
                               poa_manager.in (),
-                              policies
-                              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                              policies);
 
       gsf = ACE_High_Res_Timer::global_scale_factor ();
 
       object_creation_test (root_poa.in (),
                             0  // POA::create_reference
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            );
 
       object_creation_test (child_poa.in (),
                             1  // POA::create_reference_with_id
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                            );
 
-      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      root_poa->destroy (1, 1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }

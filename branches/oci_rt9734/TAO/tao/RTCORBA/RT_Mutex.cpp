@@ -17,24 +17,24 @@ TAO_RT_Mutex::~TAO_RT_Mutex (void)
 }
 
 void
-TAO_RT_Mutex::lock (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Mutex::lock (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->mu_.acquire () != 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 }
 
 void
-TAO_RT_Mutex::unlock (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RT_Mutex::unlock (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->mu_.release () != 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    throw ::CORBA::INTERNAL ();
 }
 
 CORBA::Boolean
 TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time
-                        ACE_ENV_ARG_DECL)
+                        )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int result;

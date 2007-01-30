@@ -10,16 +10,15 @@ LatencyTest::LatencyTest (CORBA::ORB_ptr orb)
 
 
 CORBA::Long
-LatencyTest::makeCall (CORBA::Long send_time
-                       ACE_ENV_ARG_DECL_NOT_USED)
+LatencyTest::makeCall (CORBA::Long send_time)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
 
 void
-LatencyTest::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+LatencyTest::shutdown ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }

@@ -32,11 +32,10 @@ public:
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
                    const char* in_str,
-                   const A::Payload &the_payload
-                   ACE_ENV_ARG_DECL)
+                   const A::Payload &the_payload)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

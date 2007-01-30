@@ -196,8 +196,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
   TAO_ETCL_Union_Pos *union_pos
   )
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     if (union_pos->union_value ()->accept (this) == 0)
     {
@@ -205,9 +204,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
       this->queue_.dequeue_head (disc_val);
 
       TAO_DynUnion_i dyn_union;
-      dyn_union.init (this->current_value_.in ()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      dyn_union.init (this->current_value_.in ());
 
       CORBA::TypeCode_var tc = this->current_value_->type ();
 
@@ -219,12 +216,9 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
         {
           CORBA::Any disc_any;
           CORBA::TypeCode_var disc_tc =
-            tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            tc->discriminator_type ();
           CORBA::TCKind disc_kind =
-            TAO_DynAnyFactory::unalias (disc_tc.in ()
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            TAO_DynAnyFactory::unalias (disc_tc.in ());
 
           switch (disc_kind)
           {
@@ -272,18 +266,12 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           DynamicAny::DynAny_var dyn_any =
             TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any &> (
               disc_tc.in (),
-              disc_any
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          dyn_union.set_discriminator (dyn_any.in ()
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+              disc_any);
+          dyn_union.set_discriminator (dyn_any.in ());
           DynamicAny::DynAny_var u_member =
-            dyn_union.member (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            dyn_union.member ();
           this->current_value_ =
-            u_member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            u_member->to_any ();
 
           break;
         }
@@ -291,17 +279,14 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
         {
           const char *name = (const char *) disc_val;
           CORBA::ULong count =
-            tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            tc->member_count ();
 
           const char *member_name = 0;
           CORBA::ULong i = 0;
 
           for (i = 0; i < count; ++i)
           {
-            member_name = tc->member_name (i
-              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            member_name = tc->member_name (i);
 
             if (ACE_OS::strcmp (name, member_name) == 0)
               break;
@@ -310,9 +295,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           // If there's no match, member_label will throw
           // CORBA::TypeCode::Bounds and the catch block will
           // return -1;
-          this->current_value_ = tc->member_label (i
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          this->current_value_ = tc->member_label (i);
 
           break;
         }
@@ -340,11 +323,10 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
     else
       return -1;
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
-  ACE_ENDTRY;
 }
 
 int
@@ -352,15 +334,12 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
   TAO_ETCL_Component_Pos *pos
   )
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     // If we are here (from visit_component) the Any containing the
     // component as found in filterable_data_ will be in current_value_.
     CORBA::TypeCode_var tc = this->current_value_->type ();
-    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     DynamicAny::DynAny_var member;
     CORBA::Boolean success = 0;
@@ -371,39 +350,29 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
     case CORBA::tk_enum:
       {
         TAO_DynEnum_i dyn_enum;
-        dyn_enum.init (this->current_value_.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        dyn_enum.init (this->current_value_.in ());
 
-        success = dyn_enum.seek (slot
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        success = dyn_enum.seek (slot);
 
         if (success == 0)
           return -1;
 
         member =
-          dyn_enum.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          dyn_enum.current_component ();
 
         break;
       }
     case CORBA::tk_struct:
       {
         TAO_DynStruct_i dyn_struct;
-        dyn_struct.init (this->current_value_.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        dyn_struct.init (this->current_value_.in ());
 
-        success = dyn_struct.seek (slot
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        success = dyn_struct.seek (slot);
 
         if (success == 0)
           return -1;
 
-        member = dyn_struct.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        member = dyn_struct.current_component ();
 
         break;
       }
@@ -415,8 +384,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
       return -1;
     }
 
-    CORBA::Any_var value = member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Any_var value = member->to_any ();
 
     TAO_ETCL_Constraint *comp = pos->component ();
 
@@ -432,11 +400,10 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
       return comp->accept (this);
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
-  ACE_ENDTRY;
 }
 
 int
@@ -498,16 +465,13 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
 int
 TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *array)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     // If we are here (from visit_component) the Any containing the
     // component as found in filterable_data_ will be in
     // current_value_.
     CORBA::TypeCode_var tc = this->current_value_->type ();
-    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     DynamicAny::DynAny_var member;
     CORBA::Boolean success = 0;
@@ -518,39 +482,29 @@ TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *
     case CORBA::tk_array:
       {
         TAO_DynEnum_i dyn_array;
-        dyn_array.init (this->current_value_.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        dyn_array.init (this->current_value_.in ());
 
-        success = dyn_array.seek (slot
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        success = dyn_array.seek (slot);
 
         if (success == 0)
           return -1;
 
-        member = dyn_array.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        member = dyn_array.current_component ();
 
         break;
       }
     case CORBA::tk_sequence:
       {
         TAO_DynStruct_i dyn_sequence;
-        dyn_sequence.init (this->current_value_.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        dyn_sequence.init (this->current_value_.in ());
 
-        success = dyn_sequence.seek (slot
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        success = dyn_sequence.seek (slot);
 
         if (success == 0)
           return -1;
 
         member =
-          dyn_sequence.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          dyn_sequence.current_component ();
 
         break;
       }
@@ -560,8 +514,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *
       return -1;
     }
 
-    CORBA::Any_var value = member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Any_var value = member->to_any ();
 
     TAO_ETCL_Constraint *comp = array->component ();
 
@@ -577,25 +530,21 @@ TAO_Notify_Constraint_Visitor::visit_component_array (TAO_ETCL_Component_Array *
       return comp->accept (this);
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
-  ACE_ENDTRY;
 }
 
 int
 TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     CORBA::TypeCode_var tc = this->current_value_->type ();
-    tc = TAO_DynAnyFactory::strip_alias (tc.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    tc = TAO_DynAnyFactory::strip_alias (tc.in ());
 
-      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::TCKind kind = tc->kind ();
 
     switch (special->type ())
     {
@@ -608,21 +557,17 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
         case CORBA::tk_sequence:
           {
             TAO_DynSequence_i dyn_seq;
-            dyn_seq.init (current_value_.in()
-              ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            dyn_seq.init (current_value_.in());
 
             DynamicAny::AnySeq_var any_seq =
-              dyn_seq.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+              dyn_seq.get_elements ();
 
             length = any_seq->length ();
           }
           break;
         case CORBA::tk_array:
           {
-            length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            length = tc->length ();
           }
           break;
         default:
@@ -638,16 +583,12 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
         // If the TCKind is not a union, the call to init() will
         // raise an exception, and the catch block will return -1;
         TAO_DynUnion_i dyn_union;
-        dyn_union.init (this->current_value_.in ()
-          ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        dyn_union.init (this->current_value_.in ());
 
         DynamicAny::DynAny_var disc =
-          dyn_union.get_discriminator (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          dyn_union.get_discriminator ();
 
-        CORBA::Any_var disc_any = disc->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        CORBA::Any_var disc_any = disc->to_any ();
 
         TAO_ETCL_Literal_Constraint lit (disc_any.ptr ());
         this->queue_.enqueue_head (lit);
@@ -655,8 +596,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       }
     case TAO_ETCL_TYPE_ID:
       {
-        const char *name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        const char *name = tc->name ();
 
         TAO_ETCL_Literal_Constraint lit (name);
         this->queue_.enqueue_head (lit);
@@ -664,8 +604,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       }
     case TAO_ETCL_REPOS_ID:
       {
-        const char *id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        const char *id = tc->id ();
 
         TAO_ETCL_Literal_Constraint lit (id);
         this->queue_.enqueue_head (lit);
@@ -675,11 +614,10 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       return -1;
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
-  ACE_ENDTRY;
 }
 
 int
@@ -800,15 +738,13 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
   if (comp->accept (this) != 0)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     CORBA::TypeCode_var tc = this->current_value_->type ();
 
     // If the current member is not a union, this call will throw
     // BadKind and the catch block will return -1.
-    CORBA::Long default_index = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Long default_index = tc->default_index ();
 
     // No default index.
     if (default_index == -1)
@@ -825,11 +761,10 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
     TAO_ETCL_Literal_Constraint default_index_value (default_index);
     return (disc == default_index_value);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return -1;
   }
-  ACE_ENDTRY;
 }
 
 int
@@ -1155,19 +1090,15 @@ TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
         const CORBA::Any *component = (const CORBA::Any *) bag;
         CORBA::TCKind kind = CORBA::tk_null;
 
-        ACE_DECLARE_NEW_CORBA_ENV;
-        ACE_TRY
+        try
         {
           CORBA::TypeCode_var tc = component->type ();
-          kind = TAO_DynAnyFactory::unalias (tc.in ()
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          kind = TAO_DynAnyFactory::unalias (tc.in ());
         }
-        ACE_CATCHANY
+        catch (const CORBA::Exception&)
         {
           return return_value;
         }
-        ACE_ENDTRY;
 
         CORBA::Boolean result = 0;
 
@@ -1220,19 +1151,15 @@ CORBA::Boolean
 TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
                                                       TAO_ETCL_Literal_Constraint &item)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     CORBA::TypeCode_var type = any->type ();
     CORBA::TypeCode_var base_type =
-      TAO_DynAnyFactory::strip_alias (type.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      TAO_DynAnyFactory::strip_alias (type.in ());
     CORBA::TypeCode_var content_type =
-      base_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      base_type->content_type ();
     CORBA::TCKind kind =
-      TAO_DynAnyFactory::unalias (content_type.in() ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      TAO_DynAnyFactory::unalias (content_type.in());
 
     // The literal and the array elements must be
     // of the same simple type.
@@ -1243,13 +1170,10 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
       return 0;
 
     TAO_DynSequence_i dyn_seq;
-    dyn_seq.init (*any
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    dyn_seq.init (*any);
 
     DynamicAny::AnySeq_var any_seq =
-      dyn_seq.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      dyn_seq.get_elements ();
 
     CORBA::ULong length = any_seq->length ();
 
@@ -1261,11 +1185,10 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
         return 1;
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1274,13 +1197,10 @@ CORBA::Boolean
 TAO_Notify_Constraint_Visitor::array_does_contain (const CORBA::Any *any,
                                                    TAO_ETCL_Literal_Constraint &item)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     CORBA::TypeCode_var type = any->type ();
-    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ());
 
     // The literal and the array elements must be
     // of the same simple type.
@@ -1291,13 +1211,10 @@ TAO_Notify_Constraint_Visitor::array_does_contain (const CORBA::Any *any,
       return 0;
 
     TAO_DynArray_i dyn_array;
-    dyn_array.init (*any
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    dyn_array.init (*any);
 
     DynamicAny::AnySeq_var any_seq =
-      dyn_array.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      dyn_array.get_elements ();
 
     CORBA::ULong length = any_seq->length ();
 
@@ -1309,11 +1226,10 @@ TAO_Notify_Constraint_Visitor::array_does_contain (const CORBA::Any *any,
         return 1;
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1322,17 +1238,13 @@ CORBA::Boolean
 TAO_Notify_Constraint_Visitor::struct_does_contain (const CORBA::Any *any,
                                                     TAO_ETCL_Literal_Constraint &item)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     TAO_DynStruct_i dyn_struct;
-    dyn_struct.init (*any
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    dyn_struct.init (*any);
 
     DynamicAny::NameValuePairSeq_var members =
-      dyn_struct.get_members (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      dyn_struct.get_members ();
 
     CORBA::ULong length = members->length ();
     CORBA::TypeCode_var tc;
@@ -1341,9 +1253,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (const CORBA::Any *any,
     for (CORBA::ULong i = 0; i < length; ++i)
     {
       tc = members[i].value.type ();
-      kind = TAO_DynAnyFactory::unalias (tc.in ()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      kind = TAO_DynAnyFactory::unalias (tc.in ());
 
       // The literal and the struct member must be
       // of the same simple type.
@@ -1359,11 +1269,10 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (const CORBA::Any *any,
         return 1;
     }
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -1372,25 +1281,18 @@ CORBA::Boolean
 TAO_Notify_Constraint_Visitor::union_does_contain (const CORBA::Any *any,
                                                    TAO_ETCL_Literal_Constraint &item)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
   {
     TAO_DynUnion_i dyn_union;
-    dyn_union.init (*any
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    dyn_union.init (*any);
 
     DynamicAny::DynAny_var cc =
-      dyn_union.current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      dyn_union.current_component ();
 
-    CORBA::Any_var member = cc->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::Any_var member = cc->to_any ();
 
     CORBA::TypeCode_var tc = member->type ();
-    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
     // The literal and the union member must be
     // of the same simple type.
@@ -1404,11 +1306,10 @@ TAO_Notify_Constraint_Visitor::union_does_contain (const CORBA::Any *any,
 
     return (item == element);
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception&)
   {
     return 0;
   }
-  ACE_ENDTRY;
 }
 
 CORBA::Boolean

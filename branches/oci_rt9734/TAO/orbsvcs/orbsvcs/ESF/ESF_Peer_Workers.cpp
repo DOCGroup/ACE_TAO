@@ -12,40 +12,37 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class P, class R> void
-TAO_ESF_Peer_Connected<P,R>::work (P *proxy
-                                   ACE_ENV_ARG_DECL)
+TAO_ESF_Peer_Connected<P,R>::work (P *proxy)
 {
-  proxy->connected (this->peer_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK; // Shouldn't happen, just following the discipline
+  proxy->connected (this->peer_);
+// Shouldn't happen, just following the discipline
 
-  this->peer_->connected (proxy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK; // Shouldn't happen, just following the discipline
+  this->peer_->connected (proxy);
+// Shouldn't happen, just following the discipline
 }
 
 // ****************************************************************
 
 template<class P, class R> void
-TAO_ESF_Peer_Reconnected<P,R>::work (P *proxy
-                                     ACE_ENV_ARG_DECL)
+TAO_ESF_Peer_Reconnected<P,R>::work (P *proxy)
 {
-  proxy->reconnected (this->peer_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK; // Shouldn't happen, just following the discipline
+  proxy->reconnected (this->peer_);
+// Shouldn't happen, just following the discipline
 
-  this->peer_->reconnected (proxy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK; // Shouldn't happen, just following the discipline
+  this->peer_->reconnected (proxy);
+// Shouldn't happen, just following the discipline
 }
 
 // ****************************************************************
 
 template<class P, class R> void
-TAO_ESF_Peer_Disconnected<P,R>::work (P *proxy
-                                      ACE_ENV_ARG_DECL)
+TAO_ESF_Peer_Disconnected<P,R>::work (P *proxy)
 {
-  proxy->disconnected (this->peer_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK; // Shouldn't happen, just following the discipline
+  proxy->disconnected (this->peer_);
+// Shouldn't happen, just following the discipline
 
-  this->peer_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK; // Shouldn't happen, just following the discipline
+  this->peer_->disconnected (proxy);
+// Shouldn't happen, just following the discipline
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

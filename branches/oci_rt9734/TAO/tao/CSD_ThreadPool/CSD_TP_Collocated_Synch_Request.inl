@@ -27,7 +27,7 @@ TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
 
 ACE_INLINE
 bool
-TAO::CSD::TP_Collocated_Synch_Request::wait(ACE_ENV_SINGLE_ARG_DECL)
+TAO::CSD::TP_Collocated_Synch_Request::wait(void)
 {
   bool dispatched = this->synch_helper_.wait_while_pending();
 
@@ -42,18 +42,14 @@ TAO::CSD::TP_Collocated_Synch_Request::wait(ACE_ENV_SINGLE_ARG_DECL)
           // first place.
           CORBA::Exception* ex = this->exception_;
           this->exception_ = 0;
-        
-#if defined (TAO_HAS_EXCEPTIONS)
+
           ACE_Auto_Basic_Ptr<CORBA::Exception> ex_holder(ex);
           ex->_raise ();
-#else
-          ACE_TRY_ENV.exception (ex);
-#endif /* ACE_HAS_EXCEPTIONS */
         }
     }
-  
+
   return dispatched;
-    
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

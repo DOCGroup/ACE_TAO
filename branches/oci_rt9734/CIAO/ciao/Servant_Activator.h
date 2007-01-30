@@ -57,8 +57,7 @@ namespace CIAO
 
     virtual ~Servant_Activator (void);
 
-    bool update_port_activator (const PortableServer::ObjectId &oid
-      ACE_ENV_ARG_DECL)
+    bool update_port_activator (const PortableServer::ObjectId &oid)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Template methods overridden to get callbacks.
@@ -69,8 +68,7 @@ namespace CIAO
      */
     PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL)
+      PortableServer::POA_ptr poa)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::ForwardRequest));
 
@@ -78,8 +76,7 @@ namespace CIAO
                       PortableServer::POA_ptr adapter,
                       PortableServer::Servant servant,
                       CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations
-                      ACE_ENV_ARG_DECL)
+                      CORBA::Boolean remaining_activations)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Local helper methods

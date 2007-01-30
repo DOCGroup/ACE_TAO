@@ -42,7 +42,7 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void execute_i (void);
 
   /// Name of object
   virtual const char* get_name (void);
@@ -72,11 +72,11 @@ protected:
   ACE_CString constraint_;
 
   ///= Handlers
-  void handle_create_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_create_filter (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_add_filter (ACE_ENV_SINGLE_ARG_DECL);
-  void handle_destroy_filter (ACE_ENV_SINGLE_ARG_DECL);
+  void handle_create_filter_factory (void);
+  void handle_create_filter (void);
+  void handle_add_constraint (void);
+  void handle_add_filter (void);
+  void handle_destroy_filter (void);
 };
 
 #include /**/ "ace/post.h"

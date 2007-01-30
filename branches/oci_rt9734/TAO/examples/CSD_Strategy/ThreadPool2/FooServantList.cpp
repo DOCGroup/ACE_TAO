@@ -25,8 +25,7 @@ FooServantList::~FooServantList()
 
 
 void
-FooServantList::create_and_activate(PortableServer::POA_ptr poa
-                                    ACE_ENV_ARG_DECL)
+FooServantList::create_and_activate(PortableServer::POA_ptr poa)
 {
   for (unsigned i = 0; i < this->num_servants_; i++)
     {
@@ -39,27 +38,21 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa
       PortableServer::ObjectId_var id =
                     PortableServer::string_to_ObjectId(servant_name.c_str());
 
-      poa->activate_object_with_id(id.in(), 
-                                   this->servants_[i].in() 
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      poa->activate_object_with_id(id.in(),
+                                   this->servants_[i].in());
 
-      CORBA::Object_var obj = poa->id_to_reference(id.in()
-                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::Object_var obj = poa->id_to_reference(id.in());
 
       if (CORBA::is_nil(obj.in()))
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to activate servant (%s).\n",
                      servant_name.c_str()));
-          ACE_THROW (TestException());
+          throw TestException();
         }
 
-      CORBA::String_var ior 
-        = this->orb_->object_to_string(obj.in() 
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      CORBA::String_var ior
+        = this->orb_->object_to_string(obj.in());
 
       ACE_CString filename = servant_name + ".ior";
       FILE* ior_file = ACE_OS::fopen(filename.c_str(), "w");
@@ -69,7 +62,7 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Cannot open output file (%s) for writing IOR.",
                      filename.c_str()));
-          ACE_THROW (TestException());
+          throw TestException();
         }
 
       ACE_OS::fprintf(ior_file, "%s", ior.in());
@@ -79,7 +72,7 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa
 
 
 void
-FooServantList::client_done(ACE_ENV_SINGLE_ARG_DECL)
+FooServantList::client_done(void)
 {
   unsigned num_left;
 
@@ -94,6 +87,6 @@ FooServantList::client_done(ACE_ENV_SINGLE_ARG_DECL)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t)FooServantList::client_done: "
             "failed to create orb shutdown thread.\n"));
-        }        
+        }
     }
 }

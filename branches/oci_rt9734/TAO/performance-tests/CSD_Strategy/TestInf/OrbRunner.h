@@ -12,7 +12,7 @@ class CSD_PT_TestInf_Export OrbRunner
     OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads = 1);
     virtual ~OrbRunner();
 
-    void run(ACE_ENV_SINGLE_ARG_DECL);
+    void run(void);
 
 
   private:

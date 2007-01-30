@@ -15,8 +15,7 @@ Receiver_i::Receiver_i (void)
 
 
 void
-Receiver_i::receive_payload (const Receiver::Payload &payload
-                        ACE_ENV_ARG_DECL_NOT_USED)
+Receiver_i::receive_payload (const Receiver::Payload &payload)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);

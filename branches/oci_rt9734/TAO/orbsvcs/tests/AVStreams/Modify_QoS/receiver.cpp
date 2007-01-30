@@ -19,12 +19,10 @@ Receiver_StreamEndPoint::get_callback (const char *,
 
 
   // Get the stream controller for this stream.
-  ACE_TRY_NEW_ENV
+  try
     {
       CORBA::Any_ptr streamctrl_any =
-        this->get_property_value ("Related_StreamCtrl"
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->get_property_value ("Related_StreamCtrl");
 
       AVStreams::StreamCtrl_ptr streamctrl;
       *streamctrl_any >>= streamctrl;
@@ -32,14 +30,12 @@ Receiver_StreamEndPoint::get_callback (const char *,
       // Store the stream control for the stream with the callback.
       this->callback_.streamctrl (streamctrl);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender_StreamEndPoint::get_callback failed");
+      ex._tao_print_exception ("Sender_StreamEndPoint::get_callback failed");
 
       return -1;
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -100,11 +96,9 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
           qos [0].QoSParams [0].property_name = CORBA::string_dup ("video_frame_rate");
           qos [0].QoSParams [0].property_value <<= (CORBA::Short) 30;
 
-          ACE_DECLARE_NEW_CORBA_ENV;
 
           // Initiate the modifying of the qos for the flows.
-          this->streamctrl_->modify_QoS (qos, flow_spec ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          this->streamctrl_->modify_QoS (qos, flow_spec);
 
           ACE_DEBUG ((LM_DEBUG,
                       "Stream Ctrl available....Modify QoS called\n"));
@@ -140,20 +134,16 @@ Receiver_Callback::handle_destroy (void)
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
 
-  ACE_TRY_NEW_ENV
+  try
     {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Receiver_Callback::handle_destroy Failed\n");
+      ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
 
     }
-  ACE_ENDTRY;
 
   return 0;
 }
@@ -171,8 +161,7 @@ Receiver::~Receiver (void)
 
 int
 Receiver::init (int,
-                char **
-                ACE_ENV_ARG_DECL)
+                char **)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -191,8 +180,7 @@ Receiver::init (int,
     this->mmdevice_;
 
   CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    this->mmdevice_->_this ();
 
   // Register the mmdevice with the naming service.
   CosNaming::Name name (1);
@@ -209,9 +197,7 @@ Receiver::init (int,
 
   // Register the receiver object with the naming server.
   this->naming_client_->rebind (name,
-                                mmdevice.in ()
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+                                mmdevice.in ());
 
   return 0;
 }
@@ -247,40 +233,29 @@ int
 main (int argc,
       char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  try
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                         0);
 
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = orb->resolve_initial_references ("RootPOA");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        = root_poa->the_POAManager ();
 
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      mgr->activate ();
 
       // Initialize the AVStreams components.
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      root_poa.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                      root_poa.in ());
 
       int result =
         parse_args (argc,
@@ -305,29 +280,23 @@ main (int argc,
       Receiver receiver;
       result =
         receiver.init (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                       argv);
 
       if (result != 0)
         return result;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->run ();
 
       // Hack for now....
       ACE_OS::sleep (1);
 
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      orb->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"receiver::init");
+      ex._tao_print_exception ("receiver::init");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (output_file);
 

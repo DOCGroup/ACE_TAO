@@ -56,25 +56,21 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
   // "_var" object, meaning that will be done automatically.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
 
   if (!CORBA::is_nil (this->lm_.in ()))
     {
       const CORBA::ULong len = this->fcids_.size ();
       for (CORBA::ULong i = 0; i < len; ++i)
         {
-          ACE_TRY
+          try
             {
               // Clean up all object groups we created.
-              this->lm_->delete_object (this->fcids_[i].in ()
-                                        ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+              this->lm_->delete_object (this->fcids_[i].in ());
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception&)
             {
               // Ignore all exceptions.
             }
-          ACE_ENDTRY;
         }
     }
 
@@ -87,8 +83,7 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
 CORBA::Object_ptr
 TAO_LB_ObjectReferenceFactory::make_object (
     const char * repository_id,
-    const PortableInterceptor::ObjectId & id
-    ACE_ENV_ARG_DECL)
+    const PortableInterceptor::ObjectId & id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (repository_id == 0)
@@ -96,9 +91,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
 
   CORBA::Object_var obj =
     this->old_orf_->make_object (repository_id,
-                                 id
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                                 id);
 
   PortableGroup::ObjectGroup_var object_group;
 
@@ -107,9 +100,7 @@ TAO_LB_ObjectReferenceFactory::make_object (
   CORBA::Boolean const found_group =
     this->find_object_group (repository_id,
                              index,
-                             object_group.out ()
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+                             object_group.out ());
 
   if (found_group)
     {
@@ -117,48 +108,41 @@ TAO_LB_ObjectReferenceFactory::make_object (
       // subsequent object reference creation calls.
       if (!this->registered_members_[index])
         {
-          ACE_TRY
+          try
             {
               object_group =
                 this->lm_->add_member (object_group.in (),
                                        this->location_,
-                                       obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                       obj.in ());
             }
-          ACE_CATCH (PortableGroup::ObjectGroupNotFound, ex)
+          catch (const PortableGroup::ObjectGroupNotFound& ex)
             {
               if (TAO_debug_level > 0)
-                ACE_PRINT_EXCEPTION (ex,
-                                     "TAO_LB_ObjectReferenceFactory::"
-                                     "make_object");
+                ex._tao_print_exception (
+                  "TAO_LB_ObjectReferenceFactory::""make_object");
 
               ACE_THROW_RETURN (CORBA::BAD_PARAM (),
                                 CORBA::Object::_nil ());
             }
-          ACE_CATCH (PortableGroup::MemberAlreadyPresent, ex)
+          catch (const PortableGroup::MemberAlreadyPresent& ex)
             {
               if (TAO_debug_level > 0)
-                ACE_PRINT_EXCEPTION (ex,
-                                     "TAO_LB_ObjectReferenceFactory::"
-                                     "make_object");
+                ex._tao_print_exception (
+                  "TAO_LB_ObjectReferenceFactory::""make_object");
 
               ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
                                 CORBA::Object::_nil ());
 
             }
-          ACE_CATCH (PortableGroup::ObjectNotAdded, ex)
+          catch (const PortableGroup::ObjectNotAdded& ex)
             {
               if (TAO_debug_level > 0)
-                ACE_PRINT_EXCEPTION (ex,
-                                     "TAO_LB_ObjectReferenceFactory::"
-                                     "make_object");
+                ex._tao_print_exception (
+                  "TAO_LB_ObjectReferenceFactory::""make_object");
 
               ACE_THROW_RETURN (CORBA::UNKNOWN (),
                                 CORBA::Object::_nil ());
             }
-          ACE_ENDTRY;
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
           this->registered_members_[index] = 1;
         }
@@ -176,8 +160,7 @@ CORBA::Boolean
 TAO_LB_ObjectReferenceFactory::find_object_group (
   const char * repository_id,
   CORBA::ULong & index,
-  PortableGroup::ObjectGroup_out object_group
-  ACE_ENV_ARG_DECL)
+  PortableGroup::ObjectGroup_out object_group)
 {
   if (!this->load_managed_object (repository_id, index))
     return false;
@@ -207,9 +190,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
           group =
             this->lm_->create_object (repository_id,
                                       criteria,
-                                      fcid.out ()
-                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+                                      fcid.out ());
 
           CORBA::ULong const len = this->fcids_.size ();
           this->fcids_.size (len + 1); // Incremental growth.  Yuck!
@@ -218,9 +199,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
       else
         {
           group =
-            this->orb_->string_to_object (this->object_groups_[index]
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+            this->orb_->string_to_object (this->object_groups_[index]);
         }
 
       if (this->table_.bind (repository_id, group) != 0)

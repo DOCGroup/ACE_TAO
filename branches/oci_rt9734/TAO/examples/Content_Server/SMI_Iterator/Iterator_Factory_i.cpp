@@ -14,8 +14,7 @@ ACE_RCSID (SMI_Iterator, Iterator_Factory_i, "$Id$")
 void
 Iterator_Factory_i::get_iterator (const char *pathname,
                                   Web_Server::Content_Iterator_out contents,
-                                  Web_Server::Metadata_Type_out metadata
-                                  ACE_ENV_ARG_DECL)
+                                  Web_Server::Metadata_Type_out metadata)
   ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -25,7 +24,7 @@ Iterator_Factory_i::get_iterator (const char *pathname,
   ACE_stat file_status;
   if (ACE_OS::stat (pathname, &file_status) == -1)
     {
-      ACE_THROW (Web_Server::Error_Result (500));
+      throw Web_Server::Error_Result (500);
       // HTTP 1.1 "Internal Server Error"
     }
 
@@ -34,18 +33,17 @@ Iterator_Factory_i::get_iterator (const char *pathname,
                     Content_Iterator_i (pathname,
                                         file_status.st_size),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   if (iterator_servant->init () != 0)
     {
       if (errno == EACCES)
         {
-          ACE_THROW (Web_Server::Error_Result (403));
+          throw Web_Server::Error_Result (403);
           // HTTP 1.1 "Forbidden"
         }
       else
         {
-          ACE_THROW (Web_Server::Error_Result (500));
+          throw Web_Server::Error_Result (500);
           // HTTP 1.1 "Internal Server Error"
         }
     }
@@ -53,28 +51,26 @@ Iterator_Factory_i::get_iterator (const char *pathname,
 
   // Activate the Content_Iterator object.
   Web_Server::Content_Iterator_var iterator =
-    iterator_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+    iterator_servant->_this ();
 
   Web_Server::Metadata_Type *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
   metadata = tmp;
 
   if (this->modification_date (&file_status,
                                metadata) != 0)
     {
-      ACE_THROW (Web_Server::Error_Result (500));
+      throw Web_Server::Error_Result (500);
       // HTTP 1.1 "Internal Server Error
     }
 
   if (this->content_type (pathname,
                           metadata) != 0)
     {
-      ACE_THROW (Web_Server::Error_Result (500));
+      throw Web_Server::Error_Result (500);
       // HTTP 1.1 "Internal Server Error
     }
 

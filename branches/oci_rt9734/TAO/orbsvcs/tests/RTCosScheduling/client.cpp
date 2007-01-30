@@ -144,7 +144,7 @@ ORB_Thread(CORBA::ORB_var orb,
 }
 
 int svc(void) {
-  ACE_TRY_NEW_ENV
+  try
     {
       if (parse_args (argc_, argv_) != 0)
         {
@@ -159,8 +159,7 @@ int svc(void) {
 
       CORBA::Object_var obj =
         orb_->string_to_object ("file://server.ior"
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+                                );
 
 
       if (CORBA::is_nil (obj.in ()))
@@ -172,8 +171,7 @@ int svc(void) {
         }
 
       testSched::Object1_var object1 =
-        testSched::Object1::_narrow (obj.in ()ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        testSched::Object1::_narrow (obj.in ());
 
 
       if (CORBA::is_nil (object1.in ()))
@@ -195,7 +193,6 @@ int svc(void) {
                              node_,
                              file_),
                            CORBA::NO_MEMORY());
-          ACE_TRY_CHECK;
 
 
           // Check to see that the ClientScheduler started correctly
@@ -209,24 +206,17 @@ int svc(void) {
 
 
           /// Create a Current object so we can check on the priority locally
-          obj = orb_->resolve_initial_references ("RTCurrent"
-                                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          obj = orb_->resolve_initial_references ("RTCurrent");
           RTCORBA::Current_var current =
-            RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            RTCORBA::Current::_narrow (obj.in ());
 
 
           /// Test to make sure the priority model is exposed
           CORBA::Policy_var policy =
-            object1->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            object1->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
           RTCORBA::PriorityModelPolicy_var priority_policy =
-            RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
           if (CORBA::is_nil (priority_policy.in ()))
             {
@@ -237,8 +227,7 @@ int svc(void) {
 
           /// Test to make sure we are using Server Declared Priority model
           RTCORBA::PriorityModel priority_model =
-            priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            priority_policy->priority_model ();
 
           if (priority_model != RTCORBA::SERVER_DECLARED)
             {
@@ -250,19 +239,15 @@ int svc(void) {
 
           do_work(before_);
 
-          ACE_TRY_EX(sched_act)
+          try
             {
-               client_sched->schedule_activity (::activity_
-                                                ACE_ENV_ARG_PARAMETER);
-               ACE_TRY_CHECK_EX(sched_act);
+               client_sched->schedule_activity (::activity_);
             }
-          ACE_CATCHANY
+          catch (const CORBA::Exception& ex)
             {
-               ACE_PRINT_EXCEPTION (ex,
-                                    "Invalid activity name\n");
+               ex._tao_print_exception ("Invalid activity name\n");
                return -1;
             }
-          ACE_ENDTRY;
 
           ACE_OS::sprintf(buf,
                           "%s\t%s\tBeginning activity at priority %d\n",
@@ -275,7 +260,6 @@ int svc(void) {
           ACE_OS::strcat(client_output_, buf);
 
           do_work(before_);
-          ACE_TRY_CHECK;
 
 
           ACE_OS::sprintf(buf,
@@ -324,7 +308,6 @@ int svc(void) {
                      "%T\t%s\tClient\tBeginning Activity\n",
                      activity_));
           do_work(before_);
-          ACE_TRY_CHECK;
           ACE_DEBUG ((LM_DEBUG,
                       "%T\t%s\tClient\tCalling method1\n",
                       activity_));
@@ -355,13 +338,11 @@ int svc(void) {
       // Finally destroy the ORB
       orb_->destroy ();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in running the client\n");
+      ex._tao_print_exception ("Exception in running the client\n");
       return -1;
     }
-  ACE_ENDTRY;
   return 0;
  }
 
@@ -377,11 +358,10 @@ private:
 int
 ACE_TMAIN (int argc, char * argv[])
 {
-  ACE_TRY_NEW_ENV
+  try
     {
     CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "client_orb" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    CORBA::ORB_init (argc, argv, "client_orb");
 
     ORB_Thread ot(orb, argc, argv);
 
@@ -395,23 +375,19 @@ ACE_TMAIN (int argc, char * argv[])
 || (TAO_MAJOR_VERSION==1 && TAO_MAJOR_VERSION==3 && TAO_MINOR_VERSION > 1)
 
     orb->orb_core ()->orb_params ()->thread_creation_flags ();
-    ACE_TRY_CHECK;
 
 #else /* TAO version is 1.3.1 or lower */
     orb->orb_core ()->orb_params ()->scope_policy () |
     orb->orb_core ()->orb_params ()->sched_policy ();
-    ACE_TRY_CHECK;
 #endif
 
     ot.activate(flags);
     return ot.wait();
     }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
-                          "ERROR in running the client\n");
+      ex._tao_print_exception ("ERROR in running the client\n");
     }
-  ACE_ENDTRY;
   return 0;
 }
 

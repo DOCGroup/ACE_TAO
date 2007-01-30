@@ -55,49 +55,35 @@ int parse_args(int argc, char* argv[])
 int main(int argc, ACE_TCHAR* argv[])
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, ""
-                                         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+  try{
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
 
     if (parse_args(argc, argv) == -1)
       return -1;
 
     CORBA::Object_var obj =
-      orb->resolve_initial_references("RootPOA"
-      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      orb->resolve_initial_references("RootPOA");
 
     PortableServer::POA_var poa =
-      PortableServer::POA::_narrow(obj.in()
-                                   ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      PortableServer::POA::_narrow(obj.in());
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    PortableServer::POAManager_var mgr = poa->the_POAManager();
 
-    mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    mgr->activate();
 
     EventChannelFactory_i servant("factory.cfg", orb.in());
 
     FT::GenericFactory_var event_channel_factory =
-      servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      servant._this();
 
     // register to the Event Service
 
     if (id.length()) {
       CORBA::Object_var namng_contex_object =
-        orb->resolve_initial_references("NameService"
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references("NameService");
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow(namng_contex_object.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        CosNaming::NamingContext::_narrow(namng_contex_object.in());
 
       // register to naming service
       CosNaming::Name name(1);
@@ -106,9 +92,7 @@ int main(int argc, ACE_TCHAR* argv[])
       if (kind.length())
         name[0].kind = CORBA::string_dup(kind.c_str());
 
-      naming_context->bind(name, event_channel_factory.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      naming_context->bind(name, event_channel_factory.in());
 
       ACE_DEBUG((LM_DEBUG, "Register to naming service with %s", id.c_str()));
       if (kind.length())
@@ -118,9 +102,7 @@ int main(int argc, ACE_TCHAR* argv[])
 
     if (output.length()) {
       // get the IOR of factory
-      CORBA::String_var str = orb->object_to_string(event_channel_factory.in()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::String_var str = orb->object_to_string(event_channel_factory.in());
 
       if (ACE_OS::strcmp(output.c_str(), "") != 0)
       {
@@ -137,19 +119,16 @@ int main(int argc, ACE_TCHAR* argv[])
       }
     }
 
-    ACE_TRY_CHECK;
 
-    orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    orb->run();
 
   }
-  ACE_CATCHANY
+  catch (const CORBA::Exception& ex)
   {
-    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    ex._tao_print_exception ("A CORBA Exception occurred.");
   }
-  ACE_ENDTRY;
 
 
-  ACE_CHECK_RETURN(1);
 
   return 0;
 }

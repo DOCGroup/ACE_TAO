@@ -16,10 +16,9 @@ public:
   // = The skeleton methods
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
-                              Test::Controller_ptr controller
-                              ACE_ENV_ARG_DECL)
+                              Test::Controller_ptr controller)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -61,15 +60,13 @@ public:
                       int *pending_replies);
   // Constructor
 
-  virtual void worker_started (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void worker_started (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_started_excep (::Messaging::ExceptionHolder*
-                                     ACE_ENV_ARG_DECL)
+  virtual void worker_started_excep (::Messaging::ExceptionHolder*)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void worker_finished (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished_excep (::Messaging::ExceptionHolder*
-                                      ACE_ENV_ARG_DECL)
+  virtual void worker_finished_excep (::Messaging::ExceptionHolder*)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

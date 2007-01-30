@@ -55,13 +55,11 @@ namespace CIAO
     /// being configured, i.e, the template method from
     /// StandardConfigurator interface.
     virtual void set_configuration (
-        const Components::ConfigValues & descr
-        ACE_ENV_ARG_DECL)
+        const Components::ConfigValues & descr)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     void configure (
-        Components::CCMObject_ptr comp
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        Components::CCMObject_ptr comp)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::WrongComponentType));
 

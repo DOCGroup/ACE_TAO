@@ -27,8 +27,7 @@ namespace TAO
 
     CORBA::Boolean
     Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
-                                        const char *name
-                                        ACE_ENV_ARG_DECL)
+                                        const char *name)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // Default policies
@@ -38,25 +37,19 @@ namespace TAO
       PortableServer::POA_var child =
         parent->create_POA (name,
                             this->poa_manager_.in (),
-                            default_policies
-                            ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+                            default_policies);
 
-      ACE_TRY
+      try
         {
-          child->the_activator (this ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          child->the_activator (this);
         }
-      ACE_CATCHANY
+      catch (const ::CORBA::Exception&)
         {
           (void) child->destroy (1,
-                                 1
-                                 ACE_ENV_ARG_PARAMETER);
+                                 1);
 
           return false;
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
 
       // Finally everything is fine
       return true;

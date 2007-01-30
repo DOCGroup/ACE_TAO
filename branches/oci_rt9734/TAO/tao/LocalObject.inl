@@ -25,8 +25,7 @@ CORBA::LocalObject::_nil (void)
 
 ACE_INLINE
 CORBA::LocalObject_ptr
-CORBA::LocalObject::_narrow (CORBA::Object_ptr obj
-                             ACE_ENV_ARG_DECL_NOT_USED)
+CORBA::LocalObject::_narrow (CORBA::Object_ptr obj)
 {
   if (obj->_is_local () != 0)
     {

@@ -73,8 +73,7 @@ public:
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             const TAO_EndpointSet &endpoint_set,
-            bool ignore_address
-            ACE_ENV_ARG_DECL);
+            bool ignore_address);
 
   /// Close all open acceptors.
   int close_all (void);
@@ -134,8 +133,7 @@ private:
               ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
-              bool ignore_address
-              ACE_ENV_ARG_DECL);
+              bool ignore_address);
 
 private:
 

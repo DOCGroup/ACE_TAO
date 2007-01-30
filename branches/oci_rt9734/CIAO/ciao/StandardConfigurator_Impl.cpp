@@ -22,19 +22,15 @@ namespace CIAO
 
   void
   StandardConfigurator_Impl::set_configuration (
-      const Components::ConfigValues &descr
-      ACE_ENV_ARG_DECL)
+      const Components::ConfigValues &descr)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->component_->set_attributes (descr
-                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    this->component_->set_attributes (descr);
   }
 
   void
   StandardConfigurator_Impl::configure (
-    Components::CCMObject_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    Components::CCMObject_ptr)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::WrongComponentType))
   {
