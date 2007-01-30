@@ -1,0 +1,15 @@
+//
+// $Id$
+//
+
+module Test
+{
+  interface Sender {
+
+    /// Number of active objects trying to use this interface
+    oneway void active_objects (in unsigned long ao);
+
+    /// Send a ready message
+    oneway void send_ready_message ();
+    };
+};
