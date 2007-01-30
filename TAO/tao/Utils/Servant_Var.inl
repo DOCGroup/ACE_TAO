@@ -18,7 +18,7 @@ TAO::Utils::Servant_Var<T>::_duplicate (T * p)
           p->_add_ref ();
         }
     }
-  catch (const...)
+  catch (...)
     {
       throw;
     }
@@ -88,7 +88,7 @@ TAO::Utils::Servant_Var<T>::~Servant_Var (void)
           ptr_->_remove_ref ();
         }
     }
-  catch (const...)
+  catch (...)
     {
       // Forget the exception..
     }
