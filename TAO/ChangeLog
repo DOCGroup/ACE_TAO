@@ -1,3 +1,24 @@
+Tue Jan 30 10:52:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/COIOP/COIOP_Simple_Test.cpp:
+          New simplified COIOP test
+
+        * tests/COIOP/COIOP_Test.cpp:
+          Added advanced_resource.h include to force static
+          link
+
+        * tests/COIOP/COIOP_Tests.mpc:
+          Add custom project for the IDL files and added the
+          new simple test
+
+        * tests/COIOP/Server_Task.cpp:
+          Initialise pointer with 0
+
+        * tests/COIOP/run_test.pl:
+        * tests/Collocation_Tests/run_test.pl:
+          Fixed bug in these two perl script, last test case was not
+          unique
+
 Tue Jan 30 09:33:14 2007  Martin Corino  <mcorino@remedy.nl>
 
         * tao/DynamicAny/DynUnion_i.cpp:
@@ -7,9 +28,9 @@ Tue Jan 30 09:33:14 2007  Martin Corino  <mcorino@remedy.nl>
 Tue Jan 30 01:16:13 2007  James H. Hill     <hillj@isis.vanderbilt.edu>
 
         * tao/Utils/Servant_Var.inl:
-        
-          Fixed syntax error in catch (...) statements that was 
-          prevent TAO from building in some cases.         
+
+          Fixed syntax error in catch (...) statements that was
+          prevent TAO from building in some cases.
 
 Mon Jan 29 19:27:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
