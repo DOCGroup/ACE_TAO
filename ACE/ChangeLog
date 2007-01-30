@@ -1,7 +1,13 @@
+Tue Jan 30 19:21:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Module.h:
+
+          Removed the trailing comma from the last element of the enum.
+
 Tue Jan 30 16:26:43 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/sets-manager.py:
-        
+
           Modified to pin the version of MPC at the time of branching/tagging
           under modules/ACE/MPC.  Note:  This does not branch OR tag MPC,
           it simply causes the branch/tag to check out a specific
