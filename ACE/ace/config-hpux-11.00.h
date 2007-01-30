@@ -100,7 +100,11 @@
 #      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 #      endif
-#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      if defined (RWSTD_NO_NAMESPACE)
+         namespace std {} using namespace std;
+#      else
+#        define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      endif /* RWSTD_NO_NAMESPACE */
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
 #    endif /* _HP_NAMESPACE_STD */
