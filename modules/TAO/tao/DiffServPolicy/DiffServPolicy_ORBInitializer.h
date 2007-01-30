@@ -17,7 +17,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
 #include "tao/DiffServPolicy/DiffServPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
