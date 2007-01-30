@@ -1,3 +1,10 @@
+Tue Jan 30 11:27:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Server_init.{h,cpp}:
+          Change argument of BindObjectPath to a _ptr. Fixes bugzilla
+          2779. Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com>
+          for reporting this.
+
 Mon Jan 29 19:23:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Swapping_Servant_Home_Impl_Base.{h,cpp}:
