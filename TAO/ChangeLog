@@ -1,3 +1,10 @@
+Tue Jan 30 01:16:13 2007  James H. Hill     <hillj@isis.vanderbilt.edu>
+
+        * tao/Utils/Servant_Var.inl:
+        
+          Fixed syntax error in catch (...) statements that was 
+          prevent TAO from building in some cases.         
+
 Mon Jan 29 19:27:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
