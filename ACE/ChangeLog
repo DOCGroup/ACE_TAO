@@ -1,3 +1,9 @@
+Tue Jan 30 11:35:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time.{h,cpp}:
+          Readded destructor, missed that it updates the max_wait_time
+          passed to the constructor
+
 Tue Jan 30 10:44:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
