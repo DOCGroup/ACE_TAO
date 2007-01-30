@@ -1491,9 +1491,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       ACE_OS::strcpy (cp, ior_prefix);
       cp += sizeof (ior_prefix) - 1;
 
-      for (const ACE_Message_Block *i = cdr.begin ();
-           i != 0;
-           i = i->cont ())
+      for (const ACE_Message_Block *i = cdr.begin (); i != 0; i = i->cont ())
         {
           const char *bytes = i->rd_ptr ();
           size_t len = i->length ();
@@ -1582,9 +1580,7 @@ CORBA::ORB::string_to_object (const char *str)
       return ior_parser->parse_string (str, this);
     }
 
-  if (ACE_OS::strncmp (str,
-                       ior_prefix,
-                       sizeof ior_prefix - 1) == 0)
+  if (ACE_OS::strncmp (str, ior_prefix, sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1);
   else
     return this->url_ior_string_to_object (str);
@@ -1775,7 +1771,7 @@ CORBA::ORB::register_value_factory (const char *repository_id,
     {
       int const result = vta->vf_map_rebind (repository_id, factory);
 
-      if (result == 0)              // No previous factory found
+      if (result == 0) // No previous factory found
         {
           return 0;
         }
