@@ -53,7 +53,7 @@ TAO_Default_Network_Priority_Protocols_Hooks::np_service_context (
 
 void
 TAO_Default_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
-   CORBA::Long &)
+   const CORBA::Long)
 {
 }
 
