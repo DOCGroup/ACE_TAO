@@ -75,6 +75,12 @@ TAO_ORB_Core::get_protocols_hooks (void)
   return this->protocols_hooks_;
 }
 
+ACE_INLINE TAO_Network_Priority_Protocols_Hooks *
+TAO_ORB_Core::get_network_priority_protocols_hooks (void)
+{
+  return this->network_priority_protocols_hooks_;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)
