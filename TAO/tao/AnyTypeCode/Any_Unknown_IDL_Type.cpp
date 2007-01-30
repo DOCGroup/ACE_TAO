@@ -61,7 +61,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (this->cdr_);
 
-      TAO::traverse_status status =
+      TAO::traverse_status const status =
         TAO_Marshal_Object::perform_append (this->type_,
                                             &for_reading,
                                             &cdr);
@@ -145,9 +145,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
   new_mb.rd_ptr (offset);
   new_mb.wr_ptr (offset + size);
 
-  ACE_OS::memcpy (new_mb.rd_ptr (),
-                  begin,
-                  size);
+  ACE_OS::memcpy (new_mb.rd_ptr (), begin, size);
 
   this->cdr_.reset (&new_mb, cdr.byte_order ());
   this->cdr_.char_translator (cdr.char_translator ());
@@ -166,11 +164,9 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 {
   try
     {
-      CORBA::ULong kind =
-        this->type_->kind ();
+      CORBA::ULong kind = this->type_->kind ();
 
-      CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_);
+      CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
@@ -218,7 +214,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
           return false;
         }
 
-    TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
+      TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
       if (orb_core == 0)
         {
           orb_core = TAO_ORB_Core_instance ();

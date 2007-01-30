@@ -11,7 +11,8 @@ ACE_RCSID (IORInterceptor,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Impl (void)
+TAO_IORInterceptor_Adapter_Factory_Impl::~
+  TAO_IORInterceptor_Adapter_Factory_Impl (void)
 {
 }
 
@@ -36,13 +37,11 @@ int
 TAO_IORInterceptor_Adapter_Factory_Impl::Initializer (void)
 {
   TAO_ORB_Core::iorinterceptor_adapter_factory_name (
-      "Concrete_IORInterceptor_Adapter_Factory"
-    );
+    "Concrete_IORInterceptor_Adapter_Factory");
 
   return
     ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_IORInterceptor_Adapter_Factory_Impl
-      );
+    ace_svc_desc_TAO_IORInterceptor_Adapter_Factory_Impl);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -57,3 +56,4 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Factory_Impl)
+

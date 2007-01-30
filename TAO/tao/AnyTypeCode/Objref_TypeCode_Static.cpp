@@ -55,8 +55,7 @@ TAO::TypeCode::Objref<char const *,
 
 CORBA::Boolean
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr /* tc */
-  ) const
+  CORBA::TypeCode_ptr /* tc */) const
 {
   // Equality has already been established in the
   // CORBA::TypeCode base class.
@@ -66,8 +65,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equal_i (
 
 CORBA::Boolean
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr
-  ) const
+  CORBA::TypeCode_ptr) const
 {
   // Equivalence already verified in the base class
   // CORBA::TypeCode::equivalent() method.
@@ -94,39 +92,33 @@ TAO::TypeCode::Objref<char const *,
   if (this->kind_ == CORBA::tk_abstract_interface)
     {
       return adapter->create_abstract_interface_tc (this->attributes_.id (),
-                                                    ""  /* empty name */
-                                                   );
+                                                    ""  /* empty name */);
     }
   else if (this->kind_ == CORBA::tk_component)
     {
       return adapter->create_component_tc (this->attributes_.id (),
-                                           ""  /* empty name */
-                                          );
+                                           ""  /* empty name */);
     }
   else if (this->kind_ == CORBA::tk_home)
     {
       return adapter->create_home_tc (this->attributes_.id (),
-                                      ""  /* empty name */
-                                     );
+                                      ""  /* empty name */);
     }
   else if (this->kind_ == CORBA::tk_local_interface)
     {
       return adapter->create_local_interface_tc (this->attributes_.id (),
-                                                 ""  /* empty name */
-                                                );
+                                                 ""  /* empty name */);
 
     }
   else if (this->kind_ == CORBA::tk_native)
     {
       return adapter->create_native_tc (this->attributes_.id (),
-                                        ""  /* empty name */
-                                       );
+                                        ""  /* empty name */);
     }
   else // CORBA::tk_objref
     {
       return adapter->create_interface_tc (this->attributes_.id (),
-                                           ""  /* empty name */
-                                          );
+                                           ""  /* empty name */);
     }
 }
 

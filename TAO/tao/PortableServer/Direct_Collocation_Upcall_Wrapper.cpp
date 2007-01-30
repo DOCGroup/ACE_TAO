@@ -32,10 +32,8 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   TAO_Abstract_ServantBase * const servant = obj->_servant ();
 
   TAO_Collocated_Skeleton collocated_skel;
-  int const status = servant->_find (op,
-                                     collocated_skel,
-                                     strategy,
-                                     op_len);
+
+  int const status = servant->_find (op, collocated_skel, strategy, op_len);
 
   if (status == -1)
     {
@@ -54,6 +52,8 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
     }
+#else
+  ACE_UNUSED_ARG (forward_obj);
 #endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
 }
 
