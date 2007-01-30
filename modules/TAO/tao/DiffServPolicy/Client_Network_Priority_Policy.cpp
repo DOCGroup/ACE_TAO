@@ -134,7 +134,7 @@ TAO_Client_Network_Priority_Policy::copy (void)
 }
 
 void
-TAO_Client_Network_Priority_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Client_Network_Priority_Policy::destroy (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
