@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<!--
+
+file      : Documentation/CommandLine/Terminology.xhtml
+author    : Boris Kolpackov <boris@kolpackov.net>
+copyright : Copyright (c) 2002-2003 Boris Kolpackov
+license   : http://kolpackov.net/license.html
+
+-->
+
+<head>
+
+  <title>Command Line Processing Model and Terminology</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="copyright" content="&copy; 2002-2003 Boris Kolpackov"/>
+  <meta name="keywords" content="command,line,terminology,model,argv,argc,argument,command,option,operand"/>
+  <meta name="description" content="Command Line Processing Model and Terminology"/>
+
+  <link rel="stylesheet" type="text/css" href="../Style/Default.css"/>
+
+  <style type="text/css">
+
+    table.center {
+      border-collapse   : collapse;
+    }
+
+    table.center * td {
+      text-align        : center;
+      vertical-align    : middle;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<h1>Introduction</h1>
+
+<p>
+Command line is probably the most universal way of passing information from
+caller to the program. Concept of a command line is part of most operating
+systems and programming languages including C and C++. However model and
+terminology for command line processing vary greatly among different
+systems.</p>
+
+<p>
+<a href="http://unix.org/online.html">Single UNIX Specification</a> contains
+<a href="http://opengroup.org/onlinepubs/007904975/basedefs/xbd_chap12.html">
+Utility Argument Syntax Conventions and Guidelines</a> which document basic
+terminology for command line processing. Single UNIX Specification model is
+a "common denominator" for different UNIX implementations. It is somewhat
+minimal and targets system utilities rather than a wide spectrum of
+applications. Another de-facto command line processing model is
+<a href="http://gnu.org/prep/standards_18.html"> GNU Standard for  Command
+Line Interfaces</a> which generally encourages conformance to the Single UNIX
+Specification but adds few extensions and uses different terminology.</p>
+
+<p>
+The idea behind this document is to establish terminology and complete model
+for command line processing. Terms translation between this document, Single
+UNIX Specification and GNU Standard for Command Line Interfaces is provided
+in Appendix A.</p>
+
+
+<h1>Model and Terminology</h1>
+
+<p>
+<em>Command line</em> is an array of character strings and not just
+a string with spaces between words as some people tend to think.</p>
+
+<p>
+Each string in a command line array is referred to as <em>argument
+</em>. First argument usually contains a string that refers to an executable.
+</p>
+
+<p>
+Interpretation of arguments is completely up to a program logic however
+conventions exist that vary among different systems. Usually groups of
+arguments are translated into a higher-level objects such as commands,
+options, and operands. These objects form a model for command line processing.
+All of them are defined below.</p>
+
+
+<p>
+<em>Command</em> is usually a word, or a single letter that represents
+a command to the program logic. Neither Single UNIX Specification nor GNU
+Standard for Command Line Interfaces has the notion of a command. Other terms
+for command include <em>action</em> and <em>function</em>. Command is usually
+(but not necessarily) the first argument after executable name. Here are few
+examples:</p>
+
+<p><code>tar x</code></p>
+
+<p class="indent">
+Here we have a one letter command <code>'x'</code> (extract). In GNU tar
+manual it is called <em>functional letter</em>.</p>
+
+<p><code>tar xvf</code></p>
+
+<p class="indent">
+Here we have three commands encoded as a single letter each. Actually
+semantically only <code>'x'</code> is a command while <code>'v'</code>
+(verbose) and <code>'f'</code> (read from a file) are options.</p>
+
+<p><code>openssl req</code></p>
+
+<p class="indent">
+Here we have a word command <code>'req'</code> (operations with certificate
+requests).</p>
+
+<p><code>cvs checkout foo</code></p>
+
+<p class="indent">
+Here we have a word command <code>'checkout'</code> and command operand
+<code>foo</code>.</p>
+
+
+<p><code>tar --help</code></p>
+
+<p class="indent">
+Even though <code>'--help'</code> is usually considered to be an option
+semantically it is a command.</p>
+
+
+<p>
+<em>Option</em> consists of <em>option name</em> and optionally
+one or more <em>option values</em>. Options are usually optional.
+Non-optional options are usually better represented by commands or operands.
+</p>
+
+<p>Option name usually takes up one argument. Option names usually start with
+a prefix (e.g. <code>'--compile-only'</code>, <code>'-c'</code> or <code>'/c'
+</code>). This helps distinguish them from commands and operands. Option name
+may have aliases (e.g. for option name <code>'--output-dir'</code> there could
+be an <code>'-o'</code> alias).</p>
+
+<p>
+Option without a value is alway optional and represents an option with implied
+binary value (e.g. {0, 1} or {false, true} etc.). Such option is sometimes
+called <em>flag</em>.</p>
+
+<p>
+Option can be associated with a program or a command. Thus the concept of
+option can be further refined to <em>program option</em> and <em>
+command option</em>. Program option alters behavior of the program as a
+whole while command option is only affecting particular command.</p>
+
+
+<p>Following are some examples:</p>
+
+<p><code>g++ -o hello.o hello.cpp</code></p>
+
+<p class="indent">
+Here we have an option with name <code>'-o'</code> which has a value
+<code>'hello.o'</code>. <code>'hello.cpp'</code> is an operand.</p>
+
+
+<p><code>ls -l</code></p>
+
+<p class="indent">Here we have a flag with name <code>'-l'</code>.</p>
+
+<p>
+<code>foo --bar=a,b,c</code><br/>
+<code>foo -b "a,b,c"</code><br/>
+<code>foo /baz a b c</code>
+</p>
+
+<p class="indent">
+Here we have a more elaborate example of a multi-format option. It has
+a name <code>'--bar'</code> and two aliases: <code>'-b'</code> and
+<code>'/baz'</code>. It also has three values (in our case they are
+<code>'a'</code>, <code>'b'</code>, and <code>'c'</code>).</p>
+
+<p><code>cvs -z 6 checkout -P foo</code></p>
+
+<p class="indent">
+Here we have a program option with name <code>'-z'</code> and value
+<code>'6'</code> (set compression level to be 6). <code>'checkout'</code>
+is a command. <code>-P</code> is a command flag (prune empty directories).
+<code>'foo'</code> is a command operand.</p>
+
+<p>
+<em>operand</em> usually represents an input value or a parameter.
+Operands can be mandatory or optional. Interpretation of operands is usually
+application-specific.</p>
+
+<p>
+Same as with option  the concept of operand can be further refined to
+<em>program operand</em> and <em>command operand</em>.</p>
+
+<h1>Appendix A: Terms Translation</h1>
+
+<table summary="Terms Translation"
+       border="1"
+       cellspacing="0"
+       cellpadding="4"
+       class="center">
+
+  <col width="34%" />
+  <col width="33%" />
+  <col width="33%" />
+
+  <tr>
+    <th>Term</th>
+    <th>Single UNIX Specification</th>
+    <th>GNU</th>
+  </tr>
+  <tr>
+    <td>command line</td>
+    <td>command line</td>
+    <td>command line</td>
+  </tr>
+  <tr>
+    <td>argument</td>
+    <td>argument</td>
+    <td>argument</td>
+  </tr>
+  <tr>
+    <td>command</td>
+    <td>--</td>
+    <td>--</td>
+  </tr>
+  <tr>
+    <td>option</td>
+    <td>--</td>
+    <td>option</td>
+  </tr>
+  <tr>
+    <td>option name</td>
+    <td>option</td>
+    <td>name</td>
+  </tr>
+  <tr>
+    <td>option value</td>
+    <td>option-argument</td>
+    <td>--</td>
+  </tr>
+  <tr>
+    <td>program option</td>
+    <td>--</td>
+    <td>--</td>
+  </tr>
+  <tr>
+    <td>command option</td>
+    <td>--</td>
+    <td>--</td>
+  </tr>
+  <tr>
+    <td>operand</td>
+    <td>operand</td>
+    <td>argument</td>
+  </tr>
+  <tr>
+    <td>program operand</td>
+    <td>--</td>
+    <td>--</td>
+  </tr>
+  <tr>
+    <td>command operand</td>
+    <td>--</td>
+    <td>--</td>
+  </tr>
+</table>
+
+</body>
+</html>
+<!-- $Id$ -->
