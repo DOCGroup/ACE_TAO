@@ -1,3 +1,10 @@
+Tue Jan 30 18:37:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy.mpc:
+          tao/DiffServPolicy/TAO_DiffServPolicy.pc.in
+        
+          Added the pkgconfig files.
+
 Tue Jan 30 18:14:00 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
