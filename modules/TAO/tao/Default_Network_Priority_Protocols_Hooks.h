@@ -27,7 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_POA;
 
-class TAO_Export TAO_Default_Network_Priority_Protocols_Hooks 
+class TAO_Export TAO_Default_Network_Priority_Protocols_Hooks
       : public TAO_Network_Priority_Protocols_Hooks
 {
 public:
@@ -35,28 +35,24 @@ public:
   /// destructor
   virtual ~TAO_Default_Network_Priority_Protocols_Hooks (void);
 
-  void init_hooks (TAO_ORB_Core *orb_core
-                   ACE_ENV_ARG_DECL);
+  void init_hooks (TAO_ORB_Core *orb_core);
 
   CORBA::Long get_dscp_codepoint (void);
 
-  void set_dscp_codepoint (CORBA::Long &dscp_codepoint
-                           ACE_ENV_ARG_DECL);
+  void set_dscp_codepoint (CORBA::Long &dscp_codepoint);
 
   void np_service_context (TAO_Stub *stub,
                            TAO_Service_Context &service_context,
-                           CORBA::Boolean restart
-                           ACE_ENV_ARG_DECL);
+                           CORBA::Boolean restart);
 
   void add_rep_np_service_context_hook (
     TAO_Service_Context &service_context,
-    CORBA::Long &dscp_codepoint
-    ACE_ENV_ARG_DECL);
+    CORBA::Long &dscp_codepoint);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO, 
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO,
                                TAO_Default_Network_Priority_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Network_Priority_Protocols_Hooks)
 
