@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef TARGET_DATA_IDL
+#define TARGET_DATA_IDL
+
+module Deployment {
+
+  exception PlanError {
+    string name;
+    string reason;
+  };
+};
+
+#endif /* TARGET_DATA_IDL */
