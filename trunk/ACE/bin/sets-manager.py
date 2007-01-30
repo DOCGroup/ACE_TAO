@@ -83,14 +83,43 @@ def svn_mkdir_local (path):
                         path])
     execute (command)
 
+def get_head_revision (url):
+    command = " ".join ([opts.svn,
+                         "info",
+                         url])
+
+    import re
+    lineregex = re.compile ("Last Changed Rev: (\d+)")
+    
+    for line in os.popen (command).readlines ():
+        match = lineregex.match (line)
+        if (match is not None):
+            return int(match.group (1))
+
+    print "ERROR: Unable to find current MPC head revision"
+    raise Exception
+
 def branch_ACE ():
     # Perform branching
     destination = opts.repo + opts.dest
     svn_copy (opts.repo + opts.source + "/ACE",
               destination + "modules/ACE")
+
+    # pin MPC revision
+    # Need local copy of the ACE directory to to the propset
+#    execute ("svn up -N " + opts.repo + path + "/modules/ACE sets_manager_temp/module_ACE")
+    execute ("svn up -N sets_manager_temp/modules/ACE")
+    mpc_rev = get_head_revision ("svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk")
+    
+    svn_propset ("sets_manager_temp/modules/ACE",
+                 "svn:externals",
+                 "%s\t-r %d %s" % ("MPC",
+                                   mpc_rev,
+                                   "svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk"))
+    
     #Create the set
-    svn_mkdir_local ("sets/ACE")
-    svn_propset ("sets/ACE",
+    svn_mkdir_local ("sets_manager_temp/sets/ACE")
+    svn_propset ("sets_manager_temp/sets/ACE",
                  "svn:externals",
                  "%s\t%s" % ("ACE_wrappers",
                              destination + "modules/ACE"))
@@ -104,8 +133,8 @@ def branch_TAO ():
               destination + "modules/TAO")
 
     #Create the set
-    svn_mkdir_local ("sets/ACE+TAO")
-    svn_propset ("sets/ACE+TAO",
+    svn_mkdir_local ("sets_manager_temp/sets/ACE+TAO")
+    svn_propset ("sets_manager_temp/sets/ACE+TAO",
                  "svn:externals",
                  "%s\t%s\n%s\t%s" % ("ACE_wrappers",
                                      destination + "modules/ACE",
@@ -121,8 +150,8 @@ def branch_CIAO ():
               destination + "modules/CIAO")
 
     # Create the set
-    svn_mkdir_local ("sets/ACE+TAO+CIAO")
-    svn_propset ("sets/ACE+TAO+CIAO",
+    svn_mkdir_local ("sets_manager_temp/sets/ACE+TAO+CIAO")
+    svn_propset ("sets_manager_temp/sets/ACE+TAO+CIAO",
                  "svn:externals",
                  "%s\t%s\n%s\t%s\n%s\t%s" %
                  ("ACE_wrappers",
@@ -147,14 +176,15 @@ def main (opts, args):
     # Make branch/tag directory
     svn_mkdir (opts.repo + path)
 
+    execute ("svn co " + opts.repo + path + " sets_manager_temp")
+    
     # Make modules and sets subdirectory
-    svn_mkdir (opts.repo + path + "/modules")
-    svn_mkdir (opts.repo + path + "/sets")
-
-    # We need a local copy of the sets directory, as svn:externals
-    # can only be modified locally
-    execute ("svn co " + opts.repo + path + "/sets")
-
+    svn_mkdir_local ("sets_manager_temp/modules")
+    svn_mkdir_local ("sets_manager_temp/sets")
+    
+    # commit the new directories
+    execute ('svn commit -m "branching/tagging" sets_manager_temp')
+    
     # opts.dest should now be set to path, all of the branching
     # functions assume dest now points to the branch/tag in which
     # the copies should be places
@@ -165,10 +195,10 @@ def main (opts, args):
      'ciao': branch_CIAO}[opts.project] ()
 
     # Commit the sets directory
-    execute ('svn commit -m "branching/tagging" sets')
+    execute ('svn commit -m "branching/tagging" sets_manager_temp')
 
     # remove the sets directory
-    for root, dirs, files in os.walk ('sets', False):
+    for root, dirs, files in os.walk ('sets_manager_temp', False):
         for name in files:
             os.remove (os.path.join (root, name))
         for name in dirs:
