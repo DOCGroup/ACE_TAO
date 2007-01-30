@@ -1,3 +1,11 @@
+Tue Jan 30 18:54:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/DiffServPolicy.h:
+          tao/DiffServPolicy/DiffServPolicy.cpp:
+        
+          Added files for registering the DiffServ policy ORB
+          initializer.
+
 Tue Jan 30 18:37:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy.mpc:
