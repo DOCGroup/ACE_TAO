@@ -78,18 +78,35 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
 
   // member_type()/member_label() do not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-  TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                 );
+  TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::Any_var first_label =
-    unaliased_tc->member_label (this->current_position_
-                               );
+    unaliased_tc->member_label (this->current_position_);
 
   // Initialize the discriminator to the label value of the first member.
-  this->discriminator_ =
-    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
-      first_label.in ()._tao_get_typecode (),
-      first_label.in ());
+  CORBA::TypeCode_var disc_tc = unaliased_tc->discriminator_type ();
+  CORBA::TCKind disc_kind = TAO_DynAnyFactory::unalias (disc_tc.in ());
+  if (disc_kind == CORBA::tk_enum)
+    {
+      // incase the discriminator is an enum type we have to walk
+      // a slightly more complex path because enum labels are
+      // stored as ulong in the union tc
+      this->discriminator_ =
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
+          disc_tc.in (),
+          disc_tc.in ());
+      CORBA::ULong label_val;
+      first_label >>= label_val;
+      TAO_DynEnum_i::_narrow (this->discriminator_.in ())
+                                    ->set_as_ulong (label_val);
+    }
+  else
+    {
+      this->discriminator_ =
+        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+          first_label.in ()._tao_get_typecode (),
+          first_label.in ());
+    }
 
   CORBA::TypeCode_var first_type =
     unaliased_tc->member_type (this->current_position_
@@ -938,7 +955,37 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
         CORBA::ULong my_val;
         CORBA::ULong other_val;
         my_any >>= my_val;
-        other_any >>= other_val;
+
+        // check whether the discriminator is possibly an enum type
+        // since these get stored as ulong label values as well
+        CORBA::TypeCode_var other_tc = other_any.type ();
+        CORBA::TCKind kind = TAO_DynAnyFactory::unalias (other_tc.in ());
+        if (kind == CORBA::tk_enum)
+          {
+            TAO::Any_Impl *other_impl = other_any.impl ();
+
+            if (other_impl->encoded ())
+              {
+                TAO::Unknown_IDL_Type *other_unk =
+                  dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
+
+                // We don't want unk's rd_ptr to move, in case we are
+                // shared by another Any, so we use this to copy the
+                // state, not the buffer.
+                TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
+                for_reading.read_ulong (other_val);
+              }
+            else
+              {
+                TAO_OutputCDR other_out;
+                other_impl->marshal_value (other_out);
+                TAO_InputCDR other_in (other_out);
+                other_in.read_ulong (other_val);
+              }
+          }
+        else
+          other_any >>= other_val;
+
         return my_val == other_val;
       }
     case CORBA::tk_boolean:
