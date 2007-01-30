@@ -1,8 +1,9 @@
 // $Id$
 
-#include "tao/Server_Network_Priority_Policy.h"
-#include "tao/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
+#include "tao/DiffServPolicy/DiffServPolicyC.h"
 #include "tao/SystemException.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (DiffServPolicy,
            Server_Network_Priority_Policy,
@@ -61,12 +62,8 @@ TAO_Server_Network_Priority_Policy::create (const CORBA::Any &val)
 
   ACE_NEW_THROW_EX (policy,
                     TAO_Server_Network_Priority_Policy (),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
   return policy;
 }
 
