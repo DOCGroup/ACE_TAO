@@ -1,0 +1,287 @@
+Tue Jan 30 13:51:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Module.h:
+        * ace/Module.cpp:
+
+          There was no way to distinguish between flags not being set and
+          flags to indicate that tasks should not be deleted.  I have
+          changed the M_DELETE_NONE enum value to 4 and added a new enum
+          value for use in flag initialization.  With this change, the
+          close() method can determine if it needs to use the flags passed
+          in or the internal flags.  This fixes Bugzilla #2497.
+
+Tue Jan 30 11:35:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time.{h,cpp}:
+          Readded destructor, missed that it updates the max_wait_time
+          passed to the constructor
+
+Tue Jan 30 10:44:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          When pipes is set to 1, also add -pipe to the CCFLAGS
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Set pipes to 1, set DCCFLAGS
+
+Tue Jan 30 10:14:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounded_Set.cpp:
+          Initialise pointer with 0.
+
+        * ace/OS_NS_unistd.inl (getpagesize):
+        * ace/config-rtems.h:
+          RTEMS does define _SC_PAGESIZE, but using sysconf with _SC_PAGESIZE
+          results in -1. Added a new define ACE_HAS_BROKEN_SC_PAGESIZE to be
+          able to disable the usage of sysconf (_SC_PAGESIZE) for rtems 4.6,
+          the ::getpagesize() function returns a correct value.
+
+Tue Jan 30 09:46:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added a test for ACE_OS::getpagesize(), it should return a value
+          bigger then 0 else the memory pools don't work
+
+Tue Jan 30 00:25:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: If the user sets RWSTD_NO_NAMESPACE to
+          keep a lot of the standard C++ library out of the std namespace,
+          avoid setting ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB, and also
+          hoist everything else from std into the global namespace. This is
+          necessary because RW wasn't consistent with using their internal
+          _RWSTD_NO_NAMESPACE and the user-settable RWSTD_NO_NAMESPACE and
+          some things end up in std and some not; so get the ones that ended
+          up in std out to global with the rest of them.
+
+Mon Jan 29 19:48:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Basic_Stats.cpp:
+        * ace/Codeset_Registry.cpp:
+        * ace/FILE.cpp:
+        * ace/FILE_Addr.cpp:
+          Layout improvements
+
+Mon Jan 29 19:07:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+        * etc/ciao_DAnCE.doxygen:
+          Removed CIAO_NAMESPACE
+
+Mon Jan 29 18:58:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Argv_Type_Converter.cpp:
+        * ace/Asynch_Pseudo_Task.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+          Layout changes, result of experimenting with a code
+          beautifier
+
+        * ace/config-rtems.h:
+          Improved rtems port, added support for building with
+          threads=0
+
+        * ace/config-sco-5.0.0.h:
+          Removed commented out define
+
+        * ace/config-vxworks6.4.h:
+          putenv fails with VxWorks 6.4 with a pentium target
+
+        * ace/Countdown_Time.{h,cpp}:
+          Use bool, removed return value from most methods, it was
+          meaningless, removed destructor, not needed to update members
+          in a destructor
+
+        * ace/Dev_Poll_Reactor.h:
+          Export Token_Guard, fixes bugzilla 2786, thanks to
+          <sailzeng at tencent dot com> for reporting this
+
+        * OS_NS_pwd.inl (getpwnam_r):
+          Initialize pointer with 0, simplified this a little
+
+        * docs/ACE-guidelines.html:
+          Updated example with doxygen style of documentation
+
+Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ACE version 5.5.6 released.
+
+Fri Jan 26 10:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cached_Connect_Strategy_T.cpp
+        * ace/Event_Handler_T.inl
+        * ace/Future.cpp
+        * ace/Future_Set.cpp
+        * examples/C++NPv2/Reactor_Logging_Server_T.cpp
+          Use typename
+
+Thu Jan 25 19:59:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          The include of rules.cia.GNU must come before the include of
+          rules.tao.GNU in order for CIAO libraries to have the correct
+          version numbers.
+
+        * bin/auto_run_tests.pl:
+
+          Fixed the -l option to use the correct variable name and corrected
+          a bug where the script changed to the wrong directory if the -l
+          option was used.
+
+        * bin/clean_sems.sh:
+
+          Support the ngvipc command to clean up semaphores on MacOS X.
+
+        * bin/rm_exception_macros.pl:
+
+          A new script to assist users in the removal of all ACE related
+          exception macros.
+
+Thu Jan 25 19:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Removed ACE_ENV macros
+
+Thu Jan 25 11:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.h:
+          Fixed typo, fixes part of bugzilla bug 2780, thanks to
+          <sailzeng at tencent dot com> for reporting this.
+
+        * docs/Download.html:
+          Enabled links for source only packages, they are available
+          from x.5.5
+
+Thu Jan 25 07:50:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers_T.cpp:
+          Use typename
+
+Wed Jan 24 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.h:
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Connector.h:
+          Use typename instead of ACE_TYPENAME which is now
+          deprecated
+
+        * ace/Codeset_IBM1047.cpp:
+          Added missing includes
+
+        * ace/config-aix-5.x.h:
+        * ace/config-borland-common.h:
+        * ace/config-cxx-common.h:
+        * ace/config-g++-common.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-icc-common.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-suncc-common.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.6.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-interix.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-visualage.h:
+          Removed ACE_HAS_TYPENAME_KEYWORD, we do require that each
+          compiler supports typename
+
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-lynxos.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-tru64.h:
+          Removed ACE_HAS_MEMCHR
+
+        * ace/config-doxygen.h:
+          Enabled COIOP and Transport Current
+
+        * ace/config-macros.h:
+          Deprecated ACE_TYPENAME, users can still use it, but in some builds
+          on the daily scoreboard it now can't be used anymore
+
+        * ace/config-mvs.h:
+          Improved MVS support
+
+        * ace/Global_Macros.h:
+        * ace/Malloc_T.h:
+        * ace/Map_T.h:
+        * ace/Strategies_T.h:
+          Use typename
+
+        * ace/Log_Msg.cpp:
+        * ace/os_include/sys/os_types.h:
+        * ace/Task.cpp:
+          Added support for MVS
+
+        * ace/OS_NS_string.{h,cpp,inl}:
+          Replaced ACE_HAS_MEMCHR with ACE_LACKS_MEMCHR, this way a platform that
+          lacks this method has to set an explicit define, maybe it now shows
+          that all platforms have this method and we don't need an emulation
+          anymore. Also removed several emulations that are not needed anymore
+
+        * ace/OS_NS_Thread.inl:
+          Layout changes
+
+        * ace/OS_NS_wchar.{h,cpp}:
+          Changed second argument of wcschr_emulation to wchar_t, that way we don't
+          need a cast anymore
+
+        * ace/Rtems_init.c:
+          Improved this file
+
+        * ace/Sock_Connect.cpp:
+          Initialise some pointers with 0
+
+        * bin/cvslog:
+          Removed, not needed anymore
+
+        * bin/fuzz.pl:
+          Removed checks for emulated exception macros
+
+        * examples/Export/run_test.pl:
+          Use ACE_ROOT
+
+        * examples/Misc/test_read_buffer.cpp:
+          Initialise pointer with 0
+
+        * include/makeinclude/platform_mvs.GNU:
+          Improved support
+
+        * netsvcs/servers/servers.mpc:
+          Simplified
+
+        * performance-tests/UDP/udp_test.cpp:
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+          Removed ACE_LACKS_FLOATING_POINT check
+
+        * tests/Thread_Creation_Threshold_Test.cpp:
+          Added missing \n
+
+Mon Jan 22 23:14:56 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ACE version 5.5.5 released.
+
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
