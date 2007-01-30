@@ -1,3 +1,13 @@
+Tue Jan 30 16:59:54 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Hooks.h:
+          tao/Default_Network_Priority_Hooks.cpp:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        
+          Changed the signature of the set_dscp_codepoint () method.
+
 Mon Jan 29 22:48:41 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
