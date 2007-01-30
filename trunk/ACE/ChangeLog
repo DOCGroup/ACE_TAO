@@ -1,3 +1,11 @@
+Tue Jan 30 10:44:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          When pipes is set to 1, also add -pipe to the CCFLAGS
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          Set pipes to 1, set DCCFLAGS
+
 Tue Jan 30 10:14:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Unbounded_Set.cpp:
