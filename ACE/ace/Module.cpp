@@ -158,7 +158,7 @@ ACE_Module<ACE_SYNCH_USE>::sibling (ACE_Task<ACE_SYNCH_USE> *orig)
 
 template <ACE_SYNCH_DECL>
 ACE_Module<ACE_SYNCH_USE>::ACE_Module (void)
-  : flags_ (0)
+  : flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
   this->name (ACE_LIB_TEXT ("<unknown>"));
@@ -183,7 +183,7 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ACE_TCHAR *mod_name,
                                        ACE_Task<ACE_SYNCH_USE> *reader_q,
                                        void *args,
                                        int flags /* = M_DELETE */)
-  : flags_ (0)
+  : flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
 
@@ -205,7 +205,7 @@ ACE_Module<ACE_SYNCH_USE>::close (int flags /* = M_DELETE_NONE */)
 
   // Only pay attention to the flags parameter if we haven't already
   // set the task delete policies.
-  if (this->flags_ == 0)
+  if (this->flags_ == M_FLAGS_NOT_SET)
     ACE_SET_BITS (flags_, flags);
 
   if (this->close_i (0, flags_) == -1)

@@ -1,3 +1,15 @@
+Tue Jan 30 13:51:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Module.h:
+        * ace/Module.cpp:
+
+          There was no way to distinguish between flags not being set and
+          flags to indicate that tasks should not be deleted.  I have
+          changed the M_DELETE_NONE enum value to 4 and added a new enum
+          value for use in flag initialization.  With this change, the
+          close() method can determine if it needs to use the flags passed
+          in or the internal flags.  This fixes Bugzilla #2497.
+
 Tue Jan 30 11:35:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Countdown_Time.{h,cpp}:
