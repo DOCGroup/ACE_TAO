@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: taoexe {
-  exename = Queued_Message_Test
-}
-

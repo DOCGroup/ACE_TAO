@@ -1,8 +1,0 @@
-// $Id$
-valuetype MyValueType
-{
-   private sequence<MyValueType> myValueTypes;
-};
-
-
-
