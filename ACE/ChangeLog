@@ -1,3 +1,9 @@
+Tue Jan 30 09:46:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OS_Test.cpp:
+          Added a test for ACE_OS::getpagesize(), it should return a value
+          bigger then 0 else the memory pools don't work
+
 Tue Jan 30 00:25:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h: If the user sets RWSTD_NO_NAMESPACE to
@@ -8,6 +14,15 @@ Tue Jan 30 00:25:00 UTC 2007  Steve Huston  <shuston@riverace.com>
           _RWSTD_NO_NAMESPACE and the user-settable RWSTD_NO_NAMESPACE and
           some things end up in std and some not; so get the ones that ended
           up in std out to global with the rest of them.
+
+Mon Jan 29 19:48:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Basic_Stats.cpp:
+        * ace/Codeset_Registry.cpp:
+        * ace/FILE.cpp:
+        * ace/FILE_Addr.cpp:
+          Layout improvements
 
 Mon Jan 29 19:07:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
