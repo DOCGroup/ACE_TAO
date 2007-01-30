@@ -1,3 +1,10 @@
+Tue Jan 30 19:15:31 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/TAO_Internal.cpp:
+        
+          Made changes to do a process directive for Default Network
+          Priority Protocols Hooks.
+
 Tue Jan 30 18:54:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServPolicy.h:
