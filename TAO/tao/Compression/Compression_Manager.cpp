@@ -13,13 +13,11 @@ namespace TAO
 
 void CompressionManager::register_factory (
   ::Compression::CompressorFactory_ptr compressor_factory)
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException,
-            ::Compression::FactoryAlreadyRegistered))
+    ACE_THROW_SPEC ((::CORBA::SystemException, ::Compression::FactoryAlreadyRegistered))
 {
   if (!::CORBA::is_nil (compressor_factory))
     {
-      ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
       CORBA::ULong const length = this->factories_.length ();
 
@@ -51,7 +49,7 @@ CompressionManager::unregister_factory (
             ::Compression::UnknownCompressorId
           ))
 {
-  ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
   CORBA::ULong const length = this->factories_.length ();
 
@@ -83,7 +81,8 @@ CompressionManager::get_factory (
             ::Compression::UnknownCompressorId
           ))
 {
-  ACE_Guard <ACE_SYNCH_MUTEX> guard (mutex_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_,
+    ::Compression::CompressorFactory::_nil ());
 
   CORBA::ULong const length = this->factories_.length ();
 
@@ -101,15 +100,12 @@ CompressionManager::get_factory (
     }
 
   throw ::Compression::UnknownCompressorId ();
-
-  ACE_NOTREACHED (return ::Compression::CompressorFactory::_nil ());
 }
 
 ::Compression::Compressor_ptr
 CompressionManager::get_compressor (
             ::Compression::CompressorId compressor_id,
-            ::Compression::CompressionLevel compression_level
-          )
+            ::Compression::CompressionLevel compression_level)
           ACE_THROW_SPEC ((
             ::CORBA::SystemException,
             ::Compression::UnknownCompressorId
@@ -121,11 +117,8 @@ CompressionManager::get_compressor (
 }
 
 ::Compression::CompressorFactorySeq *
-CompressionManager::get_factories (
-          )
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException
-          ))
+CompressionManager::get_factories (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   // todo
   return 0;
