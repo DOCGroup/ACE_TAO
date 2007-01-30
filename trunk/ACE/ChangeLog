@@ -1,3 +1,14 @@
+Tue Jan 30 00:25:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: If the user sets RWSTD_NO_NAMESPACE to
+          keep a lot of the standard C++ library out of the std namespace,
+          avoid setting ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB, and also
+          hoist everything else from std into the global namespace. This is
+          necessary because RW wasn't consistent with using their internal
+          _RWSTD_NO_NAMESPACE and the user-settable RWSTD_NO_NAMESPACE and
+          some things end up in std and some not; so get the ones that ended
+          up in std out to global with the rest of them.
+
 Mon Jan 29 19:07:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao.doxygen:
