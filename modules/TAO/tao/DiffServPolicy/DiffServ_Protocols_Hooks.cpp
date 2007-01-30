@@ -88,7 +88,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::add_rep_np_service_context_hook (
 
 void
 TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
-  CORBA::Long &dscp_codepoint)
+  const CORBA::Long dscp_codepoint)
 {
   this->dscp_codepoint_ = dscp_codepoint;
 }
