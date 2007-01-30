@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature (corba_e_micro) : taoidldefaults {
-  macros += CORBA_E_MICRO
-  idlflags += -DCORBA_E_MICRO
-}
