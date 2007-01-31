@@ -24,9 +24,9 @@ TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (void)
 }
 
 TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
-  const TAO::DiffservCodepoint &request_diffserv_codepoint,
-  const TAO::DiffservCodepoint &reply_diffserv_codepoint,
-  TAO::NetworkPriorityModel &network_priority_model)
+  const TAO::DiffservCodepoint request_diffserv_codepoint,
+  const TAO::DiffservCodepoint reply_diffserv_codepoint,
+  TAO::NetworkPriorityModel network_priority_model)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::CORBA::LocalObject ()

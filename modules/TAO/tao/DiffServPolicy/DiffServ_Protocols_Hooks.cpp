@@ -53,7 +53,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::np_service_context (
           TAO::DiffservCodepoint reply_diffserv_codepoint;
           reply_diffserv_codepoint = cnp->reply_diffserv_codepoint ();
 
-          CORBA::Long const rep_dscp_codepoint = reply_diffserv_codepoint;
+          CORBA::Long rep_dscp_codepoint = reply_diffserv_codepoint;
 
           this->add_rep_np_service_context_hook (service_context,
                                                  rep_dscp_codepoint);
