@@ -1,3 +1,14 @@
+Wed Jan 31 17:22:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * protocols/examples/examples.mwc:
+
+          Removed the implicit usage.  It is not necessary since each
+          example has a .mpc file.
+
+        * protocols/examples/example_base.mpb:
+
+          Removed this file.  It was not needed.
+
 Wed Jan 31 16:55:23 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * ace/config-qnx-rtp-62x.h:
@@ -17,7 +28,7 @@ Wed Jan 31 15:44:54 UTC 2007  Olli Savia  <ops@iki.fi>
           Use sigval (which is SUS defined) instead of sigval_t. If this
           change doesn't break on any platform I'll remove unnecessary
           typedef and related stuff.
-        
+
 Wed Jan 31 13:31:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
