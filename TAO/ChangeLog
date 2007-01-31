@@ -1,3 +1,10 @@
+Tue Jan 30 14:44:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          Layout improvements for the generated code now we don't generate
+          emulated exception macros
+
 Tue Jan 30 12:37:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/Compression_Manager.{h,cpp}:
