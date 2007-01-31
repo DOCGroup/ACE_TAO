@@ -1,7 +1,7 @@
 # $Id$
 #
 
-buildbits ?= 0
+buildbits ?= 64
 debug ?= 1
 distrib ?= 0
 exceptions ?= 1
@@ -13,6 +13,7 @@ with_ld ?= hpux
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
+HPMODEL := $(shell uname -m)
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= gcc
@@ -54,6 +55,21 @@ SOFLAGS		+= $(CPPFLAGS) -shared -nostdlib $(PIC) -Wl,-E
 SOEXT		= sl
 SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.$(SOEXT) $<
 PRELIB = @true
+
+ifeq ($(HPMODEL), ia64)
+  itanium = 1
+endif
+
+ifeq ($(itanium),1)
+  ifeq ($(buildbits),64)
+    CCFLAGS     += -mlp64
+    CFLAGS     += -mlp64
+  else
+    CCFLAGS     += -milp32
+    CFLAGS     += -milp32
+  endif
+endif
+
 #
 # Grab the appropriate libraries based on the version of HP-UX we're building
 # on and whether or not thread support is being used.
