@@ -1,3 +1,11 @@
+Wed Jan 31 17:33:28 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+        
+          Modified the service_context_list () method to make a call
+          on the DS network priority protocols hooks to add the reply
+          DSCP as a service context entry.
+
 Wed Jan 31 17:04:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/tao.mpc:
