@@ -975,151 +975,6 @@ sub check_for_bad_ace_trace()
 }
 
 
-
-# This test checks missing ACE_ENV_ARG_PARAMETER when using
-# resolve_initial_references
-sub check_for_missing_rir_env ()
-{
-    print "Running resolve_initial_references() check\n";
-    foreach $file (@files_cpp, @files_inl) {
-        if (open (FILE, $file)) {
-            my $disable = 0;
-            my $native_try = 0;
-            my $in_rir = 0;
-            my $found_env = 0;
-
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                if (/FUZZ\: disable check_for_missing_rir_env/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_missing_rir_env/) {
-                    $disable = 0;
-                }
-                if ($disable == 0) {
-                    next if m/^\s*\/\//;
-
-                    if (m/^\s*try/) {
-                        $disable = 1;
-                        next;
-                    }
-
-                    if (m/[^\:]resolve_initial_references\s*\(/) {
-                        $found_env = 0;
-                        $in_rir = 1;
-                    }
-
-                    if (m/ACE_ENV_ARG_PARAMETER/) {
-                        $found_env = 1;
-                    }
-
-                    if ($in_rir == 1 && m/\;\s*$/) {
-                        $in_rir = 0;
-                        if ($found_env != 1) {
-                            print_error ("$file:$.: Missing ACE_ENV_ARG_PARAMETER in"
-                                         . " resolve_initial_references");
-                        }
-                        $found_env = 0;
-                    }
-
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
-# This test checks for usage of ACE_CHECK/ACE_TRY_CHECK
-sub check_for_ace_check ()
-{
-    print "Running ACE_CHECK check\n";
-    foreach $file (@files_cpp, @files_inl) {
-        if (open (FILE, $file)) {
-            my $disable = 0;
-            my $in_func = 0;
-            my $in_return = 0;
-            my $in_ace_try = 0;
-            my $found_env = 0;
-
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                if (/FUZZ\: disable check_for_ace_check/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_ace_check/) {
-                    $disable = 0;
-                }
-
-                if (/FUZZ\: ignore check_for_ace_check/) {
-                    next;
-                }
-
-                next if m/^\s*\/\//;
-                next if m/^\s*$/;
-
-                if (m/ACE_TRY\s*$/ || m/ACE_TRY_EX/ || m/ACE_TRY\s*{/) {
-                  $in_ace_try = 1;
-                }
-                if (m/ACE_CATCH/) {
-                  $in_ace_try = 0;
-                }
-
-                if ($disable == 0) {
-                    if (m/\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
-                        $env_line = $.;
-                        if ($found_env) {
-                            print_error ("$file:$env_line: Missing ACE_CHECK/ACE_TRY_CHECK");
-                        }
-                        $found_env = 1;
-                        $in_func = 1;
-                    }
-
-                    if (m/^\s*return/) {
-                      $in_return = 1;
-                    }
-                    if ($in_return && m/;/) {
-                      $in_return = 0;
-                      $found_env = 0;
-                    }
-
-                    # ignore quoted ACE_ENV_ARG_PARAMETERS's
-                    if (m/^[^\"]*\"[^\"]*ACE_ENV_(SINGLE_)?ARG_PARAMETER[^\"]*\"[^\"]*$/) {
-                        $found_env = 0;
-                    }
-
-                    if (m/ACE_ENV_(SINGLE_)?ARG_PARAMETER.*ACE_ENV_(SINGLE_)?ARG_PARAMETER/) {
-                        print_error ("$file:$.: Multiple ACE_ENV_ARG_PARAMETER");
-                    }
-
-                    if (m/ACE_THROW/ && $in_ace_try) {
-                        print_error ("$file:$.: ACE_THROW/ACE_THROW_RETURN used inside of an ACE_TRY");
-                    }
-
-                    if ($in_func && m/\)/) {
-                      $in_func = 0;
-                    }
-                    elsif (!$in_func && $found_env) {
-                        if (m/ACE_CHECK/ && $in_ace_try) {
-                            print_error ("$file:$.: ACE_CHECK/ACE_CHECK_RETURN used inside of an ACE_TRY");
-                        }
-                        elsif (!m/_CHECK/ && !m/^\}/ && !$in_return) {
-                            print_error ("$file:$env_line: Missing ACE_CHECK/ACE_TRY_CHECK");
-                        }
-                        $found_env = 0;
-                    }
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
 # This test checks for broken ChangeLog entries.
 sub check_for_changelog_errors ()
 {
@@ -1405,8 +1260,6 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_bad_run_test
            check_for_absolute_ace_wrappers
            check_for_bad_ace_trace
-           check_for_missing_rir_env
-           check_for_ace_check
            check_for_changelog_errors
            check_for_ptr_arith_t
            check_for_include
@@ -1465,8 +1318,6 @@ check_for_mismatched_filename () if ($opt_l >= 2);
 check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
-check_for_missing_rir_env () if ($opt_l >= 6);
-check_for_ace_check () if ($opt_l >= 6);
 check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);
