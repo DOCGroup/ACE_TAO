@@ -1819,6 +1819,14 @@ TAO_ORB_Core::service_context_list (
                                               service_context,
                                               restart
                                              );
+
+  // call the network priority protocols hooks that has been
+  // registered.
+  this->network_priority_protocols_hooks_->np_service_context (stub,
+                                              service_context,
+                                              restart
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 TAO_Client_Strategy_Factory *
