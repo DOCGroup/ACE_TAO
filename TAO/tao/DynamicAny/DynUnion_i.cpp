@@ -86,7 +86,9 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
   // Initialize the discriminator to the label value of the first member.
   CORBA::TypeCode_var disc_tc = unaliased_tc->discriminator_type ();
   CORBA::TCKind disc_kind = TAO_DynAnyFactory::unalias (disc_tc.in ());
-  if (disc_kind == CORBA::tk_enum)
+  CORBA::TCKind label_kind = TAO_DynAnyFactory::unalias (first_label->_tao_get_typecode ());
+  if (disc_kind == CORBA::tk_enum &&
+      label_kind == CORBA::tk_ulong)
     {
       // incase the discriminator is an enum type we have to walk
       // a slightly more complex path because enum labels are
