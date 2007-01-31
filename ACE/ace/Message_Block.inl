@@ -579,48 +579,5 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_offset (unsigned long ul)
   // set offset for boundary between signed range and unsigned range
 
 
-ACE_INLINE ACE_Dynamic_Message_Strategy::Priority_Status
-ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
-                                               const ACE_Time_Value & tv)
-{
-  // default the message to have pending priority status
-  Priority_Status status = ACE_Dynamic_Message_Strategy::PENDING;
-
-  // start with the passed absolute time as the message's priority, then
-  // call the polymorphic hook method to (at least partially) convert
-  // the absolute time and message attributes into the message's priority
-  ACE_Time_Value priority (tv);
-  convert_priority (priority, mb);
-
-  // if the priority is negative, the message is pending
-  if (priority < ACE_Time_Value::zero)
-    {
-      // priority for pending messages must be shifted
-      // upward above the late priority range
-      priority += pending_shift_;
-      if (priority < min_pending_)
-        priority = min_pending_;
-    }
-  // otherwise, if the priority is greater than the maximum late
-  // priority value that can be represented, it is beyond late
-  else if (priority > max_late_)
-    {
-      // all messages that are beyond late are assigned lowest priority (zero)
-      mb.msg_priority (0);
-      return ACE_Dynamic_Message_Strategy::BEYOND_LATE;
-    }
-  // otherwise, the message is late, but its priority is correct
-  else
-    status = ACE_Dynamic_Message_Strategy::LATE;
-
-  // use (fast) bitwise operators to isolate and replace
-  // the dynamic portion of the message's priority
-  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) |
-                  ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) <<
-                   static_bit_field_shift_));
-
-  return status;
-}
-  // returns the priority status of the message
 
 ACE_END_VERSIONED_NAMESPACE_DECL
