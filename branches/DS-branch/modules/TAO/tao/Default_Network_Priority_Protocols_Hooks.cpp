@@ -1,22 +1,9 @@
 // $Id$
 
 #include "tao/Default_Network_Priority_Protocols_Hooks.h"
-#include "ace/Log_Msg.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
-#include "tao/MProfile.h"
 #include "tao/Service_Context.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Protocol_Factory.h"
-#include "tao/Transport_Acceptor.h"
-#include "tao/Transport_Connector.h"
-#include "tao/Policy_Set.h"
-#include "tao/debug.h"
-#include "tao/CDR.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
-#include "tao/Client_Network_Priority_Policy.h"
 
 ACE_RCSID (tao,
            Default_Network_Priority_Protocols_Hooks,

@@ -56,6 +56,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Default_Collocation_Resolver.cpp
     Default_Endpoint_Selector_Factory.cpp
     Default_Protocols_Hooks.cpp
+    Default_Network_Priority_Protocols_Hooks.cpp
     default_resource.cpp
     default_server.cpp
     Default_Stub_Factory.cpp
@@ -178,6 +179,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Profile_Transport_Resolver.cpp
     Protocol_Factory.cpp
     Protocols_Hooks.cpp
+    Network_Priority_Protocols_Hooks.cpp
     Queued_Message.cpp
     Reactive_Connect_Strategy.cpp
     Reactive_Flushing_Strategy.cpp
@@ -321,6 +323,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     default_environment.h
     default_ports.h
     Default_Protocols_Hooks.h
+    Default_Network_Priority_Protocols_Hooks.h
     default_resource.h
     default_server.h
     Default_Stub_Factory.h
@@ -469,6 +472,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Profile_Transport_Resolver.h
     Protocol_Factory.h
     Protocols_Hooks.h
+    Network_Priority_Protocols_Hooks.h
     Pseudo_VarOut_T.h
     Queued_Message.h
     Range_Checking_T.h
