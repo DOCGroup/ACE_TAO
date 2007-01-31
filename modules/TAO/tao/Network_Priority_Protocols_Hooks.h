@@ -24,8 +24,6 @@
 #include "ace/Service_Object.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
-#include "tao/IOP_IORC.h"
-#include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
