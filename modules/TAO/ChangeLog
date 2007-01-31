@@ -1,3 +1,20 @@
+Wed Jan 31 22:09:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        
+          Modified the signature of get_dscp_codepoint () to be called
+          from Remote_Invocation.cpp. Please see below.
+        
+        * tao/Remote_Invocation.cpp:
+        
+          Modified the send_message () with a logic to add DiffServ
+          codepoint to the client server communication. PLease see the
+          comments in the file in the send_message () method.
+
 Wed Jan 31 18:55:13 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
