@@ -1,3 +1,14 @@
+Wed Jan 31 22:49:14 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Changed to handle inconsistency between statically declared (IDL
+          compiler) union typecodes and dynamically declared typecodes where
+          the discriminator type is an enum.
+          With statically declared typecodes the label values are stored as
+          actual enum values while with dynamically stored typecodes these
+          label values are stored as ULong.
+
 Wed Jan 31 19:00:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/LongDouble:
