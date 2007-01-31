@@ -1,3 +1,18 @@
+Wed Jan 31 18:14:30 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/Connection_Handler.h:
+          tao/Connection_Hanlder.cpp:
+        
+          Added a new method set_dscp_codepoint () to set the DS codepoints
+          in the IP packets. A default implementation is provided
+          for the method.
+        
+        * tao/IIOP_Connection_Handler.h:
+          tao/IIOP_Connection_Handler.cpp:
+        
+          Provided the concrete implementation for the above defined
+          method.
+
 Wed Jan 31 17:40:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/Profile.cpp:
