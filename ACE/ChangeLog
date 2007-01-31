@@ -1,3 +1,11 @@
+Wed Jan 31 15:44:54 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_CB_Proactor.cpp:
+          Use sigval (which is SUS defined) instead of sigval_t. If this
+          change doesn't break on any platform I'll remove unnecessary
+          typedef and related stuff.
+        
 Wed Jan 31 13:31:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
