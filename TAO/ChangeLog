@@ -1,8 +1,24 @@
+Wed Jan 31 19:00:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/LongDouble:
+        * tests/LongDouble/Global.h:
+        * tests/LongDouble/Global.cpp:
+        * tests/LongDouble/LongDoubleTest.h:
+        * tests/LongDouble/LongDoubleTest.cpp:
+        * tests/LongDouble/LongDoubleTest.mpc:
+        * tests/LongDouble/Test.idl:
+        * tests/LongDouble/client.cpp:
+        * tests/LongDouble/run_test.pl:
+        * tests/LongDouble/server.cpp:
+
+          Added a test that sends a CORBA::LongDouble from server to client
+          to ensure that ACE and TAO correctly handles them.
+
 Wed Jan 31 17:23:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_ACE.mwc:
 
-          Exclude $(ACE_ROOT)/protocols/tests and 
+          Exclude $(ACE_ROOT)/protocols/tests and
           Exclude $(ACE_ROOT)/protocols/examples.  They should not be built
           as part of this workspace.
 
