@@ -47,7 +47,7 @@ public:
 
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;
 
-  virtual CORBA::Long get_dscp_codepoint (void) = 0;
+  virtual const CORBA::Long get_dscp_codepoint (void) = 0;
 
   virtual void set_dscp_codepoint (CORBA::Long dscp_codepoint) = 0;
 
