@@ -1,11 +1,6 @@
 # $Id$
 #
-# This is for the HP-UX 10.x and 11.x using the aC++ compiler.
-#
-# For 10.x, most of the difference for threaded vs. non-threaded is
-# contained in ace/config-hpux-10.x.h.  However, to build without threads,
-# you should run the make with "threads=0" since the default is to build
-# with threads.
+# This is for HP-UX 11.x using the aC++ compiler.
 #
 # HP-UX 11 supports both 32-bit and 64-bit builds, regardless of which
 # architecture the build is done on.  This file is set up to build native
@@ -20,6 +15,7 @@ debug ?= 1
 distrib ?= 0
 exceptions ?= 1
 optimize ?= 0
+stdcpplib ?= 1
 threads ?= 1
 versioned_so ?= 0
 
@@ -36,21 +32,6 @@ CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
 CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
 CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
 
-ifeq (,$(stdcpplib))
-# If the user didn't explicitly set stdcpplib, assume that the compiler
-# can do -AA, unless it's a .2x version (e.g., 03.24). 03.27 can do -AA,
-# so check for that one explicitly and enable it if so.
-  ifeq (,$(filter 2%,$(CXXMINORVERS)))
-    stdcpplib = 1
-  else
-    ifeq (27,$(CXXMINORVERS))
-      stdcpplib = 1
-    else
-      stdcpplib = 0
-    endif
-  endif
-endif
-
 ifeq (1,$(stdcpplib))
   CCFLAGS += -AA
   ifeq (03,$(CXXMAJORVERS))
@@ -66,6 +47,8 @@ ifeq (1,$(stdcpplib))
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
 # If you still have problems with this area, uncomment the following line:
 #  exceptions = 1
+else
+  CCFLAGS += -AP
 endif
 
 # Set the appropriate preprocessor defs for threading based on OS version
@@ -95,9 +78,7 @@ else
   THR_DEFS = -DACE_HAS_THREADS=0
   # On HP-UX 11, even without building for threads, the *_r reentrant
   # functions are available, and _REENTRANT enables them.
-  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-    THR_DEFS += -D_REENTRANT
-  endif
+  THR_DEFS += -D_REENTRANT
 endif
 
 ifeq ($(HPMODEL), ia64)
@@ -183,14 +164,9 @@ ifeq ($(buildbits),64)
     CFLAGS += +DD64
     CCFLAGS += +DD64
   else
-    ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-      ## Without the W, it isn't really a 64-bit build
-      CFLAGS += +DA2.0W +DS2.0W
-      CCFLAGS += +DA2.0W +DS2.0W
-    else
-      CFLAGS += +DA2.0 +DS2.0
-      CCFLAGS += +DA2.0 +DS2.0
-    endif
+    ## Without the W, it isn't really a 64-bit build
+    CFLAGS += +DA2.0W +DS2.0W
+    CCFLAGS += +DA2.0W +DS2.0W
   endif
 LDFLAGS         += -Wl,+vnocompatwarnings
 else

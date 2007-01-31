@@ -107,6 +107,9 @@
 #      endif /* RWSTD_NO_NAMESPACE */
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
+       // There's no support in ACE's use of numeric_limits for those that
+       // aren't in std::
+#      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
 
 // Compiler implements templates that support typedefs inside of classes
