@@ -1,3 +1,15 @@
+Wed Jan 31 17:04:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/tao.mpc:
+        
+          Added the new network priority protocols hooks files for
+          compilation.
+        
+        * tao/Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        
+          Removed unnecessary includes.
+
 Tue Jan 30 19:22:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/ORB_Core.h:
