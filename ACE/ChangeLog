@@ -1,3 +1,31 @@
+Wed Jan 31 19:03:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Basic_Types.h:
+
+          Added constants ACE_FLT_MIN and ACE_DBL_MIN to provide consistency
+          with ACE_FLT_MAX AND ACE_DBL_MAX.
+
+        * ace/CDR_Base.h:
+        * ace/CDR_Base.cpp:
+
+          Enhanced the ACE_CDR::LongDouble class which is used on platforms
+          where the native long double is not 16 bytes.
+
+          Provided operators to support multiplication, division, addition
+          and subtraction as well as conversion to the native long double.
+
+          An assign() method is also provided to set the value of the
+          ACE_CDR::LongDouble.  Since this class will be stored in a union
+          (if used as an IDL type), it can not have a non-trivial constructor
+          or assignment operator.  The existing
+          ACE_CDR_LONG_DOUBLE_INITIALIZER macro is used to initialize the
+          LongDouble and a new macro, ACE_CDR_LONG_DOUBLE_ASSIGNMENT, is
+          used to assign to the LongDouble in a portable fashion.
+
+        * bin/tao_orb_tests.lst:
+
+          Added the new TAO LongDouble test.
+
 Wed Jan 31 17:30:46 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h:
