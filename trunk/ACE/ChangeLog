@@ -1,3 +1,8 @@
+Wed Jan 31 13:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_gcc.GNU:
+          Added improvement for GCC on HPUX IA64
+
 Wed Jan 31 10:17:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_gcc.GNU:
