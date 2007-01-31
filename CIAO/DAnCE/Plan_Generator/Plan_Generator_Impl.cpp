@@ -18,8 +18,7 @@ namespace CIAO
     fetch_reference_naming (CORBA::ORB_ptr orb,
                             const char *repoman_name = 0)
     {
-      CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService");
+      CORBA::Object_var tmp = orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var pns =
         CosNaming::NamingContext::_narrow (tmp.in ());
@@ -88,7 +87,6 @@ namespace CIAO
       ACE_TCHAR package[PACKAGE_NAME_LEN];
 
       size_t length = ACE_OS::strlen (package_uri);
-
       size_t pos1 = 0;
       size_t pos2 = ACE_OS::strcspn (package_uri + pos1, "+");
 
@@ -148,6 +146,5 @@ namespace CIAO
 
       return true;
     }
-
   }
 }

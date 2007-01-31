@@ -47,8 +47,7 @@ namespace CIDL_RoundTrip_Impl
       ACE_THROW_SPEC ((CORBA::SystemException));
     */
 
-    NodeAppTest::CCM_LatencyTest_ptr
-    get_facet_1()
+    NodeAppTest::CCM_LatencyTest_ptr get_facet_1()
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
