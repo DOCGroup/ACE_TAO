@@ -67,8 +67,7 @@ namespace CIAO
       CORBA::String_var ior =
         orb->object_to_string (obj);
 
-      FILE* ior_output_file_ =
-        ACE_OS::fopen (ior_file_name_, "w");
+      FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name_, "w");
 
       if (ior_output_file_)
         {
@@ -115,7 +114,6 @@ namespace CIAO
       CosNaming::Name name (1);
       name.length (1);
 
-      // String dup required for MSVC6
       name[0].id = CORBA::string_dup ("ExecutionManager");
 
       // Register the servant with the Naming Service
@@ -124,7 +122,7 @@ namespace CIAO
           // Register the servant with the Naming Service
           naming_context->bind (name, obj);
         }
-      catch (CosNaming::NamingContext::AlreadyBound &)
+      catch (const CosNaming::NamingContext::AlreadyBound &)
         {
           ACE_DEBUG ((LM_DEBUG, "Execution_Manager.cpp: Name already bound, rebinding....\n"));
           naming_context->rebind (name, obj);
@@ -140,20 +138,16 @@ namespace CIAO
       try
         {
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc,
-                             argv,
-                             "");
+            CORBA::ORB_init (argc, argv);
 
           if (!parse_args (argc, argv))
             return -1;
 
           // Get reference to Root POA.
-          CORBA::Object_var obj
-            = orb->resolve_initial_references ("RootPOA");
+          CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
           PortableServer::POA_var poa =
             PortableServer::POA::_narrow (obj.in ());
-
 
           if (CORBA::is_nil (poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -172,34 +166,28 @@ namespace CIAO
           // Implicit activation
           PortableServer::ServantBase_var safe_daemon (daemon_servant);
 
-          CIAO::ExecutionManagerDaemon_var daemon =
-            daemon_servant->_this ();
+          CIAO::ExecutionManagerDaemon_var daemon = daemon_servant->_this ();
 
           TAO::Utils::Implicit_Deactivator de (daemon_servant);
           bool retval = false;
 
           if (register_with_ns_)
             {
-              retval =
-                register_with_ns (orb.in (),
-                                  daemon.in ());
+              retval = register_with_ns (orb.in (), daemon.in ());
             }
 
           if (write_to_ior_)
             {
-              retval =
-                write_ior_file (orb.in (),
-                                daemon.in ());
+              retval = write_ior_file (orb.in (), daemon.in ());
             }
 
           if (!retval)
             return -1;
 
           // Activate POA manager
-          PortableServer::POAManager_var mgr =
-            poa->the_POAManager ();
+          PortableServer::POAManager_var mgr = poa->the_POAManager ();
 
-          if (mgr.in () == 0)
+          if (CORBA::is_nil (mgr.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil POA Manager error, returning \n"),
@@ -220,14 +208,13 @@ namespace CIAO
           // destroy.
           (void) de.release ();
 
-          poa->destroy (1,
-                        1);
+          poa->destroy (1, 1);
 
           orb->destroy ();
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception ("CIAO_ExecutionManager::main\t\n");
+          ex._tao_print_exception ("CIAO_ExecutionManager::main\n");
           return -1;
         }
 
@@ -242,6 +229,5 @@ namespace CIAO
 int
 main (int argc, char *argv[])
 {
-  return CIAO::Execution_Manager::run_main (argc,
-                                            argv);
+  return CIAO::Execution_Manager::run_main (argc, argv);
 }
