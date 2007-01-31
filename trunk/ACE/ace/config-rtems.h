@@ -145,7 +145,7 @@
 #if (__RTEMS_MAJOR__ > 4) || (__RTEMS_MAJOR__ == 4 && __RTEMS_MINOR__ > 6)
 # define ACE_HAS_UALARM
 #else
-# define ACE_HAS_BROKEN_SC_PAGESIZE
+# define ACE_HAS_NOTSUP_SC_PAGESIZE
 # define ACE_LACKS_SUSECONDS_T
 # define ACE_LACKS_INTPTR_T
 # undef ACE_HAS_SHM_OPEN

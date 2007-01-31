@@ -45,10 +45,6 @@ enum ACE_Recyclable_State
 
 /**
  * @class ACE_Recyclable
- *
- * @brief
- *
- *
  */
 class ACE_Export ACE_Recyclable
 {

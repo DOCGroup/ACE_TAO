@@ -1,3 +1,15 @@
+Wed Jan 31 13:31:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Removed obsolete checks for environment macros
+
+        * ace/Recycable.h:
+          Removed empty brief doxygen tag
+
+        * ace/OS_NS_unistd.inl:
+        * ace/config-rtems.h:
+          Renamed ACE_HAS_BROKEN_SZ_PAGESIZE to ACE_HAS_NOTSUP_SC_PAGESIZE
+
 Wed Jan 31 13:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_gcc.GNU:
