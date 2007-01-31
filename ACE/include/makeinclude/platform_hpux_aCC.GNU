@@ -166,7 +166,7 @@ endif
 ifeq ($(itanium),1)
  SOEXT		= so
 else
- SOEXT           = sl
+ SOEXT          = sl
 endif
 
 ifeq ($(buildbits),32)
