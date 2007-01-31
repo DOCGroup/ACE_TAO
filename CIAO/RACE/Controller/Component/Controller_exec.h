@@ -35,47 +35,39 @@ namespace CIAO
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
         // Attribute operations.
-        virtual ::CORBA::Double
-        sampling_period ()
+        virtual ::CORBA::Double sampling_period ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
         // Port operations.
 
         // Operations from Components::SessionComponent
 
-        virtual void
-        set_session_context (
-          ::Components::SessionContext_ptr ctx)
+        virtual void set_session_context (::Components::SessionContext_ptr ctx)
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
-        virtual void
-        ciao_preactivate ()
+        virtual void ciao_preactivate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
-        virtual void
-        ciao_postactivate ()
+        virtual void ciao_postactivate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
-        virtual void
-        ccm_activate ()
+        virtual void ccm_activate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
-        virtual void
-        ccm_passivate ()
+        virtual void ccm_passivate ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
 
-        virtual void
-        ccm_remove ()
+        virtual void ccm_remove ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
@@ -102,8 +94,7 @@ namespace CIAO
 
         // Implicit operations.
 
-        virtual ::Components::EnterpriseComponent_ptr
-        create ()
+        virtual ::Components::EnterpriseComponent_ptr create ()
         ACE_THROW_SPEC ((
                           ::CORBA::SystemException,
                           ::Components::CCMException));
