@@ -1,3 +1,11 @@
+Wed Jan 31 17:23:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_ACE.mwc:
+
+          Exclude $(ACE_ROOT)/protocols/tests and 
+          Exclude $(ACE_ROOT)/protocols/examples.  They should not be built
+          as part of this workspace.
+
 Wed Jan 31 15:00:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
