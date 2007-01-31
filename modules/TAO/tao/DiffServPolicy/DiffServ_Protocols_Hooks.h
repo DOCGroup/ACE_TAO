@@ -42,7 +42,7 @@ public:
   /// Initialize the protocols hooks instance.
   void init_hooks (TAO_ORB_Core *orb_core);
 
-  const CORBA::Long get_dscp_codepoint (void);
+  const CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
 
   void set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
