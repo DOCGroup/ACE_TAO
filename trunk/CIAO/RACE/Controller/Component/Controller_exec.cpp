@@ -48,9 +48,7 @@ namespace CIAO
                         ::CORBA::SystemException,
                         ::Components::CCMException))
       {
-        this->context_ =
-        Controller_Context::_narrow (
-          ctx);
+        this->context_ = Controller_Context::_narrow (ctx);
 
         if (this->context_ == 0)
         {
