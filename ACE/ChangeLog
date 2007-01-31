@@ -1,3 +1,18 @@
+Wed Jan 31 17:30:46 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h:
+        * include/makeinclude/platform_hpux_aCC.GNU: If stdcpplib=0 is
+          selected at build time, explicitly set -AP compile option to use
+          old C++ libraries and no std namespace. Also set
+          ACE_LACKS_NUMERIC_LIMITS when -AP is set - there is a numeric_limits
+          but not in std. Note that ACE_Array_Map won't build with stdcpplib=0
+          but pre-ACE-5.5 legacy code will still build.
+
+          Also removed the HP-UX 10.x remnants and pre-3.0 aC++ support
+          from platform_hpux_aCC.GNU. Could probably safely remove more old
+          compiler support (anything older than 3.56 probably) but I played
+          it a little conservative for now.
+
 Wed Jan 31 17:22:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * protocols/examples/examples.mwc:
