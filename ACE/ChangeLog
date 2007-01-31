@@ -1,3 +1,29 @@
+Wed Jan 31 03:25:51 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ace/High_Res_Timer.h:
+
+          Removed the special case default definition of
+          ACE_HR_SCALE_CONVERSION to ACE_ONE_SECOND_IN_MSECS on Windows;
+          added a #ifndef around the default definition in case the user
+          wishes to change it.  This was done to prevent useless values
+          like 0 showing up in calculations using ACE_Basic_Stats when the
+          time intervals are of the order of a few microseconds.  Most of
+          the current machines have a QueryPerformanceCounter()
+          implementation that returns a value of atleast 3 MHz.  So it
+          should be completely safe to use the definition of
+          ACE_ONE_SECOND_IN_USECS as the default value for
+          ACE_HR_SCALE_CONVERSION on contemporary x86 machines running
+          Windows.
+
+        * ace/Message_Block.inl:
+        * ace/Message_Block.cpp:
+
+          Moved the definition of
+          ACE_Dynamic_Message_Strategy::priority_status() from
+          Message_Block.inl to Message_Block.cpp.  It was a big function
+          and it currently has code that causes a warning with VC8 on
+          Windows.
+
 Tue Jan 30 19:21:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Module.h:
