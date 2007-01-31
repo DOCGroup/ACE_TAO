@@ -104,6 +104,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   virtual int open_handler (void *);
 
@@ -130,6 +131,10 @@ protected:
    */
   virtual int release_os_resources (void);
   //@}
+
+  // helper function used by the set_dscp_codepoint () methods to
+  // set the TOS field in the IP packets.
+  void set_tos (int tos);
 
 private:
 
