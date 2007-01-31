@@ -1,3 +1,12 @@
+Wed Jan 31 07:50:44 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ace/OS_NS_Thread.cpp (ACE_OS::sched_params):  Check if the
+          ACE_id_t id that is being passed in is equal to ACE_SELF.  If
+          so, pass ::GetCurrentProcessId() to ::OpenProcess() instead of
+          id.  ACE_SELF is defined to be 0 on ACE_WIN32; process id 0 is
+          the zero-page process, and we certainly don't want to attempt to
+          set it to REALTIME_PRIORITY_CLASS :-)
+
 Wed Jan 31 03:25:51 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/High_Res_Timer.h:

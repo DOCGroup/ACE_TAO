@@ -3661,9 +3661,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 # if defined (ACE_HAS_PHARLAP_RT)
       ACE_NOTSUP_RETURN (-1);
 # else
-      HANDLE hProcess = ::OpenProcess (PROCESS_SET_INFORMATION,
-                                       FALSE,
-                                       id);
+      HANDLE hProcess
+        = ::OpenProcess (PROCESS_SET_INFORMATION,
+                         FALSE,
+                         id == ACE_SELF ? ::GetCurrentProcessId() : id);
       if (!hProcess)
         {
           ACE_OS::set_errno_to_last_error();
@@ -5531,4 +5532,3 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   return ret > 0 ? _vx_call_rc : 255;
 }
 #endif /* ACE_VXWORKS && !__RTP__ */
-
