@@ -13,6 +13,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_DiffServPolicy_Initializer::init (void)
 {
+  TAO_ORB_Core::set_network_priority_protocols_hooks (
+    "DS_Network_Priority_Protocols_Hooks");
+  ACE_Service_Config::process_directive (
+    ace_svc_desc_TAO_DS_Network_Priority_Protocols_Hooks);
+
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
   PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
