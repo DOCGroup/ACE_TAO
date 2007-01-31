@@ -34,9 +34,8 @@ namespace CIAO
      *
      * @class Execution_Manager_Impl
      *
-     * @brief This class implements the
-     * ExecutionManger. ExecutionManager starts the execution process
-     * after the planning stage.
+     * @brief This class implements the ExecutionManger. ExecutionManager
+     * starts the execution process after the planning stage.
      *
      */
     class Execution_Manager_Impl
@@ -58,8 +57,7 @@ namespace CIAO
                          Deployment::PlanError,
                          Deployment::StartError));
 
-      virtual Deployment::DomainApplicationManagers *
-      getManagers ()
+      virtual Deployment::DomainApplicationManagers *getManagers ()
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Below method is CIAO specific extension
@@ -96,8 +94,7 @@ namespace CIAO
                          ::Deployment::InvalidProperty,
                          ::Components::RemoveFailure));
 
-      virtual Deployment::DeploymentPlan * getPlan (
-          const char * plan_uuid)
+      virtual Deployment::DeploymentPlan * getPlan (const char * plan_uuid)
         ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /// ****************** C++ Methods *************************
