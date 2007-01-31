@@ -1,3 +1,27 @@
+Wed Jan 31 23:06:42 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-qnx-rtp-62x.h:
+
+          Replaced ACE_LACKS_CUSERID with ACE_HAS_ALT_CUSERID to get the ACE
+          library to provide us with a cuserid() function.
+
+        * ASNMP/asnmp/asn1.cpp:
+        * apps/drwho/global.h:
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Logger/client/logging_app.cpp:
+        * examples/Logger/simple-server/Logging_Handler.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+
+          Replaced htonl, htons, ntohl, and ntohs with the appropriate
+          ACE_XTOYZ macro (ACE_HTONL, for example).  QNX doesn't have htonl and
+          friends without adding extra #includes.
+
 Wed Jan 31 19:03:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Basic_Types.h:

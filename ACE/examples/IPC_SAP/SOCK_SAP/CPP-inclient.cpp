@@ -66,7 +66,7 @@ Options::init (void)
                   -1);
 
   // Copy the length into the beginning of the message.
-  ACE_UINT32 length = ntohl (this->message_len_);
+  ACE_UINT32 length = ACE_NTOHL (this->message_len_);
   ACE_OS::memcpy ((void *) this->message_buf_,
                   (void *) &length,
                   sizeof length);
@@ -207,7 +207,7 @@ Options::shared_client_test (u_short port,
                 remote_addr.get_host_name (),
                 remote_addr.get_port_number ()));
 
-  ACE_INT32 len = htonl (this->message_len ());
+  ACE_INT32 len = ACE_HTONL (this->message_len ());
 
   // Allocate the transmit buffer.
   char *buf;
