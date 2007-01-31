@@ -1,3 +1,11 @@
+Wed Jan 31 15:00:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+          Layout improvements for the generated code now we don't generate
+          emulated exception macros
+
 Wed Jan 31 14:44:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
