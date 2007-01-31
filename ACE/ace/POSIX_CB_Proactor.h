@@ -54,7 +54,7 @@ public:
 
   // This only public so the "extern C" completion function can see it
   // when needed.
-  static void aio_completion_func (sigval_t cb_data);
+  static void aio_completion_func (sigval cb_data);
 
 protected:
 
