@@ -84,9 +84,71 @@ TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
 }
 
 const CORBA::Long
-TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (void)
+TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
+  TAO_Stub *stub, CORBA::Object *object)
 {
-  return this->dscp_codepoint_;
+  CORBA::Policy_var client_nw_priority_policy =
+    stub->get_cached_policy (
+        TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY
+        ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+  CORBA::Policy_var server_nw_priority_policy =
+      object->_get_cached_policy (
+        TAO_CACHED_POLICY_NETWORK_PRIORITY
+        ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+  CORBA::Long dscp = 0;
+  TAO::DiffservCodepoint diffserv_codepoint;
+
+  if (CORBA::is_nil (client_nw_priority_policy.in ()))
+    {
+      if (CORBA::is_nil (server_nw_priority_policy.in ()))
+        {
+          // cannot happen
+        }
+      else
+        {
+          TAO::NetworkPriorityPolicy_var npp =
+            TAO::NetworkPriorityPolicy::_narrow (
+              server_nw_priority_policy.in ()
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (!CORBA::is_nil (npp.in ()))
+            {
+              TAO::NetworkPriorityModel network_priority_model =
+                npp->network_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_CHECK;
+
+              if (network_priority_model ==
+                  TAO::SERVER_DECLARED_NETWORK_PRIORITY)
+                {
+                  diffserv_codepoint =
+                    npp->request_diffserv_codepoint (
+                       ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_CHECK;
+                  dscp = diffserv_codepoint;
+                }
+            }
+        }
+    }
+  else
+    {
+      TAO::NetworkPriorityPolicy_var client_nw_priority =
+        TAO::NetworkPriorityPolicy::_narrow (client_nw_priority_policy.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+       
+      if (!CORBA::is_nil (client_nw_priority.in ()))
+        {
+          diffserv_codepoint =
+            client_nw_priority->request_diffserv_codepoint ();
+          dscp = diffserv_codepoint;
+        }
+    }
+  return dscp;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
