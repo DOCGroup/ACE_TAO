@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf (buf, ACE_TEXT ("message = %d\n"), i + 1);
       log_record.msg_data (buf);
       size_t len = log_record.length ();
-      size_t encoded_len = htonl (len);
+      size_t encoded_len = ACE_HTONL (len);
 
       log_record.encode ();
 

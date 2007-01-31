@@ -124,7 +124,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
       {
         ACE_Log_Record lp;
 
-        len = ntohl (len);
+        len = ACE_NTOHL (len);
         n = this->peer ().recv_n ((void *) &lp, len);
 
         if (n != len)

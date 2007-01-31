@@ -20,7 +20,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   u_short port_num =
-    htons (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
+    ACE_HTONS (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
   int sockbufsize = argc > 2 ? ACE_OS::atoi (argv[2]) : 0;
   struct sockaddr_in saddr;
   ACE_HANDLE s_handle, n_handle;

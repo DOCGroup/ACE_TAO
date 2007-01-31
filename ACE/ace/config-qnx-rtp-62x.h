@@ -22,6 +22,7 @@
 // if you ACE to use it.
 //#define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
+#define ACE_HAS_ALT_CUSERID
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
@@ -117,7 +118,6 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
-#define ACE_LACKS_CUSERID
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
 // supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )

@@ -21,6 +21,7 @@
 #define _GLOBAL_H
 
 #include "ace/config-all.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,8 +45,8 @@ enum
 #define RWHODIR "/usr/spool/rwho"
 
 // Macros for handling message types.
-#define GET_PACKET_TYPE(P)      (ntohs (*((short *) P)))
-#define SET_PACKET_TYPE(P,T)    ((*(short *) P) = ntohs (T))
+#define GET_PACKET_TYPE(P)      (ACE_NTOHS (*((short *) P)))
+#define SET_PACKET_TYPE(P,T)    ((*(short *) P) = ACE_NTOHS (T))
 #define SKIP_PACKET_TYPE(P)     ((P) + sizeof (short))
 #define SUBTRACT_PACKET_TYPE(L) ((L) - sizeof (short))
 
