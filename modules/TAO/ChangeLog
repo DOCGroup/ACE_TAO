@@ -1,3 +1,17 @@
+Wed Jan 31 18:55:13 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
+          tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+        
+          Changed the signature of the constructor.
+        
+        * tao/DiffServPolicy/DiffServPolicy.cpp:
+          tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+        
+          Simplified the ORBInitializer by moving the process defines
+          to the other file, which actually registers the ORBInitializer
+          as well.
+
 Wed Jan 31 18:28:33 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
