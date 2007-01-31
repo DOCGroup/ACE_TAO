@@ -38,7 +38,7 @@ ACE_POSIX_CB_Proactor::get_impl_type (void)
   return PROACTOR_CB;
 }
 
-void ACE_POSIX_CB_Proactor::aio_completion_func (sigval_t cb_data)
+void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
 {
   ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
   if ( impl != 0 )
@@ -47,7 +47,7 @@ void ACE_POSIX_CB_Proactor::aio_completion_func (sigval_t cb_data)
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
-ACE_POSIX_CB_Proactor_aio_completion (sigval_t cb_data)
+ACE_POSIX_CB_Proactor_aio_completion (sigval cb_data)
 {
   ACE_POSIX_CB_Proactor::aio_completion_func (cb_data);
 }
