@@ -83,7 +83,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
   this->dscp_codepoint_ = dscp_codepoint;
 }
 
-CORBA::Long
+const CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (void)
 {
   return this->dscp_codepoint_;
