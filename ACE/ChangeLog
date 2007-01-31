@@ -1,3 +1,8 @@
+Wed Jan 31 10:17:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_gcc.GNU:
+          Improved support for GCC on HPUX IA64
+
 Wed Jan 31 07:50:44 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/OS_NS_Thread.cpp (ACE_OS::sched_params):  Check if the
