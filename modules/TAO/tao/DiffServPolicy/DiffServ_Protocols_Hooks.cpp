@@ -90,6 +90,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 {
   CORBA::Long dscp = 0;
   TAO::DiffservCodepoint diffserv_codepoint;
+  CORBA::Policy_var server_nw_priority_policy;
 
   CORBA::Policy_var client_nw_priority_policy =
     stub->get_cached_policy (
@@ -110,7 +111,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
         {
           if (policy_list[i]->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
             {
-              CORBA::Policy_var server_nw_priority_policy =
+              server_nw_priority_policy =
                 CORBA::Policy::_duplicate (policy_list[i]);
             }
         }
