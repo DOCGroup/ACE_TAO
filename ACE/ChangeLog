@@ -1,3 +1,15 @@
+Wed Jan 31 16:55:23 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-qnx-rtp-62x.h:
+
+          Removed #define ACE_HAS_INLINED_OSCALLS as it seems to be both rarely
+          used (only oddball platforms like unixware and other QNX versions
+          have it) and also incompatible with inline=0 builds.
+          Also added new config macros ACE_LACKS_STRPTIME (June 2006) and
+          ACE_HAS_3_PARAM_READDIR_R (December 2006).
+          These modifications have been tested with QNX 6.3 but from the docs
+          on the QNX web site I believe they apply to QNX 6.2 as well.
+
 Wed Jan 31 15:44:54 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/POSIX_CB_Proactor.h:
