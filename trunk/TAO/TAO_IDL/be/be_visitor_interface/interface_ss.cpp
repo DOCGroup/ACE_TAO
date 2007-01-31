@@ -153,7 +153,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << local_name_prefix << node_local_name
       << " (void)" << be_nl;
   *os << "{" << be_nl;
-  *os << "}";
+  *os << "}" << be_nl;
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) == -1)
@@ -210,8 +210,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_is_a_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << be_uidt_nl
-        << ")" << be_uidt_nl;
+        << "void * servant)" << be_uidt << be_uidt_nl;
     *os << "{" << be_idt;
 
     // Generate exception list.
@@ -317,8 +316,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_non_existent_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << be_uidt_nl
-        << ")" << be_uidt_nl;
+        << "void * servant)" << be_uidt << be_uidt_nl;
     *os << "{" << be_idt;
 
     // Generate exception list.
@@ -388,7 +386,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     this->generate_send_reply (os);
 
     *os << be_uidt_nl
-        << "}";
+        << "}" << be_nl;
 
     non_existent.destroy ();
     rt.destroy ();
@@ -426,8 +424,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "::_repository_id_skel (" << be_idt << be_idt_nl
         << "TAO_ServerRequest & server_request, " << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << be_uidt_nl
-        << ")" << be_uidt_nl;
+        << "void * servant)" << be_uidt << be_uidt_nl;
     *os << "{" << be_idt;
 
     // Generate exception list.
@@ -511,8 +508,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request, " << be_nl
       << "void * /* servant_upcall */," << be_nl
-      << "void * servant" << be_uidt_nl
-      << ")" << be_uidt_nl;
+      << "void * servant)" << be_uidt << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
       << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
@@ -521,9 +517,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt_nl << be_uidt_nl;
   *os << "if (_tao_adapter == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1,"
-      << be_nl
-      << "                                  ::CORBA::COMPLETED_NO);"
+      << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);"
       << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
@@ -533,16 +527,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << full_skel_name << " *> (servant);"
       << be_uidt_nl;
 
-  *os << "::CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
-      << "impl->_get_interface ();" << be_uidt
+  *os << "::CORBA::InterfaceDef_ptr _tao_retval = impl->_get_interface ();"
+      << be_nl
       << "server_request.init_reply ();" << be_nl
       << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
       << be_nl << be_nl
       << "::CORBA::Boolean const _tao_result =" << be_idt_nl
-      << "_tao_adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
-      << "_tao_out," << be_nl
-      << "_tao_retval" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl
+      << "_tao_adapter->interfacedef_cdr_insert (_tao_out, _tao_retval);"
+      << be_uidt_nl << be_nl
       << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
 
   *os << "if (_tao_result == false)" << be_idt_nl
