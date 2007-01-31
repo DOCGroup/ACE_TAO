@@ -9,6 +9,7 @@
 #include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/debug.h"
 
 ACE_RCSID (tao,
@@ -133,9 +134,16 @@ namespace TAO
                                    short message_semantics,
                                    ACE_Time_Value *max_wait_time)
   {
+    // The protocols hooks could be the Default implementation
+    // or the RT CORBA implementation of the Protocols Hooks.
+    //
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
+    // This boolean value will be set only when RTCORBA is used
+    // and the enable_network_priority flag is set to 1 in the
+    // RTCORBA Protocols Properties.
+    //
     CORBA::Boolean const set_client_network_priority =
       tph->set_client_network_priority (this->resolver_.transport ()->tag (),
                                         this->resolver_.stub ());
@@ -143,7 +151,25 @@ namespace TAO
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();
 
-    connection_handler->set_dscp_codepoint (set_client_network_priority);
+    if (set_client_network_priority)
+      {
+        // RTCORBA is used and the RTCORBA way of setting DiffServ codepoints
+        // is supported.
+        //
+        connection_handler->set_dscp_codepoint (set_client_network_priority);
+      }
+    else
+      {
+        // RTCORBA may or may not be used. Check if DiffServ policy is used
+        // to set the diffserv codepoints to be used.
+        // Either CLIENT_PROPAGATED or SERVER_DECLARED models could be used.
+        TAO_Network_Priority_Protocols_Hooks *nph =
+          this->resolver_.stub ()->orb_core ()->
+            get_network_priority_protocols_hooks ();
+        CORBA::Long dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
+          this->resolver_.object ());
+        connection_handler->set_dscp_codepoint (dscp);
+      }
 
     int const retval =
       this->resolver_.transport ()->send_request (

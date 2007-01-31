@@ -29,8 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class Policy;
   class Environment;
+  class Object;
 }
 
 class TAO_ORB_Core;
@@ -47,7 +47,8 @@ public:
 
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;
 
-  virtual const CORBA::Long get_dscp_codepoint (void) = 0;
+  virtual const CORBA::Long get_dscp_codepoint (TAO_Stub *stub,
+        CORBA::Object *object) = 0;
 
   virtual void set_dscp_codepoint (CORBA::Long dscp_codepoint) = 0;
 
