@@ -1,3 +1,12 @@
+Thu Feb  1 08:05:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue.{h,cpp,inl}:
+          Fixed compile errors in the NT Message Queue when build without
+          threading under windows
+
+        * ace/OS_NS_Thread.cpp:
+          Layout changes
+
 Wed Jan 31 23:06:42 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * ace/config-qnx-rtp-62x.h:

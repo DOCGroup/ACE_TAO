@@ -4784,9 +4784,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
 {
 #if defined (ACE_HAS_PTHREAD_GETAFFINITY_NP)
   // Handle of the thread, which is NPTL thread-id, normally a big number
-  if (::pthread_getaffinity_np (thr_id,
-                                cpu_set_size,
-                                cpu_mask) != 0)
+  if (::pthread_getaffinity_np (thr_id, cpu_set_size, cpu_mask) != 0)
     {
       return -1;
     }
@@ -4797,8 +4795,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
   // If you are using this flag for NPTL-threads, however, please pass as a
   // thr_id process id obtained by ACE_OS::getpid ()
   ACE_UNUSED_ARG (cpu_set_size);
-  if (::sched_getaffinity(thr_id,
-                          cpu_mask) == -1)
+  if (::sched_getaffinity(thr_id, cpu_mask) == -1)
     {
       return -1;
     }
@@ -4808,9 +4805,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
   // linux-thread, thus making binding to cpu of that particular thread only.
   // If you are using this flag for NPTL-threads, however, please pass as a
   // thr_id process id obtained by ACE_OS::getpid ()
-  if (::sched_getaffinity(thr_id,
-                          cpu_set_size,
-                          cpu_mask) == -1)
+  if (::sched_getaffinity(thr_id, cpu_set_size, cpu_mask) == -1)
     {
       return -1;
     }
@@ -4829,9 +4824,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
                           const cpu_set_t * cpu_mask)
 {
 #if defined (ACE_HAS_PTHREAD_SETAFFINITY_NP)
-  if (::pthread_setaffinity_np (thr_id,
-                                cpu_set_size,
-                                cpu_mask) != 0)
+  if (::pthread_setaffinity_np (thr_id, cpu_set_size, cpu_mask) != 0)
     {
       return -1;
     }
@@ -4843,8 +4836,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
   ACE_UNUSED_ARG (cpu_set_size);
-  if (::sched_setaffinity (thr_id,
-                           cpu_mask) == -1)
+  if (::sched_setaffinity (thr_id, cpu_mask) == -1)
     {
       return -1;
     }
@@ -4855,9 +4847,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // If you are using this flag for NPTL-threads, however, please pass as a
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
-  if (::sched_setaffinity (thr_id,
-                           cpu_set_size,
-                           cpu_mask) == -1)
+  if (::sched_setaffinity (thr_id, cpu_set_size, cpu_mask) == -1)
     {
       return -1;
     }
