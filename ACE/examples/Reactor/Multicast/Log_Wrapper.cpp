@@ -63,7 +63,9 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   sequence_number_++;
 
   this->log_msg_.type = type;
-  this->log_msg_.time = time (0);
+  // Casting time() to long will start causing bad results sometime in 2038
+  // but the receiver isn't looking at the time, so who cares?
+  this->log_msg_.time = (long) time (0);
   this->log_msg_.msg_length = ACE_OS::strlen(message)+1;
   this->log_msg_.sequence_number = ACE_HTONL(sequence_number_);
 

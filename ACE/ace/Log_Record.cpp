@@ -110,7 +110,10 @@ ACE_Log_Record::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("length_ = %d\n"), this->length_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %u\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->secs_, this->usecs_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (")
+                        ACE_UINT64_FORMAT_SPECIFIER
+                        ACE_LIB_TEXT (", %d)\n"),
+              (ACE_UINT64)this->secs_, this->usecs_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %u\n"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
               this->msg_data_, this->msg_data_));
@@ -138,7 +141,7 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
-                                long ts_sec,
+                                time_t ts_sec,
                                 long p)
   : length_ (0),
     type_ (ACE_UINT32 (lp)),
@@ -162,7 +165,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 long p)
   : length_ (0),
     type_ (ACE_UINT32 (lp)),
-    secs_ ((ACE_UINT32) ts.sec ()),
+    secs_ (ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
     pid_ (ACE_UINT32 (p)),
     msg_data_ (0),
@@ -325,7 +328,7 @@ operator<< (ACE_OutputCDR &cdr,
   // Insert each field from <log_record> into the output CDR stream.
   cdr << ACE_CDR::Long (log_record.type ());
   cdr << ACE_CDR::Long (log_record.pid ());
-  cdr << ACE_CDR::Long (log_record.time_stamp ().sec ());
+  cdr << ACE_CDR::LongLong (log_record.time_stamp ().sec ());
   cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
   cdr << ACE_CDR::ULong (msglen);
 #if defined (ACE_USES_WCHAR)
@@ -342,7 +345,8 @@ operator>> (ACE_InputCDR &cdr,
 {
   ACE_CDR::Long type;
   ACE_CDR::Long pid;
-  ACE_CDR::Long sec, usec;
+  ACE_CDR::LongLong sec;
+  ACE_CDR::Long usec;
   ACE_CDR::ULong buffer_len;
 
   // Extract each field from input CDR stream into <log_record>.

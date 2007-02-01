@@ -251,7 +251,7 @@ Gen_Perf::open (void)
 
   if (option[RANDOM])
     {
-      ACE_OS::srand (ACE_OS::time (0));
+      ACE_OS::srand ((u_int) ACE_OS::time (0));
 
       for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; i++)
         Vectors::asso_values[i] = (ACE_OS::rand () & asso_value_max - 1);

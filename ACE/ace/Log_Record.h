@@ -61,7 +61,7 @@ public:
    */
   ACE_Log_Record (void);
   ACE_Log_Record (ACE_Log_Priority lp,
-                  long time_stamp,
+                  time_t time_stamp,
                   long pid);
   ACE_Log_Record (ACE_Log_Priority lp,
                   const ACE_Time_Value &time_stamp,
@@ -106,9 +106,15 @@ public:
 
   // = Marshall/demarshall
   /// Encode the <Log_Record> for transmission on the network.
+  /// @deprecated The encode() and decode() metods are deprecated; please use
+  /// the CDR insertion and extraction operators to properly encode and decode
+  /// ACE_Log_Record objects.
   void encode (void);
 
   /// Decode the <Log_Record> received from the network.
+  /// @deprecated The encode() and decode() metods are deprecated; please use
+  /// the CDR insertion and extraction operators to properly encode and decode
+  /// ACE_Log_Record objects.
   void decode (void);
 
   // = Set/get methods
@@ -184,7 +190,7 @@ private:
   ACE_UINT32 type_;
 
   /// Time that the logging record was generated.
-  ACE_UINT32 secs_;
+  time_t secs_;
   ACE_UINT32 usecs_;
 
   /// Id of process that generated the logging record.
