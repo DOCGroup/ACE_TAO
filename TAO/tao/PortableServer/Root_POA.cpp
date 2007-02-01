@@ -2002,8 +2002,7 @@ TAO_Root_POA::invoke_key_to_object (void)
                               this->key_to_object_params_.servant_,
                               this->key_to_object_params_.collocated_,
                               this->key_to_object_params_.priority_,
-                              this->key_to_object_params_.indirect_
-                             );
+                              this->key_to_object_params_.indirect_);
 }
 
 CORBA::Object_ptr
@@ -2012,8 +2011,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
                              TAO_ServantBase *servant,
                              CORBA::Boolean collocated,
                              CORBA::Short priority,
-                             bool indirect
-                             )
+                             bool indirect)
 {
   // Check if the ORB is still running, otherwise throw an exception.
   // @@ What if the ORB was destroyed?  In that case we shouldn't even
@@ -2031,8 +2029,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
          && this->orb_core ().imr_endpoints_in_ior ())
     {
       // Check to see if we alter the IOR.
-      CORBA::Object_var imr =
-        this->orb_core ().implrepo_service ();
+      CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
       if (CORBA::is_nil (imr.in ())
           || !imr->_stubobj ()
@@ -2087,9 +2084,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
                     "ImR-ified IOR = \n%s\n",
                     ACE_TEXT_CHAR_TO_TCHAR (ior.c_str ())));
 
-      obj =
-        this->orb_core_.orb ()->string_to_object (ior.c_str ()
-                                                 );
+      obj = this->orb_core_.orb ()->string_to_object (ior.c_str ());
 
       return obj;
     }
@@ -2100,8 +2095,7 @@ orbkey:
   ACE_UNUSED_ARG (indirect);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  TAO_Stub *data =
-    this->key_to_stub_i (key, type_id, priority);
+  TAO_Stub *data = this->key_to_stub_i (key, type_id, priority);
 
   TAO_Stub_Auto_Ptr safe_data (data);
 
@@ -2134,8 +2128,7 @@ orbkey:
 TAO_Stub *
 TAO_Root_POA::key_to_stub (const TAO::ObjectKey &key,
                            const char *type_id,
-                           CORBA::Short priority
-                           )
+                           CORBA::Short priority)
 {
   // Check if the ORB is still running, otherwise throw an exception.
   // @@ What if the ORB was destroyed?  In that case we shouldn't even
@@ -2148,12 +2141,10 @@ TAO_Root_POA::key_to_stub (const TAO::ObjectKey &key,
 TAO_Stub *
 TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
                              const char *type_id,
-                             CORBA::Short priority
-                             )
+                             CORBA::Short priority)
 {
   CORBA::PolicyList_var client_exposed_policies =
-    this->client_exposed_policies (priority
-                                  );
+    this->client_exposed_policies (priority);
 
   TAO_Acceptor_Filter* filter = 0;
 
@@ -2179,8 +2170,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
       type_id,
       client_exposed_policies._retn (),
       filter,
-      this->orb_core_.lane_resources ().acceptor_registry ()
-     );
+      this->orb_core_.lane_resources ().acceptor_registry ());
 
   return data;
 }
@@ -2198,8 +2188,7 @@ TAO_Root_POA::establish_components (void)
 }
 
 void
-TAO_Root_POA::components_established (PortableInterceptor::IORInfo_ptr info
-                                      )
+TAO_Root_POA::components_established (PortableInterceptor::IORInfo_ptr info)
 {
   TAO_IORInterceptor_Adapter *ior_adapter =
     this->orb_core_.ior_interceptor_adapter ();
@@ -2211,10 +2200,9 @@ TAO_Root_POA::components_established (PortableInterceptor::IORInfo_ptr info
 }
 
 void
-TAO_Root_POA::save_ior_component (const IOP::TaggedComponent &component
-                                  )
+TAO_Root_POA::save_ior_component (const IOP::TaggedComponent &component)
 {
-  const CORBA::ULong old_len = this->tagged_component_.length ();
+  CORBA::ULong const old_len = this->tagged_component_.length ();
 
   this->tagged_component_.length (old_len + 1);
   this->tagged_component_[old_len] = component;
@@ -2249,11 +2237,10 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                                   TAO_Acceptor_Filter *filter,
                                   TAO_Acceptor_Registry &acceptor_registry)
 {
-  int error = 0;
+  bool error = false;
 
   // Count the number of endpoints.
-  size_t const profile_count =
-    acceptor_registry.endpoint_count ();
+  size_t const profile_count = acceptor_registry.endpoint_count ();
 
   // Create a profile container and have acceptor registries populate
   // it with profiles as appropriate.
@@ -2262,10 +2249,9 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   // Allocate space for storing the profiles.  There can never be more
   // profiles than there are endpoints.  In some cases, there can be
   // less profiles than endpoints.
-  int result =
-    mprofile.set (static_cast <CORBA::ULong> (profile_count));
+  int result = mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
-    error = 1;
+    error = true;
 
   if (!error)
     {
@@ -2275,13 +2261,14 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                               acceptor_registry.begin (),
                               acceptor_registry.end ());
       if (result == -1)
-        error = 1;
+        error = true;
     }
 
   if (!error)
     result = filter->encode_endpoints (mprofile);
+
   if (result == -1)
-    error = 1;
+    error = true;
 
   if (error)
     ACE_THROW_RETURN (CORBA::INTERNAL (
@@ -2303,18 +2290,13 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                       0);
 
   TAO_Stub *stub =
-    this->orb_core_.create_stub_object (mprofile,
-                                        type_id,
-                                        policy_list
-                                       );
+    this->orb_core_.create_stub_object (mprofile, type_id, policy_list);
 
   // Add the saved tagged components methods to the profiles.
   CORBA::ULong len = this->tagged_component_.length ();
   for (CORBA::ULong i = 0; i != len; ++i)
     {
-      this->add_ior_component (mprofile,
-                               this->tagged_component_[i]
-                              );
+      this->add_ior_component (mprofile, this->tagged_component_[i]);
       }
 
   len = this->tagged_component_id_.length ();
@@ -2323,16 +2305,14 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
     {
       this->add_ior_component_to_profile (mprofile,
                                           this->tagged_component_id_[k],
-                                          this->profile_id_array_[k]
-                                         );
+                                          this->profile_id_array_[k]);
     }
 
   return stub;
 }
 
 CORBA::PolicyList *
-TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */
-                                       )
+TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */)
 {
   CORBA::PolicyList *client_exposed_policies = 0;
   ACE_NEW_THROW_EX (client_exposed_policies,
@@ -2343,16 +2323,14 @@ TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */
   CORBA::PolicyList_var policies = client_exposed_policies;
 
   // Add in all of the client exposed policies.
-  this->policies_.add_client_exposed_fixed_policies (client_exposed_policies
-                                                    );
+  this->policies_.add_client_exposed_fixed_policies (client_exposed_policies);
 
   return policies._retn ();
 }
 
 TAO_SERVANT_LOCATION
 TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
-                                PortableServer::Servant &servant
-                                )
+                                PortableServer::Servant &servant)
 {
   return this->active_policy_strategies_.request_processing_strategy()->
           locate_servant (system_id, servant);
@@ -2360,8 +2338,7 @@ TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
 
 TAO_SERVANT_LOCATION
 TAO_Root_POA::servant_present (const PortableServer::ObjectId &system_id,
-                               PortableServer::Servant &servant
-                               )
+                               PortableServer::Servant &servant)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
           servant_present (system_id, servant);
@@ -2371,26 +2348,21 @@ PortableServer::Servant
 TAO_Root_POA::find_servant (
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
-        TAO::Portable_Server::POA_Current_Impl &poa_current_impl
-        )
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
           find_servant (system_id,
                         servant_upcall,
-                        poa_current_impl
-                       );
+                        poa_current_impl);
 }
 
 int
 TAO_Root_POA::find_servant_priority (
          const PortableServer::ObjectId &system_id,
-         CORBA::Short &priority
-        )
+         CORBA::Short &priority)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
-          find_servant_priority (system_id,
-                                 priority
-                                );
+          find_servant_priority (system_id, priority);
 }
 
 TAO::ORT_Adapter_Factory *
@@ -2409,8 +2381,7 @@ TAO_Root_POA::ORT_adapter_i (void)
 
   try
     {
-      TAO::ORT_Adapter_Factory * ort_ap_factory =
-        this->ORT_adapter_factory ();
+      TAO::ORT_Adapter_Factory * ort_ap_factory = this->ORT_adapter_factory ();
 
       if (!ort_ap_factory)
         return 0;
@@ -2418,11 +2389,9 @@ TAO_Root_POA::ORT_adapter_i (void)
       // Get the full adapter name of this POA, do this before we
       // create the adapter so that in case this fails, we just
       // return 0 and not a not activated adapter
-      PortableInterceptor::AdapterName *adapter_name =
-        this->adapter_name_i ();
+      PortableInterceptor::AdapterName *adapter_name = this->adapter_name_i ();
 
-      this->ort_adapter_ =
-          ort_ap_factory->create ();
+      this->ort_adapter_ = ort_ap_factory->create ();
 
       if (!this->ort_adapter_)
         return 0;
@@ -2434,8 +2403,7 @@ TAO_Root_POA::ORT_adapter_i (void)
       this->ort_adapter_->activate (this->orb_core_.server_id (),
                                     this->orb_core_.orbid (),
                                     adapter_name,
-                                    this
-                                   );
+                                    this);
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -2487,8 +2455,7 @@ TAO_Root_POA::get_servant_manager (void)
 }
 
 void
-TAO_Root_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr
-                              )
+TAO_Root_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -2517,8 +2484,7 @@ TAO_Root_POA::get_servant (void)
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  PortableServer::Servant servant =
-    this->get_servant_i ();
+  PortableServer::Servant servant = this->get_servant_i ();
 
   if (servant != 0)
     {
@@ -2547,8 +2513,7 @@ TAO_Root_POA::get_servant (void)
 }
 
 void
-TAO_Root_POA::set_servant (PortableServer::Servant servant
-                           )
+TAO_Root_POA::set_servant (PortableServer::Servant servant)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -2684,7 +2649,9 @@ TAO_Root_POA::ORT_adapter (void)
 
   // DCL ..
   if (this->ort_adapter_ != 0)
-    return this->ort_adapter_;
+    {
+      return this->ort_adapter_;
+    }
 
   return this->ORT_adapter_i ();
 }
@@ -2734,8 +2701,7 @@ TAO_Root_POA::get_policy (CORBA::PolicyType policy)
 void
 TAO_Root_POA::check_state (void)
 {
-  this->active_policy_strategies_.lifespan_strategy ()->
-    check_state ();
+  this->active_policy_strategies_.lifespan_strategy ()->check_state ();
 }
 
 const char *
