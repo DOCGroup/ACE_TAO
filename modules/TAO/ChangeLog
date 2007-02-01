@@ -1,3 +1,24 @@
+Thu Feb  1 23:44:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/POA_Cached_Policies.h:
+          tao/PortableServer/POA_Cached_Policies.cpp:
+          tao/PortableServer/POA_Cached_Policies.inl:
+        
+          Added an enum for specifying the NetworkPriorityModel.
+        
+          Added 3 new private variables for storing the network
+          priority model, the request diffserv codepoint and reply
+          diffserv codepoint.
+        
+          Modified the constructors to initialize the above mentioned
+          private variables.
+        
+          Added new methods to get the values of the above mentioned
+          private variables.
+        
+          Added new methods to set the values of the above mentioned
+          private variables.
+
 Thu Feb  1 23:36:55 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
