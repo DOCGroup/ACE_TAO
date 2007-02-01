@@ -45,6 +45,22 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_ServerRequest &,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
+  TAO_Service_Context &request_service_context =
+    req.request_service_context ();
+
+  CORBA::Long dscp_codepoint;
+
+  TAO_Connection_Handler *connection_handler =
+    req.transport ()->connection_handler ();
+
+  // I could replace this call with a call on the protocols hooks.
+  // But the point is that the POA got to cache the policy that was 
+  // used at POA creation time, so that it can pass it here.
+  // The DiffServ codepoint created needs to be passed on to the
+  // connection handler, which is being done in the next line.
+  //
+  dscp_codepoint = poa.get_diffserv_codepoint (request_service_context);
+  connection_handler->set_dscp_codepoint (dscp_codepoint);
 }
 
 void
