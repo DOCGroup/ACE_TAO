@@ -1,3 +1,14 @@
+Thu Feb  1 23:36:55 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.h:
+          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        
+          Added a new function get_dscp_codepoint (). Note there are two
+          functions now with the same name. One helps in the client-side
+          and another helps in the server-side for setting DiffServ
+          codepoints.
+
 Thu Feb  1 23:15:32 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Root_POA.h:
