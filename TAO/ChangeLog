@@ -1,3 +1,13 @@
+Thu Feb  1 22:47:04 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+
+          Replaced htonl, htons, ntohl, and ntohs with the appropriate
+          ACE_XTOYZ macro (ACE_HTONL, for example).  QNX doesn't have htonl and
+          friends without adding extra #includes.
+
 Thu Feb  1 18:08:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_typedef.h:

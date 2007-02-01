@@ -218,7 +218,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
      if (iovcnt > 1)
        {
          crc = ACE::crc32 (iov, iovcnt);
-         crc = htonl (crc);
+         crc = ACE_HTONL (crc);
        }
      for (int cnt=0; cnt<4; ++cnt)
        {
