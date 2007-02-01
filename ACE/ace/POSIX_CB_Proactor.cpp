@@ -2,7 +2,7 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && !defined (__FreeBSD__)
+#if defined (ACE_HAS_AIO_CALLS) && !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -181,4 +181,4 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__ */
+#endif /* ACE_HAS_AIO_CALLS && !ACE_HAS_BROKEN_SIGEVENT_STRUCT */

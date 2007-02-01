@@ -1,3 +1,19 @@
+Thu Feb  1 11:21:32 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/config-freebsd.h:
+        * ace/config-lynxos.h:
+
+          Introduced a new feature test macro ACE_HAS_BROKEN_SIGEVENT_STRUCT
+          to make POSIX_CB_Proactor compile on FreeBSD 7.0-CURRENT.
+
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+
+          Modified due to changes above.
+
 Thu Feb  1 08:05:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.{h,cpp,inl}:
