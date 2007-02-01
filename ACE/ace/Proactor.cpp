@@ -318,8 +318,8 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
 #  elif defined (ACE_POSIX_SIG_PROACTOR)
       ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
-#  else /* Default order: CB (but not Lynx), SIG, AIOCB */
-#    if !defined (__Lynx) && !defined (__FreeBSD__)
+#  else /* Default order: CB, SIG, AIOCB */
+#    if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
       ACE_NEW (implementation, ACE_POSIX_CB_Proactor);
 #    else
 #      if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
@@ -327,7 +327,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
 #      else
       ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
 #      endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
-#    endif /* !__Lynx && !__FreeBSD__ */
+#    endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
 #  endif /* ACE_POSIX_AIOCB_PROACTOR */
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.

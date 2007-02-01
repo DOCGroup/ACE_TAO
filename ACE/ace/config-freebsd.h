@@ -266,6 +266,7 @@ typedef union sigval sigval_t;
 
 #if (__FreeBSD_version < 700007)
 # define ACE_HAS_SIGVAL_SIGVAL_INT
+# define ACE_HAS_BROKEN_SIGEVENT_STRUCT
 #endif
 
 #if (__FreeBSD_version >= 700028)
