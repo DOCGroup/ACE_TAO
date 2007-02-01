@@ -12,6 +12,14 @@ PLANNED CHANGES FOR "ACE-5.5.7"
 
 . (Riverace) Pharlap ETS 13 qualification.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
+====================================================
+
+. In the ACE_Log_Record (ACE_Log_Priority, long, long) constructor, the
+  second argument, long time_stamp, was changed to be of type time_t. This
+  aligns the type with the expected value, a time stamp such as that returned
+  from ACE_OS::time().
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.5 and ACE-5.5.6
 ====================================================
 

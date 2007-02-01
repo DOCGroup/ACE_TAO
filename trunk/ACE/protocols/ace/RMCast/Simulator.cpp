@@ -9,7 +9,7 @@ namespace ACE_RMCast
   Simulator::
   Simulator ()
   {
-    srand (time (0));
+    srand ((unsigned int)time (0));
   }
 
   void Simulator::

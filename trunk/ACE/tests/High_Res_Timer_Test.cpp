@@ -21,19 +21,20 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(tests, High_Res_Timer_Test, "High_Res_Timer_Test.cpp,v 4.6 2000/04/23 04:43:58 brunsch Exp")
 
 static
 u_int
-check (const u_int interval, const u_int measured)
+check (const time_t interval, const time_t measured)
 {
   const u_int threshold = 25 /* percent */;
 
-  const u_int difference =
+  const time_t difference =
     interval > measured  ?  interval - measured  :  measured - interval;
 
-  const u_int percentage_difference = difference * 100 / interval;
+  const u_int percentage_difference = (u_int) (difference * 100 / interval);
 
   if (percentage_difference < threshold)
     return 0;
@@ -41,8 +42,8 @@ check (const u_int interval, const u_int measured)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("The measured time of %u differs from ")
                        ACE_TEXT ("the interval of %u by %u percent.\n"),
-                       measured,
-                       interval,
+                       (unsigned int) measured,
+                       (unsigned int) interval,
                        percentage_difference),
                       1);
 }
@@ -137,10 +138,14 @@ run_main (int argc, ACE_TCHAR *argv[])
           const ACE_Time_Value measured = time_interval (interval,
                                                          nanoseconds,
                                                          microseconds);
+          u_int interval_usec =
+            ACE_Utils::Truncate<u_int> (interval.sec () * 1000000 + interval.usec ());
+          u_int measured_usec =
+            ACE_Utils::Truncate<u_int> (measured.sec () * 1000000 + measured.usec ());
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("interval: %u usec, measured: %u usec%s\n"),
-                      interval.sec () * 1000000 + interval.usec (),
-                      measured.sec () * 1000000 + measured.usec (),
+                      interval_usec,
+                      measured_usec,
                       intervals[i] <= TIMER_RESOLUTION  ?
                       ACE_TEXT (" (interval and measured may differ)")  :
                       ACE_TEXT ("")));

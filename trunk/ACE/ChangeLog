@@ -1,3 +1,68 @@
+Thu Feb  1 23:46:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Note change to ACE_Log_Record constructor.
+
+        * ace/Log_Record.h (constructor): The "long time_stamp" argument was
+          changed from long to time_t to correspond with what's expected.
+
+        * ace/Log_Record.{h inl cpp}: The secs_ value was changed from
+          ACE_UINT32 to time_t and is handled as a ACE_CDR::LongLong in the
+          CDR insertion and extraction operators. The encode() and decode()
+          methods are deprecated and will be removed in a future version of
+          ACE.
+
+        * ace/Message_Block.cpp (priority_status): Cast sec() value to
+          suseconds_t size to avoid truncation warnings.
+
+        * ace/Time_Value.{h inl cpp}: Use a private struct to manage time
+          internally for Windows since Windows' struct timeval uses long
+          values internally instead of the standard time_t/suseconds_t
+          that the class API uses (and POSIX uses in timeval). When a
+          real OS-defined timeval is needed, build it on the fly for Windows.
+
+        * tests/High_Res_Timer_Test.cpp: When logging ACE_Time_Value-obtained
+          sec/usec values, truncate them down to u_int size. Avoids passing
+          64-bit values to ACE_Log_Msg when only 32 bits will be taken from
+          the arg vector for a %u format spec. Fixes crashing of this test
+          on Win/VC8.
+
+        * examples/APG/Naming/Temperature_Monitor.cpp:
+        * examples/APG/Naming/Temperature_Monitor2.cpp: Treat time as an int
+          instead of a time_t; makes the logic easier even though it'll break
+          sometime in 2038.
+
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp: Unify use of time_t
+          to hold time values from ACE_OS::time().
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: When measuring messages
+          per second, truncate seconds down to a 'long' to avoid truncation
+          warnings at compile time from converting to double.
+
+        * examples/Reactor/Misc/notification.cpp (svc): Initialize an
+          ACE_Time_Value with secs / 2 instead of getting the seconds,
+          multiplying into usecs, then dividing by 2. Avoids data truncation
+          issues.
+
+        * examples/Reactor/Multicast/Log_Wrapper.cpp (log_message): Cast
+          result of time() to long to insert in the multicast buffer. Avoids
+          truncation warning. Will stop recording a legit result sometime in
+          2038 but the receiver isn't looking at the time field.
+
+        * apps/gperf/src/Gen_Perf.cpp:
+        * ASNMP/tests/test_config.h (randomize):
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Simulator.cpp:
+        * protocols/examples/TMCast/Member/member.cpp:
+        * tests/Auto_Event_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+        * tests/Timer_Queue_Test.cpp: Cast time_t to u_int for use as an
+          ACE_OS::srand() seed - we just want some bits, not to fit it back in
+          range with ACE_Utils::Truncate.
+
 Thu Feb  1 11:21:32 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/POSIX_CB_Proactor.h:

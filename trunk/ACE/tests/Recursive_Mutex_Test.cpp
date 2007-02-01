@@ -91,7 +91,7 @@ test_timed_wait (int nesting_level,
                      rm);
   else
     {
-      ACE_OS::srand (ACE_OS::time (0));
+      ACE_OS::srand ((u_int) ACE_OS::time (0));
 
       for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
         {
