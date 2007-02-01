@@ -1290,7 +1290,7 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
   // the dynamic portion of the message's priority
   mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) |
                   ((priority.usec () +
-                    ACE_ONE_SECOND_IN_USECS * priority.sec ()) <<
+                    ACE_ONE_SECOND_IN_USECS * (suseconds_t)(priority.sec())) <<
                    static_bit_field_shift_));
 
   // returns the priority status of the message

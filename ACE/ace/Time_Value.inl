@@ -4,6 +4,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#include "ace/Truncate.h"
+
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 // Something is a bit brain-damaged here and I'm not sure what... this code
 // compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
@@ -20,7 +22,15 @@ ACE_INLINE
 ACE_Time_Value::operator timeval () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
+#if defined (ACE_WIN32)
+  // Recall that on Windows we substitute another type for timeval in tv_
+  ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
+  me->ext_tv_.tv_sec = ACE_Utils::Truncate<long> (this->tv_.tv_sec);
+  me->ext_tv_.tv_usec = ACE_Utils::Truncate<long> (this->tv_.tv_usec);
+  return this->ext_tv_;
+#else
   return this->tv_;
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE void
@@ -45,26 +55,22 @@ ACE_INLINE
 ACE_Time_Value::operator const timeval * () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
+#if defined (ACE_WIN32)
+  // Recall that on Windows we substitute another type for timeval in tv_
+  ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
+  me->ext_tv_.tv_sec = ACE_Utils::Truncate<long> (this->tv_.tv_sec);
+  me->ext_tv_.tv_usec = ACE_Utils::Truncate<long> (this->tv_.tv_usec);
+  return (const timeval *) &this->ext_tv_;
+#else
   return (const timeval *) &this->tv_;
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE void
 ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-#if defined (ACE_WIN64) \
-    || (defined (ACE_WIN32) && !defined (_USE_32BIT_TIME_T))
-  // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
-  // to get these back in range.
-  if (sec > LONG_MAX)
-    this->tv_.tv_sec = LONG_MAX;
-  else if (sec < LONG_MIN)
-    this->tv_.tv_sec = LONG_MIN;
-  else
-    this->tv_.tv_sec = static_cast<long> (sec);
-#else
   this->tv_.tv_sec = sec;
-#endif
   this->tv_.tv_usec = usec;
 #if __GNUC__
   if (__builtin_constant_p(sec) &&
@@ -128,19 +134,7 @@ ACE_INLINE void
 ACE_Time_Value::sec (time_t sec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
-#if defined (ACE_WIN64) \
-  || (defined (ACE_WIN32) && !defined (_USE_32BIT_TIME_T))
-  // Win64 uses 'long' (32 bit) timeval and 64-bit time_t, so we have
-  // to get these back in range.
-  if (sec > LONG_MAX)
-    this->tv_.tv_sec = LONG_MAX;
-  else if (sec < LONG_MIN)
-    this->tv_.tv_sec = LONG_MIN;
-  else
-    this->tv_.tv_sec = static_cast<long> (sec);
-#else
   this->tv_.tv_sec = sec;
-#endif
 }
 
 // Converts from Time_Value format into milli-seconds format.
@@ -149,7 +143,12 @@ ACE_INLINE unsigned long
 ACE_Time_Value::msec (void) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
-  return this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
+
+  // Note - we're truncating a value here, which can lose data. This is
+  // called out in the user documentation for this with a recommendation to
+  // use msec(ACE_UINT64&) instead, so just go ahead and truncate.
+  time_t secs = this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
+  return ACE_Utils::Truncate<unsigned long> (secs);
 }
 
 #if !defined (ACE_LACKS_LONGLONG_T)
@@ -170,9 +169,10 @@ ACE_Time_Value::msec (long milliseconds)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
   // Convert millisecond units to seconds;
-  this->tv_.tv_sec = milliseconds / 1000;
+  long secs = milliseconds / 1000;
+  this->tv_.tv_sec = secs;
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = (milliseconds - (this->tv_.tv_sec * 1000)) * 1000;
+  this->tv_.tv_usec = (milliseconds - (secs * 1000)) * 1000;
 }
 
 // Returns number of micro-seconds.
