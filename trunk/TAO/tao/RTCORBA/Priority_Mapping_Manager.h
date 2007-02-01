@@ -61,9 +61,7 @@ public:
 
   // the static operations
   static TAO_Priority_Mapping_Manager_ptr _duplicate (TAO_Priority_Mapping_Manager_ptr obj);
-  static TAO_Priority_Mapping_Manager_ptr _narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_Priority_Mapping_Manager_ptr _narrow (CORBA::Object_ptr obj);
 
   static TAO_Priority_Mapping_Manager_ptr _nil (void)
     {
