@@ -1,3 +1,10 @@
+Thu Feb  1 15:43:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+          Layout changes
+
 Thu Feb  1 14:37:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Default_Stub_Factory.cpp:
