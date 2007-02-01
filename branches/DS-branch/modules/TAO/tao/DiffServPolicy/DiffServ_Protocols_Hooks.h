@@ -44,6 +44,8 @@ public:
 
   const CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
 
+  const CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc);
+
   void set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   void np_service_context (TAO_Stub *stub,
