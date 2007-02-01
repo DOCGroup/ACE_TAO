@@ -1,3 +1,27 @@
+Thu Feb  1 17:52:27 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        
+          Made changes to the pre_invoke_remote_request () to get the
+          DiffServ codepoint that needs to be used in the reply.
+        
+          If the CLIENT_PROPAGATED network priority model is used, then
+          the service context entry needs to be studied in the request
+          to get the reply DiffServ codepoint that needs to be used in the
+          reply. This logic can be easily moved in to the DiffServ protocols
+          hooks, which can read the service context and return the DiffServ
+          codepoint to be used.
+        
+          If the SERVER_DECLARED network priority model is used, then the
+          POA was actually created with the policy, and its the job of the
+          POA to store the reply DiffServ codepoint as part of its cached
+          policies.
+        
+        * tao/PortableServer/POA_Cached_Policies.cpp:
+        
+          Cache the network priority model policy values that was used
+          to create the POA. Works with the above description.
+
 Wed Jan 31 22:09:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
