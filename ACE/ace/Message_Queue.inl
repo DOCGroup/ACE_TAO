@@ -54,7 +54,7 @@ ACE_INLINE int
 ACE_Message_Queue_NT::is_empty (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::is_empty");
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
   return this->cur_bytes_ > 0 || this->cur_count_ > 0 ? 0 : 1;
 }
@@ -87,7 +87,7 @@ ACE_INLINE void
 ACE_Message_Queue_NT::message_bytes (size_t new_value)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_bytes");
-  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_);
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->cur_bytes_ = new_value;
 }
@@ -96,7 +96,7 @@ ACE_INLINE void
 ACE_Message_Queue_NT::message_length (size_t new_value)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_length");
-  ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_);
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
 
   this->cur_length_ = new_value;
 }
