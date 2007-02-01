@@ -53,7 +53,7 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
 
-  // I could replace this call with a call on the protocols hooks.
+  // We could replace this call with a call on the protocols hooks.
   // But the point is that the POA got to cache the policy that was 
   // used at POA creation time, so that it can pass it here.
   // The DiffServ codepoint created needs to be passed on to the
