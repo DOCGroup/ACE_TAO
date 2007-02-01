@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && !defined (__FreeBSD__)
+#if defined (ACE_HAS_AIO_CALLS)
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
@@ -96,5 +96,5 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__  */
+#endif /* ACE_HAS_AIO_CALLS */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/
