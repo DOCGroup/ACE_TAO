@@ -78,8 +78,7 @@ namespace TAO
 
       TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
       int result = this->active_object_map_->
-        find_entry_using_user_id (id,
-                                  active_object_map_entry);
+        find_entry_using_user_id (id, active_object_map_entry);
 
       // If there is no active object associated with the specified Object
       // Id, the operation raises an ObjectNotActive exception.
@@ -112,8 +111,7 @@ namespace TAO
       if (new_count == 0)
         {
           this->poa_->cleanup_servant (active_object_map_entry->servant_,
-                                       active_object_map_entry->user_id_
-                                      );
+                                       active_object_map_entry->user_id_);
         }
       else
         {
@@ -136,8 +134,7 @@ namespace TAO
     ServantRetentionStrategyRetain::unbind_using_user_id (
       const PortableServer::ObjectId &user_id)
     {
-      return this->active_object_map_->
-        unbind_using_user_id (user_id);
+      return this->active_object_map_->unbind_using_user_id (user_id);
     }
 
     PortableServer::Servant
@@ -147,8 +144,7 @@ namespace TAO
       // Find user id from system id.
       PortableServer::ObjectId_var user_id;
       if (active_object_map_->
-          find_user_id_using_system_id (system_id,
-                                        user_id.out()) != 0)
+          find_user_id_using_system_id (system_id, user_id.out()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -253,8 +249,7 @@ namespace TAO
                                                  indirect);
 
           return this->poa_->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
-                                                            id
-                                                           );
+                                                            id);
         }
       else
         {
@@ -590,9 +585,7 @@ namespace TAO
 
           // Inform the custom servant dispatching (CSD) strategy that the
           // sevant is activated.
-          this->poa_->servant_activated_hook (servant,
-                                              user_id.in ()
-                                             );
+          this->poa_->servant_activated_hook (servant, user_id.in ());
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -682,9 +675,7 @@ namespace TAO
 
           // Inform the custom servant dispatching (CSD) strategy that the
           // sevant is activated.
-          this->poa_->servant_activated_hook (servant,
-                                              system_id.in ()
-                                             );
+          this->poa_->servant_activated_hook (servant, system_id.in ());
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -717,21 +708,17 @@ namespace TAO
       // reference. The real requirement here is that a reference is
       // produced that will behave appropriately (that is, yield a
       // consistent Object Id value when asked politely).
-      CORBA::Short priority =
-        this->poa_->server_priority ();
+      CORBA::Short priority = this->poa_->server_priority ();
 
       PortableServer::ObjectId_var system_id =
-        this->servant_to_system_id_i (servant,
-                                      priority
-                                     );
+        this->servant_to_system_id_i (servant, priority);
 
       PortableServer::ObjectId user_id;
 
       // This operation requires the RETAIN, therefore don't worry about
       // the NON_RETAIN case.
       if (this->active_object_map_->
-          find_user_id_using_system_id (system_id.in (),
-                                        user_id) != 0)
+          find_user_id_using_system_id (system_id.in (), user_id) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             CORBA::Object::_nil ());
@@ -752,9 +739,7 @@ namespace TAO
       // application code. Think what would happen if the app calls us
       // back. We need to get to this at some point.
       return this->poa_->invoke_key_to_object_helper_i (
-              servant->_interface_repository_id (),
-              user_id
-             );
+              servant->_interface_repository_id (), user_id);
     }
 
     PortableServer::ObjectId *
@@ -808,8 +793,7 @@ namespace TAO
       // Inform the custom servant dispatching (CSD) strategy that the
       // sevant is activated.
       this->poa_->servant_activated_hook (servant,
-                                          user_id.in ()
-                                         );
+                                          user_id.in ());
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -919,9 +903,7 @@ namespace TAO
 
       // Inform the custom servant dispatching (CSD) strategy that the
       // sevant is activated.
-      this->poa_->servant_activated_hook (servant,
-                                          id
-                                         );
+      this->poa_->servant_activated_hook (servant, id);
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -981,9 +963,7 @@ namespace TAO
                                        true);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                        user_id
-                                                       );
-
+                                                        user_id);
     }
 
     CORBA::Object_ptr
@@ -1027,9 +1007,7 @@ namespace TAO
                                        priority,
                                        true);
 
-      return this->poa_->invoke_key_to_object_helper_i (intf,
-                                                  oid
-                                                 );
+      return this->poa_->invoke_key_to_object_helper_i (intf, oid);
     }
 
     int
