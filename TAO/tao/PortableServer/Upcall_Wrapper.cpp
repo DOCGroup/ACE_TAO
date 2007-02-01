@@ -115,7 +115,6 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                 // The actual upcall.
                 command.execute ();
               }
-
 #if TAO_HAS_INTERCEPTORS == 1
           }
       }

@@ -468,8 +468,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
     }
   else
     {
-      policy_manager->copy_from (this->policies_
-                                 );
+      policy_manager->copy_from (this->policies_);
 
       policy_manager->set_policy_overrides (policies, set_add);
     }

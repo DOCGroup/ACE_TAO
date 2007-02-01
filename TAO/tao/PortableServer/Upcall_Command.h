@@ -43,13 +43,11 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Command
   {
   public:
-
     /// Destructor.
     virtual ~Upcall_Command (void);
 
     /// Execute the upcall.
     virtual void execute (void) = 0;
-
   };
 
 }  // End namespace TAO

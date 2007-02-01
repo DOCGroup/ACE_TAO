@@ -1,3 +1,16 @@
+Thu Feb  1 14:37:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Default_Stub_Factory.cpp:
+        * tao/Default_Stub_Factory.h:
+        * tao/ORB_Core.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/Upcall_Command.h:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/Stub.cpp:
+          Layout changes
+
 Wed Jan 31 22:49:14 2007  Martin Corino  <mcorino@remedy.nl>
 
         * tao/DynamicAny/DynUnion_i.cpp:
