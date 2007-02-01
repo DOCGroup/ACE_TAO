@@ -87,6 +87,33 @@ namespace TAO
     #endif
 
     #if !defined (CORBA_E_MICRO)
+      ::TAO::NetworkPriorityPolicy_var npp
+        = ::TAO::NetworkPriorityPolicy::_narrow (policy);
+
+      if (!CORBA::is_nil (npp.in ()))
+        {
+          TAO::NetworkPriorityModel network_priority_model =
+            npp->network_priority_model ();
+
+          this->network_priority_model_ =
+            TAO::Portable_Server::Cached_Policies::NetworkPriorityModel (
+              network_priority_model);
+
+          TAO::DiffservCodepoint request_diffserv_codepoint  =
+            npp->request_diffserv_codepoint ();
+
+          TAO::DiffservCodepoint reply_diffserv_codepoint  =
+            npp->reply_diffserv_codepoint ();
+
+          this->request_diffserv_codepoint_ = request_diffserv_codepoint;
+          this->reply_diffserv_codepoint_ = reply_diffserv_codepoint;
+
+          return;
+        }
+
+    #endif
+
+    #if !defined (CORBA_E_MICRO)
       ::PortableServer::IdUniquenessPolicy_var id_uniqueness
         = ::PortableServer::IdUniquenessPolicy::_narrow (policy
                                                         );
