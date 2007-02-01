@@ -241,20 +241,17 @@ TAO_Thread_Lane::validate_and_map_priority (void)
 
   // Get the priority mapping manager.
   CORBA::Object_var obj =
-    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER
-                                    );
+    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
   TAO_Priority_Mapping_Manager_var mapping_manager =
-    TAO_Priority_Mapping_Manager::_narrow (obj.in ()
-                                          );
+    TAO_Priority_Mapping_Manager::_narrow (obj.in ());
 
   RTCORBA::PriorityMapping *pm =
     mapping_manager.in ()->mapping ();
 
   // Map CORBA priority to native priority.
-  CORBA::Boolean result =
-    pm->to_native (this->lane_priority_,
-                   this->native_priority_);
+  CORBA::Boolean const result =
+    pm->to_native (this->lane_priority_, this->native_priority_);
 
   if (!result)
     throw ::CORBA::DATA_CONVERSION ();
