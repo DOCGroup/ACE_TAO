@@ -1,3 +1,35 @@
+Thu Feb  1 18:08:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/ast/ast_typedef.cpp:
+
+          Added mutator for the boolean owns_base_type_ member
+          so it can be managed from outside the class. This
+          member is false by default, but if the base type is
+          an anonymous sequence or array, the constructor sets
+          it to true.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          When there is a comma-separated list of typedef declarations,
+          the list iteration calls the new method above after the
+          first loop and sets the member to false. This call has no
+          effect except when the base type is an anonymouse sequence
+          or array, in which case we want to prevent the shared base
+          type node from being destroyed more than once. Thanks to
+          Will Otte <wotte at dre dot vanderbilt dot edu> and Dipa Suri
+          <dipa dot suri at lmco dot com> for supplying the IDL that
+          uncovered this bug.
+
+        * TAO_IDL/util/utl_decllist.cpp:
+
+          Cosmetic changes.
+
+        * tests/IDL_Test/typedef.idl:
+
+          Added test case for the above bug.
+
 Thu Feb  1 15:43:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.h:

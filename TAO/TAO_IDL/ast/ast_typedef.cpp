@@ -103,7 +103,7 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
     owns_base_type_ (false)
 {
   AST_Decl::NodeType nt = bt->node_type ();
-  
+
   if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
     {
       this->owns_base_type_ = true;
@@ -149,6 +149,12 @@ bool
 AST_Typedef::is_local (void)
 {
   return this->pd_base_type->is_local ();
+}
+
+void
+AST_Typedef::owns_base_type (bool val)
+{
+  this->owns_base_type_ = val;
 }
 
 // Dump this AST_Typedef node to the ostream o.
