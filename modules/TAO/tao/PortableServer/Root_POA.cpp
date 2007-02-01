@@ -2635,6 +2635,12 @@ TAO_Root_POA::is_servant_active (
     is_servant_in_map (servant, wait_occurred_restart_call);
 }
 
+TAO::Portable_Server::Cached_Policies&
+TAO_Root_POA::cached_policies (void)
+{
+  return this->cached_policies_;
+}
+
 TAO::Portable_Server::Cached_Policies::PriorityModel
 TAO_Root_POA::priority_model (void) const
 {
