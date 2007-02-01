@@ -44,6 +44,12 @@ TAO_Default_Network_Priority_Protocols_Hooks::set_dscp_codepoint (CORBA::Long)
 
 const CORBA::Long
 TAO_Default_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
+  TAO_Service_Context &)
+{
+}
+
+const CORBA::Long
+TAO_Default_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Stub *, CORBA::Object *)
 {
   return 0;
