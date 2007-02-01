@@ -86,6 +86,36 @@ TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
 
 const CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
+  TAO_Service_Context &sc)
+{
+  CORBA::Long dscp_codepoint = 0;
+  const IOP::ServiceContext *context;
+
+  if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
+    {
+      TAO_InputCDR cdr (reinterpret_cast
+                        <const char*>
+                        (context->context_data.get_buffer ()),
+                        context->context_data.length ());
+
+      CORBA::Boolean byte_order;
+      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+        {
+          throw (CORBA::MARSHAL ());
+        }
+      cdr.reset_byte_order (static_cast<int> (byte_order));
+
+      if ((cdr >> dscp_codepoint) == 0)
+        {
+          throw (CORBA::MARSHAL ());
+        }
+    }
+
+  return dscp_codepoint;
+}
+
+const CORBA::Long
+TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Stub *stub, CORBA::Object *object)
 {
   CORBA::Long dscp = 0;
