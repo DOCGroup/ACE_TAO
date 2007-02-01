@@ -50,6 +50,13 @@ namespace TAO
         NOT_SPECIFIED
       };
 
+      enum NetworkPriorityModel
+      {
+        CLIENT_PROPAGATED_NETWORK_PRIORITY,
+        SERVER_DECLARED_NETWORK_PRIORITY,
+        NO_NETWORK_PRIORITY
+      };
+
       Cached_Policies ();
 
       ~Cached_Policies (void);
@@ -71,6 +78,15 @@ namespace TAO
       ::PortableServer::RequestProcessingPolicyValue request_processing (void) const;
       PriorityModel priority_model (void) const;
       CORBA::Short server_priority (void) const;
+
+      NetworkPriorityModel network_priority_model (void) const;
+      CORBA::Long request_diffserv_codepoint (void) const;
+      CORBA::Long reply_diffserv_codepoint (void) const;
+
+      void network_priority_model (
+        NetworkPriorityModel network_priority_model);
+      void request_diffserv_codepoint (CORBA::Long diffserv_codepoint);
+      void reply_diffserv_codepoint (CORBA::Long diffserv_codepoint);
 
       void priority_model (PriorityModel priority_model);
       void server_priority (CORBA::Short priority);
@@ -100,6 +116,12 @@ namespace TAO
       PriorityModel priority_model_;
 
       CORBA::Short server_priority_;
+
+      NetworkPriorityModel network_priority_model_;
+
+      CORBA::Long request_diffserv_codepoint_;
+
+      CORBA::Long reply_diffserv_codepoint_;
     };
   }
 }
