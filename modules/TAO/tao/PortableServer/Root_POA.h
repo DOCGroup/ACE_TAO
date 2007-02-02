@@ -74,6 +74,7 @@ class TAO_Acceptor_Filter_Factory;
 class TAO_POAManager_Factory;
 #endif
 
+class TAO_Network_Priority_Hook;
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
 class TAO_Regular_POA;
@@ -925,6 +926,8 @@ protected:
   PortableInterceptor::AdapterState adapter_state_;
 
   TAO::Portable_Server::Cached_Policies cached_policies_;
+
+  TAO_Network_Priority_Hook *network_priority_hook_;
 
   TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 

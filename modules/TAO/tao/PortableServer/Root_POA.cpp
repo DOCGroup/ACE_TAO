@@ -32,6 +32,7 @@
 #include "tao/PortableServer/ImplicitActivationStrategy.h"
 #include "tao/PortableServer/ThreadStrategy.h"
 #include "tao/PortableServer/Acceptor_Filter_Factory.h"
+#include "tao/PortableServer/Network_Priority_Hook.h"
 
 #include "tao/StringSeqC.h"
 #include "tao/PortableInterceptorC.h"
@@ -211,6 +212,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     policies_ (policies),
     ort_adapter_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
+    network_priority_hook_ (0),
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -243,6 +245,14 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // Parse the policies that are used in the critical path in
   // a cache.
   this->cached_policies_.update (this->policies_);
+
+  if (this->network_priority_hook_ == 0)
+    this->network_priority_hook_
+      = ACE_Dynamic_Service<TAO_Network_Priority_Hook>::instance (
+          "TAO_Network_Priority_Hook");
+
+  this->network_priority_hook_->update_network_priority (
+    *this, this->policies_);
 
 #if (TAO_HAS_MINIMUM_POA == 1)
   // If this is the RootPOA, set the value of the ImplicitActivationPolicy
