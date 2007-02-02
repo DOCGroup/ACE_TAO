@@ -1,3 +1,9 @@
+Fri Feb  2 11:48:34 UTC 2007  Simon McQueen  <sm@prismtech.com>
+
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.idl:
+
+          Add regression testing for bug #2390.
+
 Wed Jan 31 15:44:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Plan_Generator/PCVisitor.cpp:
