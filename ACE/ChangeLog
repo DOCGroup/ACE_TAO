@@ -1,3 +1,11 @@
+Fri Feb  2 14:32:06 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/auto_run_tests.pl:
+          Modified default behavior (if no -a, -o, -t, -C options are given)
+          so that the script looks for TAO in $TAO_ROOT as well as
+          $ACE_ROOT/TAO and similarly for CIAO.  This change supports the peer
+          style layout.
+
 Fri Feb  2 14:08:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/rm_exception_macros.pl:
