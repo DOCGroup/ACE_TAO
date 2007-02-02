@@ -235,8 +235,7 @@ TAO_Notify_ETCL_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq 
     {
       if (this->constraint_expr_list_.find (id_list[index],
                                             notify_constr_expr) == -1)
-        ACE_THROW_RETURN (CosNotifyFilter::ConstraintNotFound (id_list[index]),
-                          0);
+        throw CosNotifyFilter::ConstraintNotFound (id_list[index]);
 
       infoseq[index].constraint_expression =
         notify_constr_expr->constr_expr;
@@ -340,8 +339,7 @@ TAO_Notify_ETCL_Filter::match (const CORBA::Any & /*filterable_data */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
@@ -386,8 +384,7 @@ TAO_Notify_ETCL_Filter::match_typed (
   ACE_THROW_SPEC (( CORBA::SystemException,
                     CosNotifyFilter::UnsupportedFilterableData))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyFilter::CallbackID
@@ -396,8 +393,7 @@ TAO_Notify_ETCL_Filter::attach_callback (
                                 )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -414,8 +410,7 @@ CosNotifyFilter::CallbackIDSeq *
 TAO_Notify_ETCL_Filter::get_callbacks (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -183,7 +183,7 @@ CEC_Pull_Counting_Supplier::pull (void)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
-    ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
+    throw CosEventComm::Disconnected ();
 
   if (this->event_count % 2)
     {
@@ -203,7 +203,7 @@ CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
-    ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
+    throw CosEventComm::Disconnected ();
 
   if (this->event_count % 2)
     {

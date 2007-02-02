@@ -161,7 +161,7 @@ TAO_NotifyLog_i::get_filter (void)
     ))
 {
   //TODO: need to add impl
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -182,7 +182,7 @@ TAO_NotifyLog_i::MyFactory (void)
     ))
 {
   //TODO: need to add impl
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -296,7 +296,7 @@ TAO_NotifyLog_i::get_qos (void)
     ))
 {
   //need to add merging of QoS from Log_i and EventChannel_i
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void

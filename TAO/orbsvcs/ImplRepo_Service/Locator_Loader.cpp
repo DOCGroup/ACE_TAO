@@ -74,7 +74,7 @@ ImR_Locator_Loader::create_object (CORBA::ORB_ptr,
                                   ACE_TCHAR**)
    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), CORBA::Object::_nil ());
+  throw CORBA::NO_IMPLEMENT();
 }
 
 int

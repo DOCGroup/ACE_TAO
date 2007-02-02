@@ -40,7 +40,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_gr
   if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
       ACE_OS::strcmp (constraint_grammar, "ETCL") != 0 &&
       ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
-    ACE_THROW_RETURN (CosNotifyFilter::InvalidGrammar (), 0);
+    throw CosNotifyFilter::InvalidGrammar ();
 
 
   // Create the RefCounted servant.
@@ -70,7 +70,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create_mapping_filter (const char * /*co
                    CosNotifyFilter::InvalidGrammar
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_FACTORY_DEFINE (TAO_RT_Test_Filter, TAO_Notify_Tests_RT_Test_FilterFactory)

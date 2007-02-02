@@ -85,7 +85,7 @@ Grid_i::get (CORBA::Short x,
       || y < 0
       || x >= width_
       || y >= height_)
-    ACE_THROW_RETURN (Grid::RANGE_ERROR (), -1);
+    throw Grid::RANGE_ERROR ();
   else
     return array_[x][y];
 }
@@ -192,7 +192,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
                                  height,
                                  pool_t_);
   if (errno == ENOMEM)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+    throw CORBA::NO_MEMORY ();
 
   errno = prev_no;
 

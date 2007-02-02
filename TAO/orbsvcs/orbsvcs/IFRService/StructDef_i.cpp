@@ -225,7 +225,7 @@ TAO_StructDef_i::members_i (void)
                                                      this->repo_);
       if (0 == impl)
       {
-        ACE_THROW_RETURN ( CORBA::OBJECT_NOT_EXIST(), 0);
+        throw CORBA::OBJECT_NOT_EXIST();
       }
 
       retval[k].type = impl->type_i ();

@@ -180,8 +180,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CosNotifyFilter::MappingFilter::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 template <class SERVANT_TYPE> void
@@ -199,8 +198,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CosNotifyFilter::MappingFilter::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 template <class SERVANT_TYPE> void

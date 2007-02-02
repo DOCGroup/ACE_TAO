@@ -139,7 +139,7 @@ TAO_UnionDef_i::discriminator_type_i (void)
                                             this->repo_);
   if (0 == impl)
   {
-     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST(), CORBA::TypeCode::_nil () );
+     throw CORBA::OBJECT_NOT_EXIST();
   }
 
   return impl->type_i ();
@@ -300,7 +300,7 @@ TAO_UnionDef_i::members_i (void)
                                                      this->repo_);
       if (0 == impl)
       {
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST(), 0 );
+        throw CORBA::OBJECT_NOT_EXIST();
       }
 
       retval[k].type = impl->type_i ();

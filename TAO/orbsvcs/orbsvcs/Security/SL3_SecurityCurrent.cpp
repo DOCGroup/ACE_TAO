@@ -36,8 +36,7 @@ TAO::SL3::SecurityCurrent::client_credentials (void)
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
-                      SecurityLevel3::ClientCredentials::_nil ());
+    throw CORBA::BAD_INV_ORDER ();
 
   return impl->client_credentials ();
 }
@@ -52,7 +51,7 @@ TAO::SL3::SecurityCurrent::request_is_local (void)
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), false);
+    throw CORBA::BAD_INV_ORDER ();
 
   return impl->request_is_local ();
 }

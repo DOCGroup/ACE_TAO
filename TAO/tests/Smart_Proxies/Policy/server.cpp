@@ -54,8 +54,7 @@ Test_i :: method (CORBA::Short boo)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_i::method () invoked\n")));
   if (boo == 5)
-    ACE_THROW_RETURN (Test::Oops ("Invalid boo\n"),
-                      -1);
+    throw Test::Oops ("Invalid boo\n");
 
   return 0;
 }

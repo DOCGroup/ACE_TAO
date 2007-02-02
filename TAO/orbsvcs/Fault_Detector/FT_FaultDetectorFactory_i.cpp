@@ -594,7 +594,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
-    ACE_THROW_RETURN ( PortableGroup::InvalidCriteria(), CORBA::Object::_nil () );
+    throw PortableGroup::InvalidCriteria();
   }
 
   CORBA::ULong detectorId = allocate_id();
@@ -617,7 +617,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     ACE_ERROR ((LM_ERROR,
       "New FaultDetector_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), CORBA::Object::_nil () );
+    throw PortableGroup::ObjectNotCreated();
   }
   auto_ptr<TAO::Fault_Detector_i> detector(pFD);
 
@@ -629,7 +629,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       "New factory_creation_id returned NULL.  Throwing ObjectNotCreated.\n"
       ));
 
-    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), CORBA::Object::_nil ());
+    throw PortableGroup::ObjectNotCreated();
   }
   (*factory_creation_id) <<= detectorId;
 

@@ -2469,9 +2469,9 @@ TAO_Container_i::create_value_common (
                 }
               else
                 {
-                  ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 12,
-                                                      CORBA::COMPLETED_NO),
-                                    path);
+                  throw CORBA::BAD_PARAM (
+                    CORBA::OMGVMCID | 12,
+                    CORBA::COMPLETED_NO);
                 }
             }
 

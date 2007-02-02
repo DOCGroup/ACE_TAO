@@ -21,10 +21,7 @@ ServantActivator::incarnate (const PortableServer::ObjectId &,
   this->orb_->shutdown (0);
 
   // Throw forward exception
-  ACE_THROW_RETURN (
-                    PortableServer::ForwardRequest (
-                                                    this->forward_to_.in ()),
-                    0);
+  throw PortableServer::ForwardRequest (this->forward_to_.in ());
 }
 
 void

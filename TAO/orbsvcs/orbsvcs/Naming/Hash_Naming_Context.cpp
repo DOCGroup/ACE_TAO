@@ -98,10 +98,9 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
       rest.length (2);
       rest[0] = name[name_len - 2];
       rest[1] = name[name_len - 1];
-      ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
-                        (CosNaming::NamingContext::not_context,
-                         rest),
-                        CosNaming::NamingContext::_nil ());
+      throw CosNaming::NamingContext::NotFound(
+        CosNaming::NamingContext::not_context,
+        rest);
     }
   // Finally, if everything went smoothly, just return the resolved
   // context.
@@ -109,8 +108,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
 }
 
 void
-TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
-                               CORBA::Object_ptr obj)
+TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon, this->lock_,
@@ -122,7 +120,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Get the length of the name.
-  CORBA::ULong name_len = n.length ();
+  CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
@@ -133,8 +131,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
   // target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context =
-        this->get_context (n);
+      CosNaming::NamingContext_var context = this->get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -146,9 +143,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
       catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
-            context.in (
-              ),
-            simple_name);
+            context.in (), simple_name);
         }
     }
   // If we received a simple name, we need to bind it in this context.
@@ -182,7 +177,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Get the length of the name.
-  CORBA::ULong name_len = n.length ();
+  CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
@@ -193,8 +188,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
   // on target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context =
-        get_context (n);
+      CosNaming::NamingContext_var context = get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -206,9 +200,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
       catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
-            context.in (
-              ),
-            simple_name);
+            context.in (), simple_name);
         }
     }
   else
@@ -225,8 +217,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
 
       else if (result == -2)
         throw CosNaming::NamingContext::NotFound(
-          CosNaming::NamingContext::not_object,
-          n);
+          CosNaming::NamingContext::not_object, n);
     }
 }
 
@@ -248,7 +239,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
     throw CORBA::BAD_PARAM ();
 
   // Get the length of the name.
-  CORBA::ULong name_len = n.length ();
+  CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
@@ -259,8 +250,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
   // target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context =
-        get_context (n);
+      CosNaming::NamingContext_var context = get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -272,9 +262,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
       catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
-            context.in (
-              ),
-            simple_name);
+            context.in (), simple_name);
         }
     }
   // If we received a simple name, we need to bind it in this context.
@@ -308,7 +296,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Get the length of the name.
-  CORBA::ULong name_len = n.length ();
+  CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
@@ -332,9 +320,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
       catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
-            context.in (
-              ),
-            simple_name);
+            context.in (), simple_name);
         }
     }
   else
@@ -365,16 +351,14 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      CORBA::Object::_nil ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // Get the length of the name.
-  CORBA::ULong name_len = n.length ();
+  CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
-                      CORBA::Object::_nil ());
+    throw CosNaming::NamingContext::InvalidName();
 
   // Resolve the first component of the name.
 
@@ -388,10 +372,9 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
                             n[0].kind,
                             result.out (),
                             type) == -1)
-    ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
-                      (CosNaming::NamingContext::missing_node,
-                       n),
-                      CORBA::Object::_nil ());
+    throw CosNaming::NamingContext::NotFound(
+      CosNaming::NamingContext::missing_node,
+      n);
 
   // If the name we have to resolve is a compound name, we need to
   // resolve it recursively.
@@ -407,17 +390,15 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
         }
       else
         // The first name component wasn't bound to a NamingContext.
-        ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
-                          (CosNaming::NamingContext::not_context,
-                           n),
-                          CORBA::Object::_nil ());
+        throw CosNaming::NamingContext::NotFound(
+          CosNaming::NamingContext::not_context,
+          n);
 
       // If narrow failed...
       if (CORBA::is_nil (context.in ()))
-        ACE_THROW_RETURN (CosNaming::NamingContext::NotFound
-                          (CosNaming::NamingContext::not_context,
-                           n),
-                          CORBA::Object::_nil ());
+        throw CosNaming::NamingContext::NotFound(
+          CosNaming::NamingContext::not_context,
+          n);
       else
         {
           // Successfully resolved the first name component, need to
@@ -443,9 +424,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
           catch (const CORBA::TIMEOUT&)
             {
               throw CosNaming::NamingContext::CannotProceed(
-                context.in (
-                  ),
-                rest_of_name);
+                context.in (), rest_of_name);
             }
         }
     }
@@ -467,7 +446,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Get the length of the name.
-  CORBA::ULong name_len = n.length ();
+  CORBA::ULong const name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
@@ -491,9 +470,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
       catch (const CORBA::TIMEOUT&)
         {
           throw CosNaming::NamingContext::CannotProceed(
-            context.in (
-              ),
-            simple_name);
+            context.in (), simple_name);
         }
     }
   // If we received a simple name, we need to unbind it in this
@@ -502,8 +479,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
     if (this->context_->unbind (n[0].id,
                                 n[0].kind) == -1)
       throw CosNaming::NamingContext::NotFound(
-        CosNaming::NamingContext::missing_node,
-        n);
+        CosNaming::NamingContext::missing_node, n);
 }
 
 CosNaming::NamingContext_ptr
@@ -517,16 +493,14 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      CosNaming::NamingContext::_nil ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // Get the length of the name.
   CORBA::ULong name_len = n.length ();
 
   // Check for invalid name.
   if (name_len == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
-                      CosNaming::NamingContext::_nil ());
+    throw CosNaming::NamingContext::InvalidName();
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the operation on
@@ -554,8 +528,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
   // Bind the new context to the name.
   try
     {
-      bind_context (n,
-                    result.in ());
+      bind_context (n, result.in ());
     }
   catch (const CORBA::Exception&)
     {
@@ -610,7 +583,6 @@ TAO_Hash_Naming_Context::destroy (void)
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id_.fast_rep ());
-
 
       poa->deactivate_object (id.in ());
     }

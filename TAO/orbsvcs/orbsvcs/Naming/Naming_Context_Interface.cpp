@@ -37,8 +37,7 @@ TAO_Naming_Context::_default_POA (/*env*/)
 }
 
 void
-TAO_Naming_Context::bind (const CosNaming::Name &n,
-                          CORBA::Object_ptr obj)
+TAO_Naming_Context::bind (const CosNaming::Name &n, CORBA::Object_ptr obj)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNaming::NamingContext::NotFound,
                      CosNaming::NamingContext::CannotProceed,
@@ -49,8 +48,7 @@ TAO_Naming_Context::bind (const CosNaming::Name &n,
 }
 
 void
-TAO_Naming_Context::rebind (const CosNaming::Name &n,
-                            CORBA::Object_ptr obj)
+TAO_Naming_Context::rebind (const CosNaming::Name &n, CORBA::Object_ptr obj)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosNaming::NamingContext::NotFound,
                        CosNaming::NamingContext::CannotProceed,
@@ -177,8 +175,7 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
 
   // Check for invalid name.
   if (n.length () == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
-                      0);
+    throw CosNaming::NamingContext::InvalidName();
 
   // Length of the return string
   CORBA::ULong len = 0;
@@ -205,7 +202,7 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n)
   //
   if (str_name == 0)
     {
-      ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+      throw CORBA::NO_MEMORY ();
     }
 
   char *k = str_name;
@@ -323,8 +320,7 @@ TAO_Naming_Context::to_name (const char *sn)
   // Check for InvalidName i.e. Invalid stringified name
   //
   if (len == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
-                      0);
+    throw CosNaming::NamingContext::InvalidName();
 
   // Assign the length of the return unstringified name.
   //
@@ -338,7 +334,7 @@ TAO_Naming_Context::to_name (const char *sn)
     {
       if (count > ncomp)
         {
-          ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(), 0);
+          throw CosNaming::NamingContext::InvalidName();
         }
 
       char *id = CORBA::string_alloc (len);
@@ -407,8 +403,7 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
 
   // Check for invalid address
   if (addr_len == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContextExt::InvalidAddress (),
-                      0);
+    throw CosNaming::NamingContextExt::InvalidAddress ();
 
   // Make a pass through the in string name to count the number of
   // characters and if the character
@@ -424,7 +419,7 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
     }
 
   if (sn_len == 0)
-    ACE_THROW_RETURN (CosNaming::NamingContextExt::InvalidName (), 0);
+    throw CosNaming::NamingContextExt::InvalidName ();
 
   return addr_len + sn_len;
 }

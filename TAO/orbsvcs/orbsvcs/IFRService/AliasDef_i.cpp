@@ -67,7 +67,7 @@ TAO_AliasDef_i::type_i (void)
                                             this->repo_);
   if (0 == impl)
   {
-     ACE_THROW_RETURN ( CORBA::OBJECT_NOT_EXIST(), CORBA::TypeCode::_nil () );
+     throw CORBA::OBJECT_NOT_EXIST();
   }
 
   CORBA::TypeCode_var tc = impl->type_i ();

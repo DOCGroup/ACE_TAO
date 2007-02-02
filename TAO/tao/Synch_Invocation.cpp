@@ -117,7 +117,7 @@ namespace TAO
         // before we leave.
         if (s == TAO_INVOKE_RESTART)
           {
-            const Invocation_Status tmp = this->receive_other_interception ();
+            Invocation_Status const tmp = this->receive_other_interception ();
 
             if (tmp != TAO_INVOKE_SUCCESS)
               s = tmp;
@@ -230,7 +230,7 @@ namespace TAO
      * exception. Success alone is returned through the return value.
      */
 
-    const int reply_error =
+    int const reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
 
     if (TAO_debug_level > 0 && max_wait_time != 0)
@@ -311,8 +311,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher &rd
-                                               )
+  Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher &rd)
   {
     /*
      * Precondition: We probably got a reply. <ACE_Thread::self> is
@@ -510,8 +509,7 @@ namespace TAO
     CORBA::ULong minor = 0;
     CORBA::ULong completion = 0;
 
-    if ((cdr >> minor) == 0
-        || (cdr >> completion) == 0)
+    if ((cdr >> minor) == 0 || (cdr >> completion) == 0)
       {
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
@@ -520,7 +518,7 @@ namespace TAO
     //
     // Note that we are careful to retain "at most once" semantics.
     if ((ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0")   == 0 ||
+                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 ||
          ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
          ACE_OS_String::strcmp (type_id.in (),

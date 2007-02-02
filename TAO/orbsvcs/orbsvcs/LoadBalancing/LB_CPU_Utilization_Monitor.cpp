@@ -159,7 +159,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (void)
 #else
 
   ACE_UNUSED_ARG (load);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 
 #endif  /* linux || sun */
 

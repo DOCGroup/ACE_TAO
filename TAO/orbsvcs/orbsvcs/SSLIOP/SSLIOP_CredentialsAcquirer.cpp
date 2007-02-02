@@ -123,7 +123,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+  throw CORBA::BAD_INV_ORDER ();
 }
 
 SecurityLevel3::AcquisitionStatus
@@ -132,8 +132,7 @@ TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
-                    SecurityLevel3::AQST_Failed);
+  throw CORBA::BAD_INV_ORDER ();
 }
 
 SecurityLevel3::OwnCredentials_ptr
@@ -145,20 +144,17 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
   ::SSLIOP::AuthData *data;
 
   if (!(this->acquisition_arguments_ >>= data))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      SecurityLevel3::OwnCredentials::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   TAO::SSLIOP::X509_var x509 = this->make_X509 (data->certificate);
 
   if (x509.in () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      SecurityLevel3::OwnCredentials::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   TAO::SSLIOP::EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
   if (evp.in () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      SecurityLevel3::OwnCredentials::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   // Verify that the private key is consistent with the certificate.
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
@@ -168,8 +164,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
                     ACE_TEXT ("(%P|%t) ERROR: Private key is not ")
                     ACE_TEXT ("consistent with X.509 certificate")));
 
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        SecurityLevel3::OwnCredentials::_nil ());
+      throw CORBA::BAD_PARAM ();
     }
 
   TAO::SSLIOP::OwnCredentials * creds;

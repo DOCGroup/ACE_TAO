@@ -146,7 +146,7 @@ DynServer_Loader::create_object (ORB_ptr,
                                  ACE_TCHAR **)
                                  ACE_THROW_SPEC ((SystemException))
 {
-  ACE_THROW_RETURN(NO_IMPLEMENT(), Object::_nil());
+  throw NO_IMPLEMENT();
 }
 
 ACE_FACTORY_DEFINE (DynServer, DynServer_Loader)

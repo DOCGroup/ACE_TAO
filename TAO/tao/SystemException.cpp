@@ -110,8 +110,7 @@ CORBA::SystemException::operator= (const CORBA::SystemException &src)
 }
 
 void
-CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr
-                                     ) const
+CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr) const
 {
   if (cdr.write_string (this->_rep_id ())
       && cdr.write_ulong (this->minor ())
@@ -124,8 +123,7 @@ CORBA::SystemException::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void
-CORBA::SystemException::_tao_decode (TAO_InputCDR &cdr
-                                     )
+CORBA::SystemException::_tao_decode (TAO_InputCDR &cdr)
 {
   // The string is read by the caller, to determine the exact type of
   // the exception.  We just decode the fields...
@@ -210,8 +208,7 @@ CORBA::SystemException::_tao_duplicate (void) const
 }
 
 CORBA::ULong
-CORBA::SystemException::_tao_minor_code (u_int location,
-                                         int errno_value)
+CORBA::SystemException::_tao_minor_code (u_int location, int errno_value)
 {
   return
     TAO::VMCID

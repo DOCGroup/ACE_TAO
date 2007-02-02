@@ -73,7 +73,7 @@ get_object_id(CORBA::Any_var a)
   FtRtecEventChannelAdmin::ObjectId_var result;
 
   if ((a.in() >>= object_id) ==0)
-    ACE_THROW_RETURN(CORBA::NO_MEMORY(), result);
+    throw CORBA::NO_MEMORY();
 
   ACE_NEW_THROW_EX(r,
                    FtRtecEventChannelAdmin::ObjectId(*object_id),

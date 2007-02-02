@@ -143,8 +143,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
   // Create a new entry in the database:
   if (ACE_OS::strcmp (entry_type, "Employee") != 0
       || initial_attributes.length () != 2)
-    ACE_THROW_RETURN (Database::Unknown_Type (),
-                      Database::Entry::_nil ());
+    throw Database::Unknown_Type ();
 
   const char *name = 0;
   CORBA::Long id = 0;
@@ -156,8 +155,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
 
   if (ACE_OS::strcmp (first.name.in (), "name") != 0
       || ACE_OS::strcmp (second.name.in (), "id") != 0)
-    ACE_THROW_RETURN (Database::Unknown_Type (),
-                      Database::Entry::_nil ());
+    throw Database::Unknown_Type ();
 
   first.value >>= name;
   second.value >>= id;
@@ -205,8 +203,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
 {
   if (ACE_OS::strcmp (entry_type,
                       "Employee") != 0)
-    ACE_THROW_RETURN (Database::Unknown_Type (),
-                      Database::Entry::_nil ());
+    throw Database::Unknown_Type ();
 
   void *temp;
   Database::Entry_var entry;
@@ -239,8 +236,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
                   "Employee with key = %s not found\n",
                   key));
 
-      ACE_THROW_RETURN (Database::Not_Found (),
-                        Database::Entry::_nil ());
+      throw Database::Not_Found ();
     }
 
   return entry._retn ();

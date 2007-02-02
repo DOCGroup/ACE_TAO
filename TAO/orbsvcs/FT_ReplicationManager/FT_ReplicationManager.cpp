@@ -450,7 +450,7 @@ TAO::FT_ReplicationManager::get_fault_notifier ()
 {
   if (CORBA::is_nil (this->fault_notifier_.in ()))
   {
-    ACE_THROW_RETURN ( FT::InterfaceNotFound () , FT::FaultNotifier::_nil ());
+    throw FT::InterfaceNotFound ();
   }
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in ());
 }
@@ -488,7 +488,7 @@ char * TAO::FT_ReplicationManager::type_id (
   }
   else
   {
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), 0);
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result;
 }
@@ -604,7 +604,7 @@ TAO::FT_ReplicationManager::get_properties (
   }
   else
   {
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), 0);
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result._retn();
 }
@@ -643,12 +643,12 @@ TAO::FT_ReplicationManager::set_primary_member (
     }
     else
     {
-      ACE_THROW_RETURN (FT::PrimaryNotSet (), PortableGroup::ObjectGroup::_nil ());
+      throw FT::PrimaryNotSet ();
     }
   }
   else
   {
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), PortableGroup::ObjectGroup::_nil ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   METHOD_RETURN (TAO::FT_ReplicationManager::set_primary_member) result._retn ();
 }
@@ -683,7 +683,7 @@ TAO::FT_ReplicationManager::create_member (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::create_member: unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result._retn();
 }
@@ -722,7 +722,7 @@ TAO::FT_ReplicationManager::add_member (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::add_member to unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   METHOD_RETURN (TAO::FT_ReplicationManager::add_member) result._retn ();
 }
@@ -753,7 +753,7 @@ TAO::FT_ReplicationManager::remove_member (
   }
   else
   {
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result._retn ();
 }
@@ -781,7 +781,7 @@ TAO::FT_ReplicationManager::locations_of_members (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::locations_of_members: unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), 0);
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result;
 }
@@ -817,7 +817,7 @@ TAO::FT_ReplicationManager::get_object_group_id (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_id: unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result);
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result;
 }
@@ -845,7 +845,7 @@ TAO::FT_ReplicationManager::get_object_group_ref (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_ref: unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result._retn();
 }
@@ -875,7 +875,7 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_ref_from_id: unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result._retn();
 }
@@ -905,7 +905,7 @@ TAO::FT_ReplicationManager::get_member_ref (
         ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_member_ref: unknown group\n")
         ));
     }
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+    throw PortableGroup::ObjectGroupNotFound ();
   }
   return result._retn();
 }

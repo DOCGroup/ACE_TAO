@@ -86,8 +86,7 @@ ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
       return servant;
     }
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 // Since the servant gets invoked per operation, the servant has to be

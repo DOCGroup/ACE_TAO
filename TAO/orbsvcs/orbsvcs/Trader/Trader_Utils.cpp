@@ -278,11 +278,10 @@ TAO_Property_Evaluator::property_value (int index)
 
       if (CORBA::is_nil (dp_eval.in ()))
         {
-          ACE_THROW_RETURN (CosTradingDynamic::
-                            DPEvalFailure (name,
-                                           CORBA::TypeCode::_nil (),
-                                           CORBA::Any ()),
-                            prop_val);
+          throw CosTradingDynamic::DPEvalFailure (
+            name,
+            CORBA::TypeCode::_nil (),
+            CORBA::Any ());
         }
       else
         {
@@ -608,8 +607,7 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol) const
       CORBA::Boolean equal_ulong = type->equal (CORBA::_tc_ulong);
 
       if (!equal_ulong)
-        ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
-                          return_value);
+        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
         value >>= return_value;
 
@@ -678,8 +676,7 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
         type->equal (CORBA::_tc_boolean);
 
       if (!equal_boolean)
-        ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
-                          return_value);
+        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
         value >>= CORBA::Any::to_boolean (return_value);
 
@@ -744,8 +741,7 @@ TAO_Policies::starting_trader (void) const
 
       if (!equal_tradername ||
           !equal_linknameseq)
-        ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
-                          trader_name);
+        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
         value >>= trader_name;
     }
@@ -774,8 +770,7 @@ TAO_Policies::link_follow_rule (void) const
         type->equal (CosTrading::_tc_FollowOption);
 
       if (!type_equal)
-        ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
-                          return_value);
+        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
         value >>= return_value;
 
@@ -834,8 +829,7 @@ TAO_Policies::request_id (void) const
         type->equal (CosTrading::Admin::_tc_OctetSeq);
 
       if (!equal_octetseq)
-        ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
-                          request_id);
+        throw CosTrading::Lookup::PolicyTypeMismatch (*policy);
       else
         value >>= request_id;
     }

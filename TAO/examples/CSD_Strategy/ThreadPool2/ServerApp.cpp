@@ -48,7 +48,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to resolve initial ref for 'RootPOA'.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POA_var root_poa
@@ -58,7 +58,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to POA interface.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POAManager_var poa_manager
@@ -79,7 +79,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the child POA.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   policies[0]->destroy ();
@@ -96,7 +96,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   FooServantList servants(this->ior_filename_.c_str(),

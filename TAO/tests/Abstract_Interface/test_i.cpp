@@ -24,8 +24,7 @@ foo_i::foo_op (const char * inarg)
     }
   else
     {
-      ACE_THROW_RETURN (BadInput ("expected \"foo_op\"\n"),
-                        retval._retn ());
+      throw BadInput ("expected \"foo_op\"\n");
     }
 
   return retval._retn ();
@@ -46,8 +45,7 @@ foo_i::base_op (const char * inarg)
     }
   else
     {
-      ACE_THROW_RETURN (BadInput ("expected \"base_op\"\n"),
-                        retval._retn ());
+      throw BadInput ("expected \"base_op\"\n");
     }
 
   return retval._retn ();

@@ -35,49 +35,49 @@ char *
 TAO::SSLIOP::ClientCredentials::context_id (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::Principal *
 TAO::SSLIOP::ClientCredentials::client_principal (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::StatementList *
 TAO::SSLIOP::ClientCredentials::client_supporting_statements ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::ResourceNameList *
 TAO::SSLIOP::ClientCredentials::client_restricted_resources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::Principal *
 TAO::SSLIOP::ClientCredentials::target_principal (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::StatementList *
 TAO::SSLIOP::ClientCredentials::target_supporting_statements ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::ResourceNameList *
 TAO::SSLIOP::ClientCredentials::target_restricted_resources ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::OwnCredentials_ptr
@@ -113,14 +113,14 @@ CORBA::Boolean
 TAO::SSLIOP::ClientCredentials::target_authentication (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
 TAO::SSLIOP::ClientCredentials::confidentiality (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean

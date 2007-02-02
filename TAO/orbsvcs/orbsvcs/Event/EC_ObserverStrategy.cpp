@@ -31,9 +31,7 @@ TAO_EC_Null_ObserverStrategy::append_observer (
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
         RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  ACE_THROW_RETURN (
-      RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(),
-      0);
+  throw RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER();
 }
 
 void
@@ -93,9 +91,7 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
                           RtecEventChannelAdmin::Observer::_duplicate (obs));
 
     if (this->observers_.bind (entry.handle, entry) == -1)
-      ACE_THROW_RETURN (
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(),
-          0);
+      throw RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER();
   }
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
