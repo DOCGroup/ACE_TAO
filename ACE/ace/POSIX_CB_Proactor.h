@@ -27,9 +27,6 @@
 
 #include "ace/POSIX_Proactor.h"
 
-#if defined (ACE_LACKS_SIGVAL_T)
-typedef union sigval sigval_t;
-#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

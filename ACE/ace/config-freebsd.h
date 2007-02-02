@@ -246,10 +246,6 @@ extern "C" { char * cuserid (char *s); }
 #  endif /* ACE_POSIX_AIOCB_PROACTOR */
 #endif /* ACE_HAS_AIO_CALLS */
 
-/* FreeBSD does not define sigval_t */
-#include <sys/signal.h>
-typedef union sigval sigval_t;
-
 #define ACE_LACKS_STROPTS_H
 
 // Needed when ACE_HAS_WCHAR is defined.

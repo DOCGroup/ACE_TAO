@@ -246,7 +246,6 @@
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_WCTYPE_H
-#define ACE_LACKS_SIGVAL_T
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H
