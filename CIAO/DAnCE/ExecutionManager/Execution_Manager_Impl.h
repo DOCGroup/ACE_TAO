@@ -155,6 +155,10 @@ namespace CIAO
         ::CORBA::SystemException,
         ::Deployment::InvalidConnection));
 
+      CORBA::Short get_current_thread_priority (void)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
+
     protected:
       /// Destructor.
       virtual ~Execution_Manager_Impl (void);

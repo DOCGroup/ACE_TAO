@@ -186,6 +186,7 @@ namespace CIAO
           if (parse_args (argc, argv) == false)
             return -1;
 
+//          Plan_Launcher_i launcher (orb.in ());
           Plan_Launcher_i launcher;
 
           if (!launcher.init (em_use_naming ? 0 : em_ior_file,

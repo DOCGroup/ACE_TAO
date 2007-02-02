@@ -15,6 +15,7 @@
 #include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
 #include "DAnCE/Plan_Generator/Plan_Generator_Impl.h"
 
+
 namespace CIAO
 {
   namespace Plan_Launcher
@@ -38,6 +39,7 @@ namespace CIAO
 
       Plan_Launcher_i ();
 
+      Plan_Launcher_i (CORBA::ORB_ptr orb);
 
       bool init (const char *em_ior,
                  CORBA::ORB_ptr orb,
@@ -94,7 +96,18 @@ namespace CIAO
       void destroy_dam_by_plan (const char * plan_uuid
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+      // Change the priority of this thread
+      bool set_current_priority (CORBA::Short priority);
+
+    protected:
+      // Check that the object is configured with CLIENT_PROPAGATED
+      // PriorityModelPolicy.
+      bool is_client_propagated_model (void);
+
     private:
+      /// Cached ORB pointer
+      CORBA::ORB_var orb_;
+
       ::CIAO::ExecutionManagerDaemon_var em_;
 
       /// Local map for DAMs, to save expensive UUID lookups.

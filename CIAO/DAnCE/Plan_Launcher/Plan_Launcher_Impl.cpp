@@ -3,6 +3,10 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/DnC_Dump.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "tao/ORB_Core.h"
+#include "ace/Sched_Params.h"
 
 namespace CIAO
 {
@@ -38,7 +42,14 @@ namespace CIAO
     }
 
     Plan_Launcher_i::Plan_Launcher_i ()
-      : em_ (), pg_ ()
+      : orb_ (0), em_ (), pg_ ()
+    {
+    }
+
+    Plan_Launcher_i::Plan_Launcher_i (CORBA::ORB_ptr orb)
+      : orb_ (CORBA::ORB::_duplicate  (orb))
+      , em_ ()
+      , pg_ ()
     {
     }
 
@@ -50,6 +61,8 @@ namespace CIAO
                            const char *rm_name
                            ACE_ENV_ARG_DECL)
     {
+      this->orb_ = CORBA::ORB::_duplicate  (orb);
+
       CORBA::Object_var obj;
 
       // EM
@@ -78,6 +91,15 @@ namespace CIAO
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
                       " Manager ref \n"));
+        }
+
+      // Check whether the client_propagate priority model has been set
+      // on the ExecutionManager
+      if (this->is_client_propagated_model ())
+        {
+          // Set the priority of the current thread, so it can be propagated
+          // to the ExecutionManager
+          this->set_current_priority (2);
         }
 
       if (use_repoman)
@@ -429,6 +451,98 @@ namespace CIAO
         }
 
       return CORBA::string_dup (plan.UUID.in ());
+    }
+
+    bool
+    Plan_Launcher_i::set_current_priority (CORBA::Short desired_priority)
+    {
+      CORBA::Object_var object =
+        this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      object = this->orb_->resolve_initial_references ("PriorityMappingManager"
+                                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      RTCORBA::PriorityMappingManager_var mapping_manager =
+        RTCORBA::PriorityMappingManager::_narrow (object.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::PriorityMapping *pm =
+        mapping_manager->mapping ();
+
+      int sched_policy =
+        this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
+
+      int max_priority =
+        ACE_Sched_Params::priority_max (sched_policy);
+      int min_priority =
+        ACE_Sched_Params::priority_min (sched_policy);
+
+      CORBA::Short native_priority =
+        (max_priority + min_priority) / 2;
+
+      // CORBA::Short desired_priority = 0;
+
+      //if (pm->to_CORBA (native_priority, desired_priority) == 0)
+      //  ACE_ERROR_RETURN ((LM_ERROR,
+      //                     "Cannot convert native priority %d to corba priority\n",
+      //                     native_priority),
+      //                     false);
+
+
+      current->the_priority (desired_priority ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::Short priority =
+        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (desired_priority != priority)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "ERROR: Unable to set thread "
+                            "priority to %d\n", desired_priority),
+                          false);
+
+      return true;
+    }
+
+    bool
+    Plan_Launcher_i::is_client_propagated_model ()
+    {
+      CORBA::Policy_var policy =
+        this->em_->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::PriorityModelPolicy_var priority_policy =
+        RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (priority_policy.in ()))
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+          ACE_TEXT ("In ExecutionManager, the Priority Model Policy not exposed!\n")));
+        return false;
+      }
+
+      RTCORBA::PriorityModel priority_model =
+        priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (priority_model != RTCORBA::CLIENT_PROPAGATED)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+          ACE_TEXT ("The Priority Model of ExecutionManager is not CLIENT_PROPAGATED !\n")));
+        return false;
+      }
+       
+      return true;
     }
   }
 }
