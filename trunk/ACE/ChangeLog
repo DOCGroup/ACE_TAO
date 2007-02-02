@@ -1,3 +1,19 @@
+Fri Feb  2 10:47:55 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/Proactor.cpp:
+          Layout change.
+
+        * ace/config-lynxos.h:
+          Enabled POSIX_SIG_REACTOR and made some cleanups.
+
+        * ace/os_include/net/os_if.h:
+          Removed LynxOS specific include.
+
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+          Enabled these tests again even if ACE_HAS_BROKEN_SIGEVENT_STRUCT
+          is defined.
+
 Fri Feb  2 10:31:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CORBA_macros.h:

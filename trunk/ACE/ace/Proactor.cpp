@@ -11,9 +11,10 @@
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
+
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
-#  endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
+#endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
 
 
 ACE_RCSID (ace,
