@@ -11,7 +11,7 @@ Fri Feb  2 10:47:55 UTC 2007  Olli Savia  <ops@iki.fi>
           Layout change.
 
         * ace/config-lynxos.h:
-          Enabled POSIX_SIG_REACTOR and made some cleanups.
+          Enabled POSIX_SIG_PROACTOR and made some cleanups.
 
         * ace/os_include/net/os_if.h:
           Removed LynxOS specific include.
