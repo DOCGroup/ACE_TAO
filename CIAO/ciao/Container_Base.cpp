@@ -397,8 +397,7 @@ namespace CIAO
             || static_entrypts_maps_->home_creator_funcptr_map_ == 0
             || static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
           {
-            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
-                              Components::CCMHome::_nil ());
+            throw Deployment::ImplEntryPointNotFound ();
           }
 
         ACE_CString exe_entrypt_str (exe_entrypt);
@@ -574,7 +573,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::get_home_objref");
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   CORBA::Object_ptr

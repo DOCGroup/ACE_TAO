@@ -20,8 +20,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                      CORBA::IRObject::_nil ());
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   CORBA::IRObject_ptr
@@ -29,8 +28,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                      CORBA::IRObject::_nil ());
+    throw CORBA::NO_IMPLEMENT ();
   }
 
 }

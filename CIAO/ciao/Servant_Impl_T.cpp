@@ -66,7 +66,7 @@ namespace CIAO
   {
     if (::CORBA::is_nil (object_ref))
       {
-        ACE_THROW_RETURN (::CORBA::BAD_PARAM (), 0);
+        throw ::CORBA::BAD_PARAM ();
       }
 
     ::CORBA::Object_var the_other =
@@ -133,8 +133,7 @@ namespace CIAO
         return ec->get_CCM_object ();
       }
 
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      ::CORBA::Object::_nil ());
+    throw CORBA::INTERNAL ();
   }
 
   // CIAO-specific operations.

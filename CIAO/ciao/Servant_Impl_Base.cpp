@@ -27,7 +27,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ::Components::NoKeyAvailable))
   {
-    ACE_THROW_RETURN (::Components::NoKeyAvailable (), 0);
+    throw ::Components::NoKeyAvailable ();
   }
 
   CORBA::IRObject_ptr
@@ -35,8 +35,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                      CORBA::IRObject::_nil ());
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   void
@@ -126,7 +125,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   ::Components::ComponentPortDescription *
@@ -173,16 +172,14 @@ namespace CIAO
   {
     if (0 == name)
       {
-        ACE_THROW_RETURN (Components::InvalidName (),
-                          CORBA::Object::_nil ());
+        throw Components::InvalidName ();
       }
 
     CORBA::Object_ptr retval = this->lookup_facet (name);
 
     if (CORBA::is_nil (retval))
       {
-        ACE_THROW_RETURN (Components::InvalidName (),
-                          CORBA::Object::_nil ());
+        throw Components::InvalidName ();
       }
 
     return retval;
@@ -210,8 +207,7 @@ namespace CIAO
 
         if (0 == tmp)
           {
-            ACE_THROW_RETURN (Components::InvalidName (),
-                              0);
+            throw Components::InvalidName ();
           }
 
         safe_retval[i] = tmp;
@@ -284,8 +280,7 @@ namespace CIAO
   {
     if (0 == sink_name)
       {
-        ACE_THROW_RETURN (Components::InvalidName (),
-                          Components::EventConsumerBase::_nil ());
+        throw Components::InvalidName ();
       }
 
     Components::EventConsumerBase_ptr retval =
@@ -293,8 +288,7 @@ namespace CIAO
 
     if (CORBA::is_nil (retval))
       {
-        ACE_THROW_RETURN (Components::InvalidName (),
-                          Components::EventConsumerBase::_nil ());
+        throw Components::InvalidName ();
       }
 
     return retval;
@@ -322,8 +316,7 @@ namespace CIAO
 
         if (0 == tmp)
           {
-            ACE_THROW_RETURN (Components::InvalidName (),
-                              0);
+            throw Components::InvalidName ();
           }
 
         safe_retval[i] = tmp;
@@ -339,7 +332,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   ::Components::ReceptacleDescriptions *
@@ -383,7 +376,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
   {
-    ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+    throw ::CORBA::NO_IMPLEMENT ();
   }
 
   ::Components::PublisherDescriptions *
@@ -393,7 +386,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::InvalidName))
   {
-    ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+    throw ::CORBA::NO_IMPLEMENT ();
   }
 
   /// Protected operations.
