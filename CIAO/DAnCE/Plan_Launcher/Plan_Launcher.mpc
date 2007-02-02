@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers, ciao_executionmanager_stub, ciao_plan_generator {
+project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers, ciao_executionmanager_stub, ciao_plan_generator, rtcorba {
   sharedname = Plan_Launcher_Impl
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
