@@ -21,8 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/Typecode_typesC.h"
-#include "tao/Pseudo_VarOut_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<class T> class ACE_Array_Base;
