@@ -1,3 +1,24 @@
+Fri Feb  2 20:27:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+          tao/PortableServer/Network_Priority_Hook.h:
+          tao/PortableServer/Network_Priority_Hook.cpp:
+          tao/PortableServer/Root_POA.h:
+          tao/PortableServer/Root_POA.cpp:
+          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        
+          Moved the functionality that was added under the 
+          pre_invoke_remote_request () method of 
+          Default_Servant_Dispatcher.cpp to the Network_Priority_Hook
+          that is defined under the PortableServer library.
+        
+          Added helper functions in Root_POA class to return the
+          registered Network_Priority_Hook.
+        
+          Provided the implementation for the specialized function
+          in the DiffServ library.
+
 Fri Feb  2 17:55:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Network_Priority_Hook.h:
