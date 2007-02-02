@@ -25,28 +25,32 @@ TAO_DiffServ_Network_Priority_Hook::update_network_priority (
   for (CORBA::ULong i = 0; i < policy_set.num_policies (); i++)
     {
       CORBA::Policy_var policy = policy_set.get_policy_by_index (i);
-      ::TAO::NetworkPriorityPolicy_var npp
-        = ::TAO::NetworkPriorityPolicy::_narrow (policy);
 
-      if (!CORBA::is_nil (npp.in ()))
+      if (policy->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
         {
-          TAO::NetworkPriorityModel network_priority_model =
-            npp->network_priority_model ();
+          ::TAO::NetworkPriorityPolicy_var npp
+            = ::TAO::NetworkPriorityPolicy::_narrow (policy);
 
-          poa.cached_policies ().network_priority_model (
-            TAO::Portable_Server::Cached_Policies::NetworkPriorityModel (
-              network_priority_model));
+          if (!CORBA::is_nil (npp.in ()))
+            {
+              TAO::NetworkPriorityModel network_priority_model =
+                npp->network_priority_model ();
 
-          TAO::DiffservCodepoint request_diffserv_codepoint  =
-            npp->request_diffserv_codepoint ();
+              poa.cached_policies ().network_priority_model (
+                TAO::Portable_Server::Cached_Policies::NetworkPriorityModel (
+                  network_priority_model));
 
-          TAO::DiffservCodepoint reply_diffserv_codepoint  =
-            npp->reply_diffserv_codepoint ();
+              TAO::DiffservCodepoint request_diffserv_codepoint  =
+                npp->request_diffserv_codepoint ();
 
-          poa.cached_policies ().request_diffserv_codepoint (
-            request_diffserv_codepoint);
-          poa.cached_policies ().reply_diffserv_codepoint (
-            reply_diffserv_codepoint);
+              TAO::DiffservCodepoint reply_diffserv_codepoint  =
+                npp->reply_diffserv_codepoint ();
+
+              poa.cached_policies ().request_diffserv_codepoint (
+                request_diffserv_codepoint);
+              poa.cached_policies ().reply_diffserv_codepoint (
+                reply_diffserv_codepoint);
+            }
         }
     }
 }
