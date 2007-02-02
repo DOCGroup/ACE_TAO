@@ -1,3 +1,29 @@
+Fri Feb  2 04:29:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ExecutionManager/Execution_Manager.cpp
+        
+          Created a child POA which is configured with
+          Client_Propagated Priority Model.
+        
+        * ExecutionManager/Execution_Manager_Impl.cpp
+        * ExecutionManager/Execution_Manager_Impl.h
+        
+          Added a get_current_thread_priority() to get the
+          priority of the current thread. Also added 
+          debug_level control so the thread priority could
+          be printed out.
+        
+        * Plan_Launcher/Plan_Launcher.cpp
+        * Plan_Launcher/Plan_Launcher_Impl.cpp
+        * Plan_Launcher/Plan_Launcher_Impl.h
+        
+          Added two new methods. 
+          The is_client_propagated_model() checks whether
+          the ExecutionManager exposes the CLIENT_PROPAGATED
+          priority model. The set_current_priority() method
+          will set the client thread priority if the priority
+          model is CLIENT_PROPAGATED on the EM side.
+        
 Sun Jan  7 18:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/URL_Parser.cpp:
