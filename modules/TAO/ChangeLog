@@ -1,3 +1,30 @@
+Fri Feb  2 17:55:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Network_Priority_Hook.h:
+          tao/PortableServer/Network_Priority_Hook.cpp:
+        
+          Added this hook under POA to help POA make a call on the
+          DiffServ Library to cache the SERVER_DECLARED network
+          priority policy.
+        
+          The default implementation is provided under POA, which
+          sets the DiffServ codepoint to 0.
+        
+          A concrete implementation of this hook is provided by the DiffServ
+          library.
+        
+        * tao/PortableServer/Root_POA.h:
+          tao/PortableServer/Root_POA.cpp:
+        
+          Instantiated the above defined class in the ROOT_POA class
+          constructor.
+        
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        
+          Provided the concrete implementation for the network priority
+          hook that gets used by the POA.
+
 Fri Feb  2 00:38:04 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Default_Servant_Dispatcher.cpp:
