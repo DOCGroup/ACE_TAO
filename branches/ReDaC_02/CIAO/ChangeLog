@@ -13,7 +13,6 @@ Fri Feb  2 04:29:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
           debug_level control so the thread priority could
           be printed out.
         
-        * Plan_Launcher/Plan_Launcher.cpp
         * Plan_Launcher/Plan_Launcher_Impl.cpp
         * Plan_Launcher/Plan_Launcher_Impl.h
         
@@ -23,6 +22,12 @@ Fri Feb  2 04:29:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
           priority model. The set_current_priority() method
           will set the client thread priority if the priority
           model is CLIENT_PROPAGATED on the EM side.
+
+        * Plan_Launcher/Plan_Launcher.cpp
+
+          Added a command line argument "-z" to allow priority
+          to be specified on Plan_Launcher, and then propagated
+          to the Execution Manager.
         
 Sun Jan  7 18:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

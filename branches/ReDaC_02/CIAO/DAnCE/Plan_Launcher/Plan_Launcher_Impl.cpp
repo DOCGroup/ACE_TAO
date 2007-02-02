@@ -46,22 +46,17 @@ namespace CIAO
     {
     }
 
-    Plan_Launcher_i::Plan_Launcher_i (CORBA::ORB_ptr orb)
-      : orb_ (CORBA::ORB::_duplicate  (orb))
-      , em_ ()
-      , pg_ ()
-    {
-    }
-
     bool
     Plan_Launcher_i::init (const char *em_ior,
                            CORBA::ORB_ptr orb,
                            bool use_repoman,
                            bool rm_use_naming,
-                           const char *rm_name
+                           const char *rm_name,
+                           CORBA::Short priority
                            ACE_ENV_ARG_DECL)
     {
       this->orb_ = CORBA::ORB::_duplicate  (orb);
+      this->desired_priority_ = priority;
 
       CORBA::Object_var obj;
 
@@ -99,7 +94,7 @@ namespace CIAO
         {
           // Set the priority of the current thread, so it can be propagated
           // to the ExecutionManager
-          this->set_current_priority (2);
+          this->set_current_priority (this->desired_priority_);
         }
 
       if (use_repoman)
@@ -492,7 +487,6 @@ namespace CIAO
       //                     "Cannot convert native priority %d to corba priority\n",
       //                     native_priority),
       //                     false);
-
 
       current->the_priority (desired_priority ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
