@@ -1,3 +1,8 @@
+Fri Feb  2 14:45:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dynamic_Service_Base.cpp:
+          Fixed compile error
+
 Fri Feb  2 14:32:06 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/auto_run_tests.pl:
