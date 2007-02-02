@@ -87,7 +87,9 @@ endif
 
 ifeq (03,$(CXXMAJORVERS))
   # Suppress Warning 302 ((...) parameter list is a non-portable feature)
-  CCFLAGS                += +W302
+  # Suppress Warning 361 (missing return from non-void function)
+  # Suppress Warning 1039(Binary incompatabilty between old and new compilers)
+  CCFLAGS                += +W302,361,1039
 
   ifeq (57,$(CXXMINORVERS))
     # aCC 3.57 has a bug. When a class has private constructors
