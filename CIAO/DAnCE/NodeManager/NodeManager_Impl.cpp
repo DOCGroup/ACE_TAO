@@ -238,8 +238,7 @@ preparePlan (const Deployment::DeploymentPlan &plan)
                   "same component server must have the "
                   "same \"resourceName\" defined.\n"));
 
-      ACE_THROW_RETURN (Deployment::PlanError (),
-                        Deployment::NodeApplicationManager::_nil ());
+      throw Deployment::PlanError ();
     }
 
   // Update the reference count map based on the deployment plan input
@@ -348,8 +347,7 @@ preparePlan (const Deployment::DeploymentPlan &plan)
     }
   catch (const PortableServer::POA::ObjectNotActive&)
     {
-      ACE_THROW_RETURN (Deployment::StartError (),
-                        Deployment::NodeApplicationManager::_nil ());
+      throw Deployment::StartError ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -308,8 +308,7 @@ CIAO::Container_Impl::install_home (
                   "error in binding home for component "
                   "instance [%s] \n",
                   impl_info.component_instance_name.in ()));
-      ACE_THROW_RETURN (Deployment::InstallationFailure (),
-                        Components::CCMHome::_nil ());
+      throw Deployment::InstallationFailure ();
     }
 
   //Note: If the return value will be discarded, it must be kept in a var or

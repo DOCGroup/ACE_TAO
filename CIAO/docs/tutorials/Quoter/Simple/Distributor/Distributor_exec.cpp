@@ -167,7 +167,7 @@ namespace CIDL_StockDistributor_Impl
     }
     else
     {
-      ACE_THROW_RETURN (Stock::Invalid_Stock (), 0);
+      throw Stock::Invalid_Stock ();
     }
   }
 

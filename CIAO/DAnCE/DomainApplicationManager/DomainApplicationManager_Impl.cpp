@@ -1260,10 +1260,9 @@ handle_es_connection (
       error += instname;
       error += ": unable to find object reference for connection ";
       error += binding.name.in ();
-      ACE_THROW_RETURN (Deployment::StartError
-        ("DomainApplicationManager_Impl::create_connections_i",
-                      error.c_str ()),
-                      false);
+      throw Deployment::StartError(
+        "DomainApplicationManager_Impl::create_connections_i",
+        error.c_str ());
     }
 
   retv[len].event_service = es._retn ();
@@ -1299,10 +1298,9 @@ handle_es_connection (
           error += instname;
           error += ": unable to find object reference for connection ";
           error += binding.name.in ();
-          ACE_THROW_RETURN (Deployment::StartError
-            ("DomainApplicationManager_Impl::handle_es_connection",
-                          error.c_str ()),
-                          false);
+          throw Deployment::StartError(
+            "DomainApplicationManager_Impl::handle_es_connection",
+            error.c_str ());
         }
     }
 
@@ -1390,10 +1388,9 @@ handle_direct_connection (
               error += instname;
               error += ": unable to find object reference for connection ";
               error += binding.name.in ();
-              ACE_THROW_RETURN (Deployment::StartError
-                ("DomainApplicationManager_Impl::create_connections_i",
-                              error.c_str ()),
-                              false);
+              throw Deployment::StartError(
+                "DomainApplicationManager_Impl::create_connections_i",
+                error.c_str ());
             }
           break;
         }

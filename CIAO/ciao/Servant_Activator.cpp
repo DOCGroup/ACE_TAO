@@ -91,8 +91,7 @@ namespace CIAO
       for (size_t t = 0; t != sz; ++t)
         {
           if (this->pa_.get (tmp, t) == -1)
-            ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                              0);
+            throw CORBA::OBJECT_NOT_EXIST ();
 
           if (tmp == 0)
             {
@@ -116,8 +115,7 @@ namespace CIAO
             }
         }
     }
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    throw CORBA::OBJECT_NOT_EXIST ();
   }
 
   void

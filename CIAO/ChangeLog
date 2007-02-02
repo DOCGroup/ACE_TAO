@@ -1,3 +1,28 @@
+Fri Feb  2 15:09:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Container_Base.cpp:
+        * ciao/Context_Impl_Base.cpp:
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Home_Servant_Impl_Base.cpp:
+        * ciao/Home_Servant_Impl_T.cpp:
+        * ciao/Port_Activator_T.cpp:
+        * ciao/Servant_Activator.cpp:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_T.cpp:
+        * ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * docs/templates/CIAO_Glue_Session_Template.cpp:
+        * docs/templates/CIAO_Glue_Session_Template.inl:
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.cpp:
+          Replaced ACE_THROW_RETURN with throw
+
 Fri Feb  2 13:28:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:

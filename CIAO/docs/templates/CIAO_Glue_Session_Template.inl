@@ -110,7 +110,7 @@ ACE_INLINE ::Components::Principal_ptr
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ We don't support Security in CIAO yet.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE ::Components::CCMHome_ptr
@@ -126,7 +126,7 @@ ACE_INLINE CORBA::Boolean
                    Components::IllegalState))
 {
   // @@ We don't support Transaction in CIAO yet.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE ::Components::Transaction::UserTransaction_ptr
@@ -135,7 +135,7 @@ ACE_INLINE ::Components::Transaction::UserTransaction_ptr
                    Components::IllegalState))
 {
   // @@ We don't support Transaction in CIAO yet.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE CORBA::Boolean
@@ -145,7 +145,7 @@ ACE_INLINE CORBA::Boolean
   ACE_UNUSED_ARG (role);
 
   // @@ We don't support Transaction in CIAO yet.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE void
@@ -411,7 +411,7 @@ ACE_INLINE [component name]_ptr
 {
   // @@ TO-DO when we suppor keyed home.
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE [component name]_ptr
@@ -423,7 +423,7 @@ ACE_INLINE [component name]_ptr
 {
   // @@ TO-DO when we suppor keyed home.
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 
@@ -445,7 +445,7 @@ ACE_INLINE [key type] *
 {
   // @@ TO-DO when we suppor keyed home.
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ##  endif (keyed or keyless home)
@@ -458,7 +458,7 @@ ACE_INLINE ::CORBA::IRObject_ptr
 {
   // @@ TO-DO.  Contact IfR?
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ACE_INLINE CORBA::IRObject_ptr
@@ -467,5 +467,5 @@ ACE_INLINE CORBA::IRObject_ptr
 {
   // @@ TO-DO.  Contact IfR?
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }

@@ -591,7 +591,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
 
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw CORBA::INTERNAL ();
 
   ACE_DEBUG ((LM_INFO, "Successfully looked up \'%s\'.\n", name));
 
@@ -631,7 +631,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw CORBA::INTERNAL ();
 
   ACE_DEBUG ((LM_INFO, "Successfully looked up %s.\n", UUID));
 

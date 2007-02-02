@@ -60,8 +60,7 @@ namespace CIAO
 
       if (CORBA::is_nil (this->component_.in ()))
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (),
-                          CORBA::Object::_nil ());
+        throw CORBA::INTERNAL ();
       }
     }
 
