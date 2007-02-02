@@ -183,7 +183,7 @@ namespace TM_Tester
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
-      catch (Deployment::ResourceNotAvailable &)
+      catch (Deployment::ResourceCommitmentFailure&)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
       }

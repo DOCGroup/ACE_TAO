@@ -1,15 +1,3 @@
-Fri Feb  2 21:00:48 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp:
-        * DAnCE/TargetManager/DomainDataManager.h:
-        * DAnCE/TargetManager/DomainDataManager.cpp:
-        * DAnCE/TargetManager/TargetManager.mpc:
-        * DAnCE/TargetManager/TargetManagerImpl.idl:
-        * DAnCE/TargetManager/TargetManager_exec.h:
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-
-          Cleaning TM code to separate CIAO-specific functionality.
-
 Tue Jan 16 21:18:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:

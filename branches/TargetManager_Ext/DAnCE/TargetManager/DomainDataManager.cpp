@@ -194,80 +194,6 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 
 }
 
-CIAO::Host_NodeManager_seq * CIAO::DomainDataManager::get_node_managers ()
-{
-  ::CIAO::Host_NodeManager_seq* node_mgr_seq =
-      new ::CIAO::Host_NodeManager_seq ();
-  node_mgr_seq->length (initial_domain_.node.length ());
-  for (unsigned int i=0;i < initial_domain_.node.length ();i++)
-    {
-      (*node_mgr_seq)[i].host_ =
-        CORBA::string_dup (initial_domain_.node[i].name);
-      ::Deployment::NodeManager_var node_manager =
-          deployment_config_.get_node_manager (initial_domain_.node[i].name);
-      //      if (node_manager.in () != 0)
-        {
-          (*node_mgr_seq)[i].node_mgr_ = ::CIAO::NodeManagerDaemon::_narrow (node_manager.in ());
-        }
-    }
-  return node_mgr_seq;
-}
-
-CIAO::Host_Infos*  CIAO::DomainDataManager::get_cpu_info ()
-{
-  CIAO::Host_Infos* host_info_seq = new CIAO::Host_Infos ();
-  host_info_seq->length (current_domain_.node.length ());
-
-  for (CORBA::ULong i=0;i < current_domain_.node.length ();i++)
-    {
-      (*host_info_seq)[i].hostname =
-        CORBA::string_dup (current_domain_.node[i].name);
-
-      for (CORBA::ULong j = 0;j < current_domain_.node[i].resource.length ();j++)
-        {
-          if (!ACE_OS::strcmp(
-                      current_domain_.node[i].resource[j].name,
-                      "Processor"))
-            {
-              current_domain_.node[i].resource[j].property[0].value
-                >>= (*host_info_seq)[i].cpu_util;
-              CORBA::Double d;
-              current_domain_.node[i].resource[j].property[0].value
-                >>= d;
-            }
-        }
-    }
-
-  return host_info_seq;
-}
-
-CORBA::Long CIAO::DomainDataManager::get_pid (const ACE_CString& cmp)
-{
-  CORBA::Long pid;
-
-  // This is really ineffiecient this is O(n) ; searching all the nodes
-  // all the resources for a particular component.
-  // It needs to be stored in some other data structure
-
-  for (CORBA::ULong i=0;i < current_domain_.node.length ();i++)
-    {
-      for (CORBA::ULong j = 0;j < current_domain_.node[i].resource.length ();j++)
-        {
-          // The resource
-          if (!ACE_OS::strcmp(
-                      current_domain_.node[i].resource[j].name,
-                      "Component") &&
-              ACE_CString (current_domain_.node[i].resource[j].property[0].name) ==
-              cmp)
-            {
-              current_domain_.node[i].resource[j].property[0].value
-                >>= pid;
-            }
-        } // resources
-    }// nodes
-
-  return pid;
-}
 
 void CIAO::DomainDataManager
 ::commitResources (
@@ -295,12 +221,9 @@ void CIAO::DomainDataManager
                                 plan.instance[i].deployedResource,
                                 temp_provisioned_data.node[j].resource);
             }
-            catch (::Deployment::ResourceNotAvailable& ex)
+            catch (::Deployment::ResourceCommitmentFailure& ex)
               {
                 // catch the exception and add parameters
-                ex.elementName =
-                  CORBA::string_dup (temp_provisioned_data.node[j].name);
-
                 throw ex;
               }
           }
@@ -367,13 +290,9 @@ match_requirement_resource (
                         match_properties (deployed[i].property,
                                           available[j].property);
                       }
-                      catch (::Deployment::ResourceNotAvailable& ex)
+                      catch (::Deployment::ResourceCommitmentFailure& ex)
                         {
                           // catch the exception and add parameters
-                          ex.resourceType =
-                            CORBA::string_dup (available[j].resourceType[k]);
-                          ex.resourceName =
-                            CORBA::string_dup (available[j].name);
                           throw ex;
                         }
                     }
