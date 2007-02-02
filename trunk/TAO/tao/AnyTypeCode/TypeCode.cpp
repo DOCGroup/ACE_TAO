@@ -40,9 +40,7 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
     }
   else if (CORBA::is_nil (tc))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
-                                          CORBA::COMPLETED_NO),
-                        false);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 13, CORBA::COMPLETED_NO);
     }
 
   CORBA::TCKind const tc_kind = tc->kind ();
@@ -88,9 +86,7 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
     }
   else if (CORBA::is_nil (tc))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
-                                          CORBA::COMPLETED_NO),
-                        false);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 13, CORBA::COMPLETED_NO);
     }
 
   CORBA::TypeCode_ptr const mutable_this =
@@ -148,101 +144,95 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
 char const *
 CORBA::TypeCode::id_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 char const *
 CORBA::TypeCode::name_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::ULong
 CORBA::TypeCode::member_count_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 char const *
 CORBA::TypeCode::member_name_i (CORBA::ULong /* index */
                                 ) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::member_type_i (CORBA::ULong /* index */
                                 ) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                    CORBA::TypeCode::_nil ());
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::Any *
 CORBA::TypeCode::member_label_i (CORBA::ULong /* index */
                                  ) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::discriminator_type_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                    CORBA::TypeCode::_nil ());
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::Long
 CORBA::TypeCode::default_index_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::ULong
 CORBA::TypeCode::length_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::content_type_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                    CORBA::TypeCode::_nil ());
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::UShort
 CORBA::TypeCode::fixed_digits_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::UShort
 CORBA::TypeCode::fixed_scale_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::Visibility
 CORBA::TypeCode::member_visibility_i (CORBA::ULong /* index */
                                       ) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                    CORBA::PRIVATE_MEMBER);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::ValueModifier
 CORBA::TypeCode::type_modifier_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                    CORBA::VM_NONE);
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::concrete_base_type_i (void) const
 {
-  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                    CORBA::TypeCode::_nil ());
+  throw ::CORBA::TypeCode::BadKind ();
 }
 
 // ---------------------------------------------------------------
@@ -395,9 +385,7 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
 {
   if (CORBA::is_nil (tc))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 13, CORBA::COMPLETED_NO);
     }
 
   CORBA::TCKind tc_kind = tc->kind ();

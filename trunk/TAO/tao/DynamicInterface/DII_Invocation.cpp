@@ -106,18 +106,14 @@ namespace TAO
     // Pull the exception ID out of the marshaling buffer.
     if (tmp_stream.read_string (buf.inout ()) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
-                                          CORBA::COMPLETED_YES),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
       }
 
     for (CORBA::ULong i = 0;
          this->excp_list_ != 0 && i < this->excp_list_->count ();
          i++)
       {
-          CORBA::TypeCode_var tc =
-            this->excp_list_->item (i
-                                   );
+          CORBA::TypeCode_var tc = this->excp_list_->item (i);
 
           const char *xid = tc->id ();
 
@@ -139,8 +135,7 @@ namespace TAO
 
           mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
-          ACE_THROW_RETURN (CORBA::UnknownUserException (any),
-                            TAO_INVOKE_USER_EXCEPTION);
+          throw ::CORBA::UnknownUserException (any);
         }
 
     // If we couldn't find the right exception, report it as
@@ -155,9 +150,7 @@ namespace TAO
     // @@ It would seem that if the remote exception is a
     //    UserException we can assume that the request was
     //    completed.
-    ACE_THROW_RETURN (CORBA::UNKNOWN (TAO::VMCID,
-                                      CORBA::COMPLETED_YES),
-                      TAO_INVOKE_USER_EXCEPTION);
+    throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
 
   }
 

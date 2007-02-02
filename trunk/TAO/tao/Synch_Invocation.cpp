@@ -84,12 +84,9 @@ namespace TAO
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
-        this->write_header (tspec,
-                            cdr
-                           );
+        this->write_header (tspec, cdr);
 
-        this->marshal_data (cdr
-                           );
+        this->marshal_data (cdr);
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
@@ -104,19 +101,14 @@ namespace TAO
             // we close the connection?
             this->resolver_.transport ()->close_connection ();
 
-            ACE_THROW_RETURN (
-              CORBA::INTERNAL (
-                               0,
-                               CORBA::COMPLETED_NO),
-              s);
+            throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
           }
 
         countdown.update ();
 
         s = this->send_message (cdr,
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
-                                max_wait_time
-                               );
+                                max_wait_time);
 
 #if TAO_HAS_INTERCEPTORS == 1
         // @@NOTE: Too much code repetition.
@@ -125,8 +117,7 @@ namespace TAO
         // before we leave.
         if (s == TAO_INVOKE_RESTART)
           {
-            const Invocation_Status tmp =
-              this->receive_other_interception ();
+            const Invocation_Status tmp = this->receive_other_interception ();
 
             if (tmp != TAO_INVOKE_SUCCESS)
               s = tmp;
@@ -161,17 +152,12 @@ namespace TAO
         // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
         // environment.
 
-        s =
-          this->wait_for_reply (max_wait_time,
-                                rd,
-                                dispatch_guard
-                               );
+        s = this->wait_for_reply (max_wait_time, rd, dispatch_guard);
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (s == TAO_INVOKE_RESTART)
           {
-            Invocation_Status const tmp =
-              this->receive_other_interception ();
+            Invocation_Status const tmp = this->receive_other_interception ();
 
             // Push the latest values for the return..
             if (tmp != TAO_INVOKE_SUCCESS)
@@ -186,8 +172,7 @@ namespace TAO
         // the return value? That would be bogus as per the contract
         // in the interface. The call violated the contract
 
-        s = this->check_reply_status (rd
-                                     );
+        s = this->check_reply_status (rd);
 
         // For some strategies one may want to release the transport
         // back to  cache after receiving the reply.
@@ -294,12 +279,11 @@ namespace TAO
               {
                 // Just a timeout with completed_maybe, don't close
                 // the connection or  anything
-                ACE_THROW_RETURN (CORBA::TIMEOUT (
-                                    CORBA::SystemException::_tao_minor_code (
-                                      TAO_TIMEOUT_RECV_MINOR_CODE,
-                                      errno),
-                                    CORBA::COMPLETED_MAYBE),
-                                  TAO_INVOKE_FAILURE);
+                throw ::CORBA::TIMEOUT (
+                  CORBA::SystemException::_tao_minor_code (
+                    TAO_TIMEOUT_RECV_MINOR_CODE,
+                    errno),
+                  CORBA::COMPLETED_MAYBE);
               }
           }
         else
@@ -312,8 +296,7 @@ namespace TAO
                 return
                   this->orb_core ()->service_raise_comm_failure (
                     this->details_.request_service_context ().service_info (),
-                    this->resolver_.profile ()
-                   );
+                    this->resolver_.profile ());
 
               }
             catch (const ::CORBA::Exception&)
@@ -340,8 +323,7 @@ namespace TAO
      * returning a restart since that is what needed to be done by the
      * callee.
      */
-    TAO_InputCDR &cdr =
-      rd.reply_cdr ();
+    TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
@@ -355,27 +337,22 @@ namespace TAO
       {
       case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
         {
-          Reply_Guard mon (this,
-                           TAO_INVOKE_FAILURE);
+          Reply_Guard mon (this, TAO_INVOKE_FAILURE);
           if (this->details_.demarshal_args (cdr) == false)
             {
-              ACE_THROW_RETURN (CORBA::MARSHAL (),
-                                TAO_INVOKE_FAILURE);
+              throw ::CORBA::MARSHAL ();
             }
 
           mon.set_status (TAO_INVOKE_SUCCESS);
         }
         break;
       case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-        return this->location_forward (cdr
-                                      );
+        return this->location_forward (cdr);
       case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
         {
           // Unmarshal the location forward object and set the
           // variable this->forward_to_.
-          Invocation_Status const s
-            = this->location_forward (cdr
-                                     );
+          Invocation_Status const s = this->location_forward (cdr);
           if (s != TAO_INVOKE_FAILURE)
             {
               // de-marshalling of permanent object reference was successfull
@@ -392,24 +369,20 @@ namespace TAO
                                "TAO (%P|%t) - Synch_Twoway_Invocation::"
                                 "check_reply_status: unexpected LOCATION_FORWARD_PERM reply\n"));
 
-                   ACE_THROW_RETURN (CORBA::INTERNAL (0, CORBA::COMPLETED_NO),
-                                     TAO_INVOKE_FAILURE);
+                   throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
                 }
             }
 
           return s;
         }
       case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
-        return this->handle_user_exception (cdr
-                                           );
+        return this->handle_user_exception (cdr);
       case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
-        return this->handle_system_exception (cdr
-                                             );
+        return this->handle_system_exception (cdr);
 
       case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
         {
-          Reply_Guard mon (this,
-                           TAO_INVOKE_FAILURE);
+          Reply_Guard mon (this, TAO_INVOKE_FAILURE);
           // We have received a message with a request to change the
           // addressing mode. First let us read the mode that the
           // server/agent asks for.
@@ -419,15 +392,12 @@ namespace TAO
             {
               // Could not demarshal the addressing disposition, raise an local
               // CORBA::MARSHAL
-            ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                              CORBA::COMPLETED_MAYBE),
-                              TAO_INVOKE_FAILURE);
+              throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
             }
 
           // Now set this addressing mode in the profile, so that
           // the next invocation need not go through this.
-          this->resolver_.profile ()->addressing_mode (addr_mode
-                                                      );
+          this->resolver_.profile ()->addressing_mode (addr_mode);
 
           mon.set_status (TAO_INVOKE_RESTART);
 
@@ -442,8 +412,7 @@ namespace TAO
   Synch_Twoway_Invocation::location_forward (TAO_InputCDR &inp_stream)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    Reply_Guard mon (this,
-                     TAO_INVOKE_FAILURE);
+    Reply_Guard mon (this, TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
       {
@@ -456,12 +425,11 @@ namespace TAO
 
     if ((inp_stream >> fwd) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (
-            CORBA::SystemException::_tao_minor_code (
-              TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-              errno),
-            CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::MARSHAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+            errno),
+          CORBA::COMPLETED_NO);
       }
 
     this->forwarded_reference (fwd.in ());
@@ -490,9 +458,7 @@ namespace TAO
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
-        ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                          CORBA::COMPLETED_MAYBE),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
     CORBA::Exception *exception = this->details_.corba_exception (buf.in ());
@@ -538,9 +504,7 @@ namespace TAO
       {
         // Could not demarshal the exception id, raise an local
         // CORBA::MARSHAL
-        ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                          CORBA::COMPLETED_MAYBE),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
     CORBA::ULong minor = 0;
@@ -549,9 +513,7 @@ namespace TAO
     if ((cdr >> minor) == 0
         || (cdr >> completion) == 0)
       {
-        ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                          CORBA::COMPLETED_MAYBE),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
     // Special handling for non-fatal system exceptions.
@@ -577,8 +539,7 @@ namespace TAO
           Invocation_Status const s =
             this->orb_core ()->service_raise_transient_failure (
               this->details_.request_service_context ().service_info (),
-              this->resolver_.profile ()
-             );
+              this->resolver_.profile ());
 
           if (s == TAO_INVOKE_RESTART)
             return s;
@@ -709,8 +670,7 @@ namespace TAO
           }
 
 #if TAO_HAS_INTERCEPTORS == 1
-        s =
-          this->receive_other_interception ();
+        s = this->receive_other_interception ();
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     catch ( ::CORBA::Exception& ex)

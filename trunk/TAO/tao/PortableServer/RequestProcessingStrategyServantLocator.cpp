@@ -167,9 +167,7 @@ namespace TAO
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
-                                                CORBA::COMPLETED_NO),
-                                                0);
+          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
         }
 
       // Remember the cookie

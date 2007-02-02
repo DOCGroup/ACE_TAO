@@ -121,8 +121,7 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val)
 
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_RelativeRoundtripTimeoutPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -274,8 +273,7 @@ TAO_Sync_Scope_Policy::create (const CORBA::Any& val
 {
   Messaging::SyncScope synchronization;
   if ((val >>= synchronization) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,

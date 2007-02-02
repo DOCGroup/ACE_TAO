@@ -23,7 +23,7 @@ TAO_DynValueCommon_i::is_null (
       CORBA::SystemException
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void

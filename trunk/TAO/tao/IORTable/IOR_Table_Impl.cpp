@@ -67,7 +67,7 @@ TAO_IOR_Table_Impl::find (const char *object_key)
         return CORBA::string_dup (ior.c_str ());
       }
     if (CORBA::is_nil (this->locator_.in ()))
-      ACE_THROW_RETURN (IORTable::NotFound (), 0);
+      throw IORTable::NotFound ();
   }
 
   return this->locator_->locate (object_key);

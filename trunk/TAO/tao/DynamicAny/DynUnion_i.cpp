@@ -304,8 +304,7 @@ TAO_DynUnion_i::get_discriminator (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
@@ -547,8 +546,7 @@ TAO_DynUnion_i::has_no_active_member (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // No active member (CORBA 2.3.1).
@@ -564,8 +562,7 @@ TAO_DynUnion_i::discriminator_kind (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::tk_null);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var tc =
@@ -586,8 +583,7 @@ TAO_DynUnion_i::member (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Boolean has_no_active_member =
@@ -595,8 +591,7 @@ TAO_DynUnion_i::member (void)
 
   if (has_no_active_member)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                        DynamicAny::DynAny::_nil ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
@@ -617,8 +612,7 @@ TAO_DynUnion_i::member_name (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Boolean has_no_active_member =
@@ -626,8 +620,7 @@ TAO_DynUnion_i::member_name (void)
 
   if (has_no_active_member)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                        0);
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   const char *retval = this->type_->member_name (this->member_slot_
@@ -645,8 +638,7 @@ TAO_DynUnion_i::member_kind (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::tk_null);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Boolean has_no_active_member =
@@ -654,8 +646,7 @@ TAO_DynUnion_i::member_kind (void)
 
   if (has_no_active_member)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                        CORBA::tk_null);
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   CORBA::TypeCode_var tc =
@@ -714,8 +705,7 @@ TAO_DynUnion_i::to_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   TAO_OutputCDR out_cdr;
@@ -810,8 +800,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs
@@ -881,8 +870,7 @@ TAO_DynUnion_i::current_component (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->current_position_ == 1)

@@ -62,9 +62,7 @@ TAO_POAManager_Factory::create_POAManager (
     // If we already have a manager with the same name throw an exception
     if (!CORBA::is_nil (poamanager.in()))
       {
-        ACE_THROW_RETURN (
-          ::PortableServer::POAManagerFactory::ManagerAlreadyExists (),
-          ::PortableServer::POAManager::_nil ());
+        throw ::PortableServer::POAManagerFactory::ManagerAlreadyExists ();
       }
   }
 

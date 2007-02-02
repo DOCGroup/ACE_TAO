@@ -26,8 +26,7 @@ TAO_PI_PolicyFactory::create_policy (
 
       if ((value >>= policy_value) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (processing_mode_policy,
@@ -38,8 +37,7 @@ TAO_PI_PolicyFactory::create_policy (
       return processing_mode_policy;
     }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,8 +22,7 @@ TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
 {
   TAO::BufferingConstraint *buffering_constraint = 0;
   if ((val >>= buffering_constraint) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_Buffering_Constraint_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -96,13 +95,11 @@ TAO_Messaging_PolicyFactory::create_policy (
       type == Messaging::MAX_HOPS_POLICY_TYPE ||
 #endif  /* TAO_HAS_MAX_HOPS_POLICY == 1 */
       type == Messaging::QUEUE_ORDER_POLICY_TYPE)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
-                      CORBA::Policy::_nil ());
+    throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
 
   ACE_UNUSED_ARG (value);
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

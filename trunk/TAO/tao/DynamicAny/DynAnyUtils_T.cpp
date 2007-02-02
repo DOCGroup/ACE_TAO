@@ -72,8 +72,7 @@ namespace TAO
   {
     if (the_dynany->destroyed ())
       {
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                          BasicTypeTraits<T>::return_type ());
+        throw ::CORBA::OBJECT_NOT_EXIST ();
       }
 
     if (the_dynany->has_components ())
@@ -92,8 +91,7 @@ namespace TAO
 
         if (!(my_any >>= extval))
           {
-            ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                              BasicTypeTraits<T>::return_type ());
+            throw DynamicAny::DynAny::TypeMismatch ();
           }
 
         return BasicTypeTraits<T>::convert (extval);
@@ -208,11 +206,9 @@ namespace TAO
         case CORBA::tk_abstract_interface:
         case CORBA::tk_component:
         case CORBA::tk_home:
-          ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                            DynamicAny::DynAny::_nil ());
+          throw ::CORBA::NO_IMPLEMENT ();
         case CORBA::tk_native:
-          ACE_THROW_RETURN (DynamicAny::DynAnyFactory::InconsistentTypeCode (),
-                            DynamicAny::DynAny::_nil ());
+          throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
         default:
           break;
         }

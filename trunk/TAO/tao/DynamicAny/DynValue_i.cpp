@@ -25,7 +25,7 @@ TAO_DynValue_i::current_member_name (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::TCKind
@@ -37,8 +37,7 @@ TAO_DynValue_i::current_member_kind (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CORBA::tk_null);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::NameValuePairSeq *
@@ -48,7 +47,7 @@ TAO_DynValue_i::get_members (
       CORBA::SystemException
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -71,7 +70,7 @@ TAO_DynValue_i::get_members_as_dyn_any (
       CORBA::SystemException
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void

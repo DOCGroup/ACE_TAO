@@ -41,8 +41,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        PortableServer::ServantManager::_nil ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     void
@@ -148,9 +147,9 @@ namespace TAO
           PortableServer::Servant default_servant = this->default_servant_.in ();
           if (default_servant == 0)
             {
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 3,
-                                                    CORBA::COMPLETED_NO),
-                                                    0);
+              throw ::CORBA::OBJ_ADAPTER (
+                CORBA::OMGVMCID | 3,
+                CORBA::COMPLETED_NO);
             }
           else
             {
@@ -195,8 +194,7 @@ namespace TAO
            * no default servant is available, we will raise the
            * ObjectNotActive system exception.
            */
-          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                            0);
+          throw PortableServer::POA::ObjectNotActive ();
         }
 
       return servant;

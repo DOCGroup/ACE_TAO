@@ -246,8 +246,7 @@ TAO_DynAny_i::to_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Any_ptr retval;
@@ -265,8 +264,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
@@ -537,12 +535,10 @@ TAO_DynAny_i::current_component (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                    DynamicAny::DynAny::_nil ());
+  throw DynamicAny::DynAny::TypeMismatch ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

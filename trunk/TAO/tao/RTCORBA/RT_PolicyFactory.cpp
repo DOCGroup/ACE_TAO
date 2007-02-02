@@ -38,8 +38,7 @@ TAO_RT_PolicyFactory::create_policy (
   if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
     return TAO_PriorityBandedConnectionPolicy::create (value);
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 CORBA::Policy_ptr
@@ -90,8 +89,7 @@ TAO_RT_PolicyFactory::_create_policy (
       return policy;
     }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

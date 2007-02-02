@@ -146,8 +146,7 @@ namespace TAO
       if (active_object_map_->
           find_user_id_using_system_id (system_id, user_id.out()) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // This operation returns the active servant associated with the
@@ -166,8 +165,7 @@ namespace TAO
 
       if (result == -1)
         {
-          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                            0);
+          throw PortableServer::POA::ObjectNotActive ();
         }
 
       return servant;
@@ -187,8 +185,7 @@ namespace TAO
           find_user_id_using_system_id (system_id,
                                         user_id.out ()) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       return user_id._retn ();
@@ -212,8 +209,7 @@ namespace TAO
 
       if (result == -1)
         {
-          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                            0);
+          throw PortableServer::POA::ObjectNotActive ();
         }
 
       return servant;
@@ -255,8 +251,7 @@ namespace TAO
         {
           // If the Object Id value is not active in the POA, an
           // ObjectNotActive exception is raised.
-          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                            CORBA::Object::_nil ());
+          throw PortableServer::POA::ObjectNotActive ();
         }
     }
 
@@ -271,8 +266,7 @@ namespace TAO
           find_user_id_using_system_id (system_id,
                                         user_id.out()) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            TAO_SERVANT_NOT_FOUND);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       TAO_Active_Object_Map_Entry *entry = 0;
@@ -305,8 +299,7 @@ namespace TAO
           find_user_id_using_system_id (system_id,
                                         user_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       poa_current_impl.object_id(user_id);
@@ -348,8 +341,7 @@ namespace TAO
           find_user_id_using_system_id (system_id,
                                         user_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            -1);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // If the POA has the RETAIN policy, the POA looks in the Active
@@ -531,8 +523,7 @@ namespace TAO
       if (!((!this->poa_->allow_multiple_activations ()
                 || this->poa_->allow_implicit_activation ())))
         {
-          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                            0);
+          throw PortableServer::POA::WrongPolicy ();
         }
 
       /**
@@ -575,8 +566,7 @@ namespace TAO
                                                       this->poa_->server_priority (),
                                                       user_id.out ()) != 0)
             {
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                0);
+              throw ::CORBA::OBJ_ADAPTER ();
             }
 
           //
@@ -603,8 +593,7 @@ namespace TAO
       /*
        * Otherwise, the ServantNotActive exception is raised.
        */
-      ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
-                        0);
+      throw PortableServer::POA::ServantNotActive ();
     }
 
     PortableServer::ObjectId *
@@ -619,8 +608,7 @@ namespace TAO
       if (this->poa_->allow_multiple_activations () ||
             this->poa_->allow_implicit_activation ())
         {
-          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                            0);
+          throw PortableServer::POA::WrongPolicy ();
         }
 
 #else
@@ -630,8 +618,7 @@ namespace TAO
       if (!((!this->poa_->allow_multiple_activations ()
                 || this->poa_->allow_implicit_activation ())))
         {
-          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                            0);
+          throw PortableServer::POA::WrongPolicy ();
         }
 #endif
 
@@ -665,8 +652,7 @@ namespace TAO
                                                         priority,
                                                         system_id.out ()) != 0)
             {
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                0);
+              throw ::CORBA::OBJ_ADAPTER ();
             }
 
           //
@@ -691,8 +677,7 @@ namespace TAO
         }
 
       // Otherwise, the ServantNotActive exception is raised.
-      ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
-                        0);
+      throw PortableServer::POA::ServantNotActive ();
     }
 
     CORBA::Object_ptr
@@ -720,8 +705,7 @@ namespace TAO
       if (this->active_object_map_->
           find_user_id_using_system_id (system_id.in (), user_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // Remember params for potentially invoking <key_to_object> later.
@@ -753,8 +737,7 @@ namespace TAO
     {
       if (!this->poa_->has_system_id ())
         {
-          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                            0);
+          throw PortableServer::POA::WrongPolicy ();
         }
 
       bool may_activate =
@@ -768,8 +751,7 @@ namespace TAO
             }
           else
             {
-              ACE_THROW_RETURN (PortableServer::POA::ServantAlreadyActive (),
-                                0);
+              throw PortableServer::POA::ServantAlreadyActive ();
             }
         }
 
@@ -782,8 +764,7 @@ namespace TAO
                                                   priority,
                                                   user_id.out ()) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       //
@@ -941,8 +922,7 @@ namespace TAO
                                                     priority,
                                                     system_id.out ()) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // Find user id from system id.
@@ -950,8 +930,7 @@ namespace TAO
           find_user_id_using_system_id (system_id.in (),
                                         user_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // Remember params for potentially invoking <key_to_object> later.
@@ -995,8 +974,7 @@ namespace TAO
                                         priority,
                                         system_id.out ()) != 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // Remember params for potentially invoking <key_to_object> later.

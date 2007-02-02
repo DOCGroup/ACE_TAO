@@ -159,16 +159,11 @@ namespace TAO
           {
             // We sent a message already and we haven't gotten a
             // reply.  Just throw TIMEOUT with *COMPLETED_MAYBE*.
-            ACE_THROW_RETURN (
-                CORBA::TIMEOUT (
-                    CORBA::SystemException::_tao_minor_code (
-                        TAO_TIMEOUT_SEND_MINOR_CODE,
-                        errno
-                        ),
-                    CORBA::COMPLETED_MAYBE
-                    ),
-                TAO_INVOKE_FAILURE
-                );
+            throw ::CORBA::TIMEOUT (
+              CORBA::SystemException::_tao_minor_code (
+                TAO_TIMEOUT_SEND_MINOR_CODE,
+                errno),
+              CORBA::COMPLETED_MAYBE);
           }
 
         if (TAO_debug_level > 2)

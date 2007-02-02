@@ -179,8 +179,7 @@ TAO_ORBInitInfo::resolve_initial_references (
   this->check_validity ();
 
   if (id == 0 || ACE_OS::strlen (id) == 0)
-    ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
-                      CORBA::Object::_nil ());
+    throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   // The ORB is practically fully initialized by the time this point
   // is reached so just use the ORB's resolve_initial_references()
@@ -334,12 +333,11 @@ TAO_ORBInitInfo::allocate_slot_id (void)
   // initialization.  ORB initialization is already atomic.
   return this->slot_count_++;
 #else
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (
+    CORBA::SystemException::_tao_minor_code (
+      0,
+      ENOTSUP),
+    CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -378,12 +376,11 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
                                                             slot_id);
 
   if (result != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA::SystemException::_tao_minor_code (
-                          0,
-                          errno),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw ::CORBA::INTERNAL (
+      CORBA::SystemException::_tao_minor_code (
+        0,
+        errno),
+      CORBA::COMPLETED_NO);
 
   return slot_id;
 }

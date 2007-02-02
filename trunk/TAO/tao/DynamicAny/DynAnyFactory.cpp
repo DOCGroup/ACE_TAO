@@ -79,8 +79,7 @@ TAO_DynAnyFactory::create_dyn_any_without_truncation (
       DynamicAny::MustTruncate
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    DynamicAny::DynAny::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::DynAnySeq *
@@ -95,7 +94,7 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
       DynamicAny::MustTruncate
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::AnySeq *
@@ -107,7 +106,7 @@ TAO_DynAnyFactory::create_multiple_anys (
       CORBA::SystemException
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 // Utility function called by all the DynAny classes

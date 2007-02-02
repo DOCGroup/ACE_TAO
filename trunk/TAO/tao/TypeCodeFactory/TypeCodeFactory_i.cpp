@@ -149,16 +149,12 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   if (name == 0 || !this->valid_name (name))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::Boolean const good_disc_type =
@@ -166,9 +162,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   if (!good_disc_type)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 20,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 20, CORBA::COMPLETED_NO);
     }
 
   CORBA::ULong const len = members.length ();
@@ -211,9 +205,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                 }
               else
                 {
-                  ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
-                                                      CORBA::COMPLETED_NO),
-                                    tc);
+                  throw ::CORBA::BAD_PARAM (
+                    CORBA::OMGVMCID | 17,
+                    CORBA::COMPLETED_NO);
                 }
             }
           else
@@ -237,9 +231,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       // Duplicate member name?
       if (trybind_status != 0)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
-                                              CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 17, CORBA::COMPLETED_NO);
         }
 
       CORBA::TypeCode_ptr const tc_holder = member.type.in ();
@@ -251,9 +243,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       if (!valid_member)
         {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
-                                                 CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_TYPECODE (
+            CORBA::OMGVMCID | 2,
+            CORBA::COMPLETED_NO);
         }
 
       // Reset the default index, if we have a default case label.
@@ -279,9 +271,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
           if (!equiv)
             {
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                  CORBA::COMPLETED_NO),
-                                tc);
+              throw ::CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 19,
+                CORBA::COMPLETED_NO);
             }
         }
     }
@@ -294,9 +286,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   if (!unique_labels)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 18,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 18, CORBA::COMPLETED_NO);
     }
 
   using namespace TCF::Union;
@@ -354,9 +344,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
             {
               // Should never throw since label kind was
               // verified earlier.
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                  CORBA::COMPLETED_NO),
-                                CORBA::TypeCode::_nil ());
+              throw ::CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 19,
+                CORBA::COMPLETED_NO);
             }
         }
       else
@@ -407,9 +397,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::ULong,
@@ -428,9 +418,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::Long,
@@ -449,9 +439,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::UShort,
@@ -470,9 +460,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::Short,
@@ -491,9 +481,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::Char,
@@ -512,9 +502,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::Boolean,
@@ -533,9 +523,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::LongLong,
@@ -555,9 +545,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     // Should never throw since label kind was
                     // verified earlier.
-                    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 19,
-                                                        CORBA::COMPLETED_NO),
-                                      CORBA::TypeCode::_nil ());
+                    throw ::CORBA::BAD_PARAM (
+                      CORBA::OMGVMCID | 19,
+                      CORBA::COMPLETED_NO);
                   }
 
                 typedef TAO::TypeCode::Case_T<CORBA::ULongLong,
@@ -571,9 +561,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
 #endif  /* !ACE_LACKS_LONGLONG_T */
             default:
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 20,
-                                                  CORBA::COMPLETED_NO),
-                                CORBA::TypeCode::_nil ());
+              throw ::CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 20,
+                CORBA::COMPLETED_NO);
             }
         }
 
@@ -630,16 +620,12 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   if (name == 0 || !this->valid_name (name))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::ULong const len = members.length ();
@@ -656,9 +642,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
-                                              CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 17, CORBA::COMPLETED_NO);
         }
 
       enumerators[index] = members[index];
@@ -824,9 +808,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
 
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   ACE_NEW_THROW_EX (tc,
@@ -1168,17 +1150,13 @@ TAO_TypeCodeFactory_i::create_tc_common (
 {
   if (name == 0 || !this->valid_name (name))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   // Repo id may not be null for object or native type.
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::TypeCode_ptr tc;
@@ -1227,9 +1205,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
 
   if (!valid_element)
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
-                                             CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
   CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (element_type));
@@ -1258,16 +1234,12 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   if (name == 0 || !this->valid_name (name))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::ULong const len = members.length ();
@@ -1293,18 +1265,16 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
       if (!valid_member)
         {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
-                                                 CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_TYPECODE (
+            CORBA::OMGVMCID | 2,
+            CORBA::COMPLETED_NO);
         }
 
       char const * const member_name = members[index].name;
 
       if (member_name == 0 || !this->valid_name (member_name))
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                              CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
 
       ACE_CString ext_id (member_name);
@@ -1313,9 +1283,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
-                                              CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 17, CORBA::COMPLETED_NO);
         }
 
       TAO::TypeCode::Struct_Field<CORBA::String_var,
@@ -1373,16 +1341,12 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
   if (name == 0 || !this->valid_name (name))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::Boolean const valid_content =
@@ -1390,9 +1354,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
   if (!valid_content)
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
-                                             CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
   CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (underlying_type));
@@ -1424,16 +1386,12 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   if (name == 0 || !this->valid_name (name))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
     }
 
   if (id == 0 || !this->valid_id (id))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 16,
-                                          CORBA::COMPLETED_NO),
-                        tc);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
   CORBA::ULong const len = members.length ();
@@ -1457,18 +1415,16 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
       if (!valid_member)
         {
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2,
-                                                 CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_TYPECODE (
+            CORBA::OMGVMCID | 2,
+            CORBA::COMPLETED_NO);
         }
 
       const char * const member_name = members[index].name;
 
       if (member_name == 0 || !this->valid_name (member_name))
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 15,
-                                              CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
 
       ACE_CString ext_id (member_name);
@@ -1477,9 +1433,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 17,
-                                              CORBA::COMPLETED_NO),
-                            tc);
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 17, CORBA::COMPLETED_NO);
         }
 
       // Check if recursive.
@@ -1867,7 +1821,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     //    recursive through a member sequence (which
                     //    itself may be contained inside a nested
                     //    struct, union, etc).
-                        ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), false);
+                        throw ::CORBA::BAD_TYPECODE ();
                   }
               }
             else
@@ -1971,8 +1925,7 @@ TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind, char const * id)
       break;
 
     default:  // Should never hit this case.
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        tc);
+      throw ::CORBA::INTERNAL ();
     }
 
   return tc;

@@ -68,7 +68,7 @@ namespace TAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (CORBA::is_nil(poa_.in()))
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
+      throw ::CORBA::BAD_INV_ORDER ();
 
     TAO_Root_POA* tao_poa = dynamic_cast<TAO_Root_POA*>(poa_.in());
 
