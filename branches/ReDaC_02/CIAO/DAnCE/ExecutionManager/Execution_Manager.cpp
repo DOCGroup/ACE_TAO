@@ -5,7 +5,10 @@
 
 // Include Name Service header
 #include "orbsvcs/CosNamingC.h"
-#include "tao/Utils/Implicit_Deactivator.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
+#include "tao/Strategies/advanced_resource.h"
 
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
@@ -22,11 +25,12 @@ namespace CIAO
     const char *pid_file_name_ = 0;
     static bool register_with_ns_ = false;
     static bool write_to_ior_ = false;
+    static bool rt_corba_enabled = false;
 
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:i:np:");
+      ACE_Get_Opt get_opts (argc, argv, "o:i:nrp:");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -40,6 +44,9 @@ namespace CIAO
             break;
           case 'n':
             register_with_ns_ = true;
+            break;
+          case 'r':
+            rt_corba_enabled = true;
             break;
           case 'p':
             pid_file_name_ = get_opts.opt_arg ();
@@ -156,39 +163,99 @@ namespace CIAO
           if (!parse_args (argc, argv))
             return -1;
 
+          // RTORB.
+          CORBA::Object_var object =
+            orb->resolve_initial_references ("RTORB");
+          RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+
+          if (CORBA::is_nil (rt_orb.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t) CIAO_ExecutionManager: "
+                               "Nil RT_ORB panic error, returning \n"),
+                               -1);
+
           // Get reference to Root POA.
           CORBA::Object_var obj
             = orb->resolve_initial_references ("RootPOA"
                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          PortableServer::POA_var poa =
+          PortableServer::POA_var root_poa =
             PortableServer::POA::_narrow (obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
 
-          if (CORBA::is_nil (poa.in ()))
+          if (CORBA::is_nil (root_poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
-                               "Nil POA panic error, returning \n"),
+                               "Nil Root POA panic error, returning \n"),
+                               -1);
+
+          // POAManager.
+          PortableServer::POAManager_var poa_manager =
+            root_poa->the_POAManager ();
+
+          if (poa_manager.in () == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t) CIAO_ExecutionManager: "
+                               "Nil POA Manager panic error, returning \n"),
+                               -1);
+
+          PortableServer::POA_var child_poa;
+          if (rt_corba_enabled)
+            {
+              // Create child POA with RTCORBA::ClientProtocolPolicy set.
+              CORBA::PolicyList poa_policy_list;
+              poa_policy_list.length (1);
+              poa_policy_list[0] =
+                rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+                                                      0
+                                                      ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              child_poa =
+                root_poa->create_POA ("Child_POA",
+                                      poa_manager.in (),
+                                      poa_policy_list);
+
+
+            }
+          else
+            {
+              child_poa =
+                root_poa->create_POA ("Child_POA",
+                                      poa_manager.in (),
+                                      0);
+            }
+
+          if (CORBA::is_nil (child_poa.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%P|%t) CIAO_ExecutionManager: "
+                              "Nil Child POA panic error, returning \n"),
                               -1);
 
-          // Create and install the CIAO Daemon servant
+          // Create and install the CIAO Daemon servant on child POA
           Execution_Manager_Impl *daemon_servant = 0;
           ACE_NEW_RETURN (daemon_servant,
                           Execution_Manager_Impl(orb.in (),
-                                                 poa.in (),
+                                                 child_poa.in (),
                                                  init_file_name),
                           -1);
 
-          // Implicit activation
+          // Explicit activation through the child POA
           PortableServer::ServantBase_var safe_daemon (daemon_servant);
 
-          CIAO::ExecutionManagerDaemon_var daemon =
-            daemon_servant->_this ();
+          PortableServer::ObjectId_var id =
+            child_poa->activate_object (daemon_servant);
 
-          TAO::Utils::Implicit_Deactivator de (daemon_servant);
+          CORBA::Object_var daemon_obj =
+            child_poa->id_to_reference (id.in ());
+
+          CIAO::ExecutionManagerDaemon_var daemon = 
+            CIAO::ExecutionManagerDaemon::_narrow (daemon_obj.in ());
+
+          // Register to naming service
           bool retval = false;
 
           if (register_with_ns_)
@@ -213,17 +280,7 @@ namespace CIAO
             return -1;
 
           // Activate POA manager
-          PortableServer::POAManager_var mgr =
-            poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (mgr.in () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) CIAO_ExecutionManager: "
-                               "Nil POA Manager error, returning \n"),
-                              -1);
-
-          mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // End Deployment part
@@ -236,13 +293,9 @@ namespace CIAO
           orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // Forget the pointer. The POA will take care of it during
-          // destroy.
-          (void) de.release ();
-
-          poa->destroy (1,
-                        1
-                        ACE_ENV_ARG_PARAMETER);
+          root_poa->destroy (1,
+                             1
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
