@@ -86,8 +86,7 @@ TAO::TypeCode::Objref<StringType,
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::INTERNAL ();
     }
 
   if (this->kind_ == CORBA::tk_abstract_interface)

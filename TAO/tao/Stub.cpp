@@ -258,8 +258,7 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
       IOP::TaggedProfile *tp = prof->create_tagged_profile ();
 
       if (tp == 0)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (),
-                          -1);
+        throw ::CORBA::NO_MEMORY ();
       ior_info->profiles[index] = *tp;
     }
 

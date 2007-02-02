@@ -58,8 +58,7 @@ TAO_DynamicImplementation::_get_interface (void)
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        0);
+      throw ::CORBA::INTF_REPOS ();
     }
 
   CORBA::RepositoryId_var id =
@@ -102,8 +101,7 @@ TAO_DynamicImplementation::_create_stub (void)
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   PortableServer::POA_var poa =
@@ -197,8 +195,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   PortableServer::POA_var poa =

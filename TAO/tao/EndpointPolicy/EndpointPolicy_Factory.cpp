@@ -39,8 +39,7 @@ TAO_EndpointPolicy_Factory::create_policy (
   {
     const EndpointPolicy::EndpointList* endpoint_list;
     if ((value >>= endpoint_list) == 0)
-      ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-      CORBA::Policy::_nil ());
+      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
     TAO_Acceptor_Registry & registry
       = this->orb_core_->lane_resources ().acceptor_registry ();
@@ -73,8 +72,7 @@ TAO_EndpointPolicy_Factory::create_policy (
     // is listening on. A CORBA::PolicyError exception with a
     // PolicyErrorCode of UNSUPPORTED_POLICY_VALUE is raised.
     if (!found_one)
-      ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE),
-                        CORBA::Policy::_nil ());
+      throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
 
     TAO_EndpointPolicy_i *tmp;
     ACE_NEW_THROW_EX (tmp,
@@ -85,8 +83,7 @@ TAO_EndpointPolicy_Factory::create_policy (
     return tmp;
   }
   else
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
+    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 

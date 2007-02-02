@@ -45,9 +45,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
   // ........
 
   // No policy matching the given PolicyType was found.
-  ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
-                                       CORBA::COMPLETED_NO),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::INV_POLICY (CORBA::OMGVMCID | 3, CORBA::COMPLETED_NO);
 }
 
 void
@@ -117,9 +115,7 @@ TAO_IORInfo::adapter_template (void)
 
   if (adapter_template == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   return adapter_template;
@@ -141,9 +137,7 @@ TAO_IORInfo::current_factory (void)
 
   if (adapter_factory == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   return adapter_factory;

@@ -880,13 +880,11 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
       // Finalize thread pool related resources.
       thread_pool->finalize ();
 
-      ACE_THROW_RETURN (
-        CORBA::INTERNAL (
-          CORBA::SystemException::_tao_minor_code (
-            TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE,
-            errno),
-          CORBA::COMPLETED_NO),
-        result);
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE,
+          errno),
+        CORBA::COMPLETED_NO);
     }
 
   // Bind thread to internal table.
@@ -896,8 +894,7 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
 
   // Throw exceptin in case of errors.
   if (result != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      result);
+    throw ::CORBA::INTERNAL ();
 
   //
   // Success.

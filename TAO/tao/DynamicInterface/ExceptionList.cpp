@@ -58,8 +58,7 @@ CORBA::ExceptionList::item (CORBA::ULong slot)
 
   if (this->tc_list_.get (tc, slot) == -1)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::TypeCode::Bounds ();
     }
   else
     {

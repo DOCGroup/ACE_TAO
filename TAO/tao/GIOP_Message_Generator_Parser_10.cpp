@@ -250,8 +250,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       else
         {
           // <target> can only have the values above
-          ACE_THROW_RETURN (CORBA::MARSHAL (),
-                            0);
+          throw ::CORBA::MARSHAL ();
         }
 
       output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);

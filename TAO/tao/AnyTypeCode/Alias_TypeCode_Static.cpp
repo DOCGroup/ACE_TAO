@@ -113,8 +113,7 @@ TAO::TypeCode::Alias<char const *,
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::INITIALIZE ();
     }
 
   CORBA::TypeCode_var compact_content_type =

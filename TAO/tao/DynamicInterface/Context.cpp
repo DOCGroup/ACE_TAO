@@ -46,17 +46,13 @@ CORBA::Context::_decr_refcnt (void)
 const char *
 CORBA::Context::context_name (void) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 CORBA::Context_ptr
 CORBA::Context::parent (void) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO::VMCID,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 void
@@ -94,8 +90,7 @@ CORBA::Context::get_values (const char * /* start_scope */,
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
-CORBA::ContextList::ContextList (CORBA::ULong len,
-                                 char* *ctx_list)
+CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
   : ref_count_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
@@ -138,8 +133,7 @@ CORBA::ContextList::item (CORBA::ULong slot)
 
   if (this->ctx_list_.get (ctx, slot) == -1)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                        0);
+      throw ::CORBA::TypeCode::Bounds ();
     }
   else
     {

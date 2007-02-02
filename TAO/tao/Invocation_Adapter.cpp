@@ -143,12 +143,11 @@ namespace TAO
       this->target_->_stubobj ();
 
     if (stub == 0)
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        stub);
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
 
     return stub;
   }
@@ -303,12 +302,11 @@ namespace TAO
     if (this->mode_ != TAO_SYNCHRONOUS_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-            CORBA::SystemException::_tao_minor_code (
-                TAO::VMCID,
-                EINVAL),
-            CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
 
     TAO::Synch_Twoway_Invocation synch (this->target_,  r, details);

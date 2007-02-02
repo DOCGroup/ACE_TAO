@@ -250,7 +250,7 @@ TAO::TypeCode::Union<char const *,
 //       Traits<char const *>::get_typecode (this->default_case_.type)
 //      );
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 char const *
@@ -302,7 +302,7 @@ TAO::TypeCode::Union<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->ncases_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+    throw ::CORBA::TypeCode::Bounds ();
 
   return this->cases_[index]->name ();
 }
@@ -316,8 +316,7 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      CORBA::TypeCode::_nil ());
+    throw ::CORBA::TypeCode::Bounds ();
 
   return CORBA::TypeCode::_duplicate (this->cases_[index]->type ());
 }
@@ -331,8 +330,7 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      0);
+    throw ::CORBA::TypeCode::Bounds ();
 
   // Default case.
   if (this->default_index_ > -1

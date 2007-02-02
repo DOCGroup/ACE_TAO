@@ -153,12 +153,11 @@ namespace TAO
 
     if (conn_reg == 0)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-                            CORBA::SystemException::_tao_minor_code (
-                              0,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          false);
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            0,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
 
     ACE_Time_Value connection_timeout;
@@ -200,12 +199,11 @@ namespace TAO
         has_con_timeout == false &&
         errno == ETIME)
       {
-        ACE_THROW_RETURN (CORBA::TIMEOUT (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                              errno),
-                            CORBA::COMPLETED_NO),
-                          false);
+        throw ::CORBA::TIMEOUT (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_TIMEOUT_CONNECT_MINOR_CODE,
+            errno),
+          CORBA::COMPLETED_NO);
       }
     else if (this->transport_.get () == 0)
       {

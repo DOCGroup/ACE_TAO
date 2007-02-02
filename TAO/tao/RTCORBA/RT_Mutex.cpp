@@ -67,7 +67,7 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time
     return 0;
   else
     // Some really bad error.
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw ::CORBA::INTERNAL ();
 }
 
 const char *

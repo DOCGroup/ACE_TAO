@@ -316,12 +316,10 @@ TAO_DynEnum_i::current_component (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                    DynamicAny::DynAny::_nil ());
+  throw DynamicAny::DynAny::TypeMismatch ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

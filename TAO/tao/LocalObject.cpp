@@ -75,7 +75,7 @@ CORBA::LocalObject::_key (void)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Cannot get _key from a LocalObject!\n")));
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -118,39 +118,31 @@ CORBA::LocalObject::_create_request (CORBA::Context_ptr,
 CORBA::Request_ptr
 CORBA::LocalObject::_request (const char *)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 4, CORBA::COMPLETED_NO);
 }
 
 CORBA::Object_ptr
 CORBA::LocalObject::_get_component (void)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 char *
 CORBA::LocalObject::_repository_id (void)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::InterfaceDef_ptr
 CORBA::LocalObject::_get_interface (void)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::ImplementationDef_ptr
 CORBA::LocalObject::_get_implementation (void)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -160,40 +152,32 @@ CORBA::LocalObject::_get_implementation (void)
 CORBA::Policy_ptr
 CORBA::LocalObject::_get_policy (CORBA::PolicyType)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::Policy_ptr
 CORBA::LocalObject::_get_cached_policy (TAO_Cached_Policy_Type)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Object_ptr
 CORBA::LocalObject::_set_policy_overrides (const CORBA::PolicyList &,
                                            CORBA::SetOverrideType)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::PolicyList *
 CORBA::LocalObject::_get_policy_overrides (const CORBA::PolicyTypeSeq &)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 CORBA::Boolean
 CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    false);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -201,9 +185,7 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out)
 CORBA::ORB_ptr
 CORBA::LocalObject::_get_orb (void)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8,
-                                         CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
 }
 
 // ****************************************************************

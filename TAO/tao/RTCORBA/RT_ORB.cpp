@@ -171,8 +171,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
       int const result = this->map_.bind (name, mutex);
 
       if (result != 0)
-        ACE_THROW_RETURN (CORBA::INTERNAL (),
-                          RTCORBA::Mutex::_nil ());
+        throw ::CORBA::INTERNAL ();
     }
 
   // Return the one we found or created.
@@ -180,8 +179,7 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 #else /* TAO_HAS_NAMED_RT_MUTEXES */
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (created_flag);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    RTCORBA::Mutex::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 #endif /* TAO_HAS_NAMED_RT_MUTEXES */
 }
 
@@ -200,15 +198,13 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name)
   // If we find the mutex, simply return it.
   RTCORBA::Mutex_var mutex;
   if (this->map_.find (name, mutex) != 0)
-    ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (),
-                      RTCORBA::Mutex::_nil ());
+    throw RTCORBA::RTORB::MutexNotFound ();
 
   // Return the one we found.
   return mutex._retn ();
 #else /* TAO_HAS_NAMED_RT_MUTEXES */
   ACE_UNUSED_ARG (name);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    RTCORBA::Mutex::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 #endif /* TAO_HAS_NAMED_RT_MUTEXES */
 }
 

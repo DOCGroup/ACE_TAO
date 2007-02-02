@@ -27,9 +27,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal (
       // Marshaling an incomplete recursive TypeCode placeholder is
       // not allowed.
 
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        false);
+      throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->tao_marshal (cdr, offset);
@@ -45,9 +43,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal_kind (
       // Marshaling an incomplete recursive TypeCode placeholder is
       // not allowed.
 
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        false);
+      throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->tao_marshal_kind (cdr);
@@ -73,9 +69,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::equal_i (CORBA::TypeCode_ptr tc
     {
       // Nothing to compare yet.
 
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        false);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->equal (tc
@@ -90,9 +84,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::equivalent_i (CORBA::TypeCode_ptr tc
     {
       // Nothing to compare yet.
 
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        false);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->equivalent (tc
@@ -107,9 +99,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::get_compact_typecode_i (
     {
       // Nothing to compare yet.
 
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return
@@ -131,9 +121,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::name_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->name ();
@@ -145,9 +133,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_count_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->member_count ();
@@ -160,9 +146,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_name_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->member_name (index
@@ -176,9 +160,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_type_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->member_type (index
@@ -192,9 +174,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_label_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return
@@ -208,9 +188,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::discriminator_type_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return
@@ -223,9 +201,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::default_index_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->default_index ();
@@ -238,9 +214,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_visibility_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::PRIVATE_MEMBER);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->member_visibility (index
@@ -253,9 +227,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::type_modifier_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::VM_NONE);
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return this->the_typecode_->type_modifier ();
@@ -267,9 +239,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::concrete_base_type_i (
 {
   if (CORBA::is_nil (this->the_typecode_.in ()))
     {
-      ACE_THROW_RETURN (CORBA::BAD_TYPECODE (0,
-                                             CORBA::COMPLETED_NO),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
 
   return

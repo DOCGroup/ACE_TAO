@@ -57,8 +57,7 @@ namespace TAO
     ServantRetentionStrategyNonRetain::find_servant (
       const PortableServer::ObjectId &/*system_id*/)
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::ObjectId *
@@ -85,8 +84,7 @@ namespace TAO
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     CORBA::Object_ptr
@@ -97,8 +95,7 @@ namespace TAO
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        CORBA::Object::_nil ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     TAO_SERVANT_LOCATION
@@ -162,8 +159,7 @@ namespace TAO
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     CORBA::Object_ptr
@@ -173,8 +169,7 @@ namespace TAO
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        CORBA::Object::_nil ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::ObjectId *
@@ -186,8 +181,7 @@ namespace TAO
                          PortableServer::POA::ServantAlreadyActive,
                          PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
 #if !defined (CORBA_E_MICRO)

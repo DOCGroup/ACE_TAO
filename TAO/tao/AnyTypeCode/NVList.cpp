@@ -228,8 +228,7 @@ CORBA::NVList::add_element (CORBA::Flags flags
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        CORBA::NamedValue::_nil ());
+      throw ::CORBA::BAD_PARAM ();
     }
 
   CORBA::NamedValue_ptr nv;
@@ -261,8 +260,7 @@ CORBA::NVList::item (CORBA::ULong n
 
   if (n >= this->max_)
     {
-      ACE_THROW_RETURN (CORBA::Bounds (),
-                        CORBA::NamedValue::_nil ());
+      throw ::CORBA::Bounds ();
     }
 
   CORBA::NamedValue_ptr *nv = 0;

@@ -457,8 +457,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
   TAO_Root_POA *parent = this->root_;
   if (parent == 0 || parent->name () != *iterator)
-    ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                      -1);
+    throw ::CORBA::OBJ_ADAPTER ();
   else
     ++iterator;
 

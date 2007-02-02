@@ -102,14 +102,12 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 #else
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (type);
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 #endif
 }
 

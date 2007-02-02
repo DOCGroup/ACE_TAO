@@ -164,7 +164,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->spawn (start,
                       data,
@@ -183,7 +183,7 @@ TAO_RTScheduler_Current::id (void)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->id ();
 }
@@ -196,7 +196,7 @@ TAO_RTScheduler_Current::scheduling_parameter (void)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->scheduling_parameter ();
 }
@@ -208,7 +208,7 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->implicit_scheduling_parameter ();
 }
@@ -220,7 +220,7 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (void)
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw ::CORBA::BAD_INV_ORDER ();
 
   return impl->current_scheduling_segment_names ();
 }

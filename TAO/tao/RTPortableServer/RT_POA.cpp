@@ -405,23 +405,21 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
     error = 1;
 
   if (error)
-    ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_MPROFILE_CREATION_ERROR,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw ::CORBA::INTERNAL (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_MPROFILE_CREATION_ERROR,
+        0),
+      CORBA::COMPLETED_NO);
 
   // Make sure we have at least one profile.  <mp> may end up being
   // empty if none of the acceptor endpoints have the right priority
   // for this object, for example.
   if (mprofile.profile_count () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_MPROFILE_CREATION_ERROR,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw ::CORBA::BAD_PARAM (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_MPROFILE_CREATION_ERROR,
+        0),
+      CORBA::COMPLETED_NO);
 
   return
     this->orb_core_.create_stub_object (mprofile,

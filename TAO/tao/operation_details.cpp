@@ -36,9 +36,7 @@ TAO_Operation_Details::corba_exception (const char *id)
 
       if (exception == 0)
         {
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (0,
-                                              CORBA::COMPLETED_YES),
-                            0);
+          throw ::CORBA::NO_MEMORY (0, CORBA::COMPLETED_YES);
         }
 
       // Return the exception object that we just created.
@@ -46,9 +44,7 @@ TAO_Operation_Details::corba_exception (const char *id)
     }
 
   // If there are no matches return an unknown exception.
-  ACE_THROW_RETURN (CORBA::UNKNOWN (0,
-                                    CORBA::COMPLETED_YES),
-                    0);
+  throw ::CORBA::UNKNOWN (0, CORBA::COMPLETED_YES);
 }
 
 bool

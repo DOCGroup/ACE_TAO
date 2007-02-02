@@ -125,12 +125,11 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
 {
   if (!ior)
     // Failure: Null IOR string pointer
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (
+    throw ::CORBA::INV_OBJREF (
       CORBA::SystemException::_tao_minor_code (
         0,
         EINVAL),
-      CORBA::COMPLETED_NO),
-      -1);
+      CORBA::COMPLETED_NO);
 
   const TAO_ConnectorSetIterator first_connector = this->begin ();
   const TAO_ConnectorSetIterator last_connector = this->end ();
@@ -151,22 +150,20 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
         }
       else
         // Failure: Null pointer to connector in connector registry.
-        ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        throw ::CORBA::INV_OBJREF (
           CORBA::SystemException::_tao_minor_code (
             0,
             EINVAL),
-          CORBA::COMPLETED_NO),
-          -1);
+          CORBA::COMPLETED_NO);
     }
 
   // Failure: None of the connectors were able to parse the URL style
   // IOR into an MProfile.
-  ACE_THROW_RETURN (CORBA::INV_OBJREF (
-   CORBA::SystemException::_tao_minor_code (
+  throw ::CORBA::INV_OBJREF (
+    CORBA::SystemException::_tao_minor_code (
       TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL,
       0),
-   CORBA::COMPLETED_NO),
-   -1);
+    CORBA::COMPLETED_NO);
 }
 
 TAO_Profile *

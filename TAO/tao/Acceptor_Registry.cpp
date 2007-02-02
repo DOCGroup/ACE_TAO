@@ -132,12 +132,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // to create a default endpoint.
       && this->open_default (orb_core, reactor, 0) == -1)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
 
   // Count the maximum number of endpoints in the set.  This will be
@@ -165,12 +164,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                           ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
             }
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO),
-            -1);
+          throw ::CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       ++acceptor_count;  // We've got at least one acceptor so far.
@@ -253,12 +251,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                           ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
             }
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO),
-            -1);
+          throw ::CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       const ACE_CString prefix (iop.substring (0, slot));
@@ -312,12 +309,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                       ACE_TEXT ("no usable transport protocol ")
                       ACE_TEXT ("was found.\n")));
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO),
-            -1);
+          throw ::CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
     }
 
@@ -762,12 +758,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                 ));
                             }
 
-                          ACE_THROW_RETURN (CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO),
-                            -1);
+                          throw ::CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                              ENOMEM),
+                            CORBA::COMPLETED_NO);
                         }
 
                       addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
@@ -804,12 +799,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
               // Could not open a default endpoint, nor an explicit
               // one.
-              ACE_THROW_RETURN (CORBA::INTERNAL (
-                  CORBA::SystemException::_tao_minor_code (
-                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                    0),
-                  CORBA::COMPLETED_NO),
-                -1);
+              throw ::CORBA::INTERNAL (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                  0),
+                CORBA::COMPLETED_NO);
 #else /* ACE_WIN32 && ACE_HAS_IPV6 */
               if (this->open_default_i (orb_core,
                                         reactor,
@@ -824,12 +818,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               // one.
               else
                 {
-                  ACE_THROW_RETURN (CORBA::INTERNAL (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                        0),
-                      CORBA::COMPLETED_NO),
-                    -1);
+                  throw ::CORBA::INTERNAL (
+                    CORBA::SystemException::_tao_minor_code (
+                      TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                      0),
+                    CORBA::COMPLETED_NO);
                 }
 #endif /* !ACE_WIN32 || !ACE_HAS_IPV6 */
             }
@@ -856,12 +849,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                               ACE_TEXT ("")));
                 }
 
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                  CORBA::SystemException::_tao_minor_code (
-                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                    errno_value),
-                  CORBA::COMPLETED_NO),
-                -1);
+              throw ::CORBA::BAD_PARAM (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                  errno_value),
+                CORBA::COMPLETED_NO);
             }
 
           // add acceptor to list
@@ -877,12 +869,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                           ACE_TEXT_CHAR_TO_TCHAR (address.c_str ())));
             }
 
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                ENOMEM),
-              CORBA::COMPLETED_NO),
-            -1);
+          throw ::CORBA::NO_MEMORY (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              ENOMEM),
+            CORBA::COMPLETED_NO);
         }
     }
   while (astr != 0 && (astr = ACE_OS::strtok_r (0, ",", &last_addr)) != 0);

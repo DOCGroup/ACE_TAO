@@ -83,9 +83,7 @@ TAO::ServerRequestInfo::arguments (void)
 {
   if (this->args_ == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the argument list on demand.
@@ -124,9 +122,7 @@ TAO::ServerRequestInfo::exceptions (void)
 {
   if (this->args_ == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the exception list on demand.
@@ -155,18 +151,14 @@ Dynamic::ContextList *
 TAO::ServerRequestInfo::contexts (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 Dynamic::RequestContext *
 TAO::ServerRequestInfo::operation_context (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::Any *
@@ -175,9 +167,7 @@ TAO::ServerRequestInfo::result (void)
 {
   if (this->args_ == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the result on demand.
@@ -211,9 +201,7 @@ TAO::ServerRequestInfo::sync_scope (void)
   if (this->server_request_.sync_with_server ())
     return Messaging::SYNC_WITH_SERVER;
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    -1);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::ReplyStatus
@@ -222,9 +210,7 @@ TAO::ServerRequestInfo::reply_status (void)
 {
   if (this->server_request_.reply_status () == -1)
     // A reply hasn't been received yet.
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                            CORBA::COMPLETED_NO),
-                      -1);
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   return this->server_request_.reply_status ();
 }
@@ -234,9 +220,7 @@ TAO::ServerRequestInfo::forward_reference (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->server_request_.reply_status () != PortableInterceptor::LOCATION_FORWARD)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                            CORBA::COMPLETED_NO),
-                      CORBA::Object::_nil ());
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   // TAO_ServerRequest::forward_location() already duplicates the
   // object reference.  There is no need to duplicate it here.
@@ -257,7 +241,7 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   if (pi_current == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw ::CORBA::INTERNAL ();
 
   pi_current->check_validity (id);
 
@@ -305,9 +289,7 @@ TAO::ServerRequestInfo::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 26,
-                                          CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
     }
 }
 
@@ -321,9 +303,7 @@ TAO::ServerRequestInfo::sending_exception (void)
   if (this->server_request_.reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
       && this->server_request_.reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // The spec says that if it is a user exception which cannot be
@@ -356,9 +336,7 @@ TAO::ServerRequestInfo::server_id (void)
     return
       CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 char *
@@ -369,9 +347,7 @@ TAO::ServerRequestInfo::orb_id (void)
     return
       CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::AdapterName *
@@ -387,9 +363,7 @@ TAO::ServerRequestInfo::adapter_name (void)
     return
       this->servant_upcall_->poa ().adapter_name ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::ObjectId *
@@ -429,9 +403,7 @@ TAO::ServerRequestInfo::object_id (void)
       return obj_id._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::OctetSeq *
@@ -441,9 +413,7 @@ TAO::ServerRequestInfo::adapter_id (void)
   if (this->servant_upcall_ != 0)
     return this->servant_upcall_->poa ().id ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 char *
@@ -458,9 +428,7 @@ TAO::ServerRequestInfo::target_most_derived_interface (
 
   if (servant == 0)
     {
-      ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
   return CORBA::string_dup (servant->_interface_repository_id ());
@@ -483,18 +451,14 @@ TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type
       else
         {
           // No policy matching the given PolicyType was found.
-          ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
-                                               CORBA::COMPLETED_NO),
-                            CORBA::Policy::_nil ());
+          throw ::CORBA::INV_POLICY (CORBA::OMGVMCID | 3, CORBA::COMPLETED_NO);
         }
     }
 
   // @@ Technically, we shouldn't be throwing this exception since
   //    this method should be valid in all server side request
   //    interception points.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 void
@@ -538,9 +502,7 @@ TAO::ServerRequestInfo::target_is_a (const char * id
 
   if (servant == 0)
     {
-      ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
   return servant->_is_a (id
