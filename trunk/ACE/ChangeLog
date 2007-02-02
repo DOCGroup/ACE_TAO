@@ -1,3 +1,10 @@
+Fri Feb  2 11:43:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Supress 3.xx warnings about non-return from functions
+          (Anoyingly it doesn't seem to think that a throw
+          terminates the execution flow of a function.)
+
 Fri Feb  2 10:47:55 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/Proactor.cpp:
