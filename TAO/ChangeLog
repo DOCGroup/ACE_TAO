@@ -1,3 +1,40 @@
+Fri Feb  2 13:32:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB_Core.h:
+          Removed CORBA::ORB_init method that accepts a CORBA Environment
+          argument, we don't support emulated exceptions anymore
+
+        * tao/CORBA_methods.h:
+        * tao/Objref_VarOut_T.cpp
+        * tao/TypeCodeFactory_Adapter.h:
+          Updated includes
+
+        * examples/POA/Default_Servant/client.cpp:
+        * examples/POA/Default_Servant/server.cpp:
+        * examples/POA/DSI/server.cpp:
+        * examples/POA/FindPOA/FindPOA.cpp:
+        * examples/POA/Forwarding/client.cpp:
+        * examples/POA/On_Demand_Activation/server.cpp:
+        * examples/POA/RootPOA/RootPOA.cpp:
+        * examples/POA/TIE/client.cpp:
+        * examples/POA/TIE/server.cpp:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.cpp:
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+        * tests/Collocation/Collocation_Tester.cpp:
+        * tests/File_IO/client.cpp:
+        * tests/File_IO/server.cpp:
+        * tests/Multiple_Inheritance/client.cpp:
+        * tests/POA/Identity/Identity.cpp:
+        * tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+          No need anymore to pass an empty string as orbname
+
 Fri Feb  2 13:10:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/orbsvcs/CosNaming.idl:

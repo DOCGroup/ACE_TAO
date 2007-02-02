@@ -60,7 +60,7 @@ main (int argc, char **argv)
   // Initialize the ORB
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =

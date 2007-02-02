@@ -50,21 +50,11 @@ namespace CORBA
   typedef OperationDef *OperationDef_ptr;
 
   /**
-   * @name ORB Initialization
-   *
-   * These could be combined into a single version using an environment macro.
-   *
+   * ORB Initialization
    */
-  //@{
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       char * argv[],
                                       const char * orb_name = 0);
-
-  extern TAO_Export ORB_ptr ORB_init (int & argc,
-                                      char * argv[],
-                                      const char * orb_name,
-                                      Environment & ACE_TRY_ENV);
-  //@}
 
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);

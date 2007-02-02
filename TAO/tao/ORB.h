@@ -29,6 +29,7 @@
 #include "tao/objectid.h"
 #include "tao/CORBA_methods.h"
 #include "tao/VarOut_T.h"
+#include "tao/Pseudo_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/Sequence_T.h"
@@ -59,6 +60,7 @@ class TAO_OutputCDR;
 class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
+class TAO_ORB_Core;
 
 // ****************************************************************
 
