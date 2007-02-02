@@ -408,6 +408,9 @@ public:
   // obtain a reference to the cached_profiles
   TAO::Portable_Server::Cached_Policies& cached_policies (void);
 
+  // obtain a handle to the network priority hooks
+  TAO_Network_Priority_Hook* network_priority_hook (void); 
+
   TAO::Portable_Server::Cached_Policies::PriorityModel priority_model (void) const;
 
   CORBA::Boolean cleanup_in_progress (void);
