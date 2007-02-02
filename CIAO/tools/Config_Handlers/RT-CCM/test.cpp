@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
     return 1;
 
   // Initialize an ORB so Any will work
-  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
+  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv);
 
   //Create an XML_Helper for all the file work
   XML_Helper the_helper;

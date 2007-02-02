@@ -20,7 +20,7 @@ main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       StringMsg_init *StringMsg_factory = new StringMsg_init;
 
       orb->register_value_factory (StringMsg_factory->tao_repository_id (),
