@@ -157,7 +157,7 @@ TAO_LB_LeastLoaded::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                    CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   CosLoadBalancing::LoadList_var loads =
     load_manager->get_loads (the_location);
@@ -179,15 +179,13 @@ TAO_LB_LeastLoaded::next_member (
                    PortableGroup::MemberNotFound))
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      CORBA::Object::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
   if (locations->length () == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (),
-                      CORBA::Object::_nil ());
+    throw CORBA::TRANSIENT ();
 
   // @@ RACE CONDITION.  OBJECT GROUP MEMBERSHIP MAY CHANGE AFTER
   //    RETRIEVING LOCATIONS!  HOW DO WE HANDLE THAT?
@@ -480,7 +478,7 @@ TAO_LB_LeastLoaded::get_location (
         location = locations[location_index];
       }
       else if (this->reject_threshold_ != 0)
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);
+        throw CORBA::TRANSIENT ();
 
 //       ACE_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
     }

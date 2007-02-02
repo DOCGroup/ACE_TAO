@@ -751,8 +751,7 @@ TAO_PropertySet::get_property_value (const char *property_name)
 {
   // Check the name's validity.
   if (property_name == 0)
-    ACE_THROW_RETURN (CosPropertyService::InvalidPropertyName(),
-                      0);
+    throw CosPropertyService::InvalidPropertyName();
 
   // Get the value out of the hash table.
 
@@ -760,8 +759,7 @@ TAO_PropertySet::get_property_value (const char *property_name)
   CosProperty_Hash_Value hash_value;
 
   if (this->hash_table_.find (hash_key, hash_value) != 0)
-    ACE_THROW_RETURN (CosPropertyService::PropertyNotFound(),
-                      0);
+    throw CosPropertyService::PropertyNotFound();
 
   // Return the any value got.
   CORBA::Any *any_ptr =0;
@@ -1339,8 +1337,7 @@ TAO_PropertySetDef::get_property_mode (const char *property_name)
 {
   // Check for the name's validity.
   if (property_name == 0)
-    ACE_THROW_RETURN (CosPropertyService::InvalidPropertyName(),
-                      CosPropertyService::undefined);
+    throw CosPropertyService::InvalidPropertyName();
 
   // Find the property in the hash table.
   CosProperty_Hash_Key hash_key (property_name);
@@ -1355,8 +1352,7 @@ TAO_PropertySetDef::get_property_mode (const char *property_name)
       return hash_value.pmode_;
     default:
       // Error or property is not found.
-      ACE_THROW_RETURN (CosPropertyService::PropertyNotFound(),
-                        CosPropertyService::undefined);
+      throw CosPropertyService::PropertyNotFound();
     }
 }
 

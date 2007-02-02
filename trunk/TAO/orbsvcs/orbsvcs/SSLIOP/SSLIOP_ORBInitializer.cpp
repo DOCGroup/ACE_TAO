@@ -207,7 +207,7 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
                   "Unable to obtain TSS slot ID from "
                   "\"SecurityCurrent\" object.\n"));
 
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
 
   return security_current->tss_slot ();

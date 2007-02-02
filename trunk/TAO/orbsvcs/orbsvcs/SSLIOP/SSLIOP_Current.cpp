@@ -34,7 +34,7 @@ TAO::SSLIOP::Current::get_peer_certificate ()
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (::SSLIOP::Current::NoContext (), 0);
+    throw ::SSLIOP::Current::NoContext ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -66,7 +66,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (SSLIOP::Current::NoContext (), 0);
+    throw SSLIOP::Current::NoContext ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.

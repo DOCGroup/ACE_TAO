@@ -278,12 +278,11 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 
   // As the right tags are not found close the connection and throw an
   // exception
-  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-      CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
-      CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+  throw CORBA::COMM_FAILURE (
+    CORBA::SystemException::_tao_minor_code (
+      TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+      errno),
+    CORBA::COMPLETED_MAYBE);
 }
 
 TAO::Invocation_Status

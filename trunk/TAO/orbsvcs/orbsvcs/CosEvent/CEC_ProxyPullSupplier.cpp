@@ -161,7 +161,7 @@ TAO_CEC_ProxyPullSupplier::pull (void)
                        CosEventComm::Disconnected))
 {
   if (this->is_connected () == 0)
-    ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
+    throw CosEventComm::Disconnected ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
   while (this->queue_.is_empty ())
@@ -171,7 +171,7 @@ TAO_CEC_ProxyPullSupplier::pull (void)
   CORBA::Any any;
   if (this->queue_.dequeue_head (any) != 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
   return new CORBA::Any (any);
 }
@@ -182,7 +182,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 {
   has_event = 0;
   if (this->is_connected () == 0)
-    ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
+    throw CosEventComm::Disconnected ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
   CORBA::Any any;
@@ -194,7 +194,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 
   if (this->queue_.dequeue_head (any) != 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
   has_event = 1;
   return new CORBA::Any (any);

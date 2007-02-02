@@ -54,7 +54,7 @@ FileImpl::System::open (const char *file_name,
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
-      ACE_THROW_RETURN (File::IOError (), 0);
+      throw File::IOError ();
     }
 
   char file_descriptor_buffer[BUFSIZ];
@@ -164,7 +164,7 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
   if (len > 0)
     return len;
 
-  ACE_THROW_RETURN (File::IOError (), 0);
+  throw File::IOError ();
 }
 
 File::Descriptor::DataBuffer *
@@ -184,7 +184,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes)
                                              1);
 
   File::Descriptor::DataBuffer::freebuf (buffer);
-  ACE_THROW_RETURN (File::IOError (), 0);
+  throw File::IOError ();
 }
 
 CORBA::ULong
@@ -199,7 +199,7 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                                                     offset,
                                                     whence);
   if (result == -1)
-    ACE_THROW_RETURN (File::IOError (), 0);
+    throw File::IOError ();
 
   return (CORBA::ULong) result;
 }

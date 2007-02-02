@@ -62,8 +62,7 @@ Object_Group_Factory_i::make_group (int random,
   // <id>.
   if (rr_groups_.find (group_id) == 0
       || random_groups_.find (group_id) == 0)
-    ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
-                      Load_Balancer::Object_Group::_nil ());
+    throw Load_Balancer::duplicate_group ();
   else
     {
       // Store our result here for return.
@@ -93,8 +92,7 @@ Object_Group_Factory_i::make_group (int random,
       if (random)
         {
           if (random_groups_.bind (group_id, group) == -1)
-            ACE_THROW_RETURN (CORBA::INTERNAL (),
-                              Load_Balancer::Object_Group::_nil ());
+            throw CORBA::INTERNAL ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Random Group"
@@ -103,8 +101,7 @@ Object_Group_Factory_i::make_group (int random,
       else
         {
           if (rr_groups_.bind (group_id, group) == -1)
-            ACE_THROW_RETURN (CORBA::INTERNAL (),
-                              Load_Balancer::Object_Group::_nil ());
+            throw CORBA::INTERNAL ();
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Round Robin Group"
                       " with id <%s>\n", id));
@@ -124,8 +121,7 @@ Object_Group_Factory_i::resolve (const char * id)
 
   if (rr_groups_.find (group_id, group) == -1
       && random_groups_.find (group_id, group) == -1)
-    ACE_THROW_RETURN (Load_Balancer::no_such_group (),
-                      Load_Balancer::Object_Group::_nil ());
+    throw Load_Balancer::no_such_group ();
   else
     return group._retn ();
 }
@@ -281,8 +277,7 @@ Object_Group_i::resolve_with_id (const char * id)
   ACE_CString member_id (id);
 
   if (members_.find (member_id, obj) == -1)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
-                      obj._retn ());
+    throw Load_Balancer::no_such_member ();
 
   return obj._retn ();
 }
@@ -365,8 +360,7 @@ Random_Object_Group::resolve (void)
 
   size_t group_size = members_.current_size ();
   if (group_size == 0)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
-                      obj._retn ());
+    throw Load_Balancer::no_such_member ();
 
   // Generate random number in the range [0, group_size - 1]
   size_t member = ACE_OS::rand() % group_size;
@@ -415,8 +409,7 @@ RR_Object_Group::resolve (void)
 
   size_t group_size = members_.current_size ();
   if (group_size == 0)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
-                      obj._retn ());
+    throw Load_Balancer::no_such_member ();
 
   // Get the id of the member to return to the client.
   ACE_CString *id = 0;
@@ -431,8 +424,7 @@ RR_Object_Group::resolve (void)
 
   // Return the object reference corresponding to the found id to the client.
   if (members_.find (*id, obj) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      CORBA::Object::_nil ());
+    throw CORBA::INTERNAL ();
 
    return obj._retn ();
 }

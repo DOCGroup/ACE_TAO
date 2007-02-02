@@ -48,7 +48,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to resolve initial ref for 'RootPOA'.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POA_var root_poa
@@ -58,7 +58,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to POA interface.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POAManager_var poa_manager
@@ -77,7 +77,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the child POA.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   // Create the thread pool servant dispatching strategy object, and
@@ -90,7 +90,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   // Create the servant object.
@@ -111,7 +111,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to activate servant (Foo_i).\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   // Stringify the object reference
@@ -126,7 +126,7 @@ ServerApp::run(int argc, char* argv[])
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Cannot open output file for writing IOR: %s",
                  this->ior_filename_.c_str()));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   ACE_OS::fprintf(ior_file, "%s", ior.in ());
@@ -159,7 +159,7 @@ ServerApp::run(int argc, char* argv[])
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to open the OrbTask.\n"));
-          ACE_THROW_RETURN (TestException(), -1);
+          throw TestException();
         }
 
       // This will use the current (mainline) thread to run the ORB event loop.

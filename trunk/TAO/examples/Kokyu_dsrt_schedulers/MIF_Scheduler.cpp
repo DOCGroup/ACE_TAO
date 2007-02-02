@@ -593,7 +593,7 @@ CORBA::PolicyList*
 MIF_Scheduler::scheduling_policies (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -607,14 +607,14 @@ CORBA::PolicyList*
 MIF_Scheduler::poa_policies (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
 MIF_Scheduler::scheduling_discipline_name (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 RTScheduling::ResourceManager_ptr
@@ -622,7 +622,7 @@ MIF_Scheduler::create_resource_manager (const char *,
                                         CORBA::Policy_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void

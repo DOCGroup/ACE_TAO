@@ -349,7 +349,7 @@ TAO_Notify_SupplierAdmin::obtain_pull_consumer (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosEventChannelAdmin::ProxyPullConsumer::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
@@ -358,7 +358,7 @@ TAO_Notify_SupplierAdmin::pull_consumers (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 
@@ -381,7 +381,7 @@ TAO_Notify_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdm
                    , CosNotifyChannelAdmin::AdminLimitExceeded
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 TAO_Notify_ProxyConsumer *

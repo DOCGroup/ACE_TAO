@@ -109,8 +109,7 @@ TAO_PG_GenericFactory::create_object (
         // that over 4 billion object groups are being managed by this
         // generic factory!
         if (this->next_fcid_ == fcid)
-          ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
-                            CORBA::Object::_nil ());
+          throw PortableGroup::ObjectNotCreated ();
       }
 
     // Just in case this->next_fcid_ was modified in the above search,

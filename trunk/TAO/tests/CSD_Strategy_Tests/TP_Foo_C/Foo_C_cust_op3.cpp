@@ -44,7 +44,7 @@ Foo_C_cust_op3::result(void)
 {
   if (this->cancelled_)
     {
-      ACE_THROW_RETURN (CancelledException(), -1);
+      throw CancelledException();
     }
 
   return this->result_;

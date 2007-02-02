@@ -79,8 +79,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
     }
   catch (const CORBA::Exception&)
     {
-      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key),
-                        CosNaming::NamingContext::_nil ());
+      throw CosLifeCycle::NoFactory (factory_key);
     }
   return quoterNamingContext_var._retn ();
 }
@@ -152,8 +151,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
     }
   catch (const CORBA::Exception&)
     {
-      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key),
-                        CORBA::Object::_nil ());
+      throw CosLifeCycle::NoFactory (factory_key);
     }
   return quoter_var._retn ();
 }

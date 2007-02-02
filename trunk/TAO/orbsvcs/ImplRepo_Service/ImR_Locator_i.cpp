@@ -483,7 +483,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   if (info.null ())
     {
       ACE_ERROR ((LM_ERROR, "ImR: Cannot find info for server <%s>\n", name));
-      ACE_THROW_RETURN (ImplementationRepository::NotFound (), 0);
+      throw ImplementationRepository::NotFound ();
     }
 
   return activate_server_i (*info, manual_start);
@@ -546,8 +546,9 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
           waiter_svt_.unblock_all (info.name.c_str ());
 
-          ACE_THROW_RETURN (ImplementationRepository::CannotActivate
-                            (CORBA::string_dup ("Cannot start server.")), 0);
+          throw ImplementationRepository::CannotActivate(
+            CORBA::string_dup (
+              "Cannot start server."));
         }
 
       // Note: We already updated info with StartupInfo in server_is_running ()
@@ -593,8 +594,9 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       ACE_DEBUG ((LM_DEBUG,
                   "ImR: Cannot Activate <%s>.\n", info.name.c_str ()));
     }
-  ACE_THROW_RETURN (ImplementationRepository::CannotActivate
-                    (CORBA::string_dup ("Cannot start server.")), 0);
+  throw ImplementationRepository::CannotActivate(
+    CORBA::string_dup (
+      "Cannot start server."));
 }
 
 ImplementationRepository::StartupInfo*
@@ -608,16 +610,18 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     {
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot start server <%s>. ActivationMode=MANUAL\n", info.name.c_str ()));
-      ACE_THROW_RETURN (ImplementationRepository::CannotActivate
-                        (CORBA::string_dup ("Cannot implicitly activate MANUAL server.")), 0);
+      throw ImplementationRepository::CannotActivate(
+        CORBA::string_dup (
+          "Cannot implicitly activate MANUAL server."));
     }
   if (info.cmdline.length () == 0)
     {
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot start server <%s>."
                     " No command line.\n", info.name.c_str ()));
-      ACE_THROW_RETURN (ImplementationRepository::CannotActivate
-                        (CORBA::string_dup ("No command line registered for server.")), 0);
+      throw ImplementationRepository::CannotActivate(
+        CORBA::string_dup (
+          "No command line registered for server."));
     }
 
   Activator_Info_Ptr ainfo = get_activator (info.activator);
@@ -627,8 +631,9 @@ ACE_THROW_SPEC ((CORBA::SystemException,
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Cannot start server <%s>. "
                     "Activator <%s> not found.\n", info.name.c_str (), info.activator.c_str ()));
-      ACE_THROW_RETURN (ImplementationRepository::CannotActivate
-                        (CORBA::string_dup ("No activator registered for server.")), 0);
+      throw ImplementationRepository::CannotActivate(
+        CORBA::string_dup (
+          "No activator registered for server."));
     }
 
   try

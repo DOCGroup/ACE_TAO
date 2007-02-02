@@ -29,7 +29,7 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (new_filter))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -40,8 +40,7 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
     CosNotifyFilter::Filter::_duplicate (new_filter);
 
   if (this->filter_list_.bind (new_id, new_filter_var) == -1)
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        0);
+      throw CORBA::INTERNAL ();
   else
     return new_id;
 }
@@ -74,8 +73,7 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
 
   if (this->filter_list_.find (filter_id,
                                filter_var) == -1)
-    ACE_THROW_RETURN (CosNotifyFilter::FilterNotFound (),
-                      0);
+    throw CosNotifyFilter::FilterNotFound ();
 
   return filter_var._retn ();
 }
@@ -177,7 +175,7 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
     {
       this->filter_ids_.set_last_used(id);
       if (this->filter_list_.bind (id, filter) != 0)
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+        throw CORBA::INTERNAL ();
     }
   }
   return this;

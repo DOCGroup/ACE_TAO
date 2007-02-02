@@ -57,7 +57,7 @@ Process_Factory::create_new_process (void)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " spawn call failed (%d)\n",
                   errno));
-      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
+      throw Test::Spawn_Failed ();
     }
 
   int process_has_started = 0;
@@ -89,7 +89,7 @@ Process_Factory::create_new_process (void)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " timeout while waiting for child\n"));
       (void) child_process.terminate ();
-      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
+      throw Test::Spawn_Failed ();
     }
 
   return the_process._retn ();

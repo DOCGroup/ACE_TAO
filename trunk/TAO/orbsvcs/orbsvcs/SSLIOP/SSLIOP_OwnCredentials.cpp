@@ -53,16 +53,14 @@ SecurityLevel3::CredsInitiator_ptr
 TAO::SSLIOP::OwnCredentials::creds_initiator (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    SecurityLevel3::CredsInitiator::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::CredsAcceptor_ptr
 TAO::SSLIOP::OwnCredentials::creds_acceptor (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    SecurityLevel3::CredsAcceptor::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void

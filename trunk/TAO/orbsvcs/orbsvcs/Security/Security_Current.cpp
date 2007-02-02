@@ -36,7 +36,7 @@ TAO_Security_Current::get_attributes (
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw CORBA::BAD_INV_ORDER ();
 
   return impl->get_attributes (attributes);
 }
@@ -51,7 +51,7 @@ TAO_Security_Current::received_credentials ()
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw CORBA::BAD_INV_ORDER ();
 
   return impl->received_credentials ();
 }

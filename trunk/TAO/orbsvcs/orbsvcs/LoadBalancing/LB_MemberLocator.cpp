@@ -51,7 +51,7 @@ TAO_LB_MemberLocator::preinvoke (
         ex._tao_print_exception ("LoadManager::next_member()");
     }
 
-  ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+  throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void

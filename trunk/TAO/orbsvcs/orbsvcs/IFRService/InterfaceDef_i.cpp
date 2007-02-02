@@ -724,9 +724,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
   // Oneway operations cannot have a non-void return type.
   if (mode == CORBA::OP_ONEWAY && kind != CORBA::tk_void)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::OperationDef::_nil ());
+      throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 31, CORBA::COMPLETED_NO);
     }
 
   this->repo_->config ()->set_string_value (new_key,
@@ -761,9 +759,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
           // Oneway operations cannot have INOUT or OUT parameters.
           if (mode == CORBA::OP_ONEWAY && params[i].mode != CORBA::PARAM_IN)
             {
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (31,
-                                                  CORBA::COMPLETED_NO),
-                                CORBA::OperationDef::_nil ());
+              throw CORBA::BAD_PARAM (31, CORBA::COMPLETED_NO);
             }
 
           ACE_Configuration_Section_Key param_key;
@@ -799,9 +795,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       // Oneway operations cannot throw any user exceptions.
       if (mode == CORBA::OP_ONEWAY)
         {
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
-                                              CORBA::COMPLETED_NO),
-                            CORBA::OperationDef::_nil ());
+          throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 31, CORBA::COMPLETED_NO);
         }
 
       ACE_Configuration_Section_Key excepts_key;

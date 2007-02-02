@@ -854,7 +854,7 @@ _cxx_export (CORBA::Object_ptr reference,
 {
   // For robustness purposes --
   if (CORBA::is_nil (reference))
-    ACE_THROW_RETURN (CosTrading::Register::InvalidObjectRef (), 0);
+    throw CosTrading::Register::InvalidObjectRef ();
 
   // Get service type map
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
@@ -873,14 +873,13 @@ _cxx_export (CORBA::Object_ptr reference,
   // Oops the type is masked, we shouldn't let exporters know the type
   // exists.
   if (type_struct->masked)
-    ACE_THROW_RETURN (CosTrading::UnknownServiceType (type), 0);
+    throw CosTrading::UnknownServiceType (type);
 
   // TAO-specific way to determine if an object is derived from or is
   // an interface type.
   int check = (! reference->_is_a (type_struct->if_name));
   if (check)
-    ACE_THROW_RETURN (CosTrading::Register::
-                      InterfaceTypeMismatch (type, reference), 0);
+    throw CosTrading::Register::InterfaceTypeMismatch (type, reference);
 
   // Validate that the properties defined for this offer are correct
   // to their types and strength.
@@ -1089,8 +1088,7 @@ resolve (const CosTrading::TraderName &name)
 {
   // Determine if the first link is a legal link name.
   if (! TAO_Trader_Base::is_valid_link_name (name[0]))
-    ACE_THROW_RETURN (CosTrading::Register::IllegalTraderName (name),
-                      CosTrading::Register::_nil ());
+    throw CosTrading::Register::IllegalTraderName (name);
 
   // Grab a reference to the link interface, and get a link description.
   CosTrading::Link_ptr link_if =
@@ -1118,8 +1116,7 @@ resolve (const CosTrading::TraderName &name)
 
   // Ensure that the register pointer isn't nil.
   if (! CORBA::is_nil (remote_reg.in ()))
-    ACE_THROW_RETURN (CosTrading::Register::RegisterNotSupported (name),
-                      CosTrading::Register::_nil ());
+    throw CosTrading::Register::RegisterNotSupported (name);
 
   CosTrading::Register_ptr return_value = remote_reg.in ();
 
@@ -1652,14 +1649,13 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
-    ACE_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
+    throw CosTrading::Link::IllegalLinkName (name);
 
   // Ensure this isn't a duplicate link name.
   typename Links::ENTRY* link_entry = 0;
   CORBA::String_var link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
-    ACE_THROW_RETURN (CosTrading::Link::UnknownLinkName (name),
-                      0);
+    throw CosTrading::Link::UnknownLinkName (name);
 
   // Build a new Link Info structure.
   CosTrading::Link::LinkInfo* new_link_info = 0;
@@ -1784,7 +1780,7 @@ export_proxy (CosTrading::Lookup_ptr,
                   CosTrading::DuplicatePropertyName,
                   CosTrading::DuplicatePolicyName))
 {
-  ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
+  throw CORBA::UNKNOWN ();
 
   ACE_NOTREACHED (return 0;)
 }
@@ -1810,7 +1806,7 @@ describe_proxy (const char *)
                   CosTrading::UnknownOfferId,
                   CosTrading::Proxy::NotProxyOfferId))
 {
-  ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
+  throw CORBA::UNKNOWN ();
 
   ACE_NOTREACHED (return 0;)
 }

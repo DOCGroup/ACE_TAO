@@ -35,8 +35,7 @@ SecurityLevel3::TargetCredentials_ptr
 TAO::SL3::SecurityManager::get_target_credentials (CORBA::Object_ptr /* the_object */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    SecurityLevel3::TargetCredentials::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::ContextEstablishmentPolicy_ptr

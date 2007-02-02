@@ -126,13 +126,13 @@ get_transaction_depth_context(
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+    throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FTRT::TransactionDepth result;
   if ((cdr >> result) == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+    throw CORBA::BAD_PARAM ();
 
   return result;
 }
@@ -153,12 +153,12 @@ get_sequence_number_context(
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if ((cdr >> result) == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   return result;
 }

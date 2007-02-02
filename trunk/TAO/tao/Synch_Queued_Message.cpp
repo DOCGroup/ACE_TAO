@@ -135,15 +135,6 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
     }
   else
     {
-      // No allocator, so use the common heap!
-      if (TAO_debug_level == 4)
-        {
-          // This debug is for testing purposes!
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Synch_Queued_Message::clone\n"
-                      "Using global pool for allocation \n"));
-        }
-
       ACE_NEW_RETURN (qm,
                       TAO_Synch_Queued_Message (mb, this->orb_core_, 0, 0),
                       0);

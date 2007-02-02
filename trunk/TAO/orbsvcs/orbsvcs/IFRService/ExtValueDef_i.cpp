@@ -314,9 +314,9 @@ TAO_ExtValueDef_i::describe_ext_value_i (
           if (fv_desc->operations[i].mode == CORBA::OP_ONEWAY
               && kind != CORBA::tk_void)
             {
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
-                                                  CORBA::COMPLETED_NO),
-                                0);
+              throw CORBA::BAD_PARAM (
+                CORBA::OMGVMCID | 31,
+                CORBA::COMPLETED_NO);
             }
 
           // Operation contexts.

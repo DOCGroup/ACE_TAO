@@ -38,8 +38,7 @@ Sender_i::receiver_object (Receiver_ptr recv)
                     this->mutex_,-1);
 
   if (this->no_clients_ == this->last_index_)
-    ACE_THROW_RETURN (Sender::Table_Full (),
-                      -1);
+    throw Sender::Table_Full ();
 
   this->receivers_[this->last_index_] =
     Receiver::_duplicate (recv);

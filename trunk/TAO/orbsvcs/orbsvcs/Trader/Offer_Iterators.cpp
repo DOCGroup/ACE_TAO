@@ -196,8 +196,7 @@ TAO_Offer_Iterator_Collection::max_left (void)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::UnknownMaxLeft))
 {
-  ACE_THROW_RETURN (CosTrading::UnknownMaxLeft(),
-                    0);
+  throw CosTrading::UnknownMaxLeft();
 }
 
 TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator (void)

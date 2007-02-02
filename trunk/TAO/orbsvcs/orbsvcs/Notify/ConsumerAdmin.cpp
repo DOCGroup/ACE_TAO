@@ -364,7 +364,7 @@ TAO_Notify_ConsumerAdmin::priority_filter (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -384,7 +384,7 @@ TAO_Notify_ConsumerAdmin::lifetime_filter (void)
                    ))
 
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -402,7 +402,7 @@ TAO_Notify_ConsumerAdmin::pull_suppliers (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr
@@ -414,7 +414,7 @@ TAO_Notify_ConsumerAdmin::obtain_notification_pull_supplier (CosNotifyChannelAdm
                    ))
 
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyChannelAdmin::ProxySupplier::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -435,7 +435,7 @@ TAO_Notify_ConsumerAdmin::obtain_pull_supplier (void)
                    CORBA::SystemException
                    ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosEventChannelAdmin::ProxyPullSupplier::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 TAO_Notify_ProxySupplier *

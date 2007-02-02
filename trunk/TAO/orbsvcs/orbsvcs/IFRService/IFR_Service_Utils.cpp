@@ -1315,8 +1315,7 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
       repo_id += "CORBA/ComponentIR/UsesDef:";
       break;
     default:
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::Object::_nil ());
+      throw CORBA::OBJECT_NOT_EXIST ();
   }
 
   repo_id += "1.0";

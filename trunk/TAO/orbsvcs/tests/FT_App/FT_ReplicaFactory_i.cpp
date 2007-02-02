@@ -634,7 +634,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
-    ACE_THROW_RETURN ( PortableGroup::InvalidCriteria(), 0);
+    throw PortableGroup::InvalidCriteria();
   }
 
   FT_TestReplica_i * replica = create_replica(role);
@@ -643,7 +643,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     ACE_ERROR ((LM_ERROR,
       "New Replica_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), 0);
+    throw PortableGroup::ObjectNotCreated();
   }
 
   ACE_NEW_THROW_EX ( factory_creation_id,

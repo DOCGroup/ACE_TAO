@@ -62,7 +62,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     throw;
   }
 
-    ACE_THROW_RETURN(PortableGroup::ObjectNotCreated(), CORBA::Object::_nil());
+    throw PortableGroup::ObjectNotCreated();
 }
 
 void EventChannelFactory_i::delete_object (

@@ -321,8 +321,7 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
 
   if (retval == -1)
     {
-      ACE_THROW_RETURN (DsLogAdmin::InvalidRecordId (),
-                        0);
+      throw DsLogAdmin::InvalidRecordId ();
     }
 
   DsLogAdmin::NVList* nvlist = 0;

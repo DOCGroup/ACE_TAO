@@ -27,8 +27,7 @@ TAO_FT_PolicyFactory::create_policy (
   else if (type == FT::HEARTBEAT_ENABLED_POLICY)
     return TAO_FT_Heart_Beat_Enabled_Policy::create (val);
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -79,7 +79,7 @@ EC_Wrapper::for_consumers (void)
   if (this->ec_impl_)
     return this->ec_impl_->for_consumers ();
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::ConsumerAdmin::_nil());
+    throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
@@ -89,7 +89,7 @@ EC_Wrapper::for_suppliers (void)
   if (this->ec_impl_)
     return this->ec_impl_->for_suppliers ();
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), RtecEventChannelAdmin::SupplierAdmin::_nil());
+    throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void
@@ -135,7 +135,7 @@ EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
   if (this->ec_impl_)
     return this->ec_impl_->append_observer (observer);
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+    throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void

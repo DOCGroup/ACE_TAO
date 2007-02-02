@@ -48,12 +48,12 @@ public:
     if (static_cast<CORBA::Long>( 1 ) != a)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 3 ) != c)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     b= static_cast<CORBA::Long>(  a << 1 );
@@ -75,32 +75,32 @@ public:
     if (0 == a)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( a ))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('1' != *a)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( c ))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (0 == c)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('3' != *c)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     b= CORBA::string_dup( "0" ); // Create a one character output buffer
@@ -125,12 +125,12 @@ public:
     if (static_cast<CORBA::Long>( 1 ) != a.val)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), newret );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 3 ) != c.val)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), newret );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     newret.val= static_cast<CORBA::Long>( 7 );
@@ -160,32 +160,32 @@ public:
     if (0 == a.val.in())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( a.val.in() ))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('1' != *a.val.in())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (0 == c.val.in())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( c.val.in() ))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('3' != *c.val.in())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0);
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     char ca[2]= {0};
@@ -227,22 +227,22 @@ public:
     if (static_cast<CORBA::Short>( 1 ) != a._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), newret );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 1 ) != a.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), newret );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Short>( 1 ) != c._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), newret );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 3 ) != c.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), newret );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     Test::MyNonVarUnion *newval_p;
@@ -272,22 +272,22 @@ public:
     if (static_cast<CORBA::Short>( 1 ) != a._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 1 ) != a.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Short>( 1 ) != c._d())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect type of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 3 ) != c.valLong())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     Test::MyVarUnion *newval_p;
@@ -322,22 +322,22 @@ public:
     if (1u != a.length())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 1 ) != a[0])
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1u != c.length())
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect length of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (static_cast<CORBA::Long>( 3 ) != c[0])
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     Test::MySeqOfLong *newval_p;
@@ -377,26 +377,26 @@ public:
       if (static_cast<CORBA::Long>( 1 ) != aL)
       {
         ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n") );
-        ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
       }
     }
     else
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect any type for parameter a\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (c >>= cL)
     {
       if (static_cast<CORBA::Long>( 3 ) != cL)
       {
         ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter c\n") );
-        ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+        throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
       }
     }
     else
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect any type for parameter c\n") );
-      ACE_THROW_RETURN( CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO), 0 );
+      throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
     CORBA::Any *newval_p;

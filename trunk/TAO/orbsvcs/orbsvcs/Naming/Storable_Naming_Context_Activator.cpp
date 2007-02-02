@@ -64,8 +64,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
   TAO_Storable_Base * fl = factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("rw"));
   if (!fl->exists()) {
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    throw CORBA::OBJECT_NOT_EXIST ();
   }
 
   // Store the stub we will return here.

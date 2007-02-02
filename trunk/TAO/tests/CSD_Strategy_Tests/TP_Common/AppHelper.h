@@ -25,7 +25,7 @@ struct RefHelper
       {
         ACE_ERROR((LM_ERROR,
                    "(%P|%t) Failed to convert IOR string to obj ref.\n"));
-        ACE_THROW_RETURN (TestAppException(), T::_nil ());
+        throw TestAppException();
       }
 
     T_var t_obj = T::_narrow(obj.in());
@@ -34,7 +34,7 @@ struct RefHelper
       {
         ACE_ERROR((LM_ERROR,
                    "(%P|%t) Failed to narrow obj ref to T interface.\n"));
-        ACE_THROW_RETURN (TestAppException(), T::_nil ());
+        throw TestAppException();
       }
 
     return t_obj._retn();
@@ -51,7 +51,7 @@ struct RefHelper
         ACE_ERROR((LM_ERROR,
                    "(%P|%t) Failed to resolve initial ref for '%s'.\n",
                    name));
-        ACE_THROW_RETURN (TestAppException(), T::_nil ());
+        throw TestAppException();
       }
 
     T_var t_obj = T::_narrow(obj.in());
@@ -62,7 +62,7 @@ struct RefHelper
         ACE_ERROR((LM_ERROR,
                    "(%P|%t) Failed to narrow resolved initial ref '%s'.\n",
                    name));
-        ACE_THROW_RETURN (TestAppException(), T::_nil ());
+        throw TestAppException();
       }
 
     return t_obj._retn();

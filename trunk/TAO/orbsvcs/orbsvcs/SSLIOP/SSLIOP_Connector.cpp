@@ -149,8 +149,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                       ACE_TEXT ("found in the IOR.\n")));
         }
 
-      ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
-                        0);
+      throw CORBA::INV_POLICY ();
     }
 
   // Check if the user overrode the default Quality-of-Protection for
@@ -184,8 +183,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                       ACE_TEXT ("found in the IOR.\n")));
         }
 
-      ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
-                        0);
+      throw CORBA::INV_POLICY ();
     }
 
   if ((!establish_trust && qop == ::Security::SecQOPNoProtection)
@@ -370,12 +368,11 @@ TAO::SSLIOP::Connector::iiop_connect (
   // connection, and subsequently the request, from completing.
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         ::Security::NoProtection))
-    ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO::VMCID,
-                          EPERM),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw CORBA::NO_PERMISSION (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EPERM),
+      CORBA::COMPLETED_NO);
 
   TAO_IIOP_Endpoint *iiop_endpoint = ssl_endpoint->iiop_endpoint ();
 
@@ -415,12 +412,11 @@ TAO::SSLIOP::Connector::ssliop_connect (
   // SSL connection from occuring.
   if (ACE_BIT_ENABLED (ssl_component.target_requires,
                        ::Security::NoProtection))
-    ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO::VMCID,
-                          EPERM),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw CORBA::NO_PERMISSION (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EPERM),
+      CORBA::COMPLETED_NO);
 
   // If the invocation wants integrity without confidentiality but the
   // server does not support "no protection," then it won't be
@@ -432,7 +428,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         ::Security::NoProtection)
       && qop == ::Security::SecQOPIntegrity)
-    ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
+    throw CORBA::INV_POLICY ();
 
   const ACE_INET_Addr &remote_address =
     ssl_endpoint->object_addr ();
@@ -601,7 +597,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                         ACE_TEXT ("(%P|%t) Unable to set eNULL ")
                         ACE_TEXT ("SSL cipher.\n")));
 
-          ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
+          throw CORBA::INV_POLICY ();
         }
 
       svc_handler = safe_handler.release ();
