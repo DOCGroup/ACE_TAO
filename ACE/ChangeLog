@@ -1,4 +1,11 @@
-Fri Feb  2 07:48:40 UTC 2007  Olli Savia  <ops@iki.fi>
+Fri Feb  2 06:56:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ACETAOCIAO.style:
+          Configuration file for profactor (see www.profactor.co.uk), a
+          code beautifier tool that we want to use to reformat the code
+          in ACE/TAO/CIAO.
+
+Fri Feb  2 06:48:40 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/POSIX_CB_Proactor.h:
         * ace/config-aix-5.x.h:
