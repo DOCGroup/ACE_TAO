@@ -59,7 +59,7 @@ Consumer::run (int argc, char* argv[])
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
+        throw CORBA::UNKNOWN ();
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());

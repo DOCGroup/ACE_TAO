@@ -95,7 +95,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   PortableGroup::TagGroupTaggedComponent tagged_component;
   if (! TAO::PG_Utils::get_tagged_component (empty_group, tagged_component))
   {
-    ACE_THROW_RETURN (PortableGroup::ObjectNotCreated(), 0);
+    throw PortableGroup::ObjectNotCreated();
   }
 
   TAO::PG_Object_Group * objectGroup = 0;
@@ -117,7 +117,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   if (this->group_map_.bind (group_id, objectGroup) != 0)
   {
     delete objectGroup;
-    ACE_THROW_RETURN (PortableGroup::ObjectNotCreated(), 0);
+    throw PortableGroup::ObjectNotCreated();
   }
   return objectGroup;
 }

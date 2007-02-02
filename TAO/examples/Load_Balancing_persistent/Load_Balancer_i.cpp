@@ -201,15 +201,13 @@ Object_Group_Factory_i::make_group (int random,
     {
       if (this->random_groups_->find (const_cast<char *> (id),
                                       this->mem_pool_) == 0)
-        ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
-                          Load_Balancer::Object_Group::_nil ());
+        throw Load_Balancer::duplicate_group ();
     }
   else
     {
       if (this->rr_groups_->find (const_cast<char *> (id),
                                   this->mem_pool_) == 0)
-        ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
-                          Load_Balancer::Object_Group::_nil ());
+        throw Load_Balancer::duplicate_group ();
     }
 
 
@@ -243,8 +241,7 @@ Object_Group_Factory_i::make_group (int random,
   char *ptr = (char *) this->mem_pool_->malloc (id_len + kind_len);
 
   if (ptr == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (),
-                      Load_Balancer::Object_Group::_nil ());
+    throw CORBA::NO_MEMORY ();
 
   char * id_ptr =  ptr;
   char * ior_ptr = ptr + id_len;
@@ -279,8 +276,7 @@ Object_Group_Factory_i::make_group (int random,
       // For some reason the  bind failed. Free our
       // dynamically allocated  memory.
       this->mem_pool_->free ((void *) ptr);
-      ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
-                        Load_Balancer::Object_Group::_nil ());
+      throw Load_Balancer::duplicate_group ();
 
     }
 
@@ -352,8 +348,7 @@ Object_Group_Factory_i::resolve (const char * id)
       && random_groups_->find (const_cast<char *> (id),
                                ior,
                                this->mem_pool_) == -1)
-    ACE_THROW_RETURN (Load_Balancer::no_such_group (),
-                      0);
+    throw Load_Balancer::no_such_group ();
 
   CORBA::Object_var objref =
     this->orb_->string_to_object (ior);
@@ -726,8 +721,7 @@ Object_Group_i::resolve_with_id (const char * id)
 
   if (this->members_->find (const_cast<char *> (id),
                       ior.out (), this->allocator_) == -1)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
-                      0);
+    throw Load_Balancer::no_such_member ();
 
   char *retn_ptr = CORBA::string_dup (ior.in ());
 
@@ -834,8 +828,7 @@ Random_Object_Group::resolve (void)
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
-                      0);
+    throw Load_Balancer::no_such_member ();
 
   // Generate random number in the range [0, group_size - 1]
   size_t member = ACE_OS::rand() % group_size;
@@ -874,8 +867,7 @@ RR_Object_Group::resolve (void)
 
   size_t group_size = this->members_->current_size ();
   if (group_size == 0)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
-                      0);
+    throw Load_Balancer::no_such_member ();
 
   // Get the id of the member to return to the client.
   char **id = 0;
@@ -891,8 +883,7 @@ RR_Object_Group::resolve (void)
   if (this->members_->find (*id,
                             objref,
                             this->allocator_) == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      0);
+    throw CORBA::INTERNAL ();
 
   char *retn_ptr = CORBA::string_dup (objref);
 

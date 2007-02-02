@@ -205,7 +205,7 @@ TAO_NotifyLogFactory_i::MyChannel (void)
       CORBA::SystemException
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
 }
 
 CosNotifyChannelAdmin::InterFilterGroupOperator

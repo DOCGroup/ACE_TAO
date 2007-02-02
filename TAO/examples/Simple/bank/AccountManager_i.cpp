@@ -73,8 +73,7 @@ AccountManager_i::open (const char *name,
       if (hash_map_.bind (name, result) == -1)
         {
           delete result;
-          ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                            Bank::Account::_nil ());
+          throw CORBA::UNKNOWN ();
         }
     }
   else if (TAO_debug_level > 0)

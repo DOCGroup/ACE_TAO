@@ -203,7 +203,7 @@ TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr)
 {
   /// we have yet to implement the replication of observers
   /// throw an exception for the moment
-  ACE_THROW_RETURN(RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(), 0);
+  throw RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER();
 
   //return this->ec_impl_->append_observer (observer);
 }

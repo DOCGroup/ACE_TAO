@@ -119,8 +119,7 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
                             acquisition_arguments);
     }
 
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                    SecurityLevel3::CredentialsAcquirer::_nil ());
+  throw CORBA::BAD_PARAM ();
 
 }
 

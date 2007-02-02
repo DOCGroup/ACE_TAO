@@ -33,8 +33,7 @@ TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val)
 {
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_FT_Request_Duration_Policy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -111,8 +110,7 @@ TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
 {
   FT::HeartbeatPolicyValue *value = 0;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_FT_Heart_Beat_Policy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,

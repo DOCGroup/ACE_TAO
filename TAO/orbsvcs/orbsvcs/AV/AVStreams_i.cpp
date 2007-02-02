@@ -266,7 +266,7 @@ TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name)
   }
   else{
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
-    ACE_THROW_RETURN (AVStreams::noSuchFlow (), CORBA::Object::_nil ());
+    throw AVStreams::noSuchFlow ();
   }
 }
 
@@ -2334,7 +2334,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj)
       ACE_CString fep_name_key (CORBA::string_dup (flow_name.in ()));
       if (this->fep_map_.bind (fep_name_key, AVStreams::FlowEndPoint::_duplicate (fep.in ())) != 0)
         {
-          ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
+          throw AVStreams::streamOpFailed ();
         }
       // increment the flow count.
       this->flow_count_++;
@@ -2673,7 +2673,7 @@ TAO_StreamEndPoint_A::connect_leaf (AVStreams::StreamEndPoint_B_ptr /* the_ep */
                    AVStreams::QoSRequestFailed,
                    AVStreams::notSupported))
 {
-  ACE_THROW_RETURN (AVStreams::notSupported (), 0);
+  throw AVStreams::notSupported ();
 }
 
 // Multicast not supported yet.
@@ -3408,7 +3408,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
 
 
   if ( (this->fdev_map_.bind (fdev_name_key, fdev )) != 0)
-    ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
+    throw AVStreams::streamOpFailed ();
   // increment the flow count.
   this->flow_count_++;
   this->flows_.length (this->flow_count_);

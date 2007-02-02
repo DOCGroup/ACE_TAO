@@ -163,8 +163,7 @@ remove_offer (const CosTrading::OfferId offer_id)
 
   if (this->remove_offer (stype,
                           index) == -1)
-    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id),
-                      -1);
+    throw CosTrading::UnknownOfferId (offer_id);
 
   return 0;
 }
@@ -181,7 +180,7 @@ lookup_offer (const CosTrading::OfferId offer_id,
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
-    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
+    throw CosTrading::UnknownOfferId (offer_id);
 
   return offer;
 }
@@ -200,7 +199,7 @@ lookup_offer (const CosTrading::OfferId offer_id)
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
-    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
+    throw CosTrading::UnknownOfferId (offer_id);
 
   return offer;
 }

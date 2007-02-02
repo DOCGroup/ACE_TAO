@@ -80,9 +80,7 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
                                                 orb);
   if (result != 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (0,
-                                          CORBA::COMPLETED_NO),
-                        CORBA::Object::_nil ());
+      throw CORBA::BAD_PARAM (0, CORBA::COMPLETED_NO);
     }
 
   return CORBA::Object::_nil ();

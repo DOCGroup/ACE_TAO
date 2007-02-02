@@ -122,7 +122,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
     default:
       return CORBA::TypeCode::_duplicate (tc);
     case CORBA::tk_fixed:
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+      throw CORBA::NO_IMPLEMENT ();
     case CORBA::tk_array:
     {
       CORBA::ULong length = tc->length ();
@@ -477,7 +477,7 @@ TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
                                   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::FixedDef::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 int

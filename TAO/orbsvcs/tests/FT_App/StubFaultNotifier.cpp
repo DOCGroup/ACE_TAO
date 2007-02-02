@@ -380,7 +380,7 @@ void StubFaultNotifier::push_sequence_fault (
   ))
 {
   ACE_UNUSED_ARG (constraint_grammar);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 
@@ -396,7 +396,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 
@@ -412,7 +412,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
+  throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 

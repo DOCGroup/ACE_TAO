@@ -48,7 +48,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     CosNaming::Binding_out b)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CosNaming::Binding *binding;
+  CosNaming::Binding *binding = 0;
 
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
@@ -65,7 +65,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If the context we are iterating over has been destroyed,
   // self-destruct.
@@ -73,7 +73,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     {
       destroy ();
 
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+      throw CORBA::OBJECT_NOT_EXIST ();
     }
 
   // If there are no more bindings.
@@ -90,7 +90,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
       hash_iter_->next (hash_entry);
 
       if (populate_binding (hash_entry, *binding) == 0)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+        throw CORBA::NO_MEMORY ();
 
       hash_iter_->advance ();
       return 1;
@@ -116,7 +116,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   // If the context we are iterating over has been destroyed,
   // self-destruct.
@@ -124,12 +124,12 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
     {
       destroy ();
 
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+      throw CORBA::OBJECT_NOT_EXIST ();
     }
 
   // Check for illegal parameter values.
   if (how_many == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   // If there are no more bindings...
   if (hash_iter_->done ())
@@ -148,7 +148,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
           hash_iter_->next (hash_entry);
 
           if (populate_binding (hash_entry, bl[i]) == 0)
-            ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+            throw CORBA::NO_MEMORY ();
 
           if (hash_iter_->advance () == 0)
             {

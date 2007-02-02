@@ -177,8 +177,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
                       ACE_TEXT ("unimplemented.\n"),
                       ::mtype));
 
-          ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                            CosLoadBalancing::LoadMonitor::_nil ());
+          throw CORBA::NO_IMPLEMENT ();
         }
       else
         {
@@ -187,8 +186,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
                       ACE_TEXT ("type: <%s>.\n"),
                       ::mtype));
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                            CosLoadBalancing::LoadMonitor::_nil ());
+          throw CORBA::BAD_PARAM ();
         }
     }
 }

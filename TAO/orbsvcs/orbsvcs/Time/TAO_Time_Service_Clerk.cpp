@@ -65,8 +65,7 @@ TAO_Time_Service_Clerk::secure_universal_time (void)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CosTime::UTO::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 // This creates a new UTO based on the given parameters.

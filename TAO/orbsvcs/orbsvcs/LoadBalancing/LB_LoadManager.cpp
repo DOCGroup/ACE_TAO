@@ -153,7 +153,7 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
   if (this->load_map_.find (the_location, *tmp) == 0)
     return loads._retn ();
   else
-    ACE_THROW_RETURN (CosLoadBalancing::LocationNotFound (), 0);
+    throw CosLoadBalancing::LocationNotFound ();
 }
 
 void
@@ -315,8 +315,7 @@ TAO_LB_LoadManager::get_load_alert (
     }
   else
     {
-      ACE_THROW_RETURN (CosLoadBalancing::LoadAlertNotFound (),
-                        CosLoadBalancing::LoadAlert::_nil ());
+      throw CosLoadBalancing::LoadAlertNotFound ();
     }
 }
 
@@ -419,8 +418,7 @@ TAO_LB_LoadManager::get_load_monitor (
         CosLoadBalancing::LoadMonitor::_duplicate (entry->int_id_.in ());
     }
 
-  ACE_THROW_RETURN (CosLoadBalancing::LocationNotFound (),
-                    CosLoadBalancing::LoadMonitor::_nil ());
+  throw CosLoadBalancing::LocationNotFound ();
 }
 
 void
@@ -757,8 +755,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
     this->object_group_manager_.object_group (oid);
 
   if (CORBA::is_nil (object_group.in ()))
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      CORBA::Object::_nil ());
+    throw CORBA::OBJECT_NOT_EXIST ();
 
   PortableGroup::Properties_var properties =
     this->get_properties (object_group.in ());
@@ -780,8 +777,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
                                     this->lm_ref_.in ());
     }
 
-  ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                    CORBA::Object::_nil ());
+  throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void

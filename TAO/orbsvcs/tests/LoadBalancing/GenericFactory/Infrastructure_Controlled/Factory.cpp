@@ -40,8 +40,7 @@ Factory::create_object (
     {
       this->fcid_++;
       if (this->fcid_ == tmp_fcid)
-        ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
-			  CORBA::Object::_nil ());
+        throw PortableGroup::ObjectNotCreated ();
     }
 
   tmp_fcid = this->fcid_;

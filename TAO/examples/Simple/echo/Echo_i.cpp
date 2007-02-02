@@ -73,7 +73,7 @@ Echo_i::echo_string (const char *mesg)
   // raised.
 
   if (str.in () == 0)
-    ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+    throw CORBA::NO_MEMORY ();
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.

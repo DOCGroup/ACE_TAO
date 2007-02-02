@@ -37,12 +37,11 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired Quality-of-Protection value from the
       // given Any.
       if (!(value >>= qop))
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO::VMCID,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          CORBA::Policy::_nil ());
+        throw CORBA::BAD_PARAM (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
 
       TAO::Security::QOPPolicy * qop_policy = 0;
       ACE_NEW_THROW_EX (qop_policy,
@@ -63,12 +62,11 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= trust))
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO::VMCID,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          CORBA::Policy::_nil ());
+        throw CORBA::BAD_PARAM (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
 
       TAO::Security::EstablishTrustPolicy * trust_policy = 0;
       ACE_NEW_THROW_EX (trust_policy,
@@ -89,12 +87,11 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= args))
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO::VMCID,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          CORBA::Policy::_nil ());
+        throw CORBA::BAD_PARAM (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
 
       TAO::SL3::ContextEstablishmentPolicy * policy = 0;
       ACE_NEW_THROW_EX (policy,
@@ -121,12 +118,11 @@ TAO::Security::PolicyFactory::create_policy (
       // Extract the desired establishing of trust value from the
       // given Any.
       if (!(value >>= creds))
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO::VMCID,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          CORBA::Policy::_nil ());
+        throw CORBA::BAD_PARAM (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
 
       TAO::SL3::ObjectCredentialsPolicy * policy = 0;
       ACE_NEW_THROW_EX (policy,
@@ -144,11 +140,9 @@ TAO::Security::PolicyFactory::create_policy (
            || type == ::Security::SecMechanismsPolicy
            || type == ::Security::SecFeaturePolicy             // Deprecated.
            || type == ::Security::SecDelegationDirectivePolicy)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
-                      CORBA::Policy::_nil ());
+    throw CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
   else
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                      CORBA::Policy::_nil ());
+    throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

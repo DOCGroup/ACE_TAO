@@ -89,7 +89,7 @@ Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
 
       // Check if it is a valid Generic Factory reference
       if (CORBA::is_nil (genericFactoryObj_ptr))
-        ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
+        throw CosLifeCycle::NoFactory (factory_key);
       else
         {
           CosLifeCycle::GenericFactory_var genericFactory_var;

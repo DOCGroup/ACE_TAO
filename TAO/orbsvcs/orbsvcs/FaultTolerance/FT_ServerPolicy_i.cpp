@@ -27,8 +27,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val)
   CORBA::Boolean value;
 
   if ((val >>= CORBA::Any::to_boolean (value)) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_FT_Heart_Beat_Enabled_Policy *tmp;
   ACE_NEW_THROW_EX (tmp,

@@ -101,8 +101,7 @@ TAO_FT_IOGR_Property::get_primary (
     this->get_primary_profile (ior);
 
   if (pfile == 0)
-    ACE_THROW_RETURN (TAO_IOP::NotFound (),
-                      CORBA::Object::_nil ());
+    throw TAO_IOP::NotFound ();
 
   // Search for the IOP::TAG_FT_PRIMARY in the tagged component of
   // the profile
@@ -145,7 +144,7 @@ TAO_FT_IOGR_Property::get_primary (
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
     {
-      ACE_THROW_RETURN (TAO_IOP::NotFound (),  // ** Changed from Invalid_IOR () **
+      throw TAO_IOP::NotFound ()**
                         CORBA::Object::_nil ());
     }
 
@@ -183,8 +182,7 @@ TAO_FT_IOGR_Property::set_primary (
         mprofile.get_profile (i)->tagged_components ();
 
       if (tag_comp.get_component (tagged_components) == 1)
-        ACE_THROW_RETURN (TAO_IOP::Duplicate (),
-                          0);
+        throw TAO_IOP::Duplicate ();
     }
 
   // Check whether ior1 exists in ior2
@@ -217,8 +215,7 @@ TAO_FT_IOGR_Property::set_primary (
   // At the end of the loop check whether we have seen <ior1> in
   // <ior2>
   if (index == -1)
-    ACE_THROW_RETURN (TAO_IOP::NotFound (),
-                      0);
+    throw TAO_IOP::NotFound ();
 
   CORBA::Boolean val = 1;
 
@@ -375,16 +372,14 @@ TAO_FT_IOGR_Property::get_tagged_component (
           CORBA::Boolean byte_order;
 
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            ACE_THROW_RETURN (CORBA::MARSHAL (),
-                              0);
+            throw CORBA::MARSHAL ();
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> fgtc) == 1)
             return 1;
           else
-            ACE_THROW_RETURN (CORBA::MARSHAL (),
-                              0);
+            throw CORBA::MARSHAL ();
         }
     }
 

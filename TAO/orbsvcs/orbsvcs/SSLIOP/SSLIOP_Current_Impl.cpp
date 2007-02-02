@@ -31,8 +31,7 @@ TAO::SSLIOP::Current_Impl::client_credentials ()
 {
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
   if (cert.ptr () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_OPERATION (),
-                      SecurityLevel3::ClientCredentials::_nil ());
+    throw CORBA::BAD_OPERATION ();
 
   SecurityLevel3::ClientCredentials_ptr creds;
   ACE_NEW_THROW_EX (creds,
@@ -52,7 +51,7 @@ CORBA::Boolean
 TAO::SSLIOP::Current_Impl::request_is_local (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void

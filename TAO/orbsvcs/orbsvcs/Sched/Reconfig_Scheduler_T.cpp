@@ -228,11 +228,11 @@ init (int config_count,
         {
           case -1:
             // Something bad but unknown occurred while trying to bind in map.
-            ACE_THROW_RETURN (RtecScheduler::INTERNAL (), -1);
+            throw RtecScheduler::INTERNAL ();
 
           case 1:
             // Tried to bind an operation that was already in the map.
-            ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), -1);
+            throw RtecScheduler::DUPLICATE_NAME ();
 
           default:
             break;
@@ -269,7 +269,7 @@ init (int config_count,
 
       if (new_rt_info == 0)
         {
-          ACE_THROW_RETURN (RtecScheduler::INTERNAL (), -1);
+          throw RtecScheduler::INTERNAL ();
         }
 
       // Set the new info's enabled state
@@ -511,7 +511,7 @@ get (RtecScheduler::handle_t handle)
   TAO_RT_Info_Ex *rt_info = 0;
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
-      ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (), 0);
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   // Allocate a new RT_Info
@@ -1610,8 +1610,7 @@ last_scheduled_priority (void)
   if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
       && this->enforce_schedule_stability_)
     {
-      ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED (),
-                        (RtecScheduler::Preemption_Priority_t) -1);
+      throw RtecScheduler::NOT_SCHEDULED ();
     }
 
   return last_scheduled_priority_;
@@ -1708,19 +1707,19 @@ create_i (const char *entry_point,
     {
       case -1:
         // Something bad but unknown occurred while trying to bind in map.
-        ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
+        throw RtecScheduler::INTERNAL ();
 
       case 1:
         // Tried to bind an operation that was already in the map.
         if (ignore_duplicates)
           {
             // Should never get here unless something is badly awry.
-            ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
+            throw RtecScheduler::INTERNAL ();
           }
         else
           {
             // Already bound, and we're not ignoring duplicates.
-        ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), 0);
+        throw RtecScheduler::DUPLICATE_NAME ();
           }
 
       default:
@@ -1734,12 +1733,12 @@ create_i (const char *entry_point,
       case -1:
         // Something bad but unknown occurred while trying to bind in tree.
         rt_info_map_.unbind (handle);
-        ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
+        throw RtecScheduler::INTERNAL ();
 
       case 1:
         // Tried to bind an operation that was already in the tree.
         rt_info_map_.unbind (handle);
-        ACE_THROW_RETURN (RtecScheduler::DUPLICATE_NAME (), 0);
+        throw RtecScheduler::DUPLICATE_NAME ();
 
       default:
         break;
@@ -1903,7 +1902,7 @@ lookup_i (const char * entry_point)
   TAO_RT_Info_Ex *rt_info = 0;
   if (rt_info_tree_.find (entry_point, rt_info) != 0)
     {
-      ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (), 0);
+      throw RtecScheduler::UNKNOWN_TASK ();
     }
 
   return rt_info->handle;

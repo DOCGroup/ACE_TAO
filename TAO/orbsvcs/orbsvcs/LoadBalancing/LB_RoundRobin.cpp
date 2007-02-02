@@ -67,7 +67,7 @@ TAO_LB_RoundRobin::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                    CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   return load_manager->get_loads (the_location);
 }
@@ -81,7 +81,7 @@ TAO_LB_RoundRobin::next_member (
                    PortableGroup::MemberNotFound))
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   const PortableGroup::ObjectGroupId id =
     load_manager->get_object_group_id (object_group);
@@ -102,8 +102,7 @@ TAO_LB_RoundRobin::next_member (
   const CORBA::ULong len = locations->length ();
 
   if (len == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (),
-                      CORBA::Object::_nil ());
+    throw CORBA::TRANSIENT ();
 
   TAO_LB_Location_Index_Map::ENTRY * entry;
   if (this->location_index_map_.find (id, entry) == 0)
@@ -135,7 +134,7 @@ TAO_LB_RoundRobin::next_member (
 
   const CORBA::ULong index = 0;
   if (this->location_index_map_.bind (id, index + 1) != 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
+    throw CORBA::INTERNAL ();
 
   return load_manager->get_member_ref (object_group,
                                        locations[index]);

@@ -315,8 +315,7 @@ TAO::PG_Object_Group::set_primary_member (
                       ACE_TEXT ("TAO-PG (%P|%t) - set_primary_location ")
                       ACE_TEXT ("throwing MemberNotFound.\n")));
         }
-      ACE_THROW_RETURN (PortableGroup::MemberNotFound(),
-                        -1);
+      throw PortableGroup::MemberNotFound();
     }
 
   return result;
@@ -558,7 +557,7 @@ TAO::PG_Object_Group::get_member_reference (
     }
   else
     {
-      ACE_THROW_RETURN (PortableGroup::MemberNotFound(), result._retn ());
+      throw PortableGroup::MemberNotFound();
     }
   return result._retn ();
 }

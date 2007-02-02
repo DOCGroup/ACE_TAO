@@ -370,8 +370,7 @@ TAO_Notify_Builder::build_proxy(TAO_Notify_SupplierAdmin* sa
       break;
 
     default:
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        CosNotifyChannelAdmin::ProxyConsumer::_nil ());
+      throw CORBA::BAD_PARAM ();
                         }
 }
 
@@ -405,8 +404,7 @@ TAO_Notify_Builder::build_proxy(TAO_Notify_ConsumerAdmin* ca
       break;
 
     default:
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        CosNotifyChannelAdmin::ProxySupplier::_nil ());
+      throw CORBA::BAD_PARAM ();
     }
 }
 
@@ -439,8 +437,7 @@ TAO_Notify_Builder::build_proxy(TAO_Notify_SupplierAdmin* sa
       break;
 
     default:
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
+      throw CORBA::BAD_PARAM ();
                         }
 }
 
@@ -473,8 +470,7 @@ TAO_Notify_Builder::build_proxy(TAO_Notify_ConsumerAdmin* ca
       break;
 
     default:
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
+      throw CORBA::BAD_PARAM ();
     }
 }
 

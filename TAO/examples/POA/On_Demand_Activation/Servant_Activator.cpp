@@ -47,7 +47,7 @@ ServantActivator::incarnate (const PortableServer::ObjectId &oid,
     return new test_i (this->orb_.in (), poa);
   else
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+      throw CORBA::OBJECT_NOT_EXIST ();
     }
 }
 

@@ -62,8 +62,7 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle)
                      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
-    ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (),
-                      0);
+    throw RtecScheduler::UNKNOWN_TASK ();
   // Note: there is no memory leak here, according to the CORBA spec,
   // we are supposed to allocate an structure and return it, the
   // caller owns it from then on.
@@ -534,8 +533,7 @@ ACE_Runtime_Scheduler::last_scheduled_priority (void)
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
-    ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
-              (RtecScheduler::Preemption_Priority_t) -1);
+    throw RtecScheduler::NOT_SCHEDULED();
   else
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
 }

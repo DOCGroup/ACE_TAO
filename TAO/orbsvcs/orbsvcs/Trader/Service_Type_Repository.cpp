@@ -95,14 +95,12 @@ add_type (const char *name,
 
   // Make sure Type name is valid.
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
-    ACE_THROW_RETURN (CosTrading::IllegalServiceType (name),
-                      this->incarnation_);
+    throw CosTrading::IllegalServiceType (name);
 
   // Check if the service type already exists.
   CORBA::String_var type_name (name);
   if (this->type_map_.find (type_name) == 0)
-    ACE_THROW_RETURN (CosTradingRepos::ServiceTypeRepository::ServiceTypeExists (),
-                      this->incarnation_);
+    throw CosTradingRepos::ServiceTypeRepository::ServiceTypeExists ();
 
   // Make sure all property names are valid and appear only once.
   this->validate_properties (prop_map,
@@ -122,8 +120,7 @@ add_type (const char *name,
   // Instead, we do this:
   //
   if (if_name == 0)
-    ACE_THROW_RETURN (CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch (),
-                      this->incarnation_);
+    throw CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch ();
 
   // Collect and make sure that properties of all supertypes and this
   // type are compatible.  We can use prop_map and super_types_map for
@@ -248,8 +245,7 @@ describe_type (const char * name)
   Service_Type_Map::ENTRY *type_entry = 0;
   if (this->type_map_.find (type_name,
                             type_entry) == -1)
-    ACE_THROW_RETURN (CosTrading::UnknownServiceType (name),
-                      (CosTradingRepos::ServiceTypeRepository::TypeStruct *) 0);
+    throw CosTrading::UnknownServiceType (name);
 
   // Return appropriate information about the type.
   CosTradingRepos::ServiceTypeRepository::TypeStruct *descr = 0;
@@ -281,8 +277,7 @@ fully_describe_type (const char *name)
                    CosTrading::UnknownServiceType))
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
-    ACE_THROW_RETURN (CosTrading::IllegalServiceType (name),
-                      0);
+    throw CosTrading::IllegalServiceType (name);
 
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
@@ -291,8 +286,7 @@ fully_describe_type (const char *name)
   Service_Type_Map::ENTRY *type_entry = 0;
   if (this->type_map_.find (type_name,
                             type_entry) == -1)
-    ACE_THROW_RETURN (CosTrading::UnknownServiceType (name),
-                      0);
+    throw CosTrading::UnknownServiceType (name);
 
   // Return appropriate information about the type.
   CosTradingRepos::ServiceTypeRepository::TypeStruct *descr = 0;

@@ -47,7 +47,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
 
   if (position < current_position_)
     {
-      ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
+      throw DsLogAdmin::InvalidParam ();
     }
 
   if (how_many == 0)

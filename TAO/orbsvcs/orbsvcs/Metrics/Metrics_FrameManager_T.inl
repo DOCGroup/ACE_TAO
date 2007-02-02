@@ -70,7 +70,7 @@ register_period (RtecScheduler::Period_t p,
   ACE_Write_Guard<ACE_LOCK> mon (this->lock_);
   if (mon.locked () == 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   int result = 0;
@@ -89,7 +89,7 @@ register_period (RtecScheduler::Period_t p,
 		  delete data;
 
           // We failed to bind: throw an exception.
-          ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
+          throw Metrics::INTERNAL ();
         }
     }
 
@@ -136,7 +136,7 @@ update_all_frames_with_time (Metrics::Time mt,
   ORBSVCS_Time::TimeT_to_Time_Value(tv, mt);
   if (this->update_all_frames (tv) < 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   return 0;
@@ -156,7 +156,7 @@ update_all_frames (CORBA::Environment &ACE_TRY_ENV)
   ACE_Write_Guard<ACE_LOCK> mon (this->lock_);
   if (mon.locked () == 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   METRICS_FRAME_DATA_MAP_ITERATOR iter (frame_data_map_);
@@ -241,7 +241,7 @@ update_frame_with_time (RtecScheduler::Period_t p, Metrics::Time mt,
     {
       case -1: ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
       case -2: ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
-      default: return 0;      
+      default: return 0;
     }
 }
 
@@ -269,7 +269,7 @@ update_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
   ACE_Read_Guard<ACE_LOCK> mon (this->lock_);
   if (mon.locked () == 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   if (frame_data_map_.find (p, data) == 0 && data != 0)
@@ -281,7 +281,7 @@ update_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
       ACE_Write_Guard<ACE_LOCK> data_mon (data->lock_);
       if (data_mon.locked () == 0)
         {
-          ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+          throw Metrics::SYNCHRONIZATION ();
         }
 
       // Grab the time stamp as late as possible, i.e., after all locks
@@ -293,7 +293,7 @@ update_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
       return update_data (*data, tv);
     }
 
-  ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
+  throw Metrics::INTERNAL ();
 }
 
 
@@ -336,7 +336,7 @@ reset_all_frames_with_time (Metrics::Time mt,
   ORBSVCS_Time::TimeT_to_Time_Value(tv, mt);
   if (this->reset_all_frames (tv) < 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   return 0;
@@ -355,7 +355,7 @@ reset_all_frames (CORBA::Environment &ACE_TRY_ENV)
   ACE_Write_Guard<ACE_LOCK> mon (this->lock_);
   if (mon.locked () == 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   METRICS_FRAME_DATA_MAP_ITERATOR iter (frame_data_map_);
@@ -441,7 +441,7 @@ reset_frame_with_time (RtecScheduler::Period_t p, Metrics::Time mt,
     {
       case -1: ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
       case -2: ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
-      default: return 0;      
+      default: return 0;
     }
 }
 
@@ -469,7 +469,7 @@ reset_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
   ACE_Read_Guard<ACE_LOCK> mon (this->lock_);
   if (mon.locked () == 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   if (frame_data_map_.find (p, data) == 0 && data != 0)
@@ -481,7 +481,7 @@ reset_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
       ACE_Write_Guard<ACE_LOCK> data_mon (data->lock_);
       if (data_mon.locked () == 0)
         {
-          ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+          throw Metrics::SYNCHRONIZATION ();
         }
 
       // Grab the time stamp as late as possible, i.e., after all locks
@@ -492,13 +492,13 @@ reset_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
 
     if (data == 0)
       {
-        ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
+        throw Metrics::INTERNAL ();
       }
 
     return reset_data (*data, tv);
   }
 
-  ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
+  throw Metrics::INTERNAL ();
 }
 
 
@@ -568,7 +568,7 @@ get_start_time (RtecScheduler::Period_t p, Metrics::Time &start,
       case -1: ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
       case -2: ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
       default: ORBSVCS_Time::Time_Value_to_TimeT (start, tv);
-               return 0;      
+               return 0;
     }
 }
 
@@ -640,7 +640,7 @@ get_end_time (RtecScheduler::Period_t p, Metrics::Time &end,
       case -1: ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
       case -2: ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
       default: ORBSVCS_Time::Time_Value_to_TimeT (end, tv);
-               return 0;      
+               return 0;
     }
 }
 
@@ -669,7 +669,7 @@ get_frame_id (RtecScheduler::Period_t p,
   ACE_Read_Guard<ACE_LOCK> mon (this->lock_);
   if (mon.locked () == 0)
     {
-      ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+      throw Metrics::SYNCHRONIZATION ();
     }
 
   if (frame_data_map_.find (p, data) == 0 && data != 0)
@@ -680,14 +680,14 @@ get_frame_id (RtecScheduler::Period_t p,
       ACE_Read_Guard<ACE_LOCK> data_mon (data->lock_);
       if (data_mon.locked () == 0)
         {
-          ACE_THROW_RETURN (Metrics::SYNCHRONIZATION (), -1);
+          throw Metrics::SYNCHRONIZATION ();
         }
 
       id = data->frame_id_;
       return 0;
     }
 
-  ACE_THROW_RETURN (Metrics::INTERNAL (), -1);
+  throw Metrics::INTERNAL ();
 }
 
 

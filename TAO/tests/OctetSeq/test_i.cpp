@@ -48,7 +48,7 @@ Database_i::get (Test::Index i)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange))
 {
   if (i >= this->max_range_)
-    ACE_THROW_RETURN (Test::OutOfRange (0, this->max_range_), 0);
+    throw Test::OutOfRange (0, this->max_range_);
 
   Test::OctetSeq* copy;
   ACE_NEW_THROW_EX (copy,
@@ -62,7 +62,7 @@ Database_i::get_crc (Test::Index i)
     ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange))
 {
   if (i >= this->max_range_)
-    ACE_THROW_RETURN (Test::OutOfRange (0, this->max_range_), 0);
+    throw Test::OutOfRange (0, this->max_range_);
 
   return ACE::crc32 (this->elements_[i].get_buffer (),
                      this->elements_[i].length ());

@@ -138,8 +138,7 @@ TAO_Notify_Tests_RT_Test_Filter::match (const CORBA::Any & /*filterable_data */
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
@@ -245,8 +244,7 @@ TAO_Notify_Tests_RT_Test_Filter::match_typed (
   ACE_THROW_SPEC (( CORBA::SystemException,
                     CosNotifyFilter::UnsupportedFilterableData))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyFilter::CallbackID
@@ -255,8 +253,7 @@ TAO_Notify_Tests_RT_Test_Filter::attach_callback (
                                 )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -273,6 +270,5 @@ CosNotifyFilter::CallbackIDSeq *
 TAO_Notify_Tests_RT_Test_Filter::get_callbacks (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    0);
+  throw CORBA::NO_IMPLEMENT ();
 }

@@ -155,7 +155,7 @@ TAO_LB_LoadAverage::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                    CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   CosLoadBalancing::LoadList_var loads =
     load_manager->get_loads (the_location);
@@ -177,15 +177,13 @@ TAO_LB_LoadAverage::next_member (
                    PortableGroup::MemberNotFound))
 {
   if (CORBA::is_nil (load_manager))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                      CORBA::Object::_nil ());
+    throw CORBA::BAD_PARAM ();
 
   PortableGroup::Locations_var locations =
     load_manager->locations_of_members (object_group);
 
   if (locations->length () == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (),
-                      CORBA::Object::_nil ());
+    throw CORBA::TRANSIENT ();
 
   // @note The Random load balancing strategy is used since it is
   //       very lightweight and stateless.

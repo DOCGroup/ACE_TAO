@@ -46,8 +46,7 @@ Logger_Factory_i::make_logger (const char *name)
   if (hash_map_.bind (name, result) == -1)
     {
       delete result;
-      ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                        Logger::_nil ());
+      throw CORBA::UNKNOWN ();
     }
   else
     // Logger of name <name> already bound.  <result> is set
