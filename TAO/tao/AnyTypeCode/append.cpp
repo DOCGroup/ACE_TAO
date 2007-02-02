@@ -106,9 +106,7 @@ TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
         ACE_TEXT ("TAO_Marshal_Primitive::append detected error\n")
       ));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -121,14 +119,10 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
   CORBA::TypeCode_var elem_tc;
 
   if (!(*src >> elem_tc.inout ()))
-    ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                      CORBA::COMPLETED_MAYBE),
-                      TAO::TRAVERSE_STOP);
+    throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 
   if (!(*dest << elem_tc.in ()))
-    ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                      CORBA::COMPLETED_MAYBE),
-                      TAO::TRAVERSE_STOP);
+    throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 
   // append the data
   TAO::traverse_status retval =
@@ -143,9 +137,7 @@ TAO_Marshal_Any::append (CORBA::TypeCode_ptr,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_Marshal_Any::append detected error\n")));
 
-      ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                        CORBA::COMPLETED_MAYBE),
-                        TAO::TRAVERSE_STOP);
+      throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
     }
 
   return retval;
@@ -245,8 +237,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                           ACE_TEXT ("Bad kind_ value in CDR stream\n")));
             }
 
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            TAO::TRAVERSE_STOP);
+          throw ::CORBA::BAD_TYPECODE ();
         }
     }
 
@@ -261,9 +252,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
                   ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")));
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -347,9 +336,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
         ACE_TEXT ("TAO_Marshal_ObjRef::append detected error\n")
       ));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -387,9 +374,7 @@ TAO_Marshal_Struct::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Struct::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -507,8 +492,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
             tc->default_index ();
 
           if (i != default_index)
-            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                              TAO::TRAVERSE_STOP);
+            throw ::CORBA::BAD_TYPECODE ();
           // Found the default branch, save its position and continue
           // trying to find the current value...
           default_member = i;
@@ -664,9 +648,7 @@ TAO_Marshal_String::append (CORBA::TypeCode_ptr,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_TypeCode::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -693,8 +675,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
           LM_DEBUG,
           ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")
         ));
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        TAO::TRAVERSE_STOP);
+      throw ::CORBA::MARSHAL ();
     }
 
   if (bounds == 0)
@@ -880,8 +861,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
         ACE_TEXT ("marshaling TAO_Marshal_Sequence::append detected error\n")
       ));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL ();
 }
 
 TAO::traverse_status
@@ -1067,8 +1047,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Sequence::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL ();
 }
 
 TAO::traverse_status
@@ -1099,9 +1078,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Alias::append detected error\n")));
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 // Decode exception For exceptions, the "hidden" type ID near the
@@ -1151,9 +1128,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Except::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -1181,9 +1156,7 @@ TAO_Marshal_WString::append (CORBA::TypeCode_ptr,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_WString::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO::traverse_status
@@ -1288,9 +1261,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Marshal_Value::append detected error\n")));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (0,
-                                    CORBA::COMPLETED_MAYBE),
-                    TAO::TRAVERSE_STOP);
+  throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -212,7 +212,7 @@ CORBA::Object::_is_a (const char *type_id)
   // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
 
   if (this->protocol_proxy_ == 0)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+    throw ::CORBA::NO_IMPLEMENT ();
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (type_id,
@@ -322,12 +322,11 @@ CORBA::Object::_key (void)
                   ACE_TEXT ("profile in use\n")));
     }
 
-  ACE_THROW_RETURN (CORBA::INTERNAL (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        EINVAL),
-                      CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::INTERNAL (
+    CORBA::SystemException::_tao_minor_code (
+      0,
+      EINVAL),
+    CORBA::COMPLETED_NO);
 }
 
 void
@@ -454,8 +453,7 @@ CORBA::Object::_request (const char *operation)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                        0);
+      throw ::CORBA::NO_IMPLEMENT ();
     }
 }
 
@@ -533,7 +531,7 @@ CORBA::Object::_get_policy (
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy (type);
   else
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+    throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Policy_ptr
@@ -545,7 +543,7 @@ CORBA::Object::_get_cached_policy (
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_cached_policy (type);
   else
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+    throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Object_ptr
@@ -556,7 +554,7 @@ CORBA::Object::_set_policy_overrides (
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (!this->protocol_proxy_)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
+    throw ::CORBA::NO_IMPLEMENT ();
 
   TAO_Stub* stub =
     this->protocol_proxy_->set_policy_overrides (policies,
@@ -594,7 +592,7 @@ CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy_overrides (types);
   else
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+    throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
@@ -651,7 +649,7 @@ CORBA::Object::_get_orb (void)
       if (this->protocol_proxy_)
         return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
       else
-        ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::ORB::_nil());
+        throw ::CORBA::INTERNAL ();
     }
 }
 

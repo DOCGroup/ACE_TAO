@@ -103,8 +103,7 @@ TAO_ServantBase::_get_interface (void)
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        0);
+      throw ::CORBA::INTF_REPOS ();
     }
 
   // This doesn't take multiple ORBs into account, but it's being

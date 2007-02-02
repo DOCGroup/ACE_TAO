@@ -324,9 +324,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                       repo_id));
         }
 
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
-                                        CORBA::COMPLETED_MAYBE),
-                                        false);
+      throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 1, CORBA::COMPLETED_MAYBE);
     }
 
   valuetype = factory->create_for_unmarshal ();

@@ -82,7 +82,7 @@ namespace TAO
     if (stub == 0)
       {
         // If we're here, we have been passed a bogus objref.
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (), T::_nil ());
+        throw ::CORBA::BAD_PARAM ();
       }
 
     stub->_incr_refcnt ();

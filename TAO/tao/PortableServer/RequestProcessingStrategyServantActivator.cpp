@@ -153,8 +153,7 @@ namespace TAO
           // If we are not allowed to activate the servant, throw an exception
           // etherealize is not called because the servant is never added to
           // the active object map
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          throw ::CORBA::OBJ_ADAPTER ();
         }
 
       // The POA enters the returned Servant value into the Active
@@ -174,8 +173,7 @@ namespace TAO
             {
               // Throw an exception, etherealize is not called because servant
               // is not added to the active object map
-              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                                0);
+              throw ::CORBA::OBJ_ADAPTER ();
             }
 
           // Increment the reference count on the servant upcall.
@@ -242,9 +240,7 @@ namespace TAO
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
-                                                CORBA::COMPLETED_NO),
-                                                0);
+          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
         }
       else
         {

@@ -30,15 +30,15 @@ namespace TAO
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       const TAO_Transport* t = this->transport ();
       if (t == 0)
-        ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+        throw ::CORBA::NO_IMPLEMENT ();
 
       TAO_Connection_Handler *ch = const_cast<TAO_Transport*>(t)->connection_handler ();
       if (ch == 0)
-        ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+        throw ::CORBA::NO_IMPLEMENT ();
 
       return dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
 #else
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+      throw ::CORBA::NO_IMPLEMENT ();
 #endif
     }
 
@@ -66,7 +66,7 @@ namespace TAO
       // about the implicit HANDLE -> CORBA::Long conversion.
       return (CORBA::Long) this->handler ()->get_handle ();
 #else
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+      throw ::CORBA::NO_IMPLEMENT ();
 #endif
     }
 
@@ -74,7 +74,7 @@ namespace TAO
     IIOP_Current_Impl::ssliop_current (void)
           ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
-        ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+        throw ::CORBA::NO_IMPLEMENT ();
     }
 
 
@@ -91,7 +91,7 @@ namespace TAO
 
       return a.get_port_number ();
 #else
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+      throw ::CORBA::NO_IMPLEMENT ();
 #endif
     }
 
@@ -108,7 +108,7 @@ namespace TAO
 
       return CORBA::string_dup (a.get_host_addr ());
 #else
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+      throw ::CORBA::NO_IMPLEMENT ();
 #endif
     }
 
@@ -125,7 +125,7 @@ namespace TAO
 
       return a.get_port_number ();
 #else
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+      throw ::CORBA::NO_IMPLEMENT ();
 #endif
     }
 
@@ -142,7 +142,7 @@ namespace TAO
 
       return CORBA::string_dup (a.get_host_addr ());
 #else
-      ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+      throw ::CORBA::NO_IMPLEMENT ();
 #endif
     }
 

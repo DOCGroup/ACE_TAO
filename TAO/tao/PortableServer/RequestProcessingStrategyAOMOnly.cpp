@@ -28,8 +28,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        PortableServer::ServantManager::_nil ());
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     void
@@ -59,8 +58,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
     TAO_SERVANT_LOCATION
@@ -92,9 +90,9 @@ namespace TAO
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2,
-                                                     CORBA::COMPLETED_NO),
-                            0);
+          throw ::CORBA::OBJECT_NOT_EXIST (
+            CORBA::OMGVMCID | 2,
+            CORBA::COMPLETED_NO);
         }
 
       return servant;

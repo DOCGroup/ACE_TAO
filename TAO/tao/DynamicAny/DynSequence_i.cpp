@@ -176,8 +176,7 @@ TAO_DynSequence_i::get_length (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   return this->component_count_;
@@ -270,8 +269,7 @@ TAO_DynSequence_i::get_elements (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
@@ -394,8 +392,7 @@ TAO_DynSequence_i::get_elements_as_dyn_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   DynamicAny::DynAnySeq *retval = 0;
@@ -614,8 +611,7 @@ TAO_DynSequence_i::to_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   TAO_OutputCDR out_cdr;
@@ -679,8 +675,7 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var tc = rhs->type ();
@@ -757,8 +752,7 @@ TAO_DynSequence_i::current_component (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->current_position_ == -1)

@@ -99,8 +99,7 @@ namespace TAO
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        0);
+      throw ::CORBA::INTF_REPOS ();
     }
 
   return adapter->get_interface_remote (target);

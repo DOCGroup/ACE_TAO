@@ -257,8 +257,7 @@ TAO::TypeCode::Value<char const *,
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::INTERNAL ();
     }
 
   return
@@ -318,7 +317,7 @@ TAO::TypeCode::Value<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+    throw ::CORBA::TypeCode::Bounds ();
 
   return Traits<char const *>::get_string (this->fields_[index].name);
 }
@@ -332,8 +331,7 @@ TAO::TypeCode::Value<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      CORBA::TypeCode::_nil ());
+    throw ::CORBA::TypeCode::Bounds ();
 
   return
     CORBA::TypeCode::_duplicate (
@@ -349,8 +347,7 @@ TAO::TypeCode::Value<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      CORBA::PRIVATE_MEMBER);
+    throw ::CORBA::TypeCode::Bounds ();
 
   return this->fields_[index].visibility;
 }

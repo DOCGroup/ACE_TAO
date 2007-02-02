@@ -101,7 +101,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
       return safe_octet_seq._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+  throw ::CORBA::MARSHAL ();
 }
 
 CORBA::Any *
@@ -164,8 +164,7 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
         return safe_any._retn ();
     }
 
-  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),
-                    0);
+  throw IOP::Codec::FormatMismatch ();
 }
 
 CORBA::OctetSeq *
@@ -252,8 +251,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       return safe_octet_seq._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    0);
+  throw ::CORBA::MARSHAL ();
 }
 
 CORBA::Any *
@@ -339,8 +337,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
       return safe_any._retn ();
     }
 
-  ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),
-                    0);
+  throw IOP::Codec::FormatMismatch ();
 }
 
 void

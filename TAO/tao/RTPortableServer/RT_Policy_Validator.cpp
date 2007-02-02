@@ -564,8 +564,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     tp_manager.get_threadpool (thread_pool_id);
 
   if (thread_pool == 0)
-    ACE_THROW_RETURN (PortableServer::POA::InvalidPolicy (),
-                      0);
+    throw PortableServer::POA::InvalidPolicy ();
 
   return thread_pool;
 }

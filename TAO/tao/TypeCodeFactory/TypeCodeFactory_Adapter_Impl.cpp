@@ -279,7 +279,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
   CORBA::ULong /* ncases */
   )
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::TypeCode_ptr
@@ -293,7 +293,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_struct_except_tc (
   CORBA::ULong /* nfields */
   )
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::TypeCode_ptr
@@ -309,7 +309,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
   CORBA::TypeCode_ptr /* default_case_type */
   )
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::TypeCode_ptr
@@ -325,7 +325,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_event_tc (
   CORBA::ULong /* nfields */
   )
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 // *********************************************************************

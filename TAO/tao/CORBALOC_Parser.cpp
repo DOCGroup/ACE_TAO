@@ -176,9 +176,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                       ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                       ACE_TEXT("could not parse from %s"),
                       ACE_TEXT_CHAR_TO_TCHAR(ior)));
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                            CORBA::COMPLETED_NO),
-                          CORBA::Object::_nil ());
+        throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
       }
     if (*ior == ',') // more endpoints follow
       {
@@ -208,9 +206,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                   ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                   ACE_TEXT("could not parse from %s"),
                   ACE_TEXT_CHAR_TO_TCHAR(ior)));
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                        CORBA::COMPLETED_NO),
-                      CORBA::Object::_nil ());
+    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
   } // end of while
 
   // At this point, ior points at the start of the object key
@@ -242,9 +238,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                         ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                         ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
                         i));
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                              CORBA::COMPLETED_NO),
-                            CORBA::Object::_nil ());
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
         }
     }
 

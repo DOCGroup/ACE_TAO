@@ -195,21 +195,18 @@ TAO_DynStruct_i::current_member_name (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // Is this an empty exception?
   if (this->component_count_ == 0)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                        0);
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 
   if (this->current_position_ == -1)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                        0);
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   // member_name() does not work with aliased type codes.
@@ -234,21 +231,18 @@ TAO_DynStruct_i::current_member_kind (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::tk_null);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   // Is this an empty exception?
   if (this->component_count_ == 0)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                        CORBA::tk_null);
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 
   if (this->current_position_ == -1)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                        CORBA::tk_null);
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   // member_type() does not work with aliased type codes.
@@ -273,8 +267,7 @@ TAO_DynStruct_i::get_members (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   DynamicAny::NameValuePairSeq* members;
@@ -383,8 +376,7 @@ TAO_DynStruct_i::get_members_as_dyn_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   DynamicAny::NameDynAnyPairSeq * members;
@@ -579,8 +571,7 @@ TAO_DynStruct_i::to_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   TAO_OutputCDR out_cdr;
@@ -655,8 +646,7 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::TypeCode_var tc = rhs->type ();
@@ -728,15 +718,13 @@ TAO_DynStruct_i::current_component (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->component_count_ == 0)
     {
       // Empty exception - no component.
-      ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                        DynamicAny::DynAny::_nil ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     }
 
   if (this->current_position_ == -1)

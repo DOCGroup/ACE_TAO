@@ -117,12 +117,11 @@ TAO_Connector::make_mprofile (const char *string,
   // Check for a valid string
   if (!string || !*string)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            0,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          0,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
@@ -153,7 +152,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (ior_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      throw ::CORBA::INV_OBJREF ();
       // No colon ':' in the IOR!
     }
   else
@@ -169,7 +168,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      throw ::CORBA::INV_OBJREF ();
       // Failure: No endpoints specified or no object key specified.
     }
 
@@ -194,12 +193,11 @@ TAO_Connector::make_mprofile (const char *string,
   // MProfile::set(size) returns the number profiles it can hold.
   if (mprofile.set (profile_count) != static_cast<int> (profile_count))
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_MPROFILE_CREATION_ERROR,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO);
       // Error while setting the MProfile size!
     }
 
@@ -256,19 +254,18 @@ TAO_Connector::make_mprofile (const char *string,
             {
               profile->_decr_refcnt ();
 
-              ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                                  CORBA::SystemException::_tao_minor_code (
-                                     TAO_MPROFILE_CREATION_ERROR,
-                                     0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
+              throw ::CORBA::INV_OBJREF (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_MPROFILE_CREATION_ERROR,
+                  0),
+                CORBA::COMPLETED_NO);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+          throw ::CORBA::INV_OBJREF ();
           // Unable to seperate endpoints
         }
     }

@@ -95,8 +95,7 @@ namespace TAO
       int result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
         // Locking error.
-        ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                          TAO_Adapter::DS_FAILED);
+        throw ::CORBA::OBJ_ADAPTER ();
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -223,8 +222,7 @@ namespace TAO
       int const result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
         // Locking error.
-        ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                          0);
+        throw ::CORBA::OBJ_ADAPTER ();
 
       // We have acquired the object adapter lock.  Record this for later
       // use.

@@ -82,9 +82,7 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
     {
       // Policy factory corresponding to given policy type does not
       // exist in policy factory map.
-      ACE_THROW_RETURN (
-         CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
-         CORBA::Policy::_nil ());
+      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
     }
 
   return policy_factory->create_policy (type,
@@ -104,9 +102,7 @@ TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
     {
       // Policy factory corresponding to given policy type does not
       // exist in policy factory map.
-      ACE_THROW_RETURN (
-         CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
-         CORBA::Policy::_nil ());
+      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
     }
 
   return policy_factory->_create_policy (type

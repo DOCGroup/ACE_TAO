@@ -25,7 +25,7 @@ TAO_DynValueBox_i::get_boxed_value (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -51,8 +51,7 @@ TAO_DynValueBox_i::get_boxed_value_as_dyn_any (
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    DynamicAny::DynAny::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void

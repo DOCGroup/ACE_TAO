@@ -119,8 +119,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val
 
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                      CORBA::Policy::_nil ());
+    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_ConnectionTimeoutPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,

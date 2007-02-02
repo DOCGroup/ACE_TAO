@@ -76,8 +76,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
   if (CORBA::is_nil (obj.in ()))
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        CORBA::InterfaceDef::_nil ());
+      throw ::CORBA::INTF_REPOS ();
     }
 
   CORBA::Repository_var repo =
@@ -86,8 +85,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
   if (CORBA::is_nil (repo.in ()))
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        CORBA::InterfaceDef::_nil ());
+      throw ::CORBA::INTF_REPOS ();
     }
 
   CORBA::Contained_var result = repo->lookup_id (repo_id

@@ -41,8 +41,7 @@ TAO_DynCommon::type (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   return CORBA::TypeCode::_duplicate (this->type_.in ());
@@ -653,8 +652,7 @@ TAO_DynCommon::get_string (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -675,8 +673,7 @@ TAO_DynCommon::get_string (void)
 
       if (kind != CORBA::tk_string)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            0);
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       char *retval = 0;
@@ -688,8 +685,7 @@ TAO_DynCommon::get_string (void)
       // it must be for some other reason.
       if ((this->any_ >>= CORBA::Any::to_string (retval, bound)) == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                            0);
+          throw DynamicAny::DynAny::InvalidValue ();
         }
 
       return CORBA::string_dup (retval);
@@ -706,8 +702,7 @@ TAO_DynCommon::get_reference (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::Object::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -723,8 +718,7 @@ TAO_DynCommon::get_reference (void)
 
       if ((this->any_ >>= CORBA::Any::to_object (retval.inout ())) == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            CORBA::Object::_nil ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       return retval._retn ();
@@ -741,8 +735,7 @@ TAO_DynCommon::get_typecode (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::TypeCode::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -758,8 +751,7 @@ TAO_DynCommon::get_typecode (void)
 
       if ((this->any_ >>= retval) == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            CORBA::TypeCode::_nil ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       return CORBA::TypeCode::_duplicate (retval);
@@ -809,8 +801,7 @@ TAO_DynCommon::get_wchar (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -826,8 +817,7 @@ TAO_DynCommon::get_wchar (void)
 
       if ((this->any_ >>= CORBA::Any::to_wchar (retval)) == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            0);
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       return retval;
@@ -844,8 +834,7 @@ TAO_DynCommon::get_wstring (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -886,8 +875,7 @@ TAO_DynCommon::get_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -903,8 +891,7 @@ TAO_DynCommon::get_any (void)
 
       if ((this->any_ >>= tmp) == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            0);
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       CORBA::Any *retval = 0;
@@ -927,8 +914,7 @@ TAO_DynCommon::get_dyn_any (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Any_var any = this->get_any ();
@@ -949,7 +935,7 @@ TAO_DynCommon::get_val (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -967,7 +953,7 @@ TAO_DynCommon::get_val (void)
 
       if (kind != CORBA::tk_value)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (), 0);
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       CORBA::ValueBase_var retval;
@@ -975,7 +961,7 @@ TAO_DynCommon::get_val (void)
 
       if (any_impl == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
+          throw DynamicAny::DynAny::InvalidValue ();
         }
 
       // This should always be non-zero for dynamic anys.
@@ -991,7 +977,7 @@ TAO_DynCommon::get_val (void)
 
       if (!good_extract)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
+          throw DynamicAny::DynAny::InvalidValue ();
         }
 
       return retval._retn ();
@@ -1009,8 +995,7 @@ TAO_DynCommon::seek (CORBA::Long slot
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        false);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_ == 0)
@@ -1054,8 +1039,7 @@ TAO_DynCommon::next (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_ == 0
@@ -1080,8 +1064,7 @@ TAO_DynCommon::copy (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        DynamicAny::DynAny::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   CORBA::Any_var any = this->to_any ();
@@ -1102,8 +1085,7 @@ TAO_DynCommon::component_count (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   return this->component_count_;
@@ -1202,8 +1184,7 @@ TAO_DynCommon::get_abstract (void)
 {
   if (this->destroyed_)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::AbstractBase::_nil ());
+      throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
   if (this->has_components_)
@@ -1221,7 +1202,7 @@ TAO_DynCommon::get_abstract (void)
 
       if (kind != CORBA::tk_abstract_interface)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (), 0);
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
 
       CORBA::AbstractBase_var retval;
@@ -1229,7 +1210,7 @@ TAO_DynCommon::get_abstract (void)
 
       if (any_impl == 0)
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
+          throw DynamicAny::DynAny::InvalidValue ();
         }
 
       // This should always be non-zero for dynamic anys.
@@ -1243,7 +1224,7 @@ TAO_DynCommon::get_abstract (void)
       // all cases.
       if (!(for_reading >> retval.inout ()))
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (), 0);
+          throw DynamicAny::DynAny::InvalidValue ();
         }
 
       return retval._retn ();
@@ -1645,8 +1626,7 @@ TAO_DynCommon::check_component (void)
 {
   if (this->current_position_ == -1)
     {
-      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
-                        DynamicAny::DynAny::_nil ());
+      throw DynamicAny::DynAny::InvalidValue ();
     }
 
   DynamicAny::DynAny_var cc =
@@ -1666,8 +1646,7 @@ TAO_DynCommon::check_component (void)
     case CORBA::tk_except:
     case CORBA::tk_struct:
     case CORBA::tk_union:
-      ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                        DynamicAny::DynAny::_nil ());
+      throw DynamicAny::DynAny::TypeMismatch ();
     case CORBA::tk_sequence:
       if (TAO_DynCommon::is_basic_type_seq (tc.in ()))
         {
@@ -1675,8 +1654,7 @@ TAO_DynCommon::check_component (void)
         }
       else
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                            DynamicAny::DynAny::_nil ());
+          throw DynamicAny::DynAny::TypeMismatch ();
         }
     default:
       return cc._retn ();

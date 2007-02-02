@@ -172,8 +172,7 @@ PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 

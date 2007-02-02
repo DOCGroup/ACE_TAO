@@ -40,7 +40,7 @@ TAO_RT_Current::the_priority (void)
   int const result = tph->get_thread_CORBA_priority (priority);
 
   if (result == -1)
-    ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO), -1);
+    throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
 
   return priority;
 }

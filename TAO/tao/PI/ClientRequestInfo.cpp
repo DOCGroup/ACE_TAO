@@ -76,9 +76,7 @@ TAO_ClientRequestInfo::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 26,
-                                          CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
     }
 }
 
@@ -125,9 +123,7 @@ TAO_ClientRequestInfo::effective_profile (void)
 
   if (ep == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                          CORBA::COMPLETED_NO),
-                                          0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
 
   // @@BAD_PARAM exception
@@ -149,8 +145,7 @@ TAO_ClientRequestInfo::received_exception (void)
   if (this->invocation_->reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
       && this->invocation_->reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO), 0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // The spec says that if it is a user exception which can't be
@@ -190,9 +185,7 @@ TAO_ClientRequestInfo::received_exception_id (
 
   if (caught_exception == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   return CORBA::string_dup (caught_exception->_rep_id ());
@@ -242,9 +235,7 @@ TAO_ClientRequestInfo::get_effective_component (
 
   // No tagged component was found that matched the given
   // IOP::ComponentId.
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                      CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 }
 
 IOP::TaggedComponentSeq *
@@ -298,9 +289,7 @@ TAO_ClientRequestInfo::get_effective_components (
       // No tagged component sequence was allocated, meaning no tagged
       // components were found that matched the given
       // IOP::ComponentId.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-                                          CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
     }
 
   return safe_tagged_components._retn ();
@@ -321,12 +310,11 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type
 #else
   ACE_UNUSED_ARG (type);
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::NO_IMPLEMENT (
+    CORBA::SystemException::_tao_minor_code (
+      TAO::VMCID,
+      ENOTSUP),
+    CORBA::COMPLETED_NO);
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
@@ -428,7 +416,7 @@ TAO_ClientRequestInfo::request_id (void)
                     "(%P|%t) since its request ID generator is not\n"
                     "(%P|%t) supported on this platform.\n"));
 
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw ::CORBA::INTERNAL ();
     }
 
   return id;
@@ -457,8 +445,7 @@ TAO_ClientRequestInfo::arguments (void)
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
   if (this->parameter_list (*parameter_list) == false)
-    ACE_THROW_RETURN (CORBA::MARSHAL (),
-                      0);
+    throw ::CORBA::MARSHAL ();
 
   return safe_parameter_list._retn ();
 
@@ -495,8 +482,7 @@ TAO_ClientRequestInfo::exceptions (void)
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
 
   if (this->exception_list (*exception_list) == false)
-    ACE_THROW_RETURN (CORBA::MARSHAL (),
-                      0);
+    throw ::CORBA::MARSHAL ();
 
   return safe_exception_list._retn ();
 }
@@ -530,9 +516,7 @@ TAO_ClientRequestInfo::contexts (void)
 {
   this->check_validity ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 Dynamic::RequestContext *
@@ -541,9 +525,7 @@ TAO_ClientRequestInfo::operation_context (void)
 {
   this->check_validity ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::Any *
@@ -560,8 +542,7 @@ TAO_ClientRequestInfo::result (void)
   CORBA::Any_var safe_result_any = result_any;
 
   if (this->result (result_any) == false)
-    ACE_THROW_RETURN (CORBA::MARSHAL (),
-                      0);
+    throw ::CORBA::MARSHAL ();
 
   return safe_result_any._retn ();
 }
@@ -604,9 +585,7 @@ TAO_ClientRequestInfo::reply_status (void)
   if (this->invocation_->reply_status() == -1)
     {
       // A reply hasn't been received yet.
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   return this->invocation_->reply_status();
@@ -620,9 +599,7 @@ TAO_ClientRequestInfo::forward_reference (void)
 
   if (this->invocation_->reply_status() != PortableInterceptor::LOCATION_FORWARD)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        CORBA::Object::_nil ());
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // TAO::Invocation_Base::forward_reference() already duplicates the

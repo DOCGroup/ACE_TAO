@@ -673,12 +673,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           if (this->orb_params ()->preferred_interfaces (
                 ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
-            ACE_THROW_RETURN (CORBA::INTERNAL (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
+            throw ::CORBA::INTERNAL (
+              CORBA::SystemException::_tao_minor_code (
+                TAO_ORB_CORE_INIT_LOCATION_CODE,
+                0),
+              CORBA::COMPLETED_NO);
 
           arg_shifter.consume_arg ();
         }
@@ -738,12 +737,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                           ACE_TEXT ("Invalid ORBInitRef argument '%s'")
                           ACE_TEXT ("format is ObjectID=IOR\n"),
                           current_arg));
-              ACE_THROW_RETURN (CORBA::INTERNAL (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
+              throw ::CORBA::INTERNAL (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_ORB_CORE_INIT_LOCATION_CODE,
+                  0),
+                CORBA::COMPLETED_NO);
             }
           ACE_CString object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
                                  pos - current_arg);
@@ -756,12 +754,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                           ACE_TEXT ("Duplicate -ORBInitRef ")
                           ACE_TEXT ("argument '%s'\n"),
                           current_arg));
-              ACE_THROW_RETURN (CORBA::INTERNAL (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
+              throw ::CORBA::INTERNAL (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_ORB_CORE_INIT_LOCATION_CODE,
+                  0),
+                CORBA::COMPLETED_NO);
             }
           arg_shifter.consume_arg ();
         }
@@ -996,7 +993,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // Fill in later
           // @@ To do later: Priyanka.
 
-          ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), -1);
+          throw ::CORBA::NO_IMPLEMENT ();
         }
        else if (0 != (current_arg = arg_shifter.get_the_parameter
                  (ACE_TEXT("-ORBUseSharedProfile"))))
@@ -1076,12 +1073,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                                               : current_arg)));
             }
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
+          throw ::CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ORB_CORE_INIT_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       ////////////////////////////////////////////////////////////////
@@ -1115,12 +1111,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                           env_endpoint));
             }
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            -1);
+          throw ::CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ORB_CORE_INIT_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
     }
 
@@ -1153,12 +1148,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Resource Factory instance")));
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ORB_CORE_INIT_LOCATION_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
 
   // Set whether or not to use the local memory pool for the cdr allocators.
@@ -1173,12 +1167,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to initialize reactor")));
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INITIALIZE (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ORB_CORE_INIT_LOCATION_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
@@ -1189,12 +1182,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ORB Core unable to find a ")
                   ACE_TEXT ("Server Strategy Factory instance")));
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ORB_CORE_INIT_LOCATION_CODE,
+          0),
+        CORBA::COMPLETED_NO);
     }
 
   ssf->open (this);
@@ -1302,12 +1294,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // all factories loaded by the service configurator.
   // Load all protocol factories!
   if (trf->init_protocol_factories () == -1)
-    ACE_THROW_RETURN (CORBA::INITIALIZE (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      -1);
+    throw ::CORBA::INITIALIZE (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_ORB_CORE_INIT_LOCATION_CODE,
+        0),
+      CORBA::COMPLETED_NO);
 
   // init the ORB core's pointer
   this->protocol_factories_ = trf->get_protocol_factories ();
@@ -1326,12 +1317,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   // Must have valid protocol hooks.
   if (this->protocols_hooks_ == 0)
-    ACE_THROW_RETURN (CORBA::INITIALIZE (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                          0),
-                        CORBA::COMPLETED_NO),
-                      -1);
+    throw ::CORBA::INITIALIZE (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_ORB_CORE_INIT_LOCATION_CODE,
+        0),
+      CORBA::COMPLETED_NO);
 
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this);
@@ -1738,12 +1728,11 @@ TAO_ORB_Core::service_raise_comm_failure (
                  raise_comm_failure (clist, profile);
     }
 
-  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-      CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
-      CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+  throw ::CORBA::COMM_FAILURE (
+    CORBA::SystemException::_tao_minor_code (
+      TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+      errno),
+    CORBA::COMPLETED_MAYBE);
 }
 
 
@@ -2632,12 +2621,11 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
                   ACE_TEXT ("(%P|%t)\n")
                   ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                           CORBA::SystemException::_tao_minor_code (
-                              TAO_ORB_CORE_INIT_LOCATION_CODE,
-                              EINVAL),
-                           CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::BAD_PARAM (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_ORB_CORE_INIT_LOCATION_CODE,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   return 0;
@@ -3414,8 +3402,7 @@ TAO_ORB_Core::valuetype_adapter (void)
 
       if (this->valuetype_adapter_ == 0)
         {
-           ACE_THROW_RETURN (CORBA::INTERNAL (),
-                             0);
+           throw ::CORBA::INTERNAL ();
         }
     }
 
