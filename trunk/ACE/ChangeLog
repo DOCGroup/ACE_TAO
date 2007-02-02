@@ -1,3 +1,8 @@
+Fri Feb  2 12:03:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TSS_T.cpp:
+          Fixed merge error
+
 Fri Feb  2 11:43:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
