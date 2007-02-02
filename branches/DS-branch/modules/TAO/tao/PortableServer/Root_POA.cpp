@@ -2651,6 +2651,12 @@ TAO_Root_POA::cached_policies (void)
   return this->cached_policies_;
 }
 
+TAO_Network_Priority_Hook*
+TAO_Root_POA::network_priority_hook (void)
+{
+  return this->network_priority_hook_;
+}
+
 TAO::Portable_Server::Cached_Policies::PriorityModel
 TAO_Root_POA::priority_model (void) const
 {

@@ -24,6 +24,12 @@ TAO_Network_Priority_Hook::update_network_priority (
   poa.cached_policies ().request_diffserv_codepoint (0);
 }
 
+CORBA::Long
+TAO_Network_Priority_Hook::get_dscp_codepoint (
+  TAO_ServerRequest &, TAO_Root_POA &)
+{
+  return 0;
+}
 
 int
 TAO_Network_Priority_Hook::initialize (void)

@@ -2,6 +2,7 @@
 
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Network_Priority_Hook.h"
 #include "tao/Service_Context.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Connection_Handler.h"
@@ -50,34 +51,11 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_ServerRequest &req,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
-  TAO_Service_Context &request_service_context =
-    req.request_service_context ();
-
-  CORBA::Long dscp_codepoint;
+  CORBA::Long dscp_codepoint = poa.network_priority_hook ()->
+    get_dscp_codepoint (req, poa);
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
-
-  TAO_Network_Priority_Protocols_Hooks *nph =
-   poa.orb_core ().get_network_priority_protocols_hooks ();
-
-  TAO::Portable_Server::Cached_Policies::NetworkPriorityModel npm =
-    poa.cached_policies ().network_priority_model ();
-
-  if (npm == TAO::Portable_Server::Cached_Policies::
-             CLIENT_PROPAGATED_NETWORK_PRIORITY)
-    {
-      dscp_codepoint = nph->get_dscp_codepoint (request_service_context); 
-      connection_handler->set_dscp_codepoint (dscp_codepoint);
-    }
-  else if (npm == TAO::Portable_Server::Cached_Policies::
-                  SERVER_DECLARED_NETWORK_PRIORITY)
-    {
-      dscp_codepoint = poa.cached_policies ().reply_diffserv_codepoint ();
-    }
-  else
-    {
-      // no server side network priority policy defined.
-    }
+  connection_handler->set_dscp_codepoint (dscp_codepoint);
 }
 
 void
