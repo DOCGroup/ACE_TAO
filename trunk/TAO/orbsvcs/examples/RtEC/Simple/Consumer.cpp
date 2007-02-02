@@ -31,7 +31,7 @@ Consumer::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the run() method.

@@ -22,7 +22,7 @@ Policy_Verifier::init (int argc,
                        char *argv[])
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "");
+    CORBA::ORB_init (argc, argv);
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

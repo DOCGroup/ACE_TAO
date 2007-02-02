@@ -7,12 +7,8 @@ int main (int argc, char* argv[])
 {
   try
     {
-
       // First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv,
-                         "" /* the ORB name, it can be anything! */
-                         );
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Get a reference to the RootPOA
       CORBA::Object_var poa_object =
@@ -23,8 +19,7 @@ int main (int argc, char* argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       // Set a POA Manager
-      PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager ();
+      PortableServer::POAManager_var poa_manager = poa->the_POAManager ();
 
       // Activate the POA Manager
       poa_manager->activate ();
@@ -33,8 +28,7 @@ int main (int argc, char* argv[])
       corbaname_Status_i status_i;
 
       // Activate it to obtain the reference
-      corbaname::Status_var status =
-        status_i._this ();
+      corbaname::Status_var status = status_i._this ();
 
       // Get a reference to Naming Context
       CORBA::Object_var naming_context_object =
@@ -49,8 +43,7 @@ int main (int argc, char* argv[])
       name.length (1);
       name[0].id = CORBA::string_dup ("STATUS");
 
-      naming_context->bind (name,
-                            status.in ());
+      naming_context->bind (name, status.in ());
 
       // Run the orb
       orb->run ();

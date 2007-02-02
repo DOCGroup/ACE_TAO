@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager threads;
 
       // Normal corba init
-      g_pOrb = CORBA::ORB_init (argc, argv, "");
+      g_pOrb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var pPoaObj =
         g_pOrb->resolve_initial_references ("RootPOA");

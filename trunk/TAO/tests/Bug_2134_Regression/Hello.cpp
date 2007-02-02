@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
     {
       // Initialize the ORB
       orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       // create Hello object
       Test::Hello_impl hello_i;
