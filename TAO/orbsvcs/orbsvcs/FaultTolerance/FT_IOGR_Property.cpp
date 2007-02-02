@@ -144,8 +144,7 @@ TAO_FT_IOGR_Property::get_primary (
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
     {
-      throw TAO_IOP::NotFound ()**
-                        CORBA::Object::_nil ());
+      throw TAO_IOP::NotFound ();
     }
 
   // Release ownership of the pointers protected by the auto_ptrs since they
