@@ -499,7 +499,7 @@ ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Gestalt)
 
 
-  void
+void
 ACE_Service_Gestalt::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -538,7 +538,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
         ACE_Service_Config::global()->find_processed_static_svc(svc_name);
       if (assd != 0)
         {
-          this->process_directive_i(*assd,0);
+          this->process_directive_i(*assd, 0);
         }
       else
         {
@@ -792,7 +792,7 @@ int
 ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
                                         int force_replace)
 {
-  int result = process_directive_i(ssd,force_replace);
+  int const result = process_directive_i (ssd, force_replace);
   if (result == 0)
     {
       this->add_processed_static_svc(&ssd);
@@ -802,7 +802,7 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
 int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
-                                        int force_replace)
+                                          int force_replace)
 {
   if (this->repo_ == 0)
     return -1;
@@ -829,8 +829,7 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
   if (stp == 0)
     return 0;
 
-
-  ACE_Service_Type *service_type;
+  ACE_Service_Type *service_type = 0;
 
   // This is just a temporary to force the compiler to use the right
   // constructor in ACE_Service_Type. Note that, in cases where we are
