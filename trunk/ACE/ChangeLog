@@ -1,3 +1,9 @@
+Fri Feb  2 14:08:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/rm_exception_macros.pl:
+          Also zap ACE_THROW_RETURN from application code, that is also
+          deprecated now
+
 Fri Feb  2 12:03:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TSS_T.cpp:
