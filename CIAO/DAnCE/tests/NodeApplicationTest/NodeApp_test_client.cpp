@@ -61,7 +61,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "CompNum: %d\n",comp_num));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CIAO::Client_init (orb.in ());
 

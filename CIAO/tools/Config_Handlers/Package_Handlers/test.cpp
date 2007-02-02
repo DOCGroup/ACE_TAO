@@ -55,7 +55,7 @@ int main (int argc, char *argv[])
         return 1;
 
       // Initialize an ORB so Any will work
-      CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv);
       ACE_UNUSED_ARG (orb);
 
 

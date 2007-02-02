@@ -1,3 +1,21 @@
+Fri Feb  2 13:28:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * examples/BasicSP/EC/client.cpp:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * performance-tests/Benchmark/server.cpp:
+        * performance-tests/Protocols/Controller/Controller.cpp:
+        * RACE/Input_Adapters/LocationUpdater/Injector.cpp:
+        * RACE/Input_Adapters/PlanGenerator/Injector.cpp:
+        * tests/IDL3/Events/Any/main.cpp:
+        * tools/Config_Handlers/Package_Handlers/test.cpp:
+        * tools/Config_Handlers/RT-CCM/test.cpp:
+        * tools/Config_Handlers/test.cpp:
+          No need anymore to pass an empty string as orbname
+
 Fri Feb  2 11:48:34 UTC 2007  Simon McQueen  <sm@prismtech.com>
 
         * tests/IDL3/Components/SimpleComponent/SimpleComponent.idl:
