@@ -95,7 +95,7 @@ Server_i::init (int argc, char** argv)
 {
   try
   {
-    this->orb_ = CORBA::ORB_init (argc, argv, 0);
+    this->orb_ = CORBA::ORB_init (argc, argv);
 
     int retval = this->parse_args (argc, argv);
     if (retval != 0)
