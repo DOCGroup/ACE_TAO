@@ -1178,24 +1178,8 @@ CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
                  char *argv[],
-                 const char *orb_name)
+                 const char *orbid)
 {
-  CORBA::Environment env;
-  return CORBA::ORB_init (argc,
-                          argv,
-                          orb_name,
-                          env /* unused */);
-}
-
-CORBA::ORB_ptr
-CORBA::ORB_init (int &argc,
-                 char *argv[],
-                 const char *orbid,
-                 CORBA::Environment &try_ENV)
-{
-  // This ugly macro will go away once we've merged the two ORB_init's.
-  ACE_UNUSED_ARG(try_ENV); // FUZZ: ignore check_for_ace_check
-
   // Use this string variable to hold the orbid
   ACE_CString orbid_string (orbid);
 
@@ -1227,7 +1211,7 @@ CORBA::ORB_init (int &argc,
   // It doesn't make sense for argc to be zero and argv to be
   // non-empty/zero, or for argc to be greater than zero and argv be
   // zero.
-  const size_t argv0_len =
+  size_t const argv0_len =
     (command_line.get_TCHAR_argv ()
      ? (*command_line.get_TCHAR_argv ()
         ? ACE_OS::strlen (*command_line.get_TCHAR_argv ())
@@ -1732,7 +1716,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
 
   // Figure out if the servant is collocated.
   CORBA::Object_ptr obj = this->orb_core_->create_object (safe_objdata.get ());
-  
+
   if (CORBA::is_nil (obj))
     return CORBA::Object::_nil ();
 

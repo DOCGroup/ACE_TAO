@@ -3,7 +3,6 @@
 #define TAO_OBJREF_VAROUT_T_CPP
 
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Environment.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
