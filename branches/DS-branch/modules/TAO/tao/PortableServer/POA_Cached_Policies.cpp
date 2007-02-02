@@ -89,6 +89,7 @@ namespace TAO
         }
     #endif
 
+    /*
     #if !defined (CORBA_E_MICRO)
       ::TAO::NetworkPriorityPolicy_var npp
         = ::TAO::NetworkPriorityPolicy::_narrow (policy);
@@ -115,6 +116,7 @@ namespace TAO
         }
 
     #endif
+    */
 
     #if !defined (CORBA_E_MICRO)
       ::PortableServer::IdUniquenessPolicy_var id_uniqueness

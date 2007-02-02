@@ -2,6 +2,11 @@
 
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "tao/Service_Context.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(PortableServer,
           Default_Servant_Dispatcher,
@@ -41,9 +46,9 @@ TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 void
 TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Root_POA &poa,
-  CORBA::Short servant_priority,
+  CORBA::Short,
   TAO_ServerRequest &req,
-  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
@@ -61,7 +66,7 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   if (npm == TAO::Portable_Server::Cached_Policies::
              CLIENT_PROPAGATED_NETWORK_PRIORITY)
     {
-      dscp_codepoint = nph->get_dscp_codepoint (request_service_context, poa); 
+      dscp_codepoint = nph->get_dscp_codepoint (request_service_context); 
       connection_handler->set_dscp_codepoint (dscp_codepoint);
     }
   else if (npm == TAO::Portable_Server::Cached_Policies::
