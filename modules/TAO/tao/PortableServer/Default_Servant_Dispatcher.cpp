@@ -40,27 +40,39 @@ TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
 void
 TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
-  TAO_Root_POA &,
-  CORBA::Short,
-  TAO_ServerRequest &,
-  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
+  TAO_Root_POA &poa,
+  CORBA::Short servant_priority,
+  TAO_ServerRequest &req,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 {
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
 
   CORBA::Long dscp_codepoint;
-
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
 
-  // We could replace this call with a call on the protocols hooks.
-  // But the point is that the POA got to cache the policy that was 
-  // used at POA creation time, so that it can pass it here.
-  // The DiffServ codepoint created needs to be passed on to the
-  // connection handler, which is being done in the next line.
-  //
-  dscp_codepoint = poa.get_diffserv_codepoint (request_service_context);
-  connection_handler->set_dscp_codepoint (dscp_codepoint);
+  TAO_Network_Priority_Protocols_Hooks *nph =
+   poa.orb_core ().get_network_priority_protocols_hooks ();
+
+  TAO::Portable_Server::Cached_Policies::NetworkPriorityModel npm =
+    poa.cached_policies ().network_priority_model ();
+
+  if (npm == TAO::Portable_Server::Cached_Policies::
+             CLIENT_PROPAGATED_NETWORK_PRIORITY)
+    {
+      dscp_codepoint = nph->get_dscp_codepoint (request_service_context, poa); 
+      connection_handler->set_dscp_codepoint (dscp_codepoint);
+    }
+  else if (npm == TAO::Portable_Server::Cached_Policies::
+                  SERVER_DECLARED_NETWORK_PRIORITY)
+    {
+      dscp_codepoint = poa.cached_policies ().reply_diffserv_codepoint ();
+    }
+  else
+    {
+      // no server side network priority policy defined.
+    }
 }
 
 void
