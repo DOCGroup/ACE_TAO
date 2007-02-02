@@ -1,20 +1,22 @@
 Fri Feb  2 04:29:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
-        * ExecutionManager/Execution_Manager.cpp
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
         
           Created a child POA which is configured with
           Client_Propagated Priority Model.
         
-        * ExecutionManager/Execution_Manager_Impl.cpp
-        * ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
         
           Added a get_current_thread_priority() to get the
           priority of the current thread. Also added 
           debug_level control so the thread priority could
           be printed out.
         
-        * Plan_Launcher/Plan_Launcher_Impl.cpp
-        * Plan_Launcher/Plan_Launcher_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
         
           Added two new methods. 
           The is_client_propagated_model() checks whether
@@ -23,7 +25,7 @@ Fri Feb  2 04:29:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
           will set the client thread priority if the priority
           model is CLIENT_PROPAGATED on the EM side.
 
-        * Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
 
           Added a command line argument "-z" to allow priority
           to be specified on Plan_Launcher, and then propagated
