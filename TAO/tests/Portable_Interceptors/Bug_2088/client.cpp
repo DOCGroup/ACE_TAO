@@ -34,7 +34,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (initializer_var2.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
     }
   catch (const CORBA::NO_MEMORY&)

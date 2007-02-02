@@ -50,7 +50,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Begin of Hello_Server test\n"));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       //------ Get Root POA & POA Manager references
 

@@ -43,7 +43,7 @@ Supplier::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
 
 

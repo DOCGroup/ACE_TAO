@@ -361,7 +361,7 @@ main (int argc, char **argv)
         root_poa->the_POAManager ();
 
       test_i *servant =
-	new test_i (orb.in (),
+        new test_i (orb.in (),
 		    root_poa.in ());
 
       PortableServer::ServantBase_var safe_servant (servant);

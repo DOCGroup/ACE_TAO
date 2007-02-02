@@ -72,7 +72,7 @@ int main(int argc,  ACE_TCHAR** argv)
 {
   try
   {
-    orb = CORBA::ORB_init (argc, argv, "");
+    orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args(argc, argv)==-1)
       return 1;

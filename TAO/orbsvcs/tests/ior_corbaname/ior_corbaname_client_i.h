@@ -35,7 +35,7 @@ class IOR_corbaname_Client_i
   //
 
  public:
-  // = COnstructor and destructor.
+  // = Constructor and destructor.
   IOR_corbaname_Client_i (void);
   ~IOR_corbaname_Client_i (void);
 

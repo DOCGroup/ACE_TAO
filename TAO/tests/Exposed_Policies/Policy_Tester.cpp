@@ -48,7 +48,7 @@ Policy_Tester::init (int argc,
 {
   // ORB Initialization.
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "");
+    CORBA::ORB_init (argc, argv);
 
   // Get a reference to the RT-ORB.
   CORBA::Object_var object =

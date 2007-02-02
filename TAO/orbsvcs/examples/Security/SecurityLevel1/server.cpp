@@ -15,7 +15,7 @@ main (int argc, char *argv[])
     {
       /// Our regular ORB Initialization.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       /// Get a reference to the RootPOA.
       CORBA::Object_var poa_object =
