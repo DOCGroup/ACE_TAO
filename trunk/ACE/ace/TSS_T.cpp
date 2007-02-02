@@ -92,7 +92,7 @@ ACE_TSS<TYPE>::cleanup (void *ptr)
 }
 
 template <class TYPE> int
-ACE_TSS<TYPE>::ts_init (void) 
+ACE_TSS<TYPE>::ts_init (void)
 {
   // Ensure that we are serialized!
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
@@ -338,12 +338,10 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
     }
 #else
   void *temp = ts_obj; // Need this temp to keep G++ from complaining.
-  if (ACE_Thread::getspecific (this->key_,
-                               &temp) == -1)
+  if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     return 0; // This should not happen!
   ts_obj = static_cast <TYPE *> (temp);
-  if (ACE_Thread::setspecific (this->key_,
-                               (void *) new_ts_obj) == -1)
+  if (ACE_Thread::setspecific (this->key_, void *) new_ts_obj) == -1)
     return ts_obj; // This should not happen!
 #endif /* ACE_HAS_THR_C_DEST */
 

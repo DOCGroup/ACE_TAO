@@ -244,7 +244,7 @@ public:
   /// via ACE_Singleton. Note that this is allways the same instance,
   /// in contrast with current (), which may be different instance at
   /// different times, dependent on the context.
-  static  ACE_Service_Gestalt* global (void);
+  static ACE_Service_Gestalt* global (void);
 
   /// Accessor for the "current" service repository through a pointer
   /// held in TSS.
