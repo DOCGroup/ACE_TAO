@@ -39,13 +39,12 @@ namespace CIAO
 
       Plan_Launcher_i ();
 
-      Plan_Launcher_i (CORBA::ORB_ptr orb);
-
       bool init (const char *em_ior,
                  CORBA::ORB_ptr orb,
                  bool use_repoman = false,
                  bool rm_use_naming = false,
-                 const char *rm_name = 0
+                 const char *rm_name = 0,
+                 CORBA::Short priority = 0
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /**
@@ -114,6 +113,9 @@ namespace CIAO
       Execution_Manager::DAM_Map map_;
 
       CIAO::Plan_Generator::Plan_Generator_i pg_;
+
+      /// Desired CORBA prioirty to be propagated to EM
+      CORBA::Short desired_priority_;
     };
 
   }

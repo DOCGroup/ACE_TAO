@@ -27,6 +27,7 @@ namespace CIAO
     const char* repoman_name_ = "RepositoryManager";
     const char* dap_ior_filename = 0;
     const char* dap_ior = 0;
+    CORBA::Short priority = 0;
 
     enum mode_type {
       pl_mode_start,
@@ -58,6 +59,7 @@ namespace CIAO
                   ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
                   ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
                   ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
+                  ACE_TEXT ("-z <DESIRED_CORBA_PRIORITY_FOR_EXECUTION_MANAGER>\n")
                   ACE_TEXT ("-h : Show this usage information\n"),
                   program));
     }
@@ -68,7 +70,7 @@ namespace CIAO
     {
       ACE_Get_Opt get_opt (argc,
                            argv,
-                           ACE_TEXT ("a:e:p:nk:l:v:t:o:i:r:h"));
+                           ACE_TEXT ("a:e:p:nk:l:v:t:o:i:r:z:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
@@ -116,6 +118,9 @@ namespace CIAO
             case 'r':
               new_deployment_plan_url = get_opt.opt_arg ();
               mode = pl_mode_redeployment;
+              break;
+            case 'z':
+              priority = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'h':
             default:
@@ -186,14 +191,14 @@ namespace CIAO
           if (parse_args (argc, argv) == false)
             return -1;
 
-//          Plan_Launcher_i launcher (orb.in ());
           Plan_Launcher_i launcher;
 
           if (!launcher.init (em_use_naming ? 0 : em_ior_file,
                               orb.in (),
                               use_repoman,
                               rm_use_naming,
-                              rm_use_naming ? repoman_name_ : rm_ior_file))
+                              rm_use_naming ? repoman_name_ : rm_ior_file,
+                              priority))
             {
               ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;
