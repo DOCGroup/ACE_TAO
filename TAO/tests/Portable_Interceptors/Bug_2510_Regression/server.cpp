@@ -53,7 +53,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (initializer.in ());
       // Now create an ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

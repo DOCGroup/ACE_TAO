@@ -70,7 +70,7 @@ ECT_Throughput::run (int argc, char* argv[])
       ACE_High_Res_Timer::calibrate ();
 
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");

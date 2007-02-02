@@ -130,7 +130,7 @@ Test_ECG::run (int argc, char* argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");

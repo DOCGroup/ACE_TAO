@@ -42,7 +42,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       // We do the command line parsing first
       if (parse_args (argc, argv) != 0)

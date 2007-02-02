@@ -44,7 +44,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.

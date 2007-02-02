@@ -124,7 +124,7 @@ TAO_EC_Basic_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
   int argc = 0;
   char **argv = 0;
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "");
+    CORBA::ORB_init (argc, argv);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
   return new TAO_EC_Reactive_Timeout_Generator (reactor);
 }
@@ -225,7 +225,7 @@ TAO_EC_Basic_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
   int argc = 0;
   char **argv = 0;
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "");
+    CORBA::ORB_init (argc, argv);
   // Hard-coded rate to 10 times a second
   ACE_Time_Value rate (0, 100000);
   // Hard-coded polling-timeout to 10 msec
@@ -245,7 +245,7 @@ TAO_EC_Basic_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
   int argc = 0;
   char **argv = 0;
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "");
+    CORBA::ORB_init (argc, argv);
   // Hard-coded rate to 10 times a second
   ACE_Time_Value rate (0, 100000);
   // Hard-coded polling-timeout to 10 msec
