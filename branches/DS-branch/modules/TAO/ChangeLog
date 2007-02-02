@@ -1,3 +1,14 @@
+Fri Feb  2 00:00:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        
+          Added implementations for the newly added get_dscp_codepoint ()
+          method.
+        
+          Note that now there are implementations for both the 
+          get_dscp_codepoint () methods.
+
 Thu Feb  1 23:44:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/POA_Cached_Policies.h:
