@@ -1,3 +1,8 @@
+Fri Feb  2 18:38:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+          Fixed problem introduced when removing ACE_THROW_RETURN
+
 Fri Feb  2 16:16:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
