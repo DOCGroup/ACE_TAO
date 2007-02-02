@@ -70,7 +70,6 @@ namespace CIDL_TargetManager_i
   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
-  ::Deployment::ResourceNotAvailable,
   ::Deployment::PlanError))
   {
     return CIAO::DomainDataManager::
@@ -161,59 +160,6 @@ namespace CIDL_TargetManager_i
     return;
   }
   //==================================================================
-  // Facet Executor Implementation Class:   TargetManagerExt_exec_i
-  // required for RACE
-  //==================================================================
-
-  TargetManagerExt_exec_i::TargetManagerExt_exec_i (void)
-  {
-  }
-
-  TargetManagerExt_exec_i::~TargetManagerExt_exec_i (void)
-  {
-  }
-
-  // Operations from ::CIAO::TargetManagerExt
-
-  ::CORBA::Long
-  TargetManagerExt_exec_i::get_pid (
-                                    const char * component_uuid
-                                    ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Your code here.
-    return CIAO::DomainDataManager::
-      get_data_manager ()->get_pid (component_uuid);
-  }
-
-  ::CIAO::Host_Infos *
-  TargetManagerExt_exec_i::get_host_cpu (
-                                         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Your code here.
-    return CIAO::DomainDataManager::
-      get_data_manager ()->get_cpu_info ();
-  }
-
-  ::CIAO::Component_Infos *
-  TargetManagerExt_exec_i::get_component_cpu (
-                                              ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    return 0;
-  }
-
-  ::CIAO::Host_NodeManager_seq *
-  TargetManagerExt_exec_i::get_all_node_managers
-  (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    return CIAO::DomainDataManager::
-      get_data_manager ()->get_node_managers ();
-  }
-
-  //==================================================================
   // Component Executor Implementation Class:   TargetManagerImpl_exec_i
   //==================================================================
 
@@ -248,19 +194,6 @@ namespace CIDL_TargetManager_i
       }
 
     return ::Deployment::CCM_TargetManager::_duplicate (this->exec_object_.in ());
-  }
-
-  ::CIAO::CCM_TargetManagerExt_ptr TargetManagerImpl_exec_i
-  ::get_target_manager_ext (
-                            ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-                            ) ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    if (CORBA::is_nil (this->exec_ext_object_.in ()))
-      {
-        this->exec_ext_object_ = new TargetManagerExt_exec_i();
-      }
-
-    return ::CIAO::CCM_TargetManagerExt::_duplicate (this->exec_ext_object_.in ());
   }
 
   // Operations from Components::SessionComponent

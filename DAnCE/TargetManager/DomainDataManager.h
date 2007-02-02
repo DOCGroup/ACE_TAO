@@ -90,40 +90,11 @@ namespace CIAO
        * @brief deletes the data manager
        */
       static void delete_data_manger ();
+
       /**
        * @brief returns the sequence of node managers
        * object reference
        */
-      CIAO::Host_NodeManager_seq *
-        get_node_managers ();
-
-      /**
-       * @brief returns the node specific cpu utilization
-       *
-       * @return CIAO::Host_Infos*
-       */
-
-       CIAO::Host_Infos* get_cpu_info ();
-
-       /**
-        * @brief returns the pid of the component id submitted
-        * @param cmp The component id
-        *
-        * @return process id
-        */
-       CORBA::Long get_pid (const ACE_CString& cmp);
-
-       /**
-        * @brief commits the resources that are specified
-        * in the plan.
-        * @param plan ::Deployment::DeploymentPlan
-        * @exception  ::Deployment::ResourceNotAvailable thrown
-        *             when the resources mentioned in the plan exceeds
-        *             the current resource.
-        * @exception  ::Deployment::PlanError thrown if the plan has any
-        *              error
-        *
-        */
        void commitResources (
        const ::Deployment::DeploymentPlan & plan);
 

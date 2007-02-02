@@ -10,13 +10,11 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub, ciao_no
 
   IDL_Files {
     TargetManagerImpl.idl
-    TargetManagerExt.idl
     DomainEvents.idl
   }
 
   Source_Files {
     TargetManagerImplC.cpp
-    TargetManagerExtC.cpp
     DomainEventsC.cpp
   }
 }
@@ -40,7 +38,6 @@ project(CIAO_TargetManager_svnt) : ciao_servant_dnc, ciao_targetmanager_stub {
   Source_Files {
     TargetManagerEC.cpp
     TargetManagerImplS.cpp
-    TargetManagerExtS.cpp
     TargetManager_svnt.cpp
     DomainEventsS.cpp
   }
