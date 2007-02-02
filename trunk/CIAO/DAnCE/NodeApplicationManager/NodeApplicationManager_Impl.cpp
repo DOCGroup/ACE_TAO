@@ -359,21 +359,15 @@ startLaunch (const Deployment::Properties & configProperty,
     }
   catch (const Deployment::UnknownImplId& e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
-                                                e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::StartError (e.name.in (), e.reason.in ());
     }
   catch (const Deployment::ImplEntryPointNotFound& e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
-                                                e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::StartError (e.name.in (), e.reason.in ());
     }
   catch (const Deployment::InstallationFailure& e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
-                                                e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::StartError (e.name.in (), e.reason.in ());
     }
 
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
@@ -506,21 +500,15 @@ perform_redeployment (const Deployment::Properties & configProperty,
     }
   catch (const Deployment::UnknownImplId& e)
     {
-      ACE_THROW_RETURN (Deployment::UnknownImplId (e.name.in (),
-                                                   e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::UnknownImplId (e.name.in (), e.reason.in ());
     }
   catch (const Deployment::ImplEntryPointNotFound& e)
     {
-      ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (e.name.in (),
-                                                            e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::ImplEntryPointNotFound (e.name.in (), e.reason.in ());
     }
   catch (const Deployment::InstallationFailure& e)
     {
-      ACE_THROW_RETURN (Deployment::InstallationFailure (e.name.in (),
-                                                         e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::InstallationFailure (e.name.in (), e.reason.in ());
     }
 
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());

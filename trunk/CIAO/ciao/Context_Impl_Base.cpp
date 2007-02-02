@@ -27,8 +27,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                      Components::Principal::_nil ());
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   Components::CCMHome_ptr
@@ -45,7 +44,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   Components::Transaction::UserTransaction_ptr
@@ -54,8 +53,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                      Components::Transaction::UserTransaction::_nil ());
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   CORBA::Boolean
@@ -64,7 +62,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   void

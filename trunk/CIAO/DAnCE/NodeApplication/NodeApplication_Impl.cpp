@@ -616,7 +616,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 			        if (retv == false)
 			        {
 				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
-				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+				        throw ::Deployment::InstallationFailure ();
 			        }
 		        }
 
@@ -629,7 +629,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 			        if (retv == false)
 			        {
 				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
-				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+				        throw ::Deployment::InstallationFailure ();
 			        }
 		        }
 
@@ -644,7 +644,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
 			        if (retv == false)
 			        {
 				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
-				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+				        throw ::Deployment::InstallationFailure ();
 			        }
 		        }
         }
@@ -653,7 +653,7 @@ ACE_THROW_SPEC ((::CORBA::SystemException,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("NodeApplication_Impl::finishLaunch\t\n");
-      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
+      throw ::Deployment::InstallationFailure ();
     }
 
 }

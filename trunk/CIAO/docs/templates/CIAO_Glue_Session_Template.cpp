@@ -48,7 +48,7 @@ CORBA::Object_ptr
   if (! CORBA::is_nil(ec.in ()))
     return ec->get_CCM_object ();
 
-  ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+  throw CORBA::INTERNAL ();
 }
 
 ##end foreach [facet type]
@@ -126,7 +126,7 @@ void
                    ::Components::ExceededConnectionLimit))
 {
   if (CORBA::is_nil (c))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   [eventtype]Consumer_var sub
     = [eventtype]Consumer::_duplicate (c);
@@ -151,11 +151,11 @@ void
   ACE_Active_Map_Manager_Key key;
   if (ck == 0 ||
       CIAO::Map_Key_Cookie::extract (ck, key) == -1)
-    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+    throw ::Components::InvalidConnection ();
 
   if (this->ciao_publishes_[publish name]_map_.unbind (key,
                                                        retv) != 0)
-    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+    throw ::Components::InvalidConnection ();
 
   return retv._retn ();
 }
@@ -210,7 +210,7 @@ void
                        ::Components::InvalidConnection))
 {
   if (CORBA::is_nil (c))
-    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+    throw ::Components::InvalidConnection ();
 
   [uses type]_var conn
     = [uses type]::_duplicate (c);
@@ -235,11 +235,11 @@ void
   ACE_Active_Map_Manager_Key key;
   if (ck == 0 ||
       CIAO::Map_Key_Cookie::extract (ck, key) == -1)
-    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+    throw ::Components::InvalidConnection ();
 
   if (this->ciao_muses_[receptacle name]_.unbind (key,
                                                   retv) != 0)
-    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+    throw ::Components::InvalidConnection ();
 
   return retv._retn ();
 }
@@ -264,7 +264,7 @@ CORBA::Object_ptr
       this->component_ = [component name]::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->component_.in ()))
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0); // This should not happen...
+        throw CORBA::INTERNAL (); // This should not happen...
     }
   return [component name]::_duplicate (this->component_.in ());
 }
@@ -326,7 +326,7 @@ CORBA::Object_ptr
       CCM_[facet type]_var fexe = this->executor_->get_[facet name] ();
 
       if (CORBA::is_nil (fexe.in ()))
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+        throw CORBA::INTERNAL ();
 
       [ciao module name]::[facet type]_Servant *svt =
         new [ciao module name]::[facet type]_Servant (fexe.in (),
@@ -398,7 +398,7 @@ CORBA::Object_ptr
                    Components::InvalidName))
 {
   if (name == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   // We simply iterate thru all the facets this component provides
   // now.  We can also use a hash map along with perfect hashing
@@ -410,7 +410,7 @@ CORBA::Object_ptr
     return this->provide_[facet name] ();
 ##end foreach [facet name] with [facet type]
 
-  ACE_THROW_RETURN (::Components::InvalidName (), 0);
+  throw ::Components::InvalidName ();
 }
 
 ::Components::FacetDescriptions *
@@ -467,7 +467,7 @@ CORBA::Object_ptr
         }
 ##end foreach [facet name] with [facet type]
       else
-        ACE_THROW_RETURN (::Components::InvalidName (), 0);
+        throw ::Components::InvalidName ();
 
       collection[i] = x._retn ();
     }
@@ -479,7 +479,7 @@ CORBA::Boolean
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (object_ref))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    throw CORBA::BAD_PARAM ();
 
   CORBA::Object_var the_other = object_ref->_get_component ();
 
@@ -500,7 +500,7 @@ CORBA::Boolean
 {
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
   if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
@@ -509,7 +509,7 @@ CORBA::Boolean
         [uses type]::_narrow (connection);
 
       if (CORBA::is_nil (_ciao_conn.in ()))
-        ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+        throw ::Components::InvalidConnection ();
 
 ##  if [receptacle name] is a simplex receptacle ('uses')
       this->connect_[receptacle name] (_caio_conn.in ());
@@ -520,7 +520,7 @@ CORBA::Boolean
     }
 ##end foreach [receptacle name] with [uses type]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 /*
@@ -542,7 +542,7 @@ CORBA::Object_ptr
 {
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
   if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
@@ -553,7 +553,7 @@ CORBA::Object_ptr
 ##  endif [receptacle name]
 ##end foreach [receptacle name] with [uses type]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 ::Components::ConnectionDescriptions *
@@ -563,7 +563,7 @@ CORBA::Object_ptr
 {
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
   if (ACE_OS_String::strcmp (name, "[receptacle name]") == 0)
@@ -585,7 +585,7 @@ CORBA::Object_ptr
     }
 ##end foreach [receptacle name] with [uses type]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 ::Components::ReceptacleDescriptions *
@@ -642,7 +642,7 @@ CORBA::Object_ptr
         }
 ##end foreach [receptacle name] with [uses type]
       else
-        ACE_THROW_RETURN (::Components::InvalidName (), 0);
+        throw ::Components::InvalidName ();
     }
   return retv._retn ();
 }
@@ -655,13 +655,13 @@ CORBA::Object_ptr
 {
   // @@ We can omit this if clause if there's no event sinks in this component.
   if (sink_name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [consumer name] with [eventtype] in (list of all consumers) generate:
   if (ACE_OS_String::strcmp (sink_name, "[consumer name]") == 0)
     return this->get_consumer_[consumer name] ();
 ##end foreach [consumer name] with [eventtype]
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 ::Components::Cookie *
@@ -674,7 +674,7 @@ CORBA::Object_ptr
 {
   // @@ We can omit this if clause if there's no publisher in this component.
   if (publisher_name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
   if (ACE_OS_String::strcmp (publisher_name, "[publish name]") == 0)
@@ -683,13 +683,13 @@ CORBA::Object_ptr
         [eventtype]Consumer::_narrow (subscriber);
 
       if (CORBA::is_nil (_ciao_consumer.in ()))
-        ACE_THROW_RETURN (Components::InvalidConnection (), 0);
+        throw Components::InvalidConnection ();
 
       return this->subscribe_[publish name] (_ciao_consumer.in ());
     }
 ##end foreach [publish name] with [eventtype]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 ::Components::EventConsumerBase_ptr
@@ -701,7 +701,7 @@ CORBA::Object_ptr
 {
   // @@ We can omit this if clause if there's no publisher in this component.
   if (publisher_name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
   if (ACE_OS_String::strcmp (publisher_name, "[publish name]") == 0)
@@ -710,7 +710,7 @@ CORBA::Object_ptr
     }
 ##end foreach [publish name] with [eventtype]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 void
@@ -750,7 +750,7 @@ void
 {
   // @@ We can omit this if clause if there's no emitter in this component.
   if (source_name == 0)
-    ACE_THROW_RETURN (Components::InvalidName (), 0);
+    throw Components::InvalidName ();
 
 ##foreach [emit name] with [eventtype] in (list of all emitters) generate:
   if (ACE_OS_String::strcmp (source_name, "[emit name]") == 0)
@@ -759,7 +759,7 @@ void
     }
 ##end foreach [emit name] with [eventtype]
 
-  ACE_THROW_RETURN (Components::InvalidName (), 0);
+  throw Components::InvalidName ();
 }
 
 ::Components::ConsumerDescriptions *
@@ -813,7 +813,7 @@ void
         }
 ##end foreach [consumer name] with [eventtype]
       else
-        ACE_THROW_RETURN (::Components::InvalidName (), 0);
+        throw ::Components::InvalidName ();
     }
   return retv._retn ();
 }
@@ -863,7 +863,7 @@ void
         }
 ##end foreach [consumer name] with [eventtype]
       else
-        ACE_THROW_RETURN (::Components::InvalidName (), 0);
+        throw ::Components::InvalidName ();
     }
   return retv._retn ();
 }
@@ -876,7 +876,7 @@ void
 
   // Need to add interfaces in the Context class to gather the information.
   // Or we can just relay it to the Context object.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ::Components::PublisherDescriptions *
@@ -888,7 +888,7 @@ void
 
   // Need to add interfaces in the Context class to gather the information.
   // Or we can just relay it to the Context object.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 // Operations for CCMObject interface
@@ -897,7 +897,7 @@ void
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ to-do: Connect to an IfR?
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 ::Components::CCMHome_ptr
@@ -913,7 +913,7 @@ void
                    Components::NoKeyAvailable))
 {
   // This is a keyless component.
-  ACE_THROW_RETURN (::Components::NoKeyAvailable (), 0);
+  throw ::Components::NoKeyAvailable ();
 }
 
 void
@@ -985,7 +985,7 @@ CORBA::Object_ptr
   if (! CORBA::is_nil(ec.in ()))
     return ec->get_CCM_object ();
 
-  ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+  throw CORBA::INTERNAL ();
 }
 
 void
@@ -1074,7 +1074,7 @@ void
                    Components::CreateFailure))
 {
   if (this->executor_.in () == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw CORBA::INTERNAL ();
 
   Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->create ();

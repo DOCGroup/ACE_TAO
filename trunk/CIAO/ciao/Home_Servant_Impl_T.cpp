@@ -142,8 +142,7 @@ namespace CIAO
 
     if (this->executor_.in () == 0)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (),
-                          COMP_SVNT::_stub_type::_nil ());
+        throw CORBA::INTERNAL ();
       }
 
     ::Components::EnterpriseComponent_var _ciao_ec =

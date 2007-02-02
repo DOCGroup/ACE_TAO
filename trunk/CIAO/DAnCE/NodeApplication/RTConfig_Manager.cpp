@@ -300,7 +300,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_threadpool_by_name\"\n"));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      throw CORBA::BAD_PARAM ();
     }
 
 
@@ -311,7 +311,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a threadpool named %s\n",
                   name));
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
 
   return ret_id;
@@ -325,7 +325,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_priority_bands_by_name\"\n"));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      throw CORBA::BAD_PARAM ();
     }
 
   PB_MAP::ENTRY *entry = 0;
@@ -335,7 +335,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a connection bands named %s\n",
                   name));
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
 
   RTCORBA::PriorityBands_var retv = new RTCORBA::PriorityBands;
@@ -351,7 +351,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_policies_by_name\"\n"));
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      throw CORBA::BAD_PARAM ();
     }
 
 
@@ -365,7 +365,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a PolicyList named %s\n",
                   name));
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
 
   // duplicate the sequence PolicyList.
@@ -440,7 +440,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
     default:
       ACE_ERROR ((LM_ERROR,
                   "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
 
   return retv._retn ();
