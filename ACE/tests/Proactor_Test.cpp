@@ -20,7 +20,7 @@ ACE_RCSID (tests,
            Proactor_Test,
            "$Id$")
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)) && !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
 
@@ -253,7 +253,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
 #  endif /* sun */
 
-#  if !defined(__Lynx__)
+#  if !defined(ACE_HAS_BROKEN_SIGEVENT_STRUCT)
     case CB:
       ACE_NEW_RETURN (proactor_impl,
                       ACE_POSIX_CB_Proactor (max_op),
@@ -261,7 +261,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
       break;
-#  endif /* __Lynx__ */
+#  endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
 
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -1769,11 +1769,11 @@ set_proactor_type (const ACE_TCHAR *ptype)
       proactor_type = SUN;
       return 1;
 #endif /* sun */
-#if !defined (__Lynx__)
+#if !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
      case 'C':
        proactor_type = CB;
        return 1;
-#endif /* __Lynx__ */
+#endif /* !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
     default:
       break;
     }
