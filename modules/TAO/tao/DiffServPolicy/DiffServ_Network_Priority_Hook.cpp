@@ -5,6 +5,10 @@
 #include "tao/PortableServer/POA_Policy_Set.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/Service_Context.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(DiffServPolicy,
           DiffServ_Network_Priority_Hook,
@@ -53,6 +57,38 @@ TAO_DiffServ_Network_Priority_Hook::update_network_priority (
             }
         }
     }
+}
+
+CORBA::Long
+TAO_DiffServ_Network_Priority_Hook::get_dscp_codepoint (
+  TAO_ServerRequest &req, TAO_Root_POA &poa)
+{
+  CORBA::Long dscp_codepoint;
+  TAO_Service_Context &request_service_context =
+    req.request_service_context ();
+
+  TAO_Network_Priority_Protocols_Hooks *nph =
+   poa.orb_core ().get_network_priority_protocols_hooks ();
+
+  TAO::Portable_Server::Cached_Policies::NetworkPriorityModel npm =
+    poa.cached_policies ().network_priority_model ();
+
+  if (npm == TAO::Portable_Server::Cached_Policies::
+             CLIENT_PROPAGATED_NETWORK_PRIORITY)
+    {
+      dscp_codepoint = nph->get_dscp_codepoint (request_service_context);
+    }
+  else if (npm == TAO::Portable_Server::Cached_Policies::
+                  SERVER_DECLARED_NETWORK_PRIORITY)
+    {
+      dscp_codepoint = poa.cached_policies ().reply_diffserv_codepoint ();
+    }
+  else
+    {
+      dscp_codepoint = 0;
+    }
+
+  return dscp_codepoint;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
