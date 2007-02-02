@@ -1,3 +1,21 @@
+Fri Feb  2 10:31:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CORBA_macros.h:
+          Removed workaround for ACE_THROW_RETURN for HP aCC compiler. This is
+          only needed for the HP 3.x compiler and we can suppress just this
+          warning. When this has been build on the scoreboard we will
+          zap the usage of this macro.
+
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Service_Config.{h,cpp}:
+        * ace/Service_Gestalt.cpp:
+        * ace/TSS_T.cpp:
+          Layout changes
+
+        * ace/Thread_Manager.cpp:
+          Const improvement
+
 Fri Feb  2 06:56:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACETAOCIAO.style:

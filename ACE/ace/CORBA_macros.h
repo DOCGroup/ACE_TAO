@@ -165,17 +165,8 @@
       throw EXCEPTION
 
 // Throwing an exception when the function requires a return value.
-# if defined (__HP_aCC)
-#   define ACE_THROW_RETURN(EXCEPTION, RETV) \
-       do \
-         { \
-           throw EXCEPTION; \
-           return RETV; \
-         } while (0)
-# else
-#   define ACE_THROW_RETURN(EXCEPTION,RETV) \
+# define ACE_THROW_RETURN(EXCEPTION,RETV) \
       throw EXCEPTION
-# endif
 
 // For compilers with native exceptions, we can simply use try to try. ;-)
 // do {} while (0) is required to avoid compilation warnings.

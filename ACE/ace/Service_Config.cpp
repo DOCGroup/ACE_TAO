@@ -300,7 +300,7 @@ ACE_Service_Config::global (void)
 ACE_Service_Gestalt *
 ACE_Service_Config::instance (void)
 {
-  return  ACE_Service_Config::current ();
+  return ACE_Service_Config::current ();
 }
 
 
@@ -360,8 +360,7 @@ ACE_Service_Config::current (void)
   if (impl == 0)
     return 0;
 
-  ACE_Service_Gestalt* & gestalt =
-    ACE_TSS_GET (impl, TSS_Resources)->ptr_;
+  ACE_Service_Gestalt* & gestalt = ACE_TSS_GET (impl, TSS_Resources)->ptr_;
 
   if (gestalt == 0)
     gestalt = ACE_Service_Config::global ();
@@ -377,8 +376,7 @@ ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
   if (impl == 0)
     return 0;
 
-  ACE_Service_Gestalt* & gestalt =
-    ACE_TSS_GET (impl, TSS_Resources)->ptr_;
+  ACE_Service_Gestalt* & gestalt = ACE_TSS_GET (impl, TSS_Resources)->ptr_;
 
   gestalt = newcurrent;
 
