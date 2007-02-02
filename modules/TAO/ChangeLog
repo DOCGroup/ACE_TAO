@@ -1,4 +1,15 @@
-Fri Feb  2 00:00:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Fri Feb  2 00:38:04 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        
+          Modified the pre_invoke_remote_request () to set the 
+          DiffServ codepoint to be used for the reply.
+        
+          The policy is stored in the POA_Cached_Policies class, and
+          depending upon the network priority model, the diffserv codepoint
+          is obtained.
+
+Fri Feb  2 00:00:19 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
           tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
@@ -9,7 +20,7 @@ Fri Feb  2 00:00:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           Note that now there are implementations for both the 
           get_dscp_codepoint () methods.
 
-Thu Feb  1 23:44:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Thu Feb  1 23:44:53 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/POA_Cached_Policies.h:
           tao/PortableServer/POA_Cached_Policies.cpp:
@@ -30,7 +41,7 @@ Thu Feb  1 23:44:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           Added new methods to set the values of the above mentioned
           private variables.
 
-Thu Feb  1 23:36:55 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Thu Feb  1 23:36:55 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
           tao/Default_Network_Priority_Protocols_Hooks.h:
@@ -41,7 +52,7 @@ Thu Feb  1 23:36:55 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           and another helps in the server-side for setting DiffServ
           codepoints.
 
-Thu Feb  1 23:15:32 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Thu Feb  1 23:15:32 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Root_POA.h:
           tao/PortableServer/Root_POA.cpp:
@@ -52,7 +63,7 @@ Thu Feb  1 23:15:32 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           This will allow a network priority protocol hook to get access
           to the cached policies, if it can get handle to the POA.
 
-Thu Feb  1 17:52:27 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Thu Feb  1 17:52:27 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Default_Servant_Dispatcher.cpp:
         
@@ -76,7 +87,7 @@ Thu Feb  1 17:52:27 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           Cache the network priority model policy values that was used
           to create the POA. Works with the above description.
 
-Wed Jan 31 22:09:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 22:09:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
           tao/Default_Network_Priority_Protocols_Hooks.h:
@@ -93,7 +104,7 @@ Wed Jan 31 22:09:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           codepoint to the client server communication. PLease see the
           comments in the file in the send_message () method.
 
-Wed Jan 31 18:55:13 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 18:55:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
           tao/DiffServPolicy/Client_Network_Priority_Policy.h:
@@ -107,7 +118,7 @@ Wed Jan 31 18:55:13 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           to the other file, which actually registers the ORBInitializer
           as well.
 
-Wed Jan 31 18:28:33 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 18:28:33 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
           tao/Default_Network_Priority_Protocols_Hooks.h:
@@ -117,7 +128,7 @@ Wed Jan 31 18:28:33 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
         
           Changed the signature of the get_dscp_codepoint ().
 
-Wed Jan 31 18:14:30 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 18:14:30 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Connection_Handler.h:
           tao/Connection_Hanlder.cpp:
@@ -132,7 +143,7 @@ Wed Jan 31 18:14:30 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           Provided the concrete implementation for the above defined
           method.
 
-Wed Jan 31 17:40:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 17:40:48 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Profile.cpp:
         
@@ -145,7 +156,7 @@ Wed Jan 31 17:40:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           If we do not do that, some function which uses the returned
           PolicyList could get into memory problems.
 
-Wed Jan 31 17:33:28 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 17:33:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/ORB_Core.cpp:
         
@@ -153,7 +164,7 @@ Wed Jan 31 17:33:28 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           on the DS network priority protocols hooks to add the reply
           DSCP as a service context entry.
 
-Wed Jan 31 17:04:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Wed Jan 31 17:04:53 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/tao.mpc:
         
@@ -165,7 +176,7 @@ Wed Jan 31 17:04:53 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
         
           Removed unnecessary includes.
 
-Tue Jan 30 19:22:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 19:22:19 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/ORB_Core.h:
           tao/ORB_Core.cpp:
@@ -174,14 +185,14 @@ Tue Jan 30 19:22:19 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           Added set and get functions for the Network Priority Protocols
           Hooks.
 
-Tue Jan 30 19:15:31 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 19:15:31 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/TAO_Internal.cpp:
         
           Made changes to do a process directive for Default Network
           Priority Protocols Hooks.
 
-Tue Jan 30 18:54:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 18:54:48 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServPolicy.h:
           tao/DiffServPolicy/DiffServPolicy.cpp:
@@ -189,14 +200,14 @@ Tue Jan 30 18:54:48 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu
           Added files for registering the DiffServ policy ORB
           initializer.
 
-Tue Jan 30 18:37:38 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 18:37:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy.mpc:
           tao/DiffServPolicy/TAO_DiffServPolicy.pc.in
         
           Added the pkgconfig files.
 
-Tue Jan 30 18:14:00 UTC 2007  Jaiganesh Balasubramanian  <jai.dre.vanderbilt.edu>
+Tue Jan 30 18:14:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
           tao/DiffServPolicy/Server_Network_Priority_Policy.h:
