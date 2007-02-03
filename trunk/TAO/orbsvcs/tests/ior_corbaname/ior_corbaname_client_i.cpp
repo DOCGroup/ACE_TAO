@@ -115,7 +115,7 @@ IOR_corbaname_Client_i::init (int argc, char **argv)
   try
     {
       // First initialize the ORB, that will remove some arguments...
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_,);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
 
       // There must be at least one argument, the file that has to be
       // retrieved
