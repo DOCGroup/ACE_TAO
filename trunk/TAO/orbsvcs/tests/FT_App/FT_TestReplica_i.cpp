@@ -95,21 +95,21 @@ namespace
 #define KEVORKIAN_RETURN(value, method, result)                    \
   if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
     suicide (#value " in method " #method);                        \
-    throw FAULT_CODE (
-        \CORBA::SystemException::_tao_minor_code (
-              \TAO::VMCID,
-            \EFAULT),
-    \CORBA::COMPLETED_NO);                                                     \
+    throw FAULT_CODE (                                             \
+        CORBA::SystemException::_tao_minor_code (                  \
+              TAO::VMCID,                                          \
+              EFAULT),                                             \
+              CORBA::COMPLETED_NO);                                \
     } else ;
 
 #define KEVORKIAN_DURING_RETURN(method, result)                    \
   if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
     suicide ("read-only method " #method);                         \
-    throw FAULT_CODE (
-        \CORBA::SystemException::_tao_minor_code (
-              \TAO::VMCID,
-            \EFAULT),
-    \CORBA::COMPLETED_NO);                                               \
+    throw FAULT_CODE (                                             \
+        CORBA::SystemException::_tao_minor_code (                  \
+             TAO::VMCID,                                           \
+             EFAULT),                                              \
+     CORBA::COMPLETED_NO);                                         \
     } else ;
 
 
