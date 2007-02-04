@@ -24,8 +24,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyServantManager::get_servant (
-      void)
+    RequestProcessingStrategyServantManager::get_servant (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
@@ -34,8 +33,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantManager::set_servant (
-      PortableServer::Servant servant
-      )
+      PortableServer::Servant servant)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
@@ -59,17 +57,14 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::system_id_to_servant (
-      const PortableServer::ObjectId &system_id
-      )
+      const PortableServer::ObjectId &system_id)
     {
-      return this->poa_->find_servant (system_id
-                                      );
+      return this->poa_->find_servant (system_id);
     }
 
     PortableServer::ObjectId *
     RequestProcessingStrategyServantManager::servant_to_id (
-      PortableServer::Servant servant
-      )
+      PortableServer::Servant servant)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
@@ -79,8 +74,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::id_to_servant (
-      const PortableServer::ObjectId &id
-      )
+      const PortableServer::ObjectId &id)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))

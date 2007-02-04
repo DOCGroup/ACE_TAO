@@ -40,11 +40,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_union_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_union_tc (id,
-                              name,
-                              discriminator_type,
-                              members
-                             );
+  return tcf.create_union_tc (id, name, discriminator_type, members);
 }
 
 CORBA::TypeCode_ptr
@@ -56,10 +52,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_enum_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_enum_tc (id,
-                             name,
-                             members
-                            );
+  return tcf.create_enum_tc (id, name, members);
 }
 
 CORBA::TypeCode_ptr
@@ -71,10 +64,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_alias_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_alias_tc (id,
-                              name,
-                              original_type
-                             );
+  return tcf.create_alias_tc (id, name, original_type);
 }
 
 CORBA::TypeCode_ptr
@@ -86,10 +76,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_exception_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_exception_tc (id,
-                                  name,
-                                  members
-                                 );
+  return tcf.create_exception_tc (id, name, members);
 }
 
 CORBA::TypeCode_ptr
@@ -100,9 +87,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_interface_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_interface_tc (id,
-                                  name
-                                 );
+  return tcf.create_interface_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
@@ -167,11 +152,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_value_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_value_tc (id,
-                              name,
-                              type_modifier,
-                              concrete_base,
-                              members);
+  return tcf.create_value_tc (id, name, type_modifier, concrete_base, members);
 }
 
 CORBA::TypeCode_ptr
@@ -261,12 +242,7 @@ TAO_TypeCodeFactory_Adapter_Impl::create_event_tc (
 {
   TAO_TypeCodeFactory_i tcf;
 
-  return tcf.create_event_tc (id,
-                              name,
-                              type_modifier,
-                              concrete_base,
-                              members
-                             );
+  return tcf.create_event_tc (id, name, type_modifier, concrete_base, members);
 }
 
 // --

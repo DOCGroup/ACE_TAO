@@ -33,8 +33,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyAOMOnly::set_servant_manager (
-      PortableServer::ServantManager_ptr /*imgr*/
-                         )
+      PortableServer::ServantManager_ptr /*imgr*/)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -43,8 +42,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyAOMOnly::set_servant (
-      PortableServer::Servant /*servant*/
-      )
+      PortableServer::Servant /*servant*/)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
@@ -64,12 +62,9 @@ namespace TAO
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyAOMOnly::locate_servant (
       const PortableServer::ObjectId & system_id,
-      PortableServer::Servant & servant
-      )
+      PortableServer::Servant & servant)
     {
-      return this->poa_->servant_present (system_id,
-                                          servant
-                                         );
+      return this->poa_->servant_present (system_id, servant);
     }
 
     PortableServer::Servant
@@ -78,15 +73,13 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      bool & /*wait_occurred_restart_call*/
-      )
+      bool & /*wait_occurred_restart_call*/)
     {
       PortableServer::Servant servant = 0;
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
-                                          poa_current_impl
-                                         );
+                                          poa_current_impl);
 
       if (servant == 0)
         {
@@ -100,30 +93,25 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::system_id_to_servant (
-      const PortableServer::ObjectId &system_id
-      )
+      const PortableServer::ObjectId &system_id)
     {
-      return this->poa_->find_servant (system_id
-                                      );
+      return this->poa_->find_servant (system_id);
     }
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::id_to_servant (
-      const PortableServer::ObjectId &id
-      )
+      const PortableServer::ObjectId &id)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      return this->poa_->user_id_to_servant_i (id
-                                              );
+      return this->poa_->user_id_to_servant_i (id);
     }
 
     void
     RequestProcessingStrategyAOMOnly::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id
-      )
+      const PortableServer::ObjectId &user_id)
     {
       if (servant)
         {
@@ -137,9 +125,7 @@ namespace TAO
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      int result = this->poa_->unbind_using_user_id (user_id);
-
-      if (result != 0)
+      if (this->poa_->unbind_using_user_id (user_id) != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -153,8 +139,7 @@ namespace TAO
 
     PortableServer::ObjectId *
     RequestProcessingStrategyAOMOnly::servant_to_id (
-      PortableServer::Servant servant
-      )
+      PortableServer::Servant servant)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))

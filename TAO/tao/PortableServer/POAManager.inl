@@ -27,8 +27,7 @@ TAO_POA_Manager::activate (void)
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 ACE_INLINE void
-TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion
-                                )
+TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
@@ -39,8 +38,7 @@ TAO_POA_Manager::hold_requests (CORBA::Boolean wait_for_completion
 }
 
 ACE_INLINE void
-TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion
-                                   )
+TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
@@ -52,17 +50,14 @@ TAO_POA_Manager::discard_requests (CORBA::Boolean wait_for_completion
 
 ACE_INLINE void
 TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
-                             CORBA::Boolean wait_for_completion
-                             )
+                             CORBA::Boolean wait_for_completion)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD;
 
-  this->deactivate_i (etherealize_objects,
-                      wait_for_completion
-                     );
+  this->deactivate_i (etherealize_objects, wait_for_completion);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -131,7 +126,7 @@ TAO_POA_Manager::generate_manager_id (void) const
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 ACE_INLINE
-CORBA::PolicyList& TAO_POA_Manager::get_policies ()
+CORBA::PolicyList& TAO_POA_Manager::get_policies (void)
 {
   return this->policies_;
 }

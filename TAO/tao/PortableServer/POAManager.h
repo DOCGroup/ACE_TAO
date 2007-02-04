@@ -68,8 +68,7 @@ public:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  void hold_requests (CORBA::Boolean wait_for_completion
-                      )
+  void hold_requests (CORBA::Boolean wait_for_completion)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
 
@@ -79,8 +78,7 @@ public:
                      PortableServer::POAManager::AdapterInactive));
 
   void deactivate (CORBA::Boolean etherealize_objects,
-                   CORBA::Boolean wait_for_completion
-                   )
+                   CORBA::Boolean wait_for_completion)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
 
@@ -109,12 +107,10 @@ public:
   PortableServer::POAManager::State get_state_i ()
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ORB_ptr _get_orb (
-
-    );
+  virtual CORBA::ORB_ptr _get_orb (void);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  CORBA::PolicyList& get_policies ();
+  CORBA::PolicyList& get_policies (void);
 #endif
 
 protected:
@@ -124,26 +120,22 @@ protected:
                      PortableServer::POAManager::AdapterInactive));
 
   void deactivate_i (CORBA::Boolean etherealize_objects,
-                     CORBA::Boolean wait_for_completion
-                     )
+                     CORBA::Boolean wait_for_completion)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
 
   /// Method needed for notifying the IORInterceptors that the state
   /// of POAManager changed.
-  void adapter_manager_state_changed (PortableServer::POAManager::State state
-                                      )
+  void adapter_manager_state_changed (PortableServer::POAManager::State state)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  void hold_requests_i (CORBA::Boolean wait_for_completion
-                        )
+  void hold_requests_i (CORBA::Boolean wait_for_completion)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
 
-  void discard_requests_i (CORBA::Boolean wait_for_completion
-                           )
+  void discard_requests_i (CORBA::Boolean wait_for_completion)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POAManager::AdapterInactive));
 

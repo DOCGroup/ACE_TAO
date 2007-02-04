@@ -52,8 +52,7 @@ namespace TAO
     Servant_Upcall::prepare_for_upcall (
       const TAO::ObjectKey &key,
       const char *operation,
-      CORBA::Object_out forward_to
-      )
+      CORBA::Object_out forward_to)
     {
       while (1)
         {
@@ -63,8 +62,7 @@ namespace TAO
             this->prepare_for_upcall_i (key,
                                         operation,
                                         forward_to,
-                                        wait_occurred_restart_call
-                                       );
+                                        wait_occurred_restart_call);
 
           if (result == TAO_Adapter::DS_FAILED &&
               wait_occurred_restart_call)
@@ -108,17 +106,13 @@ namespace TAO
         );
 
       // Locate the POA.
-      this->object_adapter_->locate_poa (key,
-                                         this->system_id_,
-                                         this->poa_
-                                        );
+      this->object_adapter_->locate_poa (key, this->system_id_, this->poa_);
 
       // Check the state of the POA.
       this->poa_->check_state ();
 
       // Setup current for this request.
-      this->current_context_.setup (this->poa_,
-                                    key);
+      this->current_context_.setup (this->poa_, key);
 
       // Increase <poa->outstanding_requests_> for the duration of finding
       // the POA, finding the servant, and making the upcall.
@@ -231,8 +225,7 @@ namespace TAO
       // Check if a non-servant upcall is in progress.  If a non-servant
       // upcall is in progress, wait for it to complete.  Unless of
       // course, the thread making the non-servant upcall is this thread.
-      this->object_adapter_->wait_for_non_servant_upcalls_to_complete (
-        );
+      this->object_adapter_->wait_for_non_servant_upcalls_to_complete ();
 
       // Locate the POA.
       this->object_adapter_->locate_poa (key, this->system_id_, this->poa_);
@@ -337,10 +330,8 @@ namespace TAO
     Servant_Upcall::single_threaded_poa_cleanup (void)
     {
 #if (TAO_HAS_MINIMUM_POA == 0)
-      int result = 0;
-
       // Since the servant lock was acquired, we must release it.
-      result = this->poa_->exit ();
+      int const result = this->poa_->exit ();
 
       ACE_UNUSED_ARG (result);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -361,7 +352,7 @@ namespace TAO
       if (this->active_object_map_entry_ != 0)
         {
           // Decrement the reference count.
-          CORBA::UShort new_count =
+          CORBA::UShort const new_count =
             --this->active_object_map_entry_->reference_count_;
 
           if (new_count == 0)
@@ -415,7 +406,6 @@ namespace TAO
           // non-servant upcalls to be in progress at this point.
           if (this->poa_->waiting_destruction_)
             {
-
               try
                 {
                   this->poa_->complete_destruction_i ();
