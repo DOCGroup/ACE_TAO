@@ -29,9 +29,7 @@ namespace TAO
         return T::_nil ();
       }
 
-    return TAO::Narrow_Utils<T>::unchecked_narrow (obj,
-                                                   repo_id,
-                                                   pbf);
+    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id, pbf);
   }
 
   template<typename T> T *
@@ -41,10 +39,7 @@ namespace TAO
     T *proxy = 0;
     try
       {
-        proxy =
-          TAO::Narrow_Utils<T>::unchecked_narrow (obj,
-                                                  0,
-                                                  pbf);
+        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0, pbf);
       }
     catch (const ::CORBA::Exception&)
       {

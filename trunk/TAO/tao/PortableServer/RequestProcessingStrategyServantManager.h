@@ -41,7 +41,7 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      void set_servant (PortableServer::Servant servant )
+      void set_servant (PortableServer::Servant servant)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
@@ -50,19 +50,16 @@ namespace TAO
        );
 
       virtual PortableServer::Servant system_id_to_servant (
-        const PortableServer::ObjectId &system_id
-       );
+        const PortableServer::ObjectId &system_id);
 
       virtual PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId &id
-        )
+        const PortableServer::ObjectId &id)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ObjectNotActive,
                            PortableServer::POA::WrongPolicy));
 
       virtual PortableServer::ObjectId *servant_to_id (
-        PortableServer::Servant servant
-        )
+        PortableServer::Servant servant)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy));

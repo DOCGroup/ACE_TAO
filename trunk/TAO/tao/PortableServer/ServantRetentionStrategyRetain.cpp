@@ -77,7 +77,7 @@ namespace TAO
     {
 
       TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
-      int result = this->active_object_map_->
+      int const result = this->active_object_map_->
         find_entry_using_user_id (id, active_object_map_entry);
 
       // If there is no active object associated with the specified Object
@@ -204,8 +204,7 @@ namespace TAO
       PortableServer::Servant servant = 0;
 
       int const result =
-        this->active_object_map_->find_servant_using_user_id (id,
-                                                              servant);
+        this->active_object_map_->find_servant_using_user_id (id, servant);
 
       if (result == -1)
         {
@@ -372,8 +371,7 @@ namespace TAO
     {
       bool deactivated = false;
       int servant_in_map =
-        this->active_object_map_->is_servant_in_map (servant,
-                                                     deactivated);
+        this->active_object_map_->is_servant_in_map (servant, deactivated);
 
       if (!servant_in_map)
         {
@@ -505,8 +503,7 @@ namespace TAO
            i < counter;
            ++i)
         {
-          this->deactivate_map_entry (map_entries[i]
-                                     );
+          this->deactivate_map_entry (map_entries[i]);
         }
     }
 
@@ -773,8 +770,7 @@ namespace TAO
 
       // Inform the custom servant dispatching (CSD) strategy that the
       // sevant is activated.
-      this->poa_->servant_activated_hook (servant,
-                                          user_id.in ());
+      this->poa_->servant_activated_hook (servant, user_id.in ());
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -850,7 +846,7 @@ namespace TAO
       if (!priorities_match)
         {
           throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 1,
-                                           CORBA::COMPLETED_NO));
+                                          CORBA::COMPLETED_NO));
         }
 
       bool const may_activate =
