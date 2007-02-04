@@ -111,7 +111,7 @@ main(int argc, char *argv[])
   try
     {
       // Initialize the ORB.
-      orb = CORBA::ORB_init(argc, argv, 0);
+      orb = CORBA::ORB_init(argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = client_parse_args(argc, argv);
