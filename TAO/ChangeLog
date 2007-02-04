@@ -1,3 +1,17 @@
+Sun Feb  4 19:57:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/String_Const_Sequence_Element_T.h:
+        * tao/String_Sequence_Element_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+          Fixed bug 2792, thanks to Frank Pilhofer <fp at mc dot com>
+          for reporting this
+
+        * tao/Bug_2792_Regression/Bug_2792_Regression.mpc:
+        * tao/Bug_2792_Regression/Bug_2792_Regression/client.cpp:
+        * tao/Bug_2792_Regression/Bug_2792_Regression/run_test.pl:
+          New regression test
+
 Sun Feb  4 18:51:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp

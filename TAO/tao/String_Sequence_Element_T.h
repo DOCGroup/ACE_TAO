@@ -31,13 +31,12 @@ public:
   typedef typename traits::string_mgr string_mgr;
 
 private:
-  inline string_sequence_element<traits> & pseudo_copy_swap(
-      string_var & rhs)
+  inline string_sequence_element<traits> & pseudo_copy_swap(string_var & rhs)
   {
     if (release())
-    {
-      traits::release(*element_);
-    }
+      {
+        traits::release(*element_);
+      }
     *element_ = rhs._retn();
     return *this;
   }
