@@ -219,8 +219,7 @@ CORBA::Object::_is_a (const char *type_id)
                          this->_stubobj ()->type_id.in ()) == 0)
     return true;
 
-  return this->proxy_broker ()->_is_a (this,
-                                       type_id);
+  return this->proxy_broker ()->_is_a (this, type_id);
 }
 
 const char*
@@ -618,8 +617,7 @@ CORBA::Object::_validate_connection (
     }
   catch (const ::CORBA::INV_POLICY&)
     {
-      inconsistent_policies =
-        tao_call.get_inconsistent_policies ();
+      inconsistent_policies = tao_call.get_inconsistent_policies ();
       retval = false;
     }
   catch (const ::CORBA::Exception&)
@@ -738,8 +736,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
       for (CORBA::ULong i = 0; i != profile_count; ++i)
         {
-          IOP::TaggedProfile &tpfile =
-            obj->ior_->profiles[i];
+          IOP::TaggedProfile &tpfile = obj->ior_->profiles[i];
 
           // NOTE: This is a place for optimizations. Here we have an
           // 2 allocations and 2 copies. Future optimizations should
@@ -754,8 +751,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
                             orb_core->input_cdr_msgblock_allocator (),
                             orb_core);
 
-          TAO_Profile *pfile =
-            connector_registry->create_profile (cdr);
+          TAO_Profile *pfile = connector_registry->create_profile (cdr);
 
           if (pfile != 0)
             mp.give_profile (pfile);
@@ -774,9 +770,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
         }
 
 
-      objdata =
-        orb_core->create_stub (obj->ior_->type_id.in (),
-                               mp);
+      objdata = orb_core->create_stub (obj->ior_->type_id.in (), mp);
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -792,8 +786,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
   // This call will set the stub proxy broker if necessary
-  if (orb_core->initialize_object (safe_objdata.get (),
-                                   obj) == -1)
+  if (orb_core->initialize_object (safe_objdata.get (), obj) == -1)
     return;
 
   obj->protocol_proxy_ = objdata;
@@ -877,8 +870,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
           for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
             {
-              TAO_Profile *pfile =
-                connector_registry->create_profile (cdr);
+              TAO_Profile *pfile = connector_registry->create_profile (cdr);
               if (pfile != 0)
                 mp.give_profile (pfile);
             }
@@ -896,9 +888,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                                 0);
             }
 
-
-          objdata = orb_core->create_stub (type_hint.in (),
-                                           mp);
+          objdata = orb_core->create_stub (type_hint.in (), mp);
         }
       catch (const ::CORBA::Exception& ex)
         {
@@ -931,8 +921,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       cdr >> *ior;
       ACE_NEW_RETURN (x,
-                      CORBA::Object (ior,
-                                     orb_core),
+                      CORBA::Object (ior, orb_core),
                       0);
     }
 

@@ -63,13 +63,11 @@ namespace TAO
     virtual int activate (const char *server_id,
                           const char *orb_id,
                           PortableInterceptor::AdapterName *,
-                          PortableServer::POA_ptr poa
-                          ) = 0;
+                          PortableServer::POA_ptr poa) = 0;
 
     /// Set a different ort_factory to be used.
     virtual int set_obj_ref_factory (
-      PortableInterceptor::ObjectReferenceFactory *current_factory
-      ) = 0;
+      PortableInterceptor::ObjectReferenceFactory *current_factory) = 0;
 
     /// Accessor methods to ObjectReferenceTemplate template
     virtual PortableInterceptor::ObjectReferenceTemplate *
@@ -100,9 +98,7 @@ namespace TAO
       const char * repository_id,
       const PortableInterceptor::ObjectId & id
       )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
     //@}
   };
 

@@ -92,7 +92,6 @@ TAO_UIOP_Connection_Handler::open (void*)
 
   bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
-
   try
     {
       if (client)

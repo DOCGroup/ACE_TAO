@@ -38,7 +38,7 @@ TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (ACE_Thread_Manager *
 
 
 TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                          CORBA::Boolean flag)
+                                                            CORBA::Boolean flag)
   : TAO_COIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
@@ -115,7 +115,7 @@ TAO_COIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 
 int
 TAO_COIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                             const void *)
+                                              const void *)
 {
   // We don't use this upcall from the Reactor.  However, we should
   // override this since the base class returns -1 which will result
@@ -125,7 +125,7 @@ TAO_COIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
 int
 TAO_COIOP_Connection_Handler::handle_close (ACE_HANDLE,
-                                           ACE_Reactor_Mask)
+                                            ACE_Reactor_Mask)
 {
   // No asserts here since the handler is registered with the Reactor
   // and the handler ownership is given to the Reactor.  When the

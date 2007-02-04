@@ -1,3 +1,60 @@
+Sun Feb  4 18:51:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp
+        * tao/Object_T.cpp
+        * tao/Object_T.h
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp
+        * tao/PortableServer/LifespanStrategyPersistent.cpp
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/ORT_Adapter.h
+        * tao/PortableServer/POA_Current.cpp
+        * tao/PortableServer/POA_Current_Factory.h
+        * tao/PortableServer/POA_Current_Impl.cpp
+        * tao/PortableServer/POA_Current_Impl.h
+        * tao/PortableServer/POA_Guard.cpp
+        * tao/PortableServer/POA_Guard.h
+        * tao/PortableServer/POA_Policy_Set.cpp
+        * tao/PortableServer/POA_Policy_Set.inl
+        * tao/PortableServer/POAManager.cpp
+        * tao/PortableServer/POAManager.h
+        * tao/PortableServer/POAManager.inl
+        * tao/PortableServer/POAManagerFactory.cpp
+        * tao/PortableServer/POAManagerFactory.h
+        * tao/PortableServer/Regular_POA.cpp
+        * tao/PortableServer/RequestProcessingStrategy.cpp
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.cpp
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.h
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.h
+        * tao/PortableServer/RequestProcessingStrategyServantManager.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantManager.h
+        * tao/PortableServer/Servant_Base.h
+        * tao/PortableServer/Servant_Dispatcher.h
+        * tao/PortableServer/Servant_Upcall.cpp
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp
+        * tao/Strategies/advanced_resource.cpp
+        * tao/Strategies/COIOP_Acceptor.cpp
+        * tao/Strategies/COIOP_Connection_Handler.cpp
+        * tao/Strategies/DIOP_Endpoint.cpp
+        * tao/Strategies/SCIOP_Connector.cpp
+        * tao/Strategies/UIOP_Connection_Handler.cpp
+        * tao/TkResource/TkResource_Loader.cpp
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp
+        * tao/TypeCodeFactory/Recursive_TypeCode.h
+        * tao/TypeCodeFactory/Recursive_TypeCode.inl
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp
+        * tao/ULongLongSeq.pidl
+        * tao/ULongSeq.pidl
+          Layout and const fixes
+
 Fri Feb  2 18:38:14 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:

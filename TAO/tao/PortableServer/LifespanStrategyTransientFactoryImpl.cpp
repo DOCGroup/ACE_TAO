@@ -38,9 +38,7 @@ namespace TAO
     }
 
     void
-    LifespanStrategyTransientFactoryImpl::destroy (
-      LifespanStrategy *strategy
-      )
+    LifespanStrategyTransientFactoryImpl::destroy (LifespanStrategy *strategy)
     {
       strategy->strategy_cleanup ();
 

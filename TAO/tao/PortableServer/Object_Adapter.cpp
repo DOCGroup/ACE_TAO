@@ -342,8 +342,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 int
 TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
                                       TAO_ServerRequest &req,
-                                      CORBA::Object_out forward_to
-                                      )
+                                      CORBA::Object_out forward_to)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START);
 
@@ -354,11 +353,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   // Set up state in the POA et al (including the POA Current), so
   // that we know that this servant is currently in an upcall.
   const char *operation = req.operation ();
-  int result =
-    servant_upcall.prepare_for_upcall (key,
-                                       operation,
-                                       forward_to
-                                      );
+  int result = servant_upcall.prepare_for_upcall (key, operation, forward_to);
 
   if (result != TAO_Adapter::DS_OK)
     return result;
@@ -366,13 +361,11 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   // Preprocess request.
   if (req.collocated ())
     {
-      servant_upcall.pre_invoke_collocated_request (
-        );
+      servant_upcall.pre_invoke_collocated_request ();
     }
   else
     {
-      servant_upcall.pre_invoke_remote_request (req
-                                               );
+      servant_upcall.pre_invoke_remote_request (req);
     }
 
   // Servant dispatch.
@@ -401,8 +394,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
 void
 TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 PortableServer::ObjectId &system_id,
-                                TAO_Root_POA *&poa
-                                )
+                                TAO_Root_POA *&poa)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
   CORBA::Boolean is_root = false;

@@ -100,7 +100,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
       // Attempt to extract client-propagated priority from the
       // ServiceContextList of the request.
-      const IOP::ServiceContext *context;
+      const IOP::ServiceContext *context = 0;
 
       if (request_service_context.get_context (IOP::RTCorbaPriority,
                                                &context) == 1)
@@ -217,8 +217,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           if (TAO_debug_level > 0)
             {
               CORBA::Short native_priority;
-              tph->get_thread_native_priority (native_priority
-                                              );
+              tph->get_thread_native_priority (native_priority);
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("%s processing using %s ")
@@ -250,14 +249,10 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     }
 
   CORBA::Policy_var policy =
-    poa.policies ().get_cached_policy (
-      TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-     );
+    poa.policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   CORBA::Boolean set_server_network_priority =
-    tph->set_server_network_priority (req.transport ()->tag (),
-                                      policy.in ()
-                                     );
+    tph->set_server_network_priority (req.transport ()->tag (), policy.in ());
 
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
@@ -274,8 +269,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   TAO_Thread_Pool *thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
-  if (thread_pool == 0 ||
-      thread_pool->with_lanes ())
+  if (thread_pool == 0 || thread_pool->with_lanes ())
     {
       //
       // We don't mess with the priority of threads in lanes or for
@@ -334,8 +328,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
         {
           // Reset the priority of the current thread back to its original
           // value.
-          TAO_Protocols_Hooks *tph =
-            poa.orb_core ().get_protocols_hooks ();
+          TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
           if (tph->set_thread_native_priority (
                  pre_invoke_state.original_native_priority_)
@@ -374,8 +367,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                 lock,
                                 thread_lock,
                                 orb_core,
-                                object_adapter
-                               ),
+                                object_adapter),
                     CORBA::NO_MEMORY ());
 
   return poa;

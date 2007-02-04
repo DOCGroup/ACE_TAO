@@ -36,12 +36,10 @@ TAO_POAManager_Factory::create_POAManager (
   TAO_POA_Policy_Set tao_policies (TAO_POA_Policy_Set (this->object_adapter_.default_poa_policies ()));
 
   // Merge policies from the ORB level.
-  this->object_adapter_.validator ().merge_policies (tao_policies.policies ()
-                                                     );
+  this->object_adapter_.validator ().merge_policies (tao_policies.policies ());
 
   // Merge in any policies that the user may have specified.
-  tao_policies.merge_policies (policies
-                             );
+  tao_policies.merge_policies (policies);
 
   // If any of the policy objects specified are not valid for the ORB
   // implementation, if conflicting policy objects are specified, or
@@ -50,8 +48,7 @@ TAO_POAManager_Factory::create_POAManager (
   // InvalidPolicy exception is raised containing the index in the
   // policies parameter value of the first offending policy object.
   tao_policies.validate_policies (this->object_adapter_.validator (),
-                                  this->object_adapter_.orb_core ()
-                                 );
+                                  this->object_adapter_.orb_core ());
 
   PortableServer::POAManager_var poamanager;
 
@@ -84,8 +81,7 @@ TAO_POAManager_Factory::create_POAManager (
 }
 
 ::PortableServer::POAManagerFactory::POAManagerSeq *
-TAO_POAManager_Factory::list (
-  void)
+TAO_POAManager_Factory::list (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
@@ -112,8 +108,7 @@ TAO_POAManager_Factory::list (
 }
 
 ::PortableServer::POAManager_ptr
-TAO_POAManager_Factory::find (
-  const char * id )
+TAO_POAManager_Factory::find (const char * id )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::PortableServer::POAManager_ptr poamanager =
@@ -123,8 +118,7 @@ TAO_POAManager_Factory::find (
         iterator != this->poamanager_set_.end ();
         ++iterator)
     {
-      CORBA::String_var poamanagerid =
-        (*iterator)->get_id ();
+      CORBA::String_var poamanagerid = (*iterator)->get_id ();
 
       if (ACE_OS::strcmp (id, poamanagerid.in()) == 0)
         {
@@ -153,8 +147,7 @@ int
 TAO_POAManager_Factory::remove_poamanager (
   ::PortableServer::POAManager_ptr poamanager)
 {
-  int retval = 0;
-  retval = this->poamanager_set_.remove (poamanager);
+  int retval = this->poamanager_set_.remove (poamanager);
 
   if (retval == 0)
     {

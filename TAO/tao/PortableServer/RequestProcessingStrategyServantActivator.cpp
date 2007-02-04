@@ -28,23 +28,20 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup (
-      void)
+    RequestProcessingStrategyServantActivator::strategy_cleanup (void)
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
-        this->servant_activator_ =
-          PortableServer::ServantActivator::_nil ();
+        this->servant_activator_ = PortableServer::ServantActivator::_nil ();
       }
 
       RequestProcessingStrategy::strategy_cleanup ();
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantActivator::get_servant_manager (
-      void)
+    RequestProcessingStrategyServantActivator::get_servant_manager (void)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy))
     {
@@ -53,8 +50,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantActivator::set_servant_manager (
-      PortableServer::ServantManager_ptr imgr
-      )
+      PortableServer::ServantManager_ptr imgr)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
@@ -77,8 +73,7 @@ namespace TAO
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyServantActivator::locate_servant (
       const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant
-      )
+      PortableServer::Servant &servant)
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 
@@ -163,7 +158,7 @@ namespace TAO
       // are no errors or if a restart is not required.
       if (!wait_occurred_restart_call)
         {
-          int result =
+          int const result =
             this->poa_->
               rebind_using_user_id_and_system_id (servant,
                                                   poa_current_impl.object_id (),
@@ -222,8 +217,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::incarnate_servant (
-      const PortableServer::ObjectId& object_id
-      )
+      const PortableServer::ObjectId& object_id)
     {
       PortableServer::Servant servant = 0;
 
@@ -235,8 +229,7 @@ namespace TAO
       // Invocations of incarnate on the servant manager are serialized.
       // Invocations of etherealize on the servant manager are serialized.
       // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-      servant = this->servant_activator_->incarnate (object_id,
-                                                     this->poa_);
+      servant = this->servant_activator_->incarnate (object_id, this->poa_);
 
       if (servant == 0)
         {
@@ -301,9 +294,7 @@ namespace TAO
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      int const result = this->poa_->unbind_using_user_id (user_id);
-
-      if (result != 0)
+      if (this->poa_->unbind_using_user_id (user_id) != 0)
         throw ::CORBA::OBJ_ADAPTER ();
     }
 
