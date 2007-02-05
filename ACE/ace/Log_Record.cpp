@@ -8,6 +8,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/CDR_Stream.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Log_Record.inl"
@@ -357,7 +358,8 @@ operator>> (ACE_InputCDR &cdr,
     auto_ptr<ACE_TCHAR> log_msg_p (log_msg);
     log_record.type (type);
     log_record.pid (pid);
-    log_record.time_stamp (ACE_Time_Value (sec, usec));
+    log_record.time_stamp (ACE_Time_Value (ACE_Utils::Truncate<time_t> (sec),
+                                           usec));
 #if defined (ACE_USES_WCHAR)
     cdr.read_wchar_array (log_msg, buffer_len);
 #else
