@@ -1,3 +1,8 @@
+Mon Feb  5 19:58:39 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Record.cpp (operator>>): Use ACE_Utils::Truncate to truncate
+          the received 64-bit time seconds to time_t.
+
 Mon Feb  5 17:16:20 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-msvc-8.h: Added a new setting for Windows VC8,
