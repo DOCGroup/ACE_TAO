@@ -1,3 +1,16 @@
+Mon Feb  5 17:16:20 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-msvc-8.h: Added a new setting for Windows VC8,
+          ACE_HAS_TIME_T_LONG_MISMATCH, to capture the case that requires
+          a replacement timeval def. See the following for details:
+          Thu Feb  1 23:46:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+          This change isolates just the desktop VC8 compiler for the change,
+          avoiding compilers that don't need it and/or can't deal with
+          the code.
+
+        * ace/Time_Value.{h inl}: Change code that uses a replacement timeval
+          from ACE_WIN32 to ACE_HAS_TIME_T_LONG_MISMATCH.
+
 Fri Feb  2 14:45:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dynamic_Service_Base.cpp:
