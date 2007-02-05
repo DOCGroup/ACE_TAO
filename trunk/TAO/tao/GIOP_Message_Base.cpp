@@ -49,14 +49,11 @@ TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
 }
 
-
 void
-TAO_GIOP_Message_Base::init (CORBA::Octet major,
-                             CORBA::Octet minor)
+TAO_GIOP_Message_Base::init (CORBA::Octet major, CORBA::Octet minor)
 {
   // Set the giop version of the out stream
-  this->out_stream_.set_version (major,
-                                 minor);
+  this->out_stream_.set_version (major, minor);
 }
 
 TAO_OutputCDR &
@@ -85,13 +82,10 @@ TAO_GIOP_Message_Base::generate_request_header (
   cdr.get_version (major, minor);
 
   // Get the state information that we need to use
-  this->set_state (major,
-                   minor,
-                   generator_parser);
+  this->set_state (major, minor, generator_parser);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REQUEST,
-                                    cdr))
+  if (!this->write_protocol_header (TAO_GIOP_REQUEST, cdr))
     {
       if (TAO_debug_level)
         {
@@ -103,9 +97,7 @@ TAO_GIOP_Message_Base::generate_request_header (
     }
 
   // Now call the implementation for the rest of the header
-  if (!generator_parser->write_request_header (op,
-                                               spec,
-                                               cdr))
+  if (!generator_parser->write_request_header (op, spec, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -121,8 +113,7 @@ int
 TAO_GIOP_Message_Base::generate_locate_request_header (
     TAO_Operation_Details &op,
     TAO_Target_Specification &spec,
-    TAO_OutputCDR &cdr
- )
+    TAO_OutputCDR &cdr)
 {
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
@@ -132,13 +123,10 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
   cdr.get_version (major, minor);
 
   // Get the state information that we need to use
-  this->set_state (major,
-                   minor,
-                   generator_parser);
+  this->set_state (major, minor, generator_parser);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST,
-                                    cdr))
+  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -149,9 +137,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
 
   // Now call the implementation for the rest of the header
   if (!generator_parser->write_locate_request_header
-      (op.request_id (),
-       spec,
-       cdr))
+      (op.request_id (), spec, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -168,8 +154,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
 int
 TAO_GIOP_Message_Base::generate_reply_header (
     TAO_OutputCDR &cdr,
-    TAO_Pluggable_Reply_Params_Base &params
-  )
+    TAO_Pluggable_Reply_Params_Base &params)
 {
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
@@ -179,13 +164,10 @@ TAO_GIOP_Message_Base::generate_reply_header (
   cdr.get_version (major, minor);
 
   // Get the state information that we need to use
-  this->set_state (major,
-                   minor,
-                   generator_parser);
+  this->set_state (major, minor, generator_parser);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REPLY,
-                                    cdr))
+  if (!this->write_protocol_header (TAO_GIOP_REPLY, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -198,9 +180,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
     {
       // Now call the implementation for the rest of the header
       int const result =
-        generator_parser->write_reply_header (cdr,
-                                              params
-                                             );
+        generator_parser->write_reply_header (cdr, params);
 
       if (!result)
         {
@@ -242,9 +222,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
     return -1;
 
   // Get the state information that we need to use
-  this->set_state (major,
-                   minor,
-                   generator_parser);
+  this->set_state (major, minor, generator_parser);
 
   // Write the GIOP header first
   if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, cdr)
@@ -301,16 +279,12 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
       ACE_Message_Block* consolidated_block = 0;
       if (stream.begin()->cont () != 0)
         {
-          ACE_NEW_RETURN (consolidated_block,
-                          ACE_Message_Block,
-                          0);
+          ACE_NEW_RETURN (consolidated_block, ACE_Message_Block, 0);
           ACE_CDR::consolidate (consolidated_block, stream.begin ());
           buf = (char *) (consolidated_block->rd_ptr ());
         }
       ///
-      this->dump_msg ("send",
-                      reinterpret_cast <u_char *> (buf),
-                      total_len);
+      this->dump_msg ("send", reinterpret_cast <u_char *> (buf), total_len);
 
       //
       delete consolidated_block;
@@ -358,7 +332,7 @@ TAO_GIOP_Message_Base::message_type (
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
                     ACE_TEXT ("wrong message.\n")));
-    }
+           }
     }
 
   return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
@@ -405,8 +379,7 @@ TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
 
       /* init out-parameters */
       this->init_queued_data (&qd, state);
-      mesg_length  = TAO_GIOP_MESSAGE_HEADER_LEN
-                   + state.payload_size ();
+      mesg_length  = TAO_GIOP_MESSAGE_HEADER_LEN + state.payload_size ();
 
       return 1; /* complete header */
     }
@@ -446,8 +419,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
               return -1;
             }
 
-          qd->msg_block_->copy (incoming.rd_ptr (),
-                                incoming.length ());
+          qd->msg_block_->copy (incoming.rd_ptr (), incoming.length ());
 
           incoming.rd_ptr (incoming.length ()); // consume all available data
 
@@ -493,8 +465,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
       qd->missing_data_ = 0;
     }
 
-  qd->msg_block_->copy (incoming.rd_ptr (),
-                        copying_len);
+  qd->msg_block_->copy (incoming.rd_ptr (), copying_len);
 
   incoming.rd_ptr (copying_len);
   this->init_queued_data (qd, state);
@@ -535,8 +506,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
           return -1;
         }
 
-      if (qd->msg_block_->copy (incoming.rd_ptr (),
-                                n_copy) == -1)
+      if (qd->msg_block_->copy (incoming.rd_ptr (), n_copy) == -1)
         {
            return -1;
         }
@@ -594,8 +564,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 
       // ..now we are set to copy the right amount of data to the
       // node..
-      if (qd->msg_block_->copy (incoming.rd_ptr (),
-                                copy_len) == -1)
+      if (qd->msg_block_->copy (incoming.rd_ptr (), copy_len) == -1)
         {
           return -1;
         }
@@ -628,8 +597,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 
       // Copy the right amount of data in to the node...
       // node..
-      if (qd->msg_block_->copy (incoming.rd_ptr (),
-                                copy_len) == -1)
+      if (qd->msg_block_->copy (incoming.rd_ptr (), copy_len) == -1)
         {
           return -1;
         }
@@ -719,8 +687,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Get the flag in the message block
   flg = qd->msg_block_->self_flags ();
 
-  if (ACE_BIT_ENABLED (flg,
-                       ACE_Message_Block::DONT_DELETE))
+  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
     {
       // Use the same datablock
       db = qd->msg_block_->data_block ();
@@ -731,7 +698,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
       // heap.
       db = qd->msg_block_->data_block ()->duplicate ();
     }
-
 
   TAO_InputCDR input_cdr (db,
                           flg,
@@ -781,9 +747,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
   // Get the state information that we need to use
-  this->set_state (qd->major_version_,
-                   qd->minor_version_,
-                   generator_parser);
+  this->set_state (qd->major_version_, qd->minor_version_, generator_parser);
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -822,14 +786,12 @@ TAO_GIOP_Message_Base::process_reply_message (
     case TAO_PLUGGABLE_MESSAGE_REPLY:
       // Should be taken care by the state specific parsing
       retval =
-        generator_parser->parse_reply (input_cdr,
-                                       params);
+        generator_parser->parse_reply (input_cdr, params);
 
       break;
     case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
       retval =
-        generator_parser->parse_locate_reply (input_cdr,
-                                              params);
+        generator_parser->parse_locate_reply (input_cdr, params);
       break;
     default:
       retval = -1;
@@ -945,7 +907,6 @@ TAO_GIOP_Message_Base::process_request (
 
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = false;
-
   int parse_error = 0;
 
   try
@@ -981,8 +942,7 @@ TAO_GIOP_Message_Base::process_request (
       this->orb_core_->request_dispatcher ()->dispatch (
           this->orb_core_,
           request,
-          forward_to
-         );
+          forward_to);
 
 //@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_END
 
@@ -1149,8 +1109,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
-  TAO_GIOP_Locate_Request_Header locate_request (input,
-                                                 this->orb_core_);
+  TAO_GIOP_Locate_Request_Header locate_request (input, this->orb_core_);
 
   TAO_GIOP_Locate_Status_Msg status_info;
 
@@ -1161,8 +1120,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
   try
     {
-      int parse_error =
-        parser->parse_locate_header (locate_request);
+      int parse_error = parser->parse_locate_header (locate_request);
 
       if (parse_error != 0)
         {
@@ -1699,9 +1657,7 @@ TAO_GIOP_Message_Base::fragment_header_length (CORBA::Octet major,
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
   // Get the state information that we need to use
-  this->set_state (major,
-                   minor,
-                   generator_parser);
+  this->set_state (major, minor, generator_parser);
 
   return generator_parser->fragment_header_length ();
 }

@@ -1,3 +1,11 @@
+Mon Feb  5 20:46:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Make sure ACE_THROW_SPEC expands to nothing
+
+        * tao/GIOP_Message_Base.cpp:
+          Layout change
+
 Mon Feb  5 20:16:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocated_Invocation.cpp:
