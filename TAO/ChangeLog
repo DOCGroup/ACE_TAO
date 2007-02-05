@@ -1,3 +1,21 @@
+Mon Feb  5 20:16:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Base.h:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/ORB.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.h:
+          Committed on behalf of Ossama Othman. Added needed code to
+          work correctly in case of C++ exceptions without ACE_THROW_SPEC
+          spefication. To make sure this all works we are changing ACE
+          to expand ACE_THROW_SPEC to nothing, when the scoreboard shows
+          no problems we will zap ACE_THROW_SPEC from all source code.
+
 Mon Feb  5 06:20:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynAnyFactory.cpp:
