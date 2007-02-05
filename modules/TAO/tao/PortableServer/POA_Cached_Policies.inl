@@ -74,24 +74,38 @@ namespace TAO
       this->server_priority_ = priority;
     }
 
+    // the network priority model that is defined on the server.
+    // the network priority model could be SERVER_DECLARED or
+    // CLIENT_PROPAGATED.
+    // 
     ACE_INLINE Cached_Policies::NetworkPriorityModel
     Cached_Policies::network_priority_model (void) const
     {
       return this->network_priority_model_;
     }
 
+    // this function returns the request DiffServ codepoint to be used
+    // when the SERVER_DECLARED network priority model is followed.
+    //
     ACE_INLINE CORBA::Long
     Cached_Policies::request_diffserv_codepoint (void) const
     {
       return this->request_diffserv_codepoint_;
     }
 
+    // this function returns the reply DiffServ codepoint to be used
+    // when the SERVER_DECLARED or CLIENT_PROPAGATED network priority 
+    // model is followed.
+    //
     ACE_INLINE CORBA::Long
     Cached_Policies::reply_diffserv_codepoint (void) const
     {
       return this->reply_diffserv_codepoint_;
     }
 
+    // initiate the network priority model with the policy defined on the
+    // server side.
+    //
     ACE_INLINE void
     Cached_Policies::network_priority_model (
        NetworkPriorityModel network_priority_model)
@@ -99,6 +113,9 @@ namespace TAO
       this->network_priority_model_ = network_priority_model;
     }
 
+    // initiate the request DiffServ codepoint with the policy defined on the
+    // server side.
+    //
     ACE_INLINE void
     Cached_Policies::request_diffserv_codepoint (
       CORBA::Long diffserv_codepoint)
@@ -106,6 +123,9 @@ namespace TAO
       this->request_diffserv_codepoint_ = diffserv_codepoint;
     }
 
+    // initiate the reply DiffServ codepoint  with the policy defined on the
+    // server side.
+    //
     ACE_INLINE void
     Cached_Policies::reply_diffserv_codepoint (CORBA::Long diffserv_codepoint)
     {
