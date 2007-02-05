@@ -51,11 +51,7 @@ TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_ServerRequest &req,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
-  CORBA::Long dscp_codepoint = poa.network_priority_hook ()->
-    get_dscp_codepoint (req, poa);
-  TAO_Connection_Handler *connection_handler =
-    req.transport ()->connection_handler ();
-  connection_handler->set_dscp_codepoint (dscp_codepoint);
+  poa.network_priority_hook ()-> set_dscp_codepoint (req, poa);
 }
 
 void
