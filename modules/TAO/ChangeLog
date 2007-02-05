@@ -1,3 +1,17 @@
+Mon Feb  5 22:18:25 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Network_Priority_Hook.h:
+          tao/PortableServer/Network_Priority_Hook.cpp:
+          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+          tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        
+          Replaced the function get_dscp_codepoint with
+          set_dscp_codepoint ().
+        
+          Called the function within the pre_invoke_remote_request ()
+          in Default_Servant_Dispatcher.cpp.
+
 Fri Feb  2 20:27:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Default_Servant_Dispatcher.cpp:
