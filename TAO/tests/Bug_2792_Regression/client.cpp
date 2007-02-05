@@ -6,7 +6,7 @@
 ACE_RCSID(BUg_2792_Regression, client, "$Id$")
 
 int
-main (int argc, char *[] argv)
+main (int argc, char *argv[])
 {
   try
     {
