@@ -46,10 +46,6 @@ ACE_RCSID (tao,
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
 
-void TAO_unexpected_exception_handler (void)
-{
-  throw ::CORBA::UNKNOWN ();
-}
 
 static const char ior_prefix[] = "IOR:";
 
@@ -1121,20 +1117,6 @@ TAO::ORB::init_orb_globals (void)
     {
       ++orb_init_count;
     }
-
-  // This must be done after the system TypeCodes and Exceptions have
-  // been initialized.  An unexpected exception will cause TAO's
-  // unexpected exception handler to be called.  That handler
-  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
-  // course requires the TypeCode constants and system exceptions to
-  // have been initialized.
-  /**
-   * @note The new TypeCode implementation obviates the above
-   *       comment.  Standard CORBA exception TypeCodes are now
-   *       available before CORBA::ORB_init() is ever called.
-   */
-  TAO_Singleton_Manager::instance ()->_set_unexpected (
-    ::TAO_unexpected_exception_handler);
 }
 
 CORBA::ORB_ptr

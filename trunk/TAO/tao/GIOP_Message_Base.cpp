@@ -1106,23 +1106,20 @@ TAO_GIOP_Message_Base::process_request (
                                     (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
                                     CORBA::COMPLETED_MAYBE);
 
-          result = this->send_reply_exception (transport,
-                                               output,
-                                               request_id,
-                                               &request.reply_service_info (),
-                                               &exception);
-          if (result == -1)
+          if (this->send_reply_exception (transport,
+                                          output,
+                                          request_id,
+                                          &request.reply_service_info (),
+                                          &exception) == -1
+              && TAO_debug_level > 0)
             {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request[3], ")
-                              ACE_TEXT ("%p: ")
-                              ACE_TEXT ("cannot send exception\n"),
-                              ACE_TEXT ("process_request ()")));
-                  exception._tao_print_exception (
-                    "TAO_GIOP_Message_Base::process_request[3]");
-                }
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request[3], ")
+                          ACE_TEXT ("%p: ")
+                          ACE_TEXT ("cannot send exception\n"),
+                          ACE_TEXT ("process_request ()")));
+              exception._tao_print_exception (
+                "TAO_GIOP_Message_Base::process_request[3]");
             }
         }
       else if (TAO_debug_level > 0)
@@ -1133,7 +1130,7 @@ TAO_GIOP_Message_Base::process_request (
           // However, in this case, we cannot close the connection
           // down, since it really isn't the client's fault.
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t|%N|%l) exception thrown ")
+                      ACE_TEXT ("TAO (%P|%t) exception thrown ")
                       ACE_TEXT ("but client is not waiting a response\n")));
         }
 

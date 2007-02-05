@@ -51,8 +51,7 @@ TAO_Messaging_Loader::init (int,
 
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                    );
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {
