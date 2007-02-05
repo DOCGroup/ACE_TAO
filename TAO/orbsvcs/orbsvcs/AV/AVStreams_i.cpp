@@ -981,19 +981,19 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
               AVStreams::FlowEndPoint_var fep;
               result = a_fep_map->find (fep_key, fep);
               if (result == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on A side for flowname: %s\n", flow_spec[i]), 0);
+                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on A side for flowname: %s\n", flow_spec[i].in ()), 0);
 
               result = spec_fep_map_a->bind (fep_key, fep);
               if (result == -1)
-                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i]));
+                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
 
               result = b_fep_map->find (fep_key, fep);
               if (result == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on B side for flowname: %s\n", flow_spec[i]), 0);
+                ACE_ERROR_RETURN ((LM_ERROR, "Fep not found on B side for flowname: %s\n", flow_spec[i].in ()), 0);
 
               result = spec_fep_map_b->bind (fep_key, fep);
               if (result == -1)
-                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i]));
+                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
             }
           map_a = spec_fep_map_a;
           map_b = spec_fep_map_b;
