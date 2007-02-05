@@ -315,7 +315,8 @@ namespace CIAO
           conn_desc.internalEndpoint[0].provider = 1;
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
           // (Get kind from data link in opstring)
-          conn_desc.internalEndpoint[0].kind = Deployment::EventEmitter;
+//          conn_desc.internalEndpoint[0].kind = Deployment::EventEmitter;
+          conn_desc.internalEndpoint[0].kind = Deployment::EventPublisher;
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
           conn_desc.internalEndpoint[1].instanceRef = taskBinst;
           conn_desc.internalEndpoint[1].portName = CORBA::string_dup (taskBport.c_str ());
