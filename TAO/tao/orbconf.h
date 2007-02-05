@@ -192,6 +192,12 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 #define TAO_HAS_EXCEPTIONS
 
+#if defined (ACE_THROW_SPEC)
+# undef ACE_THROW_SPEC
+#endif
+
+#define ACE_THROW_SPEC(X)
+
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
 
