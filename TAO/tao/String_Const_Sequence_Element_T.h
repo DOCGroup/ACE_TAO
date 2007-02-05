@@ -44,7 +44,6 @@ public:
   {
   }
 
-
   ~string_const_sequence_element()
   {
   }

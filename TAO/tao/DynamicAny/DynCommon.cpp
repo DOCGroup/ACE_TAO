@@ -48,8 +48,7 @@ TAO_DynCommon::type (void)
 }
 
 void
-TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
-                       )
+TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch
@@ -62,16 +61,13 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
 
   CORBA::TypeCode_var tc = dyn_any->type ();
 
-  CORBA::Boolean const equivalent =
-    this->type_.in ()->equivalent (tc.in ()
-                                  );
+  CORBA::Boolean const equivalent = this->type_.in ()->equivalent (tc.in ());
 
   if (equivalent)
     {
       CORBA::Any_var any = dyn_any->to_any ();
 
-      this->from_any (any.in ()
-                     );
+      this->from_any (any.in ());
     }
   else
     {
@@ -80,125 +76,106 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
 }
 
 void
-TAO_DynCommon::insert_boolean (CORBA::Boolean value
-                               )
+TAO_DynCommon::insert_boolean (CORBA::Boolean value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Boolean>::insert_value (value,
-                                                           this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Boolean>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_octet (CORBA::Octet value
-                             )
+TAO_DynCommon::insert_octet (CORBA::Octet value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Octet>::insert_value (value,
-                                                         this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Octet>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_char (CORBA::Char value
-                            )
+TAO_DynCommon::insert_char (CORBA::Char value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Char>::insert_value (value,
-                                                        this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Char>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_short (CORBA::Short value
-                             )
+TAO_DynCommon::insert_short (CORBA::Short value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Short>::insert_value (value,
-                                                         this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Short>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_ushort (CORBA::UShort value
-                              )
+TAO_DynCommon::insert_ushort (CORBA::UShort value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::UShort>::insert_value (value,
-                                                          this);
+  TAO::DynAnyBasicTypeUtils<CORBA::UShort>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_long (CORBA::Long value
-                            )
+TAO_DynCommon::insert_long (CORBA::Long value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Long>::insert_value (value,
-                                                        this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Long>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_ulong (CORBA::ULong value
-                             )
+TAO_DynCommon::insert_ulong (CORBA::ULong value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::ULong>::insert_value (value,
-                                                         this);
+  TAO::DynAnyBasicTypeUtils<CORBA::ULong>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_float (CORBA::Float value
-                             )
+TAO_DynCommon::insert_float (CORBA::Float value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Float>::insert_value (value,
-                                                         this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Float>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_double (CORBA::Double value
-                              )
+TAO_DynCommon::insert_double (CORBA::Double value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::Double>::insert_value (value,
-                                                          this);
+  TAO::DynAnyBasicTypeUtils<CORBA::Double>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_string (const char * value
-                              )
+TAO_DynCommon::insert_string (const char * value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -215,14 +192,12 @@ TAO_DynCommon::insert_string (const char * value
       DynamicAny::DynAny_var cc =
         this->check_component ();
 
-      cc->insert_string (value
-                        );
+      cc->insert_string (value);
     }
   else
     {
       CORBA::TypeCode_var unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                       );
+        TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
       CORBA::TCKind const kind =
         unaliased_tc->kind ();
@@ -246,8 +221,7 @@ TAO_DynCommon::insert_string (const char * value
 }
 
 void
-TAO_DynCommon::insert_reference (CORBA::Object_ptr value
-                                 )
+TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -264,15 +238,13 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
       DynamicAny::DynAny_var cc =
         this->check_component ();
 
-      cc->insert_reference (value
-                           );
+      cc->insert_reference (value);
     }
   else
     {
       CORBA::Boolean good_type = true;
       CORBA::TCKind const kind =
-        TAO_DynAnyFactory::unalias (this->type_.in ()
-                                   );
+        TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_objref)
         {
@@ -289,8 +261,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
 
               if (ACE_OS::strcmp (value_id, my_id) != 0)
                 {
-                  good_type = value->_is_a (my_id
-                                           );
+                  good_type = value->_is_a (my_id);
                 }
             }
         }
@@ -329,47 +300,40 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
 }
 
 void
-TAO_DynCommon::insert_typecode (CORBA::TypeCode_ptr value
-                                )
+TAO_DynCommon::insert_typecode (CORBA::TypeCode_ptr value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::TypeCode_ptr>::insert_value (value,
-                                                                this);
+  TAO::DynAnyBasicTypeUtils<CORBA::TypeCode_ptr>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_longlong (CORBA::LongLong value
-                                )
+TAO_DynCommon::insert_longlong (CORBA::LongLong value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::LongLong>::insert_value (value,
-                                                            this);
+  TAO::DynAnyBasicTypeUtils<CORBA::LongLong>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_ulonglong (CORBA::ULongLong value
-                                 )
+TAO_DynCommon::insert_ulonglong (CORBA::ULongLong value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::ULongLong>::insert_value (value,
-                                                             this);
+  TAO::DynAnyBasicTypeUtils<CORBA::ULongLong>::insert_value (value, this);
 }
 
 void
-TAO_DynCommon::insert_longdouble (CORBA::LongDouble value
-                                  )
+TAO_DynCommon::insert_longdouble (CORBA::LongDouble value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -381,8 +345,7 @@ TAO_DynCommon::insert_longdouble (CORBA::LongDouble value
 }
 
 void
-TAO_DynCommon::insert_wchar (CORBA::WChar value
-                             )
+TAO_DynCommon::insert_wchar (CORBA::WChar value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -394,8 +357,7 @@ TAO_DynCommon::insert_wchar (CORBA::WChar value
 }
 
 void
-TAO_DynCommon::insert_wstring (const CORBA::WChar * value
-                               )
+TAO_DynCommon::insert_wstring (const CORBA::WChar * value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -412,14 +374,12 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value
       DynamicAny::DynAny_var cc =
         this->check_component ();
 
-      cc->insert_wstring (value
-                         );
+      cc->insert_wstring (value);
     }
   else
     {
       CORBA::TypeCode_var unaliased_tc =
-        this->check_type_and_unalias (CORBA::_tc_wstring
-                                     );
+        this->check_type_and_unalias (CORBA::_tc_wstring);
 
       CORBA::ULong const bound = unaliased_tc->length ();
 
@@ -434,8 +394,7 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value
 }
 
 void
-TAO_DynCommon::insert_any (const CORBA::Any &value
-                           )
+TAO_DynCommon::insert_any (const CORBA::Any &value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -449,8 +408,7 @@ TAO_DynCommon::insert_any (const CORBA::Any &value
 // @@@ (JP) TODO - optimize - this version was intended by the OMG to
 // have fewer Any/DynAny conversions than insert_any, not more.
 void
-TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value
-                               )
+TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -464,13 +422,11 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value
 
   CORBA::Any_var any = value->to_any ();
 
-  this->insert_any (any.in ()
-                   );
+  this->insert_any (any.in ());
 }
 
 void
-TAO_DynCommon::insert_val (CORBA::ValueBase *value
-                           )
+TAO_DynCommon::insert_val (CORBA::ValueBase *value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -487,14 +443,12 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
       DynamicAny::DynAny_var cc =
         this->check_component ();
 
-      cc->insert_val (value
-                     );
+      cc->insert_val (value);
     }
   else
     {
       CORBA::TCKind kind =
-        TAO_DynAnyFactory::unalias (this->type_.in ()
-                                   );
+        TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_value)
         {
@@ -535,8 +489,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value
       TAO_InputCDR in (out);
       TAO::Unknown_IDL_Type *unk = 0;
       ACE_NEW (unk,
-               TAO::Unknown_IDL_Type (this->type_.in (),
-                                      in));
+               TAO::Unknown_IDL_Type (this->type_.in (), in));
       this->any_.replace (unk);
     }
 }
@@ -665,8 +618,7 @@ TAO_DynCommon::get_string (void)
   else
     {
       CORBA::TypeCode_var unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                       );
+        TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
       CORBA::TCKind kind =
         unaliased_tc->kind ();
@@ -740,8 +692,7 @@ TAO_DynCommon::get_typecode (void)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
-        this->check_component ();
+      DynamicAny::DynAny_var cc = this->check_component ();
 
       return cc->get_typecode ();
     }
@@ -806,8 +757,7 @@ TAO_DynCommon::get_wchar (void)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
-        this->check_component ();
+      DynamicAny::DynAny_var cc = this->check_component ();
 
       return cc->get_wchar ();
     }
@@ -850,16 +800,14 @@ TAO_DynCommon::get_wstring (void)
       // type code equivalence twice without risking a throw of
       // BadKind.
       CORBA::TypeCode_var unaliased_tc =
-        this->check_type_and_unalias (CORBA::_tc_wstring
-                                     );
+        this->check_type_and_unalias (CORBA::_tc_wstring);
 
       CORBA::WChar *retval = 0;
 
       CORBA::ULong bound =
         unaliased_tc->length ();
 
-      (void) (this->any_ >>= CORBA::Any::to_wstring (retval,
-                                                     bound));
+      (void) (this->any_ >>= CORBA::Any::to_wstring (retval, bound));
 
       return CORBA::wstring_dup (retval);
     }
@@ -948,8 +896,7 @@ TAO_DynCommon::get_val (void)
   else
     {
       CORBA::TCKind kind =
-        TAO_DynAnyFactory::unalias (this->type_.in ()
-                                   );
+        TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_value)
         {
@@ -1027,8 +974,7 @@ TAO_DynCommon::rewind (void)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  (void) this->seek (0
-                    );
+  (void) this->seek (0);
 }
 
 CORBA::Boolean
@@ -1094,8 +1040,7 @@ TAO_DynCommon::component_count (void)
 // ****************************************************************
 
 void
-TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value
-                                )
+TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -1143,8 +1088,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value
                   // in insert_val() (see comment there) that there
                   // is no way to check for derived valuetypes w/o
                   // type knowledge at compile time.
-                  good_type = value->_is_a (my_id
-                                           );
+                  good_type = value->_is_a (my_id);
                 }
             }
         }
@@ -1163,8 +1107,7 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value
           TAO_InputCDR in (out);
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
-                   TAO::Unknown_IDL_Type (this->type_.in (),
-                                          in));
+                   TAO::Unknown_IDL_Type (this->type_.in (), in));
           this->any_.replace (unk);
         }
       else
@@ -1197,8 +1140,7 @@ TAO_DynCommon::get_abstract (void)
   else
     {
       CORBA::TCKind kind =
-        TAO_DynAnyFactory::unalias (this->type_.in ()
-                                   );
+        TAO_DynAnyFactory::unalias (this->type_.in ());
 
       if (kind != CORBA::tk_abstract_interface)
         {
@@ -1234,9 +1176,7 @@ TAO_DynCommon::get_abstract (void)
 // ****************************************************************
 
 void
-TAO_DynCommon::insert_boolean_seq (
-    const CORBA::BooleanSeq &value
-    )
+TAO_DynCommon::insert_boolean_seq (const CORBA::BooleanSeq &value)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -1279,8 +1219,7 @@ TAO_DynCommon::insert_short_seq (const CORBA::ShortSeq &value)
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::ShortSeq>::insert_value (value,
-                                                            this);
+  TAO::DynAnyBasicTypeUtils<CORBA::ShortSeq>::insert_value (value, this);
 }
 
 void
@@ -1291,8 +1230,7 @@ TAO_DynCommon::insert_ushort_seq (const CORBA::UShortSeq &value)
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::UShortSeq>::insert_value (value,
-                                                             this);
+  TAO::DynAnyBasicTypeUtils<CORBA::UShortSeq>::insert_value (value, this);
 }
 
 void
