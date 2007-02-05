@@ -23,7 +23,7 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n",
                         Dump_Obj::indent(), caption, i));
             ACE_DEBUG ((LM_DEBUG, "%s  %s: \n",
-                        Dump_Obj::indent(), str_seq[i]));
+                        Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
   }
