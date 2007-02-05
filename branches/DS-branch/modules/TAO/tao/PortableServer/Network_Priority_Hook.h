@@ -47,8 +47,8 @@ public:
                                         TAO_POA_Policy_Set& poa_policy_set);
 
 
-  virtual CORBA::Long get_dscp_codepoint (TAO_ServerRequest &req,
-                                          TAO_Root_POA& poa);
+  virtual void set_dscp_codepoint (TAO_ServerRequest &req,
+                                   TAO_Root_POA& poa);
 
   /// Static initializer ensures the factory is loaded
   static int initialize (void);
