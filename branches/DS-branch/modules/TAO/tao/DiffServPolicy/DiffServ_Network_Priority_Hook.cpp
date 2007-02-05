@@ -59,7 +59,7 @@ TAO_DiffServ_Network_Priority_Hook::update_network_priority (
     }
 }
 
-CORBA::Long
+void
 TAO_DiffServ_Network_Priority_Hook::get_dscp_codepoint (
   TAO_ServerRequest &req, TAO_Root_POA &poa)
 {
@@ -88,7 +88,9 @@ TAO_DiffServ_Network_Priority_Hook::get_dscp_codepoint (
       dscp_codepoint = 0;
     }
 
-  return dscp_codepoint;
+  TAO_Connection_Handler *connection_handler =
+    req.transport ()->connection_handler ();
+  connection_handler->set_dscp_codepoint (dscp_codepoint);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -36,7 +36,7 @@ public:
   void update_network_priority (TAO_Root_POA &poa, 
                                 TAO_POA_Policy_Set &poa_policy_set);
 
-  CORBA::Long get_dscp_codepoint (TAO_ServerRequest &req,
+  void get_dscp_codepoint (TAO_ServerRequest &req,
                                   TAO_Root_POA &poa);
 };
 
