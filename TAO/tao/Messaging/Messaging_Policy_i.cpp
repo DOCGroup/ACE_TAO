@@ -70,14 +70,13 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         {
           policy =
             orb_core->get_cached_policy_including_current (
-              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT
-             );
+              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
         }
       else
         {
           policy =
-            stub->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT
-                                    );
+            stub->get_cached_policy (
+              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
         }
 
       if (CORBA::is_nil (policy.in ()))
@@ -87,9 +86,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         }
 
       Messaging::RelativeRoundtripTimeoutPolicy_var p =
-        Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
-          policy.in ()
-         );
+        Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ());
 
       TimeBase::TimeT t = p->relative_expiry ();
       TimeBase::TimeT seconds = t / 10000000u;
@@ -118,7 +115,6 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
-
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
@@ -233,14 +229,12 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
         {
           policy =
             orb_core->get_cached_policy_including_current (
-              TAO_CACHED_POLICY_SYNC_SCOPE
-             );
+              TAO_CACHED_POLICY_SYNC_SCOPE);
         }
       else
         {
           policy =
-            stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE
-                                    );
+            stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
         }
 
       if (CORBA::is_nil (policy.in ()))
@@ -268,8 +262,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
 }
 
 CORBA::Policy_ptr
-TAO_Sync_Scope_Policy::create (const CORBA::Any& val
-                               )
+TAO_Sync_Scope_Policy::create (const CORBA::Any& val)
 {
   Messaging::SyncScope synchronization;
   if ((val >>= synchronization) == 0)

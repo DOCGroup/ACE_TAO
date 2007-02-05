@@ -43,26 +43,22 @@ TAO_Messaging_PolicyFactory::create_policy (
 {
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
   if (type == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE)
-    return TAO_RelativeRoundtripTimeoutPolicy::create (value
-                                                      );
+    return TAO_RelativeRoundtripTimeoutPolicy::create (value);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
   if (type == TAO::CONNECTION_TIMEOUT_POLICY_TYPE)
-    return TAO_ConnectionTimeoutPolicy::create (value
-                                               );
+    return TAO_ConnectionTimeoutPolicy::create (value);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
   if (type == Messaging::SYNC_SCOPE_POLICY_TYPE)
-    return TAO_Sync_Scope_Policy::create (value
-                                         );
+    return TAO_Sync_Scope_Policy::create (value);
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   if (type == TAO::BUFFERING_CONSTRAINT_POLICY_TYPE)
-    return this->create_buffering_constraint_policy (value
-                                                    );
+    return this->create_buffering_constraint_policy (value);
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   if (

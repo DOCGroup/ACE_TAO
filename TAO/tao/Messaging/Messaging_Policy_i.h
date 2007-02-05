@@ -56,8 +56,7 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   );
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;

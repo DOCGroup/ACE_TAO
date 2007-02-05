@@ -66,15 +66,12 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         {
           policy =
             orb_core->get_cached_policy_including_current (
-              TAO_CACHED_POLICY_CONNECTION_TIMEOUT
-             );
+              TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
         }
       else
         {
           policy =
-            stub->get_cached_policy (
-              TAO_CACHED_POLICY_CONNECTION_TIMEOUT
-             );
+            stub->get_cached_policy (TAO_CACHED_POLICY_CONNECTION_TIMEOUT);
         }
 
       if (CORBA::is_nil (policy.in ()))
@@ -84,9 +81,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         }
 
       TAO::ConnectionTimeoutPolicy_var p =
-        TAO::ConnectionTimeoutPolicy::_narrow (
-          policy.in ()
-         );
+        TAO::ConnectionTimeoutPolicy::_narrow (policy.in ());
 
       TimeBase::TimeT t = p->relative_expiry ();
       TimeBase::TimeT seconds = t / 10000000u;
@@ -111,8 +106,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 }
 
 CORBA::Policy_ptr
-TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val
-                                            )
+TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!

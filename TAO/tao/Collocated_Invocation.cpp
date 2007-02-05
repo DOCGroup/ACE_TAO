@@ -5,6 +5,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/operation_details.h"
+#include "tao/PortableInterceptor.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -111,7 +112,7 @@ namespace TAO
       }
     catch ( ::CORBA::Exception& ex)
       {
-        // Ignore exceptions for oneways
+        // Ignore CORBA exceptions for oneways
         if (this->response_expected_ == false)
           return TAO_INVOKE_SUCCESS;
 
@@ -125,9 +126,25 @@ namespace TAO
         else
 #else
         ACE_UNUSED_ARG (ex);
-#endif /*TAO_HAS_INTERCEPTORS*/
+#endif /* TAO_HAS_INTERCEPTORS */
           throw;
       }
+#if TAO_HAS_INTERCEPTORS == 1
+    catch (...)
+      {
+        // Notify interceptors of non-CORBA exception, and propagate
+        // that exception to the caller.
+
+        PortableInterceptor::ReplyStatus const st =
+          this->handle_all_exception ();
+
+        if (st == PortableInterceptor::LOCATION_FORWARD ||
+            st == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else
+          throw;
+      }
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
     if (this->forwarded_to_.in () != 0)
       s =  TAO_INVOKE_RESTART;

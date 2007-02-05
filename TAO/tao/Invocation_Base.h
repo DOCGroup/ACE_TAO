@@ -214,8 +214,7 @@ namespace TAO
     /// Helper methods to handle interception calls when exceptions
     /// are thrown by the PortableInterceptor.
     PortableInterceptor::ReplyStatus
-        handle_any_exception (CORBA::Exception *e
-                             );
+        handle_any_exception (CORBA::Exception * e);
 
     PortableInterceptor::ReplyStatus
         handle_all_exception (void);

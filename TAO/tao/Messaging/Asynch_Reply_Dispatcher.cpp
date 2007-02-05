@@ -58,8 +58,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == 0)
     {
@@ -126,8 +125,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
           // Call the Reply Handler's skeleton.
           reply_handler_skel_ (this->reply_cdr_,
                                this->reply_handler_.in (),
-                               reply_error
-                               );
+                               reply_error);
         }
       catch (const ::CORBA::Exception& ex)
         {
@@ -173,8 +171,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
         {
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
-                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION
-                                     );
+                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
     }
   catch (const ::CORBA::Exception& ex)
@@ -231,8 +228,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
         {
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
-                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION
-                                     );
+                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
     }
   catch (const ::CORBA::Exception& ex)
@@ -249,8 +245,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
 long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time
-                                             )
+                                             const ACE_Time_Value &max_wait_time)
 {
   if (this->timeout_handler_ == 0)
     {

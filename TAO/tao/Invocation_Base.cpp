@@ -10,7 +10,7 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 # include "tao/ClientRequestInterceptor_Adapter_Factory.h"
-#endif /* TAO_HAS_INTERCEPTORS == 1*/
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Base.inl"
@@ -24,6 +24,13 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  // Exception used to represent non-CORBA exceptions.  A global
+  // instance is used since it will never be modified.
+  CORBA::UNKNOWN /* const */ unknown_exception;
+}
+
 namespace TAO
 {
   Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
@@ -31,7 +38,7 @@ namespace TAO
                                     TAO_Stub *stub,
                                     TAO_Operation_Details &details,
                                     bool response_expected,
-                                    bool request_is_remote)
+                                    bool TAO_INTERCEPTOR (request_is_remote))
     : details_ (details)
     , forwarded_to_ (0)
     , response_expected_ (response_expected)
@@ -45,18 +52,15 @@ namespace TAO
     , invoke_status_ (TAO_INVOKE_START)
     , caught_exception_ (0)
     , is_remote_request_ (request_is_remote)
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   {
-#if TAO_HAS_INTERCEPTORS == 0
-    ACE_UNUSED_ARG (request_is_remote);
-#endif /*TAO_HAS_INTERCEPTORS == 0*/
   }
 
   Invocation_Base::~Invocation_Base (void)
   {
 #if TAO_HAS_INTERCEPTORS == 1
     adapter_ = 0;
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   }
 
   void
@@ -147,7 +151,11 @@ namespace TAO
         catch ( ::CORBA::Exception& ex)
           {
             (void) this->handle_any_exception (&ex);
-
+            throw;
+          }
+        catch (...)
+          {
+            (void) this->handle_all_exception ();
             throw;
           }
 
@@ -227,7 +235,7 @@ namespace TAO
         return -1;
       }
   }
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -863,15 +863,6 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
     }
   catch (...)
     {
-      // @@ TODO some c++ exception or another, but what do we do with
-      //    it?
-      // We are supposed to map it into a CORBA::UNKNOWN exception.
-      // BTW, this cannot be detected if using the <env> mapping.  If
-      // we have native exceptions but no support for them in the ORB
-      // we should still be able to catch it.  If we don't have native
-      // exceptions it couldn't have been raised in the first place!
-      int result = 0;
-
       if (response_required)
         {
           CORBA::UNKNOWN exception (
@@ -882,23 +873,20 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
               CORBA::COMPLETED_MAYBE
             );
 
-          result = this->send_reply_exception (transport,
-                                               this->orb_core_,
-                                               request_id,
-                                               &request.reply_service_info (),
-                                               &exception);
-          if (result == -1)
+          if (this->send_reply_exception (transport,
+                                          this->orb_core_,
+                                          request_id,
+                                          &request.reply_service_info (),
+                                          &exception) == -1
+              && TAO_debug_level > 0)
             {
-              if (TAO_debug_level > 0)
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_request[3], ")
-                              ACE_TEXT ("%p: ")
-                              ACE_TEXT ("cannot send exception\n"),
-                              ACE_TEXT ("process_request ()")));
-                  exception._tao_print_exception (
-                    "TAO_GIOP_Message_Lite::process_request[3]");
-                }
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_request[3], ")
+                          ACE_TEXT ("%p: ")
+                          ACE_TEXT ("cannot send exception\n"),
+                          ACE_TEXT ("process_request ()")));
+              exception._tao_print_exception (
+                "TAO_GIOP_Message_Lite::process_request[3]");
             }
         }
       else if (TAO_debug_level > 0)
@@ -913,7 +901,9 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                       ACE_TEXT ("but client is not waiting a response\n")));
         }
 
-      return result;
+      // Propagate the non-CORBA C++ exception up to the application
+      // server.
+      throw;
     }
 
   return 0;
