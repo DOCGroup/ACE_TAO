@@ -2,9 +2,11 @@
 //
 // $Id$
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+#  include "ace/Truncate.h"
+#endif
 
-#include "ace/Truncate.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 // Something is a bit brain-damaged here and I'm not sure what... this code
@@ -22,15 +24,15 @@ ACE_INLINE
 ACE_Time_Value::operator timeval () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator timeval");
-#if defined (ACE_WIN32)
-  // Recall that on Windows we substitute another type for timeval in tv_
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+  // Recall that on some Windows we substitute another type for timeval in tv_
   ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
   me->ext_tv_.tv_sec = ACE_Utils::Truncate<long> (this->tv_.tv_sec);
   me->ext_tv_.tv_usec = ACE_Utils::Truncate<long> (this->tv_.tv_usec);
   return this->ext_tv_;
 #else
   return this->tv_;
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 }
 
 ACE_INLINE void
@@ -55,15 +57,15 @@ ACE_INLINE
 ACE_Time_Value::operator const timeval * () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
-#if defined (ACE_WIN32)
-  // Recall that on Windows we substitute another type for timeval in tv_
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
+  // Recall that on some Windows we substitute another type for timeval in tv_
   ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
   me->ext_tv_.tv_sec = ACE_Utils::Truncate<long> (this->tv_.tv_sec);
   me->ext_tv_.tv_usec = ACE_Utils::Truncate<long> (this->tv_.tv_usec);
   return (const timeval *) &this->ext_tv_;
 #else
   return (const timeval *) &this->tv_;
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 }
 
 ACE_INLINE void
