@@ -1,3 +1,39 @@
+Mon Feb  5 23:30:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+          Removed the check which lets the class definition for
+          an anonymous sequence be generated only once. If an
+          anonymous sequence is shared as the base type of more
+          than one typedef (as it is in a comma separated list
+          of typedef declarations), it will need to be generated
+          once for each typedef, each generated class having the
+          name of the typedef identifier. In the case of two or
+          more anonymous sequence members of the same base type,
+          the generated #ifdef guard for the class will be the
+          same in each case, and the C++ preprocessor will pass
+          only one.
+
+        * TAO_IDL/ast/ast_decl.cpp(set_name):
+
+          When the scoped name is reset from outside the node,
+          the char* members flat_name, full_name and repoID
+          are now deleted, zeroed, and eventually recomputed
+          (the last happens on demand), similarly to what is
+          already done for the other members local_name and
+          original_local_name.
+
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+
+          Added check for the context state before generating a
+          class declaration for an anonymous sequence member. For
+          valuetypes, this should be done only once, even though
+          the scope is visited twice more in the corresponding
+          OBV_ class, and we can no longer depend on the previous
+          check for anonymous sequences to avoid multiple
+          generation (see the first item in this entry).
+
 Mon Feb  5 20:46:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
