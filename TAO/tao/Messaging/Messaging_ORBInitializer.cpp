@@ -21,8 +21,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-  TAO_ORB_Core::set_timeout_hook
-    (TAO_RelativeRoundtripTimeoutPolicy::hook);
+  TAO_ORB_Core::set_timeout_hook (TAO_RelativeRoundtripTimeoutPolicy::hook);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
@@ -30,8 +29,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
-  TAO_ORB_Core::connection_timeout_hook
-    (TAO_ConnectionTimeoutPolicy::hook);
+  TAO_ORB_Core::connection_timeout_hook (TAO_ConnectionTimeoutPolicy::hook);
 #endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
 }
