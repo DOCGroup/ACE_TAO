@@ -458,7 +458,7 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (contexts_key,
                                                 stringified,
-                                                contexts[i]);
+                                                contexts[i].in ());
     }
 }
 

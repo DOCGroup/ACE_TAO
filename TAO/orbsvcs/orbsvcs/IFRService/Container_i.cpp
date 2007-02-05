@@ -1081,7 +1081,7 @@ TAO_Container_i::create_enum_i (const char *id,
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
-                                                members[i]);
+                                                members[i].in ());
     }
 
   CORBA::DefinitionKind def_kind =
