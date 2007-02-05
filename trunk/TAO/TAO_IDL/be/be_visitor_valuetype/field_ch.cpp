@@ -544,7 +544,8 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
   // Not a typedef and bt is defined here.
   if (bt->node_type () != AST_Decl::NT_typedef
-      && bt->is_child (bu))
+      && bt->is_child (bu)
+      && this->ctx_->state () != TAO_CodeGen::TAO_VALUETYPE_OBV_CH)
     {
       be_field *member_node =
         be_field::narrow_from_decl (this->ctx_->node ());

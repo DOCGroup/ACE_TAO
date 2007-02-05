@@ -50,7 +50,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  if (node->cli_hdr_gen () || node->imported ())
+  // We don't check cli_hdr_gen() here. If we are generated more
+  // than once as an anonymous sequence, the name guard will cause
+  // the C++ preprocessor to catch it. If we are generated more than
+  // once as a typedef (caused by a comma separated list of
+  // typedefs), our name will be changed by the call above and the
+  // name guard will not catch it, but that's ok - we want to
+  // be generated for each typedef.
+  if (node->imported ())
     {
       return 0;
     }
@@ -98,6 +105,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
+
 
   os->gen_ifdef_macro (node->flat_name ());
 
