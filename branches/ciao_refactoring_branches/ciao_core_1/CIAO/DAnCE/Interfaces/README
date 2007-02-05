@@ -1,0 +1,2 @@
+To resolve the MPC issue of directory dependency, we have to put some IDL
+files into a separate directory. This directory servers for this purpose.

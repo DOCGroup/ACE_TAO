@@ -1,0 +1,12 @@
+// -*- MPC -*-
+//
+// $Id$
+
+feature(!ace_for_tao) {
+
+// Includes ACE_SSL asynch stream support.
+
+  after      += SSL
+  libs       += ACE_SSL
+
+}
