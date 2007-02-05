@@ -322,7 +322,7 @@ private:
   void normalize (void);
 
   /// Store the values as a timeval.
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Windows' timeval is non-conformant, so swap in a struct that conforms
   // to the proper data types to represent the entire time range that this
   // class's API can accept.
@@ -338,7 +338,7 @@ private:
   timeval ext_tv_;
 #else
   timeval tv_;
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
