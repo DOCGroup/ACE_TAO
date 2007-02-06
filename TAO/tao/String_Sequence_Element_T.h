@@ -28,6 +28,7 @@ public:
   typedef character_type * value_type;
   typedef character_type const * const_value_type;
   typedef typename traits::string_var string_var;
+  typedef typename traits::string_out string_out;
   typedef typename traits::string_mgr string_mgr;
 
 private:
@@ -97,6 +98,20 @@ public:
 
   inline const character_type *in (void) const {
     return *this->element_;
+  }
+
+  inline character_type *&inout (void) const {
+    return *this->element_;
+  }
+
+  inline string_out out (void) const {
+    return *this->element_;
+  }
+
+  inline const character_type *_retn (void) {
+    value_type * copy_ = this->element_;
+    *this->element_ = traits::default_initializer();
+    return *copy_;
   }
 
   void swap(string_sequence_element & rhs)
