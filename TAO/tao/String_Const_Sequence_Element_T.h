@@ -26,12 +26,12 @@ class string_const_sequence_element
 public:
   typedef typename traits::char_type character_type;
   typedef character_type * value_type;
-  typedef character_type * const const_value_type;
+  typedef character_type const * const_value_type;
   typedef typename traits::string_var string_var;
   typedef typename traits::string_mgr string_mgr;
 
 public:
-  string_const_sequence_element(const_value_type & e, CORBA::Boolean release)
+  string_const_sequence_element(value_type const & e, CORBA::Boolean release)
     : element_(&e)
     , release_(release)
   {
@@ -68,7 +68,7 @@ private:
   string_const_sequence_element & operator=(string_const_sequence_element const & rhs);
 
 private:
-  const_value_type * element_;
+  const_value_type const * element_;
   CORBA::Boolean release_;
 };
 
