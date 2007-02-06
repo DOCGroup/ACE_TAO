@@ -1,3 +1,57 @@
+Tue Feb  6 16:33:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.cpp:
+          Added a check that we don't rethrow an user exception that is
+          not in the signature list, if that is the case we throw
+          an unknown. Fixes bugzilla 2064
+
+        * tao/operation_details.cpp
+        * tao/operation_details.h
+        * tao/operation_details.inl
+          Added support to check whether an exception is in the list of
+          exceptions for this operation
+
+        * tao/Invocation_Base.cpp:
+          Some more changes related to removing ACE_THROW_SPEC
+
+        * tao/DynamicInterface/DII_Arguments.cpp
+        * tao/DynamicInterface/DII_Arguments.inl
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+        * tao/Exception.h
+        * tao/GIOP_Message_Generator_Parser_10.cpp
+        * tao/GIOP_Message_State.cpp
+        * tao/GIOP_Message_State.inl
+        * tao/GIOP_Message_Version.inl
+        * tao/Invocation_Endpoint_Selectors.cpp
+        * tao/Invocation_Endpoint_Selectors.h
+        * tao/IOR_Parser.h
+        * tao/IORInterceptor_Adapter.h
+        * tao/IORInterceptor_Adapter_Factory.h
+        * tao/LocateRequest_Invocation.cpp
+        * tao/LocateRequest_Invocation_Adapter.cpp
+        * tao/MCAST_Parser.cpp
+        * tao/Object.cpp
+        * tao/Object_Ref_Table.cpp
+        * tao/Object_Ref_Table.inl
+        * tao/Object_T.cpp
+        * tao/ObjectKey_Table.cpp
+        * tao/RTScheduling/Request_Interceptor.cpp
+        * tao/Strategies/SCIOP_Endpoint.cpp
+        * tao/Strategies/SCIOP_Factory.cpp
+        * tao/Strategies/SCIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Acceptor.cpp
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Strategies/SHMIOP_Transport.h
+        * tao/Strategies/UIOP_Transport.cpp
+        * tao/TransportCurrent/Current_ORBInitializer.h
+        * tao/TransportCurrent/Current_ORBInitializer_Base.h
+        * tao/Valuetype/AbstractBase.cpp
+        * tao/Valuetype/ValueBase.cpp
+        * tao/Valuetype/ValueFactory.cpp
+        * tao/Valuetype/ValueFactory_Map.cpp
+          Layout changes
+
 Mon Feb  5 23:30:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:

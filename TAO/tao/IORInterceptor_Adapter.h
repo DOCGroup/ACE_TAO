@@ -80,7 +80,7 @@ public:
    * IORInterceptor::components_established() once the former is
    * completed.
    */
-  virtual void establish_components (TAO_Root_POA *poa )
+  virtual void establish_components (TAO_Root_POA *poa)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Call the IORInterceptor::components_established() method on all

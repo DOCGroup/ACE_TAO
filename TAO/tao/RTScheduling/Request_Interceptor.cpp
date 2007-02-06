@@ -43,7 +43,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       // If this is a one way request
       if (!ri->response_expected ())
         {
-
           // Generate GUID.
           RTScheduling::Current::IdType guid;
           guid.length (sizeof(long));
@@ -166,12 +165,10 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
     ACE_DEBUG ((LM_DEBUG,
                 "Client_Interceptor::receive_exception\n"));
 
-
-  TAO_RTScheduler_Current_i *current = 0;
-
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
-  current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
+  TAO_RTScheduler_Current_i *current =
+    static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
 
   if (current != 0)
     {
@@ -182,8 +179,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
           return;
         }
 
-      CORBA::Any_var ex =
-        ri->received_exception ();
+      CORBA::Any_var ex = ri->received_exception ();
       CORBA::TypeCode_var type = ex->type ();
 
       if (CORBA::is_nil (type.in ()))
@@ -198,7 +194,6 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
         ACE_DEBUG ((LM_DEBUG,
                     "Received Exception %s\n",
                     ACE_TEXT_CHAR_TO_TCHAR (id)));
-
 
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate

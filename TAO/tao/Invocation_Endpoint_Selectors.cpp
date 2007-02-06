@@ -28,8 +28,7 @@ TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 
 void
 TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                                ACE_Time_Value *max_wait_time
-                                                )
+                                                ACE_Time_Value *max_wait_time)
 {
   do
     {
@@ -45,18 +44,12 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
           if (r->profile ()->endpoint_count () > 1 &&
               r->use_parallel_connect())
             {
-
-              TAO_Endpoint *ep =
-                r->profile ()->endpoint ();
+              TAO_Endpoint *ep = r->profile ()->endpoint ();
 
               TAO_Base_Transport_Property desc (ep);
-              bool success =
-                r->try_parallel_connect (&desc,
-                                         max_wait_time
-                                        );
 
               // Check if the connect has completed.
-              if (success)
+              if (r->try_parallel_connect (&desc, max_wait_time))
                 return;
               // The default implementation of try_parallel_connect returns
               // a not supported errno. In this case, allow the ordinary
@@ -72,20 +65,15 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
                ep = r->profile ()->next_filtered_endpoint (ep))
             {
               TAO_Base_Transport_Property desc (ep);
-              bool retval =
-                r->try_connect (&desc,
-                                max_wait_time
-                               );
 
               // Check if the connect has completed.
-              if (retval)
+              if (r->try_connect (&desc, max_wait_time))
                 return;
             }
 
         }
     }
   while (r->stub ()->next_profile_retry () != 0);
-
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.

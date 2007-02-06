@@ -59,13 +59,9 @@ TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    return this->create_new_profile (object_key, mprofile, priority);
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    return this->create_shared_profile (object_key, mprofile, priority);
 }
 
 int
@@ -135,9 +131,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       // If <mprofile> doesn't contain SHMIOP_Profile, we need to create
       // one.
-      return create_new_profile (object_key,
-                                 mprofile,
-                                 priority);
+      return create_new_profile (object_key, mprofile, priority);
     }
   else
     {
@@ -232,8 +226,7 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   //    address.
   this->host_ = this->address_.get_host_name ();
 
-  return this->open_i (orb_core,
-                       reactor);
+  return this->open_i (orb_core, reactor);
 }
 
 int
@@ -366,8 +359,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
-  if (!(cdr.read_octet (major)
-        && cdr.read_octet (minor)))
+  if (!(cdr.read_octet (major) && cdr.read_octet (minor)))
   {
     if (TAO_debug_level > 0)
       {

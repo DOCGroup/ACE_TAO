@@ -22,9 +22,7 @@ namespace TAO
         return T::_nil ();
       }
 
-    CORBA::Boolean const is_it = obj->_is_a (repo_id);
-
-    if (is_it == false)
+    if (obj->_is_a (repo_id) == false)
       {
         return T::_nil ();
       }
