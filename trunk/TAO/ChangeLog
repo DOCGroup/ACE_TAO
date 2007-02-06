@@ -1,3 +1,29 @@
+Tue Feb  6 19:00:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/String_Alloc.cpp:
+          Layout changes
+
+        * tao/String_Sequence_Element_T.h:
+          Added missing out/inout/_retn, this fixes bugzilla bug 2795,
+          thanks to Frank Pilhofer <fp at mc dot com> for reporting this
+
+        * tests/Bug_2792_Regression/client.cpp:
+          Small improvement
+
+        * tests/Bug_2795_Regression/Bug_2795_Regression.mpc:
+        * tests/Bug_2795_Regression/client.cpp:
+        * tests/Bug_2795_Regression/run_test.pl:
+          New test for bug 2795
+
+        * tests/Collocation_Exception_Test/Server_Task.cpp:
+          Initialise pointer with 0
+
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+          No need to pass 0 orb name
+
+        * tests/UNKNOWN_Exception/server.cpp:
+          Layout change
+
 Tue Feb  6 16:33:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocated_Invocation.cpp:
