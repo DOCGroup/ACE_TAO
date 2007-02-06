@@ -116,6 +116,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------
 
+# define ACE_HAS_NO_THROW_SPEC
 # if defined (ACE_HAS_NO_THROW_SPEC)
 #   define ACE_THROW_SPEC(X)
 # else
