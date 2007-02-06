@@ -41,9 +41,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (*params.input_cdr_);
-
+  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == 0)
     {
@@ -82,9 +80,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   try
     {
       // Call the Request back and send the reply data.
-      this->req_->handle_response (this->reply_cdr_,
-                                   this->reply_status_
-                                  );
+      this->req_->handle_response (this->reply_cdr_, this->reply_status_);
     }
   catch (const ::CORBA::Exception& ex)
     {

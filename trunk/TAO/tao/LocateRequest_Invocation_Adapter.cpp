@@ -48,8 +48,7 @@ namespace TAO
     ACE_Time_Value tmp_wait_time;
     ACE_Time_Value *max_wait_time = 0;
 
-    bool const is_timeout  =
-      this->get_timeout (tmp_wait_time);
+    bool const is_timeout = this->get_timeout (tmp_wait_time);
 
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
@@ -65,24 +64,18 @@ namespace TAO
 
         try
           {
-            resolver.init_inconsistent_policies (
-                );
+            resolver.init_inconsistent_policies ();
 
-            resolver.resolve (max_wait_time
-                             );
+            resolver.resolve (max_wait_time);
 
             // Dummy operation details that is used to instantiate the
             // LocateRequest class.
-            TAO_Operation_Details op (0,
-                                      0);
+            TAO_Operation_Details op (0, 0);
 
             op.request_id (resolver.transport ()->tms ()->request_id ());
-            TAO::LocateRequest_Invocation synch (this->target_,
-                                                 resolver,
-                                                 op);
+            TAO::LocateRequest_Invocation synch (this->target_, resolver, op);
 
-            s = synch.invoke (max_wait_time
-                             );
+            s = synch.invoke (max_wait_time);
           }
         catch (const ::CORBA::INV_POLICY&)
           {

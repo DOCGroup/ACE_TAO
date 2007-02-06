@@ -91,13 +91,17 @@ namespace TAO
       {
         try
           {
+            // This is a begin interception point
             this->adapter_->send_request (*this);
           }
         catch ( ::CORBA::Exception& ex)
           {
             (void) this->handle_any_exception (&ex);
-
-            // This is a begin interception point
+            throw;
+          }
+        catch (...)
+          {
+            (void) this->handle_all_exception ();
             throw;
           }
 
@@ -122,7 +126,11 @@ namespace TAO
         catch ( ::CORBA::Exception& ex)
           {
             (void) this->handle_any_exception (&ex);
-
+            throw;
+          }
+        catch (...)
+          {
+            (void) this->handle_all_exception ();
             throw;
           }
 
@@ -194,8 +202,7 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::handle_all_exception (void)
   {
-    CORBA::UNKNOWN ex;
-    this->exception (&ex);
+    this->exception (&unknown_exception);
 
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
@@ -204,8 +211,7 @@ namespace TAO
       {
         this->adapter_->receive_exception (*this);
 
-        status =
-          this->adapter_->reply_status (*this);
+        status = this->adapter_->reply_status (*this);
       }
 
     return status;

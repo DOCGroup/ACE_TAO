@@ -42,9 +42,7 @@ class TAO_Export TAO_IORInterceptor_Adapter_Factory
 public:
   virtual ~TAO_IORInterceptor_Adapter_Factory (void);
 
-  virtual TAO_IORInterceptor_Adapter * create (
-
-    )
+  virtual TAO_IORInterceptor_Adapter * create (void)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

@@ -48,6 +48,19 @@ TAO_Operation_Details::corba_exception (const char *id)
 }
 
 bool
+TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
+{
+  for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
+    {
+      if (ACE_OS::strcmp (ex._rep_id (), this->ex_data_[i].id) == 0)
+        {
+          return true;
+        }
+    }
+  return false;
+}
+
+bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
   for (CORBA::ULong i = 0; i != this->num_args_; ++i)
