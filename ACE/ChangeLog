@@ -1,3 +1,9 @@
+Tue Feb  6 16:44:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          For the moment expand ACE_THROW_SPEC to nothing, we want to deprecate
+          this in TAO and want to see the impact of this on the tests
+
 Tue Feb  6 15:36:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Time_Value.inl: Remove the #if around #include "ace/Truncate.h"
