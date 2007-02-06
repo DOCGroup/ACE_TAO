@@ -104,8 +104,7 @@ public:
                             ACE_Time_Value *max_time_wait = 0);
 
   /// Initialising the messaging object
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor);
+  virtual int messaging_init (CORBA::Octet major, CORBA::Octet minor);
 
 private:
   /// The connection service handler used for accessing lower layer

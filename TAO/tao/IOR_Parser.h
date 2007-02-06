@@ -59,8 +59,7 @@ public:
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb)
+  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 

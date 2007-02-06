@@ -42,8 +42,7 @@ namespace TAO
 
     /// Start the interception point
 #if TAO_HAS_INTERCEPTORS == 1
-    s =
-      this->send_request_interception ();
+    s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -110,7 +109,35 @@ namespace TAO
           return s;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
-    catch ( ::CORBA::Exception& ex)
+    catch ( ::CORBA::UserException& ex)
+      {
+        // Ignore CORBA exceptions for oneways
+        if (this->response_expected_ == false)
+          return TAO_INVOKE_SUCCESS;
+
+#if TAO_HAS_INTERCEPTORS == 1
+        PortableInterceptor::ReplyStatus const status =
+          this->handle_any_exception (&ex);
+
+        if (status == PortableInterceptor::LOCATION_FORWARD ||
+          status == PortableInterceptor::TRANSPORT_RETRY)
+          s = TAO_INVOKE_RESTART;
+        else
+#endif /* TAO_HAS_INTERCEPTORS */
+          {
+            // Check whether the user exception thrown matches the signature
+            // list, if not, then throw an Unknown exception
+            if (!this->details_.has_exception (ex))
+              {
+                throw ::CORBA::UNKNOWN (0, CORBA::COMPLETED_YES);
+              }
+            else
+             {
+               throw;
+             }
+          }
+      }
+    catch ( ::CORBA::SystemException& TAO_INTERCEPTOR (ex))
       {
         // Ignore CORBA exceptions for oneways
         if (this->response_expected_ == false)
@@ -124,8 +151,6 @@ namespace TAO
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
-#else
-        ACE_UNUSED_ARG (ex);
 #endif /* TAO_HAS_INTERCEPTORS */
           throw;
       }
@@ -134,7 +159,6 @@ namespace TAO
       {
         // Notify interceptors of non-CORBA exception, and propagate
         // that exception to the caller.
-
         PortableInterceptor::ReplyStatus const st =
           this->handle_all_exception ();
 

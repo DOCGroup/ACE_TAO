@@ -10,7 +10,7 @@ TAO_GIOP_Message_State::message_size (void) const
   CORBA::ULong len =
     this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  return len; 
+  return len;
 }
 
 ACE_INLINE CORBA::ULong
@@ -33,25 +33,5 @@ TAO_GIOP_Message_State::reset (void)
   this->more_fragments_ = 0;
   this->missing_data_ = 0;
 }
-
-#if 0
-ACE_INLINE int
-TAO_GIOP_Message_State::message_fragmented (void)
-{
-  if (this->more_fragments)
-    return 1;
-
-  return 0;
-}
-
-
-
-ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_State::header_received (void) const
-{
-  return this->message_size != 0;
-}
-
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -24,7 +24,6 @@
 #include "tao/TimeBaseC.h"
 #include "tao/target_specification.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
@@ -106,8 +105,7 @@ public:
   TAO_Service_Context &reply_service_context (void);
   const TAO_Service_Context &reply_service_context (void) const;
 
-  /// Reset the contents of the service context lists that we
-  /// hold.
+  /// Reset the contents of the service context lists that we hold.
   void reset_request_service_info (void);
   void reset_reply_service_info (void);
 
@@ -134,6 +132,9 @@ public:
    */
   CORBA::Exception *corba_exception (const char *ex)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Check whether exception @a ex is in the signature of this operation
+  bool has_exception (::CORBA::Exception& ex) const;
 
   /**
    * @name Helper methods used by the Invocation classes.
@@ -222,7 +223,7 @@ private:
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
   /// The dii request flag.
-  CORBA::Boolean is_dii_request_;  
+  CORBA::Boolean is_dii_request_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

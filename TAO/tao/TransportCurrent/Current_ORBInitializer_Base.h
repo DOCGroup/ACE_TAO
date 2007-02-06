@@ -49,8 +49,7 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException));
     protected:
         virtual TAO::Transport::Current_ptr
-        make_current_instance (TAO_ORB_Core* core,
-                               size_t tss_slot_id)
+        make_current_instance (TAO_ORB_Core* core, size_t tss_slot_id)
           ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
     protected:
       const ACE_TString id_;

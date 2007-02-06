@@ -61,10 +61,7 @@ namespace TAO
 
     TAO_OutputCDR &cdr = transport->out_stream ();
 
-    int const retval =
-      transport->generate_locate_request (tspec, this->details_, cdr);
-
-    if (retval == -1)
+    if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
       return TAO_INVOKE_FAILURE;
 
     countdown.update ();
@@ -83,8 +80,7 @@ namespace TAO
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
 
-    s =
-      this->wait_for_reply (max_wait_time, rd, dispatch_guard);
+    s = this->wait_for_reply (max_wait_time, rd, dispatch_guard);
 
     s = this->check_reply (rd);
 
@@ -100,8 +96,7 @@ namespace TAO
   Invocation_Status
   LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd)
   {
-    TAO_InputCDR &cdr =
-      rd.reply_cdr ();
+    TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
