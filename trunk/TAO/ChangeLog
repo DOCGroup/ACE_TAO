@@ -1,3 +1,14 @@
+Tue Feb  6 20:14:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/ORB.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          Layout change
+
+        * tao/String_Const_Sequence_Element_T.h:
+          Const improvements to improve ownership
+
 Tue Feb  6 19:00:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/String_Alloc.cpp:

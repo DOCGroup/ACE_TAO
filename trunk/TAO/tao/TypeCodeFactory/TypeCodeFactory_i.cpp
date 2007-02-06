@@ -748,9 +748,7 @@ TAO_TypeCodeFactory_i::create_array_tc (
     CORBA::TypeCode_ptr element_type)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return sequence_array_tc_common (length,
-                                   element_type,
-                                   CORBA::tk_array);
+  return sequence_array_tc_common (length, element_type, CORBA::tk_array);
 }
 
 CORBA::TypeCode_ptr
