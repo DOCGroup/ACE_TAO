@@ -2,9 +2,7 @@
 //
 // $Id$
 
-#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
-#  include "ace/Truncate.h"
-#endif
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

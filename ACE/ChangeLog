@@ -1,3 +1,9 @@
+Tue Feb  6 15:36:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Time_Value.inl: Remove the #if around #include "ace/Truncate.h"
+          because ACE_Utils::Truncate is needed in a case that's not in a
+          ACE_HAS_TIME_T_LONG_MISMATCH block.
+
 Mon Feb  5 19:58:39 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Record.cpp (operator>>): Use ACE_Utils::Truncate to truncate
