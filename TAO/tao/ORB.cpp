@@ -466,9 +466,7 @@ CORBA::ORB::create_enum_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_enum_tc (id,
-                                  name,
-                                  members);
+  return adapter->create_enum_tc (id, name, members);
 }
 
 CORBA::TypeCode_ptr

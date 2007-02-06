@@ -38,9 +38,7 @@ void
 TAO_DynEnum_i::init (const CORBA::Any &any)
 {
   CORBA::TypeCode_var tc = any.type ();
-
-  CORBA::TCKind kind =
-    TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_enum)
     {
@@ -108,33 +106,28 @@ char *
 TAO_DynEnum_i::get_as_string (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  const char *retval =
-    this->type_.in ()->member_name (this->value_);
+  const char *retval = this->type_.in ()->member_name (this->value_);
 
   return CORBA::string_dup (retval);
 }
 
 void
-TAO_DynEnum_i::set_as_string (const char *value_as_string
-                              )
+TAO_DynEnum_i::set_as_string (const char *value_as_string)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULong count =
-    this->type_.in ()->member_count ();
+  CORBA::ULong count = this->type_.in ()->member_count ();
 
   CORBA::ULong i;
   const char *temp = 0;
 
   for (i = 0; i < count; ++i)
     {
-      temp = this->type_.in ()->member_name (i
-                                            );
+      temp = this->type_.in ()->member_name (i);
 
-      if (!ACE_OS::strcmp (value_as_string,
-                           temp))
+      if (!ACE_OS::strcmp (value_as_string, temp))
         {
           break;
         }
@@ -160,15 +153,13 @@ TAO_DynEnum_i::get_as_ulong (void)
 }
 
 void
-TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
-                             )
+TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULong max =
-    this->type_.in ()->member_count ();
+  CORBA::ULong const max = this->type_.in ()->member_count ();
 
   if (value_as_ulong < max)
     {
@@ -183,8 +174,7 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
 // ****************************************************************
 
 void
-TAO_DynEnum_i::from_any (const CORBA::Any& any
-                         )
+TAO_DynEnum_i::from_any (const CORBA::Any& any)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
