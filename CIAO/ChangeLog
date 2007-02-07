@@ -1,3 +1,33 @@
+Wed Feb  7 23:22:08 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Context_Impl_T.h:
+        * ciao/Upgradeable_Context_Impl_T.h:
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Upgradeable_Context_Impl_T.cpp:
+        
+          - Replaced a class template parameter in both
+            Context_Impl and Upgradeable_Context_Impl with
+            a trait in the class body. This change was
+            evidently overlooked when similar changes were
+            made to Servant_Impl and Home_Servant_Impl
+            pursuant to dropping support for Visual Studio 6.
+            
+          - In Upgradeable_Context_Impl, removed class members
+            already present in the base class Context_Impl.
+            
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          - Made changes to the generated context class corresponding
+            to the changes above.
+            
+          - Added code generation to check for a nil event
+            consumer before a push call is made on it by
+            an emits port. The event consumer would be nil
+            if a connection had not yet been made. Thanks
+            to James Hill <hillj@isis.vanderbilt.edu> for
+            reporting the problem.
+
 Fri Feb  2 15:09:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Container_Base.cpp:
