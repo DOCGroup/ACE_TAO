@@ -814,7 +814,8 @@ namespace
         os << endl;
         os << "ACE_CString source_id = this->_ciao_instance_id ();";
         os << "source_id += \"_\";" << endl;
-        os << "source_id += \"" << p.name () << "\";//port name" << endl << endl;
+        os << "source_id += \"" << p.name () << "\";//port name"
+           << endl << endl;
 
         os << "for (ACE_Active_Map_Manager< " << endl
            << "  " << STRS[COMP_ECB] << "_var>::iterator giter =" << endl
@@ -913,8 +914,8 @@ namespace
            << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "ACE_Active_Map_Manager_Key key;" << endl
-           << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)"
-           << endl
+           << "if (ck == 0 || ::CIAO::Map_Key_Cookie::"
+           << "extract (ck, key) == false)" << endl
            << "{"
            << STRS[ACE_TR] << " ( "
            << STRS[EXCP_IC] << " ()," << endl;
@@ -966,14 +967,16 @@ namespace
            << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
+           << "if (! ::CORBA::is_nil (this->ciao_emits_"
+           << e.name () << "_consumer_.in ()))" << endl
+           << "{"
            << "this->ciao_emits_" << e.name ()
            << "_consumer_->push_";
 
         Traversal::EmitterData::belongs (e, simple_belongs_);
 
-        os << " (" << endl
-           << "ev" << endl
-           << ");" << endl
+        os << " (ev);" << endl
+           << "}"
            << "}";
 
         os << "void" << endl
@@ -1141,8 +1144,7 @@ namespace
          << "        " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context," << endl
          << "        " << t.name () << "_Servant," << endl
-         << "        " << t.scoped_name () << "," << endl
-         << "        " << t.scoped_name () << "_var" << endl
+         << "        " << t.scoped_name () << endl
          << "      > (h, c, sv)";
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -1155,9 +1157,8 @@ namespace
              << "        " << t.scoped_name ().scope_name () << "::CCM_"
              << t.name () << "_Context," << endl
              << "        " << t.name () << "_Servant," << endl
-             << "        " << t.scoped_name () << "," << endl
-             << "        " << t.scoped_name () << "_var" << endl
-             << "      > (h, c, sv)" << endl;
+             << "        " << t.scoped_name () << endl
+             << "      > (h, c, sv)";
         }
       else
         {

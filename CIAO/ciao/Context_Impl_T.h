@@ -66,14 +66,13 @@ namespace CIAO
    */
   template <typename BASE_CTX,
             typename SVNT,
-            typename COMP,
-            typename COMP_VAR>
+            typename COMP>
   class Context_Impl : public virtual BASE_CTX,
                        public virtual Context_Impl_Base,
                        public virtual TAO_Local_RefCounted_Object
   {
   public:
-    Context_Impl (Components::CCMHome_ptr home,
+    Context_Impl (Components::CCMHome_ptr the_home,
                   Session_Container *c,
                   SVNT *sv);
 
@@ -88,7 +87,7 @@ namespace CIAO
 
   protected:
     SVNT *servant_;
-    COMP_VAR component_;
+    typename COMP::_var_type component_;
   };
 }
 
