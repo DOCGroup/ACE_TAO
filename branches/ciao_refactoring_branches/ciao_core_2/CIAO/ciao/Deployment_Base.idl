@@ -11,12 +11,14 @@ module Deployment {
     any value;
   };
   typedef sequence < Property > Properties;
-
+  
+  // @@changed element order
   struct Requirement {
-    string resourceType;
     string name;
+    string resourceType;
     Properties property;
   };
+
   typedef sequence < Requirement > Requirements;
 
   enum SatisfierPropertyKind {

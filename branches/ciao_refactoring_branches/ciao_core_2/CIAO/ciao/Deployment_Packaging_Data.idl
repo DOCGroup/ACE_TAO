@@ -35,11 +35,9 @@ module Deployment
 
   typedef sequence < AssemblyPropertyMapping > AssemblyPropertyMappings;
 
-#ifndef AVOID_IFR_CRASH
   struct NamedImplementationArtifact;
 
   typedef sequence < NamedImplementationArtifact > NamedImplementationArtifacts;
-#endif /* AVOID_IFR_CRASH */
 
   struct ImplementationArtifactDescription {
     string label;
@@ -47,9 +45,7 @@ module Deployment
     ::CORBA::StringSeq location;
     Properties execParameter;
     Requirements deployRequirement;
-#ifndef AVOID_IFR_CRASH
     NamedImplementationArtifacts dependsOn;
-#endif /* AVOID_IFR_CRASH */
     Properties infoProperty;
   };
 
@@ -57,19 +53,17 @@ module Deployment
     string name;
     ImplementationArtifactDescription referencedArtifact;
   };
-
+  
+  // @@changed: order of members
   struct MonolithicImplementationDescription {
     Properties nodeExecParameter;
-    Properties componentExecParameter;
-#ifndef AVOID_IFR_CRASH
     NamedImplementationArtifacts primaryArtifact;
-#endif /* AVOID_IFR_CRASH */
     ImplementationRequirements deployRequirement;
+    Properties componentExecParameter;
   };
 
   typedef sequence < MonolithicImplementationDescription > MonolithicImplementationDescriptions;
 
-#ifndef AVOID_IFR_CRASH
   struct PackageConfiguration;
 
   typedef sequence < PackageConfiguration > PackageConfigurations;
@@ -77,14 +71,11 @@ module Deployment
   struct ComponentPackageDescription;
 
   typedef sequence < ComponentPackageDescription > ComponentPackageDescriptions;
-#endif /* AVOID_IFR_CRASH */
 
   struct SubcomponentInstantiationDescription {
     string name;
-#ifndef AVOID_IFR_CRASH
     ComponentPackageDescriptions basePackage;
     PackageConfigurations specializedConfig;
-#endif /* AVOID_IFR_CRASH */
     Requirements selectRequirement;
     Properties configProperty;
     ComponentPackageReferences referencedPackage;
@@ -102,11 +93,29 @@ module Deployment
   };
 
   typedef sequence < AssemblyConnectionDescription > AssemblyConnectionDescriptions;
-
+  
+  // @@added
+  enum LocalityKind {
+    SameNodeAnyProcess,
+    SameNodeSameProcess,
+    SameNodeDifferentProcess,
+    DifferentNode,
+    DifferentProcess,
+    NoConstraint
+  };
+  
+  // @@added
+  struct Locality {
+    LocalityKind constraint;
+    ::CORBA::ULongSeq constrainedInstanceRef; 
+  };
+    
   struct ComponentAssemblyDescription {
     SubcomponentInstantiationDescriptions instance;
     AssemblyConnectionDescriptions connection;
     AssemblyPropertyMappings externalProperty;
+    // @@added
+    // Localities localityConstraint;
   };
 
   typedef sequence < ComponentAssemblyDescription > ComponentAssemblyDescriptions;
@@ -145,13 +154,15 @@ module Deployment
   struct PackageConfiguration {
     string label;
     string UUID;
-#ifndef AVOID_IFR_CRASH
-    PackageConfigurations specializedConfig;
     ComponentPackageDescriptions basePackage;
-#endif /* AVOID_IFR_CRASH */
-    ComponentPackageReferences reference;
+    PackageConfigurations specializedConfig;
     Requirements selectRequirement;
     Properties configProperty;
+    ComponentPackageReferences reference;
+    // @@changed, delete previous
+    //ComponentPackageReferences referencedPackage;
+    // @@add
+    ComponentPackageImports importedPackage;
   };
 
 

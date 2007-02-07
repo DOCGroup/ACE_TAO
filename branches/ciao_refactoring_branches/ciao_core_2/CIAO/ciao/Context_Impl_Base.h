@@ -93,6 +93,11 @@ namespace CIAO
     set_rollback_only ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
+    
+    virtual CORBA::Object *
+    resolve_service_reference (const char *service_id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    
 
     // CIAO-specific.
 

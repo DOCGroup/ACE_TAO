@@ -12,7 +12,23 @@ module Deployment {
     string name;
     string reason;
   };
-
+  
+  // @@added
+  exception InvalidNodeExecParameter {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception InvalidComponentExecParameter {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception LastConfiguration {
+  };
+  
   exception NoSuchName {
   };
 

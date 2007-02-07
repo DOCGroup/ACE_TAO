@@ -7,6 +7,14 @@
 #include "ciao/Deployment_ApplicationManager.idl"
 
 module Deployment {
+  // @@changed
+  // interface DomainApplicationManager :
+  //     ApplicationManager
+  //   {
+  //     Applications getApplications ();
+  //     DeploymentPlan getPlan ();
+  //   };
+  
   /// CIAO 's DomainApplicationManager interface differs spec-defined interface
   /// in the same that it also integrates the spec-defined interface for
   /// DomainApplication into itself
