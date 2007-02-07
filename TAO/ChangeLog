@@ -1,3 +1,16 @@
+Wed Feb  7 20:08:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TransportCurrent/lib/Client_ORBInitializer.cpp:
+        * tao/TransportCurrent/lib/Client_ORBInitializer.h:
+        * tao/TransportCurrent/lib/Client_Request_Interceptor.cpp:
+        * tao/TransportCurrent/lib/Client_Request_Interceptor.h:
+        * tao/TransportCurrent/lib/Current_Test_Impl.h:
+        * tao/TransportCurrent/lib/Server_ORBInitializer.cpp:
+        * tao/TransportCurrent/lib/Server_ORBInitializer.h:
+        * tao/TransportCurrent/lib/Server_Request_Interceptor.cpp:
+        * tao/TransportCurrent/lib/Server_Request_Interceptor.h:
+          Use ACE_THROW_SPEC then plain throw
+
 Wed Feb  7 15:31:20 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * tao/AnyTypeCode/Any_SystemException.cpp:
