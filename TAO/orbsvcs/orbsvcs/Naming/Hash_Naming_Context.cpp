@@ -140,7 +140,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
         {
           context->bind (simple_name, obj);
         }
-      catch (const CORBA::TIMEOUT&)
+      catch (const CORBA::SystemException&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -197,7 +197,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
         {
           context->rebind (simple_name, obj);
         }
-      catch (const CORBA::TIMEOUT&)
+      catch (const CORBA::SystemException&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -259,7 +259,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
         {
           context->bind_context (simple_name, nc);
         }
-      catch (const CORBA::TIMEOUT&)
+      catch (const CORBA::SystemException&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -317,7 +317,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
         {
           context->rebind_context (simple_name, nc);
         }
-      catch (const CORBA::TIMEOUT&)
+      catch (const CORBA::SystemException&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -421,7 +421,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
               resolved_ref = context->resolve (rest_of_name);
               return resolved_ref;
             }
-          catch (const CORBA::TIMEOUT&)
+          catch (const CORBA::SystemException&)
             {
               throw CosNaming::NamingContext::CannotProceed(
                 context.in (), rest_of_name);
@@ -467,7 +467,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
         {
           context->unbind (simple_name);
         }
-      catch (const CORBA::TIMEOUT&)
+      catch (const CORBA::SystemException&)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);

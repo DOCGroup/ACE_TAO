@@ -51,7 +51,6 @@ main (int argc, char *argv[])
       CORBA::Object_var tmp =
         orb->string_to_object(ior);
 
-
       /* Do an unchecked narrow since there's no way to do an is_a on
        * a multicast reference (yet...).
        */
