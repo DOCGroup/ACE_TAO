@@ -1,3 +1,10 @@
+Wed Feb  7 23:48:51 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+        
+          Removed an 'ex' identifier in a catch block that is
+          no longer referenced.
+
 Wed Feb  7 23:22:08 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Context_Impl_T.h:
