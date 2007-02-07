@@ -1,3 +1,9 @@
+Wed Feb  7 23:04:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added two existing Notify Service examples into the autotest list.
+
 Wed Feb  7 21:01:39 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Added a bit of info about building for National
