@@ -139,6 +139,8 @@ class Subscribe_StructuredPushConsumer
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
   // Accessor for the Proxy that we're connected to.
 
+  // public data member for evaluating the results of subscription.
+  CosNotification::EventTypeSeq expected_subscription_;
 protected:
   // = Data members
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;

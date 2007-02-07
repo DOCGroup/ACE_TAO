@@ -28,6 +28,7 @@
 #include "ace/SString.h"
 
 #include "tao/Basic_Types.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -89,7 +90,7 @@ public:
   operator CORBA::Long (void) const;
   operator CORBA::Double (void) const;
   operator const char* (void) const;
-  operator const CORBA::Any* (void) const;
+  operator TAO::Any_Impl* (void) const;
 
   // Return the type represented by this MysteryOperand.
 
@@ -146,7 +147,7 @@ private:
   union
   {
     char* str_;
-    CORBA::Any_ptr any_;
+    TAO::Any_Impl* any_;
     CORBA::ULong uinteger_;
     CORBA::Long integer_;
     CORBA::Boolean bool_;
