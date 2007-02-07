@@ -271,7 +271,7 @@ int svc(void) {
                       "%s",
                       buf));
           ACE_OS::strcat(client_output_, buf);
-      serv_output_ = ACE_OS::strdup("");
+          serv_output_ = ACE_OS::strdup("");
           object1->method1 (activity_, remote_, serv_output_.inout());
 
           ACE_OS::strcat(client_output_, serv_output_.in());
@@ -370,16 +370,7 @@ ACE_TMAIN (int argc, char * argv[])
     // recommended by irfan@oomworks.com
     long flags = THR_NEW_LWP | THR_JOINABLE |
 
-#if  TAO_MAJOR_VERSION > 1 \
-|| (TAO_MAJOR_VERSION==1 && TAO_MINOR_VERSION > 3 ) \
-|| (TAO_MAJOR_VERSION==1 && TAO_MAJOR_VERSION==3 && TAO_MINOR_VERSION > 1)
-
     orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
-#else /* TAO version is 1.3.1 or lower */
-    orb->orb_core ()->orb_params ()->scope_policy () |
-    orb->orb_core ()->orb_params ()->sched_policy ();
-#endif
 
     ot.activate(flags);
     return ot.wait();

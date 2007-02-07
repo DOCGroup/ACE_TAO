@@ -1,3 +1,17 @@
+Wed Feb  7 20:52:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+          Throw a cannotproceed exception on any system exception, not just
+          timeout exceptions, fixes bugzilla bug 2800
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp
+        * orbsvcs/tests/Property/client.cpp
+        * orbsvcs/tests/Redundant_Naming/client.cpp
+        * orbsvcs/tests/RTCosScheduling/client.cpp
+        * orbsvcs/tests/RTCosScheduling/server.cpp
+          Layout change
+
 Wed Feb  7 20:46:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Exception_Test/Client_Task.cpp:
