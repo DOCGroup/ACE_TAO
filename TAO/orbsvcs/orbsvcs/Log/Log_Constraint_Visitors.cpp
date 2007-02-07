@@ -563,8 +563,10 @@ TAO_Log_Constraint_Visitor::visit_component (
       this->queue_.dequeue_head (id);
       CORBA::Any *any_ptr = 0;
       ACE_NEW_RETURN (any_ptr,
-                      CORBA::Any (*(const CORBA::Any *) id),
+                      CORBA::Any (),
                       -1);
+      any_ptr->replace (id);
+      any_ptr->impl ()->_add_ref ();
       this->current_member_ = any_ptr;
       return nested->accept (this);
     }
@@ -943,7 +945,9 @@ TAO_Log_Constraint_Visitor::visit_in (
 
           if (bag.expr_type () == TAO_ETCL_COMPONENT)
             {
-              const CORBA::Any *component = (const CORBA::Any *) bag;
+              CORBA::Any_var component = new CORBA::Any ();
+              component->replace (bag);
+              component->impl ()->_add_ref ();
               CORBA::TCKind kind = CORBA::tk_null;
 
               try

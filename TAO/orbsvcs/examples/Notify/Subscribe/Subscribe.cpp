@@ -186,24 +186,34 @@ Subscribe::send_events (void)
   // Setup the Consumer 1 to receive event_type : "domain_B", "Type_b"
   CosNotification::EventTypeSeq added_1(1);
   CosNotification::EventTypeSeq removed_1 (0);
+  added_1.length (1);
 
   added_1[0].domain_name =  CORBA::string_dup (DOMAIN_B);
   added_1[0].type_name = CORBA::string_dup (TYPE_B);
-  added_1.length (1);
   removed_1.length (0);
 
   this->consumer_1_->get_proxy_supplier ()->subscription_change (added_1, removed_1);
+  // now the expected subscription for consumer 1 should be
+  // A and B
+  this->consumer_1_->expected_subscription_.length (2);
+  this->consumer_1_->expected_subscription_[0] = added[0];
+  this->consumer_1_->expected_subscription_[1] = added_1[0];
 
   // Setup the Consumer 2 to receive event_type : "domain_C", "Type_c"
   CosNotification::EventTypeSeq added_2(1);
   CosNotification::EventTypeSeq removed_2 (0);
+  added_2.length (1);
 
   added_2[0].domain_name =  CORBA::string_dup (DOMAIN_C);
   added_2[0].type_name = CORBA::string_dup (TYPE_C);
-  added_2.length (1);
   removed_2.length (0);
 
   this->consumer_2_->get_proxy_supplier ()->subscription_change (added_2, removed_2);
+  // now the expected subscription for consumer 2 should be
+  // A and C
+  this->consumer_2_->expected_subscription_.length (2);
+  this->consumer_2_->expected_subscription_[0] = added[0];
+  this->consumer_2_->expected_subscription_[1] = added_2[0];
 
   // Create the events - one of each type
   // Event 1
@@ -250,7 +260,8 @@ Subscribe::send_events (void)
 
 /*****************************************************************/
 Subscribe_StructuredPushConsumer::Subscribe_StructuredPushConsumer (Subscribe* subscribe)
-  : subscribe_ (subscribe)
+  : expected_subscription_ (2),
+    subscribe_ (subscribe)
 {
 }
 
@@ -315,7 +326,20 @@ Subscribe_StructuredPushConsumer::push_structured_event
   const char* type_name =
     notification.header.fixed_header.event_type.type_name;
 
-  ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received event, domain = %s, type =  %s\n", this->proxy_supplier_id_, domain_name, type_name));
+  bool found = false;
+
+  for (CORBA::ULong i = 0; i < expected_subscription_.length (); i++)
+  {
+    if ( ACE_OS::strcmp (expected_subscription_[i].domain_name, domain_name) == 0)
+      found = true;
+  }
+
+  if (found)
+    ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received subscribed event, domain = %s, type =  %s\n",
+                this->proxy_supplier_id_, domain_name, type_name));
+  else
+    ACE_ERROR ((LM_ERROR, "Error: Structured Subscribe Consumer %d received not subcribed event , domain = %s, type =  %s\n",
+                this->proxy_supplier_id_, domain_name, type_name));
 
   if (++g_result_count == EVENT_COUNT)
     subscribe_->done ();
