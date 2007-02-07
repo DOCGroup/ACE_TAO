@@ -12,7 +12,20 @@ module Deployment {
   };
 
   interface NodeApplicationManager;
-
+  
+  //@@changed
+//   interface NodeManager {
+//     void joinDomain (in Domain theDomain, in TargetManager manager, in
+//                      Logger log, in long updateInterval);
+//     void leaveDomain ();
+//     NodeApplicationManager preparePlan (in DeploymentPlan plan, in
+//                                         ResourceCommitmentManager resourceCommitment)
+//       raises (StartError, PlanError);
+//     void destroyManager (in NodeApplicationManager appManager)
+//       raises (StopError);
+//     Resources getDynamicResources ();
+//   };
+  
   interface NodeManager {
     /*
      * @todo 06-02-01 mentions a 4th argument:in long updateInterval

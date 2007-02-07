@@ -14,6 +14,7 @@ module Deployment {
     ::CORBA::StringSeq resourceType;
     SatisfierProperties property;
   };
+
   typedef sequence < Resource > Resources;
 
   struct SharedResource {

@@ -73,7 +73,15 @@ namespace CIAO
   {
     throw CORBA::NO_IMPLEMENT ();
   }
+  
+  CORBA::Object *
+  Context_Impl_Base::resolve_service_reference (const char *service_id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    throw CORBA::NO_IMPLEMENT ();
+  }
 
+  
   // CIAO-specific.
 
   CIAO::Session_Container *

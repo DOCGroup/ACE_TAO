@@ -11,7 +11,14 @@ module Deployment
 {
   typedef sequence < Object > Endpoints;
   //typedef Object Endpoint;
-
+  
+  // @@changed
+  // struct Connection
+  //   {
+  //     string name;
+  //     Endpoints endpoint;
+  //   };
+  
   // CIAO's specific <Connection> type defition.
   // To avoid the connection info in the plan being passed to the
   // local node and to make the implementation not very cumbersome

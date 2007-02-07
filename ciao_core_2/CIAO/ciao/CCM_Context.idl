@@ -34,11 +34,8 @@ module Components
     void set_rollback_only()
       raises (IllegalState);
 
-    /**
-     * @todo Add for QoS4CCM
-     * Object resolve_service_reference(in string service_id)
-     *    raises (CCMException);
-     */
+    Object resolve_service_reference(in string service_id);
+    
   };
 };
 #endif /* CCM_CONTEXT_IDL */

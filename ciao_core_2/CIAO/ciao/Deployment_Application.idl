@@ -21,6 +21,11 @@ module Deployment
 
   interface Application
   {
+    // @@changed
+    //     void finishLaunch (in Connections providedReference,
+    //                        in boolean start)
+    //       raises (StartError, InvalidConnection);
+    
     void finishLaunch (in Connections providedReference,
                        in boolean start,
                        in boolean is_ReDAC)

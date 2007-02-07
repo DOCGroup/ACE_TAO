@@ -1,126 +1,40 @@
-Fri Feb  2 15:09:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Feb  7 21:16:36 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * ciao/Container_Base.cpp:
-        * ciao/Context_Impl_Base.cpp:
-        * ciao/Context_Impl_T.cpp:
-        * ciao/Home_Servant_Impl_Base.cpp:
-        * ciao/Home_Servant_Impl_T.cpp:
-        * ciao/Port_Activator_T.cpp:
-        * ciao/Servant_Activator.cpp:
-        * ciao/Servant_Impl_Base.cpp:
-        * ciao/Servant_Impl_T.cpp:
-        * ciao/Swapping_Servant_Home_Impl_Base.cpp:
-        * ciao/Swapping_Servant_Home_Impl_T.cpp:
-        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-        * DAnCE/NodeApplication/Container_Impl.cpp:
-        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
-        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-        * DAnCE/NodeManager/NodeManager_Impl.cpp:
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
-        * docs/templates/CIAO_Glue_Session_Template.cpp:
-        * docs/templates/CIAO_Glue_Session_Template.inl:
-        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.cpp:
-          Replaced ACE_THROW_RETURN with throw
+        * ciao/Deployment_Data.idl
+        * ciao/Deployment_ApplicationManager.idl
+        * ciao/CCM_CCMException.idl
+        * ciao/Deployment_Application.idl
+        * ciao/Context_Impl_Base.h
+        * ciao/Deployment.idl
+        * ciao/Context_Impl_Base.cpp
+        * ciao/Deployment_NodeApplication.idl
+        * ciao/Deployment_TargetData.idl
+        * ciao/CCM_Events.idl
+        * ciao/Deployment_ExecutionManager.idl
+        * ciao/Deployment_NodeApplicationManager.idl
+        * ciao/CCM_Context.idl
+        * ciao/Deployment_Base.idl
+        * ciao/Deployment_Packaging_Data.idl
+        * ciao/Deployment_DomainApplicationManager.idl
+        * ciao/Deployment_Connection.idl
+        * ciao/Deployment_TargetManager.idl
+        * ciao/Deployment_DeploymentPlan.idl
+        * ciao/Deployment_NodeManager.idl
+        
+          Updated with changes to comply with the 06-02-01 version of the
+          DnC spec.  Many of these changes would break the entire toolchain,
+          so they are commented out for the time being.  grep for
 
-Fri Feb  2 13:28:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+          @@changed @@add @@delete
+        
+          to find changes.
+          
+        * ciao/CCM_Core.mpc
+        *ciao/Deployment_DomainApplication.idl
+        
+         Added DomainApplication interface, completely missing from our IDL.
 
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
-        * examples/BasicSP/EC/client.cpp:
-        * performance-tests/Benchmark/RoundTripServer/server.cpp:
-        * performance-tests/Benchmark/server.cpp:
-        * performance-tests/Protocols/Controller/Controller.cpp:
-        * RACE/Input_Adapters/LocationUpdater/Injector.cpp:
-        * RACE/Input_Adapters/PlanGenerator/Injector.cpp:
-        * tests/IDL3/Events/Any/main.cpp:
-        * tools/Config_Handlers/Package_Handlers/test.cpp:
-        * tools/Config_Handlers/RT-CCM/test.cpp:
-        * tools/Config_Handlers/test.cpp:
-          No need anymore to pass an empty string as orbname
-
-Fri Feb  2 11:48:34 UTC 2007  Simon McQueen  <sm@prismtech.com>
-
-        * tests/IDL3/Components/SimpleComponent/SimpleComponent.idl:
-
-          Add regression testing for bug #2790.
-
-Wed Jan 31 15:44:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/Plan_Generator/PCVisitor.cpp:
-        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
-        * RACE/Controller/Component/Controller_exec.cpp:
-        * RACE/Controller/Component/Controller_exec.h:
-
-Wed Jan 31 15:03:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/ExecutionManager/DAM_Map.{h,cpp}:
-        * DAnCE/ExecutionManager/Execution_Manager.cpp
-        * DAnCE/ExecutionManager/Execution_Manager_Impl.{h,cpp}:
-          Const changes, layout improvements
-
-Tue Jan 30 20:49:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-         * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
-         * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
-
-           Compile fixes for FC6.
-
-Tue Jan 30 20:43:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-          Changed the check for the bind, with -1 return an error, with
-          1 report a debug message of the reuse, else a normal debug.
-          Thanks to Sandro Andrade <sandro dot andrade at gmail dot com>
-          for reporting that ReDAC was broken.
-
-Tue Jan 30 11:27:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Server_init.{h,cpp}:
-          Change argument of BindObjectPath to a _ptr. Fixes bugzilla
-          2779. Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com>
-          for reporting this.
-
-Mon Jan 29 19:23:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Swapping_Servant_Home_Impl_Base.{h,cpp}:
-        * ciao/Upgradeable_Context_Impl_T.cpp:
-        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-          Layout changes
-
-        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-          Fixed parsing of node manager file
-
-        * examples/BasicSP/descriptors/run_test.pl:
-          New script to run this example automatically
-
-        * exampls/BasicSP/README.html:
-          Fixed incorrect path and mpc generation command
-
-Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * CIAO version 0.5.6 released.
-
-Thu Jan 25 18:18:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
-
-        * *.{h,cpp,inl}:
-
-          Removed the majority of the ACE exception macros.  The
-          ACE_THROW_RETURN's were left in to avoid warnings from aCC.
-
-Wed Jan 24 13:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * *.{h,cpp,inl}:
-          Removed part of the environment macros
-
-Mon Jan 22 23:14:56 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
-
-        * CIAO version 0.5.5 released.
-
+        
 
 Local Variables:
 mode: change-log
