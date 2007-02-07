@@ -36,10 +36,10 @@ namespace Test
     virtual ~Server_ORBInitializer (void);
 
     virtual void pre_init(PortableInterceptor::ORBInitInfo*)
-      throw (CORBA::SystemException);
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void post_init(PortableInterceptor::ORBInitInfo*)
-      throw (CORBA::SystemException);
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     PortableInterceptor::ServerRequestInterceptor_var interceptor_;
