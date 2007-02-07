@@ -429,7 +429,7 @@ protected:
   ACE_Configuration_Section_Key root_;
 };
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 /**
  * @class ACE_Section_Key_Win32
@@ -554,7 +554,7 @@ protected:
   ACE_Configuration_Win32Registry (const ACE_Configuration_Win32Registry& rhs);
   ACE_Configuration_Win32Registry& operator= (const ACE_Configuration_Win32Registry& rhs);
 };
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
 // ACE_Allocator version
 

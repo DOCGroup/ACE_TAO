@@ -1,3 +1,40 @@
+Wed Feb  7 21:01:39 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Added a bit of info about building for National
+          Instruments' LabVIEW RT which uses Pharlap ETS. In particular, if
+          building for LabVIEW's Pharlap, add #define ACE_PHARLAP_LABVIEW_RT
+          to your config.h file along with #include "ace/config-pharlap.h"
+          to adjust for slight differences between stock Pharlap and
+          LabVIEW RT's variant.
+
+        * ace/config-pharlap.h: Pharlap doesn't supply InterlockedExchangeAdd
+          and doesn't do SetFilePointerEx (needs ACE_LACKS_SETFILEPOINTEREX).
+
+        * ace/OS_NS_Thread.cpp (sched_params): Don't attempt SetPriorityClass
+          on Pharlap - it's not defined.
+
+        * ace/OS_NS_Thread.inl (thr_getprio): For Pharlap ETS, use
+          EtsGetTimeSlice() to determine the scheduling policy; if the time
+          slice is anything other than 0, it's multitasking ACE_SCHED_OTHER.
+
+        * ace/OS_NS_stdio.inl (cuserid): Pharlap doesn't go GetUserName() so
+          make it ACE_NOTSUP_RETURN.
+          (adjust_flock_params): Use SetFilePointer() instead of
+          SetFilePointerEx(), even with 64 bit offsets, if
+          ACE_LACKS_SETFILEPOINTEREX is set.
+
+        * ace/OS_NS_unistd.inl (pwrite): For Windows platforms without
+          overlapped I/O, don't rely on availability of SetFilePointerEx -
+          platforms that have it also have overlapped I/O. In this case, use
+          SetFilePointer with appropriate call differences for 32/64 bit
+          file offsets.
+
+        * ace/Pagefile_Memory_Pool.{h inl cpp}: Pharlap doesn't do this class.
+
+        * ace/Configuration.{h cpp}:
+        * ace/Registry.{h cpp}: The Windows registry is not available in
+          Pharlap.
+
 Wed Feb  7 14:44:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/rm_exception_macros.pl:

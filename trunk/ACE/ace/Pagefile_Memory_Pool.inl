@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,4 +51,4 @@ ACE_Pagefile_Memory_Pool::base_addr (void) const
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 &7 !ACE_HAS_PHARLAP */
