@@ -41,23 +41,19 @@ public:
   //Constructor
   TAO_CSD_POA (const String &name,
                PortableServer::POAManager_ptr poa_manager,
-              const TAO_POA_Policy_Set &policies,
-              TAO_Root_POA *parent,
-              ACE_Lock &lock,
-              TAO_SYNCH_MUTEX &thread_lock,
-              TAO_ORB_Core &orb_core,
-              TAO_Object_Adapter *object_adapter
-             );
+               const TAO_POA_Policy_Set &policies,
+               TAO_Root_POA *parent,
+               ACE_Lock &lock,
+               TAO_SYNCH_MUTEX &thread_lock,
+               TAO_ORB_Core &orb_core,
+               TAO_Object_Adapter *object_adapter);
 
   //Destructor
   virtual ~TAO_CSD_POA (void);
 
   /// Pass the Strategy object reference to the CSD poa.
   virtual
-  void set_csd_strategy (
-      ::CSD_Framework::Strategy_ptr s
-
-    )
+  void set_csd_strategy (::CSD_Framework::Strategy_ptr s)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -70,13 +66,11 @@ public:
 
   /// Hook - A servant has been activated.
   virtual void servant_activated_hook (PortableServer::Servant servant,
-                              const PortableServer::ObjectId& oid
-                             );
+                              const PortableServer::ObjectId& oid);
 
   /// Hook - A servant has been deactivated.
   virtual void servant_deactivated_hook (PortableServer::Servant servant,
-                                const PortableServer::ObjectId& oid
-                               );
+                                const PortableServer::ObjectId& oid);
 
   ///Method for creating new CSD POA.
   TAO_Root_POA * new_POA (const String &name,
@@ -86,8 +80,7 @@ public:
                           ACE_Lock &lock,
                           TAO_SYNCH_MUTEX &thread_lock,
                           TAO_ORB_Core &orb_core,
-                          TAO_Object_Adapter *object_adapter
-                         );
+                          TAO_Object_Adapter *object_adapter);
 
   /// Servant Dispatching Strategy proxy accessor.
   TAO::CSD::Strategy_Proxy&

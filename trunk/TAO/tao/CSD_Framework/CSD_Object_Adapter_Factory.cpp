@@ -41,8 +41,7 @@ TAO_CSD_Object_Adapter_Factory::create (TAO_ORB_Core *oc)
 }
 
 int
-TAO_CSD_Object_Adapter_Factory::init (int /* argc */,
-                                  ACE_TCHAR* /* argv */ [])
+TAO_CSD_Object_Adapter_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 {
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");

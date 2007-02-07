@@ -82,20 +82,17 @@ template<typename StringType,
 CORBA::Boolean
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                               ) const
+                     RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 {
   // The CORBA::TypeCode base class already verified equality of the
   // base attributes (id and name).  Perform an equality comparison of
   // the content.
 
-  CORBA::TypeCode_var rhs_content_type =
-    tc->content_type ();
+  CORBA::TypeCode_var rhs_content_type = tc->content_type ();
 
   return
     Traits<StringType>::get_typecode (this->content_type_)->equal (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 template<typename StringType,
@@ -104,9 +101,7 @@ template<typename StringType,
 CORBA::Boolean
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::equivalent_i (
-  CORBA::TypeCode_ptr
-  ) const
+                     RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr) const
 {
   // Equivalence already verified in the base class
   // CORBA::TypeCode::equivalent() method.
@@ -134,22 +129,19 @@ TAO::TypeCode::Alias<StringType,
 
   CORBA::TypeCode_var compact_content_type =
     Traits<StringType>::get_typecode (
-      this->content_type_)->get_compact_typecode (
-        );
+      this->content_type_)->get_compact_typecode ();
 
   if (this->kind_ == CORBA::tk_alias)
     {
       return adapter->create_alias_tc (this->attributes_.id (),
                                        "",  /* empty name */
-                                       compact_content_type.in ()
-                                      );
+                                       compact_content_type.in ());
     }
   else
     {
       return adapter->create_value_box_tc (this->attributes_.id (),
                                            "",  /* empty name */
-                                           compact_content_type.in ()
-                                          );
+                                           compact_content_type.in ());
     }
 }
 
@@ -159,8 +151,7 @@ template<typename StringType,
 char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::id_i (
-  void) const
+                     RefCountPolicy>::id_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -173,8 +164,7 @@ template<typename StringType,
 char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::name_i (
-  void) const
+                     RefCountPolicy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -187,8 +177,7 @@ template<typename StringType,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::content_type_i (
-  void) const
+                     RefCountPolicy>::content_type_i (void) const
 {
   return
      CORBA::TypeCode::_duplicate (

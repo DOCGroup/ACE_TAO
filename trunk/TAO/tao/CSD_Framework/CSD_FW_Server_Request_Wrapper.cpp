@@ -73,8 +73,7 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 // Assumes that the servant argument is not a NULL pointer.
 void
 TAO::CSD::FW_Server_Request_Wrapper::dispatch
-                                            (PortableServer::Servant servant
-                                             )
+                                            (PortableServer::Servant servant)
 {
   try
     {

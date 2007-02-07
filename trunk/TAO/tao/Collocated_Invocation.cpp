@@ -129,7 +129,8 @@ namespace TAO
             // list, if not, then throw an Unknown exception
             if (!this->details_.has_exception (ex))
               {
-                throw ::CORBA::UNKNOWN (0, CORBA::COMPLETED_YES);
+                throw ::CORBA::UNKNOWN (CORBA::OMGVMCID | 1,
+                                        CORBA::COMPLETED_MAYBE);
               }
             else
              {
