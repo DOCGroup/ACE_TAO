@@ -141,7 +141,8 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
       }
       break;
     case TAO_ETCL_COMPONENT:
-      this->op_.any_ = any;
+      this->op_.any_ = any->impl ();
+      this->op_.any_->_add_ref ();
       break;
     }
 }
@@ -237,7 +238,10 @@ TAO_ETCL_Literal_Constraint::operator CORBA::ULong (void) const
     case TAO_ETCL_COMPONENT:
       {
         CORBA::ULong retval = 0;
-        *this->op_.any_ >>= retval;
+        CORBA::Any tmp;
+        tmp.replace(this->op_.any_);
+        this->op_.any_->_add_ref ();
+        tmp >>= retval;
         return retval;
       }
     default:
@@ -268,7 +272,12 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Long (void) const
     case TAO_ETCL_COMPONENT:
       {
         CORBA::Long retval = 0;
-        *this->op_.any_ >>= retval;
+
+        CORBA::Any tmp;
+        tmp.replace(this->op_.any_);
+        this->op_.any_->_add_ref ();
+        tmp >>= retval;
+
         return retval;
       }
     default:
@@ -290,7 +299,12 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Double (void) const
     case TAO_ETCL_COMPONENT:
       {
         CORBA::Double retval = 0.0;
-        *this->op_.any_ >>= retval;
+
+        CORBA::Any tmp;
+        tmp.replace(this->op_.any_);
+        this->op_.any_->_add_ref ();
+        tmp >>= retval;
+
         return retval;
       }
     default:
@@ -307,7 +321,12 @@ TAO_ETCL_Literal_Constraint::operator const char* (void) const
     case TAO_ETCL_COMPONENT:
       {
         const char *retval = 0;
-        *this->op_.any_ >>= retval;
+
+         CORBA::Any tmp;
+        tmp.replace(this->op_.any_);
+        this->op_.any_->_add_ref ();
+        tmp >>= retval;
+
         return retval;
       }
     default:
@@ -315,7 +334,7 @@ TAO_ETCL_Literal_Constraint::operator const char* (void) const
   }
 }
 
-TAO_ETCL_Literal_Constraint::operator const CORBA::Any* (void) const
+TAO_ETCL_Literal_Constraint::operator TAO::Any_Impl* (void) const
 {
   return (this->type_ == TAO_ETCL_COMPONENT) ? this->op_.any_ : 0;
 }
@@ -716,6 +735,9 @@ TAO_ETCL_Literal_Constraint::widest_type (
 void
 TAO_ETCL_Literal_Constraint::copy (const TAO_ETCL_Literal_Constraint &lit)
 {
+  // save the older type_ before assignment.
+  unsigned short prev_type = this->type_;
+
   this->type_ = lit.type_;
 
   switch (this->type_)
@@ -737,7 +759,10 @@ TAO_ETCL_Literal_Constraint::copy (const TAO_ETCL_Literal_Constraint &lit)
     this->op_.bool_ = lit.op_.bool_;
     break;
   case TAO_ETCL_COMPONENT:
+    if(prev_type == TAO_ETCL_COMPONENT && this->op_.any_ != 0)
+      this->op_.any_->_remove_ref ();
     this->op_.any_ = lit.op_.any_;
+    this->op_.any_->_add_ref ();
     break;
   default:
     this->type_ = TAO_UNKNOWN;

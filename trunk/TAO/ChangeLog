@@ -1,3 +1,28 @@
+Wed Feb  7 23:12:03 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+
+          Changed to use Any_Impl instead of Any to fix memory crash 
+          problem since Any_Imply is refcounted. Refer to Bug 2798 or
+          RT 9552 for more info.
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Repercussion changes are required here.
+
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Filter/Notify_Filter.mpc:
+
+          Added a new case to test IN operator for the ETCL.
+
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+
+          Fixed an incorrect initialization of a sequence object.
+          Added code to detect consumer receiving not subscribed event.
+
 Wed Feb  7 20:52:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
