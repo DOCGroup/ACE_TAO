@@ -33,8 +33,9 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
       break;
     case SEEK_CUR:
       {
-# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
-        LARGE_INTEGER distance, offset;
+        LARGE_INTEGER offset;
+# if !defined (ACE_LACKS_SETFILEPOINTEREX)
+        LARGE_INTEGER distance;
         distance.QuadPart = 0;
         if (!::SetFilePointerEx (lock->handle_,
                                  distance,
@@ -44,17 +45,24 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-        start += offset.QuadPart;
 # else
-        DWORD const offset =
-          ::SetFilePointer (lock->handle_, 0, 0, FILE_CURRENT);
-        if (offset == INVALID_SET_FILE_POINTER)
+        offset.LowPart = ::SetFilePointer (lock->handle_,
+                                           0,
+                                           &offset.HighPart,
+                                           FILE_CURRENT);
+        if (offset.LowPart == INVALID_SET_FILE_POINTER &&
+            ::GetLastError() != NO_ERROR)
           {
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-        start += static_cast<ACE_OFF_T> (offset);
-# endif  /* _FILE_OFFSET_BITS == 64 */
+# endif /* ACE_LACKS_SETFILEPOINTEREX */
+
+# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
+        start += offset.QuadPart;
+# else
+        start += offset.LowPart;
+# endif /* _FILE_OFFSET_BITS == 64 */
       }
       break;
     case SEEK_END:
@@ -398,6 +406,10 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       return user;
     }
 #elif defined (__QNXNTO__)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_PHARLAP)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);

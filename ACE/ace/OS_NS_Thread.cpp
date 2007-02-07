@@ -3617,8 +3617,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   if (id != ACE_SELF)
     ACE_NOTSUP_RETURN (-1);
 
+#   if !defined (ACE_PHARLAP_LABVIEW_RT)
   if (sched_params.quantum() != ACE_Time_Value::zero)
     EtsSetTimeSlice (sched_params.quantum().msec());
+#   endif
 
 # else
 
@@ -3637,7 +3639,9 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
       // a VERY BAD THING. This include guard will allow people
       // to easily disable this feature in ACE.
-#ifndef ACE_DISABLE_WIN32_INCREASE_PRIORITY
+      // It won't work at all for Pharlap since there's no SetPriorityClass.
+#if !defined (ACE_HAS_PHARLAP) && \
+    !defined (ACE_DISABLE_WIN32_INCREASE_PRIORITY)
       // Set the priority class of this process to the REALTIME process class
       // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
       if (!::SetPriorityClass (::GetCurrentProcess (),
