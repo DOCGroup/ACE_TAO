@@ -65,9 +65,18 @@ Client_Task::test_user_exception_not_expected (
     {
       hello_ptr->user_exception_not_expected ();
     }
-  catch (const CORBA::UNKNOWN& )
+  catch (const CORBA::UNKNOWN& ex)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Caught unknown exception as expected\n"));
+      if ((ex.minor() & 0xFFFU) == 1)
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Caught unknown exception as expected\n"));
+        }
+      else
+        {
+          ex._tao_print_exception (
+            "Unexpected exception caught in user_exception_not_expected:");
+          throw;
+        }
       // ignore
     }
   catch (const CORBA::Exception& ex)
@@ -83,11 +92,9 @@ Client_Task::svc (void)
 {
   try
     {
-      CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_);
+      CORBA::Object_var tmp = this->corb_->string_to_object (input_);
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -97,8 +104,7 @@ Client_Task::svc (void)
                              1);
         }
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+      CORBA::String_var the_string = hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
 		  the_string.in ()));
