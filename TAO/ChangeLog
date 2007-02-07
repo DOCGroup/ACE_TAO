@@ -1,3 +1,8 @@
+Wed Feb  7 15:31:20 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
+
+        * tao/AnyTypeCode/Any_SystemException.cpp:
+          This fixes bug 2774
+
 Tue Feb  6 20:14:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynEnum_i.cpp:

@@ -161,6 +161,7 @@ TAO::Any_SystemException::free_value (void)
       this->value_destructor_ = 0;
     }
 
+  ::CORBA::release (this->type_);
   this->value_ = 0;
 }
 
