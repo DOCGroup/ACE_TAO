@@ -54,7 +54,7 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor) const
 {
   TAO_IIOP_Acceptor *iacc = dynamic_cast<TAO_IIOP_Acceptor *>(acceptor);
   if (iacc == 0)
-    return 0;
+    return false;
 
 #if 0
   // @@@ mesnier_p@ociweb.com @@@
@@ -73,16 +73,16 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor) const
       char hostname[513];
       eps[eps_idx].get_host_name(hostname,512);
       if (this->is_equivalent_i(eps[eps_idx].get_port_number(),hostname))
-        return 1;
+        return true;
     }
-  return 0;
+  return false;
 #else
-  return 1;
+  return true;
 #endif /* 0 */
 }
 
 char *
-IIOPEndpointValue_i::host ( void )
+IIOPEndpointValue_i::host (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->host_.in());
@@ -108,7 +108,6 @@ IIOPEndpointValue_i::port (CORBA::UShort p )
 {
   this->port_ = p;
 }
-
 
 CORBA::ULong
 IIOPEndpointValue_i::protocol_tag (void)

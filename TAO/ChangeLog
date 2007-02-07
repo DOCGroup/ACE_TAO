@@ -1,3 +1,24 @@
+Wed Feb  7 20:16:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Alias_TypeCode.cpp:
+        * tao/AnyTypeCode/Alias_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/Alias_TypeCode_Static.h:
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/Collocated_Invocation.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter_Factory.cpp:
+        * tao/CSD_Framework/CSD_POA.cpp:
+        * tao/CSD_Framework/CSD_POA.h:
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.inl:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h:
+        * tao/ORB.cpp:
+        * tao/Tagged_Components.cpp:
+        * tao/Wait_On_Leader_Follower.h:
+          Layout changes
+
 Wed Feb  7 20:08:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TransportCurrent/lib/Client_ORBInitializer.cpp:

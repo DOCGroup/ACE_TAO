@@ -113,15 +113,13 @@ void TAO_CSD_POA::poa_deactivated_hook ()
 }
 
 void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant,
-                               const PortableServer::ObjectId& oid
-                               )
+                               const PortableServer::ObjectId& oid)
 {
   this->sds_proxy_->servant_activated_event (servant, oid);
 }
 
 void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid
-                                 )
+                                 const PortableServer::ObjectId& oid)
 {
   this->sds_proxy_->servant_deactivated_event (servant, oid);
 }
