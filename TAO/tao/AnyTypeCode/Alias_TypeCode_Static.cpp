@@ -80,8 +80,7 @@ TAO::TypeCode::Alias<char const *,
   // base attributes (id and name).  Perform an equality comparison of
   // the content.
 
-  CORBA::TypeCode_var rhs_content_type =
-    tc->content_type ();
+  CORBA::TypeCode_var rhs_content_type = tc->content_type ();
 
   return
     Traits<char const *>::get_typecode (this->content_type_)->equal (
@@ -118,15 +117,13 @@ TAO::TypeCode::Alias<char const *,
 
   CORBA::TypeCode_var compact_content_type =
     Traits<char const *>::get_typecode (
-      this->content_type_)->get_compact_typecode (
-        );
+      this->content_type_)->get_compact_typecode ();
 
   if (this->kind_ == CORBA::tk_alias)
     {
       return adapter->create_alias_tc (this->attributes_.id (),
                                        "",  /* empty name */
-                                       compact_content_type.in ()
-                                      );
+                                       compact_content_type.in ());
     }
   else
     {
@@ -159,8 +156,7 @@ TAO::TypeCode::Alias<char const *,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::content_type_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::content_type_i (void) const
 {
   return
      CORBA::TypeCode::_duplicate (

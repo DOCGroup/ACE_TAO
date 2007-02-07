@@ -66,8 +66,7 @@ public:
 
   /// Value initializing constructor, this is typically for creation
   /// of one-off values.
-  IIOPEndpointValue_i (const char *host,
-                       CORBA::UShort port);
+  IIOPEndpointValue_i (const char *host, CORBA::UShort port);
 
   virtual ~IIOPEndpointValue_i (void);
 
@@ -85,15 +84,15 @@ public:
   CORBA::Boolean validate_acceptor (TAO_Acceptor *) const;
 
   /// Host attribute get/set operators.
-  char * host ( void )
+  char * host (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void host (const char *)
+  void host (const char * h)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Port attribute get/set operators.
   CORBA::UShort port (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void port (CORBA::UShort )
+  void port (CORBA::UShort p)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Protocol tag get operator, inherited from EndpointValueBase

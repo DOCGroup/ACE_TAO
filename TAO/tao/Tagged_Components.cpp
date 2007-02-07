@@ -251,8 +251,7 @@ TAO_Tagged_Components::remove_component (IOP::ComponentId id)
 }
 
 int
-TAO_Tagged_Components::remove_known_component_i (
-    IOP::ComponentId tag)
+TAO_Tagged_Components::remove_known_component_i (IOP::ComponentId tag)
 {
   if (tag == IOP::TAG_ORB_TYPE)
     {
@@ -325,12 +324,11 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
       return 0;
     }
 
-  CORBA::ULong l = this->components_.length ();
+  CORBA::ULong const l = this->components_.length ();
 
   for (CORBA::ULong i = 0; i != l; ++i)
     {
-      const IOP::TaggedComponent &component =
-        this->components_[i];
+      const IOP::TaggedComponent &component = this->components_[i];
 
       if (this->known_tag (component.tag))
         {

@@ -484,9 +484,7 @@ CORBA::ORB::create_alias_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_alias_tc (id,
-                                   name,
-                                   original_type);
+  return adapter->create_alias_tc (id, name, original_type);
 }
 
 CORBA::TypeCode_ptr
@@ -504,9 +502,7 @@ CORBA::ORB::create_exception_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_exception_tc (id,
-                                       name,
-                                       members);
+  return adapter->create_exception_tc (id, name, members);
 }
 
 CORBA::TypeCode_ptr
@@ -523,8 +519,7 @@ CORBA::ORB::create_interface_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_interface_tc (id,
-                                       name);
+  return adapter->create_interface_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
@@ -573,8 +568,7 @@ CORBA::ORB::create_fixed_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_fixed_tc (digits,
-                                   scale);
+  return adapter->create_fixed_tc (digits, scale);
 }
 
 CORBA::TypeCode_ptr
@@ -591,8 +585,7 @@ CORBA::ORB::create_sequence_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_sequence_tc (bound,
-                                      element_type);
+  return adapter->create_sequence_tc (bound, element_type);
 }
 
 CORBA::TypeCode_ptr
@@ -609,8 +602,7 @@ CORBA::ORB::create_array_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_array_tc (length,
-                                   element_type);
+  return adapter->create_array_tc (length, element_type);
 }
 
 CORBA::TypeCode_ptr
@@ -630,8 +622,7 @@ CORBA::ORB::create_value_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_value_tc (id,
-                                   name,
+  return adapter->create_value_tc (id, name,
                                    type_modifier,
                                    concrete_base,
                                    members);
@@ -652,15 +643,11 @@ CORBA::ORB::create_value_box_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_value_box_tc (id,
-                                       name,
-                                       boxed_type);
+  return adapter->create_value_box_tc (id, name, boxed_type);
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_native_tc (
-    const char *id,
-    const char *name)
+CORBA::ORB::create_native_tc (const char *id, const char *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -671,13 +658,11 @@ CORBA::ORB::create_native_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_native_tc (id,
-                                    name);
+  return adapter->create_native_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_recursive_tc (
-    const char *id)
+CORBA::ORB::create_recursive_tc (const char *id)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -692,9 +677,7 @@ CORBA::ORB::create_recursive_tc (
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_abstract_interface_tc (
-    const char *id,
-    const char *name)
+CORBA::ORB::create_abstract_interface_tc (const char *id, const char *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -705,14 +688,11 @@ CORBA::ORB::create_abstract_interface_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_abstract_interface_tc (id,
-                                                name);
+  return adapter->create_abstract_interface_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_local_interface_tc (
-    const char *id,
-    const char *name)
+CORBA::ORB::create_local_interface_tc (const char *id, const char *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -723,14 +703,11 @@ CORBA::ORB::create_local_interface_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_local_interface_tc (id,
-                                             name);
+  return adapter->create_local_interface_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_component_tc (
-    const char *id,
-    const char *name)
+CORBA::ORB::create_component_tc (const char *id, const char *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -741,14 +718,11 @@ CORBA::ORB::create_component_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_component_tc (id,
-                                       name);
+  return adapter->create_component_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_home_tc (
-    const char *id,
-    const char *name)
+CORBA::ORB::create_home_tc (const char *id, const char *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -759,8 +733,7 @@ CORBA::ORB::create_home_tc (
       throw ::CORBA::INTERNAL ();
     }
 
-  return adapter->create_home_tc (id,
-                                  name);
+  return adapter->create_home_tc (id, name);
 }
 
 CORBA::TypeCode_ptr
@@ -796,8 +769,7 @@ CORBA::ORB::resolve_policy_manager (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  TAO_Policy_Manager *policy_manager =
-    this->orb_core_->policy_manager ();
+  TAO_Policy_Manager *policy_manager = this->orb_core_->policy_manager ();
 
   if (policy_manager == 0)
     {
@@ -816,7 +788,6 @@ CORBA::ORB::resolve_policy_manager (void)
 CORBA::Object_ptr
 CORBA::ORB::resolve_policy_current (void)
 {
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
@@ -917,8 +888,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     {
-      result = this->orb_core ()->resolve_poa_current
-        ();
+      result = this->orb_core ()->resolve_poa_current ();
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
     {
@@ -930,39 +900,32 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     {
-      result = this->orb_core ()->resolve_ior_manipulation
-        ();
+      result = this->orb_core ()->resolve_ior_manipulation ();
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORTABLE) == 0)
     {
-      result = this->orb_core ()->resolve_ior_table
-        ();
+      result = this->orb_core ()->resolve_ior_table ();
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
     {
-      result = this->orb_core ()->resolve_dynanyfactory
-        ();
+      result = this->orb_core ()->resolve_dynanyfactory ();
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     {
-      result = this->orb_core ()->resolve_typecodefactory
-        ();
+      result = this->orb_core ()->resolve_typecodefactory ();
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
     {
-      result = this->orb_core ()->resolve_codecfactory
-        ();
+      result = this->orb_core ()->resolve_codecfactory ();
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_COMPRESSIONMANAGER) == 0)
     {
-      result = this->orb_core ()->resolve_compression_manager
-        ();
+      result = this->orb_core ()->resolve_compression_manager ();
     }
 #if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
     {
-      result = this->orb_core ()->resolve_picurrent
-        ();
+      result = this->orb_core ()->resolve_picurrent ();
     }
 #endif
 
@@ -1000,11 +963,9 @@ CORBA::ORB::resolve_initial_references (const char *name,
   CORBA::String_var ior_env_var_name =
     CORBA::string_alloc (static_cast<CORBA::ULong> (ACE_OS::strlen (name) + 3));
 
-  ACE_OS::strcpy (ior_env_var_name.inout (),
-                  name);
+  ACE_OS::strcpy (ior_env_var_name.inout (), name);
 
-  ACE_OS::strcat (ior_env_var_name.inout (),
-                  "IOR");
+  ACE_OS::strcat (ior_env_var_name.inout (), "IOR");
 
   ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
 
@@ -1053,8 +1014,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
 #if !defined(CORBA_E_MICRO)
 void
-CORBA::ORB::register_initial_reference (const char * id,
-                                        CORBA::Object_ptr obj)
+CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
 {
   if (id == 0 || ACE_OS::strlen (id) == 0)
     throw ::CORBA::ORB::InvalidName ();
@@ -1134,9 +1094,7 @@ CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 // ORB initialization, per OMG document 98-12-01.
 
 CORBA::ORB_ptr
-CORBA::ORB_init (int &argc,
-                 char *argv[],
-                 const char *orbid)
+CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
 {
   // Use this string variable to hold the orbid
   ACE_CString orbid_string (orbid);
@@ -1639,8 +1597,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
   // of profiles and tell the MProfile object to allocate enough memory
   // to hold them all.
 
-  TAO_Connector_Registry *conn_reg =
-    this->orb_core_->connector_registry ();
+  TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
 
   int const retv = conn_reg->make_mprofile (str, mprofile);
   // Return nil.
