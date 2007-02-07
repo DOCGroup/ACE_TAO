@@ -18,6 +18,7 @@ main (int argc, char *argv[])
       foo[0] = "Hello World";
       const CORBA::StringSeq & bar = foo;
       ACE_DEBUG ((LM_DEBUG, "String: %s\n", bar[0].in ()));
+      CORBA::String_var mystring = bar[0].in ();
     }
   catch (const CORBA::Exception &ex)
     {
