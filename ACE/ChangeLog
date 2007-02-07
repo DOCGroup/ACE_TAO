@@ -1,3 +1,9 @@
+Wed Feb  7 14:44:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/rm_exception_macros.pl:
+
+          Added the ability to remove the ACE_THROW_SPEC's completely.
+
 Tue Feb  6 16:44:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:

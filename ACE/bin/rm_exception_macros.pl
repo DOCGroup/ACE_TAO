@@ -37,6 +37,7 @@ my(%macros) = ('ACE_ENV_TYPE'                  => 'CORBA::Environment',
                'ACE_THROW_INT *\((.*)\)'       => 'throw $1',
                'ACE_THROW *\((.*)\)'           => 'throw $1',
                'ACE_THROW_RETURN *\((.*),.+\)' => 'throw $1',
+               'ACE_THROW_SPEC *\((.*)\)'      => '',
                'ACE_TRY'                       => 'try',
                'ACE_TRY_NEW_ENV'               => 'try',
                'ACE_TRY_EX *\([^\)]+\)'        => 'try',
@@ -123,9 +124,23 @@ sub process_file {
           }
 
           $line =~ s/^(\s*)?($key\s*[;]?)//;
-          $val .= ';' if ($val ne '' && $rest =~ /;$/);
-          $line = $space . $val . $line;
-          $line =~ s/^\s+$//;
+
+          ## A special concession for ACE_THROW_SPEC.  In the header
+          ## we want to ensure that the semi-colon is preserved and if
+          ## possible placed on the previous line.  In the source file
+          ## we want the whole thing to go away.
+          my($ats) = (index($key, 'ACE_THROW_SPEC') == 0);
+          $val .= ';' if (($ats || $val ne '') && $rest =~ /;$/);
+          if ($ats && index($val, ';') == 0 &&
+              !($lines[$#lines] =~ /\/\/.*$/ ||
+                $lines[$#lines] =~ /\/\*.*\*\/$/)) {
+            $lines[$#lines] .= $val;                          
+            $line = '';
+          }
+          else {
+            $line = $space . $val . $line;
+            $line =~ s/^\s+$//;
+          }
 
           ## Fix up problems where ACE_TRY_THROW is used
           ## on a line by itself with the parenthesis following
