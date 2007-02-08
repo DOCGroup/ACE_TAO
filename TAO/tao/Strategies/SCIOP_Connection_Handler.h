@@ -42,9 +42,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>
         TAO_SCIOP_SVC_HANDLER;
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
-
 // ****************************************************************
 
 /**
