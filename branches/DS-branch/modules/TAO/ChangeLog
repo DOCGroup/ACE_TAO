@@ -1,3 +1,11 @@
+Thu Feb  8 21:36:19 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/POA_Cached_Policies.h:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+        
+          Added documentation.
+
 Thu Feb  8 20:41:20 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
