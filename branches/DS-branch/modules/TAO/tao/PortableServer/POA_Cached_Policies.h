@@ -79,13 +79,35 @@ namespace TAO
       PriorityModel priority_model (void) const;
       CORBA::Short server_priority (void) const;
 
+      /// Returns the network priority model that was set using a policy
+      /// by the server application.
+      ///
       NetworkPriorityModel network_priority_model (void) const;
+
+      /// Returns the request DiffServ codepoint that was set using a policy
+      /// by the server application.
+      ///
       CORBA::Long request_diffserv_codepoint (void) const;
+
+      /// Returns the reply DiffServ codepoint that was set using a policy
+      /// by the server application.
+      ///
       CORBA::Long reply_diffserv_codepoint (void) const;
 
+      /// Caches the network priority model that was set using a policy
+      /// by the server application.
+      ///
       void network_priority_model (
         NetworkPriorityModel network_priority_model);
+
+      /// Caches the request DiffServ codepoint that was set using a policy
+      /// by the server application.
+      ///
       void request_diffserv_codepoint (CORBA::Long diffserv_codepoint);
+
+      /// Caches the reply DiffServ codepoint that was set using a policy
+      /// by the server application.
+      ///
       void reply_diffserv_codepoint (CORBA::Long diffserv_codepoint);
 
       void priority_model (PriorityModel priority_model);
