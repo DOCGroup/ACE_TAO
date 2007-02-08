@@ -33,9 +33,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
-
 // ****************************************************************
 
 /**
@@ -56,8 +53,7 @@ public:
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
-  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag);
+  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core, CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_DIOP_Connection_Handler (void);
