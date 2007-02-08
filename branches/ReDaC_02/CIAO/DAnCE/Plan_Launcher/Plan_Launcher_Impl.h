@@ -44,7 +44,8 @@ namespace CIAO
                  bool use_repoman = false,
                  bool rm_use_naming = false,
                  const char *rm_name = 0,
-                 CORBA::Short priority = 0
+                 CORBA::Short priority = 0,
+                 size_t niterations = 0
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       /**
@@ -71,11 +72,11 @@ namespace CIAO
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      const char * launch_plan (const ::Deployment::DeploymentPlan &plan
+      virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
-      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan
+      virtual const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((Deployment_Failure));
 
@@ -103,10 +104,10 @@ namespace CIAO
       // PriorityModelPolicy.
       bool is_client_propagated_model (void);
 
-    private:
       /// Cached ORB pointer
       CORBA::ORB_var orb_;
 
+      /// Object reference of the ExecutionManager
       ::CIAO::ExecutionManagerDaemon_var em_;
 
       /// Local map for DAMs, to save expensive UUID lookups.
@@ -116,6 +117,9 @@ namespace CIAO
 
       /// Desired CORBA prioirty to be propagated to EM
       CORBA::Short desired_priority_;
+
+      /// Number of iterations to run benchmarking, if specified
+      size_t niterations_;
     };
 
   }
