@@ -171,8 +171,7 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
   TimeBase::TimeT t = this->relative_expiry_;
   TimeBase::TimeT seconds = t / 10000000u;
   TimeBase::TimeT microseconds = (t % 10000000u) / 10;
-  time_value.set (ACE_U64_TO_U32 (seconds),
-                  ACE_U64_TO_U32 (microseconds));
+  time_value.set (ACE_U64_TO_U32 (seconds), ACE_U64_TO_U32 (microseconds));
 
   if (TAO_debug_level > 0)
     {

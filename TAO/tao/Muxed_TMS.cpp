@@ -156,7 +156,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     // cases we dispatch with the lock held.
     // Dispatch the reply.
     // They return 1 on success, and -1 on failure.
-    result =  rd->dispatch_reply (params);
+    result = rd->dispatch_reply (params);
   }
 
   return result;

@@ -46,10 +46,8 @@ TAO_Tagged_Components::set_code_sets (
 void
 TAO_Tagged_Components::set_code_sets (CONV_FRAME::CodeSetComponentInfo &ci)
 {
-  this->set_code_sets_i (this->code_sets_.ForCharData,
-                         ci.ForCharData);
-  this->set_code_sets_i (this->code_sets_.ForWcharData,
-                         ci.ForWcharData);
+  this->set_code_sets_i (this->code_sets_.ForCharData, ci.ForCharData);
+  this->set_code_sets_i (this->code_sets_.ForWcharData, ci.ForWcharData);
   this->code_sets_set_ = 1;
 
   TAO_OutputCDR cdr;
@@ -170,10 +168,8 @@ TAO_Tagged_Components::set_known_component_i (
           return;
         }
 
-      this->set_code_sets_i (this->code_sets_.ForCharData,
-                             ci.ForCharData);
-      this->set_code_sets_i (this->code_sets_.ForWcharData,
-                             ci.ForWcharData);
+      this->set_code_sets_i (this->code_sets_.ForCharData, ci.ForCharData);
+      this->set_code_sets_i (this->code_sets_.ForWcharData, ci.ForWcharData);
       this->code_sets_set_ = 1;
     }
 }

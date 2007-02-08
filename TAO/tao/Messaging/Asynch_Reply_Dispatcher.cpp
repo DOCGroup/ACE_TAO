@@ -35,9 +35,7 @@ TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 
 // Dispatch the reply.
 int
-TAO_Asynch_Reply_Dispatcher::dispatch_reply (
-    TAO_Pluggable_Reply_Params &params
-  )
+TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
   if (params.input_cdr_ == 0)
     return -1;
@@ -162,7 +160,6 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
       TAO_OutputCDR out_cdr;
 
       comm_failure._tao_encode (out_cdr);
-
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);

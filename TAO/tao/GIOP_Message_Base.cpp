@@ -785,13 +785,11 @@ TAO_GIOP_Message_Base::process_reply_message (
     {
     case TAO_PLUGGABLE_MESSAGE_REPLY:
       // Should be taken care by the state specific parsing
-      retval =
-        generator_parser->parse_reply (input_cdr, params);
+      retval = generator_parser->parse_reply (input_cdr, params);
 
       break;
     case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
-      retval =
-        generator_parser->parse_locate_reply (input_cdr, params);
+      retval = generator_parser->parse_locate_reply (input_cdr, params);
       break;
     default:
       retval = -1;
@@ -802,8 +800,7 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   params.input_cdr_ = &input_cdr;
 
-  retval =
-    params.transport_->tms ()->dispatch_reply (params);
+  retval = params.transport_->tms ()->dispatch_reply (params);
 
   if (retval == -1)
     {

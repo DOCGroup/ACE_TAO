@@ -270,12 +270,11 @@ CORBA::TypeCode::Bounds::_tao_duplicate (void) const
 void
 CORBA::TypeCode::Bounds::_raise (void) const
 {
-  TAO_RAISE(*this);
+  throw *this;
 }
 
 void
-CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr
-                                      ) const
+CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr) const
 {
   if (cdr << this->_rep_id ())
     {
@@ -286,8 +285,7 @@ CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void
-CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &
-                                      )
+CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &)
 {
 }
 
@@ -318,12 +316,11 @@ CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 void
 CORBA::TypeCode::BadKind::_raise (void) const
 {
-  TAO_RAISE(*this);
+  throw *this;
 }
 
 void
-CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr
-                                       ) const
+CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr) const
 {
   if (cdr << this->_rep_id ())
     {
@@ -334,8 +331,7 @@ CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr
 }
 
 void
-CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &
-                                       )
+CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &)
 {
 }
 

@@ -57,8 +57,7 @@ namespace TAO
 
     Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-    TAO::Argument **args =
-      this->details_.args ();
+    TAO::Argument **args = this->details_.args ();
 
     if (this->details_.args_num () > 1)
       {
@@ -184,8 +183,7 @@ namespace TAO
 
     Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-    TAO::Argument **args =
-      this->details_.args ();
+    TAO::Argument **args = this->details_.args ();
 
     if (this->details_.args_num () > 1)
       {
