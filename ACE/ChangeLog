@@ -1,3 +1,11 @@
+Thu Feb  8 09:23:50 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/MMAP_Memory_Pool.cpp:
+          Removed empty else statement.
+
+        * include/makeinclude/platform_linux.GNU:
+          Fixed TCL/TK settings
+
 Thu Feb  8 08:03:57 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/config-openbsd.h:
