@@ -1,3 +1,4 @@
+// $Id$
 
 #include "NamingTask.h"
 #include "Hello.h"

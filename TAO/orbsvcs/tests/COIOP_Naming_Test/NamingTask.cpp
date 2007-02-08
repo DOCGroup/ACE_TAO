@@ -1,10 +1,10 @@
+// $Id$
 
 #include "NamingTask.h"
-#include <tao/Version.h>
-#include <orbsvcs/Naming/Naming_Server.h>
-#include <ace/OS_NS_unistd.h>
+#include "tao/Version.h"
+#include "orbsvcs/Naming/Naming_Server.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
-#include <iostream>
 
 NamingTask::NamingTask (const char* orbname, int argc, char** argv)
  : initialized_(false)
@@ -65,11 +65,11 @@ int NamingTask::svc()
       return 0;
     }
     else {
-      std::cerr << "Unable to initialize the Naming Service." << std::endl;
+      ACE_ERROR ((LM_ERROR, "Error, Unable to initialize the Naming Service.\n"));
     }
   }
   catch (CORBA::Exception& ex) {
-    std::cerr << "NamingTask::svc() CORBA::Exception: " << ex << std::endl;
+    ex._tao_print_exception ("CORBA exception: NamingTask::svc() ");
   }
 
   return -1;
