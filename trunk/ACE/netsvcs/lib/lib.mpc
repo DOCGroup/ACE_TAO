@@ -6,6 +6,7 @@ project(netsvcs): acelib {
   sharedname    = netsvcs
   dynamicflags += ACE_NETSVCS_BUILD_DLL
   Source_Files {
+    Time_Request_Reply.cpp
     TS_Server_Handler.cpp
     TS_Clerk_Handler.cpp
     Client_Logging_Handler.cpp

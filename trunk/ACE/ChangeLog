@@ -1,3 +1,30 @@
+Thu Feb  8 19:40:30 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Makefile.am:
+        * ace/ace.mpc:
+        * ace/Time_Request_Reply.{h cpp}:
+        * netsvcs/lib/Makefile.am:
+        * netsvcs/lib/lib.mpc:
+        * netsvcs/lib/Time_Request_Reply.{h cpp}: Moved Time_Request_Reply
+          from ace to netsvcs; it's only used from netsvcs and is only useful
+          as an example of some ACE usage. Real time synch needs should be
+          met using NTP.
+
+        * ace/Name_Request_Reply.{h cpp}: Changed the sec_timeout_ transfer
+          member from ACE_UINT32 to ACE_UINT64 to accomodate 64-bit time_t.
+
+        * netsvcs/lib/TS_Clerk_Handler.h:
+        * netsvcs/lib/TS_Server_Handler.h: Time_Request_Reply.h now is included
+          from netsvcs/lib, not ace.
+
+        * netsvcs/lib/Time_Request_Reply.{h cpp}: Changed the time-passing
+          API arguments in the constructor and time() methods from ACE_UINT32
+          to time_t. The on-wire protocol buffer fields that carry seconds
+          values between clerk and server were changed from ACE_UINT32 to
+          ACE_UINT64 to accomodate 64-bit time_t values.
+
+        * NEWS: Explained the user-visible ramifications of these changes.
+
 Thu Feb  8 09:23:50 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/MMAP_Memory_Pool.cpp:

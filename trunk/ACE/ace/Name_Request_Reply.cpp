@@ -1,4 +1,6 @@
 #include "ace/Name_Request_Reply.h"
+#include "ace/Basic_Types.h"
+#include "ace/CDR_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_string.h"
@@ -274,7 +276,10 @@ ACE_Name_Request::encode (void *&buf)
   buf = (void *) &this->transfer_;
   this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
   this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_ = ACE_HTONL (this->transfer_.sec_timeout_);
+#if defined (ACE_LITTLE_ENDIAN)
+  ACE_UINT64 secs = this->transfer_.sec_timeout_;
+  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+#endif
   this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
   this->transfer_.msg_type_ = ACE_HTONL (this->transfer_.msg_type_);
   this->transfer_.name_len_ = ACE_HTONL (this->transfer_.name_len_);
@@ -294,7 +299,10 @@ ACE_Name_Request::decode (void)
   // Decode the fixed-sized portion first.
   this->transfer_.block_forever_ = ACE_NTOHL (this->transfer_.block_forever_);
   this->transfer_.usec_timeout_  = ACE_NTOHL (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_ = ACE_NTOHL (this->transfer_.sec_timeout_);
+#if defined (ACE_LITTLE_ENDIAN)
+  ACE_UINT64 secs = this->transfer_.sec_timeout_;
+  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+#endif
   this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
   this->transfer_.msg_type_ = ACE_NTOHL (this->transfer_.msg_type_);
   this->transfer_.name_len_ = ACE_NTOHL (this->transfer_.name_len_);

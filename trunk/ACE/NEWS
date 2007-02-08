@@ -15,6 +15,19 @@ PLANNED CHANGES FOR "ACE-5.5.7"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
 ====================================================
 
+. The ace/Time_Request_Reply.h and ace/Time_Request_Reply.cpp files were
+  moved from $ACE_ROOT/ace to $ACE_ROOT/netsvcs/lib. The time arguments in
+  the public API to ACE_Time_Request were changed from ACE_UINT32 to time_t
+  and the portions of the on-wire protocol that contains time was changed from
+  ACE_UINT32 to ACE_UINT64. Thus, code that uses the ACE_Time_Request class
+  to transfer time information will not interoperate properly with prior
+  ACE versions. This will affect uses of the netsvcs time clerk/server.
+
+. The portion of the ACE_Name_Request class that carries the on-wire seconds
+  portion of a timeout value was changed from ACE_UINT32 to ACE_UINT64. This
+  means that Name server/clients at ACE 5.5.7 and higher will not interoperate
+  properly with previous ACE versions' name servers/clients.
+
 . In the ACE_Log_Record (ACE_Log_Priority, long, long) constructor, the
   second argument, long time_stamp, was changed to be of type time_t. This
   aligns the type with the expected value, a time stamp such as that returned
