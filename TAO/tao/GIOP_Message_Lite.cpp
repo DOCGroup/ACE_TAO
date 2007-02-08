@@ -1147,7 +1147,7 @@ TAO_GIOP_Message_Lite::parse_reply (TAO_InputCDR &cdr,
 
   params.input_cdr_= &cdr;
 
-  if ( params.transport_->tms ()->dispatch_reply (params) == -1)
+  if (params.transport_->tms ()->dispatch_reply (params) == -1)
     {
       // Something really critical happened, we will forget about
       // every reply on this connection.

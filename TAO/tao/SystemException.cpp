@@ -947,7 +947,7 @@ TAO::create_system_exception (const char *id)
 void \
 CORBA::name ::_raise (void) const \
 { \
-  TAO_RAISE (*this); \
+  throw *this; \
 }
 
 STANDARD_EXCEPTION_LIST

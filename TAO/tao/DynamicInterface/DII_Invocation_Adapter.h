@@ -87,8 +87,7 @@ namespace TAO
                             CORBA::Request *r,
                             Invocation_Mode mode = TAO_DII_INVOCATION);
 
-
-    virtual ~DII_Invocation_Adapter (void) {}
+    virtual ~DII_Invocation_Adapter (void);
 
   protected:
 
@@ -96,8 +95,7 @@ namespace TAO
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-       );
+        ACE_Time_Value *&max_wait_time);
 
   private:
 
@@ -132,9 +130,7 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
     /// Invoke the target
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                        );
+    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
 
 
   protected:
@@ -142,8 +138,7 @@ namespace TAO
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-       );
+        ACE_Time_Value *&max_wait_time);
 
   private:
     CORBA::Request *request_;

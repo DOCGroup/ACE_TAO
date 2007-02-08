@@ -122,7 +122,7 @@ CORBA::WrongTransaction::_tao_duplicate (void) const
 
 void CORBA::WrongTransaction::_raise (void) const
 {
-  TAO_RAISE (*this);
+  throw *this;
 }
 
 void CORBA::WrongTransaction::_tao_encode (

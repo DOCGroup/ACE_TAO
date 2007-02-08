@@ -45,6 +45,10 @@ namespace TAO
   {
   }
 
+  DII_Invocation_Adapter::~DII_Invocation_Adapter (void)
+  {
+  }
+
   Invocation_Status
   DII_Invocation_Adapter::invoke_twoway (
         TAO_Operation_Details &op,

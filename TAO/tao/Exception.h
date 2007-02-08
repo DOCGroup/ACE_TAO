@@ -25,9 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is used in the implementation of the _raise methods
-#define TAO_RAISE(EXCEPTION) throw EXCEPTION
-
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"

@@ -32,8 +32,7 @@ TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
 // Dispatch the reply.
 int
 TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
-    TAO_Pluggable_Reply_Params &params
-  )
+    TAO_Pluggable_Reply_Params &params)
 {
   if (params.input_cdr_ == 0)
     return -1;
@@ -103,20 +102,16 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
   try
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0,
-                                        CORBA::COMPLETED_MAYBE);
+      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
-      comm_failure._tao_encode (out_cdr
-                               );
+      comm_failure._tao_encode (out_cdr);
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
-      this->req_->handle_response (cdr,
-                                   TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION
-                                  );
+      this->req_->handle_response (cdr, TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION);
     }
   catch (const ::CORBA::Exception& ex)
     {

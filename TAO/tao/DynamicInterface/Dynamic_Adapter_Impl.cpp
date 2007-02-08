@@ -28,9 +28,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::NamedValue_ptr result,
     CORBA::ExceptionList_ptr exceptions,
     CORBA::Request_ptr &request,
-    CORBA::Flags req_flags
-
-  )
+    CORBA::Flags req_flags)
 {
   ACE_NEW_THROW_EX (request,
                     CORBA::Request (obj,
@@ -53,8 +51,7 @@ TAO_Dynamic_Adapter_Impl::create_request (
 CORBA::Request_ptr
 TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
-                                   const char *operation
-                                   )
+                                   const char *operation)
 {
   CORBA::Request_ptr req = CORBA::Request::_nil ();
   ACE_NEW_THROW_EX (req,
@@ -120,9 +117,7 @@ TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 
 void
 TAO_Dynamic_Adapter_Impl::create_exception_list (
-    CORBA::ExceptionList_ptr &list
-
-  )
+    CORBA::ExceptionList_ptr &list)
 {
   ACE_NEW_THROW_EX (list,
                     CORBA::ExceptionList,

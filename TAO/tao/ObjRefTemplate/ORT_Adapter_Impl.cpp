@@ -42,9 +42,7 @@ TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
                                     const PortableInterceptor::ObjectId &id)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->ort_factory_->make_object (repo_id,
-                                          id
-                                         );
+  return this->ort_factory_->make_object (repo_id, id);
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
