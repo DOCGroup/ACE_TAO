@@ -225,16 +225,14 @@
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
 
-// OpenBSD actually has the clearerr call, but it causes a
-// bogus compiler syntax error.
-#define ACE_LACKS_CLEARERR
-
 // OpenBSD 3.2 lacks sched_setscheduler (see /usr/src/lib/libc_r/TODO)
 #define ACE_LACKS_SETSCHED
 
 // OpenBSD supports IPv6 by default, but ACE IPv6 code
 // has compile errors.
 //#define ACE_HAS_IPV6
+
+#define ACE_HAS_3_PARAM_READDIR_R
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
