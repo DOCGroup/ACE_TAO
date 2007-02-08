@@ -33,10 +33,18 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_Network_Priority_Hook
 public:
   virtual ~TAO_DiffServ_Network_Priority_Hook(void);
 
+  /// This function is a hook, that is called from the Root_POA's
+  /// constructor. It allows the POA to cache the server side network
+  /// priority policy, so that it can be used for sending replies with the
+  /// policy-specified DiffServ codepoint.
+  ///
   void update_network_priority (TAO_Root_POA &poa, 
                                 TAO_POA_Policy_Set &poa_policy_set);
 
-  void get_dscp_codepoint (TAO_ServerRequest &req,
+  /// This function is a hook, that is used by the POA's servant dispatcher
+  /// when it tries to assign DiffServ codepoints on the replies.
+  ///
+  void set_dscp_codepoint (TAO_ServerRequest &req,
                                   TAO_Root_POA &poa);
 };
 
