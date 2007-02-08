@@ -52,8 +52,6 @@ public:
 
   virtual const CORBA::Long get_dscp_codepoint (TAO_Service_Context &req) = 0;
 
-  virtual void set_dscp_codepoint (CORBA::Long dscp_codepoint) = 0;
-
   virtual void np_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart) = 0;
