@@ -52,8 +52,7 @@ namespace TAO
   }
 
   void
-  Invocation_Adapter::invoke_i (TAO_Stub *stub,
-                                TAO_Operation_Details &details)
+  Invocation_Adapter::invoke_i (TAO_Stub *stub, TAO_Operation_Details &details)
   {
     // The invocation has got to be within the context of the
     // corresponding ORB's configuration. Otherwise things like
@@ -81,12 +80,10 @@ namespace TAO
         // the object reference also refers to a collocated object.
         if (cpb_ != 0 || effective_target->_servant () != 0)
           {
-            strat =
-              TAO_ORB_Core::collocation_strategy (effective_target.in ());
+            strat = TAO_ORB_Core::collocation_strategy (effective_target.in ());
           }
 
-        if (strat == TAO_CS_REMOTE_STRATEGY ||
-            strat == TAO_CS_LAST)
+        if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
             ACE_Time_Value *max_wait_time = 0;
             status =
@@ -311,14 +308,12 @@ namespace TAO
 
     TAO::Synch_Twoway_Invocation synch (this->target_,  r, details);
 
-    Invocation_Status const status =
-      synch.remote_twoway (max_wait_time);
+    Invocation_Status const status = synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        effective_target = synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
         const bool is_permanent_forward =
@@ -343,14 +338,12 @@ namespace TAO
   {
     TAO::Synch_Oneway_Invocation synch (this->target_, r, details);
 
-    Invocation_Status const s =
-      synch.remote_oneway (max_wait_time);
+    Invocation_Status const s = synch.remote_oneway (max_wait_time);
 
     if (s == TAO_INVOKE_RESTART &&
         synch.is_forwarded ())
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        effective_target = synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
         const bool is_permanent_forward =
@@ -373,8 +366,7 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj =
-      effective_target->_stubobj ();
+    TAO_Stub *stubobj = effective_target->_stubobj ();
 
     if (stubobj == 0)
       throw ::CORBA::INTERNAL (

@@ -113,7 +113,7 @@ CORBA::ORB::InvalidName::_tao_duplicate (void) const
 
 void CORBA::ORB::InvalidName::_raise (void) const
 {
-  TAO_RAISE (*this);
+  throw *this;
 }
 
 void CORBA::ORB::InvalidName::_tao_encode (TAO_OutputCDR &) const

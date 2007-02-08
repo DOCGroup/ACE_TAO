@@ -59,29 +59,23 @@ public:
   /// The invoke() method receives requests issued to any CORBA object
   /// incarnated by the DSI servant and performs the processing
   /// necessary to execute the request.
-  virtual void invoke (CORBA::ServerRequest_ptr request
-                       ) = 0;
+  virtual void invoke (CORBA::ServerRequest_ptr request) = 0;
 
   /// The _primary_interface() method receives an ObjectId value and a
   /// POA_ptr as input parameters and returns a valid RepositoryId
   /// representing the most-derived interface for that oid.
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-
-    ) = 0;
+      PortableServer::POA_ptr poa) = 0;
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char *logical_type_id
-                                );
+  virtual CORBA::Boolean _is_a (const char *logical_type_id);
 
   /// Returns a CORBA::Object_ptr for the target object.
   CORBA::Object_ptr _this (void);
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA::InterfaceDef_ptr _get_interface (
-      void
-    );
+  virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
 protected:
 
@@ -95,15 +89,11 @@ protected:
   virtual TAO_Stub *_create_stub (void);
 
   /// Turns around and calls invoke.
-  virtual void _dispatch (TAO_ServerRequest &request,
-                          void *context
-                          );
+  virtual void _dispatch (TAO_ServerRequest &request, void *context);
 
 private:
   /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().
-  CORBA::RepositoryId get_id_from_primary_interface (
-      void
-    );
+  CORBA::RepositoryId get_id_from_primary_interface (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

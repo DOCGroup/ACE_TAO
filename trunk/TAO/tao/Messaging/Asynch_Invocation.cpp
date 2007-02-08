@@ -118,8 +118,7 @@ namespace TAO
         // Nothing great on here. If we get a restart during send or a
         // proper send, we are supposed to call receiver_other ()
         // interception point. So we do that here
-        Invocation_Status const tmp =
-          this->receive_other_interception ();
+        Invocation_Status const tmp = this->receive_other_interception ();
 
         // We got an error during the interception.
         if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)

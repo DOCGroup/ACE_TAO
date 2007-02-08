@@ -70,8 +70,7 @@ TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
 // Must override pure virtual method in TAO_Reply_Dispatcher.
 int
 TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
-    TAO_Pluggable_Reply_Params & /*params*/
-  )
+    TAO_Pluggable_Reply_Params & /*params*/)
 {
   return 0;
 }

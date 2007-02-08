@@ -71,7 +71,7 @@ CORBA::UnknownUserException::_downcast (CORBA::Exception const * ex)
 void
 CORBA::UnknownUserException::_raise (void) const
 {
-  TAO_RAISE (*this);
+  throw *this;
 }
 
 CORBA::Exception *
@@ -87,17 +87,13 @@ CORBA::UnknownUserException::_tao_duplicate (void) const
 }
 
 void
-CORBA::UnknownUserException::_tao_encode (
-    TAO_OutputCDR &
-
-  ) const
+CORBA::UnknownUserException::_tao_encode (TAO_OutputCDR &) const
 {
   throw ::CORBA::MARSHAL ();
 }
 
 void
-CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &
-                                         )
+CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
 {
   throw ::CORBA::MARSHAL ();
 }

@@ -71,8 +71,7 @@ namespace CORBA
 
     /// Constructor - initialize given a length and an array of
     /// TypeCodes.
-    ExceptionList (CORBA::ULong len,
-                   CORBA::TypeCode_ptr *tc_list);
+    ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
     /// Destructor.
     ~ExceptionList (void);

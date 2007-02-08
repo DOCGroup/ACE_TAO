@@ -79,8 +79,7 @@ namespace TAO
         this->x_->_tao_incoming_cdr (
             cdr,
             CORBA::ARG_OUT | CORBA::ARG_INOUT,
-            this->lazy_evaluation_
-           );
+            this->lazy_evaluation_);
       }
     catch (const ::CORBA::Exception&)
       {

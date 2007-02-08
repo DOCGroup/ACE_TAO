@@ -73,27 +73,22 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
 
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
-                 const TAO_Reply_Handler_Skeleton &reply_handler_skel
-                );
+                 const TAO_Reply_Handler_Skeleton &reply_handler_skel);
 
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                        );
+    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
   protected:
 
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-       );
+        ACE_Time_Value *&max_wait_time);
 
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat
-       );
+        Collocation_Strategy strat);
 
   private:
     /// Autofunctor to manage the reply dispatcher

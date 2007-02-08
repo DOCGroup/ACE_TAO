@@ -1,9 +1,51 @@
+Thu Feb  8 16:26:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/ExceptionA.h
+        * tao/AnyTypeCode/TypeCode.cpp
+        * tao/Asynch_Reply_Dispatcher_Base.cpp
+        * tao/DynamicInterface/Context.h
+        * tao/DynamicInterface/DII_Arguments.cpp
+        * tao/DynamicInterface/DII_Invocation.cpp
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp
+        * tao/DynamicInterface/DII_Invocation_Adapter.h
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.cpp
+        * tao/DynamicInterface/Dynamic_Adapter_Impl.h
+        * tao/DynamicInterface/Dynamic_Implementation.cpp
+        * tao/DynamicInterface/Dynamic_Implementation.h
+        * tao/DynamicInterface/ExceptionList.h
+        * tao/DynamicInterface/Server_Request.cpp
+        * tao/DynamicInterface/Server_Request.h
+        * tao/DynamicInterface/Unknown_User_Exception.cpp
+        * tao/DynamicInterface/Unknown_User_Exception.h
+        * tao/Exception.h
+        * tao/GIOP_Message_Base.cpp
+        * tao/GIOP_Message_Lite.cpp
+        * tao/ImR_Client/ImR_Client.cpp
+        * tao/ImR_Client/ServerObject_i.h
+        * tao/Invocation_Adapter.cpp
+        * tao/Messaging/Asynch_Invocation.cpp
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp
+        * tao/Messaging/Asynch_Invocation_Adapter.h
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp
+        * tao/Messaging/Messaging_Policy_i.cpp
+        * tao/Muxed_TMS.cpp
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.cpp
+        * tao/ORB.cpp
+        * tao/PolicyC.cpp
+        * tao/RTCORBA/RTCORBAC.cpp
+        * tao/SystemException.cpp
+        * tao/Tagged_Components.cpp
+        * tao/Tagged_Profile.cpp
+        * tao/WrongTransactionC.cpp
+          Layout changes
+
 Wed Feb  7 23:12:03 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
 
-          Changed to use Any_Impl instead of Any to fix memory crash 
+          Changed to use Any_Impl instead of Any to fix memory crash
           problem since Any_Imply is refcounted. Refer to Bug 2798 or
           RT 9552 for more info.
 
