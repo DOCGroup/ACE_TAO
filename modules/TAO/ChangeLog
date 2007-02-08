@@ -1,3 +1,10 @@
+Thu Feb  8 18:08:40 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Root_POA.cpp:
+        
+          Modified the constructor in the initialization of 
+          the network_priority_hook_ private variable.
+
 Mon Feb  5 22:18:25 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Network_Priority_Hook.h:
