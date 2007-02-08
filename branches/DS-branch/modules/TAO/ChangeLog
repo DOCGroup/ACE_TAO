@@ -34,10 +34,10 @@ Thu Feb  8 18:08:40 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Mon Feb  5 22:18:25 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Network_Priority_Hook.h:
-          tao/PortableServer/Network_Priority_Hook.cpp:
-          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
-          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
-          tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Network_Priority_Hook.cpp:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
         
           Replaced the function get_dscp_codepoint with
           set_dscp_codepoint ().
@@ -48,12 +48,12 @@ Mon Feb  5 22:18:25 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Fri Feb  2 20:27:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Default_Servant_Dispatcher.cpp:
-          tao/PortableServer/Network_Priority_Hook.h:
-          tao/PortableServer/Network_Priority_Hook.cpp:
-          tao/PortableServer/Root_POA.h:
-          tao/PortableServer/Root_POA.cpp:
-          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
-          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        * tao/PortableServer/Network_Priority_Hook.h:
+        * tao/PortableServer/Network_Priority_Hook.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
         
           Moved the functionality that was added under the 
           pre_invoke_remote_request () method of 
@@ -69,7 +69,7 @@ Fri Feb  2 20:27:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Fri Feb  2 17:55:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Network_Priority_Hook.h:
-          tao/PortableServer/Network_Priority_Hook.cpp:
+        * tao/PortableServer/Network_Priority_Hook.cpp:
         
           Added this hook under POA to help POA make a call on the
           DiffServ Library to cache the SERVER_DECLARED network
@@ -82,13 +82,13 @@ Fri Feb  2 17:55:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
           library.
         
         * tao/PortableServer/Root_POA.h:
-          tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.cpp:
         
           Instantiated the above defined class in the ROOT_POA class
           constructor.
         
         * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
-          tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
         
           Provided the concrete implementation for the network priority
           hook that gets used by the POA.
@@ -107,7 +107,7 @@ Fri Feb  2 00:38:04 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Fri Feb  2 00:00:19 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
         
           Added implementations for the newly added get_dscp_codepoint ()
           method.
@@ -118,8 +118,8 @@ Fri Feb  2 00:00:19 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Thu Feb  1 23:44:53 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/POA_Cached_Policies.h:
-          tao/PortableServer/POA_Cached_Policies.cpp:
-          tao/PortableServer/POA_Cached_Policies.inl:
+        * tao/PortableServer/POA_Cached_Policies.cpp:
+        * tao/PortableServer/POA_Cached_Policies.inl:
         
           Added an enum for specifying the NetworkPriorityModel.
         
@@ -139,8 +139,8 @@ Thu Feb  1 23:44:53 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Thu Feb  1 23:36:55 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        * tao/Default_Network_Priority_Protocols_Hooks.h:
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
         
           Added a new function get_dscp_codepoint (). Note there are two
           functions now with the same name. One helps in the client-side
@@ -150,7 +150,7 @@ Thu Feb  1 23:36:55 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Thu Feb  1 23:15:32 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Root_POA.h:
-          tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.cpp:
         
           Added a new method cached_policies () to get the POA's
           cached policies.
@@ -185,10 +185,10 @@ Thu Feb  1 17:52:27 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Wed Jan 31 22:09:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.cpp:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/Default_Network_Priority_Protocols_Hooks.h:
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
         
           Modified the signature of get_dscp_codepoint () to be called
           from Remote_Invocation.cpp. Please see below.
@@ -202,12 +202,12 @@ Wed Jan 31 22:09:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Wed Jan 31 18:55:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
-          tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h:
         
           Changed the signature of the constructor.
         
         * tao/DiffServPolicy/DiffServPolicy.cpp:
-          tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
         
           Simplified the ORBInitializer by moving the process defines
           to the other file, which actually registers the ORBInitializer
@@ -216,24 +216,24 @@ Wed Jan 31 18:55:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Wed Jan 31 18:28:33 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.cpp:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/Default_Network_Priority_Protocols_Hooks.h:
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
         
           Changed the signature of the get_dscp_codepoint ().
 
 Wed Jan 31 18:14:30 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Connection_Handler.h:
-          tao/Connection_Hanlder.cpp:
+        * tao/Connection_Hanlder.cpp:
         
           Added a new method set_dscp_codepoint () to set the DS codepoints
           in the IP packets. A default implementation is provided
           for the method.
         
         * tao/IIOP_Connection_Handler.h:
-          tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
         
           Provided the concrete implementation for the above defined
           method.
@@ -267,15 +267,15 @@ Wed Jan 31 17:04:53 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
           compilation.
         
         * tao/Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
         
           Removed unnecessary includes.
 
 Tue Jan 30 19:22:19 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/ORB_Core.h:
-          tao/ORB_Core.cpp:
-          tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.inl:
         
           Added set and get functions for the Network Priority Protocols
           Hooks.
@@ -290,7 +290,7 @@ Tue Jan 30 19:15:31 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Tue Jan 30 18:54:48 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServPolicy.h:
-          tao/DiffServPolicy/DiffServPolicy.cpp:
+        * tao/DiffServPolicy/DiffServPolicy.cpp:
         
           Added files for registering the DiffServ policy ORB
           initializer.
@@ -298,16 +298,16 @@ Tue Jan 30 18:54:48 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Tue Jan 30 18:37:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy.mpc:
-          tao/DiffServPolicy/TAO_DiffServPolicy.pc.in
+        * tao/DiffServPolicy/TAO_DiffServPolicy.pc.in
         
           Added the pkgconfig files.
 
 Tue Jan 30 18:14:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
-          tao/DiffServPolicy/Server_Network_Priority_Policy.h:
-          tao/DiffServPolicy/Client_Network_Priority_Policy.h:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
         
           Fixed #includes for compilation errors.
 
@@ -323,25 +323,25 @@ Tue Jan 30 18:09:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
         
           Added DiffServ policy specific CACHED policy constants.
         
-          tao/IOP_IOR.pidl:
+        * tao/IOP_IOR.pidl:
         
           Added DiffServ policy specific service context entry.
 
 Tue Jan 30 16:59:54 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Hooks.h:
-          tao/Default_Network_Priority_Hooks.cpp:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/Default_Network_Priority_Hooks.h:
+        * tao/Default_Network_Priority_Hooks.cpp:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
         
           Changed the signature of the set_dscp_codepoint () method.
 
 Mon Jan 29 22:48:41 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.h:
-          tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        * tao/Default_Network_Priority_Protocols_Hooks.h:
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
         
           Added a new protocols hooks to handle capabilities related
           to TAO DiffServ policy support.
@@ -355,18 +355,18 @@ Mon Jan 29 22:48:41 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Mon Jan 29 22:35:04 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy:
-          tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
-          tao/DiffServPolicy/Client_Network_Priority_Policy.h:
-          tao/DiffServPolicy/DiffServPolicy_Export.h:
-          tao/DiffServPolicy/DiffServPolicy_Factory.cpp:
-          tao/DiffServPolicy/DiffServPolicy_Factory.h:
-          tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
-          tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
-          tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
-          tao/DiffServPolicy/DiffServPolicy.pidl:
-          tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
-          tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/DiffServPolicy_Export.h:
+        * tao/DiffServPolicy/DiffServPolicy_Factory.cpp:
+        * tao/DiffServPolicy/DiffServPolicy_Factory.h:
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+        * tao/DiffServPolicy/DiffServPolicy.pidl:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.h:
         
           Added a new DiffServ library for creating client-side
           and server-side policies for setting DiffServ codepoints
