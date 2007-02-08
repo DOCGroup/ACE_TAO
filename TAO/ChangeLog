@@ -1,3 +1,19 @@
+Thu Feb  8 18:00:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.h:
+        * tao/IIOP_Connection_Handler.h:
+          Layout changes
+
+        * orbsvcs/tests/Bug_2800_Regression/*:
+          New regression test for bugzilla bug 2800 created by
+          Martin Corino
+
+        * orbsvcs/tests/COIOP_Naming_Test/*:
+          New test using COIOP and the naming service together
+
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+          Initialise pointer with 0
+
 Thu Feb  8 16:26:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/ExceptionA.h

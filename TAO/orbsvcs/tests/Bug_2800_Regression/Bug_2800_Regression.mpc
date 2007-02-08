@@ -1,0 +1,33 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): namingexe, naming_serv {
+  after += *idl
+  Source_Files {
+    Hello.cpp
+    NamingTask.cpp
+    nsmain.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+}
+
+project(*Client): namingexe {
+  after += *idl
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+  }
+}
+
