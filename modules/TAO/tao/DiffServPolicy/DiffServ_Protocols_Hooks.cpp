@@ -16,7 +16,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_DS_Network_Priority_Protocols_Hooks::
 TAO_DS_Network_Priority_Protocols_Hooks (void)
   : orb_core_ (0)
-  , dscp_codepoint_ ()
 {
 }
 
@@ -75,13 +74,6 @@ TAO_DS_Network_Priority_Protocols_Hooks::add_rep_np_service_context_hook (
     }
 
   service_context.set_context (IOP::REP_NWPRIORITY, cdr);
-}
-
-void
-TAO_DS_Network_Priority_Protocols_Hooks::set_dscp_codepoint (
-  CORBA::Long dscp_codepoint)
-{
-  this->dscp_codepoint_ = dscp_codepoint;
 }
 
 const CORBA::Long
