@@ -1,11 +1,14 @@
 // $Id$
 
 #include "ace/Log_Msg.h"
+#include "ace/Message_Block.h"
+#include "ace/Log_Record.h"
+#include "ace/OS_NS_string.h"
+#include "ace/CDR_Stream.h"
+#include "ace/Auto_Ptr.h"
 
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
-#include "ace/Log_Record.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(simple_server, Logging_Handler, "$Id$")
 
@@ -51,55 +54,90 @@ Logging_Handler::handle_timeout (const ACE_Time_Value &,
 int
 Logging_Handler::handle_input (ACE_HANDLE)
 {
-  ssize_t n;
-  size_t len;
+  ACE_Log_Record log_record;
 
-  // Perform two recv's to emulate record-oriented semantics.  Note
-  // that this code is not entirely portable since it relies on the
-  // fact that sizeof (ssize_t) is the same on both the sender and
-  // receiver side.  To correctly handle this is painful, and we leave
-  // it as an exercise for the reader ;-).
+  // We need to use the old two-read trick here since TCP sockets
+  // don't support framing natively.  Allocate a message block for the
+  // payload; initially at least large enough to hold the header, but
+  // needs some room for alignment.
+  ACE_Message_Block *payload_p = 0;
+  ACE_Message_Block *header_p = 0;
+  ACE_NEW_RETURN (header_p,
+                  ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
+                  -1);
 
-  switch (n = this->cli_stream_.recv ((void *) &len, sizeof len))
+  auto_ptr <ACE_Message_Block> header (header_p);
+
+  // Align the Message Block for a CDR stream
+  ACE_CDR::mb_align (header.get ());
+
+  ACE_CDR::Boolean byte_order;
+  ACE_CDR::ULong length;
+
+  ssize_t count = ACE::recv_n (this->peer ().get_handle (), 
+			       header->wr_ptr (),
+			       8);
+  switch (count)
     {
-    case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p at host %C\n"),
-                         ACE_TEXT ("client logger"), this->host_name_), -1);
-      /* NOTREACHED */
-    case 0:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P|%t) closing log daemon at host %s (fd = %d)\n",
-                         this->host_name_, this->get_handle ()), -1);
-      /* NOTREACHED */
-    case sizeof (size_t):
-      {
-        ACE_Log_Record lp;
-
-        len = ACE_NTOHL (len);
-        n = this->cli_stream_.recv_n ((void *) &lp, len);
-        if (n != (ssize_t) len)
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p at host %C\n"),
-                             ACE_TEXT ("client logger"), this->host_name_), -1);
-        /* NOTREACHED */
-
-        lp.decode ();
-
-        if (lp.length () == n)
-          {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ")));
-            lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->host_name_), 1);
-          }
-        else
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) error, lp.length = %d, n = %d\n"),
-                      lp.length (), n));
-        break;
-      }
+      // Handle shutdown and error cases.
     default:
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p at host %C\n"),
-                         ACE_TEXT ("client logger"), this->host_name_), -1);
+    case -1:
+    case 0:
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("server logging daemon closing down\n")));
+
+      return -1;
       /* NOTREACHED */
+
+    case 8:
+      // Just fall through in this case..
+      break;
     }
+
+  header->wr_ptr (8); // Reflect addition of 8 bytes.
+
+  // Create a CDR stream to parse the 8-byte header.
+  ACE_InputCDR header_cdr (header.get ());
+
+  // Extract the byte-order and use helper methods to disambiguate
+  // octet, booleans, and chars.
+  header_cdr >> ACE_InputCDR::to_boolean (byte_order);
+
+  // Set the byte-order on the stream...
+  header_cdr.reset_byte_order (byte_order);
+
+  // Extract the length
+  header_cdr >> length;
+  
+  ACE_NEW_RETURN (payload_p,
+                  ACE_Message_Block (length),
+                  -1);
+  auto_ptr <ACE_Message_Block> payload (payload_p);
+
+  // Ensure there's sufficient room for log record payload.
+  ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
+
+  // Use <recv_n> to obtain the contents.
+  if (ACE::recv_n (this->peer ().get_handle (),
+                   payload->wr_ptr (),
+                   length) <= 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("recv_n()")));
+      return -1;
+    }
+
+  payload->wr_ptr (length);   // Reflect additional bytes
+
+  ACE_InputCDR payload_cdr (payload.get ());
+  payload_cdr.reset_byte_order (byte_order);
+  payload_cdr >> log_record;  // Finally extract the <ACE_log_record>.
+
+  log_record.length (length);
+
+  log_record.print ("<localhost>", 1, stderr);
 
   return 0;
 }

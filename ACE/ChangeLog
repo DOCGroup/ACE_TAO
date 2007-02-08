@@ -1,3 +1,12 @@
+Thu Feb  8 23:09:59 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Logger/Acceptor-server/server_loggerd.cpp (handle_input): 
+        * examples/Logger/simple-server/Logging_Handler.cpp (handle_input): 
+        * examples/Logger/client/logging_app.cpp (ACE_TMAIN): Fixed these
+          programs to use the proper (new) formatting for ACE_Log_Record.
+          Thanks to Mouna Seri <seri at crhc dot uiuc dot edu> for
+          reporting this.
+
 Thu Feb  8 19:40:30 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Makefile.am:

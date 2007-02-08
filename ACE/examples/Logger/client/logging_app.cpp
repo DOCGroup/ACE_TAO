@@ -6,6 +6,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Record.h"
 #include "ace/Log_Msg.h"
+#include "ace/CDR_Stream.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
@@ -40,16 +41,39 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::sprintf (buf, ACE_TEXT ("message = %d\n"), i + 1);
       log_record.msg_data (buf);
-      size_t len = log_record.length ();
-      size_t encoded_len = ACE_HTONL (len);
 
-      log_record.encode ();
+      const size_t max_payload_size =
+        4 // type()
+        + 8 // timestamp
+        + 4 // process id
+        + 4 // data length
+        + ACE_Log_Record::MAXLOGMSGLEN // data
+        + ACE_CDR::MAX_ALIGNMENT; // padding;
 
-      if (logger.send (4, &encoded_len, sizeof encoded_len,
-		       (char *) &log_record, len) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),-1);
-      else
-	ACE_OS::sleep (1);
+      // Insert contents of <log_record> into payload stream.
+      ACE_OutputCDR payload (max_payload_size);
+      payload << log_record;
+
+      // Get the number of bytes used by the CDR stream.
+      ACE_CDR::ULong length = payload.total_length ();
+
+      // Send a header so the receiver can determine the byte order and
+      // size of the incoming CDR stream.
+      ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
+      header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
+
+      // Store the size of the payload that follows
+      header << ACE_CDR::ULong (length);
+
+      // Use an iovec to send both buffer and payload simultaneously.
+      iovec iov[2];  
+      iov[0].iov_base = header.begin ()->rd_ptr ();
+      iov[0].iov_len  = 8;
+      iov[1].iov_base = payload.begin ()->rd_ptr ();
+      iov[1].iov_len  = length;
+
+      if (logger.sendv_n (iov, 2) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
     }
 
   if (logger.close () == -1)
