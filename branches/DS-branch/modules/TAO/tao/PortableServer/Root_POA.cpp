@@ -246,13 +246,15 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // a cache.
   this->cached_policies_.update (this->policies_);
 
-  if (this->network_priority_hook_ == 0)
-    this->network_priority_hook_
-      = ACE_Dynamic_Service<TAO_Network_Priority_Hook>::instance (
-          "TAO_Network_Priority_Hook");
+  this->network_priority_hook_
+    = ACE_Dynamic_Service<TAO_Network_Priority_Hook>::instance (
+        "TAO_Network_Priority_Hook");
 
-  this->network_priority_hook_->update_network_priority (
-    *this, this->policies_);
+  if (this->network_priority_hook_ != 0)
+    {
+      this->network_priority_hook_->update_network_priority (
+        *this, this->policies_);
+    }
 
 #if (TAO_HAS_MINIMUM_POA == 1)
   // If this is the RootPOA, set the value of the ImplicitActivationPolicy
