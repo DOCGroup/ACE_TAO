@@ -38,8 +38,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Implementation class for TAO-specific Network Priority Policy.
  *
- * This policy is used to control the network priority assigned to the
- * requests and replies, processed by the ORB.
+ * This policy is defined by a server application to specify the
+ * network priority model that it would like to follow, as well as
+ * the request DiffServ codepoint and reply DiffServ codepoint
+ * corresponding to the network priority model.
  */
 class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
   : public TAO::NetworkPriorityPolicy,
