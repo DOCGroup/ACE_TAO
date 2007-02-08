@@ -3940,7 +3940,7 @@ namespace
       post (SemanticGraph::HomeFinder& hf)
       {
         os << "{"
-           << "throw ::CORBA::NO_IMPLEMENT ();" << endl;
+           << "throw ::CORBA::NO_IMPLEMENT ();" << endl
            << "}";
       }
 
