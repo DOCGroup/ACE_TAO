@@ -19,12 +19,11 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Time_Value.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Time_Request
@@ -34,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class is implemented to minimize data copying.
  * In particular, all marshaling is done in situ...
  */
-class ACE_Export ACE_Time_Request
+class ACE_Svc_Export ACE_Time_Request
 {
 public:
   enum Constants
@@ -56,7 +55,7 @@ public:
    * @param timeout Max time waiting for request.
    */
   ACE_Time_Request (ACE_INT32 msg_type,
-                    const ACE_UINT32 time,
+                    const time_t time,
                     ACE_Time_Value *timeout = 0);
 
   /**
@@ -76,10 +75,10 @@ public:
   void msg_type (ACE_INT32);
 
   /// Get the time
-  ACE_UINT32 time (void) const;
+  time_t time (void) const;
 
   // Set the time
-  void time (ACE_UINT32 t);
+  void time (time_t t);
 
   /// Get the blocking semantics.
   ACE_UINT32 block_forever (void) const;
@@ -117,23 +116,21 @@ private:
     ACE_UINT32 block_forever_;
 
     /// Max seconds willing to wait for name if not blocking forever.
-    ACE_UINT32 sec_timeout_;
+    ACE_UINT64 sec_timeout_;
 
     /// Max micro seconds to wait for name if not blocking forever.
     ACE_UINT32 usec_timeout_;
 
     /// The data portion contains <time_>
-    ACE_UINT32 time_;
+    ACE_UINT64 time_;
   };
 
   /// Transfer buffer.
   Transfer transfer_;
 
   /// Time
-  ACE_UINT32 time_;
+  time_t time_;
 };
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIME_REQUEST_REPLY_H */
