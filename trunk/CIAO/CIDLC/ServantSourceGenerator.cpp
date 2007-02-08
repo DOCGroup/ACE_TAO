@@ -179,7 +179,7 @@ namespace
 
     // Overridden by facet and home operation emitters to do nothing.
     virtual void
-    gen_swap_related (Type& o)
+    gen_swap_related (Type&)
     {
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
@@ -3937,7 +3937,7 @@ namespace
       }
 
       virtual void
-      post (SemanticGraph::HomeFinder& hf)
+      post (SemanticGraph::HomeFinder&)
       {
         os << "{"
            << "throw ::CORBA::NO_IMPLEMENT ();" << endl
