@@ -1,7 +1,14 @@
+Thu Feb  8 18:35:51 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+          Don't generate ACE_THROW_RETURN but just throw
+
 Wed Feb  7 23:48:51 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.cpp:
-        
+
           Removed an 'ex' identifier in a catch block that is
           no longer referenced.
 
@@ -11,23 +18,23 @@ Wed Feb  7 23:22:08 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * ciao/Upgradeable_Context_Impl_T.h:
         * ciao/Context_Impl_T.cpp:
         * ciao/Upgradeable_Context_Impl_T.cpp:
-        
+
           - Replaced a class template parameter in both
             Context_Impl and Upgradeable_Context_Impl with
             a trait in the class body. This change was
             evidently overlooked when similar changes were
             made to Servant_Impl and Home_Servant_Impl
             pursuant to dropping support for Visual Studio 6.
-            
+
           - In Upgradeable_Context_Impl, removed class members
             already present in the base class Context_Impl.
-            
+
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           - Made changes to the generated context class corresponding
             to the changes above.
-            
+
           - Added code generation to check for a nil event
             consumer before a push call is made on it by
             an emits port. The event consumer would be nil

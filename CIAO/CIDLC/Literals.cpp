@@ -74,8 +74,7 @@ namespace StringLiterals
     "variable-size",                                      // VAR_SIZE
     "_ciao_extract_val",                                  // EXTRACT
     "_ciao_extract_tmp",                                  // EXTRACT_TMP
-    "ACE_UNUSED_ARG",                                     // ACE_UA
-    "ACE_THROW_RETURN"                                    // ACE_TR
+    "ACE_UNUSED_ARG"                                      // ACE_UA
   };
 }
 

@@ -48,7 +48,6 @@ namespace StringLiterals
     EXTRACT,
     EXTRACT_TMP,
     ACE_UA,
-    ACE_TR,
     LIT_SIZE
   };
 
