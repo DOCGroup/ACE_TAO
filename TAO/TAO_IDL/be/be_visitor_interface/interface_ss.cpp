@@ -697,8 +697,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << "::CORBA::Boolean " << be_nl << full_skel_name
-          << "::ciao_is_substitutable (const char *)" << be_idt_nl
-          << "ACE_THROW_SPEC (( ::CORBA::SystemException))" << be_uidt_nl
+          << "::ciao_is_substitutable (const char *)" << be_nl
           << "{" << be_idt_nl
           << "return true;" << be_uidt_nl
           << "}";
@@ -895,14 +894,10 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void " << node->full_skel_name ()
-      << "::_dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest & req," << be_nl
-      << "void * servant_upcall" << be_uidt_nl
-      << ")" << be_uidt_nl;
+      << "::_dispatch (TAO_ServerRequest & req, void * servant_upcall)"
+      << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->synchronous_upcall_dispatch (req," << be_nl
-      << "                                   servant_upcall," << be_nl
-      << "                                   this);"
+  *os << "this->synchronous_upcall_dispatch (req, servant_upcall, this);"
       << be_uidt_nl;
   *os << "}";
 }

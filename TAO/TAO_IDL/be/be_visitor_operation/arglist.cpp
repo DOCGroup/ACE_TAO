@@ -77,17 +77,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       *os << "void";
     }
 
-  *os << be_uidt_nl<< ")";
-
-  // Now generate the throw specs.
-  if (this->gen_throw_spec (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_operation_arglist")
-                         ACE_TEXT ("::visit_operation - ")
-                         ACE_TEXT ("Failed to generate throw spec\n")),
-                        -1);
-    }
+  *os << ")" << be_uidt << be_uidt;
 
   switch (this->ctx_->state ())
     {
