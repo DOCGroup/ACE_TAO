@@ -1,3 +1,8 @@
+Thu Feb  8 08:03:57 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Removed ACE_LACKS_CLEARERR and added ACE_HAS_3_PARAM_READDIR_R.
+
 Wed Feb  7 23:04:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * bin/tao_other_tests.lst:
