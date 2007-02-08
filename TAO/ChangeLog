@@ -20,8 +20,10 @@ Wed Feb  7 23:12:03 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
         * orbsvcs/examples/Notify/Subscribe/Subscribe.h:
         * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
 
-          Fixed an incorrect initialization of a sequence object.
-          Added code to detect consumer receiving not subscribed event.
+          Fixed an incorrect initialization of a sequence object.  Added
+          code to detect consumer receiving not subscribed event.  Thanks
+          to Olli Savia <ops at iki dot fi> for reporting this problem and
+          helping track down the problem.
 
 Wed Feb  7 20:52:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
