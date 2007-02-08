@@ -52,10 +52,12 @@ namespace CIAO
                            bool use_repoman,
                            bool rm_use_naming,
                            const char *rm_name,
-                           CORBA::Short priority
+                           CORBA::Short priority,
+                           size_t niterations
                            ACE_ENV_ARG_DECL)
     {
       this->orb_ = CORBA::ORB::_duplicate  (orb);
+      this->niterations_ = niterations;
       this->desired_priority_ = priority;
 
       CORBA::Object_var obj;

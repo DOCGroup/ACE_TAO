@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Plan_Launcher_Impl.h"
+#include "Plan_Launcher_Benchmark_Impl.h"
 
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
@@ -27,6 +27,8 @@ namespace CIAO
     const char* repoman_name_ = "RepositoryManager";
     const char* dap_ior_filename = 0;
     const char* dap_ior = 0;
+    bool do_benchmarking = false;
+    size_t niterations = 0;
     CORBA::Short priority = 0;
 
     enum mode_type {
@@ -46,19 +48,20 @@ namespace CIAO
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("[(%P|%t) Executor] Usage: %s\n")
                   ACE_TEXT ("-a <PACKAGE_NAMES>\n")
+                  ACE_TEXT ("-b <BENCHMARKING_ITERATIONS>\n")
                   ACE_TEXT ("-e <PACKAGE_TYPES>\n")
-                  ACE_TEXT ("-p <DEPLOYMENT_PLAN_URL>\n")
-                  ACE_TEXT ("-n : Use naming service to fetch EM")
+                  ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
                   ACE_TEXT ("-k <EXECUTION_MANAGER_IOR>")
                   ACE_TEXT (" : Default file://em.ior\n")
                   ACE_TEXT ("-l <REPOSITORY_MANAGER_IOR>")
                   ACE_TEXT (" : Default file://rm.ior\n")
+                  ACE_TEXT ("-n : Use naming service to fetch EM")
+                  ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
+                  ACE_TEXT ("-p <DEPLOYMENT_PLAN_URL>\n")
+                  ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
+                  ACE_TEXT ("-t <PLAN_UUID>\n")
                   ACE_TEXT ("-v <REPOSITORY_MANAGER_NAME>: Use naming service to fetch RM with the given name")
                   ACE_TEXT (" : Default RepositoryManager\n")
-                  ACE_TEXT ("-t <PLAN_UUID>\n")
-                  ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
-                  ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
-                  ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
                   ACE_TEXT ("-z <DESIRED_CORBA_PRIORITY_FOR_EXECUTION_MANAGER>\n")
                   ACE_TEXT ("-h : Show this usage information\n"),
                   program));
@@ -70,7 +73,7 @@ namespace CIAO
     {
       ACE_Get_Opt get_opt (argc,
                            argv,
-                           ACE_TEXT ("a:e:p:nk:l:v:t:o:i:r:z:h"));
+                           ACE_TEXT ("a:b:e:p:nk:l:v:t:o:i:r:z:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
@@ -80,6 +83,10 @@ namespace CIAO
             case 'a':
               package_names = get_opt.opt_arg ();
               use_package_name = true;
+              break;
+            case 'b':
+              do_benchmarking = true;
+              niterations = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'e':
               package_types = get_opt.opt_arg ();
@@ -191,14 +198,28 @@ namespace CIAO
           if (parse_args (argc, argv) == false)
             return -1;
 
-          Plan_Launcher_i launcher;
+          Plan_Launcher_i * launcher = 0;
 
-          if (!launcher.init (em_use_naming ? 0 : em_ior_file,
-                              orb.in (),
-                              use_repoman,
-                              rm_use_naming,
-                              rm_use_naming ? repoman_name_ : rm_ior_file,
-                              priority))
+          if (do_benchmarking)
+            {
+              ACE_NEW_RETURN (launcher,
+                              Plan_Launcher_Benchmark_i,
+                              -1);
+            }
+          else
+            {
+              ACE_NEW_RETURN (launcher,
+                              Plan_Launcher_i,
+                              -1);
+            }
+
+          if (!launcher->init (em_use_naming ? 0 : em_ior_file,
+                               orb.in (),
+                               use_repoman,
+                               rm_use_naming,
+                               rm_use_naming ? repoman_name_ : rm_ior_file,
+                               priority,
+                               niterations))
             {
               ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;
@@ -211,15 +232,15 @@ namespace CIAO
               CORBA::String_var uuid;
 
               if (package_names != 0)
-                uuid = launcher.launch_plan (deployment_plan_url,
-                                             package_names,
-                                             use_package_name,
-                                             use_repoman);
+                uuid = launcher->launch_plan (deployment_plan_url,
+                                              package_names,
+                                              use_package_name,
+                                              use_repoman);
               else
-                uuid = launcher.launch_plan (deployment_plan_url,
-                                             package_types,
-                                             use_package_name,
-                                             use_repoman);
+                uuid = launcher->launch_plan (deployment_plan_url,
+                                              package_types,
+                                              use_package_name,
+                                              use_repoman);
 
               if (uuid.in () == 0)
                 {
@@ -228,7 +249,7 @@ namespace CIAO
                 }
 
               ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid.in ()));
-              dapp_mgr = launcher.get_dam (uuid.in ());
+              dapp_mgr = launcher->get_dam (uuid.in ());
 
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
@@ -245,7 +266,7 @@ namespace CIAO
                   // Tear down the assembly
                   ACE_DEBUG ((LM_DEBUG,
                               "Plan_Launcher: destroy the application.....\n"));
-                  if (! launcher.teardown_plan (uuid))
+                  if (! launcher->teardown_plan (uuid))
                       ACE_DEBUG ((LM_DEBUG,
                                   "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
                                   "unkonw plan uuid.\n"));
@@ -259,15 +280,15 @@ namespace CIAO
               CORBA::String_var uuid;
 
               if (package_names != 0)
-                uuid = launcher.re_launch_plan (new_deployment_plan_url,
-                                                package_names,
-                                                use_package_name,
-                                                use_repoman);
+                uuid = launcher->re_launch_plan (new_deployment_plan_url,
+                                                 package_names,
+                                                 use_package_name,
+                                                 use_repoman);
               else
-                uuid = launcher.re_launch_plan (new_deployment_plan_url,
-                                                package_types,
-                                                use_package_name,
-                                                use_repoman);
+                uuid = launcher->re_launch_plan (new_deployment_plan_url,
+                                                 package_types,
+                                                 use_package_name,
+                                                 use_repoman);
 
               if (uuid.in () == 0)
                 {
@@ -292,14 +313,14 @@ namespace CIAO
               // Tear down the assembly
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: destroy the application.....\n"));
-              launcher.teardown_plan (dapp_mgr.in ());
+              launcher->teardown_plan (dapp_mgr.in ());
             }
           else if (mode == pl_mode_stop_by_uuid) // tear down by plan_uuid
             {
               // Tear down the assembly
               ACE_DEBUG ((LM_DEBUG,
                           "Plan_Launcher: destroy the application.....\n"));
-              if (! launcher.teardown_plan (plan_uuid))
+              if (! launcher->teardown_plan (plan_uuid))
                 {
                   ACE_ERROR ((LM_ERROR,
                               "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
