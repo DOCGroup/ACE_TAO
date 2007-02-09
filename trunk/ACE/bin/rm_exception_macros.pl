@@ -73,18 +73,18 @@ sub process_file {
     my(@lines) = ();
     my($mod)   = undef;
     my($line)  = '';
-    my($cont_until_semicolon) = undef;
+    my($cont_until_this) = undef;
     while(<$fh>) {
       my($part) = $_;
       $part =~ s/\s+$//;
 
-      if ($cont_until_semicolon) {
+      if ($cont_until_this) {
         if ($part =~ s/^\s+// && $line =~ /[,\)]$/) {
           $part = ' ' . $part;
         }
         $line .= $part;
-        if (index($part, ';') >= 0) {
-          $cont_until_semicolon = undef;
+        if (index($part, $cont_until_this) >= 0) {
+          $cont_until_this = undef;
         }
         else {
           next;
@@ -96,10 +96,13 @@ sub process_file {
 
       my($skip_blank) = undef;
       foreach my $key (@keys) {
-        my($base) = undef;
+        my($ats)    = (index($key, 'ACE_THROW_SPEC') == 0);
+        my($search) = ($ats ? '))' : ';');
+        my($base)   = undef;
         if ($key =~ /^([^\s]+\s\*\\\()/) {
           $base = $1;
         }
+
         if ($line =~ /^(\s*)?($key\s*[;]?)/) {
           my($space)  = $1;
           my($rest)   = $2;
@@ -129,7 +132,6 @@ sub process_file {
           ## we want to ensure that the semi-colon is preserved and if
           ## possible placed on the previous line.  In the source file
           ## we want the whole thing to go away.
-          my($ats) = (index($key, 'ACE_THROW_SPEC') == 0);
           $val .= ';' if (($ats || $val ne '') && $rest =~ /;$/);
           if ($ats && index($val, ';') == 0 &&
               !($lines[$#lines] =~ /\/\/.*$/ ||
@@ -203,8 +205,8 @@ sub process_file {
           last;
         }
         elsif (defined $base &&
-               index($line, ';') == -1 && $line =~ /^(\s*)?$base/) {
-          $cont_until_semicolon = 1;
+               index($line, $search) == -1 && $line =~ /^(\s*)?$base/) {
+          $cont_until_this = $search;
           last;
         }
       }
@@ -212,7 +214,7 @@ sub process_file {
       if ($line =~ s/ACE_ANY_EXCEPTION/ex/g) {
         $mod = 1;
       }
-      if (!$cont_until_semicolon) {
+      if (!$cont_until_this) {
         if ($line =~ s/(\s*)ACE_ENV(_SINGLE)?_ARG_DECL_WITH_DEFAULTS// ||
             $line =~ s/(\s*)ACE_ENV(_SINGLE)?_ARG_DECL_NOT_USED// ||
             $line =~ s/(\s*)ACE_ENV(_SINGLE)?_ARG_DECL// ||
