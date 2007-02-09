@@ -24,6 +24,9 @@
 #include "tao/LocalObject.h"
 #include "DomainDataManager.h"
 
+/**
+ * TargetManager Executor namespace
+ */
 namespace CIDL_TargetManager_i
 {
   class TargetManager_exec_i;
@@ -45,11 +48,6 @@ namespace CIDL_TargetManager_i
     virtual ::Deployment::CCM_TargetManager_ptr
     get_targetMgr ()
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual ::CIAO::CCM_TargetManagerExt_ptr
-      get_target_manager_ext (
-                              )
-      ACE_THROW_SPEC ((::CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
@@ -96,39 +94,10 @@ namespace CIDL_TargetManager_i
 
     /// The exec Object
     ::Deployment::CCM_TargetManager_var exec_object_;
-
-    ::CIAO::CCM_TargetManagerExt_var exec_ext_object_;
   };
-
-  class TARGETMANAGER_EXEC_Export TargetManagerExt_exec_i
-    : public virtual ::CIAO::CCM_TargetManagerExt,
-  public virtual TAO_Local_RefCounted_Object
-    {
-    public:
-      TargetManagerExt_exec_i (void);
-      virtual ~TargetManagerExt_exec_i (void);
-
-      // Operations from ::CIAO::TargetManagerExt
-
-      virtual ::CORBA::Long
-        get_pid (
-      const char * component_uuid)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::CIAO::Host_Infos *
-        get_host_cpu ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::CIAO::Component_Infos *
-        get_component_cpu ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-
-      virtual ::CIAO::Host_NodeManager_seq *
-        get_all_node_managers ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-    };
-
- class TARGETMANAGER_EXEC_Export TargetManager_exec_i
+ 
+  
+  class TARGETMANAGER_EXEC_Export TargetManager_exec_i
   : public virtual ::Deployment::CCM_TargetManager,
   public virtual TAO_Local_RefCounted_Object
   {
@@ -154,7 +123,6 @@ namespace CIDL_TargetManager_i
     const ::Deployment::DeploymentPlan & plan)
     ACE_THROW_SPEC ((
     ::CORBA::SystemException,
-    ::Deployment::ResourceNotAvailable,
     ::Deployment::PlanError));
 
     virtual void
@@ -168,6 +136,20 @@ namespace CIDL_TargetManager_i
     const ::Deployment::Domain & domainSubset,
     ::Deployment::DomainUpdateKind updateKind)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual ::Deployment::ResourceCommitmentManager_ptr 
+    createResourceCommitment (
+    const ::Deployment::ResourceAllocations& manager
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Deployment::ResourceCommitmentFailure));
+
+    virtual void 
+    destroyResourceCommitment (
+    ::Deployment::ResourceCommitmentManager_ptr resources
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((::CORBA::SystemException));
 
   private:
     TargetManagerImpl_exec_i * _exec;
