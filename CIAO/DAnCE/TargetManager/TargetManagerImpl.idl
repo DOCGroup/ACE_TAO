@@ -12,21 +12,13 @@
 
 #include "ciao/Components.idl"
 #include "ciao/Deployment_Target_Data.idl"
-#include "TargetManagerExt.idl"
 #include "DomainEvents.idl"
 
-/**
- * @module CIAO
- *
- * @brief TargetManagenr interface defintion
- *
- */
 module CIAO
 {
   component TargetManagerImpl
   {
     provides ::Deployment::TargetManager targetMgr;
-    provides CIAO::TargetManagerExt target_manager_ext;
 
     publishes Domain_Changed_Event changes;
   };
