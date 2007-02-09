@@ -217,6 +217,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_DomainApplicationManager.idl
     Deployment_ExecutionManager.idl
     Deployment_RepositoryManager.idl
+    Deployment_ResourceCommitmentManager.idl
   }
 
   Source_Files {
@@ -242,6 +243,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     CIAO_NodeApplication_CallBackC.cpp
     CIAO_ServerResourcesC.cpp
     Deployment_EventsC.cpp
+    Deployment_ResourceCommitmentManagerC.cpp
   }
 }
 
@@ -276,6 +278,7 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
     NodeApp_CB_Impl.cpp
     Deployment_TargetManagerS.cpp
     CIAO_NodeApplication_CallBackS.cpp
+    Deployment_ResourceCommitmentManagerS.cpp
   }
 
 }

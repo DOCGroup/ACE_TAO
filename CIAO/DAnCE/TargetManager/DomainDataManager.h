@@ -51,7 +51,7 @@ namespace CIAO
                            ::Deployment::DomainUpdateKind updateKind
                            );
       /**
-       * @brief        This function is called the Executor code
+       * @brief        This function is called from the Executor code
        *               to get the Original Domain data.
        * @return       Domain* The Initial Domain
        *
@@ -59,12 +59,11 @@ namespace CIAO
       ::Deployment::Domain* get_initial_domain ();
 
       /**
-       * @brief       This function is called the Executor code
+       * @brief       This function is called from the Executor code
        *              to get the Current Domain data.
        * @return      Domain* The Current Domain
        */
       ::Deployment::Domain* get_current_domain ();
-
 
       /**
        * This function calls the constructor of the
@@ -82,7 +81,7 @@ namespace CIAO
        * @brief Returns the static pointer to the
        *        data manager.
        * @return DomainDataManager*
-       * @description The staic get_data_manger function returning
+       * The staic get_data_manger function returning
        *              the data_manager pointer
        */
       static DomainDataManager* get_data_manager ();
@@ -96,36 +95,6 @@ namespace CIAO
        * @brief returns the sequence of node managers
        * object reference
        */
-      CIAO::Host_NodeManager_seq *
-        get_node_managers ();
-
-      /**
-       * @brief returns the node specific cpu utilization
-       *
-       * @return CIAO::Host_Infos*
-       */
-
-       CIAO::Host_Infos* get_cpu_info ();
-
-       /**
-        * @brief returns the pid of the component id submitted
-        * @param cmp The component id
-        *
-        * @return process id
-        */
-       CORBA::Long get_pid (ACE_CString cmp);
-
-       /**
-        * @brief commits the resources that are specified
-        * in the plan.
-        * @param plan ::Deployment::DeploymentPlan
-        * @exception  ::Deployment::ResourceNotAvailable thrown
-        *             when the resources mentioned in the plan exceeds
-        *             the current resource.
-        * @exception  ::Deployment::PlanError thrown if the plan has any
-        *              error
-        *
-        */
        void commitResources (
        const ::Deployment::DeploymentPlan & plan);
 
@@ -144,7 +113,27 @@ namespace CIAO
         */
        void stop_monitors ();
 
-    protected:
+       /**
+        * @brief The function allocates resources specified in the
+        * parameter
+        *
+        * This function is for the ResourceCommitmentManager
+        *
+        */
+       void commitResourceAllocation (
+           const ::Deployment::ResourceAllocations & resources);
+
+       /**
+        * @brief The function releases resources specified in the
+        * parameter
+        *
+        * This function is for the ResourceCommitmentManager
+        *
+        */
+       void releaseResourceAllocation (
+           const ::Deployment::ResourceAllocations & resources);
+
+      private:
 
       /**
        * The constructor made protected so that no one can create
@@ -252,6 +241,18 @@ namespace CIAO
        */
       bool update_node_status ();
 
+      /**
+       * @function find_resource
+       * @brief It finds the Resource structure which is respresents the
+       * ResourceAllocation
+       */
+      ::Deployment::Resource& find_resource (
+          const ::Deployment::ResourceAllocation& resource);
+
+      int commit_release_RA (
+          const ::Deployment::ResourceAllocations& resources);
+
+
       /// The ORB pointer
       CORBA::ORB_var orb_;
 
@@ -262,7 +263,8 @@ namespace CIAO
       /// at total capacity
       ::Deployment::Domain initial_domain_;
 
-
+      /// The staic data member , replacing a global variable
+      static DomainDataManager* global_data_manager_; 
       /// The Current Domain - contains resources
       /// at current capacity
       ::Deployment::Domain current_domain_;
@@ -271,20 +273,18 @@ namespace CIAO
       ::Deployment::TargetManager_var target_mgr_;
 
       /**
-       * The staic data manager pointer implementing
-       * singleton pattern
-       */
-      static DomainDataManager* global_data_manager_;
-
-      /**
        * The static provisioned Domain data
        */
       ::Deployment::Domain provisioned_data_;
 
+      /// temporary domain used in commit/release to
+      /// guard against exceptions
+      ::Deployment::Domain temp_provisioned_data_;
+
       /// The current action
       Action current_action_;
     };
-
 } // CIAO
+
 
 #endif /* DOMAIN_DATA_MGRH */

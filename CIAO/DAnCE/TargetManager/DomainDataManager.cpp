@@ -1,16 +1,4 @@
 // $Id$
-//===============================================================
-/**
- * @file DomainDataManager.cpp
- *
- * @brief Maintains the Domain Information
- *
- * It contains the entire Domain information.Both the
- * initial domain as well as the current available domain.
- *
- * @author Nilabja Roy nilabjar@dre.vanderbilt.edu
- */
-//===============================================================
 #include "DomainDataManager.h"
 
 #include "Config_Handlers/DD_Handler.h"
@@ -32,7 +20,7 @@ CIAO::DomainDataManager * CIAO::DomainDataManager::create (CORBA::ORB_ptr orb,
   return global_data_manager_;
 }
 
-
+// Returns the pointer to the static variable
 CIAO::DomainDataManager*
 CIAO::DomainDataManager::get_data_manager ()
 {
@@ -46,8 +34,6 @@ CIAO::DomainDataManager::delete_data_manger ()
   if (global_data_manager_)
     delete global_data_manager_;
 }
-
-
 
 int CIAO::DomainDataManager::update_domain (
                              const ::CORBA::StringSeq &,
@@ -63,7 +49,7 @@ int CIAO::DomainDataManager::update_domain (
   switch (update_kind)
     {
       case ::Deployment::UpdateAll:
-      case ::Deployment::UpdateAvailable:
+      case ::Deployment::UpdateDynamic:
         break;
       case ::Deployment::Add:
         add_to_domain (domainSubset);
@@ -75,22 +61,18 @@ int CIAO::DomainDataManager::update_domain (
         break;
     }
 
-  int size = current_domain_.node.length ();
+  CORBA::ULong const size = current_domain_.node.length ();
 
-  int i;
+  CORBA::ULong i;
   for (i=0;i < size;i++)
     {
-      if (!strcmp (domainSubset.node[0].name ,
+      if (!ACE_OS::strcmp (domainSubset.node[0].name ,
                    current_domain_.node[i].name))
         {
           // found a match
           // for now overwrite the entire Node info ...
           // but later , this has to be changed to overwrite
           // only the specific part ...
-          if (CIAO::debug_level () > 9)
-            {
-              ACE_DEBUG ((LM_DEBUG , "TM::Changed the cpu Value\n"));
-            }
           current_domain_.node[i] = domainSubset.node[0];
           break; // finished job ...break
         }
@@ -103,11 +85,6 @@ int CIAO::DomainDataManager::update_domain (
       current_domain_.node.length (size+1);
       current_domain_.node[size]=domainSubset.node[0];
     }
-  if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG ,
-          "TM::Inside The update Domain of Manager\n"));
-    }
   return 0;
 }
 
@@ -118,11 +95,8 @@ DomainDataManager (CORBA::ORB_ptr orb,
     deployment_config_ (orb_.in()),
     target_mgr_ (::Deployment::TargetManager::_duplicate(target))
 {
-  //  ACE_DEBUG((LM_DEBUG , "Calling DD_HANDLER\n"));
   CIAO::Config_Handlers::DD_Handler dd (domain_file_name);
-  //  ACE_DEBUG((LM_DEBUG , "After DD_HANDLER Constructor\n"));
   ::Deployment::Domain* dmn = dd.domain_idl ();
-  //  ACE_DEBUG((LM_DEBUG , "After DD_HANDLER domain_idl\n"));
 
   if (CIAO::debug_level () > 9)
     ::Deployment::DnC_Dump::dump (*dmn);
@@ -168,10 +142,6 @@ int CIAO::DomainDataManager::call_all_node_managers ()
     }
 
   CORBA::ULong const length = initial_domain_.node.length ();
-  if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Number of nodes in domain.cdd is : %d\n", length));
-    }
 
   for (CORBA::ULong i=0;i < length;i++)
     {
@@ -195,11 +165,6 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 
       if (!CORBA::is_nil (node_manager.in ()))
         {
-          if (CIAO::debug_level () > 9)
-            {
-              ACE_DEBUG ((LM_DEBUG, "Trying to contact nodemanager on %s\n",
-                          initial_domain_.node[i].name.in ()));
-            }
           Deployment::Logger_ptr log =
             Deployment::Logger::_nil ();
           ::Deployment::Domain sub_domain;
@@ -219,7 +184,7 @@ int CIAO::DomainDataManager::call_all_node_managers ()
             }
           catch (CORBA::Exception& ex)
             {
-              ACE_DEBUG ((LM_DEBUG , "TM::Error in calling Join Domain==\n"));
+              ACE_ERROR ((LM_ERROR , "TM::Error in calling Join Domain==\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::joinDomain");
             }
@@ -229,98 +194,6 @@ int CIAO::DomainDataManager::call_all_node_managers ()
 
 }
 
-CIAO::Host_NodeManager_seq * CIAO::DomainDataManager::get_node_managers ()
-{
-  ::CIAO::Host_NodeManager_seq* node_mgr_seq =
-      new ::CIAO::Host_NodeManager_seq ();
-  node_mgr_seq->length (initial_domain_.node.length ());
-  for (unsigned int i=0;i < initial_domain_.node.length ();i++)
-    {
-      (*node_mgr_seq)[i].host_ =
-        CORBA::string_dup (initial_domain_.node[i].name);
-      ::Deployment::NodeManager_var node_manager =
-          deployment_config_.get_node_manager (initial_domain_.node[i].name);
-      //      if (node_manager.in () != 0)
-        {
-          (*node_mgr_seq)[i].node_mgr_ = ::CIAO::NodeManagerDaemon::_narrow (node_manager.in ());
-        }
-    }
-  return node_mgr_seq;
-}
-
-CIAO::Host_Infos*  CIAO::DomainDataManager::get_cpu_info ()
-{
-  CIAO::Host_Infos* host_info_seq = new CIAO::Host_Infos ();
-  host_info_seq->length (current_domain_.node.length ());
-
-  if (CIAO::debug_level () > 9)
-    ACE_DEBUG ((LM_DEBUG , "TM:: The node length is [%d]",
-                current_domain_.node.length ()));
-
-  for (unsigned int i=0;i < current_domain_.node.length ();i++)
-    {
-      (*host_info_seq)[i].hostname =
-        CORBA::string_dup (current_domain_.node[i].name);
-      //      ACE_DEBUG ((LM_DEBUG , "The resource length is [%d]",
-      //          current_domain_.node[i].resource.length ()));
-
-      for (unsigned int j = 0;j < current_domain_.node[i].resource.length ();j++)
-        {
-          if (!strcmp(
-                      current_domain_.node[i].resource[j].name,
-                      "Processor"))
-            {
-              current_domain_.node[i].resource[j].property[0].value
-                >>= (*host_info_seq)[i].cpu_util;
-              CORBA::Double d;
-              current_domain_.node[i].resource[j].property[0].value
-                >>= d;
-              //      ACE_DEBUG ((LM_DEBUG, "TM::The current cpu util is [%f]\n", d));
-            }
-        }
-    }
-
-  if (CIAO::debug_level () > 9)
-    ACE_DEBUG ((LM_DEBUG , "TM::Returning from get_cpu_info"));
-
-  return host_info_seq;
-}
-
-CORBA::Long CIAO::DomainDataManager::get_pid (ACE_CString cmp)
-{
-  CORBA::Long pid;
-
-  // This is really ineffiecient this is O(n) ; searching all the nodes
-  // all the resources for a particular component.
-  // It needs to be stored in some other data structure
-
-  for (unsigned int i=0;i < current_domain_.node.length ();i++)
-    {
-      if (CIAO::debug_level () > 9)
-        ACE_DEBUG ((LM_DEBUG , "TM::The resource length is [%d]",
-                    current_domain_.node[i].resource.length ()));
-
-      for (unsigned int j = 0;j < current_domain_.node[i].resource.length ();j++)
-        {
-          // The resource
-          if (!ACE_OS::strcmp(
-                      current_domain_.node[i].resource[j].name,
-                      "Component") &&
-              ACE_CString (current_domain_.node[i].resource[j].property[0].name) ==
-              cmp)
-            {
-              current_domain_.node[i].resource[j].property[0].value
-                >>= pid;
-              if (CIAO::debug_level () > 9)
-                ACE_DEBUG ((LM_DEBUG,
-                            "TM::getpid::The current pid is [%d]\n", pid));
-
-            }
-        } // resources
-    }// nodes
-
-  return pid;
-}
 
 void CIAO::DomainDataManager
 ::commitResources (
@@ -336,27 +209,21 @@ void CIAO::DomainDataManager
   ::Deployment::Domain temp_provisioned_data =
       provisioned_data_;
 
-  for (unsigned int i = 0;i < plan.instance.length ();i++)
+  for (CORBA::ULong i = 0;i < plan.instance.length ();i++)
     {
-      for (unsigned int j = 0;j < temp_provisioned_data.node.length ();j++)
+      for (CORBA::ULong j = 0;j < temp_provisioned_data.node.length ();j++)
         {
-          if (!strcmp (plan.instance[i].node.in () ,
+          if (!ACE_OS::strcmp (plan.instance[i].node.in () ,
                        temp_provisioned_data.node[j].name.in ()))
           {
-            if (CIAO::debug_level () > 9)
-              ACE_DEBUG ((LM_DEBUG ,
-                  "TM::commitResource::Host name matched\n"));
             try {
               match_requirement_resource (
-                                          plan.instance[i].deployedResource,
-                                          temp_provisioned_data.node[j].resource);
+                                plan.instance[i].deployedResource,
+                                temp_provisioned_data.node[j].resource);
             }
-            catch (::Deployment::ResourceNotAvailable& ex)
+            catch (::Deployment::ResourceCommitmentFailure& ex)
               {
                 // catch the exception and add parameters
-                ex.elementName =
-                  CORBA::string_dup (temp_provisioned_data.node[j].name);
-
                 throw ex;
               }
           }
@@ -378,19 +245,13 @@ releaseResources (
   // set the action value
   current_action_ = release;
 
-  for (unsigned int i = 0;i < plan.instance.length ();i++)
+  for (CORBA::ULong i = 0;i < plan.instance.length ();i++)
     {
-      for (unsigned int j = 0;j < provisioned_data_.node.length ();j++)
+      for (CORBA::ULong j = 0;j < provisioned_data_.node.length ();j++)
         {
           if (!ACE_OS::strcmp (plan.instance[i].node.in () ,
                                provisioned_data_.node[j].name.in ()))
           {
-            if (CIAO::debug_level () > 9)
-              {
-                ACE_DEBUG ((LM_DEBUG ,
-                    "TM::commitResource::Host name matched\n"));
-              }
-
             match_requirement_resource (
                                         plan.instance[i].deployedResource,
                                         provisioned_data_.node[j].resource);
@@ -416,32 +277,22 @@ match_requirement_resource (
       // available resource
       for (CORBA::ULong j = 0;j < available.length ();j++)
         {
-          if (!strcmp (deployed[i].requirementName, available[j].name))
+          if (!ACE_OS::strcmp (deployed[i].requirementName, available[j].name))
             {
               if (CIAO::debug_level () > 9)
-                ACE_DEBUG ((LM_DEBUG ,
-                    "TM::commitResource::Requirement name matched\n"));
               // search for the resourcename in the resourceType
               for (CORBA::ULong k = 0;k < available[j].resourceType.length ();k++)
                 {
-                  if (!strcmp (deployed[i].resourceName,
+                  if (!ACE_OS::strcmp (deployed[i].resourceName,
                                available[j].resourceType[k]))
                     {
-                      if (CIAO::debug_level () > 9)
-                        ACE_DEBUG ((LM_DEBUG ,
-                           "TM::commitResource::Resource name matched\n"));
-
                       try {
                         match_properties (deployed[i].property,
                                           available[j].property);
                       }
-                      catch (::Deployment::ResourceNotAvailable& ex)
+                      catch (::Deployment::ResourceCommitmentFailure& ex)
                         {
                           // catch the exception and add parameters
-                          ex.resourceType =
-                            CORBA::string_dup (available[j].resourceType[k]);
-                          ex.resourceName =
-                            CORBA::string_dup (available[j].name);
                           throw ex;
                         }
                     }
@@ -457,9 +308,14 @@ match_properties (
       ::Deployment::Properties deployed,
       ::Deployment::SatisfierProperties & available)
 {
+  bool property_found;
+
   for (CORBA::ULong i = 0;i < deployed.length ();i++)
     {
+      property_found = false;
+
       for (CORBA::ULong j = 0;j < available.length ();j++)
+      {
         if (!ACE_OS::strcmp (deployed[i].name , available[j].name))
           {
             // check kind here ....and then subtract ....
@@ -467,14 +323,25 @@ match_properties (
             // some specialised algo
             // for now assuming Capacity ....
             // and tk_double ....
-            if (CIAO::debug_level () > 9)
-              ACE_DEBUG ((LM_DEBUG ,
-                          "TM::commitResource::Property name matched\n"));
 
               commit_release_resource (deployed[i] , available[j]);
-
+              property_found = true;
           }
-    }
+      } // internal for ....
+
+      // check if property was found or not
+      if (property_found == false)
+      {
+        // throw an error since property was not found in the Resource
+        ::Deployment::ResourceCommitmentFailure failure;
+
+        failure.reason = CORBA::string_dup ("Property Not Found\n");
+        failure.propertyName = CORBA::string_dup (deployed[i].name);
+        failure.propertyValue.length (0);
+
+        throw failure;
+      }
+    } // outside for ...
 }
 
 void CIAO::DomainDataManager::commit_release_resource (
@@ -497,24 +364,20 @@ void CIAO::DomainDataManager::commit_release_resource (
       if (available_d >= required_d)
         {
           available_d = available_d - required_d;
-          if (CIAO::debug_level () > 9)
-            ACE_DEBUG ((LM_DEBUG, "TM::The available is [%f]",
-                        available_d));
 
           available.value <<= available_d;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Insufficient resources! Available: %d, Required %d\n",
-                      available_d, required_d));
-          throw ::Deployment::ResourceNotAvailable ("",
-                                                    "",
-                                                    deployed.name.in (),
-                                                    "",
-                                                    "");
+          ::Deployment::ResourceCommitmentFailure failure;
+
+          failure.reason = CORBA::string_dup ("Insufficient resources!");
+          failure.propertyName = CORBA::string_dup (available.name);
+          failure.propertyValue.length (1);
+          failure.propertyValue[0] = available.value;
+
+          throw failure;
         }
-
-
     }
   else
     {
@@ -529,10 +392,6 @@ void CIAO::DomainDataManager::commit_release_resource (
 
       // Should we check for bin > 100 ??????
 
-      if (CIAO::debug_level () > 9)
-        ACE_DEBUG ((LM_DEBUG, "TM::The available is [%f]",
-                    available_d));
-
       available.value <<= available_d;
     }
 }
@@ -541,10 +400,6 @@ void CIAO::DomainDataManager::stop_monitors ()
 {
 
   CORBA::ULong length = initial_domain_.node.length ();
-  if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Number of nodes in domain.cdd is : %d\n", length));
-    }
 
   for (CORBA::ULong i=0;i < length;i++)
     {
@@ -567,18 +422,13 @@ void CIAO::DomainDataManager::stop_monitors ()
 
       if (!CORBA::is_nil (node_manager.in ()))
         {
-          if (CIAO::debug_level () > 9)
-            {
-              ACE_DEBUG ((LM_DEBUG, "Trying to contact nodemanager on %s\n",
-                          initial_domain_.node[i].name.in ()));
-            }
           try
             {
               node_manager->leaveDomain ();
             }
           catch (CORBA::Exception& ex)
             {
-              ACE_DEBUG ((LM_DEBUG , "TM::Error in calling Leave Domain\n"));
+              ACE_ERROR ((LM_ERROR , "TM::Error in calling Leave Domain\n"));
               ex._tao_print_exception (
                 "Exception caught in ""DomainDataManager::leaveDomain");
             }
@@ -621,10 +471,6 @@ int CIAO::DomainDataManager::add_to_domain (
             a_node;
         }
   }
-
-//  ::Deployment::DnC_Dump::dump (this->provisioned_data_);
-
-  ACE_DEBUG ((LM_DEBUG, "TM::Node Up Message Processed\n"));
 
   return 0;
 }
@@ -694,7 +540,7 @@ int CIAO::DomainDataManager::delete_from_domain (
 
       for (CORBA::ULong i = 0;i < domain.node.length ();i++)
         {
-          if (strcmp (domain.node[i].name.in (),
+          if (ACE_OS::strcmp (domain.node[i].name.in (),
                       this->provisioned_data_.node[j].name.in ()) == 0)
             {
               found = true;
@@ -735,4 +581,83 @@ bool CIAO::DomainDataManager::update_node_status ()
 {
   // update the node status here ...
   return 0;
+}
+
+void CIAO::DomainDataManager::commitResourceAllocation (
+          const ::Deployment::ResourceAllocations & resources)
+{
+  // commit the resources
+  // parse into the plan and commit resources ...
+
+  // set the action value
+  current_action_ = commit;
+
+  this->commit_release_RA (resources);
+}
+
+void CIAO::DomainDataManager::releaseResourceAllocation (
+    const ::Deployment::ResourceAllocations & resources)
+{
+  // set the action value
+  current_action_ = release;
+
+  this->commit_release_RA (resources);
+}
+
+
+int CIAO::DomainDataManager::
+commit_release_RA (const ::Deployment::ResourceAllocations& resources)
+{
+  // temporary used to guard against exceptions
+  temp_provisioned_data_ = provisioned_data_;
+
+
+  for (CORBA::ULong i = 0;i < resources.length ();i++)
+  {
+    try
+    {
+      ::Deployment::Resource& res = find_resource (resources[i]);
+
+      match_properties (resources[i].property , res.property);
+    }
+    catch (::Deployment::ResourceCommitmentFailure& ex)
+    {
+      // catch the exception and add parameters
+      ACE_ERROR ((LM_ERROR, "Caught the Exception in releaseResourceAllocation\n"));
+      ex.index = i;
+      throw ex;
+    }
+  }
+
+  // here commit the commitresources
+  provisioned_data_ = temp_provisioned_data_;
+
+  return 0;
+}
+
+::Deployment::Resource&
+CIAO::DomainDataManager::find_resource (
+    const ::Deployment::ResourceAllocation& resource)
+{
+  // for now search the resource in the Node sequence; Later need
+  // to add it to the Bridges and Interconnects too according to the
+  // spec
+    for (CORBA::ULong j = 0;j < this->temp_provisioned_data_.node.length ();j++)
+    {
+      if (!ACE_OS::strcmp (resource.elementName.in () ,
+            this->temp_provisioned_data_.node[j].name.in ()))
+      {
+        for (CORBA::ULong k =0;
+              k < this->temp_provisioned_data_.node[j].resource.length ();
+              k++)
+        {
+          if (!ACE_OS::strcmp (this->temp_provisioned_data_.node[j].resource[k].name.in (),
+                resource.resourceName.in ()))
+            return this->temp_provisioned_data_.node[j].resource[k];//resource found here, return
+        }
+
+        // resource not found
+        throw ::Deployment::ResourceCommitmentFailure ().reason = CORBA::string_dup ("Resource Not Found\n");
+      }
+    }
 }
