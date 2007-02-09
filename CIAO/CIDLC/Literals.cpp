@@ -34,7 +34,7 @@ namespace StringLiterals
     "ACE_THROW_SPEC (( ::CORBA::SystemException))",       // EXCP_SNGL
     "ACE_THROW_SPEC ((",                                  // EXCP_START
     "::CORBA::SystemException",                           // EXCP_SYS
-    "::CORBA::BAD_PARAM ()",                              // EXCP_BP
+    "::CORBA::BAD_PARAM",                                 // EXCP_BP
     "::Components::IllegalState",                         // EXCP_IS
     "::Components::AlreadyConnected",                     // EXCP_AC
     "::Components::InvalidConnection",                    // EXCP_IC
