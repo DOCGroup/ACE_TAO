@@ -1,757 +1,290 @@
-Fri Feb  2 21:00:48 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+Fri Feb  9 20:39:25 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * ChangeLog:
+
+        * DAnCE/NodeManager/MonitorCB.cpp:
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp:
+
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.cpp:
+				  Merged in changes to the trunk after commiting spec compliant TM
+
+Fri Feb  9 20:11:15 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * ChangeLog:
+
+        * DAnCE/NodeManager/MonitorCB.cpp:
 
         * DAnCE/TargetManager/CmpClient.cpp:
         * DAnCE/TargetManager/DomainDataManager.h:
         * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/ResourceCommitmentManager.h:
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp:
         * DAnCE/TargetManager/TargetManager.mpc:
-        * DAnCE/TargetManager/TargetManagerImpl.idl:
-        * DAnCE/TargetManager/TargetManager_exec.h:
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-
-          Cleaning TM code to separate CIAO-specific functionality.
-
-Tue Jan 16 21:18:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp:
-        * DAnCE/TargetManager/DomainDataManager.h:
-        * DAnCE/TargetManager/DomainDataManager.cpp:
         * DAnCE/TargetManager/TargetManagerExt.idl:
         * DAnCE/TargetManager/TargetManagerImpl.idl:
         * DAnCE/TargetManager/TargetManager_exec.h:
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-
-          Added some comments to decrease doxygen warnings;Changed
-          ACE_DEBUG in many places to ACE_ERROR;Removed a lot of unwanted
-          debug messages
-
-Fri Jan 12 22:04:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp:
-        * DAnCE/TargetManager/DomainDataManager.h:
-        * DAnCE/TargetManager/DomainDataManager.cpp:
         * DAnCE/TargetManager/TargetManager_exec.cpp:
 
         * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
 
-        * ciao/Deployment_TargetManager.idl:
-          Changed to address Johnny's comments
-
-Thu Dec 28 22:59:45 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp:
-        * DAnCE/TargetManager/DomainDataManager.h:
-        * DAnCE/TargetManager/DomainDataManager.cpp:
-        * DAnCE/TargetManager/TargetManager_exec.h:
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-
-        * ciao/Deployment_ResourceCommitmentManager.idl:
-        * ciao/Deployment_TargetManager.idl:
-
-Wed Dec 27 19:59:32 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
-        * DAnCE/TargetManager/CmpClient.cpp:
-        * DAnCE/TargetManager/DomainDataManager.h:
-        * DAnCE/TargetManager/DomainDataManager.cpp:
-        * DAnCE/TargetManager/TargetManager.mpc:
-        * DAnCE/TargetManager/TargetManager_exec.h:
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-
         * ciao/CCM_Core.mpc:
         * ciao/Deployment_ResourceCommitmentManager.idl:
         * ciao/Deployment_TargetManager.idl:
-          Changes made to accomodate the ResourceCommitmentManager
+          Merged in changes from the branch TargetManager_Ext to introduce new
+          feature complying to the spec
 
-Tue Dec  5 17:44:49 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+        Fri Feb  2 21:00:48 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-        * ciao/Deployment_TargetManager.idl:
-          Deleted some extraneous comments
+				* DAnCE/TargetManager/CmpClient.cpp:
+				* DAnCE/TargetManager/DomainDataManager.h:
+				* DAnCE/TargetManager/DomainDataManager.cpp:
+				* DAnCE/TargetManager/TargetManager.mpc:
+				* DAnCE/TargetManager/TargetManagerImpl.idl:
+				* DAnCE/TargetManager/TargetManager_exec.h:
+				* DAnCE/TargetManager/TargetManager_exec.cpp:
 
-Tue Dec  5 06:29:22 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+				Cleaning TM code to separate CIAO-specific functionality.
 
-        * DAnCE/TargetManager/CmpClient.cpp:
+				Tue Jan 16 21:18:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-        * ciao/CCM_Core.mpc:
-        * ciao/Deployment_ResourceCommitmentManager.idl:
-        * ciao/Deployment_TargetManager.idl:
-          Added in order to introduce ResourceCommitmenManager
-          to TargetManager
+				* DAnCE/TargetManager/CmpClient.cpp:
+				* DAnCE/TargetManager/DomainDataManager.h:
+				* DAnCE/TargetManager/DomainDataManager.cpp:
+				* DAnCE/TargetManager/TargetManagerExt.idl:
+				* DAnCE/TargetManager/TargetManagerImpl.idl:
+				* DAnCE/TargetManager/TargetManager_exec.h:
+				* DAnCE/TargetManager/TargetManager_exec.cpp:
 
-Mon Dec  4 12:14:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				Added some comments to decrease doxygen warnings;Changed
+				ACE_DEBUG in many places to ACE_ERROR;Removed a lot of unwanted
+				debug messages
 
-        * MPC/config/*:
-          All CIAO base projects are moved from
-          ACE_wrappers/bin/MakeProjectCreator/config to this directory
+				Fri Jan 12 22:04:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-Mon Dec  4 12:35:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				* DAnCE/TargetManager/CmpClient.cpp:
+				* DAnCE/TargetManager/DomainDataManager.h:
+				* DAnCE/TargetManager/DomainDataManager.cpp:
+				* DAnCE/TargetManager/TargetManager_exec.cpp:
 
-        * DAnCE/TargetManager/TM_Client.mpc:
-          Simplified this file using more base projects
+				* DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
 
-Mon Dec  4 12:29:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				* ciao/Deployment_TargetManager.idl:
+				Changed to address Johnny's comments
 
-        * DAnCE/TargetManager/DomainDataManager.h:
-          Documentation changes
+				Thu Dec 28 22:59:45 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-        * DAnCE/TargetManager/TargetManager.mpc:
-          Simplified this file using more base projects
+				* DAnCE/TargetManager/CmpClient.cpp:
+				* DAnCE/TargetManager/DomainDataManager.h:
+				* DAnCE/TargetManager/DomainDataManager.cpp:
+				* DAnCE/TargetManager/TargetManager_exec.h:
+				* DAnCE/TargetManager/TargetManager_exec.cpp:
 
-Mon Dec  4 12:24:57 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				* ciao/Deployment_ResourceCommitmentManager.idl:
+				* ciao/Deployment_TargetManager.idl:
+				Modified defination to ResourceCommitmentManager
 
-        * MPC
-        * MPC/config
-          New directory for the base projects specifically for CIAO
+				Wed Dec 27 19:59:32 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-Mon Dec  4 12:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				* DAnCE/TargetManager/CmpClient.cpp:
+				* DAnCE/TargetManager/DomainDataManager.h:
+				* DAnCE/TargetManager/DomainDataManager.cpp:
+				* DAnCE/TargetManager/TargetManager.mpc:
+				* DAnCE/TargetManager/TargetManager_exec.h:
+				* DAnCE/TargetManager/TargetManager_exec.cpp:
 
-        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-          Use include from CIAO_ROOT and removed using namespace
+				* ciao/CCM_Core.mpc:
+				* ciao/Deployment_ResourceCommitmentManager.idl:
+				* ciao/Deployment_TargetManager.idl:
+				Changes made to accomodate the ResourceCommitmentManager
 
-        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
-          Simplified this file
+				Tue Dec  5 17:44:49 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-Mon Dec  4 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				* ciao/Deployment_TargetManager.idl:
+				Deleted some extraneous comments
 
-        * DAnCE/ExecutionManager/ExecutionManager.mpc:
-          Simplified by using the base projects
+				Tue Dec  5 06:29:22 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-Mon Dec  4 11:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+				* DAnCE/TargetManager/CmpClient.cpp:
 
-          Converted the NodeApplication into a library and build
-          an exe using this library. Will prevent duplicate compilation
-          of part of the code. Fixes bugzilla bug 2739.
+				* ciao/CCM_Core.mpc:
+				* ciao/Deployment_ResourceCommitmentManager.idl:
+				* ciao/Deployment_TargetManager.idl:
+				Added in order to introduce ResourceCommitmenManager
+				to TargetManager
 
-        * DAnCE/NodeApplication/CIAO_NodeApplication_export.h:
-          New export file:
+Thu Feb  8 18:35:51 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * DAnCE/NodeApplication/Configurator_Factory.h:
-        * DAnCE/NodeApplication/Container_Impl.h:
-        * DAnCE/NodeApplication/NodeApplication_Core.h:
-        * DAnCE/NodeApplication/NodeApplication_Impl.h:
-          Added export macro to export the class from the new NodeApplication
-          library.
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+          Don't generate ACE_THROW_RETURN but just throw
 
-        * DAnCE/NodeApplication/NodeApplication.mpc:
-          Added new library project and use this in the executable.
-
-        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
-          Use the new NodeApplication library and the new base projects
-          I added for CIAO
-
-        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.{h,cpp,inl}:
-          Moved destructor from inline to cpp method and small code improvements
-
-        * DAnCE/NodeManager/NodeManager.mpc:
-        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
-          Simplified by using the new base projects
-
-        * DAnCE/NodeManager/NodeManager_Impl.cpp:
-          Small improvements
-
-Mon Dec  4 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * CIAO-INSTALL.html:
-          Updated build instructions
-
-        * ciao/Dynamic_Component_Activator.cpp:
-          Removed not needed return statements in a void method
-
-        * ciao/Dynamic_Component_Activator.h:
-          Changed guard in file to match filename
-
-        * ciao/Home_Servant_Impl_T.cpp:
-          Layout changes
-
-        * ciao/Port_Activator.{h,cpp}:
-          The name methods did really change oid, so renamed name
-          to oid and added a new name method to return the name
-          member
-
-        * ciao/Servant_Activator.cpp:
-          Const changes and updated for Port Activator changes
-
-        * ciao/Servant_Impl_Base.cpp:
-          Small code improvements
-
-        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-          Const changes
-
-        * DAnCE/NodeApplication/Container_Impl.cpp:
-        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
-          Throw NO_MEMORY when allocation fails
-
-        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
-          Throw BAD_PARAM when an incorrect method parameter has been passed
-
-        * DAnCE/NodeManager/BaseMonitor.h:
-        * DAnCE/NodeManager/CIAO_Monitor.h:
-        * DAnCE/NodeManager/NodeManager_Impl.h:
-          Doxygen changes
-
-        * DAnCE/NodeManager/NodeManager_Impl.cpp:
-          Fixed a comment
-
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
-          Use true/false for bool
-
-        * DAnCE/TargetManager/DomainDataManager.cpp:
-          Layout changes
-
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-          Removed not needed includes, made messages dependent
-          on the debug level, added missing duplicate
-
-        * DAnCE/TargetManager/TargetManager_exec.h:
-          Don't use std:: for auto_ptr
-
-        * DAnCE/TargetManager/TargetManagerExt.idl:
-          Removed commented out include
-
-        * DAnCE/TargetManager/TargetManagerImpl.idl:
-          Removed empty lines
-
-        * DAnCE/tests/NodeApplicationTest/run_test.pl:
-        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
-        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
-        * DAnCE/tests/scripts/BasicSP/basicNodeDaemon.pl:
-        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
-        * examples/Display/descriptors/basicNodeDaemon.pl:
-        * examples/Display/descriptors/run_NodeDaemons.pl:
-        * examples/Hello/descriptors/run_NodeDaemons.pl:
-          Use $ACE_ROOT/bin with use lib. This fixes bugzilla bug 2737,
-          thanks for Abdul for reporting this.
-
-        * docs/tutorials/Quoter/Simple/01.html:
-          Update from Abdul
-
-Fri Dec  1 16:27:34 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * bin/generate_component_mpc.pl:
-
-          Fixed generation of export files. Thanks to Abdullah
-          Sowayan <abdullah.sowayan@lmco.com> for reporting
-          the problem.
-
-Fri Dec  1 13:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * docs/tutorials/CoSMIC/index.html:
-        * docs/tutorials/Quoter/Simple/index.html:
-          Updated download location of ACE/TAO/CIAO
-
-Fri Dec  1 11:26:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/ExecutionManager/Execution_Manager.cpp:
-          Fixed invalid check whether we have a nil POA or not
-
-Fri Dec  1 11:17:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/TargetManager/Deployment_Configuration.{h,cpp}:
-          Removed these files, not used in the mpc file
-
-        * DAnCE/DomainApplicationManager/Deployment_Configuration.{h,cpp}:
-          Close the file handle, part of the fix for bugzilla bug 2733
-
-        * DAnCE/TargetManager/DomainDataManager.{h,cpp}:
-          Const changes, sequences have a CORBA::ULong as length, not int.
-          Added some todo's and use a little bit more ACE
-
-        * DAnCE/TargetManager/TargetManager.cidl:
-          Removed empty line
-
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-          Fixed memory management and the way we check for a nil
-          reference
-
-Fri Dec  1 09:01:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * bin/generate_component_mpc.pl:
-          Layout improvements, thanks to Abdul for making this
-          update.
-
-Thu Nov 30 12:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/ExecutionManager/Execution_Manager.cpp:
-          Removed not needed ACE_TRY_CHECK
-
-        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
-        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
-          Const improvement
+Wed Feb  7 23:48:51 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.cpp:
-          Initialise pointer with 0, removed code after return
-          added added a todo
 
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
-          Doxygen improvement
+          Removed an 'ex' identifier in a catch block that is
+          no longer referenced.
 
-        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
-          Lot of layout changes to make the code a little bit more
-          readable, more has to be done to this file
+Wed Feb  7 23:22:08 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
-          Doyxgen improvements and removed not needed include
+        * ciao/Context_Impl_T.h:
+        * ciao/Upgradeable_Context_Impl_T.h:
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Upgradeable_Context_Impl_T.cpp:
 
-        * DAnCE/TargetManager/CmpClient.cpp:
-          Use true/false for a bool
+          - Replaced a class template parameter in both
+            Context_Impl and Upgradeable_Context_Impl with
+            a trait in the class body. This change was
+            evidently overlooked when similar changes were
+            made to Servant_Impl and Home_Servant_Impl
+            pursuant to dropping support for Visual Studio 6.
 
-        * DAnCE/TargetManager/Deployment_Configuration.cpp:
-          Use bool and use 0 instead of NULL
+          - In Upgradeable_Context_Impl, removed class members
+            already present in the base class Context_Impl.
 
-        * DAnCE/TargetManager/DomainDataManager.h:
-          Doxygen changes
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-        * DAnCE/TargetManager/DomainEvents.idl:
-          Removed not needed include
+          - Made changes to the generated context class corresponding
+            to the changes above.
 
-        * DAnCE/TargetManager/TargetManager_exec.cpp:
-          Layout changes
+          - Added code generation to check for a nil event
+            consumer before a push call is made on it by
+            an emits port. The event consumer would be nil
+            if a connection had not yet been made. Thanks
+            to James Hill <hillj@isis.vanderbilt.edu> for
+            reporting the problem.
 
-        * DAnCE/TargetManager/TM_Client.mpc:
-          Removed not needed includes
+Fri Feb  2 15:09:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-Wed Nov 29 21:26:53 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+        * ciao/Container_Base.cpp:
+        * ciao/Context_Impl_Base.cpp:
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Home_Servant_Impl_Base.cpp:
+        * ciao/Home_Servant_Impl_T.cpp:
+        * ciao/Port_Activator_T.cpp:
+        * ciao/Servant_Activator.cpp:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Impl_T.cpp:
+        * ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * docs/templates/CIAO_Glue_Session_Template.cpp:
+        * docs/templates/CIAO_Glue_Session_Template.inl:
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.cpp:
+          Replaced ACE_THROW_RETURN with throw
 
-        * docs/generate_component_mpc.html:
+Fri Feb  2 13:28:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-          New file, documentation for the Perl script
-          generate_component_mpc.pl, in CIAO_ROOT/bin.
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * examples/BasicSP/EC/client.cpp:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * performance-tests/Benchmark/server.cpp:
+        * performance-tests/Protocols/Controller/Controller.cpp:
+        * RACE/Input_Adapters/LocationUpdater/Injector.cpp:
+        * RACE/Input_Adapters/PlanGenerator/Injector.cpp:
+        * tests/IDL3/Events/Any/main.cpp:
+        * tools/Config_Handlers/Package_Handlers/test.cpp:
+        * tools/Config_Handlers/RT-CCM/test.cpp:
+        * tools/Config_Handlers/test.cpp:
+          No need anymore to pass an empty string as orbname
 
-        * bin/generate_component_mpc.pl:
+Fri Feb  2 11:48:34 UTC 2007  Simon McQueen  <sm@prismtech.com>
 
-          Changes mainly to correct problems with MPC files
-          generated for non-component builds, i.e., from some IDL
-          file used in common by multiple component builds, such
-          as the definition of a port interface. Also made changes
-          and added a new command line option to help minimize the
-          amount of code generated from IDL and minimize the
-          dependencies of the generated makefile or project.
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.idl:
 
-Wed Nov 29 15:43:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+          Add regression testing for bug #2790.
 
-        * DAnCE/NodeManager/CIAO_Monitor.cpp:
-          Don't use plain new, fixes bugzilla bug 2732. Thanks to Abdul
-          for reporting this
+Wed Jan 31 15:44:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-Wed Nov 29 12:48:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * DAnCE/Plan_Generator/PCVisitor.cpp:
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
+        * RACE/Controller/Component/Controller_exec.cpp:
+        * RACE/Controller/Component/Controller_exec.h:
 
-        * ciao/*.idl:
-          Added ciao/ as prefix to the include path. This way it is clear
-          where we are including a file from.
+Wed Jan 31 15:03:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-Tue Nov 28 21:38:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * DAnCE/ExecutionManager/DAM_Map.{h,cpp}:
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.{h,cpp}:
+          Const changes, layout improvements
 
-        * DAnCE/RTNodeApplication:
-          Zapped, not used anymore
+Tue Jan 30 20:49:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-Tue Nov 28 19:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+         * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+         * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
 
-        * ciao/Deployment_DomainApplicationManager.idl:
-          Added comments about more details which are not compliant according
-          to the spec
+           Compile fixes for FC6.
+
+Tue Jan 30 20:43:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-          Use native bool instead of int
+          Changed the check for the bind, with -1 return an error, with
+          1 report a debug message of the reuse, else a normal debug.
+          Thanks to Sandro Andrade <sandro dot andrade at gmail dot com>
+          for reporting that ReDAC was broken.
 
-        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h:
-          Reordered includes and improved doxygen documentation
+Tue Jan 30 11:27:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-          Const changes, use ACE_ERROR for error messages
+        * ciao/Server_init.{h,cpp}:
+          Change argument of BindObjectPath to a _ptr. Fixes bugzilla
+          2779. Thanks to Abdullah Sowayan <abdullah.sowayan@lmco.com>
+          for reporting this.
 
-        * DAnCE/NodeManager/CIAO_Monitor.cpp:
-          Const changes, use more ACE and little cleanup
+Mon Jan 29 19:23:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * DAnCE/NodeManager/CIAO_Monitor.h:
-          Doxygen improvement
+        * ciao/Swapping_Servant_Home_Impl_Base.{h,cpp}:
+        * ciao/Upgradeable_Context_Impl_T.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+          Layout changes
 
-        * DAnCE/NodeManager/MonitorCB.cpp:
-          Code layout changes
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Fixed parsing of node manager file
 
-        * DAnCE/NodeManager/MonitorCB.h:
-          Doxygen changes and added some todo's
+        * examples/BasicSP/descriptors/run_test.pl:
+          New script to run this example automatically
 
-        * DAnCE/NodeManager/MonitorController.cpp:
-          Use bool and small improvements
+        * exampls/BasicSP/README.html:
+          Fixed incorrect path and mpc generation command
 
-        * DAnCE/NodeManager/Node_Manager.cpp:
-          Use the correct value for the lenght of the buffer passed
-          to hostname
+Sun Jan 28 19:59:14 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * DAnCE/NodeManager/NodeManager_Impl.cpp:
-          Small improvements and added some todo's
+        * CIAO version 0.5.6 released.
 
-        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
-          Cleanup
+Thu Jan 25 18:18:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-          Made some debug lines dependent on a debug level
+        * *.{h,cpp,inl}:
 
-Tue Nov 28 16:11:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+          Removed the majority of the ACE exception macros.  The
+          ACE_THROW_RETURN's were left in to avoid warnings from aCC.
 
-        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
-        * DAnCE/NodeManager/Monitor.mpc
+Wed Jan 24 13:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-          Fixes for link errors in OS X.
+        * *.{h,cpp,inl}:
+          Removed part of the environment macros
 
-Tue Nov 28 11:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Jan 22 23:14:56 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * CIDLC/ExecutorMappingGenerator.cpp:
-          Updated because of idl file rename
+        * CIAO version 0.5.5 released.
 
-Tue Nov 28 10:42:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/*:
-        * *:
-          Renamed a lot of idl files, if the file contains interfaces/types
-          from the DAnCE spec, added Deployment_ as prefix, if they are
-          containing CIAO specific interfaces, added CIAO_. This way we can
-          more easily see if we have spec compliant IDL or not.
-
-Tue Nov 28 09:50:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/CCM_Home.idl:
-        * ciao/CCM_Object.idl:
-          Moved CCMHome again to its own file
-
-        * ciao/Security.idl:
-          CIAO uses an interface of the security service but we don't
-          do a thing with it, so just define a local interface within
-          CIAO and use that for the moment, saves 250Kb of footprint
-
-        * ciao/CCM_Context.idl:
-          Use the local security interface
-
-        * ciao/ExectionManager.idl:
-          Added todo
-
-        * ciao/CCM_Core.idl:
-          Added new file
-
-Mon Nov 27 18:34:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/NodeApplicationManager.idl:
-        * ciao/Deployment_ApplicationManager.idl:
-          Moved ApplicationManager interface to its own file
-
-        * ciao/CCM_Core.mpc:
-          Added new file
-
-        * ciao/DomainApplicationManager.idl:
-        * ciao/TargetManager.idl:
-          Updated includes
-
-        * ciao/Target_Data.idl:
-          Moved ResourceNotAvailable also to the new
-          Deyloyment_ApplicationManger file
-
-        * DAnCE/NodeManager/CIAO_Monitor.h:
-          Removed include of memory, not portable and not used.
-          Fixes bugzilla bug 2730. Thanks to Abdul for reporting
-          this.
-
-Mon Nov 27 15:41:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Deployment_Core.idl:
-        * ciao/Deployment_Container.idl:
-        * ciao/Deployment_NodeApplication.idl:
-          Moved types from Core to the other files and added remarks
-          to all CIAO specific types
-
-        * DAnCE/NodeApplicationManager/Containers_Info_Map.h:
-        * DAnCE/NodeApplicationManager/ImplementationInfo.h:
-          Updated includes because of the move above
-
-Mon Nov 27 14:55:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/CCM_Core.mpc:
-          Added new Deployment_DeploymentPlan
-
-        * ciao/Deployment_Data.idl
-        * ciao/Deployment_DeploymentPlan.idl:
-          Moved types related to DeploymentPlan to their own file
-
-        * ciao/Deployment_Data.idl
-          Removed RequirementSatisfier, it is superfluous.
-
-        * ciao/Deployment.idl:
-          No need to include Deployment_Data
-
-        * ciao/Target_Data.idl:
-          Removed not needed include
-
-        * ciao/Deployment_Connection.idl:
-        * ciao/TargetManager.idl:
-        * RACE/Output_Adapters/Interface/PlanEgress.idl:
-        * RACE/Plan_Analyzer/Interface/PlanIngress.idl:
-        * RACE/Planner_Manager/Interface/Planner_Manager_I.idl:
-        * RACE/Planners/Interface/Planner_I.idl:
-          Updated include because of move above
-
-        * tools/Config_Handlers/DnC_Dump.{h,cpp}:
-          Removed RequirementSatisfier
-
-Mon Nov 27 14:11:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Deployment.idl:
-          Removed LastConfiguration, it is not used and has been zapped
-          from the DAnCE spec
-
-Mon Nov 27 14:04:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Deployment_Core.idl:
-        * ciao/Deployment_NodeApplication.idl:
-          Moved ESInstallationInfo to NodeApplication file
-
-        * ciao/Deployment.idl:
-          LastConfiguration doesn't seem used, added a comment to that
-          exception.
-
-        * ciao/NodeApplicationManager.idl:
-          Doxygen improvement
-
-Mon Nov 27 13:23:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/NodeApplicationManager.idl:
-          Doxygen improvement
-
-        * ciao/Deployment_Core.idl:
-          Removed InvalidLocation exception, not used and not in the DAnCE
-          spec
-
-Mon Nov 27 13:10:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Deployment_Core.idl
-        * ciao/Deployment_Container.idl
-        * ciao/Deployment_NodeApplication.idl
-          Moved some interfaces from Core to their own files
-
-        * ciao/CCM_Core.mpc:
-          Updated because of split above and added some more flags to
-          reduce the amount of generated files
-
-        * ciao/DomainApplicationManager.idl:
-        * ciao/NodeApplication_CallBack.idl
-          Updated include
-
-        * DAnCE/NodeApplication/Container_Impl.h:
-        * DAnCENodeApplication/NodeApplication_Impl.h:
-        * DAnCEtests/NodeApplicationTest/NodeApp_test_client.cpp:
-        * DAnCEtests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
-        * DAnCEtests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
-        * DAnCEtests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
-          Updated includes because of refactoring above
-
-Mon Nov 27 09:40:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
-          Instead of the http files in this library, use the HTTP
-          classes from the TAO lib
-
-        * DAnCE/RepositoryManager/HTTP_Client.cpp
-        * DAnCE/RepositoryManager/HTTP_Client.h
-        * DAnCE/RepositoryManager/HTTP_Handler.cpp
-        * DAnCE/RepositoryManager/HTTP_Handler.h
-          Removed, not needed anymore, these files did move to the TAO
-          lib to support http:// ior and we are reusing them now in
-          CIAO
-
-        * DAnCE/RepositoryManager/RepositoryManager.mpc
-          Removed the files above
-
-Mon Nov 27 09:36:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
-          Instead of the http files in this library, use the HTTP
-          classes from the TAO lib
-
-        * DAnCE/NodeApplicationManager/URL_Parser.h:
-          Doxygen improvements
-
-        * DAnCE/NodeApplicationManager/HTTP_Client.cpp:
-        * DAnCE/NodeApplicationManager/HTTP_Client.h:
-        * DAnCE/NodeApplicationManager/HTTP_Handler.cpp:
-        * DAnCE/NodeApplicationManager/HTTP_Handler.h:
-          Removed, not needed anymore, these files did move to the TAO
-          lib to support http:// ior and we are reusing them now in
-          CIAO
-
-        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
-          Removed the files above
-
-Mon Nov 27 09:33:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/NodeManager/NodeManager_Impl.cpp:
-          Removed include of errno.h. It is not portable, but it seems
-          it isn't needed at all. Thanks to Abdul for reporting this,
-          this fixes bugzilla bug 2726.
-
-Mon Nov 27 08:59:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * docs/tutorials/Quoter:
-          Extended this tutorial with more documentations. Thanks to
-          Abdul for delivering these files. This fixes bugzilla 2717
-
-Fri Nov 24 13:59:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/StaticConfigurator/StaticDAnCEParser.cpp:
-          Added check whether we got a valid NodeImplementationInfo back
-          and not a nill pointer. Fixes bugzilla bug 2692 finally.
-          Thanks to Abdul for pointing out the need for this check
-
-Fri Nov 24 09:41:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc:
-          Don't build this project in ace_for_tao configuration
-
-Thu Nov 23 12:34:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/CCM_Home.idl:
-        * ciao/CCM_Object.idl:
-          Moved CCMHome again to its own file now the idl compiler has
-          been fixed to handle this correctly
-
-Wed Nov 22 20:39:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Dynamic_Component_Servant_Base.h:
-          Removed the character c from the first line which drove the
-          compilers really crazy
-
-Wed Nov 22 19:31:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/CCM_Home.idl:
-        * ciao/CCM_Object.idl:
-          Moved CCMHome to CCMObject, when these are in seperate files
-          the generated code for components is not correct. We want to have
-          these interfaces in seperate files but we can sort out this
-          later.
-
-Wed Nov 22 14:45:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Dynamic_Component_Servant_Base.h:
-          Fixed pragme once warning
-
-Wed Nov 22 11:05:12 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/CCM_Base.idl
-        * ciao/CCM_CCM2Context.idl
-        * ciao/CCM_CCMException.idl
-        * ciao/CCM_Component.idl
-        * ciao/CCM_Configurator.idl
-        * ciao/CCM_Container.idl
-        * ciao/CCM_Container_Ex.idl
-        * ciao/CCM_Context.idl
-        * ciao/CCM_Cookie.idl
-        * ciao/CCM_Core.mpc
-        * ciao/CCM_EnterpriseComponent.idl
-        * ciao/CCM_EntityComponent.idl
-        * ciao/CCM_EntityContext.idl
-        * ciao/CCM_Enumeration.idl
-        * ciao/CCM_Event.idl
-        * ciao/CCM_Home.idl
-        * ciao/CCM_HomeConfigurator.idl
-        * ciao/CCM_HomeExecutorBase.idl
-        * ciao/CCM_HomeFinder.idl
-        * ciao/CCM_HomeRegistration.idl
-        * ciao/CCM_KeylessCCMHome.idl
-        * ciao/CCM_Navigation.idl
-        * ciao/CCM_Object.idl
-        * ciao/CCM_ProxyHomeRegistration.idl
-        * ciao/CCM_Receptacle.idl
-        * ciao/CCM_Session2Context.idl
-        * ciao/CCM_SessionSynchronization.idl
-        * ciao/CCM_StandardConfigurator.idl
-        * ciao/Client_init.cpp
-        * ciao/Components.idl
-        * ciao/Cookies.h
-        * ciao/CosPersistentState.idl
-        * ciao/Deployment.idl
-        * ciao/Deployment_Application.idl
-        * ciao/Deployment_Base.idl
-        * ciao/Deployment_Connection.idl
-        * ciao/Deployment_Core.idl
-        * ciao/Deployment_Data.idl
-        * ciao/Deployment_TargetData.idl
-        * ciao/DomainApplicationManager.idl
-        * ciao/Home_Servant_Impl_Base.h
-        * ciao/NodeApplicationManager.idl
-        * ciao/NodeManager.idl
-        * ciao/Servant_Impl_Base.h
-        * ciao/Servant_Impl_T.cpp
-        * ciao/Server_init.cpp
-        * ciao/StandardConfigurator_Impl.h
-        * ciao/SwapExec.idl
-        * ciao/Swapping_Servant_Home_Impl_Base.h
-        * ciao/Target_Data.idl
-        * ciao/TargetManager.idl
-        * ciao/UpgradeableContext.idl
-          Splitted the huge idl files into smaller parts. The CCM files are almost done,
-          the Deployment files do need some more iterations to get smaller files that
-          contain an interface with the types they need. This way the linker can optimize
-          objects out during a static compilation
-
-        * ciao/CIAO_Value.idl:
-        * ciao/Container_Base.pidl:
-          Removed, not used at all
-
-        * ciao/ComponentsC.h:
-        * ciao/ComponentsS.h:
-          Removed, will be generated by tao_idl
-
-        * DAnCE/Interfaces/NodeManagerDaemon.idl
-        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
-        * DAnCE/NodeManager/MonitorController.h
-        * DAnCE/TargetManager/CmpClient.cpp
-        * DAnCE/TargetManager/DomainDataManager.h
-        * DAnCE/TargetManager/DomainEvents.idl
-        * DAnCE/TargetManager/TargetManager.cidl
-        * DAnCE/TargetManager/TargetManager.mpc
-        * tools/Config_Handlers/DD_Handler.cpp
-        * tools/Config_Handlers/DnC_Dump.h
-        * examples/Hello/Sender/starter.cpp
-          Updated because of rename above
-
-        * DAnCE/TargetManager/TargetManager.idl:
-          Renamed to TargetManagerImpl.idl, this is the interface
-          it contains.
-
-        * DAnCE/NodeApplication/Container_Impl.cpp
-        * DAnCE/NodeApplication/Container_Impl.h
-          Removed get_homes(), it is not in the base idl
-
-        * examples/Display/Display_Base/Display_Base.mpc
-        * examples/Display/GPS/GPS.mpc
-        * examples/Display/NavDisplay/NavDisplay.mpc
-        * examples/Display/RateGen/RateGen.mpc
-        * RACE/common/RACE_common.mpc
-        * RACE/Input_Adapters/Base/Input_Adapter.mpc
-        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
-        * RACE/Output_Adapters/Base/Output_Adapter.mpc
-        * RACE/Output_Adapters/Interface/Output_Adapter_Interface.mpc
-        * RACE/Plan_Analyzer/Component/Plan_Analyzer.mpc
-        * RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc
-        * RACE/Planner_Manager/Component/Planner_Manager.mpc
-        * RACE/Planner_Manager/Interface/Planner_Manager_Interface.mpc
-        * RACE/Planners/Base/Planner.mpc
-        * RACE/Planners/Interface/Planner_Interface.mpc
-        * RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
-        * tests/IDL3/ImpliedIDL/All/all.mpc
-        * tests/IDL3/Lookup/lookup_test.mpc
-        * tests/Minimum/Minimum_Base/Minimum.mpc
-        * tests/Minimum/Receiver/Receiver.mpc
-        * tests/Minimum/Sender/Sender.mpc
-          Simplified these mpc files, the -GT option is not added by
-          orbsvcslib anymore and -Sc is deprecated
-
-        * tests/IDL3/Events/Any/main.cpp:
-        * tests/IDL3/Events/Any/README:
-        * tests/IDL3/Events/Any/run_test.pl:
-          Updated this test to reproduce a problem with valuetype
-          insertion into an any. This test will now fail until
-          Jeff Parsons commits some idl compiler changes
-
-Mon Nov 20 08:16:34 2006  Simon McQueen  <sm@prismtech.com>
-
-        * CIAO version 0.5.4 released.
 
 Local Variables:
 mode: change-log

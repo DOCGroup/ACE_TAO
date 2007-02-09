@@ -32,7 +32,7 @@ int CIAO::MonitorCB::update_data (::Deployment::Domain& data)
 
   // data to be updated ...
   ::Deployment::DomainUpdateKind update_kind
-      = ::Deployment::UpdateAvailable;
+      = ::Deployment::UpdateDynamic;
 
   // The copy of the domain variable
   ::Deployment::Domain_var domain
