@@ -1,3 +1,17 @@
+Fri Feb  9 16:45:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * MPC/config/portableserver.mpb:
+
+          The portableserver base project now inherits from core_anytypecode
+          instead of anytypecode.  This is to prevent the situation where
+          inheriting from from portablserver causes changes to the IDL compiler
+          options, specifically inclusion of support for Anys and Typecodes.
+          User projects that inherit from portableserver need to also inherit
+          from anytypecode to get the options that generate Anys and Typecodes
+          passed to the IDL compiler.  The assumption is that a significant
+          number of projects inhert from portableserver yet have no interest in
+          the added footprint of Any and Typecode support in generated code.
+
 Thu Feb  8 19:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html:
