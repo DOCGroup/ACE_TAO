@@ -1,3 +1,24 @@
+Fri Feb  9 21:40:02 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ace/High_Res_Timer.inl:
+        * ace/High_Res_Timer.cpp:
+
+          Removed ACE_WIN32 specific code in ACE_High_Res_Timer to reflect
+          the change in the default value of ACE_HR_SCALE_CONVERSION.
+          Removed uses of ACE_HRTIME_CONVERSION and use
+          ACE_Utils::Truncate instead.
+
+        * ace/OS_NS_time.h:
+
+          Changed the check for defining ACE_HRTIME_CONVERSION and
+          ACE_HRTIME_TO_U64 from ACE_HRTIME_T_IS_BASIC_TYPE to
+          ACE_LACKS_UNSIGNEDLONGLONG_T.
+
+        * tests/High_Res_Timer_Test.cpp:
+
+          Updated the test to use ACE_Utils::Truncate instead of
+          static_cast which caused 0 to be output when time_t is 64-bit.
+
 Fri Feb  9 12:19:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/rm_exception_macros.pl:
