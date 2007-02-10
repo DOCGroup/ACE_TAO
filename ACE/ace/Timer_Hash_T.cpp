@@ -12,6 +12,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(ace,
           Timer_Hash_T,
@@ -374,8 +375,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
     reinterpret_cast<Hash_Token<TYPE> *> (
       const_cast<void *> (expired->get_act ()));
 
-  h->pos_ =
-    expired->get_timer_value ().sec () % this->table_size_;
+  size_t secs_hash_input =
+    ACE_Utils::Truncate<size_t> (expired->get_timer_value ().sec ());
+  h->pos_ = secs_hash_input % this->table_size_;
 
   h->orig_id_ =
     this->table_[h->pos_]->schedule (expired->get_type (),
@@ -409,8 +411,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
 {
   ACE_TRACE ("ACE_Timer_Hash_T::schedule_i");
 
-  size_t position =
-    future_time.sec () % this->table_size_;
+  size_t secs_hash_input = ACE_Utils::Truncate<size_t> (future_time.sec ());
+  size_t position = secs_hash_input % this->table_size_;
 
   Hash_Token<TYPE> *h = 0;
 
