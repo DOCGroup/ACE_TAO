@@ -1,3 +1,10 @@
+Sat Feb 10 23:13:06 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Svc_Conf_Lexer.cpp (ace_yy_buffer_state): Disable VC8 warning
+          C4351 (input_ elements will be default-initialized) for this
+          block. The new behavior is good and desireable, so the warning
+          noise can be silenced in this case.
+
 Fri Feb  9 21:40:02 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/High_Res_Timer.inl:
