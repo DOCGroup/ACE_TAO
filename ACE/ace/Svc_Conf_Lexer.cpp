@@ -49,6 +49,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #define ACE_NO_STATE -1
 #define ACE_COMMENT 0
 
+#if defined (_MSC_VER) && (_MSC_VER >= 1400)
+// Visual Studio .NET 2005 (VC8) issues warning C4351 for input_ in the
+// constructor initializer list below. Since we like the warned-of new
+// behavior (input_ elements will be default-initialized), squash the
+// warning here.
+#  pragma warning (push)
+#  pragma warning (disable:4351)
+#endif /* VC8 */
+
 struct ace_yy_buffer_state
 {
   ace_yy_buffer_state (void)
@@ -65,6 +74,9 @@ struct ace_yy_buffer_state
 #endif /* ACE_USES_WCHAR */
   {
   }
+#if defined (_MSC_VER) && (_MSC_VER >= 1400)
+#  pragma warning (pop)
+#endif /* VC8 */
 
   ~ace_yy_buffer_state (void)
   {
