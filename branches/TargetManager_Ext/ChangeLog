@@ -1,7 +1,13 @@
+Sat Feb 10 20:13:35 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/ResourceCommitmentManager.h:
+        * DAnCE/TargetManager/ResourceCommitmentManager.cpp:
+				  Added the above files.
+
 Sat Feb 10 20:09:29 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * ciao/Deployment_ResourceCommitmentManager.idl:
-				  Added id tag
+                                  Added id tag
 
 Fri Feb  9 20:39:25 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
