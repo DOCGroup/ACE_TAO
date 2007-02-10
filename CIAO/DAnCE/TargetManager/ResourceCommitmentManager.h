@@ -1,4 +1,13 @@
-
+// $Id$
+// 
+/**
+ * @file ResourceCommitmentManager.h
+ *
+ * @brief This file declares the ResourceCommitmentManager class
+ * 
+ * This class acts as the servant of the interface 
+ * ResourceCommitmentManager
+ */
 #ifndef DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_
 #define DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_
 
@@ -55,6 +64,6 @@ namespace CIAO {
         ::Deployment::ResourceAllocations resources_;
     };
 
-};
+}
 
 #endif /* DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_  */
