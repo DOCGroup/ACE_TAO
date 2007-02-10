@@ -5,6 +5,11 @@ Sat Feb 10 23:13:06 UTC 2007  Steve Huston  <shuston@riverace.com>
           block. The new behavior is good and desireable, so the warning
           noise can be silenced in this case.
 
+        * ace/Timer_Hash_T.cpp (reschedule, schedule_i): When calculating the
+          hash value, truncate the seconds value down to size_t range because
+          the modulo value used to hash is a size_t. Avoids a compile warning
+          about losing data when time_t is larger than size_t.
+
 Fri Feb  9 21:40:02 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/High_Res_Timer.inl:
