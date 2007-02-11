@@ -6,6 +6,7 @@
 #include "tao/AnyTypeCode/Value_TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"

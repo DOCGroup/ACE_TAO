@@ -23,8 +23,6 @@ Client_Interceptor::SchedulingInfo = 30;
 
 void
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -118,7 +116,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
 void
 Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -138,7 +135,6 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
 
 void
 Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -158,8 +154,6 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
 void
 Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -216,8 +210,6 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 
 void
 Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -237,14 +229,12 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 
 char*
 Client_Interceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return  CORBA::string_dup ("RTSchdeuler_Client_Interceptor");
 }
 
 void
 Client_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -259,8 +249,6 @@ Server_Interceptor::Server_Interceptor (TAO_RTScheduler_Current_ptr current)
 void
 Server_Interceptor::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -271,8 +259,6 @@ Server_Interceptor::receive_request_service_contexts (
 void
 Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
                                      )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -283,8 +269,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   try
     {
       serv_cxt =
-        ri->get_request_service_context (Server_Interceptor::SchedulingInfo
-                                        );
+        ri->get_request_service_context (Server_Interceptor::SchedulingInfo);
     }
   catch (const ::CORBA::Exception&)
     {
@@ -374,9 +359,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 }
 
 void
-Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -423,10 +406,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 }
 
 void
-Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri
-                                    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -449,10 +429,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
 }
 
 void
-Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
-                                )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
+Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -476,16 +453,13 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
 
 char*
 Server_Interceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
     return  CORBA::string_dup ("RTSchdeuler_Server_Interceptor");
 }
 
 void
 Server_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

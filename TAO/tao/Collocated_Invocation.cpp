@@ -6,6 +6,7 @@
 #include "tao/Stub.h"
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
+#include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"

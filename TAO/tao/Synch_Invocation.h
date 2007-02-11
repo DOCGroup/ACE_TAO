@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -80,8 +80,7 @@ namespace TAO
      * invocation. This method is also nerve centre for the
      * interceptor invocation points.
      */
-    Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time);
 
   protected:
 
@@ -91,17 +90,14 @@ namespace TAO
      * example the DII needs a totally different method of
      * user exception exception handling
      */
-    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
 
     /// Helper method used to handle location forwarded replies.
-    Invocation_Status location_forward (TAO_InputCDR &cdr)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    Invocation_Status location_forward (TAO_InputCDR &cdr);
 
     /// Helper method used to handle system exceptions from the remote
     /// objects.
-    Invocation_Status handle_system_exception (TAO_InputCDR &cdr)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    Invocation_Status handle_system_exception (TAO_InputCDR &cdr);
 
     /// As the name suggests waits for a reply from the remote ORB.
     /**
@@ -109,8 +105,7 @@ namespace TAO
      */
     Invocation_Status wait_for_reply (ACE_Time_Value *max_wait_time,
                                       TAO_Synch_Reply_Dispatcher &rd,
-                                      TAO_Bind_Dispatcher_Guard &bd)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                      TAO_Bind_Dispatcher_Guard &bd);
 
   private:
 
@@ -159,8 +154,7 @@ namespace TAO
 
     /// Method used by the adapter to kickstart an oneway invocation
     /// to the remote object.
-    Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time);
   };
 
   /**

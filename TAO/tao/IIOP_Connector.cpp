@@ -17,6 +17,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            IIOP_Connector,

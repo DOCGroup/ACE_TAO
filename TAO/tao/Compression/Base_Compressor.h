@@ -43,29 +43,17 @@ namespace TAO
         const ::CORBA::OctetSeq & source,
         ::CORBA::OctetSeq & target
       )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::CompressionException
-      )) = 0;
+      = 0;
 
     virtual void decompress (
         const ::CORBA::OctetSeq & source,
         ::CORBA::OctetSeq & target
       )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::CompressionException
-      )) = 0;
+      = 0;
 
-    virtual ::Compression::CompressorFactory_ptr compressor_factory (void)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+    virtual ::Compression::CompressorFactory_ptr compressor_factory (void);
 
-    virtual ::Compression::CompressionLevel compression_level (void)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+    virtual ::Compression::CompressionLevel compression_level (void);
 
     protected:
       ::Compression::CompressionLevel compression_level_;

@@ -7,10 +7,9 @@
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "tao/Abstract_Servant_Base.h"
-#include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Object.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (PortableServer,
            Direct_Collocation_Upcall_Wrapper,
@@ -27,15 +26,12 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   const char * op,
   size_t op_len,
   TAO::Collocation_Strategy strategy)
-    ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO_Abstract_ServantBase * const servant = obj->_servant ();
 
   TAO_Collocated_Skeleton collocated_skel;
 
-  int const status = servant->_find (op, collocated_skel, strategy, op_len);
-
-  if (status == -1)
+  if (servant->_find (op, collocated_skel, strategy, op_len) == -1)
     {
       throw ::CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }

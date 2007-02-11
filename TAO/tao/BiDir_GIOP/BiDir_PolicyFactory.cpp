@@ -5,6 +5,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include "ace/CORBA_macros.h"
+
 ACE_RCSID (BiDir_GIOP,
            BiDir_PolicyFactory,
            "$Id$")
@@ -15,8 +17,6 @@ CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 

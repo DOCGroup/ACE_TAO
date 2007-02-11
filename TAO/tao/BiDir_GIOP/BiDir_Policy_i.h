@@ -55,17 +55,13 @@ public:
   virtual TAO_BidirectionalPolicy *clone (void) const;
 
   /// = The BiDir::BidirectionalPolicy methods
-  virtual BiDirPolicy::BidirectionalPolicyValue value (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual BiDirPolicy::BidirectionalPolicyValue value (void);
 
-  virtual CORBA::PolicyType policy_type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 

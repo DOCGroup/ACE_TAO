@@ -26,7 +26,6 @@
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

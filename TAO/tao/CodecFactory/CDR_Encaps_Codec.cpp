@@ -16,6 +16,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
 
 ACE_RCSID (CodecFactory,
@@ -43,13 +44,9 @@ TAO_CDR_Encaps_Codec::~TAO_CDR_Encaps_Codec (void)
 }
 
 CORBA::OctetSeq *
-TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
-                              )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::InvalidTypeForEncoding))
+TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
 {
-  this->check_type_for_encoding (data
-                                );
+  this->check_type_for_encoding (data);
 
   // ----------------------------------------------------------------
 
@@ -107,8 +104,6 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
                               )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::FormatMismatch))
 {
   // @todo How do we check for a format mismatch so that we can throw
   //       a IOP::Codec::FormatMismatch exception?
@@ -170,8 +165,6 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
 CORBA::OctetSeq *
 TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::InvalidTypeForEncoding))
 {
   this->check_type_for_encoding (data
                                 );
@@ -258,9 +251,6 @@ CORBA::Any *
 TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                                     CORBA::TypeCode_ptr tc
                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::Codec::FormatMismatch,
-                   IOP::Codec::TypeMismatch))
 {
   // The ACE_CDR::mb_align() call can shift the rd_ptr by up
   // to ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset

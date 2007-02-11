@@ -148,7 +148,6 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_Pluggable_Reply_Params_Base &reply
 
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)

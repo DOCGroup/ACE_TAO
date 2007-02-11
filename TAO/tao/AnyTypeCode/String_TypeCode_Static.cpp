@@ -2,6 +2,7 @@
 
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/String_TypeCode_Static.inl"
@@ -41,8 +42,7 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::tao_release (void)
 
 CORBA::Boolean
 TAO::TypeCode::String<TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // The following call won't throw since CORBA::TypeCode::equal() has
   // already established the kind of tc is the same as our kind.
@@ -59,8 +59,7 @@ TAO::TypeCode::String<TAO::Null_RefCount_Policy>::equivalent_i (
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
   // tk_string-based TypeCodes.
-  return this->equal_i (tc
-                       );
+  return this->equal_i (tc);
 }
 
 CORBA::TypeCode_ptr

@@ -128,9 +128,6 @@ template <class T> ACE_INLINE
 CORBA::PolicyType POA_CORBA::Policy_tie<T>::policy_type  (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->ptr_->policy_type (
 
@@ -142,11 +139,7 @@ CORBA::PolicyType POA_CORBA::Policy_tie<T>::policy_type  (
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::Policy_tie<T>::copy  (
-
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   return this->ptr_->copy (
 
@@ -160,9 +153,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::Policy_tie<T>::destroy  (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   this->ptr_->destroy (
 

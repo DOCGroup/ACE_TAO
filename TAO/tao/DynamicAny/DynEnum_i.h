@@ -68,77 +68,45 @@ public:
 
   virtual char * get_as_string (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void set_as_string (
       const char * value
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
   virtual CORBA::ULong get_as_ulong (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void set_as_ulong (
       CORBA::ULong value
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
       const CORBA::Any & value
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
   virtual CORBA::Any * to_any (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void destroy (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual DynamicAny::DynAny_ptr current_component (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
+;
 
 private:
   // Called by both versions of init().

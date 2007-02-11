@@ -8,14 +8,14 @@ ACE_RCSID (AnyTypeCode,
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_NVList_Adapter_Impl::create_list (
       CORBA::Long count,
-      CORBA::NVList_ptr &new_list
-      )
+      CORBA::NVList_ptr &new_list)
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
   // Create an empty list

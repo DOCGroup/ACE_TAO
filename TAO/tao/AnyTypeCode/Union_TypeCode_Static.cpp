@@ -3,15 +3,14 @@
 #include "tao/AnyTypeCode/Union_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Union_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "tao/SystemException.h"
-
 #include "ace/Value_Ptr.h"
-
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (AnyTypeCode,
            Union_TypeCode_Static,

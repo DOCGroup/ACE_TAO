@@ -35,10 +35,7 @@ namespace TAO
 
         virtual ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level
-          )
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException
-          ));
+          );
        private:
          ::Compression::Compressor_var compressor_;
     };

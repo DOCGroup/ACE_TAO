@@ -8,6 +8,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/Profile.h"
 #include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 #include "ace/Countdown_Time.h"
 
@@ -32,7 +33,6 @@ namespace TAO
 
   Invocation_Status
   LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
-    ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
 

@@ -11,7 +11,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (tao,
            DLL_Parser,
            "$Id$")
@@ -36,7 +35,6 @@ TAO_DLL_Parser::match_prefix (const char *ior_string) const
 CORBA::Object_ptr
 TAO_DLL_Parser::parse_string (const char *ior,
                               CORBA::ORB_ptr orb)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
@@ -51,13 +49,12 @@ TAO_DLL_Parser::parse_string (const char *ior,
 
   if (loader == 0)
     {
-      ACE_THROW_RETURN
-        (CORBA::INV_OBJREF
+      throw
+         CORBA::INV_OBJREF
          (CORBA::SystemException::_tao_minor_code (
             0,
             EINVAL),
-          CORBA::COMPLETED_NO),
-         CORBA::Object::_nil ());
+          CORBA::COMPLETED_NO);
     }
 
   return loader->create_object (orb, 0, 0);

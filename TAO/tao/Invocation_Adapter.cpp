@@ -13,7 +13,7 @@
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/TAOC.h"
-
+#include "tao/SystemException.h"
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)

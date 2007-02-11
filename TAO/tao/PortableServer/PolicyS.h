@@ -146,9 +146,7 @@ namespace POA_CORBA
     virtual CORBA::PolicyType policy_type (
         void
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+      = 0;
 
     static void _get_policy_type_skel (
         TAO_ServerRequest & server_request,
@@ -163,9 +161,7 @@ namespace POA_CORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+      = 0;
 
     static void copy_skel (
         TAO_ServerRequest & server_request,
@@ -180,9 +176,7 @@ namespace POA_CORBA
     virtual void destroy (
         void
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+      = 0;
 
     static void destroy_skel (
         TAO_ServerRequest & server_request,
@@ -211,8 +205,7 @@ namespace POA_CORBA
     get_strategy (
         CORBA::Object_ptr obj
 
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      );
 
     void
     dispatch (
@@ -224,8 +217,7 @@ namespace POA_CORBA
         size_t op_len,
         TAO::Collocation_Strategy strategy
 
-      )
-      ACE_THROW_SPEC ((CORBA::Exception));
+      );
 
     static _TAO_Policy_Strategized_Proxy_Broker *
     the_TAO_Policy_Strategized_Proxy_Broker (void);
@@ -260,10 +252,7 @@ namespace POA_CORBA
         TAO::Argument ** args,
         int num_args
 
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
@@ -274,10 +263,7 @@ namespace POA_CORBA
         TAO::Argument ** args,
         int num_args
 
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
@@ -288,10 +274,7 @@ namespace POA_CORBA
         TAO::Argument ** args,
         int num_args
 
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
   };
 
   //

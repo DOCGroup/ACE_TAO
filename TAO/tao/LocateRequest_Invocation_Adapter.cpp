@@ -6,7 +6,7 @@
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
-
+#include "tao/SystemException.h"
 #include "ace/Service_Config.h"
 
 ACE_RCSID (tao,

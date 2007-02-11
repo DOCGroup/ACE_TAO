@@ -85,7 +85,6 @@ namespace TAO
 
   Invocation_Status
   Invocation_Base::send_request_interception (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (adapter_ != 0)
       {
@@ -115,7 +114,6 @@ namespace TAO
 
   Invocation_Status
   Invocation_Base::receive_reply_interception (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (adapter_ != 0)
       {
@@ -148,7 +146,6 @@ namespace TAO
 
   Invocation_Status
   Invocation_Base::receive_other_interception (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (adapter_ != 0)
       {

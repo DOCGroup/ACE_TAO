@@ -72,8 +72,6 @@ TAO_RTScheduler_Current::begin_scheduling_segment (
     const char * name,
     CORBA::Policy_ptr sched_param,
     CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -103,8 +101,6 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
                                                     CORBA::Policy_ptr sched_param,
                                                     CORBA::Policy_ptr implicit_sched_param
                                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -119,7 +115,6 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
 
 void
 TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -137,7 +132,6 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
 
 RTScheduling::DistributableThread_ptr
 TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::DistributableThread_var DT;
   int result = this->dt_hash_.find (id,
@@ -159,7 +153,6 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
                                 CORBA::Policy_ptr implicit_sched_param,
                                 CORBA::ULong stack_size,
                                 RTCORBA::Priority base_priority)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -178,7 +171,6 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
 
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current::id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -190,7 +182,6 @@ TAO_RTScheduler_Current::id (void)
 
 CORBA::Policy_ptr
 TAO_RTScheduler_Current::scheduling_parameter (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   TAO_RTScheduler_Current_i *impl = this->implementation ();
@@ -203,7 +194,6 @@ TAO_RTScheduler_Current::scheduling_parameter (void)
 
 CORBA::Policy_ptr
 TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -215,7 +205,6 @@ TAO_RTScheduler_Current::implicit_scheduling_parameter (void)
 
 RTScheduling::Current::NameList *
 TAO_RTScheduler_Current::current_scheduling_segment_names (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -227,14 +216,12 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (void)
 
 RTCORBA::Priority
 TAO_RTScheduler_Current::the_priority (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->rt_current_->the_priority ();
 }
 
 void
 TAO_RTScheduler_Current::the_priority (RTCORBA::Priority the_priority)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->rt_current_->the_priority(the_priority);
 }
@@ -330,8 +317,6 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
   const char * name,
   CORBA::Policy_ptr sched_param,
   CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   // Check if it is a new Scheduling Segmnet
   if (this->guid_.length () == 0)
@@ -420,8 +405,6 @@ TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
                                                       CORBA::Policy_ptr sched_param,
                                                       CORBA::Policy_ptr implicit_sched_param
                                                       )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   // Check if DT has been cancelled
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -444,7 +427,6 @@ TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
 
 void
 TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check if DT has been cancelled
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -494,7 +476,6 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
                                   CORBA::ULong stack_size,
                                   RTCORBA::Priority base_priority
                                   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check if DT has been cancelled.
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -650,7 +631,6 @@ DTTask::svc (void)
 
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   RTScheduling::Current::IdType_var guid = this->guid_;
@@ -660,21 +640,18 @@ TAO_RTScheduler_Current_i::id (void)
 
 CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::scheduling_parameter (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Policy::_duplicate (this->sched_param_);
 }
 
 CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::implicit_scheduling_parameter (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Policy::_duplicate (this->implicit_sched_param_);
 }
 
 RTScheduling::Current::NameList *
 TAO_RTScheduler_Current_i::current_scheduling_segment_names (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::Current::NameList* name_list;
   ACE_NEW_RETURN (name_list,
@@ -705,7 +682,6 @@ TAO_RTScheduler_Current_i::name (void)
 
 void
 TAO_RTScheduler_Current_i::cancel_thread (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   size_t guid;
   ACE_OS::memcpy (&guid,

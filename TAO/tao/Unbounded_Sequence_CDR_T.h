@@ -12,6 +12,7 @@
  */
 
 #include "tao/orbconf.h"
+#include "tao/CORBA_String.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

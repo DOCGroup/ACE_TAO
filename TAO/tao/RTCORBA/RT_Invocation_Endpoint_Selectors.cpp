@@ -17,6 +17,7 @@
 #include "tao/Endpoint.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,

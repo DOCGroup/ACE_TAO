@@ -7,7 +7,7 @@
 
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_T.inl"

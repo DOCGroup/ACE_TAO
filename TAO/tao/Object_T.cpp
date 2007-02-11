@@ -6,6 +6,7 @@
 #include "tao/Object_T.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

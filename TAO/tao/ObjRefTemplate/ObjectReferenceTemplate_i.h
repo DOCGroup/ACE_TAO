@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ObjRefTemplate/Default_ORTC.h"
-#include "tao/SystemException.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -69,14 +68,11 @@ namespace TAO
      * PortableInterceptor::ObjectReferenceTemplate ValueType.
      */
     //@{
-    virtual char * server_id (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * server_id (void);
 
-    virtual char * orb_id (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * orb_id (void);
 
-    virtual PortableInterceptor::AdapterName * adapter_name (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual PortableInterceptor::AdapterName * adapter_name (void);
     //@}
 
     /**
@@ -88,8 +84,7 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
-      const PortableInterceptor::ObjectId & id)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      const PortableInterceptor::ObjectId & id);
     //@}
 
   protected:

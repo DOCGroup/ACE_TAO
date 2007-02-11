@@ -35,7 +35,6 @@ class TAO_DII_Deferred_Reply_Dispatcher;
 namespace  CORBA
 {
   class Object;
-  class SystemException;
   class ExceptionList;
   class Request;
 }

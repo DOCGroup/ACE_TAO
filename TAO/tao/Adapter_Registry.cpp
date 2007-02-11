@@ -9,6 +9,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            Adapter_Registry,

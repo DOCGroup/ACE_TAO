@@ -18,17 +18,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_PortableServer_ORBInitializer::pre_init (
   PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_PortableServer_ORBInitializer::post_init (
   PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->register_policy_factories (info
-                                  );
+  this->register_policy_factories (info);
 }
 
 void

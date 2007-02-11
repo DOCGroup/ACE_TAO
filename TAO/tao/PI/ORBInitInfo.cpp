@@ -3,12 +3,12 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
 #include "tao/Object_Loader.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
+#include "ace/CORBA_macros.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PI/PICurrent.h"
@@ -29,17 +29,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
-TAO::Objref_Traits<TAO_ORBInitInfo>::duplicate (
-    TAO_ORBInitInfo_ptr p
-  )
+TAO::Objref_Traits<TAO_ORBInitInfo>::duplicate (TAO_ORBInitInfo_ptr p)
 {
   return TAO_ORBInitInfo::_duplicate (p);
 }
 
 void
-TAO::Objref_Traits<TAO_ORBInitInfo>::release (
-    TAO_ORBInitInfo_ptr p
-  )
+TAO::Objref_Traits<TAO_ORBInitInfo>::release (TAO_ORBInitInfo_ptr p)
 {
   ::CORBA::release (p);
 }
@@ -77,7 +73,6 @@ TAO_ORBInitInfo::~TAO_ORBInitInfo (void)
 
 CORBA::StringSeq *
 TAO_ORBInitInfo::arguments (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -106,7 +101,6 @@ TAO_ORBInitInfo::arguments (void)
 
 char *
 TAO_ORBInitInfo::orb_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -117,7 +111,6 @@ TAO_ORBInitInfo::orb_id (void)
 
 IOP::CodecFactory_ptr
 TAO_ORBInitInfo::codec_factory (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->codec_factory_.in ()))
     {
@@ -152,8 +145,6 @@ TAO_ORBInitInfo::register_initial_reference (
     const char * id,
     CORBA::Object_ptr obj
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::InvalidName))
 {
   this->check_validity ();
 
@@ -173,8 +164,6 @@ CORBA::Object_ptr
 TAO_ORBInitInfo::resolve_initial_references (
     const char * id
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::InvalidName))
 {
   this->check_validity ();
 
@@ -193,8 +182,6 @@ void
 TAO_ORBInitInfo::add_client_request_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::DuplicateName))
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -214,8 +201,6 @@ void
 TAO_ORBInitInfo::add_server_request_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::DuplicateName))
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -236,8 +221,6 @@ void
 TAO_ORBInitInfo::add_ior_interceptor (
     PortableInterceptor::IORInterceptor_ptr interceptor
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::DuplicateName))
 {
   this->check_validity ();
 
@@ -250,9 +233,6 @@ TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::DuplicateName,
-                   CORBA::PolicyError))
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -276,9 +256,6 @@ TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::DuplicateName,
-                   CORBA::PolicyError))
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -303,9 +280,6 @@ TAO_ORBInitInfo::add_ior_interceptor_with_policy (
     PortableInterceptor::IORInterceptor_ptr interceptor,
     const CORBA::PolicyList& policies
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ORBInitInfo::DuplicateName,
-                   CORBA::PolicyError))
 {
   this->check_validity ();
 
@@ -324,7 +298,6 @@ TAO_ORBInitInfo::add_ior_interceptor_with_policy (
 
 PortableInterceptor::SlotId
 TAO_ORBInitInfo::allocate_slot_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -346,7 +319,6 @@ TAO_ORBInitInfo::register_policy_factory (
     CORBA::PolicyType type,
     PortableInterceptor::PolicyFactory_ptr policy_factory
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -366,7 +338,6 @@ TAO_ORBInitInfo::register_policy_factory (
 size_t
 TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
                                        )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 

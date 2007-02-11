@@ -9,6 +9,7 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -73,28 +74,24 @@ TAO_PriorityModelPolicy::get_priority_model (void)
 
 RTCORBA::PriorityModel
 TAO_PriorityModelPolicy::priority_model (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->priority_model_;
 }
 
 RTCORBA::Priority
 TAO_PriorityModelPolicy::server_priority (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->server_priority_;
 }
 
 CORBA::PolicyType
 TAO_PriorityModelPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -107,7 +104,6 @@ TAO_PriorityModelPolicy::copy (void)
 
 void
 TAO_PriorityModelPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -190,21 +186,18 @@ TAO_ThreadpoolPolicy::create (const CORBA::Any &val
 
 RTCORBA::ThreadpoolId
 TAO_ThreadpoolPolicy::threadpool (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->id_;
 }
 
 CORBA::PolicyType
 TAO_ThreadpoolPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::THREADPOOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -217,7 +210,6 @@ TAO_ThreadpoolPolicy::copy (void)
 
 void
 TAO_ThreadpoolPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -259,8 +251,7 @@ TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy (void)
 }
 
 CORBA::Policy_ptr
-TAO_PrivateConnectionPolicy::create (const CORBA::Any &
-                                     )
+TAO_PrivateConnectionPolicy::create (const CORBA::Any &)
 {
   TAO_PrivateConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -273,14 +264,12 @@ TAO_PrivateConnectionPolicy::create (const CORBA::Any &
 
 CORBA::PolicyType
 TAO_PrivateConnectionPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -293,7 +282,6 @@ TAO_PrivateConnectionPolicy::copy (void)
 
 void
 TAO_PrivateConnectionPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -360,7 +348,6 @@ TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val
 
 RTCORBA::PriorityBands *
 TAO_PriorityBandedConnectionPolicy::priority_bands (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::PriorityBands *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -373,14 +360,12 @@ TAO_PriorityBandedConnectionPolicy::priority_bands (void)
 
 CORBA::PolicyType
 TAO_PriorityBandedConnectionPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -393,7 +378,6 @@ TAO_PriorityBandedConnectionPolicy::copy (void)
 
 void
 TAO_PriorityBandedConnectionPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -473,7 +457,6 @@ TAO_ServerProtocolPolicy::create (const CORBA::Any &val
 
 RTCORBA::ProtocolList *
 TAO_ServerProtocolPolicy::protocols (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -486,14 +469,12 @@ TAO_ServerProtocolPolicy::protocols (void)
 
 CORBA::PolicyType
 TAO_ServerProtocolPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::SERVER_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -506,7 +487,6 @@ TAO_ServerProtocolPolicy::copy (void)
 
 void
 TAO_ServerProtocolPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -579,7 +559,6 @@ TAO_ClientProtocolPolicy::create (const CORBA::Any &val
 
 RTCORBA::ProtocolList *
 TAO_ClientProtocolPolicy::protocols (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -592,14 +571,12 @@ TAO_ClientProtocolPolicy::protocols (void)
 
 CORBA::PolicyType
 TAO_ClientProtocolPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -612,7 +589,6 @@ TAO_ClientProtocolPolicy::copy (void)
 
 void
 TAO_ClientProtocolPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -713,7 +689,6 @@ TAO_TCP_Protocol_Properties::~TAO_TCP_Protocol_Properties (void)
 
 CORBA::Long
 TAO_TCP_Protocol_Properties::send_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
 }
@@ -721,14 +696,12 @@ TAO_TCP_Protocol_Properties::send_buffer_size (void)
 void
 TAO_TCP_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size
                                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
 TAO_TCP_Protocol_Properties::recv_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
 }
@@ -736,14 +709,12 @@ TAO_TCP_Protocol_Properties::recv_buffer_size (void)
 void
 TAO_TCP_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
                                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
 
 CORBA::Boolean
 TAO_TCP_Protocol_Properties::keep_alive (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->keep_alive_;
 }
@@ -751,14 +722,12 @@ TAO_TCP_Protocol_Properties::keep_alive (void)
 void
 TAO_TCP_Protocol_Properties::keep_alive (CORBA::Boolean keep_alive
                                          )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->keep_alive_ = keep_alive;
 }
 
 CORBA::Boolean
 TAO_TCP_Protocol_Properties::dont_route (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->dont_route_;
 }
@@ -766,13 +735,11 @@ TAO_TCP_Protocol_Properties::dont_route (void)
 void
 TAO_TCP_Protocol_Properties::dont_route (CORBA::Boolean dont_route
                                          )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->dont_route_ = dont_route;
 }
 
 CORBA::Boolean TAO_TCP_Protocol_Properties::no_delay (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->no_delay_;
 }
@@ -780,14 +747,12 @@ CORBA::Boolean TAO_TCP_Protocol_Properties::no_delay (void)
 void
 TAO_TCP_Protocol_Properties::no_delay (CORBA::Boolean no_delay
                                        )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->no_delay_ = no_delay;
 }
 
 CORBA::Boolean
 TAO_TCP_Protocol_Properties::enable_network_priority (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->enable_network_priority_;
 }
@@ -795,7 +760,6 @@ TAO_TCP_Protocol_Properties::enable_network_priority (void)
 void
 TAO_TCP_Protocol_Properties::enable_network_priority (CORBA::Boolean enable
                                                       )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->enable_network_priority_ = enable;
 }
@@ -844,7 +808,6 @@ TAO_UnixDomain_Protocol_Properties::~TAO_UnixDomain_Protocol_Properties (void)
 
 CORBA::Long
 TAO_UnixDomain_Protocol_Properties::send_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
 }
@@ -852,14 +815,12 @@ TAO_UnixDomain_Protocol_Properties::send_buffer_size (void)
 void
 TAO_UnixDomain_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size
                                                       )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
 TAO_UnixDomain_Protocol_Properties::recv_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
 }
@@ -867,7 +828,6 @@ TAO_UnixDomain_Protocol_Properties::recv_buffer_size (void)
 void
 TAO_UnixDomain_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
                                                       )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
@@ -914,7 +874,6 @@ TAO_SharedMemory_Protocol_Properties::~TAO_SharedMemory_Protocol_Properties (voi
 
 CORBA::Long
 TAO_SharedMemory_Protocol_Properties::send_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
 }
@@ -922,14 +881,12 @@ TAO_SharedMemory_Protocol_Properties::send_buffer_size (void)
 void
 TAO_SharedMemory_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size
                                                         )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
 TAO_SharedMemory_Protocol_Properties::recv_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
 }
@@ -937,14 +894,12 @@ TAO_SharedMemory_Protocol_Properties::recv_buffer_size (void)
 void
 TAO_SharedMemory_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
                                                         )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
 
 CORBA::Boolean
 TAO_SharedMemory_Protocol_Properties::keep_alive (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->keep_alive_;
 }
@@ -952,14 +907,12 @@ TAO_SharedMemory_Protocol_Properties::keep_alive (void)
 void
 TAO_SharedMemory_Protocol_Properties::keep_alive (CORBA::Boolean keep_alive
                                                   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->keep_alive_ = keep_alive;
 }
 
 CORBA::Boolean
 TAO_SharedMemory_Protocol_Properties::dont_route (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->dont_route_;
 }
@@ -967,14 +920,12 @@ TAO_SharedMemory_Protocol_Properties::dont_route (void)
 void
 TAO_SharedMemory_Protocol_Properties::dont_route (CORBA::Boolean dont_route
                                                   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->dont_route_ = dont_route;
 }
 
 CORBA::Boolean
 TAO_SharedMemory_Protocol_Properties::no_delay (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->no_delay_;
 }
@@ -982,14 +933,12 @@ TAO_SharedMemory_Protocol_Properties::no_delay (void)
 void
 TAO_SharedMemory_Protocol_Properties::no_delay (CORBA::Boolean no_delay
                                                 )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->no_delay_ = no_delay;
 }
 
 CORBA::Long
 TAO_SharedMemory_Protocol_Properties::preallocate_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->preallocate_buffer_size_;
 }
@@ -997,14 +946,12 @@ TAO_SharedMemory_Protocol_Properties::preallocate_buffer_size (void)
 void
 TAO_SharedMemory_Protocol_Properties::preallocate_buffer_size (CORBA::Long preallocate_buffer_size
                                                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->preallocate_buffer_size_ = preallocate_buffer_size;
 }
 
 char *
 TAO_SharedMemory_Protocol_Properties::mmap_filename (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mmap_filename_.rep ();
 }
@@ -1012,14 +959,12 @@ TAO_SharedMemory_Protocol_Properties::mmap_filename (void)
 void
 TAO_SharedMemory_Protocol_Properties::mmap_filename (const char * mmap_filename
                                                      )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mmap_filename_.set (mmap_filename);
 }
 
 char *
 TAO_SharedMemory_Protocol_Properties::mmap_lockname (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mmap_lockname_.rep ();
 }
@@ -1027,7 +972,6 @@ TAO_SharedMemory_Protocol_Properties::mmap_lockname (void)
 void
 TAO_SharedMemory_Protocol_Properties::mmap_lockname (const char * mmap_lockname
                                                      )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mmap_lockname_.set (mmap_lockname);
 }
@@ -1085,7 +1029,6 @@ TAO_UserDatagram_Protocol_Properties::~TAO_UserDatagram_Protocol_Properties (voi
 
 CORBA::Boolean
 TAO_UserDatagram_Protocol_Properties::enable_network_priority (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->enable_network_priority_;
 }
@@ -1093,7 +1036,6 @@ TAO_UserDatagram_Protocol_Properties::enable_network_priority (void)
 void
 TAO_UserDatagram_Protocol_Properties::enable_network_priority (CORBA::Boolean enable
                                                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->enable_network_priority_ = enable;
 }
@@ -1133,7 +1075,6 @@ TAO_StreamControl_Protocol_Properties::~TAO_StreamControl_Protocol_Properties (v
 
 CORBA::Long
 TAO_StreamControl_Protocol_Properties::send_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->send_buffer_size_;
 }
@@ -1141,14 +1082,12 @@ TAO_StreamControl_Protocol_Properties::send_buffer_size (void)
 void
 TAO_StreamControl_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size
                                                          )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->send_buffer_size_ = send_buffer_size;
 }
 
 CORBA::Long
 TAO_StreamControl_Protocol_Properties::recv_buffer_size (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->recv_buffer_size_;
 }
@@ -1156,14 +1095,12 @@ TAO_StreamControl_Protocol_Properties::recv_buffer_size (void)
 void
 TAO_StreamControl_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
                                                          )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
 
 CORBA::Boolean
 TAO_StreamControl_Protocol_Properties::keep_alive (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->keep_alive_;
 }
@@ -1171,14 +1108,12 @@ TAO_StreamControl_Protocol_Properties::keep_alive (void)
 void
 TAO_StreamControl_Protocol_Properties::keep_alive (CORBA::Boolean keep_alive
                                                    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->keep_alive_ = keep_alive;
 }
 
 CORBA::Boolean
 TAO_StreamControl_Protocol_Properties::dont_route (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->dont_route_;
 }
@@ -1186,13 +1121,11 @@ TAO_StreamControl_Protocol_Properties::dont_route (void)
 void
 TAO_StreamControl_Protocol_Properties::dont_route (CORBA::Boolean dont_route
                                                    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->dont_route_ = dont_route;
 }
 
 CORBA::Boolean TAO_StreamControl_Protocol_Properties::no_delay (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->no_delay_;
 }
@@ -1200,14 +1133,12 @@ CORBA::Boolean TAO_StreamControl_Protocol_Properties::no_delay (void)
 void
 TAO_StreamControl_Protocol_Properties::no_delay (CORBA::Boolean no_delay
                                                  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->no_delay_ = no_delay;
 }
 
 CORBA::Boolean
 TAO_StreamControl_Protocol_Properties::enable_network_priority (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->enable_network_priority_;
 }
@@ -1215,7 +1146,6 @@ TAO_StreamControl_Protocol_Properties::enable_network_priority (void)
 void
 TAO_StreamControl_Protocol_Properties::enable_network_priority (CORBA::Boolean enable
                                                                 )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->enable_network_priority_ = enable;
 }

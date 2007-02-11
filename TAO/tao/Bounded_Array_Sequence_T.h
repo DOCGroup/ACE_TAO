@@ -12,7 +12,6 @@
 #include "tao/Bounded_Array_Allocation_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 #include "tao/Array_Traits_T.h"
-#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

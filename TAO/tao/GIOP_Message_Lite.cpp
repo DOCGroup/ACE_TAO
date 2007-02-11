@@ -1171,7 +1171,6 @@ TAO_GIOP_Message_Lite::write_reply_header (
     TAO_Pluggable_Reply_Params_Base &reply
      /*  */
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the GIOP Lite header first
   this->write_protocol_header (TAO_GIOP_REPLY,

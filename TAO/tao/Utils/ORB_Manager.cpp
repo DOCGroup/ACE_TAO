@@ -16,7 +16,6 @@
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/PortableServer/LifespanPolicyC.h"
 
-#include "tao/Environment.h"
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Log_Msg.h"

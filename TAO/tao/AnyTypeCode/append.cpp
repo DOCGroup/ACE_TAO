@@ -25,7 +25,6 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/Valuetype_Adapter.h"
 #include "tao/ORB_Core.h"

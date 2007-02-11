@@ -10,8 +10,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Exception.h"
-#include "tao/Environment.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

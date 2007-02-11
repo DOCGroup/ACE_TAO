@@ -55,46 +55,23 @@ public:
 
   virtual CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
-    )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::EmptyProfileList,
-        TAO_IOP::Duplicate,
-        TAO_IOP::Invalid_IOR
-      ));
+    );
 
   virtual CORBA::Object_ptr add_profiles (
       CORBA::Object_ptr ior1,
       CORBA::Object_ptr ior2
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::EmptyProfileList,
-        TAO_IOP::Duplicate,
-        TAO_IOP::Invalid_IOR
-      ));
+      );
 
   virtual CORBA::Object_ptr remove_profiles (
     CORBA::Object_ptr group,
     CORBA::Object_ptr ior2
-    )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::Invalid_IOR,
-        TAO_IOP::EmptyProfileList,
-        TAO_IOP::NotFound
-      ));
+    );
 
   virtual CORBA::Boolean set_property (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group
       )
-
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      TAO_IOP::Invalid_IOR,
-      TAO_IOP::Duplicate
-    ));
+;
 
   // @@ note awkward argument order
   virtual CORBA::Boolean set_primary (
@@ -102,57 +79,33 @@ public:
       CORBA::Object_ptr new_primary,
       CORBA::Object_ptr group
       )
-
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      TAO_IOP::Invalid_IOR,
-      TAO_IOP::Duplicate,
-      TAO_IOP::MultiProfileList
-    ));
+;
 
   virtual CORBA::Object_ptr get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group
       )
-
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      TAO_IOP::NotFound
-    ));
+;
 
   virtual CORBA::Boolean is_primary_set (
       TAO_IOP::TAO_IOR_Property_ptr prop,
       CORBA::Object_ptr group
       )
-
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+;
 
    virtual CORBA::Boolean remove_primary_tag (
        TAO_IOP::TAO_IOR_Property_ptr prop,
        CORBA::Object_ptr iogr
-       )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+       );
 
   virtual CORBA::ULong is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2
-    )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::NotFound
-      ));
+    );
 
   virtual CORBA::ULong get_profile_count (
     CORBA::Object_ptr group
-    )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::EmptyProfileList
-      ));
+    );
 
 protected:
 

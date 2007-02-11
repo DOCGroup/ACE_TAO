@@ -169,8 +169,6 @@ PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
 ::CORBA::Policy_ptr
 PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
                                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

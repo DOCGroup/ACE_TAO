@@ -34,11 +34,6 @@ namespace TAO
   void
   DynAnyBasicTypeUtils<T>::insert_value (const T &val,
                                          TAO_DynCommon *the_dynany)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ))
   {
     if (the_dynany->destroyed ())
       {
@@ -64,11 +59,6 @@ namespace TAO
   template<typename T>
   typename BasicTypeTraits<T>::return_type
   DynAnyBasicTypeUtils<T>::get_value (TAO_DynCommon *the_dynany)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ))
   {
     if (the_dynany->destroyed ())
       {
@@ -102,9 +92,6 @@ namespace TAO
   void
   DynAnyFlagUtils<T>::set_flag_t (DynamicAny::DynAny_ptr component,
                                   CORBA::Boolean destroying)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
   {
     T *tmp = T::_narrow (component);
 

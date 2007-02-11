@@ -37,6 +37,7 @@
 #include "tao/ORBInitializer_Registry_Adapter.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/GIOP_Fragmentation_Strategy.h"
+#include "tao/SystemException.h"
 
 #include "tao/Valuetype_Adapter.h"
 #include "tao/Valuetype_Adapter_Factory.h"
@@ -52,7 +53,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
 #include "ace/Auto_Ptr.h"
-
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()

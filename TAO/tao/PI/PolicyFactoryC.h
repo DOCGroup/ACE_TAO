@@ -42,8 +42,6 @@
 
 #include "tao/PI/pi_export.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
-#include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
@@ -131,20 +129,13 @@ namespace PortableInterceptor
         const ::CORBA::Any & value
 
       )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::CORBA::PolicyError
-      )) = 0;
+      = 0;
 
     // Hand-crafted addition.
     virtual ::CORBA::Policy_ptr _create_policy (
         CORBA::PolicyType type
 
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , CORBA::PolicyError
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210

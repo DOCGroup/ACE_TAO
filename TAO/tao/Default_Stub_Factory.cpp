@@ -4,7 +4,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
-
+#include "ace/CORBA_macros.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (tao,

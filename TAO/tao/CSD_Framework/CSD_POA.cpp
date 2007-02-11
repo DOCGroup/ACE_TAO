@@ -19,13 +19,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Implementation skeleton constructor
 TAO_CSD_POA::TAO_CSD_POA (const String &name,
                           PortableServer::POAManager_ptr poa_manager,
-                   const TAO_POA_Policy_Set &policies,
-                   TAO_Root_POA *parent,
-                   ACE_Lock &lock,
-                   TAO_SYNCH_MUTEX &thread_lock,
-                   TAO_ORB_Core &orb_core,
-                   TAO_Object_Adapter *object_adapter
-                   )
+                          const TAO_POA_Policy_Set &policies,
+                          TAO_Root_POA *parent,
+                          ACE_Lock &lock,
+                          TAO_SYNCH_MUTEX &thread_lock,
+                          TAO_ORB_Core &orb_core,
+                          TAO_Object_Adapter *object_adapter)
 : TAO_Regular_POA (name,
                    poa_manager,
                    policies,
@@ -33,8 +32,7 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
                    lock,
                    thread_lock,
                    orb_core,
-                   object_adapter
-                  )
+                   object_adapter)
 {
   ACE_NEW_THROW_EX (this->sds_proxy_,
                     TAO::CSD::Strategy_Proxy (),
@@ -48,13 +46,7 @@ TAO_CSD_POA::~TAO_CSD_POA (void)
   delete this->sds_proxy_;
 }
 
-void TAO_CSD_POA::set_csd_strategy (
-    ::CSD_Framework::Strategy_ptr strategy
-
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+void TAO_CSD_POA::set_csd_strategy (::CSD_Framework::Strategy_ptr strategy)
 {
   if (CORBA::is_nil (strategy))
     {
@@ -71,8 +63,7 @@ TAO_CSD_POA::new_POA (const String &name,
                       ACE_Lock &lock,
                       TAO_SYNCH_MUTEX &thread_lock,
                       TAO_ORB_Core &orb_core,
-                      TAO_Object_Adapter *object_adapter
-                      )
+                      TAO_Object_Adapter *object_adapter)
 {
   TAO_CSD_POA *poa = 0;
 
@@ -90,7 +81,6 @@ TAO_CSD_POA::new_POA (const String &name,
 
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
-
 
   CSD_Framework::Strategy_var strategy = repo->find (name);
 

@@ -5,7 +5,7 @@
 #include "tao/Strategies/UIOP_Profile.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"

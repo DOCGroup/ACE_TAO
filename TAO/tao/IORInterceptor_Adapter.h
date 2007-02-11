@@ -22,9 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
 #include "tao/Policy_ForwardC.h"
+#include "tao/TAO_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T> class ACE_Array_Base;
@@ -80,23 +80,20 @@ public:
    * IORInterceptor::components_established() once the former is
    * completed.
    */
-  virtual void establish_components (TAO_Root_POA *poa)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual void establish_components (TAO_Root_POA *poa) = 0;
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
   virtual void components_established (PortableInterceptor::IORInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
-      PortableInterceptor::AdapterState state)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      PortableInterceptor::AdapterState state) = 0;
 
   virtual void adapter_manager_state_changed (
       const char * id,
-      PortableInterceptor::AdapterState state)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      PortableInterceptor::AdapterState state) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
