@@ -2146,8 +2146,6 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
       return 0;
     }
 
-  UTL_ExceptList *list = 0;
-
   for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
