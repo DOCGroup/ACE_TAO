@@ -68,53 +68,30 @@ public:
 
   virtual CORBA::ULong get_length (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void set_length (
       CORBA::ULong len
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
   virtual DynamicAny::AnySeq * get_elements (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void set_elements (
       const DynamicAny::AnySeq & value
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
   virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void set_elements_as_dyn_any (
       const DynamicAny::DynAnySeq & value
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
@@ -122,42 +99,24 @@ public:
   virtual void from_any (
       const CORBA::Any & value
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ));
+;
 
   virtual CORBA::Any * to_any (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
       )
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual void destroy (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+;
 
   virtual DynamicAny::DynAny_ptr current_component (
       void)
-
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch
-      ));
+;
 
 private:
   // Utility, turns the type of elements contained in the sequence.

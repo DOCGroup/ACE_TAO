@@ -58,8 +58,7 @@ public:
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
 
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   /// Writes the locate _reply message in to the @a output
   virtual bool write_locate_reply_mesg (

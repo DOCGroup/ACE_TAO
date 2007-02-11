@@ -27,11 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Synch_Reply_Dispatcher;
 
-namespace CORBA
-{
-  class SystemException;
-}
-
 namespace TAO
 {
   class Profile_Transport_Resolver;
@@ -65,8 +60,7 @@ namespace TAO
         TAO_Operation_Details &detail);
 
     /// Start the invocation.
-    Invocation_Status invoke (ACE_Time_Value *max_wait_time)
-      ACE_THROW_SPEC ((CORBA::Exception));
+    Invocation_Status invoke (ACE_Time_Value *max_wait_time);
 
   private:
     /// Helper to check the reply status

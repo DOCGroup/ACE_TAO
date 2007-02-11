@@ -104,7 +104,6 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 
 char *
 TAO_DynEnum_i::get_as_string (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *retval = this->type_.in ()->member_name (this->value_);
 
@@ -113,10 +112,6 @@ TAO_DynEnum_i::get_as_string (void)
 
 void
 TAO_DynEnum_i::set_as_string (const char *value_as_string)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::ULong count = this->type_.in ()->member_count ();
 
@@ -145,19 +140,12 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string)
 
 CORBA::ULong
 TAO_DynEnum_i::get_as_ulong (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   return this->value_;
 }
 
 void
 TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::ULong const max = this->type_.in ()->member_count ();
 
@@ -175,11 +163,6 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 
 void
 TAO_DynEnum_i::from_any (const CORBA::Any& any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::TypeCode_var tc = any.type ();
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
@@ -215,9 +198,6 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any)
 
 CORBA::Any_ptr
 TAO_DynEnum_i::to_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   TAO_OutputCDR out_cdr;
 
@@ -241,9 +221,6 @@ TAO_DynEnum_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   CORBA::TypeCode_var tc = rhs->type ();
 
@@ -282,9 +259,6 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynEnum_i::destroy (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -299,10 +273,6 @@ TAO_DynEnum_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynEnum_i::current_component (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {

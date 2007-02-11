@@ -7,6 +7,8 @@ ACE_RCSID(PortableServer,
           Default_Servant_Dispatcher,
           "$Id$")
 
+#include "ace/CORBA_macros.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Servant_Dispatcher::~TAO_Default_Servant_Dispatcher (void)

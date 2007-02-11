@@ -62,17 +62,13 @@ public:
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::TimeT relative_expiry (void);
 
-  virtual CORBA::PolicyType policy_type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
@@ -128,19 +124,15 @@ public:
 
   // = The Messaging::SyncScopePolicy methods.
 
-  virtual Messaging::SyncScope synchronization (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Messaging::SyncScope synchronization (void);
 
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
-  virtual CORBA::PolicyType policy_type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   // Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;

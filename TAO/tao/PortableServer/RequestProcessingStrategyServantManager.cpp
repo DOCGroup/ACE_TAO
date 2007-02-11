@@ -25,27 +25,20 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::get_servant (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     void
     RequestProcessingStrategyServantManager::set_servant (
-      PortableServer::Servant servant)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
+      PortableServer::Servant)
     {
-      ACE_UNUSED_ARG (servant);
-
       throw PortableServer::POA::WrongPolicy ();
     }
 
     void
     RequestProcessingStrategyServantManager::validate_servant_manager (
-      PortableServer::ServantManager_ptr servant_manager
-      )
+      PortableServer::ServantManager_ptr servant_manager)
     {
       // When no servant manager is set, give an exception with minor code 4,
       // see 11.3.8.6 of the corba spec
@@ -65,9 +58,6 @@ namespace TAO
     PortableServer::ObjectId *
     RequestProcessingStrategyServantManager::servant_to_id (
       PortableServer::Servant servant)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       return this->poa_->servant_to_user_id (servant);
     }
@@ -75,9 +65,6 @@ namespace TAO
     PortableServer::Servant
     RequestProcessingStrategyServantManager::id_to_servant (
       const PortableServer::ObjectId &id)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       return this->poa_->user_id_to_servant_i (id);
     }

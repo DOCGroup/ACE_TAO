@@ -11,10 +11,10 @@ ACE_RCSID (AnyTypeCode,
 # include "tao/AnyTypeCode/TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "tao/SystemException.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -31,8 +31,7 @@ CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
 }
 
 CORBA::Boolean
-CORBA::TypeCode::equal (TypeCode_ptr tc
-                        ) const
+CORBA::TypeCode::equal (TypeCode_ptr tc) const
 {
   if (this == tc)
     {
@@ -72,13 +71,11 @@ CORBA::TypeCode::equal (TypeCode_ptr tc
       // below.
     }
 
-  return this->equal_i (tc
-                       );
+  return this->equal_i (tc);
 }
 
 CORBA::Boolean
-CORBA::TypeCode::equivalent (TypeCode_ptr tc
-                             ) const
+CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
 {
   if (this == tc)
     {

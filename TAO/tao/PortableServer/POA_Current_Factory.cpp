@@ -9,9 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Object_ptr
 TAO_POA_Current_Factory::create_object (CORBA::ORB_ptr,
                                         int,
-                                        ACE_TCHAR * []
-                                        )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                                        ACE_TCHAR * [])
 {
   TAO::Portable_Server::POA_Current* adapter = 0;
   ACE_NEW_RETURN (adapter,

@@ -45,7 +45,7 @@ ACE_RCSID (tao,
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
-
+#include "ace/CORBA_macros.h"
 
 static const char ior_prefix[] = "IOR:";
 

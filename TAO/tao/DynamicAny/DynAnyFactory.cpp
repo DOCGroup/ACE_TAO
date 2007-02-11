@@ -36,10 +36,6 @@ TAO_DynAnyFactory::TAO_DynAnyFactory (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any (const CORBA::Any & value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ))
 {
   return
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
@@ -49,10 +45,6 @@ TAO_DynAnyFactory::create_dyn_any (const CORBA::Any & value)
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_from_type_code (CORBA::TypeCode_ptr type)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ))
 {
   // Second arg is typed in the template parameter, repeating it
   // this way allows cleaner template code.
@@ -65,11 +57,6 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (CORBA::TypeCode_ptr type)
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_without_truncation (
     const CORBA::Any & /* value */)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode,
-      DynamicAny::MustTruncate
-    ))
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -78,11 +65,6 @@ DynamicAny::DynAnySeq *
 TAO_DynAnyFactory::create_multiple_dyn_anys (
     const DynamicAny::AnySeq & /* values */,
     ::CORBA::Boolean /* allow_truncate */)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode,
-      DynamicAny::MustTruncate
-    ))
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
@@ -90,9 +72,6 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
 DynamicAny::AnySeq *
 TAO_DynAnyFactory::create_multiple_anys (
     const DynamicAny::DynAnySeq & /* values */)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }

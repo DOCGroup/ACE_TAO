@@ -45,17 +45,13 @@ namespace TAO
     public:
       ThreadPolicy (::PortableServer::ThreadPolicyValue value);
 
-      CORBA::Policy_ptr copy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::Policy_ptr copy (void);
 
-      void destroy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      void destroy (void);
 
-      ::PortableServer::ThreadPolicyValue value (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      ::PortableServer::ThreadPolicyValue value (void);
 
-      CORBA::PolicyType policy_type (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::PolicyType policy_type (void);
 
       /// Return the cached policy type for this policy.
       TAO_Cached_Policy_Type _tao_cached_type (void) const;

@@ -3,6 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
+#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID (Messaging,
@@ -37,17 +38,13 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
 }
 
 TimeBase::TimeT
-TAO_ConnectionTimeoutPolicy::relative_expiry (
-    void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ConnectionTimeoutPolicy::relative_expiry (void)
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_ConnectionTimeoutPolicy::policy_type (
-    void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ConnectionTimeoutPolicy::policy_type (void)
 {
   return TAO::CONNECTION_TIMEOUT_POLICY_TYPE;
 }
@@ -115,7 +112,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val)
   if ((val >>= value) == 0)
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ConnectionTimeoutPolicy *tmp;
+  TAO_ConnectionTimeoutPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_ConnectionTimeoutPolicy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -136,7 +133,6 @@ TAO_ConnectionTimeoutPolicy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_ConnectionTimeoutPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -151,7 +147,6 @@ TAO_ConnectionTimeoutPolicy::copy (void)
 
 void
 TAO_ConnectionTimeoutPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

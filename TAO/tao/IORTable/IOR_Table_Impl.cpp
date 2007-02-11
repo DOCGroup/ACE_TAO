@@ -53,7 +53,6 @@ TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
 
 char *
 TAO_IOR_Table_Impl::find (const char *object_key)
-  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   // We don't want the lock held during locate, so make it go out
   // of scope before then.
@@ -75,7 +74,6 @@ TAO_IOR_Table_Impl::find (const char *object_key)
 
 void
 TAO_IOR_Table_Impl::bind (const char * object_key, const char * IOR)
-  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::AlreadyBound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.bind (object_key, IOR) != 0)
@@ -84,7 +82,6 @@ TAO_IOR_Table_Impl::bind (const char * object_key, const char * IOR)
 
 void
 TAO_IOR_Table_Impl::rebind (const char * object_key, const char * IOR)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->map_.rebind (object_key, IOR);
@@ -92,7 +89,6 @@ TAO_IOR_Table_Impl::rebind (const char * object_key, const char * IOR)
 
 void
 TAO_IOR_Table_Impl::unbind (const char * object_key)
-  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->map_.unbind (object_key) != 0)
@@ -101,7 +97,6 @@ TAO_IOR_Table_Impl::unbind (const char * object_key)
 
 void
 TAO_IOR_Table_Impl::set_locator (IORTable::Locator_ptr locator)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->locator_ = IORTable::Locator::_duplicate (locator);

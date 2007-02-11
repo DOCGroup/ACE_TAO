@@ -4,6 +4,7 @@
 #include "tao/PortableServer/POAManager.h"
 
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (PortableServer,
            POAManagerFactory,
@@ -28,9 +29,6 @@ TAO_POAManager_Factory::create_POAManager (
   const char * id,
   const ::CORBA::PolicyList & policies
   )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ::PortableServer::POAManagerFactory::ManagerAlreadyExists,
-                     ::CORBA::PolicyError))
 {
   // Validate the policy.
   TAO_POA_Policy_Set tao_policies (TAO_POA_Policy_Set (this->object_adapter_.default_poa_policies ()));
@@ -82,7 +80,6 @@ TAO_POAManager_Factory::create_POAManager (
 
 ::PortableServer::POAManagerFactory::POAManagerSeq *
 TAO_POAManager_Factory::list (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
   CORBA::ULong number_of_poamanagers = static_cast <CORBA::ULong>
@@ -109,7 +106,6 @@ TAO_POAManager_Factory::list (void)
 
 ::PortableServer::POAManager_ptr
 TAO_POAManager_Factory::find (const char * id )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::PortableServer::POAManager_ptr poamanager =
     ::PortableServer::POAManager::_nil();

@@ -14,13 +14,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/SystemException.h"
+#include "tao/Service_Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Service_Context.h"
 #include "tao/TimeBaseC.h"
 #include "tao/target_specification.h"
 
@@ -130,8 +129,7 @@ public:
    * is not found in the list of exceptions specified by the operation
    * this call would raise an UNKNOWN exception.
    */
-  CORBA::Exception *corba_exception (const char *ex)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Exception *corba_exception (const char *ex);
 
   /// Check whether exception @a ex is in the signature of this operation
   bool has_exception (::CORBA::Exception& ex) const;

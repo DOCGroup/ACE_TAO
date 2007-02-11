@@ -9,6 +9,7 @@
 #include "tao/Transport.h"
 #include "tao/Transport.h"
 #include "tao/Pluggable_Messaging.h"
+#include "tao/SystemException.h"
 #include "tao/DynamicInterface/Request.h"
 
 #include "ace/os_include/os_errno.h"
@@ -77,15 +78,11 @@ namespace TAO
                                this->request_);
 
 
-    Invocation_Status status =
-      synch.remote_invocation (max_wait_time
-                              );
-
+    Invocation_Status status = synch.remote_invocation (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART && synch.is_forwarded ())
       {
-        effective_target =
-          synch.steal_forwarded_reference ();
+        effective_target = synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
         const CORBA::Boolean permanent_forward =

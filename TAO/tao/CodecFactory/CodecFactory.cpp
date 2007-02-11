@@ -26,7 +26,6 @@ TAO_CodecFactory_Loader::create_object (
   int,
   ACE_TCHAR *[]
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
   ACE_NEW_RETURN (obj,

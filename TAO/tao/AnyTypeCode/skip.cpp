@@ -39,9 +39,7 @@ ACE_RCSID (AnyTypeCode,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::traverse_status
-TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
-                             TAO_InputCDR *stream
-                             )
+TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 
@@ -118,9 +116,7 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
 }
 
 TAO::traverse_status
-TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
-                            TAO_InputCDR *stream
-                            )
+TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 

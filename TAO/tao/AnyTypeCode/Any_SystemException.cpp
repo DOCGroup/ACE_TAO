@@ -8,12 +8,9 @@
 
 #include "tao/CDR.h"
 #include "tao/Exception.h"
-#include "tao/Environment.h"
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (AnyTypeCode,

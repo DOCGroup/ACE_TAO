@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Codeset_Manager.h"
 #include "ace/Codeset_Symbols.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (CodecFactory_impl,
            CodecFactory,
@@ -22,11 +23,7 @@ TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
 }
 
 IOP::Codec_ptr
-TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
-                                              )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     IOP::CodecFactory::UnknownEncoding,
-                     IOP::CodecFactory::UnsupportedCodeset))
+TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc)
 {
   TAO_Codeset_Translator_Base *char_trans = 0;
   TAO_Codeset_Translator_Base *wchar_trans = 0;
@@ -69,10 +66,7 @@ TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
 }
 
 IOP::Codec_ptr
-TAO_CodecFactory::create_codec (const IOP::Encoding & enc
-                                )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::CodecFactory::UnknownEncoding))
+TAO_CodecFactory::create_codec (const IOP::Encoding & enc)
 {
   return this->create_codec_i (enc.major_version,
                                enc.minor_version,
@@ -89,8 +83,6 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
                                   TAO_Codeset_Translator_Base * char_trans,
                                   TAO_Codeset_Translator_Base * wchar_trans
                                   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::CodecFactory::UnknownEncoding))
 {
   // @todo: Ideally we should have some sort of CodecFactory
   //        registry to make it possible to add factories

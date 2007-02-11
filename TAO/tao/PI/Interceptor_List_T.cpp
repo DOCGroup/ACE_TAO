@@ -2,7 +2,6 @@
 
 #include "tao/PI/ORBInitInfoC.h"
 #include "tao/PI/InterceptorC.h"
-#include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 

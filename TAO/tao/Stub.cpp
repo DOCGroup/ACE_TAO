@@ -24,6 +24,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
+#include "ace/CORBA_macros.h"
 
 
 ACE_RCSID (tao,

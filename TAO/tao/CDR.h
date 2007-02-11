@@ -53,7 +53,6 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 
-#include "ace/CORBA_macros.h"
 #include "ace/CDR_Stream.h"
 
 

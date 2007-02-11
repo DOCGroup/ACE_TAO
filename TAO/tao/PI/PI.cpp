@@ -6,6 +6,7 @@
 #include "tao/PI/PI_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (PI,
            PI,

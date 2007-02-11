@@ -53,7 +53,6 @@ void
 TAO_IORInterceptor_Adapter_Impl::establish_components (
   TAO_Root_POA* poa
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const size_t interceptor_count = this->ior_interceptor_list_.size ();
 
@@ -127,7 +126,6 @@ void
 TAO_IORInterceptor_Adapter_Impl::components_established (
   PortableInterceptor::IORInfo_ptr info
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -166,7 +164,6 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const size_t interceptor_count = this->ior_interceptor_list_.size ();
 
@@ -210,7 +207,6 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
       const char * id,
       PortableInterceptor::AdapterState state
       )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// Whenever the POAManager state is changed, the
   /// adapter_manager_state_changed method is to be invoked on all the IOR

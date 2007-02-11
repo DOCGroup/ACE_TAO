@@ -17,31 +17,19 @@ TAO_DynValueCommon_i::~TAO_DynValueCommon_i (void)
 }
 
 CORBA::Boolean
-TAO_DynValueCommon_i::is_null (
-    void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynValueCommon_i::is_null (void)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO_DynValueCommon_i::set_to_null (
-    void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynValueCommon_i::set_to_null (void)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO_DynValueCommon_i::set_to_value (
-    void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+TAO_DynValueCommon_i::set_to_value (void)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }

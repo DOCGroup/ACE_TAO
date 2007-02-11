@@ -63,7 +63,6 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
 
 void
 TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
   // Register all of the RT related services.
@@ -206,7 +205,6 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
 void
 TAO_RT_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 }

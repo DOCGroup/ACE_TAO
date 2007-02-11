@@ -75,7 +75,6 @@ TAO::Utils::Servant_Var<T>::operator= (T * p)
 
 template <class T> ACE_INLINE
 TAO::Utils::Servant_Var<T>::~Servant_Var (void)
-  ACE_THROW_SPEC (())
 {
   // Unfortunately, there is no throw spec on _remove_ref, so we
   // can't assume that it will not throw.  If it does, then we are in

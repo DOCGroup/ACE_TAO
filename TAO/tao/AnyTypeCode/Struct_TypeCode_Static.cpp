@@ -6,7 +6,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/CDR.h"
-
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Struct_TypeCode_Static.inl"

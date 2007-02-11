@@ -211,8 +211,7 @@ namespace TAO
   class TAO_Messaging_Export ARH_Refcount_Functor
   {
   public:
-    void operator() (TAO_AMH_Response_Handler *arh)
-      ACE_THROW_SPEC (());
+    void operator() (TAO_AMH_Response_Handler *arh);
   };
 
 }

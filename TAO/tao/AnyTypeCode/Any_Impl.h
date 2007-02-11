@@ -15,16 +15,15 @@
 #define TAO_ANY_IMPL_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-
 #include "tao/Basic_Types.h"
-#include "tao/orbconf.h"
 
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"

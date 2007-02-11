@@ -5,6 +5,8 @@ ACE_RCSID (PortableServer,
            IdUniquenessPolicy,
            "$Id$")
 
+#include "ace/CORBA_macros.h"
+
 #if !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -21,7 +23,6 @@ namespace TAO
 
     CORBA::Policy_ptr
     IdUniquenessPolicy::copy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       IdUniquenessPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -33,20 +34,17 @@ namespace TAO
 
     void
     IdUniquenessPolicy::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::IdUniquenessPolicyValue
     IdUniquenessPolicy::value (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
     IdUniquenessPolicy::policy_type (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::ID_UNIQUENESS_POLICY_ID;
     }

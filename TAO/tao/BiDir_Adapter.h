@@ -19,7 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +42,7 @@ public:
   virtual ~TAO_BiDir_Adapter (void);
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

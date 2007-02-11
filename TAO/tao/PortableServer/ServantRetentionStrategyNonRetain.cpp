@@ -63,9 +63,6 @@ namespace TAO
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::system_id_to_object_id (
       const PortableServer::ObjectId &system_id)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongAdapter,
-                         PortableServer::POA::WrongPolicy))
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
@@ -80,9 +77,6 @@ namespace TAO
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::user_id_to_servant (
       const PortableServer::ObjectId &/*id*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -91,9 +85,6 @@ namespace TAO
     ServantRetentionStrategyNonRetain::id_to_reference (
       const PortableServer::ObjectId &/*id*/,
       bool /*indirect*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -147,17 +138,12 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetain::deactivate_all_objects (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
     }
 
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::servant_to_user_id (
       PortableServer::Servant /*servant*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -165,9 +151,6 @@ namespace TAO
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::servant_to_reference (
       PortableServer::Servant /*servant*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -177,9 +160,6 @@ namespace TAO
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
       bool &/*wait_occurred_restart_call*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantAlreadyActive,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -191,10 +171,6 @@ namespace TAO
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
       bool &/*wait_occurred_restart_call*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantAlreadyActive,
-                         PortableServer::POA::ObjectAlreadyActive,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -204,8 +180,6 @@ namespace TAO
     ServantRetentionStrategyNonRetain::create_reference (
       const char *intf,
       CORBA::Short priority)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       // This operation creates an object reference that encapsulates a
       // POA-generated Object Id value and the specified interface
@@ -247,7 +221,6 @@ namespace TAO
       const PortableServer::ObjectId &oid,
       const char *intf,
       CORBA::Short priority)
-        ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // This operation creates an object reference that encapsulates the
       // specified Object Id and interface repository Id values. This

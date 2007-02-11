@@ -3,6 +3,7 @@
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/DII_Arguments_Converter.h"
+#include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"

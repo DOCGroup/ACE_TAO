@@ -43,28 +43,20 @@ namespace TAO
 #if (TAO_HAS_MINIMUM_POA == 0)
 
       PortableServer::ServantManager_ptr
-      get_servant_manager (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      get_servant_manager (void);
 
       void
       set_servant_manager (PortableServer::ServantManager_ptr imgr
-                           )
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+                           );
 
       void
       set_servant (PortableServer::Servant servant
-                   )
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+                   );
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       PortableServer::Servant
-      get_servant (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      get_servant (void);
 
       virtual
       TAO_SERVANT_LOCATION
@@ -87,10 +79,7 @@ namespace TAO
 
       virtual PortableServer::Servant id_to_servant (
         const PortableServer::ObjectId &id
-        )
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::ObjectNotActive,
-                           PortableServer::POA::WrongPolicy));
+        );
 
       virtual void cleanup_servant (
         PortableServer::Servant servant,
@@ -101,10 +90,7 @@ namespace TAO
 
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant
-        )
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::ServantNotActive,
-                           PortableServer::POA::WrongPolicy));
+        );
 
       virtual void post_invoke_servant_cleanup(
         const PortableServer::ObjectId &system_id,

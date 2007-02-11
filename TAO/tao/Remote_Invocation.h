@@ -15,13 +15,12 @@
 #define TAO_REMOTE_INVOCATION_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/Invocation_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Invocation_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include "ace/CORBA_macros.h"
+
 ACE_RCSID (BiDir_GIOP,
            BiDir_Policy_i,
            "$Id$")
@@ -35,7 +37,6 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy 
 
 CORBA::PolicyType
 TAO_BidirectionalPolicy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -55,7 +56,6 @@ TAO_BidirectionalPolicy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_BidirectionalPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -70,16 +70,12 @@ TAO_BidirectionalPolicy::copy (void)
 
 void
 TAO_BidirectionalPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 BiDirPolicy::BidirectionalPolicyValue
 TAO_BidirectionalPolicy::value (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException))
-{
-  return this->value_;
+  {return this->value_;
 }
 
 

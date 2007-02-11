@@ -4,6 +4,7 @@
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/IIOP_Transport.h"
 #include "tao/Transport_Selection_Guard.h"
+#include "tao/SystemException.h"
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
@@ -25,7 +26,6 @@ namespace TAO
 
     TAO_IIOP_Connection_Handler*
     IIOP_Current_Impl::handler (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       const TAO_Transport* t = this->transport ();
@@ -59,7 +59,6 @@ namespace TAO
 
     CORBA::Long
     IIOP_Current_Impl::id (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       // Need to use cast to pacify windows compilers complaining
@@ -72,7 +71,6 @@ namespace TAO
 
     ::SSLIOP::Current_ptr
     IIOP_Current_Impl::ssliop_current (void)
-          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
         throw ::CORBA::NO_IMPLEMENT ();
     }
@@ -80,7 +78,6 @@ namespace TAO
 
     CORBA::Long
     IIOP_Current_Impl::remote_port (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
@@ -97,7 +94,6 @@ namespace TAO
 
     char*
     IIOP_Current_Impl::remote_host (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
@@ -114,7 +110,6 @@ namespace TAO
 
     CORBA::Long
     IIOP_Current_Impl::local_port (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =
@@ -131,7 +126,6 @@ namespace TAO
 
     char*
     IIOP_Current_Impl::local_host (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
       TAO_IIOP_Connection_Handler *iiopch =

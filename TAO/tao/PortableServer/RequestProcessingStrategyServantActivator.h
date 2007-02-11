@@ -40,14 +40,10 @@ namespace TAO
 
       virtual void strategy_cleanup(void);
 
-      PortableServer::ServantManager_ptr get_servant_manager (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+      PortableServer::ServantManager_ptr get_servant_manager (void);
 
       void set_servant_manager (PortableServer::ServantManager_ptr imgr
-                                )
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy));
+                                );
 
       virtual TAO_SERVANT_LOCATION locate_servant (
         const PortableServer::ObjectId &system_id,

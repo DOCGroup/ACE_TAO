@@ -25,8 +25,6 @@ namespace TAO
 
     PortableServer::ServantManager_ptr
     RequestProcessingStrategyAOMOnly::get_servant_manager (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -34,8 +32,6 @@ namespace TAO
     void
     RequestProcessingStrategyAOMOnly::set_servant_manager (
       PortableServer::ServantManager_ptr /*imgr*/)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -43,8 +39,6 @@ namespace TAO
     void
     RequestProcessingStrategyAOMOnly::set_servant (
       PortableServer::Servant /*servant*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -53,8 +47,6 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::get_servant (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -101,9 +93,6 @@ namespace TAO
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::id_to_servant (
       const PortableServer::ObjectId &id)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       return this->poa_->user_id_to_servant_i (id);
     }
@@ -140,9 +129,6 @@ namespace TAO
     PortableServer::ObjectId *
     RequestProcessingStrategyAOMOnly::servant_to_id (
       PortableServer::Servant servant)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       return this->poa_->servant_to_user_id (servant);
     }

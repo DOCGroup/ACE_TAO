@@ -22,6 +22,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.inl"
@@ -289,7 +290,6 @@ CORBA::Object::_hash (CORBA::ULong maximum)
 
 CORBA::Boolean
 CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
-  ACE_THROW_SPEC (())
 {
   if (other_obj == this)
     {

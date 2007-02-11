@@ -45,8 +45,7 @@ public:
 
   virtual TAO_Valuetype_Adapter * create (
 
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

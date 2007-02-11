@@ -28,7 +28,6 @@ namespace TAO
     CORBA::Boolean
     Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // Default policies
       CORBA::PolicyList default_policies;

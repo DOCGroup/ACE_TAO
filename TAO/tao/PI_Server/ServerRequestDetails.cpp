@@ -6,6 +6,8 @@
 #include "tao/PI_Server/ServerRequestDetails.inl"
 #endif /* defined INLINE */
 
+#include "tao/SystemException.h"
+
 ACE_RCSID (PI_Server,
            ServerRequestDetails,
            "$Id$")

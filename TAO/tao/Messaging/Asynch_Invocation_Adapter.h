@@ -25,7 +25,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 #include "tao/Invocation_Adapter.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
@@ -43,7 +42,6 @@ class TAO_Asynch_Reply_Dispatcher_Base;
 namespace  CORBA
 {
   class Object;
-  class SystemException;
 }
 
 namespace TAO

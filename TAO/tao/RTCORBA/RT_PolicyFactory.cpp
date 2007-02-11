@@ -17,8 +17,6 @@ CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     return TAO_PriorityModelPolicy::create (value);
@@ -42,11 +40,7 @@ TAO_RT_PolicyFactory::create_policy (
 }
 
 CORBA::Policy_ptr
-TAO_RT_PolicyFactory::_create_policy (
-    CORBA::PolicyType type
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 

@@ -9,6 +9,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 #include "ace/Sched_Params.h"
@@ -42,14 +43,12 @@ TAO_RT_ORB::~TAO_RT_ORB (void)
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_mutex (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mutex_mgr_.create_mutex ();
 }
 
 void
 TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->mutex_mgr_.destroy_mutex (mutex);
 }
@@ -58,14 +57,12 @@ TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex)
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_named_mutex (const char *name,
                                 CORBA::Boolean_out created_flag)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->mutex_mgr_.create_named_mutex (name, created_flag);
 }
 
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::open_named_mutex (const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException, RTCORBA::RTORB::MutexNotFound))
 {
   return this->mutex_mgr_.open_named_mutex (name);
 }
@@ -82,7 +79,6 @@ TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager (void)
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_mutex (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RT_Mutex *mutex = 0;
   ACE_NEW_THROW_EX (mutex,
@@ -101,7 +97,6 @@ TAO_Named_RT_Mutex_Manager::create_mutex (void)
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 void
 TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_RT_Mutex *tao_mutex =
     dynamic_cast<TAO_RT_Mutex *> (mutex);
@@ -127,7 +122,6 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex)
 #else /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 void
 TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
@@ -135,7 +129,6 @@ TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr)
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
                                                 CORBA::Boolean_out created_flag)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   // The following should be atomic.
@@ -185,8 +178,6 @@ TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
 
 RTCORBA::Mutex_ptr
 TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTCORBA::RTORB::MutexNotFound))
 {
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
   // The following should be atomic.
@@ -218,7 +209,6 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Boolean no_delay,
                                             CORBA::Boolean enable_network_priority
                                             )
-  ACE_THROW_SPEC ((CORBA::SystemException ))
 {
   TAO_TCP_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -239,7 +229,6 @@ TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                     CORBA::Long send_buffer_size,
                                                     CORBA::Long recv_buffer_size
                                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UnixDomain_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -262,7 +251,6 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
                                                       CORBA::Long preallocate_buffer_size,
                                                       const char *mmap_filename,
                                                       const char *mmap_lockname)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SharedMemory_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -284,7 +272,6 @@ RTCORBA::UserDatagramProtocolProperties_ptr
 TAO_RT_ORB::create_user_datagram_protocol_properties (
                                                       CORBA::Boolean enable_network_priority
                                                       )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UserDatagram_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -305,7 +292,6 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                        CORBA::Boolean no_delay,
                                                        CORBA::Boolean enable_network_priority
                                                        )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_StreamControl_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -331,7 +317,6 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                CORBA::ULong max_buffered_requests,
                                CORBA::ULong max_request_buffer_size
                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->tp_manager_->create_threadpool (stacksize,
                                                static_threads,
@@ -352,7 +337,6 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                           CORBA::ULong max_buffered_requests,
                                           CORBA::ULong max_request_buffer_size
                                           )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->tp_manager_->create_threadpool_with_lanes (stacksize,
                                                           lanes,
@@ -366,8 +350,6 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
 
 void
 TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTCORBA::RTORB::InvalidThreadpool))
 {
   this->tp_manager_->destroy_threadpool (threadpool);
 }
@@ -376,7 +358,6 @@ RTCORBA::PriorityModelPolicy_ptr
 TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
                                           RTCORBA::Priority server_priority
                                           )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -389,7 +370,6 @@ TAO_RT_ORB::create_priority_model_policy (RTCORBA::PriorityModel priority_model,
 
 RTCORBA::ThreadpoolPolicy_ptr
 TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -404,7 +384,6 @@ RTCORBA::PriorityBandedConnectionPolicy_ptr
 TAO_RT_ORB::create_priority_banded_connection_policy (const
                                                       RTCORBA::PriorityBands & priority_bands
                                                       )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -417,7 +396,6 @@ TAO_RT_ORB::create_priority_banded_connection_policy (const
 
 RTCORBA::PrivateConnectionPolicy_ptr
 TAO_RT_ORB::create_private_connection_policy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -431,7 +409,6 @@ TAO_RT_ORB::create_private_connection_policy (void)
 RTCORBA::ServerProtocolPolicy_ptr
 TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
                                            )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -445,7 +422,6 @@ TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protoco
 RTCORBA::ClientProtocolPolicy_ptr
 TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
                                            )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,

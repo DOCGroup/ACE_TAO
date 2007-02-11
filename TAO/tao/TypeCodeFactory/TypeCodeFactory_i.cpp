@@ -129,7 +129,6 @@ TAO_TypeCodeFactory_i::create_struct_tc (
     const char *id,
     const char *name,
     const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->struct_except_tc_common (id,
                                         name,
@@ -143,7 +142,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
     const char *name,
     CORBA::TypeCode_ptr discriminator_type,
     const CORBA::UnionMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
@@ -614,7 +612,6 @@ TAO_TypeCodeFactory_i::create_enum_tc (
     const char *id,
     const char *name,
     const CORBA::EnumMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
@@ -668,7 +665,6 @@ TAO_TypeCodeFactory_i::create_alias_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr original_type)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->alias_value_box_tc_common (id,
                                           name,
@@ -681,7 +677,6 @@ TAO_TypeCodeFactory_i::create_exception_tc (
     const char *id,
     const char *name,
     const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->struct_except_tc_common (id,
                                         name,
@@ -693,7 +688,6 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_interface_tc (
     const char *id,
     const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
@@ -702,7 +696,6 @@ TAO_TypeCodeFactory_i::create_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_string_tc (CORBA::ULong bound)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->string_wstring_tc_common (bound,
                                          CORBA::tk_string);
@@ -710,7 +703,6 @@ TAO_TypeCodeFactory_i::create_string_tc (CORBA::ULong bound)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_wstring_tc (CORBA::ULong bound)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->string_wstring_tc_common (bound,
                                          CORBA::tk_wstring);
@@ -720,7 +712,6 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_fixed_tc (
     CORBA::UShort digits,
     CORBA::UShort scale)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc;
   ACE_NEW_THROW_EX (tc,
@@ -735,7 +726,6 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_sequence_tc (
     CORBA::ULong bound,
     CORBA::TypeCode_ptr element_type)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return sequence_array_tc_common (bound,
                                    element_type,
@@ -746,7 +736,6 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_array_tc (
     CORBA::ULong length,
     CORBA::TypeCode_ptr element_type)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return sequence_array_tc_common (length, element_type, CORBA::tk_array);
 }
@@ -759,7 +748,6 @@ TAO_TypeCodeFactory_i::create_value_tc (
     CORBA::TypeCode_ptr concrete_base,
     const CORBA::ValueMemberSeq &members
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_event_tc_common (id,
                                       name,
@@ -776,7 +764,6 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
     const char *name,
     CORBA::TypeCode_ptr boxed_type
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->alias_value_box_tc_common (id,
                                           name,
@@ -790,7 +777,6 @@ TAO_TypeCodeFactory_i::create_native_tc (
     const char *id,
     const char *name
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
@@ -800,7 +786,6 @@ TAO_TypeCodeFactory_i::create_native_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
@@ -821,7 +806,6 @@ TAO_TypeCodeFactory_i::create_abstract_interface_tc (
     const char *id,
     const char *name
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
@@ -834,7 +818,6 @@ TAO_TypeCodeFactory_i::create_local_interface_tc (
     const char *id,
     const char *name
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
@@ -847,7 +830,6 @@ TAO_TypeCodeFactory_i::create_component_tc (
     const char *id,
     const char *name
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
@@ -856,7 +838,6 @@ TAO_TypeCodeFactory_i::create_component_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_home_tc (const char *id, const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->create_tc_common (id,
                                  name,
@@ -870,7 +851,6 @@ TAO_TypeCodeFactory_i::create_event_tc (
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
     const CORBA::ValueMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_event_tc_common (id,
                                       name,
@@ -1144,7 +1124,6 @@ TAO_TypeCodeFactory_i::create_tc_common (
     CORBA::TCKind kind
 
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0 || !this->valid_name (name))
     {
@@ -1175,7 +1154,6 @@ TAO_TypeCodeFactory_i::string_wstring_tc_common (
     CORBA::TCKind kind
 
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc;
   ACE_NEW_THROW_EX (tc,
@@ -1193,7 +1171,6 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
     CORBA::TCKind kind
 
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
@@ -1226,7 +1203,6 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
     CORBA::TCKind kind
 
   )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
@@ -1333,7 +1309,6 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
     CORBA::TypeCode_ptr underlying_type,
     CORBA::TCKind kind
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
@@ -1378,7 +1353,6 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
     CORBA::TCKind kind
 
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
 
