@@ -1,3 +1,11 @@
+Sun Feb 11 18:58:14 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          (Hopefully) Last change to handle inconsistency between statically declared (IDL
+          compiler) union typecodes and dynamically declared typecodes where
+          the discriminator type is an enum.
+
 Sun Feb 11 12:38:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*.{h,cpp,inl}:
