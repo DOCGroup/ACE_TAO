@@ -369,8 +369,24 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
         }
 
       // If we got a match, a named member will be active.
-      this->discriminator_->from_any (label_any.in ()
+      CORBA::TCKind disc_kind = TAO_DynAnyFactory::unalias (disc_tc.in ());
+      CORBA::TCKind label_kind = TAO_DynAnyFactory::unalias (label_any->_tao_get_typecode ());
+      if (disc_kind == CORBA::tk_enum &&
+          label_kind == CORBA::tk_ulong)
+        {
+          // incase the discriminator is an enum type we have to walk
+          // a slightly more complex path because enum labels are
+          // stored as ulong in the union tc
+          CORBA::ULong label_val;
+          label_any >>= label_val;
+          TAO_DynEnum_i::_narrow (this->discriminator_.in ())
+                                        ->set_as_ulong (label_val);
+        }
+      else
+        {
+          this->discriminator_->from_any (label_any.in ()
                                      );
+        }
 
       // member_type() does not work with aliased type codes.
       CORBA::TypeCode_var member_tc =
@@ -390,6 +406,10 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
       this->component_count_ = 2;
 
       this->member_slot_ = i;
+
+      // we're through, disc, value has already been set
+      // no need for the copy operation below.
+      return;
     }
   else
     {
