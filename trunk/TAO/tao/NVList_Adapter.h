@@ -24,7 +24,6 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

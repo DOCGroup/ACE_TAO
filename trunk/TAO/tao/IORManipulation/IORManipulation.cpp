@@ -25,12 +25,7 @@ TAO_IOR_Manipulation_impl::~TAO_IOR_Manipulation_impl (void)
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::merge_iors (
-    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::EmptyProfileList,
-                   TAO_IOP::Duplicate,
-                   TAO_IOP::Invalid_IOR))
+    const TAO_IOP::TAO_IOR_Manipulation::IORList & iors)
 {
   // we need to create a new CORBA::Object which has the union of the
   // two profile lists.  However, if any profiles are duplicates (i.e. in
@@ -91,8 +86,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
-                                          Merged_Profiles
-                                         );
+                                          Merged_Profiles);
 
   // Make the stub memory allocation exception safe for the duration
   // of this method.
@@ -123,12 +117,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::EmptyProfileList,
-                   TAO_IOP::Duplicate,
-                   TAO_IOP::Invalid_IOR))
+    CORBA::Object_ptr ior2)
 {
 
   // Get an estimate of the number of profiles
@@ -144,12 +133,6 @@ TAO_IOR_Manipulation_impl::remove_profiles (
     CORBA::Object_ptr group,
     CORBA::Object_ptr ior2
     )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::Invalid_IOR,
-        TAO_IOP::EmptyProfileList,
-        TAO_IOP::NotFound
-      ))
 {
   // First verify they are the same type!
   CORBA::String_var id =
@@ -231,9 +214,6 @@ TAO_IOR_Manipulation_impl::set_property (
     TAO_IOP::TAO_IOR_Property_ptr prop,
     CORBA::Object_ptr group
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::Invalid_IOR,
-                   TAO_IOP::Duplicate))
 {
   // make sure we have some profiles
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -251,10 +231,6 @@ TAO_IOR_Manipulation_impl::set_primary (
     CORBA::Object_ptr new_primary,
     CORBA::Object_ptr group
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::Invalid_IOR,
-                   TAO_IOP::Duplicate,
-                   TAO_IOP::MultiProfileList))
 {
   // make sure we have some profiles in GROUP
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -277,10 +253,6 @@ TAO_IOR_Manipulation_impl::get_primary (
       CORBA::Object_ptr group
 
     )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      TAO_IOP::NotFound
-    ))
 {
   // make sure we have some profiles in IOR
   if (group->_stubobj ()->base_profiles ().profile_count () == 0)
@@ -297,9 +269,7 @@ TAO_IOR_Manipulation_impl::get_primary (
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::is_primary_set (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr group
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    CORBA::Object_ptr group)
 {
   return prop->is_primary_set (group);
 }
@@ -307,9 +277,7 @@ TAO_IOR_Manipulation_impl::is_primary_set (
 CORBA::Boolean
 TAO_IOR_Manipulation_impl:: remove_primary_tag (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr group
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    CORBA::Object_ptr group)
 {
   return prop->remove_primary_tag (group);
 }
@@ -319,8 +287,6 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::NotFound))
 {
   CORBA::ULong count = 0;
   TAO_Profile *pfile1, *pfile2;
@@ -345,14 +311,9 @@ TAO_IOR_Manipulation_impl::is_in_ior (
 }
 
 CORBA::ULong
-TAO_IOR_Manipulation_impl::get_profile_count (
-    CORBA::Object_ptr group
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::EmptyProfileList))
+TAO_IOR_Manipulation_impl::get_profile_count (CORBA::Object_ptr group)
 {
-  CORBA::ULong count;
-  count = group->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong const count = group->_stubobj ()->base_profiles ().profile_count ();
 
   if (count == 0)
     throw TAO_IOP::EmptyProfileList ();

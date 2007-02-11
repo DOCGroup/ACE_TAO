@@ -40,11 +40,9 @@ public:
    * PortableInterceptor::ORBInitializer interface.
    */
   //@{
-  void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  void post_init (PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   //@}
 

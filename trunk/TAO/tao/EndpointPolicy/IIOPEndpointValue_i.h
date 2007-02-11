@@ -84,20 +84,15 @@ public:
   CORBA::Boolean validate_acceptor (TAO_Acceptor *) const;
 
   /// Host attribute get/set operators.
-  char * host (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void host (const char * h)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char * host (void);
+  void host (const char * h);
 
   /// Port attribute get/set operators.
-  CORBA::UShort port (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void port (CORBA::UShort p)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::UShort port (void);
+  void port (CORBA::UShort p);
 
   // Protocol tag get operator, inherited from EndpointValueBase
-  CORBA::ULong protocol_tag (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::ULong protocol_tag (void);
 
 private:
   CORBA::Boolean is_equivalent_i (CORBA::UShort port, const char *host) const;

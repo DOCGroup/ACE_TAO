@@ -45,10 +45,7 @@ TAO_Policy_Current::get_policy (
 }
 
 CORBA::PolicyList *
-TAO_Policy_Current::get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts
-        )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Policy_Current::get_policy_overrides (const CORBA::PolicyTypeSeq & ts)
 
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
@@ -58,10 +55,7 @@ TAO_Policy_Current::get_policy_overrides (
 
 void
 TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
-                                          CORBA::SetOverrideType set_add
-                                          )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::InvalidPolicies))
+                                          CORBA::SetOverrideType set_add)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
@@ -69,13 +63,11 @@ TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 CORBA::Policy_ptr
-TAO_Policy_Current::get_cached_policy (TAO_Cached_Policy_Type type
-                                       )
+TAO_Policy_Current::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
-  return impl.get_cached_policy (type
-                                );
+  return impl.get_cached_policy (type);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,4 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Utils/PolicyList_Destroyer.inl"
@@ -12,7 +11,6 @@ ACE_RCSID (Utils,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
-  ACE_THROW_SPEC (())
 {
 
   for (CORBA::ULong i = 0; i != length(); ++i)

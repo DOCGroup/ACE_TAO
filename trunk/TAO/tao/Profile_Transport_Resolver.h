@@ -21,9 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
-#include "tao/SystemException.h"
 #include "tao/Transport_Selection_Guard.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -89,8 +86,7 @@ namespace TAO
      * the profile.
      */
     void resolve (ACE_Time_Value *val
-                  )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                  );
 
     //@{
     /**
@@ -153,8 +149,7 @@ namespace TAO
 
     /// Initialize the inconsistent policy list that this object has
     /// cached.
-    void init_inconsistent_policies (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void init_inconsistent_policies (void);
 
     CORBA::PolicyList *inconsistent_policies (void) const;
 

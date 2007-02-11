@@ -7,11 +7,9 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/CDR.h"
-#include "tao/Environment.h"
-#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/SystemException.h"
 
-#include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 

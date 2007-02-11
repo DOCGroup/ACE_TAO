@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
 #include "ace/Service_Object.h"
 #include "ace/Array_Base.h"
@@ -86,19 +85,11 @@ namespace TAO
      *
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
-     *
-     * @todo
-     * @@ Johnny, we won't be needing the exception specification
-     * below for long.  Once bug 1852 is fixed, we can the
-     * exception specification and the "tao/SystemException.h"
-     * include above.
      */
     //@{
     virtual CORBA::Object_ptr make_object (
       const char * repository_id,
-      const PortableInterceptor::ObjectId & id
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      const PortableInterceptor::ObjectId & id) = 0;
     //@}
   };
 

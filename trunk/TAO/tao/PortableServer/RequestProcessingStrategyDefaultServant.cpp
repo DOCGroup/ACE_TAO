@@ -36,8 +36,6 @@ namespace TAO
 
     PortableServer::ServantManager_ptr
     RequestProcessingStrategyDefaultServant::get_servant_manager (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -45,16 +43,12 @@ namespace TAO
     void
     RequestProcessingStrategyDefaultServant::set_servant_manager (
       PortableServer::ServantManager_ptr /*imgr*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::get_servant (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       // This operation returns the default servant associated with the
       // POA.
@@ -65,8 +59,6 @@ namespace TAO
     RequestProcessingStrategyDefaultServant::set_servant (
       PortableServer::Servant servant
       )
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       // This operation registers the specified servant with the POA as
       // the default servant. This servant will be used for all requests
@@ -171,9 +163,6 @@ namespace TAO
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::id_to_servant (
       const PortableServer::ObjectId & /*id*/)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ObjectNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
@@ -224,9 +213,6 @@ namespace TAO
     RequestProcessingStrategyDefaultServant::servant_to_id (
       PortableServer::Servant servant
       )
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::ServantNotActive,
-                         PortableServer::POA::WrongPolicy))
     {
       PortableServer::Servant default_servant = this->default_servant_.in ();
 

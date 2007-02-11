@@ -187,11 +187,6 @@ TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref)
 
 DynamicAny::FieldName
 TAO_DynStruct_i::current_member_name (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -223,11 +218,6 @@ TAO_DynStruct_i::current_member_name (void)
 // Returns the unaliased TCKind.
 CORBA::TCKind
 TAO_DynStruct_i::current_member_kind (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -261,9 +251,6 @@ TAO_DynStruct_i::current_member_kind (void)
 
 DynamicAny::NameValuePairSeq *
 TAO_DynStruct_i::get_members (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -313,11 +300,6 @@ TAO_DynStruct_i::get_members (void)
 
 void
 TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -370,9 +352,6 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values)
 
 DynamicAny::NameDynAnyPairSeq *
 TAO_DynStruct_i::get_members_as_dyn_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -419,11 +398,6 @@ TAO_DynStruct_i::set_members_as_dyn_any (
     const DynamicAny::NameDynAnyPairSeq & values
 
   )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -476,11 +450,6 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 
 void
 TAO_DynStruct_i::from_any (const CORBA::Any & any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -565,9 +534,6 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
 
 CORBA::Any_ptr
 TAO_DynStruct_i::to_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -640,9 +606,6 @@ TAO_DynStruct_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -684,9 +647,6 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynStruct_i::destroy (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -711,10 +671,6 @@ TAO_DynStruct_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynStruct_i::current_component (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {

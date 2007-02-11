@@ -13,7 +13,6 @@ namespace TAO
 
 void CompressionManager::register_factory (
   ::Compression::CompressorFactory_ptr compressor_factory)
-    ACE_THROW_SPEC ((::CORBA::SystemException, ::Compression::FactoryAlreadyRegistered))
 {
   if (!::CORBA::is_nil (compressor_factory))
     {
@@ -44,10 +43,6 @@ void CompressionManager::register_factory (
 void
 CompressionManager::unregister_factory (
   ::Compression::CompressorId compressor_id)
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException,
-            ::Compression::UnknownCompressorId
-          ))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
@@ -76,10 +71,6 @@ CompressionManager::unregister_factory (
 ::Compression::CompressorFactory_ptr
 CompressionManager::get_factory (
   ::Compression::CompressorId compressor_id)
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException,
-            ::Compression::UnknownCompressorId
-          ))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_,
     ::Compression::CompressorFactory::_nil ());
@@ -106,10 +97,6 @@ CompressionManager::get_factory (
 CompressionManager::get_compressor (
             ::Compression::CompressorId compressor_id,
             ::Compression::CompressionLevel compression_level)
-          ACE_THROW_SPEC ((
-            ::CORBA::SystemException,
-            ::Compression::UnknownCompressorId
-          ))
 {
   ::Compression::CompressorFactory_var factory = this->get_factory (compressor_id);
 
@@ -118,7 +105,6 @@ CompressionManager::get_compressor (
 
 ::Compression::CompressorFactorySeq *
 CompressionManager::get_factories (void)
-          ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   // todo
   return 0;

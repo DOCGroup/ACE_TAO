@@ -19,8 +19,6 @@ namespace TAO
   {
     PortableServer::POA_ptr
     POA_Current::get_POA (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -31,8 +29,6 @@ namespace TAO
 
     PortableServer::ObjectId *
     POA_Current::get_object_id (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -43,8 +39,6 @@ namespace TAO
 
     PortableServer::Servant
     POA_Current::get_servant (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
     {
       POA_Current_Impl *impl = this->implementation ();
 
@@ -55,8 +49,6 @@ namespace TAO
 
     CORBA::Object_ptr
     POA_Current::get_reference (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::Current::NoContext))
     {
       POA_Current_Impl *impl = this->implementation ();
 

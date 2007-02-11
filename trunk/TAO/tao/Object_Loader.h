@@ -20,7 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+#include "tao/TAO_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,8 +60,7 @@ public:
    */
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR* argv [])
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+                                           ACE_TCHAR* argv []) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

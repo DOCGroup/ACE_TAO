@@ -8,7 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Policy_Manager.h"
-
+#include "tao/SystemException.h"
 
 ACE_RCSID (RTCORBA,
            RT_Stub,

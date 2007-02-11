@@ -19,11 +19,9 @@ class TAO_RTScheduler_Export TAO_DistributableThread:
 
   ~TAO_DistributableThread (void);
 
-  virtual void cancel (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void cancel (void);
 
-  virtual RTScheduling::DistributableThread::DT_State state (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RTScheduling::DistributableThread::DT_State state (void);
 
  private:
   RTScheduling::DistributableThread::DT_State state_;

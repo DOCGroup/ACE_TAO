@@ -17,14 +17,12 @@ CompressorFactory::CompressorFactory (::Compression::CompressorId compressor_id)
 
 ::Compression::CompressorId
 CompressorFactory::compressor_id (void)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return compressor_id_;
 }
 
 ::CORBA::ULongLong
 CompressorFactory::compressed_bytes (void)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ::CORBA::ULongLong return_value;
   {
@@ -36,7 +34,6 @@ CompressorFactory::compressed_bytes (void)
 
 ::CORBA::ULongLong
 CompressorFactory::uncompressed_bytes (void)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ::CORBA::ULongLong return_value;
   {
@@ -48,7 +45,6 @@ CompressorFactory::uncompressed_bytes (void)
 
 ::CORBA::Double
 CompressorFactory::average_compression (void)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ::CORBA::Double return_value = 0.0;
   {
@@ -65,7 +61,6 @@ void
 CompressorFactory::add_sample (
   ::CORBA::ULongLong compressed_bytes,
   ::CORBA::ULongLong uncompressed_bytes)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->compressed_bytes_ += compressed_bytes;

@@ -138,11 +138,6 @@ TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref)
 // an Any argument.
 void
 TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ))
 {
   // discriminator_type () does not work with aliased type codes,
   // only on unions, so strip the alias out of the type code
@@ -298,9 +293,6 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::get_discriminator (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -318,10 +310,6 @@ TAO_DynUnion_i::get_discriminator (void)
 
 void
 TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {
@@ -437,10 +425,6 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
 
 void
 TAO_DynUnion_i::set_to_default_member (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {
@@ -485,10 +469,6 @@ TAO_DynUnion_i::set_to_default_member (void)
 
 void
 TAO_DynUnion_i::set_to_no_active_member (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {
@@ -540,9 +520,6 @@ TAO_DynUnion_i::set_to_no_active_member (void)
 
 CORBA::Boolean
 TAO_DynUnion_i::has_no_active_member (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -556,9 +533,6 @@ TAO_DynUnion_i::has_no_active_member (void)
 
 CORBA::TCKind
 TAO_DynUnion_i::discriminator_kind (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -576,10 +550,6 @@ TAO_DynUnion_i::discriminator_kind (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::member (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -605,10 +575,6 @@ TAO_DynUnion_i::member (void)
 
 char *
 TAO_DynUnion_i::member_name (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -631,10 +597,6 @@ TAO_DynUnion_i::member_name (void)
 
 CORBA::TCKind
 TAO_DynUnion_i::member_kind (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -662,11 +624,6 @@ TAO_DynUnion_i::member_kind (void)
 
 void
 TAO_DynUnion_i::from_any (const CORBA::Any& any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -699,9 +656,6 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any)
 
 CORBA::Any_ptr
 TAO_DynUnion_i::to_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -794,9 +748,6 @@ TAO_DynUnion_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -832,9 +783,6 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynUnion_i::destroy (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -863,10 +811,6 @@ TAO_DynUnion_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::current_component (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {
@@ -897,9 +841,6 @@ CORBA::Boolean
 TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
                              const CORBA::Any &other_any
                              )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   // Use my_any so we can detect a default case label,
   // if we are iterating through the union type code's

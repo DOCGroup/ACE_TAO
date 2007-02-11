@@ -15,7 +15,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
 TAO::ORT_Adapter_Impl::tao_server_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
   return this->ort_template_->server_id ();
@@ -23,7 +22,6 @@ TAO::ORT_Adapter_Impl::tao_server_id (void)
 
 char *
 TAO::ORT_Adapter_Impl::tao_orb_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
   return this->ort_template_->orb_id ();
@@ -31,7 +29,6 @@ TAO::ORT_Adapter_Impl::tao_orb_id (void)
 
 PortableInterceptor::AdapterName *
 TAO::ORT_Adapter_Impl::tao_adapter_name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
   return this->ort_template_->adapter_name ();
@@ -40,7 +37,6 @@ TAO::ORT_Adapter_Impl::tao_adapter_name (void)
 CORBA::Object_ptr
 TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
                                     const PortableInterceptor::ObjectId &id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ort_factory_->make_object (repo_id, id);
 }

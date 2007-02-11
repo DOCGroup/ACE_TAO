@@ -211,11 +211,6 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 
 void
 TAO_DynAny_i::from_any (const CORBA::Any &any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -242,7 +237,6 @@ TAO_DynAny_i::from_any (const CORBA::Any &any)
 
 CORBA::Any_ptr
 TAO_DynAny_i::to_any (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->destroyed_)
     {
@@ -260,7 +254,6 @@ TAO_DynAny_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->destroyed_)
     {
@@ -510,9 +503,6 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynAny_i::destroy (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -528,10 +518,6 @@ TAO_DynAny_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynAny_i::current_component (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {

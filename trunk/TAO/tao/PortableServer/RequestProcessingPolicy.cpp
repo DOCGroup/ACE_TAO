@@ -23,7 +23,6 @@ namespace TAO
 
     CORBA::Policy_ptr
     RequestProcessingPolicy::copy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       RequestProcessingPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -35,20 +34,17 @@ namespace TAO
 
     void
     RequestProcessingPolicy::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::RequestProcessingPolicyValue
     RequestProcessingPolicy::value (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
     RequestProcessingPolicy::policy_type (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::REQUEST_PROCESSING_POLICY_ID;
     }

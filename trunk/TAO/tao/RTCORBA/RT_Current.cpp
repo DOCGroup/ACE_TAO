@@ -11,6 +11,7 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/SystemException.h"
 
 #include "ace/Thread.h"
 
@@ -31,15 +32,12 @@ TAO_RT_Current::~TAO_RT_Current (void)
 
 RTCORBA::Priority
 TAO_RT_Current::the_priority (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
   RTCORBA::Priority priority;
 
-  int const result = tph->get_thread_CORBA_priority (priority);
-
-  if (result == -1)
+  if (tph->get_thread_CORBA_priority (priority) == -1)
     throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
 
   return priority;
@@ -47,14 +45,11 @@ TAO_RT_Current::the_priority (void)
 
 void
 TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
-  int const result = tph->set_thread_CORBA_priority (the_priority);
-
-  if (result == -1)
+  if (tph->set_thread_CORBA_priority (the_priority) == -1)
     throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
 }
 

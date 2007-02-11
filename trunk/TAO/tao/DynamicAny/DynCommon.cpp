@@ -35,9 +35,6 @@ TAO_DynCommon::~TAO_DynCommon (void)
 
 CORBA::TypeCode_ptr
 TAO_DynCommon::type (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -49,10 +46,6 @@ TAO_DynCommon::type (void)
 
 void
 TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {
@@ -77,110 +70,60 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any)
 
 void
 TAO_DynCommon::insert_boolean (CORBA::Boolean value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Boolean>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_octet (CORBA::Octet value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Octet>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_char (CORBA::Char value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Char>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_short (CORBA::Short value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Short>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_ushort (CORBA::UShort value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::UShort>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_long (CORBA::Long value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Long>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_ulong (CORBA::ULong value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::ULong>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_float (CORBA::Float value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Float>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_double (CORBA::Double value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Double>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_string (const char * value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -222,11 +165,6 @@ TAO_DynCommon::insert_string (const char * value)
 
 void
 TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -301,44 +239,24 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
 
 void
 TAO_DynCommon::insert_typecode (CORBA::TypeCode_ptr value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::TypeCode_ptr>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_longlong (CORBA::LongLong value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::LongLong>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_ulonglong (CORBA::ULongLong value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::ULongLong>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_longdouble (CORBA::LongDouble value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::LongDouble>::insert_value (value,
                                                               this);
@@ -346,11 +264,6 @@ TAO_DynCommon::insert_longdouble (CORBA::LongDouble value)
 
 void
 TAO_DynCommon::insert_wchar (CORBA::WChar value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::WChar>::insert_value (value,
                                                          this);
@@ -358,11 +271,6 @@ TAO_DynCommon::insert_wchar (CORBA::WChar value)
 
 void
 TAO_DynCommon::insert_wstring (const CORBA::WChar * value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -395,11 +303,6 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value)
 
 void
 TAO_DynCommon::insert_any (const CORBA::Any &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::Any>::insert_value (value,
                                                        this);
@@ -409,11 +312,6 @@ TAO_DynCommon::insert_any (const CORBA::Any &value)
 // have fewer Any/DynAny conversions than insert_any, not more.
 void
 TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -427,11 +325,6 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value)
 
 void
 TAO_DynCommon::insert_val (CORBA::ValueBase *value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -498,110 +391,60 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
 
 CORBA::Boolean
 TAO_DynCommon::get_boolean (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Boolean>::get_value (this);
 }
 
 CORBA::Octet
 TAO_DynCommon::get_octet (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Octet>::get_value (this);
 }
 
 CORBA::Char
 TAO_DynCommon::get_char (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Char>::get_value (this);
 }
 
 CORBA::Short
 TAO_DynCommon::get_short (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Short>::get_value (this);
 }
 
 CORBA::UShort
 TAO_DynCommon::get_ushort (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::UShort>::get_value (this);
 }
 
 CORBA::Long
 TAO_DynCommon::get_long (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Long>::get_value (this);
 }
 
 CORBA::ULong
 TAO_DynCommon::get_ulong (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::ULong>::get_value (this);
 }
 
 CORBA::Float
 TAO_DynCommon::get_float (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Float>::get_value (this);
 }
 
 CORBA::Double
 TAO_DynCommon::get_double (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::Double>::get_value (this);
 }
 
 char *
 TAO_DynCommon::get_string (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -646,11 +489,6 @@ TAO_DynCommon::get_string (void)
 
 CORBA::Object_ptr
 TAO_DynCommon::get_reference (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -679,11 +517,6 @@ TAO_DynCommon::get_reference (void)
 
 CORBA::TypeCode_ptr
 TAO_DynCommon::get_typecode (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -711,44 +544,24 @@ TAO_DynCommon::get_typecode (void)
 
 CORBA::LongLong
 TAO_DynCommon::get_longlong (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::LongLong>::get_value (this);
 }
 
 CORBA::ULongLong
 TAO_DynCommon::get_ulonglong (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::ULongLong>::get_value (this);
 }
 
 CORBA::LongDouble
 TAO_DynCommon::get_longdouble (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   return TAO::DynAnyBasicTypeUtils<CORBA::LongDouble>::get_value (this);
 }
 
 CORBA::WChar
 TAO_DynCommon::get_wchar (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -776,11 +589,6 @@ TAO_DynCommon::get_wchar (void)
 
 CORBA::WChar *
 TAO_DynCommon::get_wstring (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -815,11 +623,6 @@ TAO_DynCommon::get_wstring (void)
 
 CORBA::Any_ptr
 TAO_DynCommon::get_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -854,11 +657,6 @@ TAO_DynCommon::get_any (void)
 // have fewer Any/DynAny conversions than get_any, not more.
 DynamicAny::DynAny_ptr
 TAO_DynCommon::get_dyn_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -875,11 +673,6 @@ TAO_DynCommon::get_dyn_any (void)
 
 CORBA::ValueBase *
 TAO_DynCommon::get_val (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -936,9 +729,6 @@ TAO_DynCommon::get_val (void)
 CORBA::Boolean
 TAO_DynCommon::seek (CORBA::Long slot
                      )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -965,9 +755,6 @@ TAO_DynCommon::seek (CORBA::Long slot
 
 void
 TAO_DynCommon::rewind (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -979,9 +766,6 @@ TAO_DynCommon::rewind (void)
 
 CORBA::Boolean
 TAO_DynCommon::next (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -1004,9 +788,6 @@ TAO_DynCommon::next (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynCommon::copy (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -1025,9 +806,6 @@ TAO_DynCommon::copy (void)
 
 CORBA::ULong
 TAO_DynCommon::component_count (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -1041,11 +819,6 @@ TAO_DynCommon::component_count (void)
 
 void
 TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -1119,11 +892,6 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
 
 CORBA::AbstractBase_ptr
 TAO_DynCommon::get_abstract (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -1177,11 +945,6 @@ TAO_DynCommon::get_abstract (void)
 
 void
 TAO_DynCommon::insert_boolean_seq (const CORBA::BooleanSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::BooleanSeq>::insert_value (value,
                                                               this);
@@ -1189,11 +952,6 @@ TAO_DynCommon::insert_boolean_seq (const CORBA::BooleanSeq &value)
 
 void
 TAO_DynCommon::insert_octet_seq (const CORBA::OctetSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::OctetSeq>::insert_value (value,
                                                             this);
@@ -1201,11 +959,6 @@ TAO_DynCommon::insert_octet_seq (const CORBA::OctetSeq &value)
 
 void
 TAO_DynCommon::insert_char_seq (const CORBA::CharSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::CharSeq>::insert_value (value,
                                                            this);
@@ -1213,33 +966,18 @@ TAO_DynCommon::insert_char_seq (const CORBA::CharSeq &value)
 
 void
 TAO_DynCommon::insert_short_seq (const CORBA::ShortSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::ShortSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_ushort_seq (const CORBA::UShortSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::UShortSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_long_seq (const CORBA::LongSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::LongSeq>::insert_value (value,
                                                            this);
@@ -1247,11 +985,6 @@ TAO_DynCommon::insert_long_seq (const CORBA::LongSeq &value)
 
 void
 TAO_DynCommon::insert_ulong_seq (const CORBA::ULongSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::ULongSeq>::insert_value (value,
                                                             this);
@@ -1259,11 +992,6 @@ TAO_DynCommon::insert_ulong_seq (const CORBA::ULongSeq &value)
 
 void
 TAO_DynCommon::insert_float_seq (const CORBA::FloatSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::FloatSeq>::insert_value (value,
                                                             this);
@@ -1271,11 +999,6 @@ TAO_DynCommon::insert_float_seq (const CORBA::FloatSeq &value)
 
 void
 TAO_DynCommon::insert_double_seq (const CORBA::DoubleSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::DoubleSeq>::insert_value (value,
                                                              this);
@@ -1283,11 +1006,6 @@ TAO_DynCommon::insert_double_seq (const CORBA::DoubleSeq &value)
 
 void
 TAO_DynCommon::insert_longlong_seq (const CORBA::LongLongSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::LongLongSeq>::insert_value (value,
                                                                this);
@@ -1295,11 +1013,6 @@ TAO_DynCommon::insert_longlong_seq (const CORBA::LongLongSeq &value)
 
 void
 TAO_DynCommon::insert_ulonglong_seq (const CORBA::ULongLongSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::ULongLongSeq>::insert_value (value,
                                                                 this);
@@ -1307,11 +1020,6 @@ TAO_DynCommon::insert_ulonglong_seq (const CORBA::ULongLongSeq &value)
 
 void
 TAO_DynCommon::insert_longdouble_seq (const CORBA::LongDoubleSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::LongDoubleSeq>::insert_value (value,
                                                                  this);
@@ -1319,11 +1027,6 @@ TAO_DynCommon::insert_longdouble_seq (const CORBA::LongDoubleSeq &value)
 
 void
 TAO_DynCommon::insert_wchar_seq (const CORBA::WCharSeq &value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::insert_value (value,
                                                             this);
@@ -1333,11 +1036,6 @@ TAO_DynCommon::insert_wchar_seq (const CORBA::WCharSeq &value)
 
 CORBA::BooleanSeq *
 TAO_DynCommon::get_boolean_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::BooleanSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::BooleanSeq>::get_value (this);
@@ -1346,11 +1044,6 @@ TAO_DynCommon::get_boolean_seq (void)
 
 CORBA::OctetSeq *
 TAO_DynCommon::get_octet_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::OctetSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::OctetSeq>::get_value (this);
@@ -1359,11 +1052,6 @@ TAO_DynCommon::get_octet_seq (void)
 
 CORBA::CharSeq *
 TAO_DynCommon::get_char_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::CharSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::CharSeq>::get_value (this);
@@ -1372,11 +1060,6 @@ TAO_DynCommon::get_char_seq (void)
 
 CORBA::ShortSeq *
 TAO_DynCommon::get_short_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::ShortSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::ShortSeq>::get_value (this);
@@ -1385,11 +1068,6 @@ TAO_DynCommon::get_short_seq (void)
 
 CORBA::UShortSeq *
 TAO_DynCommon::get_ushort_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::UShortSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::UShortSeq>::get_value (this);
@@ -1398,11 +1076,6 @@ TAO_DynCommon::get_ushort_seq (void)
 
 CORBA::LongSeq *
 TAO_DynCommon::get_long_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::LongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::LongSeq>::get_value (this);
@@ -1411,11 +1084,6 @@ TAO_DynCommon::get_long_seq (void)
 
 CORBA::ULongSeq *
 TAO_DynCommon::get_ulong_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::ULongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::ULongSeq>::get_value (this);
@@ -1424,11 +1092,6 @@ TAO_DynCommon::get_ulong_seq (void)
 
 CORBA::FloatSeq *
 TAO_DynCommon::get_float_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::FloatSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::FloatSeq>::get_value (this);
@@ -1437,11 +1100,6 @@ TAO_DynCommon::get_float_seq (void)
 
 CORBA::DoubleSeq *
 TAO_DynCommon::get_double_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::DoubleSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::DoubleSeq>::get_value (this);
@@ -1450,11 +1108,6 @@ TAO_DynCommon::get_double_seq (void)
 
 CORBA::LongLongSeq *
 TAO_DynCommon::get_longlong_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::LongLongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::LongLongSeq>::get_value (this);
@@ -1463,11 +1116,6 @@ TAO_DynCommon::get_longlong_seq (void)
 
 CORBA::ULongLongSeq *
 TAO_DynCommon::get_ulonglong_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::ULongLongSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::ULongLongSeq>::get_value (this);
@@ -1476,11 +1124,6 @@ TAO_DynCommon::get_ulonglong_seq (void)
 
 CORBA::LongDoubleSeq *
 TAO_DynCommon::get_longdouble_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::LongDoubleSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::LongDoubleSeq>::get_value (this);
@@ -1489,11 +1132,6 @@ TAO_DynCommon::get_longdouble_seq (void)
 
 CORBA::WCharSeq *
 TAO_DynCommon::get_wchar_seq (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   CORBA::WCharSeq *owned =
     TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::get_value (this);
@@ -1505,9 +1143,6 @@ TAO_DynCommon::get_wchar_seq (void)
 void
 TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
                          CORBA::Boolean destroying)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   CORBA::TypeCode_var tc = component->type ();
 
@@ -1556,11 +1191,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
 
 DynamicAny::DynAny_ptr
 TAO_DynCommon::check_component (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->current_position_ == -1)
     {
@@ -1601,10 +1231,6 @@ TAO_DynCommon::check_component (void)
 
 void
 TAO_DynCommon::check_type (CORBA::TypeCode_ptr tc)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   CORBA::Boolean const equivalent =
     this->type_->equivalent (tc);
@@ -1666,10 +1292,6 @@ TAO_DynCommon::ref_to_component (CORBA::Boolean val)
 CORBA::TypeCode_ptr
 TAO_DynCommon::check_type_and_unalias (CORBA::TypeCode_ptr tc
                                        )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   this->check_type (tc);
 

@@ -44,12 +44,10 @@ public:
   ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void ping (void);
 
   /// Shutdown the server.
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA (void);

@@ -26,8 +26,6 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/CORBA_macros.h"
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL

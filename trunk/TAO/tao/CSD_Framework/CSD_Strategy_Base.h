@@ -77,8 +77,7 @@ namespace TAO
 
       /// This method is invoked to "attach" this strategy object to
       /// the supplied POA.  Returns true for success, and false for failure.
-      CORBA::Boolean apply_to(PortableServer::POA_ptr poa )
-        ACE_THROW_SPEC((CORBA::SystemException));
+      CORBA::Boolean apply_to(PortableServer::POA_ptr poa );
 
     protected:
       /// Default Constructor.

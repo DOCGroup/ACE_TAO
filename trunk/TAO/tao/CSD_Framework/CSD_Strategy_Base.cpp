@@ -24,7 +24,6 @@ TAO::CSD::Strategy_Base::~Strategy_Base()
 
 CORBA::Boolean
 TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil(poa))
     {

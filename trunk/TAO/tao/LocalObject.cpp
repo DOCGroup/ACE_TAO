@@ -60,7 +60,6 @@ CORBA::LocalObject::_hash (CORBA::ULong maximum)
 
 CORBA::Boolean
 CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj)
-  ACE_THROW_SPEC (())
 {
   return (other_obj == this) ? true : false;
 }

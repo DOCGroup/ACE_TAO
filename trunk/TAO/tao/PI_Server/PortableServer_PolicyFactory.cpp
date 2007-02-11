@@ -21,8 +21,6 @@ CORBA::Policy_ptr
 TAO_PortableServer_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
 #if !defined (CORBA_E_MICRO)
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)

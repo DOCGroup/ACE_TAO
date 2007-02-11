@@ -18,7 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
   TAO_ORB_Core::set_timeout_hook (TAO_RelativeRoundtripTimeoutPolicy::hook);
@@ -37,7 +36,6 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 void
 TAO_Messaging_ORBInitializer::post_init (
   PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 

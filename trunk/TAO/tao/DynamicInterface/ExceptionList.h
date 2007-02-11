@@ -39,7 +39,6 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Synch_Traits.h"
 
 #if defined (TAO_EXPORT_MACRO)

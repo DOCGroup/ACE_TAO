@@ -8,11 +8,11 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
 
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (PI,
            ORBInitializer_Registry,

@@ -9,6 +9,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            MProfile,

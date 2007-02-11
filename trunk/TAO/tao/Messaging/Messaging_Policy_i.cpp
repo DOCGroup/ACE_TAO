@@ -43,7 +43,6 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (
     void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->relative_expiry_;
 }
@@ -51,7 +50,6 @@ TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (
 CORBA::PolicyType
 TAO_RelativeRoundtripTimeoutPolicy::policy_type (
     void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE;
 }
@@ -140,7 +138,6 @@ TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_RelativeRoundtripTimeoutPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -155,7 +152,6 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (void)
 
 void
 TAO_RelativeRoundtripTimeoutPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -209,7 +205,6 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
 
 CORBA::PolicyType
 TAO_Sync_Scope_Policy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Messaging::SYNC_SCOPE_POLICY_TYPE;
 }
@@ -287,14 +282,12 @@ TAO_Sync_Scope_Policy::clone (void) const
 
 Messaging::SyncScope
 TAO_Sync_Scope_Policy::synchronization (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->synchronization_;
 }
 
 CORBA::Policy_ptr
 TAO_Sync_Scope_Policy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -306,7 +299,6 @@ TAO_Sync_Scope_Policy::copy (void)
 
 void
 TAO_Sync_Scope_Policy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 TAO_Cached_Policy_Type

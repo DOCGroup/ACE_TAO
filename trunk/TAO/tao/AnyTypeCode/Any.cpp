@@ -8,8 +8,8 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/SystemException.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"

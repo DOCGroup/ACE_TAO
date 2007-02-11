@@ -5,7 +5,6 @@ ACE_RCSID (DynamicInterface,
            "$Id$")
 
 #include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/Environment.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)

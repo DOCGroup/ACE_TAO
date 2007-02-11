@@ -10,6 +10,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/debug.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
@@ -96,14 +97,11 @@ namespace TAO
       target_spec.target_specifier (*ior_info, index);
       break;
     }
-
-
   }
 
   void
   Remote_Invocation::write_header (TAO_Target_Specification &spec,
-                                   TAO_OutputCDR &out_stream
-                                   )
+                                   TAO_OutputCDR &out_stream)
   {
     this->resolver_.transport ()->clear_translators (0, &out_stream);
 

@@ -160,9 +160,6 @@ TAO_DynSequence_i::get_element_type (void)
 
 CORBA::ULong
 TAO_DynSequence_i::get_length (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -174,10 +171,6 @@ TAO_DynSequence_i::get_length (void)
 
 void
 TAO_DynSequence_i::set_length (CORBA::ULong length)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -252,9 +245,6 @@ TAO_DynSequence_i::set_length (CORBA::ULong length)
 
 DynamicAny::AnySeq *
 TAO_DynSequence_i::get_elements (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -286,11 +276,6 @@ TAO_DynSequence_i::get_elements (void)
 
 void
 TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -372,9 +357,6 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
 
 DynamicAny::DynAnySeq *
 TAO_DynSequence_i::get_elements_as_dyn_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -405,11 +387,6 @@ TAO_DynSequence_i::get_elements_as_dyn_any (void)
 void
 TAO_DynSequence_i::set_elements_as_dyn_any (
   const DynamicAny::DynAnySeq & values)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -482,11 +459,6 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
 
 void
 TAO_DynSequence_i::from_any (const CORBA::Any & any)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch,
-      DynamicAny::DynAny::InvalidValue
-    ))
 {
   if (this->destroyed_)
     {
@@ -583,9 +555,6 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
 
 CORBA::Any_ptr
 TAO_DynSequence_i::to_any (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -646,9 +615,6 @@ TAO_DynSequence_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -692,9 +658,6 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynSequence_i::destroy (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   if (this->destroyed_)
     {
@@ -717,10 +680,6 @@ TAO_DynSequence_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynSequence_i::current_component (void)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAny::TypeMismatch
-    ))
 {
   if (this->destroyed_)
     {

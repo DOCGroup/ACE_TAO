@@ -1,3 +1,8 @@
+Sun Feb 11 12:38:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*.{h,cpp,inl}:
+          Removed ACE_THROW_SPEC, layout changes, reduced includes
+
 Fri Feb  9 16:45:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * MPC/config/portableserver.mpb:

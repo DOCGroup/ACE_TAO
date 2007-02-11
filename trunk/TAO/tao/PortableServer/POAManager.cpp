@@ -54,15 +54,12 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 
 char *
 TAO_POA_Manager::get_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 void
 TAO_POA_Manager::activate_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
@@ -93,8 +90,6 @@ TAO_POA_Manager::activate_i (void)
 void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
                                CORBA::Boolean wait_for_completion)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
@@ -163,7 +158,6 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 
 void
 TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::AdapterState adapter_state =
     static_cast<PortableInterceptor::AdapterState> (state);
@@ -182,8 +176,6 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
 
 void
 TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
@@ -235,8 +227,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
 
 void
 TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),

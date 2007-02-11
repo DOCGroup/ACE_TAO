@@ -404,9 +404,6 @@ TAO::Collocation_Proxy_Broker *
 CORBA::PolicyType CORBA::Policy::policy_type (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {
@@ -445,9 +442,6 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 ::CORBA::Policy_ptr CORBA::Policy::copy (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {
@@ -486,9 +480,6 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 void CORBA::Policy::destroy (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {

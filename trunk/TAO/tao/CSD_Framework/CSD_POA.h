@@ -53,10 +53,7 @@ public:
 
   /// Pass the Strategy object reference to the CSD poa.
   virtual
-  void set_csd_strategy (::CSD_Framework::Strategy_ptr s)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+  void set_csd_strategy (::CSD_Framework::Strategy_ptr s);
 
   /// Hook - The POA has been (or is being) activated.
   virtual void poa_activated_hook ();

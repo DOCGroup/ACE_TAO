@@ -53,8 +53,7 @@ namespace TAO
   class TAO_Export LocateRequest_Invocation_Adapter
   {
   public:
-    LocateRequest_Invocation_Adapter (
-        CORBA::Object_ptr target);
+    LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);
 
     /// Start the invocation on the target
     void invoke (void);

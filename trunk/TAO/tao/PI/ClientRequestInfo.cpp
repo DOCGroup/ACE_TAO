@@ -25,6 +25,8 @@ ACE_RCSID (PI,
 #include "tao/Service_Context.h"
 #include "tao/Exception_Data.h"
 
+#include "ace/CORBA_macros.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
@@ -64,7 +66,6 @@ TAO_ClientRequestInfo::get_service_context_i (
     TAO_Service_Context &service_context_list,
     IOP::ServiceId id
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::ServiceContext_var service_context;
 
@@ -82,7 +83,6 @@ TAO_ClientRequestInfo::get_service_context_i (
 
 CORBA::Object_ptr
 TAO_ClientRequestInfo::target (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -91,7 +91,6 @@ TAO_ClientRequestInfo::target (void)
 
 CORBA::Object_ptr
 TAO_ClientRequestInfo::effective_target (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -100,7 +99,6 @@ TAO_ClientRequestInfo::effective_target (void)
 
 IOP::TaggedProfile *
 TAO_ClientRequestInfo::effective_profile (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -138,7 +136,6 @@ TAO_ClientRequestInfo::effective_profile (void)
 // with the spec.
 CORBA::Any *
 TAO_ClientRequestInfo::received_exception (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -176,7 +173,6 @@ TAO_ClientRequestInfo::received_exception (void)
 char *
 TAO_ClientRequestInfo::received_exception_id (
     void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -195,7 +191,6 @@ IOP::TaggedComponent *
 TAO_ClientRequestInfo::get_effective_component (
     IOP::ComponentId id
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -242,7 +237,6 @@ IOP::TaggedComponentSeq *
 TAO_ClientRequestInfo::get_effective_components (
     IOP::ComponentId id
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -298,7 +292,6 @@ TAO_ClientRequestInfo::get_effective_components (
 CORBA::Policy_ptr
 TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type
                                            )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -323,7 +316,6 @@ TAO_ClientRequestInfo::add_request_service_context (
     const IOP::ServiceContext & service_context,
     CORBA::Boolean replace
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -339,7 +331,6 @@ TAO_ClientRequestInfo::add_request_service_context (
 
 CORBA::ULong
 TAO_ClientRequestInfo::request_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -424,7 +415,6 @@ TAO_ClientRequestInfo::request_id (void)
 
 char *
 TAO_ClientRequestInfo::operation (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -434,7 +424,6 @@ TAO_ClientRequestInfo::operation (void)
 
 Dynamic::ParameterList *
 TAO_ClientRequestInfo::arguments (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -472,7 +461,6 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
 
 Dynamic::ExceptionList *
 TAO_ClientRequestInfo::exceptions (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -512,7 +500,6 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
 
 Dynamic::ContextList *
 TAO_ClientRequestInfo::contexts (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -521,7 +508,6 @@ TAO_ClientRequestInfo::contexts (void)
 
 Dynamic::RequestContext *
 TAO_ClientRequestInfo::operation_context (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -530,7 +516,6 @@ TAO_ClientRequestInfo::operation_context (void)
 
 CORBA::Any *
 TAO_ClientRequestInfo::result (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -560,7 +545,6 @@ TAO_ClientRequestInfo::result (CORBA::Any *any)
 
 CORBA::Boolean
 TAO_ClientRequestInfo::response_expected (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -569,7 +553,6 @@ TAO_ClientRequestInfo::response_expected (void)
 
 Messaging::SyncScope
 TAO_ClientRequestInfo::sync_scope (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -578,7 +561,6 @@ TAO_ClientRequestInfo::sync_scope (void)
 
 PortableInterceptor::ReplyStatus
 TAO_ClientRequestInfo::reply_status (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -593,7 +575,6 @@ TAO_ClientRequestInfo::reply_status (void)
 
 CORBA::Object_ptr
 TAO_ClientRequestInfo::forward_reference (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -611,8 +592,6 @@ TAO_ClientRequestInfo::forward_reference (void)
 CORBA::Any *
 TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId id
                                  )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::InvalidSlot))
 {
   this->check_validity ();
 
@@ -624,7 +603,6 @@ IOP::ServiceContext *
 TAO_ClientRequestInfo::get_request_service_context (
     IOP::ServiceId id
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -641,7 +619,6 @@ IOP::ServiceContext *
 TAO_ClientRequestInfo::get_reply_service_context (
     IOP::ServiceId id
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 

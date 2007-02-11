@@ -24,8 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+#include "tao/Basic_Types.h"
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 # include "tao/OctetSeqC.h"
@@ -154,13 +154,11 @@ namespace TAO
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void) = 0;
 
-    virtual void deallocate_pi_current (
-        TAO::PICurrent_Impl *picurrent) = 0;
+    virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent) = 0;
 
     virtual void execute_command (
         TAO_ServerRequest &server_request,
-        TAO::Upcall_Command &command
-        ) = 0;
+        TAO::Upcall_Command &command) = 0;
   };
 }
 

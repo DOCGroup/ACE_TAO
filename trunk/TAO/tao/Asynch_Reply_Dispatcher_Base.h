@@ -155,8 +155,7 @@ namespace TAO
   class TAO_Export ARDB_Refcount_Functor
   {
   public:
-    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb)
-      ACE_THROW_SPEC (());
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb);
   };
 
 }

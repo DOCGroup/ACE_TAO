@@ -55,13 +55,10 @@ public:
   // = The CORBA::PolicyManager operations
 
   virtual CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        const CORBA::PolicyTypeSeq & ts);
 
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
-                                     CORBA::SetOverrideType set_add)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::InvalidPolicies));
+                                     CORBA::SetOverrideType set_add);
 
 private:
 

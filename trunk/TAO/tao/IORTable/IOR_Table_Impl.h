@@ -55,8 +55,7 @@ public:
   TAO_IOR_Table_Impl (void);
 
   /// Find the object, using the locator if it is not on the table.
-  char *find (const char *object_key)
-    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
+  char *find (const char *object_key);
 
   /**
    * @name The IORTable::Table methods
@@ -64,17 +63,13 @@ public:
    * Please check the IORTable.pidl file for details.
    */
   //@{
-  virtual void bind (const char * object_key, const char * IOR)
-    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::AlreadyBound));
+  virtual void bind (const char * object_key, const char * IOR);
 
-  virtual void rebind (const char * object_key, const char * IOR)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void rebind (const char * object_key, const char * IOR);
 
-  virtual void unbind (const char * object_key)
-    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
+  virtual void unbind (const char * object_key);
 
-  virtual void set_locator (IORTable::Locator_ptr the_locator)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_locator (IORTable::Locator_ptr the_locator);
   //@}
 
 private:

@@ -9,7 +9,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/Stub.h"
-#include "tao/Environment.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/IFR_Client_Adapter.h"
 

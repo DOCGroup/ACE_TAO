@@ -14,6 +14,7 @@
 #include "tao/Messaging_SyncScopeC.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
+#include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -51,7 +52,6 @@ namespace TAO
 
   Invocation_Status
   Synch_Twoway_Invocation::remote_twoway (ACE_Time_Value *max_wait_time)
-    ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
@@ -226,7 +226,6 @@ namespace TAO
   Synch_Twoway_Invocation::wait_for_reply (ACE_Time_Value *max_wait_time,
                                            TAO_Synch_Reply_Dispatcher &rd,
                                            TAO_Bind_Dispatcher_Guard &bd)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /*
      * Precondition: The call went to the remote
@@ -415,7 +414,6 @@ namespace TAO
 
   Invocation_Status
   Synch_Twoway_Invocation::location_forward (TAO_InputCDR &inp_stream)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Reply_Guard mon (this, TAO_INVOKE_FAILURE);
 
@@ -446,7 +444,6 @@ namespace TAO
 
   Invocation_Status
   Synch_Twoway_Invocation::handle_user_exception (TAO_InputCDR &cdr)
-    ACE_THROW_SPEC ((CORBA::Exception))
   {
     Reply_Guard mon (this,
                      TAO_INVOKE_FAILURE);
@@ -494,7 +491,6 @@ namespace TAO
 
   Invocation_Status
   Synch_Twoway_Invocation::handle_system_exception (TAO_InputCDR &cdr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Reply_Guard mon (this, TAO_INVOKE_FAILURE);
 
@@ -611,7 +607,6 @@ namespace TAO
 
   Invocation_Status
   Synch_Oneway_Invocation::remote_oneway (ACE_Time_Value *max_wait_time)
-    ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
 

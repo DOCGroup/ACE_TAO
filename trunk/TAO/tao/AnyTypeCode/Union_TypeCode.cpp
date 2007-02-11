@@ -10,7 +10,6 @@
 # include "tao/AnyTypeCode/Union_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Value_Ptr.h"

@@ -33,32 +33,19 @@ namespace TAO
     public virtual TAO_Local_RefCounted_Object
   {
     virtual void register_factory (
-        ::Compression::CompressorFactory_ptr compressor_factory)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::FactoryAlreadyRegistered));
+        ::Compression::CompressorFactory_ptr compressor_factory);
 
     virtual void unregister_factory (
-        ::Compression::CompressorId compressor_id)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::UnknownCompressorId));
+        ::Compression::CompressorId compressor_id);
 
     virtual ::Compression::CompressorFactory_ptr get_factory (
-        ::Compression::CompressorId compressor_id)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::UnknownCompressorId));
+        ::Compression::CompressorId compressor_id);
 
     virtual ::Compression::Compressor_ptr get_compressor (
         ::Compression::CompressorId compressor_id,
-        ::Compression::CompressionLevel compression_level)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::UnknownCompressorId));
+        ::Compression::CompressionLevel compression_level);
 
-    virtual ::Compression::CompressorFactorySeq * get_factories (void)
-      ACE_THROW_SPEC ((::CORBA::SystemException));
+    virtual ::Compression::CompressorFactorySeq * get_factories (void);
 
     private:
       TAO_SYNCH_MUTEX mutex_;

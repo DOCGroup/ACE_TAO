@@ -40,8 +40,6 @@ namespace TAO
 
     PortableServer::ServantManager_ptr
     RequestProcessingStrategyServantLocator::get_servant_manager (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
     }
@@ -49,8 +47,6 @@ namespace TAO
     void
     RequestProcessingStrategyServantLocator::set_servant_manager (
       PortableServer::ServantManager_ptr imgr)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been
