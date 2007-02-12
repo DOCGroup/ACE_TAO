@@ -415,14 +415,14 @@
 
 #   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; throw (EXCEPTION); } \
+       catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; throw EXCEPTION; } \
      } while (0)
 
 #else /* ! ACE_NEW_THROWS_EXCEPTIONS */
 
 #   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; throw (EXCEPTION); } \
+       if (POINTER == 0) { errno = ENOMEM; throw EXCEPTION; } \
      } while (0)
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
