@@ -29,7 +29,7 @@ public:
     return asc_.process_directive(s);
   }
 
-  virtual void reconfigure() ACE_THROW_SPEC ((CORBA::SystemException))
+  virtual void reconfigure()
   {
     asc_.reconfigure();
   }
