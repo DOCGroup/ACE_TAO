@@ -108,9 +108,7 @@ ReconnectionCallback_i::reconnect_count () const
 }
 
 void
-ReconnectionCallback_i::reconnect (
-    CORBA::Object_ptr reconnection
-  ) ACE_THROW_SPEC ((CORBA::SystemException))
+ReconnectionCallback_i::reconnect (CORBA::Object_ptr reconnection)
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Supplier received reconnection request\n")
@@ -132,7 +130,7 @@ ReconnectionCallback_i::reconnect (
 CORBA::Boolean
 ReconnectionCallback_i::is_alive (void)
 {
-  return CORBA::Boolean (1);
+  return true;
 }
 
 ReconnectionCallback_i::~ReconnectionCallback_i ()

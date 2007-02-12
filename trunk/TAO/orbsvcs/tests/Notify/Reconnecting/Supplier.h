@@ -71,9 +71,7 @@ public:
 
   size_t reconnect_count () const;
 
-  virtual void reconnect (
-     CORBA::Object_ptr reconnection
-    ) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reconnect (CORBA::Object_ptr reconnection)
 
   virtual CORBA::Boolean is_alive (void);
 
