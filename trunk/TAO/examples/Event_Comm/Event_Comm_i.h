@@ -61,12 +61,10 @@ public:
   void set_reactor (ACE_Reactor *reactor);
   // set the <ACE_Reactor> to use when quitting.
 
-  virtual void push (const Event_Comm::Event & event)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const Event_Comm::Event & event);
   // Pass the <event> to the <Consumer>.
 
-  virtual void disconnect (const char * reason)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect (const char * reason);
 
   // Disconnect the <Consumer> from the <Notifier>, giving it the
   // <reason>.
@@ -96,30 +94,20 @@ public:
   Notifier_i (size_t size_hint = Notifier_i::DEFAULT_SIZE);
   // Initialize a Notifier_i object with the specified size hint.
 
-  virtual void disconnect (const char *reason)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect (const char *reason);
   // Disconnect all the receivers, giving them the <reason>.
 
-  virtual void push (const Event_Comm::Event &event)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const Event_Comm::Event &event);
   // Send the <event> to all the consumers who have subscribed and who
   // match the filtering criteria.
 
    virtual void subscribe (Event_Comm::Consumer_ptr Consumer,
-                           const char * filtering_criteria)
-     ACE_THROW_SPEC ((
-                      CORBA::SystemException,
-                      Event_Comm::Notifier::CannotSubscribe
-                      ));
+                           const char * filtering_criteria);
   // Subscribe the <Consumer> to receive events that match
   // <filtering_criteria> applied by the <Notifier>.
 
  void unsubscribe (Event_Comm::Consumer *consumer,
-                    const char *filtering_criteria)
-   ACE_THROW_SPEC ((
-                    CORBA::SystemException,
-                    Event_Comm::Notifier::CannotUnsubscribe
-                    ));
+                    const char *filtering_criteria);
   // Unsubscribe the <Consumer>.
 
 private:

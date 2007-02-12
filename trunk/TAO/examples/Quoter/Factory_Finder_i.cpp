@@ -41,8 +41,6 @@ Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i (void)
 
 CosLifeCycle::Factories *
 Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosLifeCycle::NoFactory))
 {
   const char *exception_message = "Null Message";
 

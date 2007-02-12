@@ -30,7 +30,6 @@ UDP_i::orb (CORBA::ORB_ptr orb)
 
 void
 UDP_i::setResponseHandler (UDP_ptr udpHandler)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (udpHandler))
     ACE_DEBUG ((LM_DEBUG,
@@ -42,7 +41,6 @@ UDP_i::setResponseHandler (UDP_ptr udpHandler)
 void
 UDP_i::invoke (const char * client_name,
                CORBA::Long request_id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -91,7 +89,6 @@ UDP_i::invoke (const char * client_name,
 
 void
 UDP_i::reset (const char * client_name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -116,7 +113,6 @@ UDP_i::reset (const char * client_name)
 
 void
 UDP_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",

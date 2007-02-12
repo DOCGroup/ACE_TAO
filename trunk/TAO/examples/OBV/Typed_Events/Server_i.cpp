@@ -104,7 +104,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 
 void
 Checkpoint_i::put_event (Event *event)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In general this function would be a dispatcher which looks at the
   // origin id and finds an event handler object for the event. The
@@ -134,7 +133,6 @@ Checkpoint_i::put_event (Event *event)
 
 Event_List *
 Checkpoint_i::get_critical_events (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The skeleton should not steal our list by decrementing
   // the reference counter.
@@ -151,7 +149,6 @@ Checkpoint_i::get_critical_events (void)
 
 void
 Checkpoint_i::shutdown (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n%s\n",

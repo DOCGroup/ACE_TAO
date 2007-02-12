@@ -26,7 +26,6 @@ Foo_i::~Foo_i()
 
 void
 Foo_i::op1(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op1_;
   // Sleep for 10 milliseconds (10,000 microseconds)
@@ -36,7 +35,6 @@ Foo_i::op1(void)
 
 void
 Foo_i::op2(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op2_;
   this->value_ = value;
@@ -45,7 +43,6 @@ Foo_i::op2(CORBA::Long value)
 
 CORBA::Long
 Foo_i::op3(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op3_;
   return this->value_;
@@ -54,7 +51,6 @@ Foo_i::op3(void)
 
 void
 Foo_i::op4(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op4_;
   this->value_ = value;
@@ -73,7 +69,6 @@ Foo_i::op4(CORBA::Long value)
 
 void
 Foo_i::op5(void)
-  ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   ++this->count_op5_;
   throw FooException();
@@ -82,7 +77,6 @@ Foo_i::op5(void)
 
 void
 Foo_i::done(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   unsigned num_left = --this->num_clients_;
 
