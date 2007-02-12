@@ -235,12 +235,6 @@ namespace CIAO
 
     virtual CONNECTION_ID consumer_id ();
 
-    //virtual void supplier_id (const char * supplier_id)
-    //  ACE_THROW_SPEC ((CORBA::SystemException));
-
-    //virtual CONNECTION_ID supplier_id ()
-    //  ACE_THROW_SPEC ((CORBA::SystemException));
-
     virtual void consumer (Components::EventConsumerBase_ptr consumer);
 
     virtual Components::EventConsumerBase_ptr consumer ();
