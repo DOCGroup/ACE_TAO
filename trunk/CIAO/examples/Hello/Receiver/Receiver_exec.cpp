@@ -20,7 +20,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::push_click_in (Hello::TimeOut * ev)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     //Get the message from the Sender first.
     ACE_DEBUG ((LM_DEBUG,
@@ -45,8 +44,6 @@ namespace CIDL_Receiver_Impl
   // Operations from Components::SessionComponen
   void
   Receiver_exec_i::set_session_context (Components::SessionContext_ptr ctx)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::set_session_context\n"));
 
@@ -59,8 +56,6 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ciao_preactivate ()
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Receiver_exec_i::ciao_preactivate\n"));
@@ -68,16 +63,12 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ccm_activate ()
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_activate\n"));
   }
 
   void
   Receiver_exec_i::ciao_postactivate ()
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Receiver_exec_i::ciao_postactivate\n"));
@@ -85,16 +76,12 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::ccm_passivate ()
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_passivate\n"));
   }
 
   void
   Receiver_exec_i::ccm_remove ()
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_remove\n"));
   }
@@ -110,8 +97,6 @@ namespace CIDL_Receiver_Impl
 
   ::Components::EnterpriseComponent_ptr
   ReceiverHome_exec_i::create ()
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    Components::CCMException))
   {
     Components::EnterpriseComponent_ptr tmp;
     ACE_NEW_THROW_EX (tmp,

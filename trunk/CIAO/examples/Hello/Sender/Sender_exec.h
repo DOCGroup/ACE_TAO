@@ -46,20 +46,16 @@ namespace CIDL_Sender_Impl
     virtual ~Sender_exec_i ();
 
     /// Operation to set the value of the attribute "local_message"
-    virtual void local_message (const char * local_message)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void local_message (const char * local_message);
 
     /// Operation to get the value of the attribute "local_message"
-    virtual char * local_message ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * local_message ();
 
     /// Operation to set the value of the attribute "hertz"
-    virtual void hertz (CORBA::Long hertz)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void hertz (CORBA::Long hertz);
 
     /// Operation to get the value of the attribute "hertz"
-    virtual CORBA::Long hertz ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Long hertz ();
 
     /* Operations for obtaining the interface reference. */
     /* This method will be used in the assembly face so the
@@ -68,45 +64,29 @@ namespace CIDL_Sender_Impl
      */
     // Note: You can specify the return type as ::Hello::CCM_message *
     virtual Hello::CCM_ReadMessage_ptr
-    get_push_message ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    get_push_message ();
 
     virtual ::Hello::COLOR_SELECTION
-    color ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    color ();
 
     virtual void
-    color (::Hello::COLOR_SELECTION)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    color (::Hello::COLOR_SELECTION);
 
     // Operation inside of the trigger interface.
-    virtual void start ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void start ();
 
     // Operations from Components::SessionComponent
-    virtual void set_session_context (Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    virtual void set_session_context (Components::SessionContext_ptr ctx);
 
-    virtual void ciao_preactivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    virtual void ciao_preactivate ();
 
-    virtual void ccm_activate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    virtual void ccm_activate ();
 
-    virtual void ciao_postactivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    virtual void ciao_postactivate ();
 
-    virtual void ccm_passivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    virtual void ccm_passivate ();
 
-    virtual void ccm_remove ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    virtual void ccm_remove ();
 
   protected:
     /// Copmponent specific context
@@ -136,8 +116,7 @@ namespace CIDL_Sender_Impl
     }
 
     virtual char *
-    get_message ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    get_message ();
 
   private:
     Sender_exec_i& component_;
@@ -162,9 +141,7 @@ namespace CIDL_Sender_Impl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+    create ();
   };
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr

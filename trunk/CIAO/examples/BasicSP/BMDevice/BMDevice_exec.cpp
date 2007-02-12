@@ -19,14 +19,12 @@ MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 
 BasicSP::CCM_ReadData_ptr
 MyImpl::BMDevice_exec_i::get_data_read ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
 }
 
 void
 MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Nitify others
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
@@ -42,14 +40,12 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
 
 char *
 MyImpl::BMDevice_exec_i::data_read ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_);
 }
 
 char *
 MyImpl::BMDevice_exec_i::get_data ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->data_read ();
 }
@@ -59,8 +55,6 @@ void
 MyImpl::BMDevice_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -80,15 +74,11 @@ MyImpl::BMDevice_exec_i::set_session_context (
 
 void
 MyImpl::BMDevice_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -100,15 +90,11 @@ MyImpl::BMDevice_exec_i::ccm_activate ()
 
 void
 MyImpl::BMDevice_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::BMDevice_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -119,8 +105,6 @@ MyImpl::BMDevice_exec_i::ccm_passivate ()
 
 void
 MyImpl::BMDevice_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -145,8 +129,6 @@ MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::BMDeviceHome_exec_i::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   Components::EnterpriseComponent_ptr tmp= 0;
   ACE_NEW_THROW_EX (tmp,

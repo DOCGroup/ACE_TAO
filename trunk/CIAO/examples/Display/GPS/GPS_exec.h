@@ -36,43 +36,27 @@ namespace MyImpl
     ~GPS_exec_i ();
 
     // Operations from HUDisplay::GPS
-    HUDisplay::CCM_position_ptr get_MyLocation ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    HUDisplay::CCM_position_ptr get_MyLocation ();
 
-    void push_Refresh (HUDisplay::tick *)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void push_Refresh (HUDisplay::tick *);
 
     // Operations from HUDisplay::position
-    CORBA::Long posx ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::Long posx ();
 
-    CORBA::Long posy ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::Long posy ();
 
     // Operations from Components::SessionComponent
-    void set_session_context (Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+    void set_session_context (Components::SessionContext_ptr ctx);
 
-    void ciao_preactivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+    void ciao_preactivate ();
 
-    void ccm_activate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+    void ccm_activate ();
 
-    void ciao_postactivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+    void ciao_postactivate ();
 
-    void ccm_passivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+    void ccm_passivate ();
 
-    void ccm_remove ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+    void ccm_remove ();
 
    protected:
     // Component specific context
@@ -106,9 +90,7 @@ namespace MyImpl
 
     // Implicit home operations
     virtual ::Components::EnterpriseComponent_ptr
-      create ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::CCMException));
+      create ();
   };
 
 
@@ -122,11 +104,9 @@ namespace MyImpl
     }
 
     // Operations from HUDisplay::position
-    CORBA::Long posx ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::Long posx ();
 
-    CORBA::Long posy ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::Long posy ();
 
   private:
     GPS_exec_i& component_;
