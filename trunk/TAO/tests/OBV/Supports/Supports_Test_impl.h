@@ -40,7 +40,6 @@ class node_init_impl : public Supports_Test::Node_init
   virtual Supports_Test::Node * create (void);
 
   virtual CORBA::ValueBase * create_for_unmarshal (void);
-
 };
 
 
@@ -61,7 +60,6 @@ class vt_graph_impl :
   virtual void add_node (const char * name);
 
   virtual void print (void);
-
 };
 
 class vt_graph_init_impl :
