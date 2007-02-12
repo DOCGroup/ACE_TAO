@@ -13,9 +13,9 @@ project(*Receiver): taoserver {
   after  += *IDL
   exename = receiver
   Source_Files {
-    receiver.cpp
-    testS.cpp
     testC.cpp
+    testS.cpp
+    receiver.cpp
   }
   IDL_Files {
   }
@@ -25,9 +25,9 @@ project(*Distributor): rt_server {
   after += *IDL
   exename = distributor
   Source_Files {
-    distributor.cpp
-    testS.cpp
     testC.cpp
+    testS.cpp
+    distributor.cpp
   }
   IDL_Files {
   }

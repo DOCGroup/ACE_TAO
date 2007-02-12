@@ -11,9 +11,9 @@ project(*RTCorba idl): taoidldefaults {
 project(*RTCorba server): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *RTCorba_idl
   Source_Files {
-    server.cpp
-    testS.cpp
     testC.cpp
+    testS.cpp
+    server.cpp
   }
   IDL_Files {
   }

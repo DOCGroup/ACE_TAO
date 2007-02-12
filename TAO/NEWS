@@ -6,7 +6,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (JTC) autoconf support for tests and examples subdirectories.
 
-PLANNED CHANGES FOR "TAO-5.5.7"
+PLANNED CHANGES FOR "TAO-1.5.7"
 ===============================
 
 . (OO) Coverity error fixes for TAO.

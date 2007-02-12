@@ -11,9 +11,9 @@ project(*sequence_idl): taoidldefaults, strategies {
 project(*sequence server): taoserver, strategies {
   after += *sequence_idl
   Source_Files {
-    Roundtrip.cpp
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
+    Roundtrip.cpp
     Worker_Thread.cpp
     server.cpp
   }

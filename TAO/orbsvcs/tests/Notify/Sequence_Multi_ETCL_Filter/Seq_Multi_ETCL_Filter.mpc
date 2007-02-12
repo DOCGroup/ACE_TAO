@@ -15,9 +15,9 @@ project(*Ntf Seq Supp): notifytest {
 
   after += *idl
   Source_Files {
-    Sequence_Supplier.cpp
     goS.cpp
     goC.cpp
+    Sequence_Supplier.cpp
   }
   IDL_Files {
   }

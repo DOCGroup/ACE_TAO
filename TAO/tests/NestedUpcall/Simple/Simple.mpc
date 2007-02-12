@@ -11,12 +11,10 @@ project(*Nested_Upcall_Idl): taoidldefaults {
 project(*Nested_Upcall_Server): taoexe, portableserver {
   after += *Nested_Upcall_Idl
   Source_Files {
-    server_i.cpp
-    server.cpp
-  }
-  Source_Files {
     testC.cpp
     testS.cpp
+    server_i.cpp
+    server.cpp
   }
   IDL_Files {
   }
@@ -26,12 +24,10 @@ project(*Nested_Upcall_Client): taoexe, portableserver {
   after += *Nested_Upcall_Idl
   after += *Nested_Upcall_Server
   Source_Files {
-    client_i.cpp
-    client.cpp
-  }
-  Source_Files {
     testC.cpp
     testS.cpp
+    client_i.cpp
+    client.cpp
   }
   IDL_Files {
   }

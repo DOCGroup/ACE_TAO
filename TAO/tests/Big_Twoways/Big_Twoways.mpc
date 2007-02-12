@@ -11,11 +11,11 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver {
   after += *idl
   Source_Files {
+    TestC.cpp
+    TestS.cpp
     Coordinator.cpp
     Session_Control.cpp
     server.cpp
-    TestC.cpp
-    TestS.cpp
   }
   IDL_Files {
   }
@@ -24,12 +24,12 @@ project(*Server): taoserver {
 project(*Client): taoexe, portableserver {
   after += *idl
   Source_Files {
+    TestC.cpp
+    TestS.cpp
     Peer.cpp
     Session.cpp
     Session_Task.cpp
     client.cpp
-    TestC.cpp
-    TestS.cpp
   }
   IDL_Files {
   }

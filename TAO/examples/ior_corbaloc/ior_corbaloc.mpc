@@ -13,10 +13,10 @@ project(*server): namingexe, portableserver {
 
   after += *IDL
   Source_Files {
-    status_i.cpp
-    server.cpp
     corbalocS.cpp
     corbalocC.cpp
+    status_i.cpp
+    server.cpp
   }
   IDL_Files {
   }
@@ -27,9 +27,9 @@ project(*client): namingexe {
 
   after += *IDL
   Source_Files {
+    corbalocC.cpp
     ior_corbaloc_client_i.cpp
     client.cpp
-    corbalocC.cpp
   }
   IDL_Files {
   }
@@ -40,8 +40,8 @@ project(*corbaname client): taoclient {
 
   after += *IDL
   Source_Files {
-    corbaname_client.cpp
     corbalocC.cpp
+    corbaname_client.cpp
   }
   IDL_Files {
   }
