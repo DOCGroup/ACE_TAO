@@ -122,8 +122,7 @@ INCLUDE_PATH          = TAO .
 PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
                         ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER \
-                        ACE_THROW_SPEC
+                        ACE_CACHE_MAP_MANAGER
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references
