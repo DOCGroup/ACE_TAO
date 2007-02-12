@@ -2,11 +2,12 @@
 
 //=============================================================================
 /**
- *  @file    ECTL_Constraint
+ *  @file    ECTL_Constraint.h
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu) Jeff Parsons (parsons@cs.wustl.edu)
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @author Jeff Parsons (parsons@cs.wustl.edu)
  */
 //=============================================================================
 
@@ -139,6 +140,7 @@ private:
   /// Private copy method.
   void copy (const TAO_ETCL_Literal_Constraint& co);
 
+  /// Union of the possible literal types.
   union
   {
     char* str_;
@@ -148,7 +150,6 @@ private:
     CORBA::Boolean bool_;
     CORBA::Double double_;
   } op_;
-  // Union of the possible literal types.
 
   /// The actual types of the TAO_ETCL_Literal_Constraint.
   unsigned short type_;
