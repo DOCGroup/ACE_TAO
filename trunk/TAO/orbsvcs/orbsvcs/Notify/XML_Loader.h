@@ -75,7 +75,7 @@ private:
 
   typedef ACE_Unbounded_Stack<Topology_Object*> TopoStack;
   TopoStack object_stack_;
-  // if false, then we're just checking syntax of topology file.
+  /// if false, then we're just checking syntax of topology file.
   bool live_;
 };
 
