@@ -9,8 +9,8 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver, pi_server {
   after += *idl
   Source_Files {
-    StateTransferS.cpp
     StateTransferC.cpp
+    StateTransferS.cpp
     server.cpp
   }
   IDL_Files {

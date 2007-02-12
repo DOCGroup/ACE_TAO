@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/CDR.h"
+#include "tao/AnyTypeCode/IOP_IORA.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"

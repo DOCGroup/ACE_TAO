@@ -11,11 +11,11 @@ project(*idl): taoidldefaults {
 project(*server): taoserver, utils, avoids_corba_e_micro {
   after += *idl
   Source_Files {
+    PP_TestS.cpp
+    PP_TestC.cpp
     PP_Test_Server.cpp
     PP_Test_i.cpp
     server.cpp
-    PP_TestS.cpp
-    PP_TestC.cpp
   }
   IDL_Files {
   }

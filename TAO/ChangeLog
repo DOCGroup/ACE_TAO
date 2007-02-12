@@ -1,3 +1,92 @@
+Mon Feb 12 15:32:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Fixed the TAO 1.5.7 version number.
+
+        * examples/Advanced/ch_3/Advanced_ch_3.mpc:
+        * examples/Buffered_AMI/Buffered_AMI.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
+        * examples/Kokyu_dsrt_schedulers/fp_example/fp_example.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/chat/chat.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/ior_corbaloc/ior_corbaloc.mpc:
+        * orbsvcs/examples/Security/Send_File/Security_Send_File.mpc:
+        * orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
+        * orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:
+        * orbsvcs/tests/Bug_2615_Regression/Bug_2615_Regression.mpc:
+        * orbsvcs/tests/HTIOP/AMI/HTIOP_AMI.mpc:
+        * orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+        * orbsvcs/tests/Notify/Discarding/Discarding.mpc:
+        * orbsvcs/tests/Notify/MT_Dispatching/MT_Dispatching.mpc:
+        * orbsvcs/tests/Notify/Ordering/Ordering.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Seq_Multi_ETCL_Filter.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Seq_Multi_Filter.mpc:
+        * orbsvcs/tests/Notify/Structured_Filter/Struct_Filter.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+        * performance-tests/Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Latency/DII/DII.mpc:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/Protocols/Protocols.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Sequence_Latency/DII/DII.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
+        * performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
+        * performance-tests/Throughput/Throughput.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * tests/Big_Oneways/Big_Oneways.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
+        * tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+        * tests/Bug_2188_Regression/broken.mpc:
+        * tests/Bug_2417_Regression/Bug_2417_Regression.mpc:
+        * tests/Client_Leaks/Client_Leaks.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/Hang_Shutdown/Hang.mpc:
+        * tests/ICMG_Any_Bug/Hello.mpc:
+        * tests/NestedUpcall/Simple/Simple.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Simple/OBV_Simple.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * tests/Oneway_Timeouts/test.mpc:
+        * tests/POA/Persistent_ID/Persistent_ID.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Portable_Interceptors/AMI/PI_AMI.mpc:
+        * tests/Portable_Interceptors/AdvSlot/AdvSlot.mpc:
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * tests/Timeout/Timeout.mpc:
+        * tests/TransportCurrent/IIOP/IIOP.mpc:
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
+
+          Re-arranged the generated source files so that they are at the
+          beginning (like MPC would do if it were automatically generating
+          the list of source files).  This is required for template
+          instantiation to work properly for Visual Age 6.0.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+
+          Added include files to get AnyTypeCode definitions.
+
+        * tao/Fixed_Array_Argument_T.inl:
+
+          Fixed a typo of a type name in a Visual Age 6.0 specific section
+          of a C-style cast.
+
 Mon Feb 12 14:48:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.cpp

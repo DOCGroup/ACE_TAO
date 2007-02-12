@@ -16,9 +16,9 @@ project(*Server): taoserver, naming, iortable {
   after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
-    Test_Output.cpp
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
+    Test_Output.cpp
     Hello.cpp
     server.cpp
   }
@@ -33,8 +33,8 @@ project(*Client): taoclient {
   after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
-    Test_Output.cpp
     TestC.cpp
+    Test_Output.cpp
     client.cpp
   }
   Header_Files {

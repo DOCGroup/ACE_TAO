@@ -13,11 +13,11 @@ project(*server): taoserver, utils, valuetype {
   exename = server
   after += *IDL
   Source_Files {
+    OBVS.cpp
+    OBVC.cpp
     Server_i.cpp
     OBV_impl.cpp
     server.cpp
-    OBVS.cpp
-    OBVC.cpp
   }
   IDL_Files {
   }
@@ -27,11 +27,11 @@ project(*client): taoserver, utils, valuetype {
   exename = client
   after += *IDL
   Source_Files {
+    OBVS.cpp
+    OBVC.cpp
     Client_i.cpp
     OBV_impl.cpp
     client.cpp
-    OBVS.cpp
-    OBVC.cpp
   }
   IDL_Files {
   }
