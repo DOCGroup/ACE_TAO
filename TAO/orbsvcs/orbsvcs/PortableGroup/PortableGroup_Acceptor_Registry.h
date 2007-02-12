@@ -76,8 +76,7 @@ public:
   ~TAO_PortableGroup_Acceptor_Registry (void);
 
   /// Open an acceptor based on a tagged profile.
-  void open (const TAO_Profile* profile,
-             TAO_ORB_Core &orb_core);
+  void open (const TAO_Profile* profile, TAO_ORB_Core &orb_core);
 
   /// Close all open acceptors.
   int close_all (void);
