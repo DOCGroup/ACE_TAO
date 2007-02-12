@@ -20,8 +20,7 @@ ACE_RCSID (PICurrent,
 // Prototype
 
 int
-test_transport_current (CORBA::ORB_ptr)  ACE_THROW_SPEC ((CORBA::SystemException,
-                                                            CORBA::UserException));
+test_transport_current (CORBA::ORB_ptr);
 
 using namespace TAO;
 
