@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    TypedefDef_i.h
-//
-// = DESCRIPTION
-//    TypedefDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TypedefDef_i.h
+ *
+ *  $Id$
+ *
+ *  TypedefDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TYPEDEFDEF_I_H
 #define TAO_TYPEDEFDEF_I_H
@@ -47,19 +44,19 @@ class TAO_IFRService_Export TAO_TypedefDef_i : public virtual TAO_Contained_i,
   //    struct, union, enum, alias, native, and valuebox.
   //
 public:
+  /// Constructor
   TAO_TypedefDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_TypedefDef_i (void);
-  // Destructor
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe ()
 ;
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i ()
 ;
-  // From Contained_i's pure virtual function.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

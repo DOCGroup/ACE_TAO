@@ -1,24 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    IFR_Service_Utils.h
-//
-// = DESCRIPTION
-//      Implement wrappers useful to IFR Service clients and servers.
-//
-// = AUTHORS
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//    Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-//    Priyanka Gontla <pgontla@doc.ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IFR_Service_Utils.h
+ *
+ *  $Id$
+ *
+ *    Implement wrappers useful to IFR Service clients and servers.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu> Jaiganesh Balasubramanian <jai@doc.ece.uci.edu> Priyanka Gontla <pgontla@doc.ece.uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IFR_SERVICE_UTILS_H
 #define TAO_IFR_SERVICE_UTILS_H
@@ -49,18 +44,18 @@ class TAO_IFRService_Export TAO_IFR_Server
 public:
   TAO_IFR_Server (void);
 
+  //// Initialize the IFR Service with the command line arguments and
+  //// the ORB.
   int init_with_orb (int argc,
                      ACE_TCHAR *argv [],
                      CORBA::ORB_ptr orb,
                      int use_multicast_server = 0);
-  /// Initialize the IFR Service with the command line arguments and
-  /// the ORB.
 
+  //// Destroy the child POA created in <init_with_orb>.
   int fini (void);
-  /// Destroy the child POA created in <init_with_orb>.
 
+  //// Destructor.
   ~TAO_IFR_Server (void);
-  /// Destructor.
 
 protected:
 

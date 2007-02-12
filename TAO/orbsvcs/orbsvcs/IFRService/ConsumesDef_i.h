@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ConsumesDef_i.h
-//
-// = DESCRIPTION
-//    ConsumesDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ConsumesDef_i.h
+ *
+ *  $Id$
+ *
+ *  ConsumesDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONSUMESDEF_I_H
 #define TAO_CONSUMESDEF_I_H
@@ -46,15 +43,15 @@ class TAO_IFRService_Export TAO_ConsumesDef_i
   //    by a component.
   //
 public:
+  /// Constructor
     TAO_ConsumesDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ConsumesDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

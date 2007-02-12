@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Naming_Context_Interface.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Naming_Context_Interface.cpp
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "ace/ACE.h"

@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ExtLocalInterfaceDef_i.h
-//
-// = DESCRIPTION
-//    ExtLocalInterfaceDef_i servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ExtLocalInterfaceDef_i.h
+ *
+ *  $Id$
+ *
+ *  ExtLocalInterfaceDef_i servant class.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EXTLOCALINTERFACEDEF_I_H
 #define TAO_EXTLOCALINTERFACEDEF_I_H
@@ -48,11 +45,11 @@ class TAO_IFRService_Export TAO_ExtLocalInterfaceDef_i
   //    Mixes in IDL3 attribute exceptions.
   //
 public:
+  /// Constructor
   TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ExtLocalInterfaceDef_i (void);
-  // Destructor
 
   virtual void destroy (
     );

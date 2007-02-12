@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    SequenceDef_i.h
-//
-// = DESCRIPTION
-//    SequenceDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SequenceDef_i.h
+ *
+ *  $Id$
+ *
+ *  SequenceDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef SEQUENCEDEF_I_H
 #define SEQUENCEDEF_I_H
@@ -35,39 +32,40 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_SequenceDef_i
+ *
+ * @brief TAO_SequenceDef_i
+ *
+ * Represents an IDL sequence type.
+ */
 class TAO_IFRService_Export TAO_SequenceDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_SequenceDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an IDL sequence type.
-  //
 public:
+  /// Constructor
   TAO_SequenceDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_SequenceDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy ()
 ;
-  // Remove the repository entry.
 
   virtual void destroy_i ()
 ;
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type ()
 ;
-  // From IDLType_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i ()
 ;
-  // From IDLType_i's pure virtual function.
 
   virtual CORBA::ULong bound ()
 ;
@@ -104,9 +102,9 @@ public:
 ;
 
 private:
+  /// Destroys an anonymous non-primitive element type.
   void destroy_element_type ()
 ;
-  // Destroys an anonymous non-primitive element type.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

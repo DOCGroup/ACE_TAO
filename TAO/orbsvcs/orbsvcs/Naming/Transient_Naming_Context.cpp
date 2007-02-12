@@ -1,17 +1,13 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Transient_Naming_Context.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Transient_Naming_Context.cpp
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 #include "ace/Auto_Ptr.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"

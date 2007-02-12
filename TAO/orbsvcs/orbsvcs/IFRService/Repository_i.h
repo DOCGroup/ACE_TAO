@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    Repository_i.h
-//
-// = DESCRIPTION
-//    Repository servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Repository_i.h
+ *
+ *  $Id$
+ *
+ *  Repository servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef REPOSITORY_I_H
 #define REPOSITORY_I_H
@@ -66,16 +63,17 @@ class TAO_ExtValueDef_i;
 class TAO_ValueMemberDef_i;
 class TAO_WstringDef_i;
 
+/**
+ * @class TAO_Repository_i
+ *
+ * @brief TAO_Repository_i
+ *
+ * Provides global access to the Interface Repository, but
+ * does not support access to information related to
+ * CORBA Components.
+ */
 class TAO_IFRService_Export TAO_Repository_i : public virtual TAO_Container_i
 {
-  // = TITLE
-  //    TAO_Repository_i
-  //
-  // = DESCRIPTION
-  //    Provides global access to the Interface Repository, but
-  //    does not support access to information related to
-  //    CORBA Components.
-  //
 public:
   TAO_Repository_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
@@ -83,13 +81,13 @@ public:
 
   virtual ~TAO_Repository_i (void);
 
+  /// Accessor for the readonly attribute.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Accessor for the readonly attribute.
 
+  /// May not be called on a repository - raises BAD_INV_ORDER.
   virtual void destroy (
     );
-  // May not be called on a repository - raises BAD_INV_ORDER.
 
   virtual CORBA::Contained_ptr lookup_id (
       const char *search_id
@@ -107,11 +105,11 @@ public:
       CORBA::TypeCode_ptr tc
     );
 
+  /// No locking necessary because the database is not
+  /// accessed.
   virtual CORBA::PrimitiveDef_ptr get_primitive (
       CORBA::PrimitiveKind kind
     );
-  // No locking necessary because the database is not
-  // accessed.
 
   virtual CORBA::StringDef_ptr create_string (
       CORBA::ULong bound
@@ -159,17 +157,18 @@ public:
       CORBA::Short scale
     );
 
+  /// Called at startup to get everything initialized.
   int repo_init (CORBA::Repository_ptr repo_ref,
                  PortableServer::POA_ptr repo_poa);
-  // Called at startup to get everything initialized.
 
+  /// We create a default servant servant for each IR Object
+  /// type and its corresponding POA.
   virtual int create_servants_and_poas (void);
-  // We create a default servant servant for each IR Object
-  // type and its corresponding POA.
 
+  /// Create the top-level ACE_Configuration sections.
   int create_sections (void);
-  // Create the top-level ACE_Configuration sections.
 
+  /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (
       CORBA::DefinitionKind def_kind
     ) const;
@@ -179,113 +178,114 @@ public:
   virtual TAO_Contained_i *select_contained (
       CORBA::DefinitionKind def_kind
     ) const;
-  // Return one of our servants for internal use.
 
+  /// Select the right POA for object creation.
   virtual PortableServer::POA_ptr select_poa (
       CORBA::DefinitionKind def_kind
     ) const;
-  // Select the right POA for object creation.
 
+  /// Accessor for the POA that is dispatching the current call.
   PortableServer::Current_ptr poa_current (void) const;
-  // Accessor for the POA that is dispatching the current call.
 
+  /// Accessor for the ACE_Configuration database.
   ACE_Configuration *config (void) const;
-  // Accessor for the ACE_Configuration database.
 
+  /// Accessor for the Typecode factory.
   CORBA::TypeCodeFactory_ptr tc_factory (void) const;
-  // Accessor for the Typecode factory.
 
+  /// Accessor/mutator for our object reference.
   CORBA::Repository_ptr repo_objref (void) const;
   void repo_objref (CORBA::Repository_ptr objref);
-  // Accessor/mutator for our object reference.
 
+  /// Accessor for the root key for all IR objects.
   ACE_Configuration_Section_Key root_key (void) const;
-  // Accessor for the root key for all IR objects.
 
+  /// Accessor for the repository ids root key.
   ACE_Configuration_Section_Key repo_ids_key (void) const;
-  // Accessor for the repository ids root key.
 
+  /// Accessor for the primitive kinds section.
   ACE_Configuration_Section_Key pkinds_key (void) const;
-  // Accessor for the primitive kinds section.
 
+  /// Accessor for the bounded strings section.
   ACE_Configuration_Section_Key strings_key (void) const;
-  // Accessor for the bounded strings section.
 
+  /// Accessor for the bounded wstrings section.
   ACE_Configuration_Section_Key wstrings_key (void) const;
-  // Accessor for the bounded wstrings section.
 
+  /// Accessor for the fixed types section.
   ACE_Configuration_Section_Key fixeds_key (void) const;
-  // Accessor for the fixed types section.
 
+  /// Accessor for the anonymous arrays section.
   ACE_Configuration_Section_Key arrays_key (void) const;
-  // Accessor for the anonymous arrays section.
 
+  /// Accessor for the anonymous sequences section.
   ACE_Configuration_Section_Key sequences_key (void) const;
-  // Accessor for the anonymous sequences section.
 
+  /// Accessor for the name extension string.
   const char *extension (void) const;
-  // Accessor for the name extension string.
 
+  /// Repo lock.
   ACE_Lock &lock (void) const;
-  // Repo lock.
 
+  /**
+   * Used ONLY with Purify, for memory leak checking.
+   * A call to this can be temporariily appended to the
+   * destroy() method of the last thing to be destroyed
+   * by the test code.
+   */
   void shutdown (void);
-  // Used ONLY with Purify, for memory leak checking.
-  // A call to this can be temporariily appended to the
-  // destroy() method of the last thing to be destroyed
-  // by the test code.
 
 protected:
+  /// Reference to our ORB.
   CORBA::ORB_ptr orb_;
-  // Reference to our ORB.
 
+  /// Reference to the root POA.
   PortableServer::POA_var root_poa_;
-  // Reference to the root POA.
 
+  /// Reference to the POA handling calls to this servant.
   PortableServer::POA_var repo_poa_;
-  // Reference to the POA handling calls to this servant.
 
+  /// Reference to the PortableServer::Current object
   PortableServer::Current_var poa_current_;
-  // Reference to the PortableServer::Current object
 
+  /// Our ACE_Configuration database.
   ACE_Configuration *config_;
-  // Our ACE_Configuration database.
 
+  /// Our Typecode factory.
   CORBA::TypeCodeFactory_var tc_factory_;
-  // Our Typecode factory.
 
+  /// The object reference of this servant.
   CORBA::Repository_var repo_objref_;
-  // The object reference of this servant.
 
+  /// Root of all IR objects.
   ACE_Configuration_Section_Key root_key_;
-  // Root of all IR objects.
 
+  /// Flat section of Interface Repository ids.
   ACE_Configuration_Section_Key repo_ids_key_;
-  // Flat section of Interface Repository ids.
 
+  /// Section holding the primitive kinds.
   ACE_Configuration_Section_Key pkinds_key_;
-  // Section holding the primitive kinds.
 
+  /// Section holding the bounded strings.
   ACE_Configuration_Section_Key strings_key_;
-  // Section holding the bounded strings.
 
+  /// Section holding the bounded wstrings.
   ACE_Configuration_Section_Key wstrings_key_;
-  // Section holding the bounded wstrings.
 
+  /// Section holding the fixed types.
   ACE_Configuration_Section_Key fixeds_key_;
-  // Section holding the fixed types.
 
+  /// Section holding the anonymous arrays.
   ACE_Configuration_Section_Key arrays_key_;
-  // Section holding the anonymous arrays.
 
+  /// Section holding the anonymous sequences.
   ACE_Configuration_Section_Key sequences_key_;
-  // Section holding the anonymous sequences.
 
+  /// Added to names temporarily to avoid name clashes.
   CORBA::String_var extension_;
-  // Added to names temporarily to avoid name clashes.
 
+  /// Lock.
   ACE_Lock *lock_;
-  // Lock.
 
   // Define a POA for each IR Object type, and a corresponding
   // default servant.
@@ -330,15 +330,15 @@ protected:
 #undef GEN_IR_OBJECT
 
 private:
+  /// Set of strings corresponding to the CORBA::PrimitiveKind
+  /// enum values.
   static const char * TAO_IFR_primitive_kinds[];
-  // Set of strings corresponding to the CORBA::PrimitiveKind
-  // enum values.
 
+  /// Convert the enum value to the equivalent string.
   const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
-  // Convert the enum value to the equivalent string.
 
+  /// Return the number of entries in the CORBA::PrimitiveKind enum.
   u_int num_pkinds (void) const;
-  // Return the number of entries in the CORBA::PrimitiveKind enum.
 
 };
 

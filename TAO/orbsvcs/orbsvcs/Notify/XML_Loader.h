@@ -58,11 +58,13 @@ public:
   virtual void startElement (const ACEXML_Char* namespaceURI,
     const ACEXML_Char* localName,
     const ACEXML_Char* qName,
-    ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL);
+    ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException));
 
   virtual void endElement (const ACEXML_Char*,
     const ACEXML_Char*,
-    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED);
+    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((ACEXML_SAXException));
 
 
 private:

@@ -1,26 +1,23 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Channel_Clients_T
-//
-// = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu) and
-//    Douglas Schmidt (schmidt@cs.wustl.edu)
-//
-// = DESCRIPTION
-//    These classes allow applications to be consumer, suppliers, and
-//    consumer suppliers, as well as being active objects.  This is
-//    accomplished with adapters to prevent the use of multiple
-//    inheritence (which is this root of all evil.)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Channel_Clients_T
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison (harrison@cs.wustl.edu) and Douglas Schmidt (schmidt@cs.wustl.edu)
+ *
+ *  These classes allow applications to be consumer, suppliers, and
+ *  consumer suppliers, as well as being active objects.  This is
+ *  accomplished with adapters to prevent the use of multiple
+ *  inheritence (which is this root of all evil.)
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef ACE_CHANNEL_CLIENTS_T_H
 #define ACE_CHANNEL_CLIENTS_T_H

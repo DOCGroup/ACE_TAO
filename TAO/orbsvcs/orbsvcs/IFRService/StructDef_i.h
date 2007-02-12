@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    StructDef_i.h
-//
-// = DESCRIPTION
-//    StructDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    StructDef_i.h
+ *
+ *  $Id$
+ *
+ *  StructDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_STRUCTDEF_I_H
 #define TAO_STRUCTDEF_I_H
@@ -46,30 +43,30 @@ class TAO_IFRService_Export TAO_StructDef_i : public virtual TAO_TypedefDef_i,
   //    Represents an OMG IDL structure definition.
   //
 public:
+  /// Constructor
   TAO_StructDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_StructDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// Remove the repository entry and its contents.
   virtual void destroy ()
 ;
-  // Remove the repository entry and its contents.
 
   virtual void destroy_i ()
 ;
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type ()
 ;
-  // From IDLType_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i ()
 ;
-  // From IDLType_i's pure virtual function.
 
   virtual CORBA::StructMemberSeq *members ()
 ;
