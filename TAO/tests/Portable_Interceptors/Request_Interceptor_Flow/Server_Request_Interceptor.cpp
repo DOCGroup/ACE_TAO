@@ -22,8 +22,6 @@ Server_Request_Interceptor::Server_Request_Interceptor (const char *name)
 void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
@@ -67,8 +65,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
 void
 Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
@@ -85,7 +81,6 @@ Server_Request_Interceptor::receive_request (
 void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean server_side =
@@ -141,8 +136,6 @@ Server_Request_Interceptor::send_reply (
 void
 Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
@@ -220,8 +213,6 @@ Server_Request_Interceptor::send_exception (
 void
 Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =

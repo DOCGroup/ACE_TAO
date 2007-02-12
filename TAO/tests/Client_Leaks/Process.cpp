@@ -13,14 +13,12 @@ Process::Process (CORBA::ORB_ptr orb)
 
 CORBA::Long
 Process::get_process_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ACE_OS::getpid ();
 }
 
 void
 Process::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

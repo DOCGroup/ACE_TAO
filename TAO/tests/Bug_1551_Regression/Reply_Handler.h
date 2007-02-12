@@ -17,11 +17,9 @@ public:
       Test::Hello_ptr hello,
       CORBA::ORB_ptr orb);
 
-  void short_sleep (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void short_sleep (void);
 
-  void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void short_sleep_excep (::Messaging::ExceptionHolder * excep_holder);
 
 private:
   void check_counter(void);

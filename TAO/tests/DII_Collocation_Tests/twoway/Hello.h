@@ -23,10 +23,7 @@ public:
   virtual
   void test_method (
       ::CORBA::ULong & error_count
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 };
 
 /// Implement the Test::Hello interface
@@ -43,110 +40,71 @@ public:
   void test_basic_arg (
       ::CORBA::Long basic,
       ::CORBA::Long_out x
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_unbounded_string_arg (
       const char * message
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_bounded_string_arg (
       const char * message
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_fixed_array_arg (
       const ::Test::Fixed_Array message
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_var_array_arg (
       const ::Test::Var_Array messages
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_bounded_var_size_arg (
       const ::Test::Bounded_Var_Size_Arg & message
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_unbounded_var_size_arg (
       const ::Test::Unbounded_Var_Size_Arg & message
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_fixed_size_arg (
       const ::Test::TimeOfDay & t
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_special_basic_arg (
       ::CORBA::Char value
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_objref_arg (
       ::Test::Simple_Test_ptr test
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_object_arg (
       ::CORBA::Object_ptr o
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_args_1 (
       ::CORBA::Object_ptr arg1,
       ::CORBA::Char arg2,
       ::Test::Simple_Test_ptr arg3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_args_2 (
       const char * arg1,
       const ::Test::Fixed_Array arg2,
       const ::Test::TimeOfDay & arg3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void test_args_3 (
@@ -154,26 +112,18 @@ public:
       const ::Test::Bounded_Var_Size_Arg & arg2,
       const ::Test::Unbounded_Var_Size_Arg & arg3,
       const ::Test::Var_Array arg4
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
-  virtual char * get_string (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (void);
 
   virtual
   char * test_unbounded_string (
       const char * s1,
       char *& s2,
       CORBA::String_out s3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   CORBA::ULong error_count () const;
 

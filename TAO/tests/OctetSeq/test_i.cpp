@@ -19,7 +19,6 @@ Database_i::set (Test::Index i,
                  const Test::OctetSeq& seq,
                  CORBA::Double verification_token,
                  CORBA::Double_out returned_token)
-    ACE_THROW_SPEC ((Test::OutOfRange))
 {
   if (i >= this->max_range_)
     throw Test::OutOfRange (0, this->max_range_);
@@ -45,7 +44,6 @@ Database_i::set (Test::Index i,
 
 Test::OctetSeq*
 Database_i::get (Test::Index i)
-    ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange))
 {
   if (i >= this->max_range_)
     throw Test::OutOfRange (0, this->max_range_);
@@ -59,7 +57,6 @@ Database_i::get (Test::Index i)
 
 CORBA::ULong
 Database_i::get_crc (Test::Index i)
-    ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange))
 {
   if (i >= this->max_range_)
     throw Test::OutOfRange (0, this->max_range_);
@@ -70,7 +67,6 @@ Database_i::get_crc (Test::Index i)
 
 void
 Database_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

@@ -24,7 +24,6 @@ project(*Server): taoserver, amh, ami, iortable, portableserver {
 project(*Client): taoserver, amh, ami {
   exename = client
   after += *idl
-  after += *Server
   Source_Files {
     Client_Task.cpp
     Reply_Handler.cpp

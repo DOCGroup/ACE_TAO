@@ -19,11 +19,9 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
-  virtual Test::HelloWorld_ptr get_helloworld (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::HelloWorld_ptr get_helloworld (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
 

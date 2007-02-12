@@ -13,7 +13,6 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 CORBA::Any*
 Test_impl::get_something (
     CORBA::Boolean need_vb)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_ptr ret_val_ptr = 0;
   ACE_NEW_RETURN (ret_val_ptr, CORBA::Any, 0);
@@ -48,7 +47,6 @@ Test_impl::get_something (
 
 OBV_AnyTest::VB *
 Test_impl::get_vb()
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CORBA::ULong magic = 3145;
 
@@ -61,7 +59,6 @@ Test_impl::get_vb()
 
 void
 Test_impl::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

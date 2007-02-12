@@ -15,7 +15,6 @@ Hello::Hello (CORBA::ORB_ptr orb)
 
 CORBA::Any *
 Hello::get_any (CORBA::Any const & the_any)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any * retval = 0;
 
@@ -29,7 +28,6 @@ Hello::get_any (CORBA::Any const & the_any)
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

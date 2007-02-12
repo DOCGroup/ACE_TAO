@@ -15,11 +15,9 @@ public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                    Test::Timestamp send_time)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    Test::Timestamp send_time);
 
-  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
 protected:
   CORBA::ORB_ptr orb_;
@@ -37,7 +35,6 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Throw an overload exception
 
@@ -58,7 +55,6 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 void
 ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

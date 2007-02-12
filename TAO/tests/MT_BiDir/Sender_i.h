@@ -24,9 +24,7 @@ public:
             ACE_Manual_Event &event);
 
   // = The skeleton methods
-  virtual CORBA::Long receiver_object (Receiver *recv)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Sender::Table_Full));
+  virtual CORBA::Long receiver_object (Receiver *recv);
 
   /// Public method defined locally
   void send_message (void);

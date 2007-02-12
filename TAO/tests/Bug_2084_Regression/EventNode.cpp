@@ -15,7 +15,6 @@ EventNode::EventNode (CORBA::ORB_ptr orb,
 }
 
 void EventNode::registerHello ( ::Test::Hello_ptr h )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) EventNode: registerHello will call get_string...\n"));
@@ -54,7 +53,6 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
 
 void
 EventNode::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

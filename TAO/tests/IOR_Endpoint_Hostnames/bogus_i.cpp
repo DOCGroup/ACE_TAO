@@ -14,6 +14,5 @@ bogus::~bogus()
 
 void
 bogus::noop (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

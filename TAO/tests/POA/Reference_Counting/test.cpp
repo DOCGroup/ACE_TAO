@@ -22,9 +22,6 @@ public:
 
   virtual void moo (
     )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
   {
   }
 };

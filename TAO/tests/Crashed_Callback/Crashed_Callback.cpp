@@ -11,14 +11,12 @@ Crashed_Callback::Crashed_Callback (void)
 
 CORBA::Boolean
 Crashed_Callback::are_you_there (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
 }
 
 void
 Crashed_Callback::crash_now_please (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Crashed_Callback - crashing application \n"));
@@ -35,6 +33,5 @@ Crashed_Callback::crash_now_please (void)
 
 void
 Crashed_Callback::test_oneway (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

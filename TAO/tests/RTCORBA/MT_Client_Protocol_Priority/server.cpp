@@ -18,11 +18,9 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void test_method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void test_method (void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -36,14 +34,12 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 void
 Test_i::test_method ( /* */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "test_method invoked\n"));
 }
 
 void
 Test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

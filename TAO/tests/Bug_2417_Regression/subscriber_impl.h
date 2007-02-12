@@ -13,15 +13,9 @@ class Subscriber_impl : public POA_Subscriber
 
     virtual void onData (
         ::CORBA::Double value
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
     virtual ::CORBA::Boolean isAlive (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
 		void shutdown();
 	private:

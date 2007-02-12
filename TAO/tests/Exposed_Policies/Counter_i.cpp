@@ -22,28 +22,24 @@ Counter_Servant::~Counter_Servant (void)
 
 void
 Counter_Servant::increment (/**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->count_;
 }
 
 CORBA::Long
 Counter_Servant::get_count (/**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->count_;
 }
 
 void
 Counter_Servant::reset (/**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->count_ = 0;
 }
 
 void
 Counter_Servant::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->policy_tester_->shutdown ();
 }

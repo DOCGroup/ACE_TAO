@@ -11,10 +11,6 @@ ACE_RCSID (Abstract_Interface,
 
 char *
 foo_i::foo_op (const char * inarg)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    BadInput
-  ))
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -32,10 +28,6 @@ foo_i::foo_op (const char * inarg)
 
 char *
 foo_i::base_op (const char * inarg)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      BadInput
-    ))
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -53,9 +45,6 @@ foo_i::base_op (const char * inarg)
 
 void
 passer_i::pass_ops (base_out outarg)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   foo_i *servant = 0;
   ACE_NEW (servant,
@@ -66,9 +55,6 @@ passer_i::pass_ops (base_out outarg)
 
 void
 passer_i::pass_state (base_out outarg)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   TreeController_var tc;
   ACE_NEW (tc.inout (),

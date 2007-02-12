@@ -19,8 +19,6 @@ Client_Request_Interceptor::Client_Request_Interceptor (const char *name)
 void
 Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   CORBA::Boolean client_side =
     this->client_side_test (ri);
@@ -75,7 +73,6 @@ Client_Request_Interceptor::send_request (
 void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean client_side =
@@ -94,7 +91,6 @@ Client_Request_Interceptor::send_poll (
 void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean client_side =
@@ -150,8 +146,6 @@ Client_Request_Interceptor::receive_reply (
 void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean client_side =
@@ -229,8 +223,6 @@ Client_Request_Interceptor::receive_exception (
 void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean client_side =

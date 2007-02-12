@@ -26,12 +26,10 @@ public:
   ~test_i (void);
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short number (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Short number (void);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
 

@@ -25,14 +25,11 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (void);
 
-  virtual void onewayTest (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void onewayTest (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

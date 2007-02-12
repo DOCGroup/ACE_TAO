@@ -18,11 +18,9 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  char *test_method (const char *x)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char *test_method (const char *x);
 
-  void shutdown ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

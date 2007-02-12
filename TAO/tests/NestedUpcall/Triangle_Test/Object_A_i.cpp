@@ -38,7 +38,6 @@ Object_A_i::~Object_A_i (void)
 
 void
 Object_A_i::foo (Initiator_ptr theInitiator_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -56,7 +55,6 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr)
 
 void
 Object_A_i::finish (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->finish_two_way_call_ = 1;
 

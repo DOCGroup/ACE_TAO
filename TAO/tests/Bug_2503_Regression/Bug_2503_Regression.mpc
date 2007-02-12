@@ -25,7 +25,6 @@ project(*Server): messaging, taoserver, ami {
 
 project(*Client): messaging, taoexe, portableserver, ami {
   after += *idl
-  after += *Server
   Source_Files {
     test_i.cpp
     common.cpp

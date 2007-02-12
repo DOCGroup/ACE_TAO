@@ -17,14 +17,11 @@ public:
   Oneway_Receiver (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void raise_no_permission (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void raise_no_permission (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
-  virtual Test::Shutdown_Helper_ptr get_shutdown_helper (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Shutdown_Helper_ptr get_shutdown_helper (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

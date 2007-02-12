@@ -16,14 +16,12 @@ class Reply_Handler
 
    virtual void
    childMethod (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
    virtual void
    childMethod_excep (Messaging::ExceptionHolder *
                          excep_holder)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       try
         {
@@ -37,7 +35,6 @@ class Reply_Handler
 
    virtual void
    parentMethod (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
@@ -47,7 +44,6 @@ class Reply_Handler
 
    virtual void
    parentMethod_excep (Messaging::ExceptionHolder * excep_holder)
-   ACE_THROW_SPEC ((CORBA::SystemException))
    {
       try
         {

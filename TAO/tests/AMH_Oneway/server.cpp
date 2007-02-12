@@ -41,8 +41,7 @@ public:
   ST_AMH_Servant (CORBA::ORB_ptr orb);
 
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                    Test::Timestamp send_time)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    Test::Timestamp send_time);
 
 protected:
   CORBA::ORB_var orb_;
@@ -60,7 +59,6 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "Recieved Timestamp # %d \n", calls_received));

@@ -13,9 +13,6 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::client_test (Test::TestScenario scenario)
-  ACE_THROW_SPEC ((Test::X,
-                   Test::UnknownScenario,
-                   CORBA::SystemException))
 {
   switch (scenario)
     {
@@ -35,9 +32,6 @@ test_i::client_test (Test::TestScenario scenario)
 void
 test_i::server_test (Test::TestScenario scenario,
                      CORBA::ULongSeq_out myseq)
-  ACE_THROW_SPEC ((Test::X,
-                   Test::UnknownScenario,
-                   CORBA::SystemException))
 {
   myseq = new CORBA::ULongSeq;
 
@@ -58,7 +52,6 @@ test_i::server_test (Test::TestScenario scenario,
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));

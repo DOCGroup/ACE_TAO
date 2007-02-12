@@ -28,17 +28,13 @@ public:
   Simple_C (CORBA::ORB_ptr orb);
 
   void op1 (
-      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
   void op2 (
-      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
   void op3 (
-      Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Foo::Bar::AMH_BResponseHandler_ptr _tao_rh);
   void op4 (
-      Baz::AMH_CResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Baz::AMH_CResponseHandler_ptr _tao_rh);
 
 protected:
   CORBA::ORB_ptr orb_;
@@ -56,7 +52,6 @@ Simple_C::Simple_C (CORBA::ORB_ptr orb)
 void
 Simple_C::op1(
     Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op1();
 }
@@ -64,7 +59,6 @@ Simple_C::op1(
 void
 Simple_C::op2(
     Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op2();
 }
@@ -72,7 +66,6 @@ Simple_C::op2(
 void
 Simple_C::op3(
     Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op3();
 }
@@ -80,7 +73,6 @@ Simple_C::op3(
 void
 Simple_C::op4(
     Baz::AMH_CResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op4();
 }

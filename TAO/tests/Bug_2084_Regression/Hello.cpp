@@ -16,7 +16,6 @@ ACE_RCSID(Hello, Hello, "$Id$")
 
 char *
 Hello::get_string (::CORBA::Long caller_threadid)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -58,7 +57,6 @@ Hello::get_string (::CORBA::Long caller_threadid)
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

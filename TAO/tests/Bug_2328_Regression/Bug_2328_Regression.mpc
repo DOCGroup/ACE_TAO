@@ -22,7 +22,6 @@ project(*Server): taoserver, codeset {
 
 project(*Client): taoclient {
   after += *idl
-  after += *Server
   Source_Files {
     TestC.cpp
     client.cpp

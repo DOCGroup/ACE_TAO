@@ -16,8 +16,7 @@ public:
   One_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown
@@ -33,8 +32,7 @@ public:
   Two_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown
@@ -50,8 +48,7 @@ public:
   Three_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

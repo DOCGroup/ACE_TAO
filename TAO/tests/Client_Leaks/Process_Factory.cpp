@@ -21,7 +21,6 @@ Process_Factory::shutdown_received (void)
 
 Test::Process_ptr
 Process_Factory::create_new_process (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
 {
   Startup_Callback *startup_callback_impl;
   ACE_NEW_THROW_EX (startup_callback_impl,
@@ -97,13 +96,11 @@ Process_Factory::create_new_process (void)
 
 void
 Process_Factory::noop (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Process_Factory::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown_received_ = 1;
   this->orb_->shutdown (0);

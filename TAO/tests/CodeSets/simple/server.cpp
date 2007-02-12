@@ -39,7 +39,6 @@ public:
   char * op1 (const char * name,
               const CORBA::Any & inany,
               CORBA::Any_out outany)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Server: bare string: %s\n", name));
@@ -59,13 +58,11 @@ public:
   };
 
   ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::wstring_dup (s1);
   };
 
   void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->orb_->shutdown (0);
   };

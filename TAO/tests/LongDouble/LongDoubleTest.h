@@ -17,11 +17,9 @@ public:
   LongDoubleTest (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::LongDouble get_long_double ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::LongDouble get_long_double ();
 
-  virtual void shutdown ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

@@ -21,7 +21,7 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, messaging {
-  after += *Server
+  after += *idl
   Source_Files {
     testC.cpp
     client.cpp

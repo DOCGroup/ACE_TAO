@@ -31,8 +31,7 @@ public:
 
   ~test_i (void);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
   PortableServer::POA_var poa_;
 
@@ -55,7 +54,6 @@ test_i::~test_i (void)
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -119,16 +117,13 @@ public:
   Servant_Activator (PortableServer::POA_ptr poa);
 
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                     PortableServer::POA_ptr poa)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+                                     PortableServer::POA_ptr poa);
 
   void etherealize (const PortableServer::ObjectId &oid,
                     PortableServer::POA_ptr adapter,
                     PortableServer::Servant servant,
                     CORBA::Boolean cleanup_in_progress,
-                    CORBA::Boolean remaining_activations)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    CORBA::Boolean remaining_activations);
 
   PortableServer::POA_var poa_;
 
@@ -144,8 +139,6 @@ Servant_Activator::Servant_Activator (PortableServer::POA_ptr poa)
 PortableServer::Servant
 Servant_Activator::incarnate (const PortableServer::ObjectId &,
                               PortableServer::POA_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
   test_i *servant =
     new test_i (this->poa_.in ());
@@ -198,7 +191,6 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
                                 CORBA::Boolean)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   servant->_remove_ref ();
 }

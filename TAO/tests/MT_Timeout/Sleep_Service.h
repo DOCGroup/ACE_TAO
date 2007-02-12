@@ -17,11 +17,9 @@ public:
   Sleep_Service (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void go_to_sleep (CORBA::ULong microseconds)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void go_to_sleep (CORBA::ULong microseconds);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

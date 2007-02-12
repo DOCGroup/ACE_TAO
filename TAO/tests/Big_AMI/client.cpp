@@ -85,7 +85,6 @@ public:
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ++reply_count_;
       if (debug)
@@ -98,7 +97,6 @@ public:
     };
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ++reply_count_;
 

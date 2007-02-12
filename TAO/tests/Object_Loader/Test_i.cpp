@@ -15,14 +15,12 @@ Test_i::Test_i (PortableServer::POA_ptr poa)
 
 CORBA::Long
 Test_i::instance_count (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Test_i::instance_count_;
 }
 
 void
 Test_i::destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_var poa =
     this->_default_POA ();
@@ -33,7 +31,6 @@ Test_i::destroy (void)
 
 PortableServer::POA_ptr
 Test_i::_default_POA (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

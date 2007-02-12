@@ -19,12 +19,8 @@ public:
     virtual void test(
         BlobType1& blob1,
         BlobType2& blob2
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      );
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
