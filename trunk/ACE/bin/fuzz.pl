@@ -6,6 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   Fuzz is a script whose purpose is to check through ACE/TAO files for
 #   easy to spot (by a perl script, at least) problems.
 
+use Cwd;
 use File::Find;
 use File::Basename;
 use Getopt::Std;
@@ -1010,6 +1011,15 @@ sub check_for_changelog_errors ()
 
 sub check_for_deprecated_macros ()
 {
+    ## Take the current working directory and remove everything up to
+    ## ACE_wrappers (or ACE for the peer-style checkout).  This will be
+    ## used to determine when the use of ACE_THROW_SPEC is an error.
+    my($cwd) = getcwd();
+    if ($cwd =~ s/.*(ACE_wrappers)/$1/) {
+    }
+    elsif ($cwd =~ s/.*(ACE)/$1/) {
+    }
+
     print "Running deprecated macros check\n";
     foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -1019,6 +1029,12 @@ sub check_for_deprecated_macros ()
                 # Check for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION usage.
                 if (m/ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION\)/) {
                     print_error ("$file:$.: ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION found.");
+                }
+                elsif (/ACE_THROW_SPEC/) {
+                    ## Do not use ACE_THROW_SPEC in TAO or CIAO.
+                    if ($file =~ /TAO|CIAO/i || $cwd =~ /TAO|CIAO/i) {
+                        print_error ("$file:$.: ACE_THROW_SPEC found.");
+                    }
                 }
             }
             close (FILE);
