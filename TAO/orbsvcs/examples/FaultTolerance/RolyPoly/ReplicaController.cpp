@@ -216,7 +216,7 @@ namespace
 {
   FT::FTRequestServiceContext*
   extract_context (
-    PortableInterceptor::ServerRequestInfo_ptr ri) ACE_THROW_SPEC ((CORBA::SystemException));
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
