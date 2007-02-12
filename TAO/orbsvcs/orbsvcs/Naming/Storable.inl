@@ -2,11 +2,12 @@
 
 //=============================================================================
 /**
- *  @file   Storable.i
+ *  @file   Storable.inl
  *
  *  $Id$
  *
- *  @author Bruce Trask <trask_b@ociweb.com> Chanaka Liyanaarachchi <chanaka@ociweb.com>
+ *  @author Bruce Trask <trask_b@ociweb.com>
+ *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
 //=============================================================================
 
