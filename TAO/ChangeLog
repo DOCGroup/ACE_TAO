@@ -1,3 +1,108 @@
+Mon Feb 12 19:51:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/Channel_Clients_T.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+        * orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * orbsvcs/orbsvcs/IFRService/concrete_classes.h:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ConsumesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.h:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstractInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FactoryDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/FixedDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IDLType_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/LocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Options.h:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/RecursDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+        * orbsvcs/orbsvcs/Naming/Entries.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.inl:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.inl:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.h:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.h:
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.h:
+          Converted to doxygen style
+
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.inl:
+          Use prefix increment/decrement
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+          Zapped environment macro code
+
 Mon Feb 12 15:32:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
