@@ -6,10 +6,6 @@
  *
  *  $Id$
  *
- *  @file    22 December 1997
- *
- *  $Id$
- *
  *  @author Chris Gill
  */
 //=============================================================================
@@ -123,7 +119,7 @@ public:
 class TAO_RTSched_Export ACE_Scheduler_Strategy
 {
 public:
-  
+
   /// = Constructor.
   ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
