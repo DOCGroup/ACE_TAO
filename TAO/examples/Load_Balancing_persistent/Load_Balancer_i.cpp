@@ -40,7 +40,6 @@ Object_Group_Factory_i::~Object_Group_Factory_i (void)
 
 PortableServer::POA_ptr
 Object_Group_Factory_i::_default_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -48,8 +47,6 @@ Object_Group_Factory_i::_default_POA (void)
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_group))
 {
 
   if (this->mem_pool_->find (rr_name_bind,
@@ -76,8 +73,6 @@ Object_Group_Factory_i::make_round_robin (const char * id)
 
 void
 Object_Group_Factory_i::unbind_round_robin (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_group))
 {
   if (this->rr_groups_ == 0)
     {
@@ -116,8 +111,6 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_random (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_group))
 {
 
   if (this->mem_pool_->find (random_name_bind, (void * &)this->random_groups_) == -1)
@@ -145,8 +138,6 @@ Object_Group_Factory_i::make_random (const char * id)
 
 void
 Object_Group_Factory_i::unbind_random (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_group))
 {
   if (this->random_groups_ == 0)
     {
@@ -185,8 +176,6 @@ Object_Group_Factory_i::unbind_random (const char * id)
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_group (int random,
                                     const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_group))
 {
   // Store our result here for return.
   Load_Balancer::Object_Group_var group;
@@ -289,8 +278,6 @@ Object_Group_Factory_i::make_group (int random,
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_group))
 {
 
 
@@ -416,14 +403,12 @@ Object_Group_Factory_i::list_groups (int random)
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::round_robin_groups (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (0);
 }
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::random_groups (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (1);
 }
@@ -553,7 +538,6 @@ Object_Group_i::~Object_Group_i (void)
 
 PortableServer::POA_ptr
 Object_Group_i::_default_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -561,15 +545,12 @@ Object_Group_i::_default_POA (void)
 
 char *
 Object_Group_i::id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (id_.c_str ());
 }
 
 void
 Object_Group_i::bind (const Load_Balancer::Member & member)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Load_Balancer::duplicate_member))
 {
 
   if (this->members_ == 0)
@@ -662,8 +643,6 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
 
 void
 Object_Group_i::unbind (const char * id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Load_Balancer::no_such_member))
 {
   // Check whether the this->member_ is NULL
   if (this->members_ == 0)
@@ -713,8 +692,6 @@ Object_Group_i::unbind (const char * id)
 
 char *
 Object_Group_i::resolve_with_id (const char * id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Load_Balancer::no_such_member))
 {
   CORBA::String_var ior;
 
@@ -731,7 +708,6 @@ Object_Group_i::resolve_with_id (const char * id)
 
 Load_Balancer::Member_ID_List *
 Object_Group_i::members (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Load_Balancer::Member_ID_List * list = 0;
 
@@ -763,7 +739,6 @@ Object_Group_i::members (void)
 
 void
 Object_Group_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
@@ -820,8 +795,6 @@ Random_Object_Group::Random_Object_Group (const char *id,
 
 char *
 Random_Object_Group::resolve (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Load_Balancer::no_such_member))
 {
 
   this->read_from_memory ();
@@ -858,8 +831,6 @@ RR_Object_Group::RR_Object_Group (const char *id,
 
 char *
 RR_Object_Group::resolve (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Load_Balancer::no_such_member))
 {
   char *objref = 0;
 
@@ -892,8 +863,6 @@ RR_Object_Group::resolve (void)
 
 void
 RR_Object_Group::unbind (const char *id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Load_Balancer::no_such_member))
 {
 
   if (this->members_ == 0)

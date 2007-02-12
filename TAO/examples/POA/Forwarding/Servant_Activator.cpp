@@ -15,8 +15,6 @@ ACE_RCSID(Forwarding, Servant_Activator, "$Id$")
 PortableServer::Servant
 ServantActivator::incarnate (const PortableServer::ObjectId &,
                              PortableServer::POA_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
   this->orb_->shutdown (0);
 
@@ -30,7 +28,6 @@ ServantActivator::etherealize (const PortableServer::ObjectId &,
                                PortableServer::Servant servant,
                                CORBA::Boolean,
                                CORBA::Boolean)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;
 }

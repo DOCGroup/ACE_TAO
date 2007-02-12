@@ -39,19 +39,15 @@ public:
   ~UDP_i (void);
   // Destructor
 
-  virtual void setResponseHandler (UDP_ptr udpHandler)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void setResponseHandler (UDP_ptr udpHandler);
 
   virtual void invoke (const char *client_name,
-                       CORBA::Long request_id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                       CORBA::Long request_id);
 
-  virtual void reset (const char * client_name)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reset (const char * client_name);
 
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   // Shutdown the server.
 

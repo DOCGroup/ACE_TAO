@@ -64,9 +64,7 @@ public:
   // Initialization.
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+                                             PortableServer::POA_ptr poa);
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
   // RETAIN policies, whenever it receives a request for a
   // test object that is not currently active. When an servant
@@ -81,8 +79,7 @@ public:
                             PortableServer::POA_ptr adapter,
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                            CORBA::Boolean remaining_activations);
   // This method is invoked whenever a test object is
   // deactivated. This occurs when the POA is destroyed or the Object
   // is deactivated. When the POA is getting destroyed, it needs to

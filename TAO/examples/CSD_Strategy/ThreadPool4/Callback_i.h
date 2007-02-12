@@ -14,10 +14,7 @@ class Callback_i : public virtual POA_Callback
     virtual ~Callback_i();
 
     virtual void test_method (
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
 };
 

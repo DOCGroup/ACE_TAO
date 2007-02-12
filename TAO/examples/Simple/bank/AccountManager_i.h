@@ -56,17 +56,14 @@ public:
   // Destructor.
 
   virtual Bank::Account_ptr open (const char *name,
-                                  CORBA::Float initial_balance)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                  CORBA::Float initial_balance);
   // Return the Account interface with the given name from the server.
   // Put the initial balance specified in the new account.
 
-  virtual void close (Bank::Account_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void close (Bank::Account_ptr);
   // Close the given account.
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

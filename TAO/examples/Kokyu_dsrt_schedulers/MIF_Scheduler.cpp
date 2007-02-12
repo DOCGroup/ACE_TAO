@@ -25,21 +25,18 @@ MIF_Sched_Param_Policy::MIF_Sched_Param_Policy (
 
 MIF_Scheduling::SchedulingParameter
 MIF_Sched_Param_Policy::value (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
 
 void
 MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->value_ = value;
 }
 
 CORBA::Policy_ptr
 MIF_Sched_Param_Policy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   MIF_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -52,7 +49,6 @@ MIF_Sched_Param_Policy::copy (void)
 
 void
 MIF_Sched_Param_Policy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -117,7 +113,6 @@ MIF_Scheduler::shutdown (void)
 
 MIF_Scheduling::SchedulingParameterPolicy_ptr
 MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingParameter & value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   MIF_Scheduling::SchedulingParameterPolicy_ptr sched_param_policy;
   ACE_NEW_THROW_EX (sched_param_policy,
@@ -139,8 +134,6 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                                              const char *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -175,8 +168,6 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
                                                            const char *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   this->begin_new_scheduling_segment (guid,
                                       name,
@@ -189,8 +180,6 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
                                           const char* name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   ACE_UNUSED_ARG ((name));
   ACE_UNUSED_ARG ((implicit_sched_param));
@@ -219,7 +208,6 @@ void
 MIF_Scheduler::end_scheduling_segment (
                     const RTScheduling::Current::IdType &guid,
                     const char *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #ifdef KOKYU_DSRT_LOGGING
   int int_guid;
@@ -237,7 +225,6 @@ MIF_Scheduler::end_nested_scheduling_segment (
                    const RTScheduling::Current::IdType &,
                    const char *,
                    CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -245,8 +232,6 @@ MIF_Scheduler::end_nested_scheduling_segment (
 
 void
 MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
@@ -336,8 +321,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::String_out /*name*/,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
 
@@ -419,7 +402,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
 void
 MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Short importance = 0;
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
@@ -489,30 +471,23 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
 void
 MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   send_reply (ri);
 }
 
 void
 MIF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   send_reply (ri);
 }
 
 void
 MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::Current::IdType guid;
   CORBA::Short importance=0;
@@ -569,50 +544,41 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 
 void
 MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri);
 }
 
 void
 MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri);
 }
 
 void
 MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 CORBA::PolicyList*
 MIF_Scheduler::scheduling_policies (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::PolicyList*
 MIF_Scheduler::poa_policies (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
 MIF_Scheduler::scheduling_discipline_name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -620,7 +586,6 @@ MIF_Scheduler::scheduling_discipline_name (void)
 RTScheduling::ResourceManager_ptr
 MIF_Scheduler::create_resource_manager (const char *,
                                         CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -629,7 +594,6 @@ void
 MIF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                          const char *,
                                          CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

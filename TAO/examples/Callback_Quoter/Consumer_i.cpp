@@ -29,7 +29,6 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Callback_Quoter::Info &data)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.
@@ -42,7 +41,6 @@ Consumer_i::push (const Callback_Quoter::Info &data)
 
 void
 Consumer_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   // Instruct the ORB to shutdown.
