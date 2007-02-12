@@ -185,7 +185,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
 
   log_record.length (length);
 
-  log_record.print ("<localhost>", 1, stderr);
+  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, stderr);
 
   return 0;
 }
