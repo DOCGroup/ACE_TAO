@@ -69,8 +69,8 @@ namespace Impl
 
     virtual ~TSEC_Session_impl();
 
-    CORBA::Long getIdent() ACE_THROW_SPEC( ( CORBA::SystemException ) );
-    CORBA::Boolean isInUse() ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    CORBA::Long getIdent();
+    CORBA::Boolean isInUse();
     void isInUse( CORBA::Boolean Flag ) { _isInUse = Flag; }
 
   protected:
@@ -121,30 +121,28 @@ namespace Impl
 
     virtual ENW::CCM_ISessionService_ptr get_sessionService
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
 
     virtual ENW::TSession_ptr createSession
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
     virtual CORBA::Boolean destroySession
     (
       ENW::TSession_ptr Session
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
     virtual ENW::TSession_ptr acquireSession
     (
       CORBA::Long Ident
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        ENW::EUnknownIdent ) );
+    );
 
     virtual CORBA::Boolean releaseSession
     (
       CORBA::Long       Ident,
       ENW::TSession_ptr Session
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        ENW::EUnknownSession ) );
+    );
 
 
     // Events
@@ -153,7 +151,7 @@ namespace Impl
     virtual void push_lifeTokenIn
     (
       ENW::ET_LifeToken* Event
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
 
     // Operations from Components::SessionComponent
@@ -162,52 +160,46 @@ namespace Impl
     virtual void set_session_context
     (
       Components::SessionContext_ptr ctx
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
 
     virtual void ciao_preactivate
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
 
     virtual void ccm_activate
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
 
     virtual void ciao_postactivate
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
 
 
     virtual void ccm_passivate
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
 
     virtual void ccm_remove
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
 
     CORBA::Object_ptr getObjRef
     (
       PortableServer::Servant Servant
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
     int init(
-    )ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
     CORBA::Object_ptr installServant
     (
       PortableServer::Servant Servant
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
     void uninstallServant
     (
       CORBA::Object_ptr ObjRef
-    ) ACE_THROW_SPEC( ( CORBA::SystemException ) );
+    );
 
     TMutex& getMutex() { return _mutex; }
 
@@ -244,13 +236,12 @@ namespace Impl
     virtual ::Components::EnterpriseComponent_ptr new_TSEC_CheckPoint
     (
       const char* Version
-      ) ACE_THROW_SPEC(( CORBA::SystemException));
+      );
 
     // Implicit home operations.
     virtual ::Components::EnterpriseComponent_ptr create
     (
-    ) ACE_THROW_SPEC( ( CORBA::SystemException,
-                        Components::CCMException ) );
+    );
   };
 }  // Impl
 
