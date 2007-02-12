@@ -1,3 +1,11 @@
+Mon Feb 12 20:15:22 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Trying to fix a compiler warning for VxWorks5.5.1_x86_GCC2.96_Exceptions
+          build on DOC group scoreboard.
+
 Mon Feb 12 19:51:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
