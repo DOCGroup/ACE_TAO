@@ -42,7 +42,7 @@ class B_i : public virtual POA_C
 {
 public:
   virtual A_ptr
-  makeA () ACE_THROW_SPEC ((CORBA::SystemException))
+  makeA ()
   {
     PortableServer::ServantBase_var servant = new A_i;
     g_pPoa->activate_object (servant.in());
