@@ -34,7 +34,6 @@
 // get_component implementation.
 CORBA::Object_ptr
 [ciao module name]::[facet type]_Servant::_get_component ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::SessionContext_var sc =
       ::Components::SessionContext::_narrow (this->ctx_.in ());
@@ -65,7 +64,6 @@ CORBA::Object_ptr
     // struct [receptacle name]Connection.
 [receptacle name]Connections *
 [ciao module name]::[component name]_Context::get_connections_[receptacle name] ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Strategized locking here.
 
@@ -94,7 +92,6 @@ CORBA::Object_ptr
 ##foreach [event name] with [eventtype] in (list of all event sources) generate:
 void
 [ciao module name]::[component name]_Context::push_[event name] ([eventtype] *ev)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 ##  if [event name] belongs to an 'emits' port
   this->ciao_emits_[event name]_consumer_->push_[event name] (ev);
@@ -122,8 +119,6 @@ void
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
 ::Components::Cookie *
 [ciao module name]::[component name]_Context::subscribe_[publish name] ([eventtype]Consumer_ptr c)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::ExceededConnectionLimit))
 {
   if (CORBA::is_nil (c))
     throw CORBA::BAD_PARAM ();
@@ -143,8 +138,6 @@ void
 
 [eventtype]Consumer_ptr
 [ciao module name]::[component name]_Context::unsubscribe_[publish name] (::Components::Cookie *ck)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::InvalidConnection))
 {
   [eventtype]Consumer_var retv;
 
@@ -168,7 +161,6 @@ void
 
 [uses type]_ptr
 [ciao module name]::[component name]_Context::get_connection_[receptacle name] ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return [uses type]::_duplicate (this->ciao_uses_[receptacle name]_.in ());
 }
@@ -176,9 +168,6 @@ void
 // Simplex [receptacle name] connection management operations
 void
 [ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::AlreadyConnected,
-                   ::Components::InvalidConnection))
 {
   if (! CORBA::is_nil (this->ciao_uses_[receptacle name]_.in ()))
     throw ::Components::AlreadyConnected ();
@@ -192,8 +181,6 @@ void
 
 [uses type]_ptr
 [ciao module name]::[component name]_Context::disconnect_[receptacle name] ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::NoConnection))
 {
   if (CORBA::is_nil (this->ciao_uses_[receptacle name]_.in ()))
     throw ::Components::NoConnection ();
@@ -205,9 +192,6 @@ void
 // Multiplex [receptacle name] connection management operations
 ::Components::Cookie *
 [ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::ExceedConnectionLimit,
-                       ::Components::InvalidConnection))
 {
   if (CORBA::is_nil (c))
     throw ::Components::InvalidConnection ();
@@ -227,8 +211,6 @@ void
 
 [uses type]_ptr
 [ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie *ck)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::InvalidConnection))
 {
   [uses type]_var retv;
 
@@ -250,8 +232,6 @@ void
 // Operations for ::Components::SessionContext interface
 CORBA::Object_ptr
 [ciao module name]::[component name]_Context::get_CCM_object ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::IllegalState))
 {
   // @@ How do I check for IllegalState here?  When it's not in a
   //    callback operation...
@@ -319,7 +299,6 @@ CORBA::Object_ptr
 
 [facet type]_ptr
 [ciao module name]::[component name]_Servant::provide_[facet name] ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->provide_[facet name]_.in ()))
     {
@@ -352,8 +331,6 @@ CORBA::Object_ptr
 // Inherit from ::Compopnents::EventBConsumerBase
 void
 [ciao module name]::[component name]_Servant::[eventtype]Consumer_[consumer name]_Servant::push_event (EventBase *ev)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Components::BadEventType))
 {
   [eventtype]_var ev_type = [eventtype]::_downcast (ev);
   if (ev_type != 0)
@@ -370,7 +347,6 @@ void
 // get_component implementation.
 [eventtype]Consumer_ptr
 [ciao module name]::[component name]_Servant::get_consumer_[consumer name] ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumes_[consumer name]_.in ()))
     {
@@ -394,8 +370,6 @@ void
 // Operations for Navigation interface
 CORBA::Object_ptr
 [ciao module name]::[component name]_Servant::provide_facet (const char * name)
-  ACE_THROW_SPEC ((CORBA::SystemException ,
-                   Components::InvalidName))
 {
   if (name == 0)
     throw CORBA::BAD_PARAM ();
@@ -415,7 +389,6 @@ CORBA::Object_ptr
 
 ::Components::FacetDescriptions *
 [ciao module name]::[component name]_Servant::get_all_facets ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::FacetDescriptions_var collection
       = new ::Components::FacetDescriptions (#99); // #99 = number of all provided
@@ -444,8 +417,6 @@ CORBA::Object_ptr
 
 ::Components::FacetDescriptions *
 [ciao module name]::[component name]_Servant::get_named_facets (const Components::NameList & names)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   ::Components::FacetDescriptions_var collection
       = new ::Components::FacetDescriptions (names.length ());
@@ -476,7 +447,6 @@ CORBA::Object_ptr
 
 CORBA::Boolean
 [ciao module name]::[component name]_Servant::same_component (CORBA::Object_ptr object_ref)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (object_ref))
     throw CORBA::BAD_PARAM ();
@@ -492,11 +462,6 @@ CORBA::Boolean
 ::Components::Cookie *
 [ciao module name]::[component name]_Servant::connect (const char * name,
                                                        CORBA::Object_ptr connection)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName,
-                   Components::InvalidConnection,
-                   Components::AlreadyConnected,
-                   Components::ExceededConnectionLimit))
 {
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
@@ -534,11 +499,6 @@ CORBA::Boolean
 CORBA::Object_ptr
 [ciao module name]::[component name]_Servant::disconnect (const char * name,
                                                           Components::Cookie *ck)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName,
-                   Components::InvalidConnection,
-                   Components::CookieRequired,
-                   Components::NoConnection))
 {
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
@@ -558,8 +518,6 @@ CORBA::Object_ptr
 
 ::Components::ConnectionDescriptions *
 [ciao module name]::[component name]_Servant::get_connections (const char * name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   // @@ We can omit this if clause if there's no receptacle in this component.
   if (name == 0)
@@ -590,7 +548,6 @@ CORBA::Object_ptr
 
 ::Components::ReceptacleDescriptions *
 [ciao module name]::[component name]_Servant::get_all_receptacles ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::ReceptacleDescriptions_var retv =
       new ::Components::ReceptacleDescriptions (#99); // #99 is number of receptacles
@@ -617,8 +574,6 @@ CORBA::Object_ptr
 
 ::Components::ReceptacleDescriptions *
 [ciao module name]::[component name]_Servant::get_named_receptacles (const Components::NameList & names)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   ::Components::ReceptacleDescriptions_var retv =
       new ::Components::ReceptacleDescriptions (names.length ());
@@ -650,8 +605,6 @@ CORBA::Object_ptr
 // Operations for Events interface
 ::Components::EventConsumerBase_ptr
 [ciao module name]::[component name]_Servant::get_consumer (const char * sink_name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   // @@ We can omit this if clause if there's no event sinks in this component.
   if (sink_name == 0)
@@ -667,10 +620,6 @@ CORBA::Object_ptr
 ::Components::Cookie *
 [ciao module name]::[component name]_Servant::subscribe (const char * publisher_name,
                                                          Components::EventConsumerBase_ptr subscriber)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName,
-                   Components::InvalidConnection,
-                   Components::ExceededConnectionLimit))
 {
   // @@ We can omit this if clause if there's no publisher in this component.
   if (publisher_name == 0)
@@ -695,9 +644,6 @@ CORBA::Object_ptr
 ::Components::EventConsumerBase_ptr
 [ciao module name]::[component name]_Servant::unsubscribe (const char * publisher_name,
                                                            Components::Cookie *ck)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName,
-                   Components::InvalidConnection))
 {
   // @@ We can omit this if clause if there's no publisher in this component.
   if (publisher_name == 0)
@@ -716,10 +662,6 @@ CORBA::Object_ptr
 void
 [ciao module name]::[component name]_Servant::connect_consumer (const char * emitter_name,
                                                                 Components::EventConsumerBase_ptr consumer)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName,
-                   Components::AlreadyConnected,
-                   Components::InvalidConnection))
 {
   // @@ We can omit this if clause if there's no emitter in this component.
   if (emitter_name == 0)
@@ -744,9 +686,6 @@ void
 
 ::Components::EventConsumerBase_ptr
 [ciao module name]::[component name]_Servant::disconnect_consumer (const char * source_name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName,
-                   Components::NoConnection))
 {
   // @@ We can omit this if clause if there's no emitter in this component.
   if (source_name == 0)
@@ -764,7 +703,6 @@ void
 
 ::Components::ConsumerDescriptions *
 [ciao module name]::[component name]_Servant::get_all_consumers ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::ConsumerDescriptions_var retv =
       new ::Components::ConsumerDescriptions (#99); // #99 is the number of consumers
@@ -789,8 +727,6 @@ void
 
 ::Components::ConsumerDescriptions *
 [ciao module name]::[component name]_Servant::get_named_consumers (const Components::NameList & names)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   ::Components::ConsumerDescriptions_var retv =
       new ::Components::ConsumerDescriptions (names.length ());
@@ -820,7 +756,6 @@ void
 
 ::Components::EmitterDescriptions *
 [ciao module name]::[component name]_Servant::get_all_emitters ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::EmitterDescriptions_var retv =
       new ::Components::EmitterDescriptions (#99); // #99 is the number of emitters
@@ -842,8 +777,6 @@ void
 
 ::Components::EmitterDescriptions *
 [ciao module name]::[component name]_Servant::get_named_emitters (const Components::NameList & names)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   ::Components::EmitterDescriptions_var retv =
       new ::Components::EmitterDescriptions (names.length ());
@@ -870,7 +803,6 @@ void
 
 ::Components::PublisherDescriptions *
 [ciao module name]::[component name]_Servant::get_all_publishers ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ to-do
 
@@ -881,8 +813,6 @@ void
 
 ::Components::PublisherDescriptions *
 [ciao module name]::[component name]_Servant::get_named_publishers (const Components::NameList & names)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidName))
 {
   // @@ to-do
 
@@ -894,7 +824,6 @@ void
 // Operations for CCMObject interface
 ::CORBA::IRObject_ptr
 [ciao module name]::[component name]_Servant::get_component_def ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ to-do: Connect to an IfR?
   throw CORBA::NO_IMPLEMENT ();
@@ -902,15 +831,12 @@ void
 
 ::Components::CCMHome_ptr
 [ciao module name]::[component name]_Servant::get_ccm_home ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->context_->get_CCM_home ();
 }
 
 ::Components::PrimaryKeyBase *
 [ciao module name]::[component name]_Servant::get_primary_key ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::NoKeyAvailable))
 {
   // This is a keyless component.
   throw ::Components::NoKeyAvailable ();
@@ -918,8 +844,6 @@ void
 
 void
 [ciao module name]::[component name]_Servant::configuration_complete ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::InvalidConfiguration))
 {
   // @@ to-do
   // No-op.  Don't know how to pass this info to monolithic executor.
@@ -927,8 +851,6 @@ void
 
 void
 [ciao module name]::[component name]_Servant::remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
 {
   // @@ to-do
   // Need to figure out what to do here.  E.g., tear down the all the connections
@@ -937,7 +859,6 @@ void
 
 ::Components::ComponentPortDescription *
 [ciao module name]::[component name]_Servant::get_all_ports ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::ComponentPortDescription_var retv =
     new OBV_Components::ComponentPortDescription;
@@ -969,7 +890,6 @@ void
 // get_component implementation.
 CORBA::Object_ptr
 [ciao module name]::[component name]_Servant::_get_component ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::SessionContext_var sc =
       ::Components::SessionContext::_narrow (this->context_);
@@ -990,7 +910,6 @@ CORBA::Object_ptr
 
 void
 [ciao module name]::[component name]_Servant::_ciao_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (this->executor_.in ());
@@ -1001,7 +920,6 @@ void
 
 void
 [ciao module name]::[component name]_Servant::_ciao_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (this->executor_.in ());
@@ -1016,7 +934,6 @@ void
 
 [component name]_ptr
 [ciao module name]::[home name]_Servant::_ciao_activate_component (CCM_[component name]_ptr exe)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var hobj
     = this->container_->get_objref (this);
@@ -1050,7 +967,6 @@ void
 
 void
 [ciao module name]::[home name]_Servant::_ciao_passivate_component ([component name]_ptr comp)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid;
 
@@ -1070,8 +986,6 @@ void
 // Operations for Implicit Home interface
 [component name]_ptr
 [ciao module name]::[home name]_Servant::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
 {
   if (this->executor_.in () == 0)
     throw CORBA::INTERNAL ();
@@ -1088,8 +1002,6 @@ void
 // Operations for CCMHome interface
 void
 [ciao module name]::[home name]_Servant::remove_component (Components::CCMObject_ptr comp)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
 {
   [component name]_var _ciao_comp
     = [component name]::_narrow (comp);
