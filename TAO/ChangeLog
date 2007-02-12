@@ -1,3 +1,13 @@
+Mon Feb 12 07:27:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Unbounded_Array_Sequence_T.h:
+          Removed check for nill sequence, is done at a different place in TAO
+          already and resolves the compile errors on the scoreboard
+
+        * orbsvcs/orbsvcs/*.{h,cpp,inl}:
+          Removed ACE_THROW_SPEC, layout changes, reduced includes
+
 Sun Feb 11 18:58:14 2007  Martin Corino  <mcorino@remedy.nl>
 
         * tao/DynamicAny/DynUnion_i.cpp:
