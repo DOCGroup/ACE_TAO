@@ -154,8 +154,7 @@ ImR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            PortableServer::POA_ptr,
                            const char *,
                            PortableServer::ServantLocator::Cookie,
-                           PortableServer::Servant
-                           ) ACE_THROW_SPEC ((CORBA::SystemException))
+                           PortableServer::Servant)
 {
 }
 
