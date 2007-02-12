@@ -53,10 +53,6 @@ Consumer::disconnect (void)
 
 void
 Consumer::push (const CORBA::Any &)
- ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-      ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Consumer::push\n"));
@@ -66,9 +62,6 @@ Consumer::push (const CORBA::Any &)
 
 void
 Consumer::disconnect_push_consumer (void)
- ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   // Deactivate this object.
 

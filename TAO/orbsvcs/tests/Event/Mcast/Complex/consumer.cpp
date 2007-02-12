@@ -19,19 +19,16 @@ public:
   //@{
   /// Logs each event.  Initiates shutdown after receiving 100 events
   /// of each type.
-  virtual void push (const RtecEventComm::EventSet &events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet &events);
 
   /// No-op.
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
 
 private:
 
   /// Helper - destroys EC, shutdowns the ORB and prints number of
   /// events received.
-  void disconnect (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void disconnect (void);
 
   /// Number of events of different types pushed to us by EC.
   //@{
@@ -57,7 +54,6 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 
 void
 EC_Consumer::push (const RtecEventComm::EventSet &events)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -91,13 +87,11 @@ EC_Consumer::push (const RtecEventComm::EventSet &events)
 
 void
 EC_Consumer::disconnect_push_consumer (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 EC_Consumer::disconnect (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->a_events_ == 100
       && this->b_events_ == 100

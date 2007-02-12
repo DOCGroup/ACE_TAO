@@ -22,14 +22,12 @@ Server_IORInterceptor::~Server_IORInterceptor (void)
 
 char *
 Server_IORInterceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_IORInterceptor");
 }
 
 void
 Server_IORInterceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::release (this->gateway_object_factory_);
   this->gateway_object_factory_ = Gateway::Object_Factory::_nil ();
@@ -38,14 +36,12 @@ Server_IORInterceptor::destroy (void)
 void
 Server_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr ior_info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Gateway_ObjRef_Factory *my_factory = 0;
 
@@ -64,7 +60,6 @@ void
 Server_IORInterceptor::adapter_manager_state_changed (
     const char *,
     PortableInterceptor::AdapterState)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -72,6 +67,5 @@ void
 Server_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
     PortableInterceptor::AdapterState)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

@@ -217,7 +217,6 @@ ImR_Locator_i::run (void)
 
 void
 ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers)
-                        ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (servers != 0 && this->repository_.servers ().current_size () > 0)
     {
@@ -368,7 +367,6 @@ ImR_Locator_i::setup_multicast (ACE_Reactor* reactor, const char* ior)
 CORBA::Long
 ImR_Locator_i::register_activator (const char* aname,
                                    ImplementationRepository::Activator_ptr activator)
-                                   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (aname != 0);
   ACE_ASSERT (! CORBA::is_nil (activator));
@@ -395,7 +393,6 @@ ImR_Locator_i::register_activator (const char* aname,
 void
 ImR_Locator_i::unregister_activator (const char* aname,
                                      CORBA::Long token)
-                                     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (aname != 0);
   Activator_Info_Ptr info = this->get_activator (aname);
@@ -430,7 +427,6 @@ ImR_Locator_i::unregister_activator_i (const char* aname)
 
 void
 ImR_Locator_i::notify_child_death (const char* name)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (name != 0);
 
@@ -457,9 +453,6 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 void
 ImR_Locator_i::activate_server (const char* server)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                ImplementationRepository::NotFound,
-                ImplementationRepository::CannotActivate))
 {
   if (debug_ > 1)
     ACE_DEBUG ((LM_DEBUG, "ImR: Manually activating server <%s>\n", server));
@@ -471,9 +464,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 char*
 ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                ImplementationRepository::NotFound,
-                ImplementationRepository::CannotActivate))
 {
   // Activate the server, starting it if necessary. Don't start MANUAL
   // servers unless manual_start=true
@@ -491,9 +481,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 char*
 ImR_Locator_i::activate_server_by_object (const char* object_name)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                ImplementationRepository::NotFound,
-                ImplementationRepository::CannotActivate))
 {
   ACE_ASSERT (object_name != 0);
 
@@ -509,9 +496,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 char*
 ImR_Locator_i::activate_server_i (Server_Info& info, bool manual_start)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                ImplementationRepository::NotFound,
-                ImplementationRepository::CannotActivate))
 {
   if (info.activation_mode == ImplementationRepository::PER_CLIENT)
     {
@@ -559,9 +543,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
 char*
 ImR_Locator_i::activate_perclient_server_i (Server_Info info, bool manual_start)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                ImplementationRepository::NotFound,
-                ImplementationRepository::CannotActivate))
 {
   Server_Info_Ptr shared_info = this->repository_.get_server (info.name);
   do
@@ -602,9 +583,6 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 ImplementationRepository::StartupInfo*
 ImR_Locator_i::start_server (Server_Info& info, bool manual_start,
                              int& waiting_clients)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                ImplementationRepository::NotFound,
-                ImplementationRepository::CannotActivate))
 {
   if (info.activation_mode == ImplementationRepository::MANUAL && ! manual_start)
     {
@@ -760,8 +738,6 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
 void
 ImR_Locator_i::add_or_update_server (const char* server,
                                 const ImplementationRepository::StartupOptions &options)
-                                ACE_THROW_SPEC ((CORBA::SystemException,
-                                  ImplementationRepository::NotFound))
 {
   ACE_ASSERT (server != 0);
 
@@ -846,7 +822,6 @@ ImR_Locator_i::add_or_update_server (const char* server,
 
 void
 ImR_Locator_i::remove_server (const char* name)
-ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
 {
   ACE_ASSERT (name != 0);
   if (this->read_only_)
@@ -907,7 +882,6 @@ ImR_Locator_i::findPOA (const char* name)
 
 void
 ImR_Locator_i::shutdown_server (const char* server)
-ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
 {
   ACE_ASSERT (server != 0);
 
@@ -973,8 +947,6 @@ void
 ImR_Locator_i::server_is_running (const char* name,
                                   const char* partial_ior,
                                   ImplementationRepository::ServerObject_ptr server)
-                                  ACE_THROW_SPEC ((CORBA::SystemException,
-                                  ImplementationRepository::NotFound))
 {
   ACE_ASSERT (name != 0);
   ACE_ASSERT (partial_ior != 0);
@@ -1038,7 +1010,6 @@ ImR_Locator_i::server_is_running (const char* name,
 
 void
 ImR_Locator_i::server_is_shutting_down (const char* server)
-ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
 {
   ACE_ASSERT (server != 0);
   Server_Info_Ptr info = this->repository_.get_server (server);
@@ -1065,7 +1036,6 @@ ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound))
 void
 ImR_Locator_i::find (const char* server,
                      ImplementationRepository::ServerInformation_out imr_info)
-                     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (server != 0);
   ACE_NEW_THROW_EX (imr_info, ImplementationRepository::ServerInformation, CORBA::NO_MEMORY ());

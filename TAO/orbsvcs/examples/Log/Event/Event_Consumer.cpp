@@ -93,7 +93,6 @@ Consumer::run (int argc, char* argv[])
 
 void
 Consumer::push (const CORBA::Any &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   this->event_count_ ++;
@@ -106,7 +105,6 @@ Consumer::push (const CORBA::Any &)
 
 void
 Consumer::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have

@@ -45,12 +45,10 @@ public:
   void disconnect (void);
   // Simple connect/disconnect methods..
 
-  void push (const CORBA::Any& events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const CORBA::Any& events);
   // Push an event.
 
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
   // The skeleton methods.
 
   CORBA::ULong event_count;
@@ -118,12 +116,9 @@ public:
   // Simple connect/disconnect methods..
 
   // The PullSupplier methods.
-  CORBA::Any* pull (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  CORBA::Any* try_pull (CORBA::Boolean_out has_event)
-    ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  virtual void disconnect_pull_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Any* pull (void);
+  CORBA::Any* try_pull (CORBA::Boolean_out has_event);
+  virtual void disconnect_pull_supplier (void);
 
   CORBA::ULong event_count;
   // Count the number of events sent

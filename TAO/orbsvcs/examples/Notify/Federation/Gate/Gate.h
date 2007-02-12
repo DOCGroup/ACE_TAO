@@ -52,21 +52,16 @@ private:
   //
   virtual void
   offer_change (CosNotification::EventTypeSeq const&,
-                CosNotification::EventTypeSeq const&)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotifyComm::InvalidEventType));
+                CosNotification::EventTypeSeq const&);
 
   // StructuredPushSupplier interface.
   //
   virtual void
-  push_structured_event (CosNotification::StructuredEvent const& e)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventComm::Disconnected));
+  push_structured_event (CosNotification::StructuredEvent const& e);
 
 
   virtual void
-  disconnect_structured_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  disconnect_structured_push_consumer (void);
 
 private:
   ACE_thread_t thread_;

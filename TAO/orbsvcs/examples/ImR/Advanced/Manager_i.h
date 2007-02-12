@@ -18,14 +18,11 @@ public:
 
   virtual ~Manager_i (void);
 
-  virtual CORBA::Long registerServer ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long registerServer ();
 
-  virtual void startRetry (CORBA::Long count)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void startRetry (CORBA::Long count);
 
-  virtual CORBA::Long endRetry ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long endRetry ();
 
 private:
 

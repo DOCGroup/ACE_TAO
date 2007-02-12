@@ -290,7 +290,6 @@ EC_Latency_Consumer::done (void)
 
 void
 EC_Latency_Consumer::push (const RtecEventComm::EventSet& events)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t creation;
   ORBSVCS_Time::TimeT_to_hrtime (creation,
@@ -310,7 +309,6 @@ EC_Latency_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 EC_Latency_Consumer::disconnect_push_consumer (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -322,7 +320,6 @@ EC_Latency_Supplier::EC_Latency_Supplier (void)
 
 void
 EC_Latency_Supplier::disconnect_push_supplier (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

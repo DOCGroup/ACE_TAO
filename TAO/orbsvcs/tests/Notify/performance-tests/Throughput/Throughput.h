@@ -66,11 +66,7 @@ public:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      );
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
   // Accumulate the throughput statistics into <throughput>

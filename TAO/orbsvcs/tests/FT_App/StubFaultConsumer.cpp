@@ -236,7 +236,6 @@ int StubFaultConsumer::idle(int & result)
 void StubFaultConsumer::push_structured_event(
   const CosNotification::StructuredEvent &notification
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
   ////////////////////////////////////////
   // keep track of how many we've received
@@ -280,7 +279,6 @@ void StubFaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -290,7 +288,6 @@ void StubFaultConsumer::offer_change (
 }
 
 void StubFaultConsumer::disconnect_structured_push_consumer(void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ERROR ((LM_ERROR,
     "StubFaultConsumer:disconnect_structured_push_consumer interpreted as quit request.\n"

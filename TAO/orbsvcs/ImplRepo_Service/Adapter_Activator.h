@@ -46,8 +46,7 @@ public:
   virtual CORBA::Boolean unknown_adapter (
     PortableServer::POA_ptr parent,
     const char *name
-  )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  );
 
   void init(PortableServer::ServantLocator_ptr servant);
 private:

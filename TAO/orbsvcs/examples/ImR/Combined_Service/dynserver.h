@@ -39,8 +39,7 @@ public:
   // Not supported
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[])
-     ACE_THROW_SPEC ((CORBA::SystemException));
+                                           ACE_TCHAR *argv[]);
 
 private:
   CORBA::ORB_var orb_;

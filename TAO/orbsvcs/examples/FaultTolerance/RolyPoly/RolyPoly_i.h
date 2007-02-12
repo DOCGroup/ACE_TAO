@@ -28,12 +28,10 @@ public:
   // RolyPoly
   //
   virtual CORBA::Short
-  number (char *&s)
-    ACE_THROW_SPEC ((CORBA::SystemException, RolyPoly::E));
+  number (char *&s);
 
   virtual void
-  shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  shutdown (void);
 
 private:
   CORBA::Short number_;

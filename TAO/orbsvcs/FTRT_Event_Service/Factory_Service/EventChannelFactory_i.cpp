@@ -25,14 +25,6 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   const PortableGroup::Criteria & the_criteria,
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
   )
-  ACE_THROW_SPEC ((
-  CORBA::SystemException
-  , PortableGroup::NoFactory
-  , PortableGroup::ObjectNotCreated
-  , PortableGroup::InvalidCriteria
-  , PortableGroup::InvalidProperty
-  , PortableGroup::CannotMeetCriteria
-  ))
 {
 
   ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
@@ -68,10 +60,6 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 void EventChannelFactory_i::delete_object (
   const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
   )
-  ACE_THROW_SPEC ((
-  CORBA::SystemException
-  , PortableGroup::ObjectNotFound
-  ))
 {
   ACE_TRACE("EventChannelFactory_i::delete_object");
   CORBA::ULong object_id;

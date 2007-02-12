@@ -77,7 +77,6 @@ Supplier::perform_push (void)
 
 void
 Supplier::disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

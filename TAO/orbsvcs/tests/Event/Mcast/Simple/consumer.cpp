@@ -18,11 +18,9 @@ public:
   /// PushConsumer methods.
   //@{
   /// Logs each event.  Initiates shutdown after receiving 100 events.
-  virtual void push (const RtecEventComm::EventSet &events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet &events);
   /// No-op.
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
   //@}
 
 private:
@@ -49,7 +47,6 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 
 void
 EC_Consumer::push (const RtecEventComm::EventSet &events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -63,7 +60,6 @@ EC_Consumer::push (const RtecEventComm::EventSet &events)
 
 void
 EC_Consumer::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

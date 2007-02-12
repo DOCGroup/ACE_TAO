@@ -17,12 +17,6 @@ Factory::create_object (
     const char * /*type_id*/,
     const PortableGroup::Criteria & /*the_criteria*/,
     PortableGroup::GenericFactory::FactoryCreationId_out fcid)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria))
 {
   Simple *servant;
 
@@ -68,8 +62,6 @@ void
 Factory::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
       fcid)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableGroup::ObjectNotFound))
 {
   CORBA::ULong my_fcid = 0;
 

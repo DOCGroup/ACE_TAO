@@ -20,7 +20,6 @@ TX_Object_i::~TX_Object_i (void)
 
 void
 TX_Object_i::send (const DataSeq & data)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->data_ = data;
 
@@ -31,7 +30,6 @@ TX_Object_i::send (const DataSeq & data)
 
 void
 TX_Object_i::recv (DataSeq_out data)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (data,
                     DataSeq,
@@ -46,7 +44,6 @@ TX_Object_i::recv (DataSeq_out data)
 
 void
 TX_Object_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

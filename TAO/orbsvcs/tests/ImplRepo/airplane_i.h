@@ -48,8 +48,7 @@ public:
   ~Airplane_i (void);
 
   /// Returns a random plane.
-  virtual char *get_plane (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char *get_plane (void);
 };
 
 #endif /* AIRPLANE_I_H */

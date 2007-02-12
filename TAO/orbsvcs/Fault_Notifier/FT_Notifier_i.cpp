@@ -465,7 +465,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 void TAO::FT_FaultNotifier_i::push_structured_fault (
     const CosNotification::StructuredEvent & event
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_structured_fault);
 
@@ -477,7 +476,6 @@ void TAO::FT_FaultNotifier_i::push_structured_fault (
 void TAO::FT_FaultNotifier_i::push_sequence_fault (
     const CosNotification::EventBatch & events
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_sequence_fault);
 
@@ -489,7 +487,6 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 ::CosNotifyFilter::Filter_ptr TAO::FT_FaultNotifier_i::create_subscription_filter (
     const char * constraint_grammar
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::create_subscription_filter);
   ACE_UNUSED_ARG (constraint_grammar); //@@todo
@@ -503,7 +500,6 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_structured_fault_consumer);
 
@@ -567,7 +563,6 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer);
   /////////////////////////
@@ -627,7 +622,6 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
 void TAO::FT_FaultNotifier_i::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::disconnect_consumer);
 
@@ -692,7 +686,6 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
 }
 
 CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) 1;
 }

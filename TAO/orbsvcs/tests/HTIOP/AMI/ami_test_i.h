@@ -33,18 +33,13 @@ public:
   // The AMI_Test methods.
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
-                   const char* in_str)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     A::DidTheRightThing));
+                   const char* in_str);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
-  CORBA::Long yadda (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long yadda (void);
 
-  void yadda (CORBA::Long yadda)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void yadda (CORBA::Long yadda);
 
 private:
   CORBA::ORB_var orb_;

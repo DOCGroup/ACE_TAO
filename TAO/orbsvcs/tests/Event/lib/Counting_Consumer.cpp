@@ -75,7 +75,6 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 
 void
 EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -98,7 +97,6 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 EC_Counting_Consumer::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
   this->supplier_proxy_ =

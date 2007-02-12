@@ -51,10 +51,7 @@ public:
   void send_event (const CORBA::Any &data);
   // Send one event.
 
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void disconnect_push_supplier (void);
   // The POA_CosEventComm::PushSupplier method.
 
   void run (void);

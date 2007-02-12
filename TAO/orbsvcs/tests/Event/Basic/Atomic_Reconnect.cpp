@@ -259,7 +259,6 @@ Consumer::dump_results (int base_count,
 
 void
 Consumer::push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {

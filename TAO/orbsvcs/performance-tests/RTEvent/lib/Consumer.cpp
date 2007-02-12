@@ -92,7 +92,6 @@ Consumer::sample_history (void)
 
 void
 Consumer::push (const RtecEventComm::EventSet &events)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
 
@@ -116,7 +115,6 @@ Consumer::push (const RtecEventComm::EventSet &events)
 
 void
 Consumer::disconnect_push_consumer (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_supplier_ =
@@ -125,7 +123,6 @@ Consumer::disconnect_push_consumer (void)
 
 PortableServer::POA_ptr
 Consumer::_default_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

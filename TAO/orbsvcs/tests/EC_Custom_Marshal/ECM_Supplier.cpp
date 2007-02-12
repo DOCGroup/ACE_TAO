@@ -474,7 +474,6 @@ Test_Supplier::svc ()
 
 void
 Test_Supplier::disconnect_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();

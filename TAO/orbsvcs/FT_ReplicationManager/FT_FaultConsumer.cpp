@@ -215,7 +215,6 @@ size_t TAO::FT_FaultConsumer::notifications () const
 void TAO::FT_FaultConsumer::push_structured_event (
   const CosNotification::StructuredEvent &event
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
   // Debugging support.
   this->notifications_ += 1;
@@ -266,7 +265,6 @@ void TAO::FT_FaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -277,7 +275,6 @@ void TAO::FT_FaultConsumer::offer_change (
 
 void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //TODO: For now, we are just ignoring the disconnect callback.
   ACE_DEBUG ((LM_DEBUG,
