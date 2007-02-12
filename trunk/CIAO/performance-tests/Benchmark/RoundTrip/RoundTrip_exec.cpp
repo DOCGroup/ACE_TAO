@@ -47,7 +47,6 @@ MyImpl::RoundTrip_exec_i::~RoundTrip_exec_i ()
 
 ::Benchmark::CCM_LatencyTest *
 MyImpl::RoundTrip_exec_i::get_latency ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Benchmark::CCM_LatencyTest::_duplicate (this);
 }
@@ -55,7 +54,6 @@ MyImpl::RoundTrip_exec_i::get_latency ()
 /* Main method that invokes the octet_sequence */
 CORBA::Long
 MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return data * data * data;
 }
@@ -64,8 +62,6 @@ MyImpl::RoundTrip_exec_i::makeCall (CORBA::Long data)
 void
 MyImpl::RoundTrip_exec_i::set_session_context (
     Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::set_session_context\n"));
@@ -81,15 +77,11 @@ MyImpl::RoundTrip_exec_i::set_session_context (
 
 void
 MyImpl::RoundTrip_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::RoundTrip_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_activate\n"));
@@ -101,16 +93,12 @@ MyImpl::RoundTrip_exec_i::ccm_activate ()
 
 void
 MyImpl::RoundTrip_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 
 }
 
 void
 MyImpl::RoundTrip_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_passivate\n"));
@@ -118,8 +106,6 @@ MyImpl::RoundTrip_exec_i::ccm_passivate ()
 
 void
 MyImpl::RoundTrip_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::RoundTrip_exec_i::ccm_remove\n"));
@@ -136,8 +122,6 @@ MyImpl::RoundTripHome_exec_i::~RoundTripHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::RoundTripHome_exec_i::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   return new MyImpl::RoundTrip_exec_i;
 }

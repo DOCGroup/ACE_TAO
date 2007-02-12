@@ -19,7 +19,6 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                Execution_Manager::Execution_Manager_Impl * em,
                                const Deployment::DeploymentPlan & plan,
                                const char * deployment_file)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     execution_manager_ (em), // a plain C++ pointer
@@ -75,7 +74,6 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 
 Deployment::NodeApplication_ptr
 CIAO::DomainApplicationManager_Impl::get_node_app (const char * node_name)
-  ACE_THROW_SPEC ((::CORBA::SystemException, ::Deployment::NoSuchName))
 {
   // Get the NodeApplication object reference.
   ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
@@ -98,10 +96,6 @@ CIAO::DomainApplicationManager_Impl::get_node_app (const char * node_name)
 
 void
 CIAO::DomainApplicationManager_Impl::init ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::PlanError))
 {
   try
     {
@@ -493,10 +487,6 @@ void
 CIAO::DomainApplicationManager_Impl::
 startLaunch (const ::Deployment::Properties & configProperty,
              ::CORBA::Boolean start)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::ResourceNotAvailable,
-                   ::Deployment::StartError,
-                   ::Deployment::InvalidProperty))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::startLaunch");
   ACE_UNUSED_ARG (start);
@@ -638,8 +628,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
 void
 CIAO::DomainApplicationManager_Impl::install_all_es (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
 {
   try
     {
@@ -692,8 +680,6 @@ void
 CIAO::DomainApplicationManager_Impl::
 add_es_to_map (const char * node_name,
                CIAO::CIAO_Event_Service * ciao_es)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
 {
   try
     {
@@ -714,8 +700,6 @@ void
 CIAO::DomainApplicationManager_Impl::
 finishLaunch (CORBA::Boolean start,
               CORBA::Boolean is_ReDaC)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::finishLaunch");
   try
@@ -933,8 +917,6 @@ finishLaunch (CORBA::Boolean start,
 void
 CIAO::DomainApplicationManager_Impl::
 post_finishLaunch (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
 {
   try
     {
@@ -1137,7 +1119,6 @@ get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv,
                             bool is_getting_all_connections,
                             bool is_search_new_plan)
-  ACE_THROW_SPEC ((Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
 
@@ -1178,7 +1159,6 @@ populate_connection_for_binding (
      const Deployment::PlanConnectionDescription & binding,
      const Deployment::DeploymentPlan & plan,
      Deployment::Connections & retv)
-  ACE_THROW_SPEC ((Deployment::StartError))
 {
   const CORBA::ULong binding_len = binding.internalEndpoint.length ();
 
@@ -1209,7 +1189,6 @@ handle_es_connection (
      const Deployment::PlanConnectionDescription & binding,
      const Deployment::DeploymentPlan & plan,
      Deployment::Connections & retv)
-  ACE_THROW_SPEC ((Deployment::StartError))
 {
   // The initial retv might have something inside
   CORBA::ULong len = retv.length ();
@@ -1314,7 +1293,6 @@ handle_direct_connection (
      const Deployment::PlanConnectionDescription & binding,
      const Deployment::DeploymentPlan & plan,
      Deployment::Connections & retv)
-  ACE_THROW_SPEC ((Deployment::StartError))
 {
   // The initial retv might have something inside
   CORBA::ULong len = retv.length ();
@@ -1401,8 +1379,6 @@ handle_direct_connection (
 void
 CIAO::DomainApplicationManager_Impl::
 start ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::start");
 
@@ -1509,8 +1485,6 @@ start ()
 void
 CIAO::DomainApplicationManager_Impl::
 destroyApplication ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::StopError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
   try
@@ -1641,8 +1615,6 @@ destroyApplication ()
 void
 CIAO::DomainApplicationManager_Impl::
 destroyManager ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StopError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyManager");
   try
@@ -1680,13 +1652,6 @@ void
 CIAO::DomainApplicationManager_Impl::
 perform_redeployment (
   const Deployment::DeploymentPlan & plan)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                    Deployment::PlanError,
-                    Deployment::InstallationFailure,
-                    Deployment::UnknownImplId,
-                    Deployment::ImplEntryPointNotFound,
-                    Deployment::InvalidConnection,
-                    ::Components::RemoveFailure))
 {
   // Currently we could dynamically update the NodeManagerMap topology,
   // but later maybe we could add another parameter to this operation,
@@ -1738,7 +1703,6 @@ perform_redeployment (
 ::Deployment::DeploymentPlan *
 CIAO::DomainApplicationManager_Impl::
 getPlan ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::getPlan");
   Deployment::DeploymentPlan_var plan = 0;
@@ -1870,8 +1834,6 @@ subtract_connections (const Deployment::Connections & left,
 void
 CIAO::DomainApplicationManager_Impl::
 passivate_shared_components (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
 {
   try
     {
@@ -1904,8 +1866,6 @@ passivate_shared_components (void)
 void
 CIAO::DomainApplicationManager_Impl::
 activate_shared_components (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError))
 {
   try
     {

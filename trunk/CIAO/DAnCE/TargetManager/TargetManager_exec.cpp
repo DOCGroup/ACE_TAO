@@ -48,7 +48,6 @@ namespace CIDL_TargetManager_i
 
   ::Deployment::Domain *
   TargetManager_exec_i::getAllResources ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
       get_data_manager ()->get_initial_domain ();
@@ -56,7 +55,6 @@ namespace CIDL_TargetManager_i
 
   ::Deployment::Domain *
   TargetManager_exec_i::getAvailableResources ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
       get_data_manager ()->get_current_domain ();
@@ -65,9 +63,6 @@ namespace CIDL_TargetManager_i
   void
   TargetManager_exec_i::commitResources (
   const ::Deployment::DeploymentPlan & plan)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Deployment::PlanError))
   {
     return CIAO::DomainDataManager::
       get_data_manager ()->commitResources (plan);
@@ -76,7 +71,6 @@ namespace CIDL_TargetManager_i
   void
   TargetManager_exec_i::releaseResources (
   const ::Deployment::DeploymentPlan &  plan)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CIAO::DomainDataManager::
       get_data_manager ()->releaseResources (plan);
@@ -87,7 +81,6 @@ namespace CIDL_TargetManager_i
   const ::CORBA::StringSeq &  elements ,
   const ::Deployment::Domain &  domainSubset ,
   ::Deployment::DomainUpdateKind  updateKind)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
     CIAO::DomainDataManager::
@@ -145,16 +138,13 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManager_exec_i::destroyResourceCommitment (
-  ::Deployment::ResourceCommitmentManager_ptr resources
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
+  ::Deployment::ResourceCommitmentManager_ptr resources)
   {
     ::Deployment::ResourceAllocations res;
     res.length (0);
     resources->releaseResources (res);
     return;
   }
-  
   //==================================================================
   // Component Executor Implementation Class:   TargetManagerImpl_exec_i
   //==================================================================
@@ -176,7 +166,6 @@ namespace CIDL_TargetManager_i
 
   ::Deployment::CCM_TargetManager_ptr
   TargetManagerImpl_exec_i::get_targetMgr ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
 
@@ -196,9 +185,6 @@ namespace CIDL_TargetManager_i
   void
   TargetManagerImpl_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     this->context_ =
     TargetManagerImpl_Context::_narrow (
@@ -212,18 +198,12 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManagerImpl_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   TargetManagerImpl_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
   }
@@ -231,9 +211,6 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManagerImpl_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
     this->get_targetMgr ();
@@ -241,18 +218,12 @@ namespace CIDL_TargetManager_i
 
   void
   TargetManagerImpl_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   TargetManagerImpl_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     // Your code here.
 
@@ -286,9 +257,6 @@ namespace CIDL_TargetManager_i
 
   ::Components::EnterpriseComponent_ptr
   TargetManagerHome_exec_i::create ()
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

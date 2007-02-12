@@ -51,51 +51,31 @@ namespace CIAO
       /// $CIAO_ROOT/ciao/Deployment.idl for documentation
       virtual Deployment::DomainApplicationManager_ptr
       preparePlan (const Deployment::DeploymentPlan & plan,
-                   CORBA::Boolean commitResources)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Deployment::ResourceNotAvailable,
-                         Deployment::PlanError,
-                         Deployment::StartError));
+                   CORBA::Boolean commitResources);
 
-      virtual Deployment::DomainApplicationManagers *getManagers ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual Deployment::DomainApplicationManagers *getManagers ();
 
       // Below method is CIAO specific extension
       virtual Deployment::DomainApplicationManager_ptr
-      getManager (const char * plan_uuid)
-        ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist));
+      getManager (const char * plan_uuid);
 
       virtual void
-      destroyManager (Deployment::DomainApplicationManager_ptr manager)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Deployment::StopError));
+      destroyManager (Deployment::DomainApplicationManager_ptr manager);
 
       // Below method is CIAO specific extension, please see the IDL
       // definition for more details.
       virtual void
-      destroyManagerByPlan (const char * plan_uuid)
-        ACE_THROW_SPEC ((::CORBA::SystemException,
-                         ::Deployment::StopError));
+      destroyManagerByPlan (const char * plan_uuid);
 
-      virtual void shutdown ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void shutdown ();
 
       // The input parameter is a *new_plan* which has the
       // same UUID of the existing running plan.
       virtual void
       perform_redeployment (
-          const Deployment::DeploymentPlan & plan)
-        ACE_THROW_SPEC ((::CORBA::SystemException,
-                         ::Deployment::PlanError,
-                         ::Deployment::InstallationFailure,
-                         ::Deployment::UnknownImplId,
-                         ::Deployment::ImplEntryPointNotFound,
-                         ::Deployment::InvalidConnection,
-                         ::Deployment::InvalidProperty,
-                         ::Components::RemoveFailure));
+          const Deployment::DeploymentPlan & plan);
 
-      virtual Deployment::DeploymentPlan * getPlan (const char * plan_uuid)
-        ACE_THROW_SPEC ((::CORBA::SystemException));
+      virtual Deployment::DeploymentPlan * getPlan (const char * plan_uuid);
 
     /// ****************** C++ Methods *************************
 
@@ -107,20 +87,13 @@ namespace CIAO
     /// a list of bindings and do the batch job.
     virtual void finalize_global_binding (
         const Component_Binding_Info & binding,
-        CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Deployment::InvalidConnection));
+        CORBA::Boolean add_connection);
 
     virtual void passivate_shared_components (
-        const Component_Binding_Info & binding)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+        const Component_Binding_Info & binding);
 
     virtual void activate_shared_components (
-        const Component_Binding_Info & binding)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+        const Component_Binding_Info & binding);
 
       /// Add shared component information.
       /// This call will be made by DomainApplicationManager.
@@ -141,10 +114,7 @@ namespace CIAO
     protected:
       /// Return the NodeApplication hosting the given biding
       virtual Deployment::NodeApplication_ptr
-        find_node_application (const Component_Binding_Info & binding)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Deployment::InvalidConnection));
+        find_node_application (const Component_Binding_Info & binding);
 
     protected:
       /// Destructor.

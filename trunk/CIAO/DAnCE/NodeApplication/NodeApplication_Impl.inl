@@ -20,7 +20,6 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
 ACE_INLINE
 Deployment::Properties *
 CIAO::NodeApplication_Impl::properties ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Deployment::Properties * tmp = 0;
 
@@ -42,7 +41,6 @@ CIAO::NodeApplication_Impl::_default_POA (void)
 ACE_INLINE
 CORBA::Object_ptr
 CIAO::NodeApplication_Impl::get_node_application_manager ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::CORBA::Object::_duplicate (this->node_app_manager_.in ());
 }
@@ -53,7 +51,6 @@ CIAO::NodeApplication_Impl::
 set_objref (Components::Deployment::ServerActivator_ptr act,
             const Components::ConfigValues &config,
             Components::Deployment::ComponentServer_ptr cs)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!CORBA::is_nil (this->node_app_manager_.in ()) ||
       !CORBA::is_nil (this->objref_.in ()))
