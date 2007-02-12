@@ -243,12 +243,6 @@ private:
   void validate_inheritance (Prop_Map &prop_map,
                              const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
 
-  //  void validate_interface (const char *if_name,
-  //                       Service_Type_Map &super_map,
-  //)
-  //    ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch));
-  // Ensure that the interface type derives from its superclasses'.
-
   /// Update the type map with the information contained in the
   /// TypeStruct, prop_map, and super_map.
   void update_type_map (const char *name,
