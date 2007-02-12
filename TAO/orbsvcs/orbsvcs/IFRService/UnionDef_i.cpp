@@ -33,14 +33,12 @@ TAO_UnionDef_i::~TAO_UnionDef_i (void)
 
 CORBA::DefinitionKind
 TAO_UnionDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Union;
 }
 
 void
 TAO_UnionDef_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -51,7 +49,6 @@ TAO_UnionDef_i::destroy (void)
 
 void
 TAO_UnionDef_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -62,7 +59,6 @@ TAO_UnionDef_i::destroy_i (void)
 
 CORBA::TypeCode_ptr
 TAO_UnionDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -73,7 +69,6 @@ TAO_UnionDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_UnionDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -116,7 +111,6 @@ TAO_UnionDef_i::type_i (void)
 
 CORBA::TypeCode_ptr
 TAO_UnionDef_i::discriminator_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -127,7 +121,6 @@ TAO_UnionDef_i::discriminator_type (void)
 
 CORBA::TypeCode_ptr
 TAO_UnionDef_i::discriminator_type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString disc_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -147,7 +140,6 @@ TAO_UnionDef_i::discriminator_type_i (void)
 
 CORBA::IDLType_ptr
 TAO_UnionDef_i::discriminator_type_def (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -158,7 +150,6 @@ TAO_UnionDef_i::discriminator_type_def (void)
 
 CORBA::IDLType_ptr
 TAO_UnionDef_i::discriminator_type_def_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString disc_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -176,7 +167,6 @@ void
 TAO_UnionDef_i::discriminator_type_def (
     CORBA::IDLType_ptr discriminator_type_def
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -189,7 +179,6 @@ void
 TAO_UnionDef_i::discriminator_type_def_i (
     CORBA::IDLType_ptr discriminator_type_def
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *disc_path =
     TAO_IFR_Service_Utils::reference_to_path (discriminator_type_def);
@@ -201,7 +190,6 @@ TAO_UnionDef_i::discriminator_type_def_i (
 
 CORBA::UnionMemberSeq *
 TAO_UnionDef_i::members (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -212,7 +200,6 @@ TAO_UnionDef_i::members (void)
 
 CORBA::UnionMemberSeq *
 TAO_UnionDef_i::members_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
@@ -316,7 +303,6 @@ TAO_UnionDef_i::members_i (void)
 
 void
 TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -327,7 +313,6 @@ TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
 
 void
 TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our old members, both refs and defns.
   TAO_Container_i::destroy_i ();
@@ -377,7 +362,6 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
 void
 TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
                              CORBA::UnionMember &member)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration::VALUETYPE vt;
   this->repo_->config ()->find_value (member_key,

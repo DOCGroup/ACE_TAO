@@ -61,7 +61,6 @@ CORBA::Object_ptr
 TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
                                        int /* argc */,
                                        char * /* argv */ [])
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
     orb->resolve_initial_references ("RootPOA");

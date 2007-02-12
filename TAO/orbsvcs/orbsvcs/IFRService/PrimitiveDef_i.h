@@ -51,37 +51,30 @@ public:
   // Destructor.
 
   virtual CORBA::DefinitionKind def_kind ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Return our definition kind.
 
   virtual void destroy ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // May not be called on a primitive kind - raises BAD_INV_ORDER.
 
   virtual void destroy_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Must implement this here because it's pure virtual in the
   // base class.
 
   virtual CORBA::TypeCode_ptr type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::PrimitiveKind kind ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::PrimitiveKind kind_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

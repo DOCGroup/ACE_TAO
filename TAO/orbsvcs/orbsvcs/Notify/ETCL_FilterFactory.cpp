@@ -28,10 +28,6 @@ TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa)
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidGrammar
-                   ))
 {
   // @@: change to "ExTCL" later.
   if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
@@ -62,10 +58,6 @@ CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
                                                   const CORBA::Any & /*default_value*/
                                                   )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidGrammar
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

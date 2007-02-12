@@ -46,7 +46,6 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
 TAO_Service_Type_Repository::incarnation (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
 
@@ -71,15 +70,6 @@ add_type (const char *name,
           const char *if_name,
           const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
           const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
-                   CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
-                   CosTrading::IllegalPropertyName,
-                   CosTrading::DuplicatePropertyName,
-                   CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
-                   CosTrading::UnknownServiceType,
-                   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 {
   Prop_Map prop_map;
   Service_Type_Map super_map;
@@ -152,10 +142,6 @@ add_type (const char *name,
 
 void
 TAO_Service_Type_Repository::remove_type (const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType,
-                   CosTradingRepos::ServiceTypeRepository::HasSubTypes))
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
     throw CosTrading::IllegalServiceType (name);
@@ -181,7 +167,6 @@ TAO_Service_Type_Repository::remove_type (const char *name)
 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
 TAO_Service_Type_Repository::
 list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
@@ -225,9 +210,6 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
 CosTradingRepos::ServiceTypeRepository::TypeStruct *
 TAO_Service_Type_Repository::
 describe_type (const char * name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType))
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
     ACE_THROW_RETURN
@@ -272,9 +254,6 @@ describe_type (const char * name)
 CosTradingRepos::ServiceTypeRepository::TypeStruct *
 TAO_Service_Type_Repository::
 fully_describe_type (const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType))
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
     throw CosTrading::IllegalServiceType (name);
@@ -314,10 +293,6 @@ fully_describe_type (const char *name)
 void
 TAO_Service_Type_Repository::
 mask_type (const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType,
-                   CosTradingRepos::ServiceTypeRepository::AlreadyMasked))
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
     throw CosTrading::IllegalServiceType (name);
@@ -344,10 +319,6 @@ mask_type (const char *name)
 void
 TAO_Service_Type_Repository::
 unmask_type (const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                  CosTrading::IllegalServiceType,
-                  CosTrading::UnknownServiceType,
-                  CosTradingRepos::ServiceTypeRepository::NotMasked))
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
     throw CosTrading::IllegalServiceType (name);
@@ -477,8 +448,6 @@ void
 TAO_Service_Type_Repository::
 validate_properties (Prop_Map &prop_map,
                      const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props)
-  ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
-                   CosTrading::DuplicatePropertyName))
 {
   for (CORBA::ULong i = 0;
        i < props.length ();
@@ -504,9 +473,6 @@ void
 TAO_Service_Type_Repository::
 validate_supertypes (Service_Type_Map &super_map,
                      const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
-  ACE_THROW_SPEC ((CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType,
-                   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 {
   for (CORBA::ULong i = 0;
        i < super_types.length ();
@@ -540,7 +506,6 @@ void
 TAO_Service_Type_Repository::
 validate_inheritance (Prop_Map &prop_map,
                       const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
-  ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition))
 {
   CORBA::ULong num_super_types = super_types.length ();
 

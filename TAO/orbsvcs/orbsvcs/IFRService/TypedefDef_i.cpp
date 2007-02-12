@@ -27,7 +27,6 @@ TAO_TypedefDef_i::~TAO_TypedefDef_i (void)
 
 CORBA::Contained::Description *
 TAO_TypedefDef_i::describe (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -38,7 +37,6 @@ TAO_TypedefDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_TypedefDef_i::describe_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,

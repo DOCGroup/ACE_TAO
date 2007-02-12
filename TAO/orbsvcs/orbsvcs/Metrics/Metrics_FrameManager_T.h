@@ -100,10 +100,7 @@ public:
 
   CORBA::Short register_period (RtecScheduler::Period_t p,
                                 CORBA::Environment &ACE_TRY_ENV
-                                  = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                                  = CORBA::Environment::default_environment ());
   // Binds the period to the internal frame map, with a new frame data
   // structure.  Returns 0 if a new entry is bound successfully,
   // returns 1 if an attempt is made to bind an existing entry, and
@@ -114,15 +111,11 @@ public:
 
   CORBA::Short update_all_frames_with_time (Metrics::Time mt,
                                             CORBA::Environment &ACE_TRY_ENV
-                                              = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION));
+                                              = CORBA::Environment::default_environment ());
   // Updates time frames, based on the passed time value.
 
   CORBA::Short update_all_frames (CORBA::Environment &ACE_TRY_ENV
-                                    = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION));
+                                    = CORBA::Environment::default_environment ());
   // Updates time frames, based on the current time as of the call.
 
   CORBA::Short update_frame (RtecScheduler::Period_t p, const ACE_Time_Value& tv);
@@ -132,19 +125,13 @@ public:
   CORBA::Short update_frame_with_time (RtecScheduler::Period_t p,
                                        Metrics::Time mt,
                                        CORBA::Environment &ACE_TRY_ENV
-                                         = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                                         = CORBA::Environment::default_environment ());
   // Updates the passed period's time frame, based on the passed time
   // value.
 
   CORBA::Short update_frame (RtecScheduler::Period_t p,
                              CORBA::Environment &ACE_TRY_ENV
-                               = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                               = CORBA::Environment::default_environment ());
   // Updates the passed period's time frame, based on the current time
   // as of the call.
 
@@ -153,15 +140,11 @@ public:
 
   CORBA::Short reset_all_frames_with_time (Metrics::Time mt,
                                            CORBA::Environment &ACE_TRY_ENV
-                                             = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION));
+                                             = CORBA::Environment::default_environment ());
   // Resets time frames, based on the passed time value.
 
   CORBA::Short reset_all_frames (CORBA::Environment &ACE_TRY_ENV
-                                   = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION));
+                                   = CORBA::Environment::default_environment ());
   // Resets time frames, based on the current time as of the call.
 
   CORBA::Short reset_frame (RtecScheduler::Period_t p, const ACE_Time_Value& tv);
@@ -171,19 +154,13 @@ public:
   CORBA::Short reset_frame_with_time (RtecScheduler::Period_t p,
                                       Metrics::Time mt,
                                       CORBA::Environment &ACE_TRY_ENV
-                                        = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                                        = CORBA::Environment::default_environment ());
   // Resets the passed period's start-of-frame, based on the passed time
   // value.
 
   CORBA::Short reset_frame (RtecScheduler::Period_t p,
                             CORBA::Environment &ACE_TRY_ENV
-                              = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                              = CORBA::Environment::default_environment ());
   // Resets the passed period's start-of-frame, based on the current time
   // as of the call.
 
@@ -193,10 +170,7 @@ public:
   CORBA::Short get_start_time (RtecScheduler::Period_t p,
                                Metrics::Time &start,
                                CORBA::Environment &ACE_TRY_ENV
-                                 = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                                 = CORBA::Environment::default_environment ());
   // Gets the start time for the period's current frame.
 
   CORBA::Short get_end_time (RtecScheduler::Period_t p, ACE_Time_Value &end);
@@ -205,19 +179,13 @@ public:
   CORBA::Short get_end_time (RtecScheduler::Period_t p,
                              Metrics::Time &end,
                              CORBA::Environment &ACE_TRY_ENV
-                               = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                               = CORBA::Environment::default_environment ());
   // Gets the end time for the period's current frame.
 
   CORBA::Short get_frame_id (RtecScheduler::Period_t p,
                              CORBA::ULong &id,
                              CORBA::Environment &ACE_TRY_ENV
-                               = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                               = CORBA::Environment::default_environment ());
   // Gets the locally unique identifier for the period's current frame.
 
   CORBA::Short get_frame_data (RtecScheduler::Period_t p, ACE_Time_Value &start,
@@ -229,10 +197,7 @@ public:
                                Metrics::Time &end,
                                CORBA::ULong &id,
                                CORBA::Environment &ACE_TRY_ENV
-                                 = CORBA::Environment::default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION));
+                                 = CORBA::Environment::default_environment ());
   // Gets the start time, end time, and id period's current frame.
 
 protected:

@@ -55,8 +55,7 @@ public:
   // Destructor
 
   virtual void destroy (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -84,7 +84,6 @@ CORBA::Object_ptr
 TAO_LB_ObjectReferenceFactory::make_object (
     const char * repository_id,
     const PortableInterceptor::ObjectId & id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (repository_id == 0)
     throw CORBA::BAD_PARAM ();

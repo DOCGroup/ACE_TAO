@@ -61,20 +61,16 @@ namespace TAO
        * @name CORBA::Policy Methods
        */
       //@{
-      virtual CORBA::PolicyType policy_type (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type (void);
 
-      virtual CORBA::Policy_ptr copy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy (void);
 
-      virtual void destroy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy (void);
       //@}
 
       /// Return the Quality-of-Protection value associated with this
       /// policy.
-      virtual ::Security::QOP qop (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual ::Security::QOP qop (void);
 
     protected:
 

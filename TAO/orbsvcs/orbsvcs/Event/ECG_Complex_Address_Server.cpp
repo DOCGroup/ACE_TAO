@@ -125,7 +125,6 @@ void
 TAO_ECG_Complex_Address_Server::get_addr (
                          const RtecEventComm::EventHeader& header,
                          RtecUDPAdmin::UDP_Addr_out addr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Long key;
   if (this->is_source_mapping_)

@@ -231,18 +231,15 @@ public:
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   virtual CosEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_consumers (void);
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this (env);
   virtual CosEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_suppliers (void);
 
   /// Commit suicide.
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   ServantRetryMap& get_servant_retry_map (void);
 

@@ -114,8 +114,7 @@ public:
 
   /// Checks for illegal member type in given container type.
   static void valid_container (CORBA::DefinitionKind container_kind,
-                               CORBA::DefinitionKind contained_kind)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                               CORBA::DefinitionKind contained_kind);
 
   /// Wrapper for id_exists() and name_exists().
   static void pre_exist (const char *id,
@@ -126,23 +125,20 @@ public:
 
   /// Checks for a global repository id clash.
   static void id_exists (const char *id,
-                         TAO_Repository_i *repo)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                         TAO_Repository_i *repo);
 
   /// Checks for a local name clash.
   static void name_exists (name_clash_checker checker,
                            ACE_Configuration_Section_Key &key,
                            TAO_Repository_i *repo,
-                           CORBA::DefinitionKind kind)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                           CORBA::DefinitionKind kind);
 
   /// Used by interfaces and components to check for name clashes
   /// in the attributes, operations, or component ports subsections.
   static void check_subsection (name_clash_checker checker,
                                 const char *sub_section,
                                 ACE_Configuration *config,
-                                ACE_Configuration_Section_Key &key)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                ACE_Configuration_Section_Key &key);
 
   /// Top-level method which calls all the above error-checking methods.
   static void valid_creation (CORBA::DefinitionKind container_kind,

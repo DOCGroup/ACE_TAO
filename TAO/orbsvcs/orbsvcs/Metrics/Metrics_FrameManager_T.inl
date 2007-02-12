@@ -54,9 +54,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 register_period (RtecScheduler::Period_t p,
                  CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case: no need to register, but
   // no harm if someone tries.
@@ -128,8 +125,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 update_all_frames_with_time (Metrics::Time mt,
                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION))
 {
   // Reentrant method that calls locked method.
   ACE_Time_Value tv;
@@ -148,8 +143,6 @@ template <class ACE_LOCK>
 ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 update_all_frames (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION))
 {
   // Synchronize read/write access to the map while the new frames are
   // being computed.
@@ -224,9 +217,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 update_frame_with_time (RtecScheduler::Period_t p, Metrics::Time mt,
                         CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -253,9 +243,6 @@ template <class ACE_LOCK>
 ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 update_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -328,8 +315,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 reset_all_frames_with_time (Metrics::Time mt,
                             CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION))
 {
   // Reentrant method that calls locked method.
   ACE_Time_Value tv;
@@ -348,8 +333,6 @@ template <class ACE_LOCK>
 ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 reset_all_frames (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::SYNCHRONIZATION))
 {
   // Synchronize read/write access to the map during the reset
   ACE_Write_Guard<ACE_LOCK> mon (this->lock_);
@@ -424,9 +407,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 reset_frame_with_time (RtecScheduler::Period_t p, Metrics::Time mt,
                        CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -453,9 +433,6 @@ template <class ACE_LOCK>
 ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 reset_frame (RtecScheduler::Period_t p, CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -550,9 +527,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 get_start_time (RtecScheduler::Period_t p, Metrics::Time &start,
                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -622,9 +596,6 @@ ACE_INLINE CORBA::Short
 TAO_Metrics_FrameManager<ACE_LOCK>::
 get_end_time (RtecScheduler::Period_t p, Metrics::Time &end,
               CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -652,9 +623,6 @@ TAO_Metrics_FrameManager<ACE_LOCK>::
 get_frame_id (RtecScheduler::Period_t p,
               CORBA::ULong &id,
               CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)
@@ -747,9 +715,6 @@ TAO_Metrics_FrameManager<ACE_LOCK>::
 get_frame_data (RtecScheduler::Period_t p, Metrics::Time &start,
                 Metrics::Time &end, CORBA::ULong &id,
                  CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Metrics::INTERNAL,
-                     Metrics::SYNCHRONIZATION))
 {
   // Treat a zero period as a special case.
   if (p == 0)

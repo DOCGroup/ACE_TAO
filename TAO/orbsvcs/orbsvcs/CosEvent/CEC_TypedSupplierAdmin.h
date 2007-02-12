@@ -57,23 +57,17 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedSupplierAdmin methods...
   virtual CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
-    obtain_typed_push_consumer (const char * supported_interface)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosTypedEventChannelAdmin::InterfaceNotSupported));
+    obtain_typed_push_consumer (const char * supported_interface);
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_typed_pull_consumer (const char * uses_interface)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosTypedEventChannelAdmin::NoSuchImplementation));
+    obtain_typed_pull_consumer (const char * uses_interface);
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-    obtain_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    obtain_push_consumer (void);
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_pull_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    obtain_pull_consumer (void);
 
   // = The PortableServer::ServantBase methods
   virtual PortableServer::POA_ptr _default_POA (void);

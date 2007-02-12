@@ -52,55 +52,44 @@ public:
   // Destructor
 
   virtual CORBA::ExcDescriptionSeq *get_exceptions (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ExcDescriptionSeq *get_exceptions_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void get_exceptions (
       const CORBA::ExcDescriptionSeq &get_exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void get_exceptions_i (
       const CORBA::ExcDescriptionSeq &get_exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ExcDescriptionSeq *set_exceptions (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ExcDescriptionSeq *set_exceptions_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void set_exceptions (
       const CORBA::ExcDescriptionSeq &set_exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void set_exceptions_i (
       const CORBA::ExcDescriptionSeq &set_exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ExtAttributeDescription *describe_attribute (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ExtAttributeDescription *describe_attribute_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   // Utility function that fills sequence elements for a
   // ComponentDescription.
   void fill_description (
       CORBA::ExtAttributeDescription &desc
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
 private:
   /// Common code for the set and get varieties.

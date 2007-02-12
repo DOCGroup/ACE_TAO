@@ -59,8 +59,7 @@ public:
       const char *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
       const CORBA::InterfaceDefSeq &supports_interfaces
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::ComponentDef_ptr create_component_i (
       const char *id,
@@ -68,8 +67,7 @@ public:
       const char *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
       const CORBA::InterfaceDefSeq &supports_interfaces
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ComponentIR::HomeDef_ptr create_home (
       const char *id,
@@ -79,8 +77,7 @@ public:
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
       const CORBA::InterfaceDefSeq &supports_interfaces,
       CORBA::ValueDef_ptr primary_key
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::HomeDef_ptr create_home_i (
       const char *id,
@@ -90,8 +87,7 @@ public:
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
       const CORBA::InterfaceDefSeq &supports_interfaces,
       CORBA::ValueDef_ptr primary_key
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ComponentIR::EventDef_ptr create_event (
       const char *id,
@@ -104,8 +100,7 @@ public:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::EventDef_ptr create_event_i (
       const char *id,
@@ -118,8 +113,7 @@ public:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   static int same_as_tmp_name (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exisits.

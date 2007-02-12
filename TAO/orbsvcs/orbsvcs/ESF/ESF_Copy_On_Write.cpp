@@ -9,8 +9,6 @@
 #include "orbsvcs/ESF/ESF_Copy_On_Write.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/Environment.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> CORBA::ULong

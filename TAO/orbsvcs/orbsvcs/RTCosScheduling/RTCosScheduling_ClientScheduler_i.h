@@ -85,34 +85,24 @@ public:
   //@{
   /// Return the name of this ClientRequestInterceptor.
   //
-  virtual char * name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
 
 private:
@@ -169,10 +159,7 @@ class TAO_RTCosScheduling_Export RTCosScheduling_ClientScheduler_i :
      *        the desired priority
      */
     virtual void schedule_activity (
-        const char *activity_name)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RTCosScheduling::UnknownName));
+        const char *activity_name);
 //@}
 
   private:

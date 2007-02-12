@@ -50,37 +50,30 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Return our definition kind.
 
   virtual CORBA::Contained::Description *describe (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From Contained_i's pure virtual function.
 
   virtual CORBA::Contained::Description *describe_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From Contained_i's pure virtual function.
 
   virtual CORBA::InterfaceDef_ptr interface_type (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::InterfaceDef_ptr interface_type_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void interface_type (
       CORBA::InterfaceDef_ptr interface_type
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void interface_type_i (
       CORBA::InterfaceDef_ptr interface_type
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

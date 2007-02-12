@@ -80,9 +80,6 @@ TAO_Notify_SupplierAdmin::release (void)
 
 void
 TAO_Notify_SupplierAdmin::destroy (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   int result = this->shutdown ();
   if ( result == 1)
@@ -146,19 +143,12 @@ TAO_Notify_SupplierAdmin::load_proxy (
 
 void
 TAO_Notify_SupplierAdmin::set_qos (const CosNotification::QoSProperties & qos)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotification::UnsupportedQoS
-                   ))
 {
   this->TAO_Notify_Object::set_qos (qos);
 }
 
 CosNotification::QoSProperties*
 TAO_Notify_SupplierAdmin::get_qos (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->TAO_Notify_Object::get_qos ();
 }
@@ -166,10 +156,6 @@ TAO_Notify_SupplierAdmin::get_qos (void)
 CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdmin::ClientType ctype
                                                          , CosNotifyChannelAdmin::ProxyID_out proxy_id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyChannelAdmin::AdminLimitExceeded
-                   ))
 
 {
   CosNotification::QoSProperties initial_qos;
@@ -188,11 +174,6 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyC
                                                                   CosNotifyChannelAdmin::ProxyID_out proxy_id,
                                                                   const CosNotification::QoSProperties & initial_qos
                                                                   )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyChannelAdmin::AdminLimitExceeded
-                   , CosNotification::UnsupportedQoS
-                   ))
 {
   CosNotifyChannelAdmin::ProxyConsumer_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this
@@ -206,9 +187,6 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyC
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_push_consumer (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   CosEventChannelAdmin::ProxyPushConsumer_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this);
@@ -218,36 +196,24 @@ TAO_Notify_SupplierAdmin::obtain_push_consumer (void)
 
 CosNotifyChannelAdmin::AdminID
 TAO_Notify_SupplierAdmin::MyID (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->id ();
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_SupplierAdmin::MyChannel (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->ec_->_this ();
 }
 
 ::CosNotifyChannelAdmin::InterFilterGroupOperator
 TAO_Notify_SupplierAdmin::MyOperator (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->filter_operator_;
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
 TAO_Notify_SupplierAdmin::push_consumers (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_Proxy_Seq_Worker seq_worker;
 
@@ -256,10 +222,6 @@ TAO_Notify_SupplierAdmin::push_consumers (void)
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_SupplierAdmin::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID proxy_id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyChannelAdmin::ProxyNotFound
-                   ))
 {
   TAO_Notify_ProxyConsumer_Find_Worker find_worker;
 
@@ -270,10 +232,6 @@ void
 TAO_Notify_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
                                     const CosNotification::EventTypeSeq & removed
                                     )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyComm::InvalidEventType
-                   ))
 
 {
   TAO_Notify_EventTypeSeq seq_added (added);
@@ -293,9 +251,6 @@ TAO_Notify_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & ad
 
 CosNotifyFilter::FilterID
 TAO_Notify_SupplierAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   CosNotifyFilter::FilterID fid =
     this->filter_admin_.add_filter (new_filter);
@@ -305,38 +260,24 @@ TAO_Notify_SupplierAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
 
 void
 TAO_Notify_SupplierAdmin::remove_filter (CosNotifyFilter::FilterID filter)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyFilter::FilterNotFound
-                   ))
 {
   this->filter_admin_.remove_filter (filter);
 }
 
 ::CosNotifyFilter::Filter_ptr
 TAO_Notify_SupplierAdmin::get_filter (CosNotifyFilter::FilterID filter)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyFilter::FilterNotFound
-                   ))
 {
   return this->filter_admin_.get_filter (filter);
 }
 
 ::CosNotifyFilter::FilterIDSeq*
 TAO_Notify_SupplierAdmin::get_all_filters (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->filter_admin_.get_all_filters ();
 }
 
 void
 TAO_Notify_SupplierAdmin::remove_all_filters (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   this->filter_admin_.remove_all_filters ();
 }
@@ -345,18 +286,12 @@ TAO_Notify_SupplierAdmin::remove_all_filters (void)
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_pull_consumer (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
 TAO_Notify_SupplierAdmin::pull_consumers (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -365,10 +300,6 @@ TAO_Notify_SupplierAdmin::pull_consumers (void)
 void
 TAO_Notify_SupplierAdmin::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
                                     CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotification::UnsupportedQoS
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -376,10 +307,6 @@ TAO_Notify_SupplierAdmin::validate_qos (const CosNotification::QoSProperties & /
 CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdmin::ClientType /*ctype*/,
                                                          CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyChannelAdmin::AdminLimitExceeded
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

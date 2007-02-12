@@ -28,7 +28,6 @@ TAO::SL3::SecurityCurrent::~SecurityCurrent (void)
 
 SecurityLevel3::ClientCredentials_ptr
 TAO::SL3::SecurityCurrent::client_credentials (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
 
@@ -43,7 +42,6 @@ TAO::SL3::SecurityCurrent::client_credentials (void)
 
 CORBA::Boolean
 TAO::SL3::SecurityCurrent::request_is_local (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
 

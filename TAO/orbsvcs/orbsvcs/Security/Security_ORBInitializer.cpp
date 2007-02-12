@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO::Security::ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // allocate_tss_slot_id() TAO extension.
@@ -129,7 +128,6 @@ TAO::Security::ORBInitializer::pre_init (
 void
 TAO::Security::ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 }

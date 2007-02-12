@@ -54,14 +54,12 @@ TAO_LB_LeastLoaded::~TAO_LB_LeastLoaded (void)
 
 char *
 TAO_LB_LeastLoaded::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("LeastLoaded");
 }
 
 CosLoadBalancing::Properties *
 TAO_LB_LeastLoaded::get_properties (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -79,7 +77,6 @@ void
 TAO_LB_LeastLoaded::push_loads (
     const PortableGroup::Location & the_location,
     const CosLoadBalancing::LoadList & loads)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Only the first load is used by this load balancing strategy.
   if (loads.length () == 0)
@@ -153,8 +150,6 @@ TAO_LB_LeastLoaded::push_loads (
 CosLoadBalancing::LoadList *
 TAO_LB_LeastLoaded::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                                const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -174,9 +169,6 @@ CORBA::Object_ptr
 TAO_LB_LeastLoaded::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -227,7 +219,6 @@ void
 TAO_LB_LeastLoaded::analyze_loads (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();

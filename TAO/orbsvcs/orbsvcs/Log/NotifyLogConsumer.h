@@ -72,26 +72,15 @@ protected:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosNotifyComm::InvalidEventType
-    ));
+    );
 
   // = PushSupplier methods
   virtual void push (
       const CORBA::Any & event
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosEventComm::Disconnected
-     ));
+    );
 
   virtual void disconnect_push_consumer (
-      )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+      );
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

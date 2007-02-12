@@ -174,10 +174,8 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void push (const RtecEventComm::EventSet &events)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
+  virtual void push (const RtecEventComm::EventSet &events);
   //@}
 
 protected:

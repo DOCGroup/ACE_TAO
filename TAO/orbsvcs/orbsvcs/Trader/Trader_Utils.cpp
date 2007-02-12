@@ -251,7 +251,6 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
 
 CORBA::Any*
 TAO_Property_Evaluator::property_value (int index)
-    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* prop_val = 0;
   CORBA::Boolean in_cache =
@@ -334,8 +333,6 @@ TAO_Property_Evaluator_By_Name::
 TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
 ,
                                 CORBA::Boolean supports_dp)
-  ACE_THROW_SPEC ((CosTrading::DuplicatePropertyName,
-                   CosTrading::IllegalPropertyName))
     : TAO_Property_Evaluator (properties, supports_dp)
 {
   int length = this->props_.length();
@@ -385,7 +382,6 @@ is_dynamic_property(const char* property_name)
 
 CORBA::Any*
 TAO_Property_Evaluator_By_Name::property_value (const char* property_name)
-  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   int index = 0;
   CORBA::Any* prop_value = 0;
@@ -499,8 +495,6 @@ const char* TAO_Policies::POLICY_NAMES[] =
 
 TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
                             const CosTrading::PolicySeq& policies)
-  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
-                  CosTrading::DuplicatePolicyName))
   : trader_ (trader)
 {
   for (int i = 0; i < TAO_NUM_POLICIES; i++)
@@ -567,7 +561,6 @@ TAO_Policies::~TAO_Policies (void)
 
 CORBA::ULong
 TAO_Policies::ulong_prop (POLICY_TYPE pol) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CORBA::ULong return_value = 0, max_value = 0;
   const TAO_Import_Attributes_i& import_attrs =
@@ -620,28 +613,24 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol) const
 
 CORBA::ULong
 TAO_Policies::search_card (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (SEARCH_CARD);
 }
 
 CORBA::ULong
 TAO_Policies::match_card (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (MATCH_CARD);
 }
 
 CORBA::ULong
 TAO_Policies::return_card (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (RETURN_CARD);
 }
 
 CORBA::Boolean
 TAO_Policies::boolean_prop (POLICY_TYPE pol) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CORBA::Boolean def_value = 1,
     return_value = 1;
@@ -693,28 +682,24 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol) const
 
 CORBA::Boolean
 TAO_Policies::use_modifiable_properties (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (USE_MODIFIABLE_PROPERTIES);
 }
 
 CORBA::Boolean
 TAO_Policies::use_dynamic_properties (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (USE_DYNAMIC_PROPERTIES);
 }
 
 CORBA::Boolean
 TAO_Policies::use_proxy_offers (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (USE_PROXY_OFFERS);
 }
 
 CORBA::Boolean
 TAO_Policies::exact_type_match (void) const
-    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->boolean_prop (EXACT_TYPE_MATCH);
 }
@@ -722,8 +707,6 @@ TAO_Policies::exact_type_match (void) const
 
 CosTrading::TraderName*
 TAO_Policies::starting_trader (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-                   CosTrading::Lookup::InvalidPolicyValue))
 {
   CosTrading::TraderName* trader_name = 0;
 
@@ -751,7 +734,6 @@ TAO_Policies::starting_trader (void) const
 
 CosTrading::FollowOption
 TAO_Policies::link_follow_rule (void) const
-    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CosTrading::FollowOption return_value =
     this->trader_.import_attributes ().def_follow_policy ();
@@ -783,10 +765,6 @@ TAO_Policies::link_follow_rule (void) const
 
 CosTrading::FollowOption
 TAO_Policies::link_follow_rule (const CosTrading::Link::LinkInfo& link_info) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-                   CosTrading::Lookup::InvalidPolicyValue,
-                   CosTrading::Link::IllegalLinkName,
-                   CosTrading::Link::UnknownLinkName))
 {
   CosTrading::FollowOption return_value = CosTrading::local_only;
   CosTrading::FollowOption trader_max_follow_policy =
@@ -808,14 +786,12 @@ TAO_Policies::link_follow_rule (const CosTrading::Link::LinkInfo& link_info) con
 
 CORBA::ULong
 TAO_Policies::hop_count (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   return this->ulong_prop (HOP_COUNT);
 }
 
 CosTrading::Admin::OctetSeq*
 TAO_Policies::request_id (void) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch))
 {
   CosTrading::Admin::OctetSeq* request_id = 0;
 
@@ -841,8 +817,6 @@ void
 TAO_Policies::
 copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
                        const CosTrading::Link::LinkInfo& link_info) const
-  ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
-                   CosTrading::Lookup::InvalidPolicyValue))
 {
   CosTrading::FollowOption follow_option = CosTrading::local_only;
   CosTrading::FollowOption trader_max_follow_policy =
@@ -1065,10 +1039,6 @@ TAO_Offer_Modifier::~TAO_Offer_Modifier (void)
 void
 TAO_Offer_Modifier::
 delete_properties (const CosTrading::PropertyNameSeq& deletes)
-  ACE_THROW_SPEC ((CosTrading::Register::UnknownPropertyName,
-                  CosTrading::Register::MandatoryProperty,
-                  CosTrading::IllegalPropertyName,
-                  CosTrading::DuplicatePropertyName))
 {
   // Validate that the listed property names can be deleted
   CORBA::ULong i = 0,
@@ -1104,11 +1074,6 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes)
 void
 TAO_Offer_Modifier::
 merge_properties (const CosTrading::PropertySeq& modifies)
-  ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
-                   CosTrading::DuplicatePropertyName,
-                   CosTrading::PropertyTypeMismatch,
-                   CosTrading::ReadonlyDynamicProperty,
-                   CosTrading::Register::ReadonlyProperty))
 {
   int i = 0, length = 0;
   TAO_String_Set modify_me;
@@ -1392,8 +1357,6 @@ TAO_Offer_Filter::limits_applied (void)
 
 TAO_Property_Filter::
 TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
-  ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
-                   CosTrading::DuplicatePropertyName))
   : policy_  (desired_props._d ())
 {
   if (this->policy_ == CosTrading::Lookup::some)

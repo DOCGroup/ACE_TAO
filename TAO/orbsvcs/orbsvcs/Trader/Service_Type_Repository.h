@@ -43,8 +43,7 @@ public:
   ~TAO_Service_Type_Repository (void);
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    incarnation (void);
 
   /**
    * BEGIN SPEC
@@ -59,16 +58,7 @@ public:
   add_type (const char *name,
             const char *if_name,
             const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
-                     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName,
-                     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
 
   // If the type creation is successful, an incarnation number is
   // returned as the value of the operation. Incarnation numbers are
@@ -115,15 +105,10 @@ public:
    * "name" has a service type which has been derived from it, then
    * the HasSubTypes exception is raised.  END SPEC
    */
-  virtual void remove_type (const char  *name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::HasSubTypes));
+  virtual void remove_type (const char  *name);
 
   virtual CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
-  list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types);
 
   // BEGIN SPEC
   // The list_types operation permits a client to obtain the names of
@@ -146,10 +131,7 @@ public:
    * END SPEC
    */
   virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
-  describe_type (const char *name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType));
+  describe_type (const char *name);
 
   /**
    * BEGIN SPEC
@@ -165,10 +147,7 @@ public:
    * END SPEC
    */
   virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
-  fully_describe_type (const char *name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType));
+  fully_describe_type (const char *name);
 
   /**
    * BEGIN SPEC
@@ -184,11 +163,7 @@ public:
    * exception is raised.
    * END SPEC
    */
-  virtual void mask_type (const char *name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::AlreadyMasked));
+  virtual void mask_type (const char *name);
 
   /**
    * BEGIN SPEC
@@ -202,11 +177,7 @@ public:
    * exception is raised.
    * END SPEC
    */
-  virtual void unmask_type (const char  *name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::NotMasked));
+  virtual void unmask_type (const char  *name);
 
 private:
 
@@ -261,22 +232,16 @@ private:
   /// Confirm that the properties in props have valid names, and aren't
   /// duplicated. Cram those properties into the prop_map.
   void validate_properties (Prop_Map &prop_map,
-                            const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props)
-    ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
-                     CosTrading::DuplicatePropertyName));
+                            const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props);
 
   /// Confirm that the each super type exists, and cram them into super_map.
   void validate_supertypes (Service_Type_Map &super_map,
-                            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
-    ACE_THROW_SPEC ((CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+                            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
 
   /// Ensure that properties of a super_type aren't having their types
   /// or retstrictions redefined.
   void validate_inheritance (Prop_Map &prop_map,
-                             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
-    ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition));
+                             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
 
   //  void validate_interface (const char *if_name,
   //                       Service_Type_Map &super_map,

@@ -8,7 +8,6 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"

@@ -48,9 +48,7 @@ class TAO_Trading_Serv_Export TAO_Constraint_Interpreter : public TAO_Interprete
 public:
   // = Initialization and termination methods.
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-                              const char* constraints)
-    ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                     CORBA::NO_MEMORY));
+                              const char* constraints);
 
   /**
    * This constructor builds an expression tree representing the
@@ -59,9 +57,7 @@ public:
    * semantic errors, such as mismatched types.
    */
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
-                              const char* constraints)
-    ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                     CORBA::NO_MEMORY));
+                              const char* constraints);
 
   /// Destructor
   ~TAO_Constraint_Interpreter (void);
@@ -93,9 +89,7 @@ class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interprete
 public:
   // = Initialization and termination methods.
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-                              const char* preference)
-    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                     CORBA::NO_MEMORY));
+                              const char* preference);
 
   /**
 	* Parse the preference string, determining first if it's
@@ -103,9 +97,7 @@ public:
 	* doesn't conform to the BNF grammar for preferences.
 	*/
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
-                              const char* preference)
-    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                     CORBA::NO_MEMORY));
+                              const char* preference);
 
   /// Destructor
   ~TAO_Preference_Interpreter(void);

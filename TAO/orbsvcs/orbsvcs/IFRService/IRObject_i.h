@@ -58,25 +58,23 @@ public:
   // Destructor.
 
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void destroy (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
   // Pure virtual.
 
   virtual void destroy_i (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
   // Pure virtual - the unlocked version called by the destroy() wrapper.
 
   void section_key (ACE_Configuration_Section_Key &key);
   // Plug in the section key.
 
 protected:
-  void update_key (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void update_key (void);
   // Set our key from the object ID via POACurrent.
 
 protected:

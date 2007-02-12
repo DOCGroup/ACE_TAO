@@ -6,10 +6,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
 TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::UnsupportedFilterableData
-                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());

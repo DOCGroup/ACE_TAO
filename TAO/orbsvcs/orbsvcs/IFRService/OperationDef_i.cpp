@@ -30,14 +30,12 @@ TAO_OperationDef_i::~TAO_OperationDef_i (void)
 
 CORBA::DefinitionKind
 TAO_OperationDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Operation;
 }
 
 CORBA::Contained::Description *
 TAO_OperationDef_i::describe ( )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -48,7 +46,6 @@ TAO_OperationDef_i::describe ( )
 
 CORBA::Contained::Description *
 TAO_OperationDef_i::describe_i ( )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -69,7 +66,6 @@ TAO_OperationDef_i::describe_i ( )
 
 CORBA::TypeCode_ptr
 TAO_OperationDef_i::result (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -80,7 +76,6 @@ TAO_OperationDef_i::result (void)
 
 CORBA::TypeCode_ptr
 TAO_OperationDef_i::result_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -97,7 +92,6 @@ TAO_OperationDef_i::result_i (void)
 
 CORBA::IDLType_ptr
 TAO_OperationDef_i::result_def (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -108,7 +102,6 @@ TAO_OperationDef_i::result_def (void)
 
 CORBA::IDLType_ptr
 TAO_OperationDef_i::result_def_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -124,7 +117,6 @@ TAO_OperationDef_i::result_def_i (void)
 
 void
 TAO_OperationDef_i::result_def (CORBA::IDLType_ptr result_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -135,7 +127,6 @@ TAO_OperationDef_i::result_def (CORBA::IDLType_ptr result_def)
 
 void
 TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *result_path =
     TAO_IFR_Service_Utils::reference_to_path (result_def);
@@ -147,7 +138,6 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
 
 CORBA::ParDescriptionSeq *
 TAO_OperationDef_i::params (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -158,7 +148,6 @@ TAO_OperationDef_i::params (void)
 
 CORBA::ParDescriptionSeq *
 TAO_OperationDef_i::params_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong i = 0;
   ACE_Configuration_Section_Key params_key;
@@ -253,7 +242,6 @@ TAO_OperationDef_i::params_i (void)
 
 void
 TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -264,7 +252,6 @@ TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
 
 void
 TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "params",
@@ -315,7 +302,6 @@ TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params)
 
 CORBA::OperationMode
 TAO_OperationDef_i::mode (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::OP_NORMAL);
 
@@ -326,7 +312,6 @@ TAO_OperationDef_i::mode (void)
 
 CORBA::OperationMode
 TAO_OperationDef_i::mode_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int mode;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -338,7 +323,6 @@ TAO_OperationDef_i::mode_i (void)
 
 void
 TAO_OperationDef_i::mode (CORBA::OperationMode mode)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -349,7 +333,6 @@ TAO_OperationDef_i::mode (CORBA::OperationMode mode)
 
 void
 TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
                                              "mode",
@@ -358,7 +341,6 @@ TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
 
 CORBA::ContextIdSeq *
 TAO_OperationDef_i::contexts (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -369,7 +351,6 @@ TAO_OperationDef_i::contexts (void)
 
 CORBA::ContextIdSeq *
 TAO_OperationDef_i::contexts_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key contexts_key;
   int status =
@@ -425,7 +406,6 @@ TAO_OperationDef_i::contexts_i (void)
 
 void
 TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -436,7 +416,6 @@ TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
 
 void
 TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "contexts",
@@ -464,7 +443,6 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
 
 CORBA::ExceptionDefSeq *
 TAO_OperationDef_i::exceptions ( )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -475,7 +453,6 @@ TAO_OperationDef_i::exceptions ( )
 
 CORBA::ExceptionDefSeq *
 TAO_OperationDef_i::exceptions_i ( )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key excepts_key;
   int status =
@@ -541,7 +518,6 @@ TAO_OperationDef_i::exceptions_i ( )
 
 void
 TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -552,7 +528,6 @@ TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
 
 void
 TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "excepts",
@@ -567,7 +542,6 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions)
 void
 TAO_OperationDef_i::make_description (
     CORBA::OperationDescription &od)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   od.name = this->name_i ();
 
@@ -686,7 +660,6 @@ TAO_OperationDef_i::make_description (
 
 CORBA::TypeCode_ptr
 TAO_OperationDef_i::type_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->result_i ();
 }

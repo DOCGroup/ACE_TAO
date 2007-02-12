@@ -73,7 +73,6 @@ void
 TAO_LB_LoadManager::push_loads (
     const PortableGroup::Location & the_location,
     const CosLoadBalancing::LoadList & loads)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (loads.length () == 0)
     throw CORBA::BAD_PARAM ();
@@ -131,8 +130,6 @@ TAO_LB_LoadManager::push_loads (
 
 CosLoadBalancing::LoadList *
 TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LocationNotFound))
 {
   CosLoadBalancing::LoadList * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -158,7 +155,6 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
 
 void
 TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
@@ -213,7 +209,6 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 
 void
 TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CosLoadBalancing::LoadAlertNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
@@ -269,9 +264,6 @@ void
 TAO_LB_LoadManager::register_load_alert (
     const PortableGroup::Location & the_location,
     CosLoadBalancing::LoadAlert_ptr load_alert)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LoadAlertAlreadyPresent,
-                   CosLoadBalancing::LoadAlertNotAdded))
 {
   if (CORBA::is_nil (load_alert))
     throw CORBA::BAD_PARAM ();
@@ -297,8 +289,6 @@ TAO_LB_LoadManager::register_load_alert (
 CosLoadBalancing::LoadAlert_ptr
 TAO_LB_LoadManager::get_load_alert (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LoadAlertNotFound))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -322,8 +312,6 @@ TAO_LB_LoadManager::get_load_alert (
 void
 TAO_LB_LoadManager::remove_load_alert (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LoadAlertNotFound))
 {
   // Disable the "alert" status on the LoadAlert object since it will
   // no longer be associated with the LoadManager.  In particular,
@@ -344,8 +332,6 @@ void
 TAO_LB_LoadManager::register_load_monitor (
     const PortableGroup::Location & the_location,
     CosLoadBalancing::LoadMonitor_ptr load_monitor)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::MonitorAlreadyPresent))
 {
   if (CORBA::is_nil (load_monitor))
     throw CORBA::BAD_PARAM ();
@@ -403,8 +389,6 @@ TAO_LB_LoadManager::register_load_monitor (
 CosLoadBalancing::LoadMonitor_ptr
 TAO_LB_LoadManager::get_load_monitor (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LocationNotFound))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -424,8 +408,6 @@ TAO_LB_LoadManager::get_load_monitor (
 void
 TAO_LB_LoadManager::remove_load_monitor (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LocationNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -456,9 +438,6 @@ TAO_LB_LoadManager::remove_load_monitor (
 void
 TAO_LB_LoadManager::set_default_properties (
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   PortableGroup::Properties new_props (props);
   this->preprocess_properties (new_props);
@@ -468,7 +447,6 @@ TAO_LB_LoadManager::set_default_properties (
 
 PortableGroup::Properties *
 TAO_LB_LoadManager::get_default_properties ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     this->property_manager_.get_default_properties ();
@@ -477,9 +455,6 @@ TAO_LB_LoadManager::get_default_properties ()
 void
 TAO_LB_LoadManager::remove_default_properties (
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.remove_default_properties (props);
 }
@@ -488,9 +463,6 @@ void
 TAO_LB_LoadManager::set_type_properties (
     const char *type_id,
     const PortableGroup::Properties & overrides)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   PortableGroup::Properties new_overrides (overrides);
   this->preprocess_properties (new_overrides);
@@ -502,7 +474,6 @@ TAO_LB_LoadManager::set_type_properties (
 PortableGroup::Properties *
 TAO_LB_LoadManager::get_type_properties (
     const char *type_id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     this->property_manager_.get_type_properties (type_id);
@@ -512,9 +483,6 @@ void
 TAO_LB_LoadManager::remove_type_properties (
     const char *type_id,
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   this->property_manager_.remove_type_properties (type_id,
                                                   props);
@@ -524,10 +492,6 @@ void
 TAO_LB_LoadManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Properties & overrides)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   PortableGroup::Properties new_overrides (overrides);
   this->preprocess_properties (new_overrides);
@@ -539,8 +503,6 @@ TAO_LB_LoadManager::set_properties_dynamically (
 PortableGroup::Properties *
 TAO_LB_LoadManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->property_manager_.get_properties (object_group);
@@ -552,13 +514,6 @@ TAO_LB_LoadManager::create_member (
     const PortableGroup::Location & the_location,
     const char * type_id,
     const PortableGroup::Criteria & the_criteria)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::CannotMeetCriteria))
 {
   return
     this->object_group_manager_.create_member (object_group,
@@ -572,10 +527,6 @@ TAO_LB_LoadManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::ObjectNotAdded))
 {
   return
     this->object_group_manager_.add_member (object_group,
@@ -587,9 +538,6 @@ PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   return
     this->object_group_manager_.remove_member (object_group,
@@ -599,8 +547,6 @@ TAO_LB_LoadManager::remove_member (
 PortableGroup::Locations *
 TAO_LB_LoadManager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.locations_of_members (object_group);
@@ -609,7 +555,6 @@ TAO_LB_LoadManager::locations_of_members (
 PortableGroup::ObjectGroups *
 TAO_LB_LoadManager::groups_at_location (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     this->object_group_manager_.groups_at_location (the_location);
@@ -618,8 +563,6 @@ TAO_LB_LoadManager::groups_at_location (
 PortableGroup::ObjectGroupId
 TAO_LB_LoadManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.get_object_group_id (object_group);
@@ -628,8 +571,6 @@ TAO_LB_LoadManager::get_object_group_id (
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::get_object_group_ref (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.get_object_group_ref (object_group);
@@ -637,9 +578,6 @@ TAO_LB_LoadManager::get_object_group_ref (
 
 PortableGroup::ObjectGroup_ptr TAO_LB_LoadManager::get_object_group_ref_from_id (
     PortableGroup::ObjectGroupId group_id)
-  ACE_THROW_SPEC((
-    CORBA::SystemException,
-    PortableGroup::ObjectGroupNotFound))
 {
   return this->object_group_manager_.get_object_group_ref_from_id (
     group_id);
@@ -649,9 +587,6 @@ CORBA::Object_ptr
 TAO_LB_LoadManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   return
     this->object_group_manager_.get_member_ref (object_group,
@@ -664,12 +599,6 @@ TAO_LB_LoadManager::create_object (
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria))
 {
 //   this->init ();
 
@@ -742,8 +671,6 @@ void
 TAO_LB_LoadManager::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
       factory_creation_id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectNotFound))
 {
   this->generic_factory_.delete_object (factory_creation_id);
 }

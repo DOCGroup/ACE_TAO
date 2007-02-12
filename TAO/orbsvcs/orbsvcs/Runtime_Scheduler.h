@@ -42,21 +42,16 @@ public:
                          ACE_Scheduler_Factory::POD_RT_Info rt_info[]);
   // Constructor. Initialize the data from the POD_RT_Info array.
 
-  virtual RtecScheduler::handle_t create (const char * entry_point)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::DUPLICATE_NAME));
+  virtual RtecScheduler::handle_t create (const char * entry_point);
   // Create an RT_Info.  In the config run scheduler this actually constructs
   // a new RT_Info.  Here, we just return its handle, or an error value if
   // it's not present.
 
-  virtual RtecScheduler::handle_t lookup (const char * entry_point)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual RtecScheduler::handle_t lookup (const char * entry_point);
   // Lookup a handle for an RT_Info, and return its handle, or an error
   // value if it's not present.
 
-  virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+  virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle);
   // Return a pointer to the RT_Info corresponding to the passed handle.
 
   virtual void set (::RtecScheduler::handle_t handle,
@@ -68,9 +63,7 @@ public:
                     ::RtecScheduler::Importance_t importance,
                     ::RtecScheduler::Quantum_t quantum,
                     ::RtecScheduler::Threads_t threads,
-                    ::RtecScheduler::Info_Type_t info_type)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                    ::RtecScheduler::Info_Type_t info_type);
   // Set characteristics of the RT_Info corresponding to the passed handle.
 
   virtual void reset (RtecScheduler::handle_t handle,
@@ -82,70 +75,46 @@ public:
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
                       RtecScheduler::Threads_t threads,
-                      RtecScheduler::Info_Type_t info_type)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                      RtecScheduler::Info_Type_t info_type);
   // Reset characteristics of the RT_Info corresponding to the passed handle.
 
-  virtual void set_seq (const RtecScheduler::RT_Info_Set& infos)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE));
+  virtual void set_seq (const RtecScheduler::RT_Info_Set& infos);
   // Set characteristics of the RT_Infos corresponding to the passed handles.
   // Tuples are added in the case of existing and/or multiple definitions.
 
-  virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE));
+  virtual void replace_seq (const RtecScheduler::RT_Info_Set& infos);
   // Replace characteristics of the RT_Infos corresponding to the
   // passed handles.
 
-  virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE));
+  virtual void reset_seq (const RtecScheduler::RT_Info_Set& infos);
   // Reset characteristics of the RT_Infos corresponding to the passed handles.
   // Tuples are replaced in the case of existing and/or multiple definitions.
 
   virtual void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& o_priority,
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                         RtecScheduler::Preemption_Priority_t& p_priority)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::NOT_SCHEDULED));
+                         RtecScheduler::Preemption_Priority_t& p_priority);
   // Returns the priority and subpriority values assigned to an RT_Info,
   // based on its handle.
 
   virtual void entry_point_priority (const char * entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
-                                     RtecScheduler::Preemption_Priority_t& p_priority)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK,
-                     RtecScheduler::NOT_SCHEDULED));
+                                     RtecScheduler::Preemption_Priority_t& p_priority);
   // Returns the priority and subpriority values assigned to an RT_Info,
   // based on its entry point name.
 
   virtual void add_dependency (RtecScheduler::handle_t handle,
                                RtecScheduler::handle_t dependency,
                                CORBA::Long number_of_calls,
-                               RtecScheduler::Dependency_Type_t dependency_type)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                               RtecScheduler::Dependency_Type_t dependency_type);
   // In the config run scheduler, this method registers a dependency between
   // two RT_Infos.  In the run time scheduler, this is a no-op.
 
   virtual void remove_dependency (RtecScheduler::handle_t handle,
                                   RtecScheduler::handle_t dependency,
                                   CORBA::Long number_of_calls,
-                                  RtecScheduler::Dependency_Type_t dependency_type)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                                  RtecScheduler::Dependency_Type_t dependency_type);
   // In the reconfig scheduler, this method removes a dependency between
   // two RT_Infos.  In the run time scheduler, this is a no-op.
 
@@ -153,29 +122,19 @@ public:
                                             RtecScheduler::handle_t dependency,
                                             CORBA::Long number_of_calls,
                                             RtecScheduler::Dependency_Type_t dependency_type,
-                                            RtecScheduler::Dependency_Enabled_Type_t enabled)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                                            RtecScheduler::Dependency_Enabled_Type_t enabled);
   // In the reconfig scheduler, this method (re)enabes a dependency between
   // two RT_Infos.  In the run time scheduler, this is a no-op.
 
   virtual void set_rt_info_enable_state (RtecScheduler::handle_t handle,
-                                         RtecScheduler::RT_Info_Enabled_Type_t enabled)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                                         RtecScheduler::RT_Info_Enabled_Type_t enabled);
   // In the reconfig scheduler, enables or disables an RT_Info.
   // In the run time scheduler, this is a no-op.
 
-  virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::UNKNOWN_TASK));
+  virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies);
   // This method sets the enable state of a sequence of dependencies.
 
-  virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::UNKNOWN_TASK));
+  virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set);
   // This method enables or disables a sequence of RT_Infos.
 
   virtual void compute_scheduling (CORBA::Long minimum_priority,
@@ -183,67 +142,40 @@ public:
                                    RtecScheduler::RT_Info_Set_out infos,
                                    RtecScheduler::Dependency_Set_out deps,
                                    RtecScheduler::Config_Info_Set_out configs,
-                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                     RtecScheduler::TASK_COUNT_MISMATCH));
+                                   RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
   // In the config run scheduler, this method causes scheduling information
   // to be computed for all registered RT_Infos.  In the run time scheduler,
   // this is a no-op.
 
   virtual void recompute_scheduling (CORBA::Long minimum_priority,
                                      CORBA::Long maximum_priority,
-                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-                     RtecScheduler::TASK_COUNT_MISMATCH,
-                     RtecScheduler::INTERNAL,
-                     RtecScheduler::DUPLICATE_NAME));
+                                     RtecScheduler::Scheduling_Anomaly_Set_out anomalies);
   // Recomputes the scheduling priorities, etc.
 
-  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL));
+  virtual void get_rt_info_set (RtecScheduler::RT_Info_Set_out infos);
   // Returns the set of rt_infos, with their assigned priorities (as
   // of the last schedule re-computation).
 
-  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL));
+  virtual void get_dependency_set (RtecScheduler::Dependency_Set_out dependencies);
   // Returns the set of rt_infos, with their assigned priorities (as
   // of the last schedule re-computation).
 
-  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::SYNCHRONIZATION_FAILURE,
-                     RtecScheduler::INTERNAL));
+  virtual void get_config_info_set (RtecScheduler::Config_Info_Set_out configs);
   // Returns the set of config_infos, describing the appropriate
   // number, types, and priority levels for the dispatching lanes.
 
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& o_priority,
-                                       RtecScheduler::Dispatching_Type_t & d_type)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED,
-                    RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
+                                       RtecScheduler::Dispatching_Type_t & d_type);
   // Provides the thread priority and queue type for the given priority level.
 
-  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED));
+  virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (void);
   // Returns the last priority number assigned to an operation in the
   // schedule.  The number returned is one less than the total number
   // of scheduled priorities.  All scheduled priorities range from 0
   // to the number returned, inclusive.
 
-  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-		     RtecScheduler::NOT_SCHEDULED));
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs);
 
 private:
   int config_count_;

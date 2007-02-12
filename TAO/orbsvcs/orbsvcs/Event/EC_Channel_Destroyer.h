@@ -26,8 +26,7 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Channel_Destroyer_Functor
   typedef  TAO_EC_Event_Channel_Base * argument;
 
   /// Destroy @c event_channel
-  void operator() (TAO_EC_Event_Channel_Base * event_channel)
-    ACE_THROW_SPEC (());
+  void operator() (TAO_EC_Event_Channel_Base * event_channel);
 };
 
 /**

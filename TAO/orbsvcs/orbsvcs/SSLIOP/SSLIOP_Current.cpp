@@ -25,8 +25,6 @@ TAO::SSLIOP::Current::~Current (void)
 
 ::SSLIOP::ASN_1_Cert *
 TAO::SSLIOP::Current::get_peer_certificate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   SSLIOP::Current::NoContext))
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
@@ -57,8 +55,6 @@ TAO::SSLIOP::Current::get_peer_certificate ()
 
 SSLIOP::SSL_Cert *
 TAO::SSLIOP::Current::get_peer_certificate_chain ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   SSLIOP::Current::NoContext))
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
@@ -89,7 +85,6 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (this->implementation () == 0 ? 1 : 0);
 }

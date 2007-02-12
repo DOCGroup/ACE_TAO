@@ -72,12 +72,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     TAO::PG_Property_Set * typeid_properties)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria))
 {
   ///////////////////////////////////
   // Create an empty group reference
@@ -123,8 +117,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
 }
 
 void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectNotFound))
 {
   if (! destroy_group (object_group))
   {
@@ -134,8 +126,6 @@ void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_
 
 
 void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroupId group_id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectNotFound))
 {
   if (! destroy_group (group_id))
   {
@@ -193,7 +183,6 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   size_t upper_limit = this->group_map_.current_size ();
   PortableGroup::ObjectGroups * result = 0;

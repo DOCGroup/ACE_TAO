@@ -127,23 +127,18 @@ public:
   // Destructor.
 
   virtual CosPropertyService::PropertySet_ptr
-  create_propertyset (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_propertyset (void);
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
 
   virtual CosPropertyService::PropertySet_ptr
   create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types,
-                                  const CosPropertyService::Properties &allowed_properties)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::ConstraintNotSupported));
+                                  const CosPropertyService::Properties &allowed_properties);
     // Allows a client to create a new TAO_PropertySet with specific
     // constraints. "All the properties will have *fixed-normal* modes".
 
   virtual CosPropertyService::PropertySet_ptr
-  create_initial_propertyset (const CosPropertyService::Properties &initial_properties)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::MultipleExceptions));
+  create_initial_propertyset (const CosPropertyService::Properties &initial_properties);
   // Allows a client to create a new TAO_PropertySet with specific
   // initial properties."All the properties will have *fixed-normal"
   // modes".
@@ -178,22 +173,17 @@ public:
   // Destructor.
 
   virtual CosPropertyService::PropertySetDef_ptr
-  create_propertysetdef (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_propertysetdef (void);
   // Returns a new TAO_PropertySetDef object.
 
   virtual CosPropertyService::PropertySetDef_ptr
   create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types,
-                                     const CosPropertyService::PropertyDefs &allowed_property_defs)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::ConstraintNotSupported));
+                                     const CosPropertyService::PropertyDefs &allowed_property_defs);
   // Allows a client to create a new TAO_PropertySetDef with specific
   // constraints.
 
   virtual CosPropertyService::PropertySetDef_ptr
-  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::MultipleExceptions));
+  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs);
   // Allows a client to create a new TAO_PropertySetDef with specific
   // initial properties.
 
@@ -237,72 +227,48 @@ public:
   // Destructor function.
 
   virtual void define_property (const char *property_name,
-                                const CORBA::Any &property_value)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::InvalidPropertyName,
-                     CosPropertyService::ConflictingProperty,
-                     CosPropertyService::UnsupportedTypeCode,
-                     CosPropertyService::UnsupportedProperty,
-                     CosPropertyService::ReadOnlyProperty));
+                                const CORBA::Any &property_value);
 
   // Store the property in the hash after checking for validity of the
   // property name, duplicate name, type code over writing etc.
 
-  virtual void define_properties (const CosPropertyService::Properties &nproperties)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::MultipleExceptions));
+  virtual void define_properties (const CosPropertyService::Properties &nproperties);
   // Define a sequence of properties at a time.
 
-  virtual CORBA::ULong get_number_of_properties (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong get_number_of_properties (void);
   // Get the number of properties that are currently defined in the
   // PropertySet.
 
   virtual void get_all_property_names (CORBA::ULong how_many,
                                        CosPropertyService::PropertyNames_out property_names,
-                                       CosPropertyService::PropertyNamesIterator_out rest)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                       CosPropertyService::PropertyNamesIterator_out rest);
   // Get the names of all the properties that are currently defined in
   // the property set.
 
-  virtual CORBA::Any *get_property_value (const char *property_name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::PropertyNotFound,
-                     CosPropertyService::InvalidPropertyName));
+  virtual CORBA::Any *get_property_value (const char *property_name);
   // Get the value of the property, given the name.
 
   virtual CORBA::Boolean get_properties (const CosPropertyService::PropertyNames &property_names,
-                                         CosPropertyService::Properties_out nproperties)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         CosPropertyService::Properties_out nproperties);
   // Get all names and their property values.
 
   virtual void get_all_properties (CORBA::ULong how_many,
                                    CosPropertyService::Properties_out nproperties,
-                                   CosPropertyService::PropertiesIterator_out rest)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                   CosPropertyService::PropertiesIterator_out rest);
   // Returns all of the property names currently defined in the
   // PropertySet. If the PropertySet contains more than how_many
   // property names, then the remaining property names are put into the PropertyNamesIterator.
 
-  virtual void delete_property (const char *property_name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::PropertyNotFound,
-                     CosPropertyService::InvalidPropertyName,
-                     CosPropertyService::FixedProperty));
+  virtual void delete_property (const char *property_name);
   // Delete a property given a name.
 
-  virtual void delete_properties (const CosPropertyService::PropertyNames &property_names)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::MultipleExceptions));
+  virtual void delete_properties (const CosPropertyService::PropertyNames &property_names);
   // Delete all the these properties from this property set.
 
-  virtual CORBA::Boolean delete_all_properties (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean delete_all_properties (void);
   // Delete everything from this property set.
 
-  virtual CORBA::Boolean is_property_defined (const char *property_name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::InvalidPropertyName));
+  virtual CORBA::Boolean is_property_defined (const char *property_name);
   // Tell whether this property is defined or no. Forget about the
   // value.
 
@@ -378,16 +344,14 @@ public:
   virtual ~TAO_PropertySetDef (void);
   // Destructor.
 
-  virtual void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types);
   // Indicates which types of properties are supported by this
   // PropertySet. If the output sequence is empty, then there is no
   // restrictions on the any TypeCode portion of the property_value
   // field of a Property in this PropertySet, unless the
   // get_allowed_properties output sequence is not empty.
 
-  virtual void get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void get_allowed_properties (CosPropertyService::PropertyDefs_out property_defs);
 
   // Indicates which properties are supported by this PropertySet. If
   // the output sequence is empty, then there is no restrictions on
@@ -396,14 +360,7 @@ public:
 
   virtual void define_property_with_mode (const char *property_name,
                                           const CORBA::Any &property_value,
-                                          CosPropertyService::PropertyModeType property_mode)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::InvalidPropertyName,
-                     CosPropertyService::ConflictingProperty,
-                     CosPropertyService::UnsupportedTypeCode,
-                     CosPropertyService::UnsupportedProperty,
-                     CosPropertyService::UnsupportedMode,
-                     CosPropertyService::ReadOnlyProperty));
+                                          CosPropertyService::PropertyModeType property_mode);
   // This operation will modify or add a property to the
   // PropertySet. If the property already exists, then the property
   // type is checked before the value is overwritten. The property
@@ -412,22 +369,16 @@ public:
   // PropertySet. If type or mode is violated, ConflictingProperty
   // exception is thrown.
 
-  virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::MultipleExceptions));
+  virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs);
   // This operation will modify or add each of the properties in the
   // Properties parameter to the PropertySet.
 
-  virtual CosPropertyService::PropertyModeType get_property_mode (const char *property_name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::PropertyNotFound,
-                     CosPropertyService::InvalidPropertyName));
+  virtual CosPropertyService::PropertyModeType get_property_mode (const char *property_name);
   // Get the mode of a property. Raises InvalidpropertyName,
   // PropertyNotFound exceptions.
 
   virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
-                                             CosPropertyService::PropertyModes_out property_modes)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                             CosPropertyService::PropertyModes_out property_modes);
   // Batch operation for getting the property. Invoke
   // get_property_mode for each name.  Return value False indicates
   // that properties with *undefined* modes have failed due to
@@ -437,11 +388,7 @@ public:
   // doing something with it.
 
   virtual void set_property_mode (const char *property_name,
-                                  CosPropertyService::PropertyModeType property_mode)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::InvalidPropertyName,
-                     CosPropertyService::PropertyNotFound,
-                     CosPropertyService::UnsupportedMode));
+                                  CosPropertyService::PropertyModeType property_mode);
   // Set the mode of a property. Watch the following. The change of
   // mode is allowed introduce more constraints, but it should not
   // relax the constraints. The following decisions have been made, in
@@ -453,9 +400,7 @@ public:
   // all illegal set_mode attempts, UnsupportedMode exception is
   // raised.
 
-  virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosPropertyService::MultipleExceptions));
+  virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes);
   // Batch operation for setting the property. Raises
   // MultipleExceptions.
 };
@@ -483,29 +428,25 @@ public:
   virtual ~TAO_PropertyNamesIterator (void);
   // Destructor.
 
-  virtual void reset (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reset (void);
   // The reset operation resets the position in an iterator to the
   // first property name, if one exists.
 
-  virtual CORBA::Boolean next_one (CORBA::String_out property_name)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean next_one (CORBA::String_out property_name);
   // The next_one operation returns true if an item exists at the
   // current position in the iterator with an output parameter of a
   // property name. A return of false signifies no more items in the iterator.
 
 
   virtual CORBA::Boolean next_n (CORBA::ULong how_many,
-                                 CosPropertyService::PropertyNames_out property_names)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                 CosPropertyService::PropertyNames_out property_names);
   // The next_n operation returns true if an item exists at the
   // current position in the iterator and the how_many parameter was
   // set greater than zero. The output is a PropertyNames sequence
   // with at most the how_many number of names. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
   // Destroys the iterator.
 private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
@@ -544,28 +485,24 @@ public:
   virtual ~TAO_PropertiesIterator (void);
   // Destructor.
 
-  virtual void reset (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reset (void);
   // Resets the position in an iterator to the first property, if one exists.
 
-  virtual CORBA::Boolean next_one (CosPropertyService::Property_out aproperty)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean next_one (CosPropertyService::Property_out aproperty);
   // The next_one operation returns true if an item exists at the
   // current position in the iterator with an output parameter of a
   // property. A return of false signifies no more items in the
   // iterator.
 
   virtual CORBA::Boolean next_n (CORBA::ULong how_many,
-                                 CosPropertyService::Properties_out nproperties)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                 CosPropertyService::Properties_out nproperties);
   // The next_n operation returns true if an item exists at the
   // current position in the iterator and the how_many parameter was
   // set greater than zero. The output is a properties sequence with
   // at most the how_many number of properties. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
   // Destroys the iterator.
 
 private:

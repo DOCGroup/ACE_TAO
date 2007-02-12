@@ -29,7 +29,6 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> INTERFACE*
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     obtain (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PROXY* proxy;
   this->event_channel_->create_proxy (proxy);
@@ -49,7 +48,6 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ESF_Shutdown_Proxy<PROXY> worker;
 
@@ -62,14 +60,12 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     connected (PROXY *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     reconnected (PROXY *proxy)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->collection_->reconnected (proxy);
 }
@@ -77,7 +73,6 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     disconnected (PROXY *proxy)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   proxy->deactivate ();
 // Cannot happen, just following the discipline.

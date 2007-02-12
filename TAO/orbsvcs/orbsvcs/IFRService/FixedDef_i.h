@@ -51,64 +51,51 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Return our definition kind.
 
   virtual void destroy (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Remove the repository entry.
 
   virtual void destroy_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::TypeCode_ptr type (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::UShort digits (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::UShort digits_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void digits (
       CORBA::UShort digits
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void digits_i (
       CORBA::UShort digits
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::Short scale (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::Short scale_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void scale (
       CORBA::Short scale
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void scale_i (
       CORBA::Short scale
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

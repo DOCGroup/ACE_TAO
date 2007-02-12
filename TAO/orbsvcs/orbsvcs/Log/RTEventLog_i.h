@@ -72,17 +72,14 @@ public:
   ~TAO_RTEventLog_i ();
 
   /// Duplicate the log.
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id);
 
   /// Duplicate the log specifying an id.
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id)
-    ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException));
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id);
 
   /// Destroy the log object and all contained records.
   void
-  destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  destroy (void);
 
   /// Activate the RTEventLog.
   void
@@ -90,25 +87,15 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel interface methods.
   RtecEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  for_consumers (void);
 
   RtecEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  for_suppliers (void);
 
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+      append_observer (RtecEventChannelAdmin::Observer_ptr);
   virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+      remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
  private:
   /// The EventChannel used.

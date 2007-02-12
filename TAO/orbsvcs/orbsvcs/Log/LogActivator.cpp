@@ -21,9 +21,6 @@ TAO_LogActivator::~TAO_LogActivator ()
 PortableServer::Servant
 TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
 			     PortableServer::POA_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   PortableServer::ForwardRequest
-		   ))
 {
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 
@@ -42,7 +39,6 @@ TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
 			       PortableServer::Servant servant,
 			       CORBA::Boolean,
 			       CORBA::Boolean remaining_activations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!remaining_activations)
    {

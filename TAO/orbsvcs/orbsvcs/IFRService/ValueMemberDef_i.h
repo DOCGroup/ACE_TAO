@@ -51,63 +51,50 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Return our definition kind.
 
   virtual CORBA::Contained::Description *describe ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From Contained_i's pure virtual function.
 
   virtual CORBA::Contained::Description *describe_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::IDLType_ptr type_def ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::IDLType_ptr type_def_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void type_def (
       CORBA::IDLType_ptr type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void type_def_i (
       CORBA::IDLType_ptr type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::Visibility access ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::Visibility access_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void access (
       CORBA::Visibility access)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void access_i (
       CORBA::Visibility access)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -51,11 +51,7 @@ public:
   virtual void init (TAO_Notify::Topology_Parent * topology_parent);
 
   /// Connect
-  void connect (TAO_Notify_Supplier* supplier)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosEventChannelAdmin::AlreadyConnected
-                     ));
+  void connect (TAO_Notify_Supplier* supplier);
 
   /// Disconnect
   void disconnect (void);

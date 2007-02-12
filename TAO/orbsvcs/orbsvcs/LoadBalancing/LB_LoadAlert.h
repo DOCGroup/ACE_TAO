@@ -43,12 +43,10 @@ public:
 
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void enable_alert (void);
 
   /// Stop forwarding requests, and begin accepting them again.
-  virtual void disable_alert (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disable_alert (void);
 
   //@}
 

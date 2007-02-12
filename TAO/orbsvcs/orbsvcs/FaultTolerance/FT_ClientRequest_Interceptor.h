@@ -76,30 +76,20 @@ namespace TAO
     FT_ClientRequest_Interceptor (void);
 
     /// Canonical name of the interceptor.
-    virtual char * name (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * name (void);
 
 
-    virtual void destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void destroy (void);
 
-    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 
-    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
 
-    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
   protected:
 
@@ -108,14 +98,11 @@ namespace TAO
   private:
 
     void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                IOP::TaggedComponent* tp)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                IOP::TaggedComponent* tp);
 
-    void request_service_context (PortableInterceptor::ClientRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void request_service_context (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-    TimeBase::TimeT request_expiration_time (CORBA::Policy *policy)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    TimeBase::TimeT request_expiration_time (CORBA::Policy *policy);
 
   private:
 

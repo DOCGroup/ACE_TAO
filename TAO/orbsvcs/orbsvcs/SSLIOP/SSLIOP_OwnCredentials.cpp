@@ -44,28 +44,24 @@ TAO::SSLIOP::OwnCredentials::_nil (void)
 
 SecurityLevel3::CredentialsType
 TAO::SSLIOP::OwnCredentials::creds_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CT_OwnCredentials;
 }
 
 SecurityLevel3::CredsInitiator_ptr
 TAO::SSLIOP::OwnCredentials::creds_initiator (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::CredsAcceptor_ptr
 TAO::SSLIOP::OwnCredentials::creds_acceptor (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 TAO::SSLIOP::OwnCredentials::release_credentials ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->creds_state_ = SecurityLevel3::CS_PendingRelease;
 }
