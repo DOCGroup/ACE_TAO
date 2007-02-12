@@ -6,6 +6,7 @@
 #include "tao/corba.h"
 #include "ace/Task.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Synch_Traits.h"
 
 class NamingTask : public ACE_Task<ACE_MT_SYNCH>
 {
