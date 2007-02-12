@@ -1058,8 +1058,7 @@ ImR_Locator_i::find (const char* server,
 void
 ImR_Locator_i::list (CORBA::ULong how_many,
                      ImplementationRepository::ServerInformationList_out server_list,
-                     ImplementationRepository::ServerInformationIterator_out server_iterator
-                     ) ACE_THROW_SPEC ((CORBA::SystemException))
+                     ImplementationRepository::ServerInformationIterator_out server_iterator)
 {
   if (this->debug_ > 1)
     ACE_DEBUG ((LM_DEBUG, "ImR: List servers.\n"));
@@ -1102,7 +1101,7 @@ ImR_Locator_i::list (CORBA::ULong how_many,
       if (this->debug_ > 1)
         ACE_DEBUG ((LM_DEBUG, "ImR_Locator_i::list: Creating ServerInformation Iterator\n"));
 
-      ImR_Iterator* imr_iter;
+      ImR_Iterator* imr_iter = 0;
 
       ACE_NEW_THROW_EX (imr_iter,
                         ImR_Iterator (n, this->repository_, this->imr_poa_.in ()),
