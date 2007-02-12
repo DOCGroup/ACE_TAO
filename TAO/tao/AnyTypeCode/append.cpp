@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     append.cpp
-//
-// = DESCRIPTION
-//     Appends a CDR stream to another CDR stream. Due to the
-//     stringent alignment requirements, it is not possible to simply
-//     append or memcpy. Instead we go thru the same CDR encoding rules
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//     and Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     append.cpp
+ *
+ *  $Id$
+ *
+ *   Appends a CDR stream to another CDR stream. Due to the
+ *   stringent alignment requirements, it is not possible to simply
+ *   append or memcpy. Instead we go thru the same CDR encoding rules
+ *
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.  and Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Marshal.h"

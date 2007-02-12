@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    IORManipulation.h
-//
-// = DESCRIPTION
-//    This class implements IOR interface to the ORB
-//
-// = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IORManipulation.h
+ *
+ *  $Id$
+ *
+ *  This class implements IOR interface to the ORB
+ *
+ *
+ *  @author  Fred Kuhns <fredk@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IOR_MANIPULATION_H
 #define TAO_IOR_MANIPULATION_H
@@ -50,8 +47,8 @@ class TAO_IOR_Manipulation_impl
   //
 public:
 
+  /// constructor
   TAO_IOR_Manipulation_impl (void);
-  // constructor
 
   virtual CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
@@ -109,8 +106,8 @@ public:
 
 protected:
 
+  /// destructor
   ~TAO_IOR_Manipulation_impl (void);
-  // destructor
 
 };
 
