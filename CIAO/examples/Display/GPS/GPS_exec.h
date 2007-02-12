@@ -73,7 +73,7 @@ namespace MyImpl
    * GPS home executor implementation class.
    */
     class GPS_EXEC_Export GPSHome_exec_i :
-    public virtual HUDisplay::CCM_GPSHome,
+      public virtual HUDisplay::CCM_GPSHome,
       public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -83,14 +83,8 @@ namespace MyImpl
     /// Default dtor.
     ~GPSHome_exec_i ();
 
-    // Explicit home operations
-/*     virtual ::Components::EnterpriseComponent_ptr */
-/*       new_GPS () */
-/*       ACE_THROW_SPEC ((CORBA::SystemException)); */
-
     // Implicit home operations
-    virtual ::Components::EnterpriseComponent_ptr
-      create ();
+    virtual ::Components::EnterpriseComponent_ptr create ();
   };
 
 
