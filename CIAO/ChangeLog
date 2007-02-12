@@ -1,3 +1,198 @@
+Mon Feb 12 16:02:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+
+        * RACE:
+
+        * RACE/Controller:
+
+        * RACE/Controller/Component:
+
+        * RACE/Controller/Component/Controller.cidl:
+        * RACE/Controller/Component/Controller.idl:
+        * RACE/Controller/Component/Controller.mpc:
+        * RACE/Controller/Component/Controller_exec.h:
+        * RACE/Controller/Component/Controller_exec.cpp:
+        * RACE/Controller/Component/Controller_exec_export.h:
+        * RACE/Controller/Component/Controller_stub_export.h:
+        * RACE/Controller/Component/Controller_svnt_export.h:
+
+        * RACE/Input_Adapters:
+
+        * RACE/Input_Adapters/Base:
+
+        * RACE/Input_Adapters/Base/Input_Adapter.idl:
+        * RACE/Input_Adapters/Base/Input_Adapter.mpc:
+        * RACE/Input_Adapters/Base/Input_Adapter_stub_export.h:
+        * RACE/Input_Adapters/Base/Input_Adapter_svnt_export.h:
+
+        * RACE/Input_Adapters/Interactive_Input_Adapter:
+
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
+
+        * RACE/Input_Adapters/LocationUpdater:
+
+        * RACE/Input_Adapters/LocationUpdater/Injector.cpp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater.cdp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater.cidl:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater.idl:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_deployment.dat:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.h:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec_export.h:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_stub_export.h:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_svnt_export.h:
+        * RACE/Input_Adapters/LocationUpdater/Location_Updater.mpc.disable:
+        * RACE/Input_Adapters/LocationUpdater/PCVisitorBase.h:
+        * RACE/Input_Adapters/LocationUpdater/PCVisitorBase.inl:
+        * RACE/Input_Adapters/LocationUpdater/PCVisitorBase.cpp:
+        * RACE/Input_Adapters/LocationUpdater/PlanUpdater.h:
+        * RACE/Input_Adapters/LocationUpdater/PlanUpdater.cpp:
+        * RACE/Input_Adapters/LocationUpdater/README.txt:
+
+        * RACE/Input_Adapters/PlanGenerator:
+
+        * RACE/Input_Adapters/PlanGenerator/Injector.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PCVisitorBase.h:
+        * RACE/Input_Adapters/PlanGenerator/PCVisitorBase.inl:
+        * RACE/Input_Adapters/PlanGenerator/PCVisitorBase.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.cidl:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.cdp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.idl:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.mpc.disable:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_deployment.dat:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec_export.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_stub_export.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_svnt_export.h:
+        * RACE/Input_Adapters/PlanGenerator/README.txt:
+
+        * RACE/Output_Adapters:
+
+        * RACE/Output_Adapters/Base:
+
+        * RACE/Output_Adapters/Base/Output_Adapter.idl:
+        * RACE/Output_Adapters/Base/Output_Adapter.mpc:
+        * RACE/Output_Adapters/Base/Output_Adapter_stub_export.h:
+        * RACE/Output_Adapters/Base/Output_Adapter_svnt_export.h:
+
+        * RACE/Output_Adapters/Component:
+
+        * RACE/Output_Adapters/Component/Output_Manager.idl:
+
+        * RACE/Output_Adapters/Interface:
+
+        * RACE/Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * RACE/Output_Adapters/Interface/Output_Adapter_Interface_stub_export.h:
+        * RACE/Output_Adapters/Interface/Output_Adapter_Interface_svnt_export.h:
+        * RACE/Output_Adapters/Interface/PlanEgress.idl:
+
+        * RACE/Output_Adapters/XML_Output_Adapter:
+
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.cidl:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.h:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.cpp:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec_export.h:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_stub_export.h:
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_svnt_export.h:
+
+        * RACE/Plan_Analyzer:
+
+        * RACE/Plan_Analyzer/Component:
+
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer.cidl:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer.idl:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer_exec.h:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer_exec.cpp:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer_exec_export.h:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer_stub_export.h:
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer_svnt_export.h:
+
+        * RACE/Plan_Analyzer/Interface:
+
+        * RACE/Plan_Analyzer/Interface/PlanIngress.idl:
+        * RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface_stub_export.h:
+        * RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface_svnt_export.h:
+
+        * RACE/Planner_Manager:
+
+        * RACE/Planner_Manager/Component:
+
+        * RACE/Planner_Manager/Component/Planner_Manager.cidl:
+        * RACE/Planner_Manager/Component/Planner_Manager.idl:
+        * RACE/Planner_Manager/Component/Planner_Manager.mpc:
+        * RACE/Planner_Manager/Component/Planner_Manager_exec.h:
+        * RACE/Planner_Manager/Component/Planner_Manager_exec.cpp:
+        * RACE/Planner_Manager/Component/Planner_Manager_exec_export.h:
+        * RACE/Planner_Manager/Component/Planner_Manager_stub_export.h:
+        * RACE/Planner_Manager/Component/Planner_Manager_svnt_export.h:
+
+        * RACE/Planner_Manager/Interface:
+
+        * RACE/Planner_Manager/Interface/Planner_Manager_I.idl:
+        * RACE/Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * RACE/Planner_Manager/Interface/Planner_Manager_Interface_stub_export.h:
+        * RACE/Planner_Manager/Interface/Planner_Manager_Interface_svnt_export.h:
+
+        * RACE/Planners:
+
+        * RACE/Planners/Base:
+
+        * RACE/Planners/Base/Planner.idl:
+        * RACE/Planners/Base/Planner.mpc:
+        * RACE/Planners/Base/Planner_stub_export.h:
+        * RACE/Planners/Base/Planner_svnt_export.h:
+
+        * RACE/Planners/Interface:
+
+        * RACE/Planners/Interface/Planner_I.idl:
+        * RACE/Planners/Interface/Planner_Interface.mpc:
+        * RACE/Planners/Interface/Planner_Interface_stub_export.h:
+        * RACE/Planners/Interface/Planner_Interface_svnt_export.h:
+
+        * RACE/Planners/SimpleBinPacker:
+
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker.cidl:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker.idl:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker_exec.h:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker_exec.cpp:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker_exec_export.h:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker_stub_export.h:
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker_svnt_export.h:
+
+        * RACE/common:
+
+        * RACE/common/RACE_common.idl:
+        * RACE/common/RACE_common.mpc:
+        * RACE/common/RACE_common_stub_export.h:
+        * RACE/common/RACE_common_svnt_export.h:
+
+        * RACE/descriptors:
+
+        * RACE/descriptors/Deployment.xsd:
+        * RACE/descriptors/Modified_Deployment.xsd:
+        * RACE/descriptors/XMI.xsd:
+        * RACE/descriptors/deployment.dat:
+        * RACE/descriptors/flattened_deploymentplan.cdp:
+
+          Removed these files. Removed the RACE implementation from the HEAD,
+					since this is obsolete. This module is now in the process of
+					re-structuring and will be checked in by Nishanth Shankaran.
+
 Mon Feb 12 12:53:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/*.{h,cpp,inl}:
