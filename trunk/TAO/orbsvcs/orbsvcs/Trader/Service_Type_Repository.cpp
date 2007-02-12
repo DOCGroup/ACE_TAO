@@ -12,8 +12,7 @@ ACE_RCSID (Trader,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Service_Type_Repository::
-TAO_Service_Type_Repository (ACE_Lock* lock)
+TAO_Service_Type_Repository::TAO_Service_Type_Repository (ACE_Lock* lock)
   : lock_ (lock)
 {
   this->incarnation_.low = 0;
@@ -73,13 +72,6 @@ add_type (const char *name,
 {
   Prop_Map prop_map;
   Service_Type_Map super_map;
-  CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
-
-  inc_num.low = 0;
-  inc_num.high = 0;
-
-  // With exceptions enabled, inc_num isn't used.
-  ACE_UNUSED_ARG (inc_num);
 
   ACE_WRITE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
@@ -317,8 +309,7 @@ mask_type (const char *name)
 }
 
 void
-TAO_Service_Type_Repository::
-unmask_type (const char *name)
+TAO_Service_Type_Repository::unmask_type (const char *name)
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
     throw CosTrading::IllegalServiceType (name);
