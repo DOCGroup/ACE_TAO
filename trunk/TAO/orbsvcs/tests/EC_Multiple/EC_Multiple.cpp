@@ -1386,7 +1386,6 @@ Test_Supplier::push (const RtecEventComm::EventSet& events)
 
 void
 Test_Supplier::disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -1469,7 +1468,6 @@ Test_Consumer::close (void)
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->test_->push_consumer (this->cookie_, arrival, events);
@@ -1477,7 +1475,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Test_Consumer::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

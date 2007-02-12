@@ -65,7 +65,6 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           PortableServer::POA_ptr poa,
                           const char *,
                           PortableServer::ServantLocator::Cookie &)
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
   ACE_ASSERT (! CORBA::is_nil(poa));
   CORBA::Object_var forward_obj;

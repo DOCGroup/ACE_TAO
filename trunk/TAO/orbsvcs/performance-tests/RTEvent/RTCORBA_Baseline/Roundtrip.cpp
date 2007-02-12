@@ -17,7 +17,6 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 Test::Timestamp
 Roundtrip::test_method (Test::Timestamp send_time,
                         CORBA::Long workload_in_usecs)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t start = ACE_OS::gethrtime ();
   CORBA::Long elapsed = 0;
@@ -35,7 +34,6 @@ Roundtrip::test_method (Test::Timestamp send_time,
 
 void
 Roundtrip::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

@@ -11,7 +11,6 @@
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -19,7 +18,6 @@ Server_ORBInitializer::pre_init (
 void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_server_request_interceptors (info);
 }
@@ -27,7 +25,6 @@ Server_ORBInitializer::post_init (
 void
 Server_ORBInitializer::register_server_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ServerRequestInterceptor_ptr sri =
     PortableInterceptor::ServerRequestInterceptor::_nil ();

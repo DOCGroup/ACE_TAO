@@ -113,10 +113,6 @@ Consumer::run (int argc, char* argv[])
 
 void
 Consumer::push (const CORBA::Any &event)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
   ACE_UNUSED_ARG (event);
 
@@ -130,9 +126,6 @@ Consumer::push (const CORBA::Any &event)
 void
 Consumer::disconnect_push_consumer
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   this->proxy_supplier_->
     disconnect_push_supplier();
@@ -142,10 +135,6 @@ void
 Consumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ))
 {
   // No-Op.
 }

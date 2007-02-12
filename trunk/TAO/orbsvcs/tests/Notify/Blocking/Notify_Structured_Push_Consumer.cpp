@@ -27,7 +27,6 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
 void
 Notify_Structured_Push_Consumer::_connect (
                 CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
     this->_this ();
@@ -76,7 +75,6 @@ Notify_Structured_Push_Consumer::_connect (
 void
 Notify_Structured_Push_Consumer::push_structured_event (
   const CosNotification::StructuredEvent& event)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG, "-"));
   ACE_UNUSED_ARG(event);

@@ -17,8 +17,7 @@ public:
   Test::Stock_ptr get_stock (const char *symbol)
     throw (Test::Invalid_Stock_Symbol);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;

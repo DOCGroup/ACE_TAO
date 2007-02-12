@@ -47,7 +47,6 @@ CEC_Counting_Supplier::disconnect (void)
 
 void
 CEC_Counting_Supplier::push (const CORBA::Any&)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -61,7 +60,6 @@ CEC_Counting_Supplier::push (const CORBA::Any&)
 
 void
 CEC_Counting_Supplier::disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
   this->consumer_proxy_ =
@@ -180,7 +178,6 @@ CEC_Pull_Counting_Supplier::disconnect (void)
 
 CORBA::Any*
 CEC_Pull_Counting_Supplier::pull (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     throw CosEventComm::Disconnected ();
@@ -200,7 +197,6 @@ CEC_Pull_Counting_Supplier::pull (void)
 
 CORBA::Any*
 CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
-    ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     throw CosEventComm::Disconnected ();
@@ -225,7 +221,6 @@ CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
 
 void
 CEC_Pull_Counting_Supplier::disconnect_pull_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
   this->consumer_proxy_ =

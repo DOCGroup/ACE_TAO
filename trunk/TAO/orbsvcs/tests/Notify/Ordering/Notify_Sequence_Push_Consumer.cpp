@@ -30,7 +30,6 @@ Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
 void
 Notify_Sequence_Push_Consumer::_connect (
   CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::SequencePushConsumer_var objref =
     this->_this ();
@@ -71,7 +70,6 @@ Notify_Sequence_Push_Consumer::_connect (
 void
 Notify_Sequence_Push_Consumer::push_structured_events (
   const CosNotification::EventBatch& events)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (count_ == 0)
   {

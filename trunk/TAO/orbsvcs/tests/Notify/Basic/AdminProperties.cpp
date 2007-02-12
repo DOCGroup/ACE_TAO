@@ -108,7 +108,6 @@ AdminProperties_StructuredPushConsumer::AdminProperties_StructuredPushConsumer (
 void
 AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
                                                                )
-  ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   ++events_received_;
 

@@ -28,10 +28,6 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_var& filter_
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_grammar)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidGrammar
-                   ))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)In TAO_Notify_Tests_RT_Test_FilterFactory::create_filter\n"));
@@ -65,10 +61,6 @@ CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_Tests_RT_Test_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
                                                   const CORBA::Any & /*default_value*/
                                                   )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidGrammar
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

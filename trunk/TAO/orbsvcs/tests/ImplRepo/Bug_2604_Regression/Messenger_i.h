@@ -14,8 +14,7 @@ public:
   {}
 
   virtual CORBA::Boolean
-  send_message (const char *user_name, const char *subject, char *&message)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  send_message (const char *user_name, const char *subject, char *&message);
 
 private:
   int count_;

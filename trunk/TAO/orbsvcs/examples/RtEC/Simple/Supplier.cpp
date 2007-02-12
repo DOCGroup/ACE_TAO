@@ -123,7 +123,6 @@ Supplier::run (int argc, char* argv[])
 
 void
 Supplier::disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

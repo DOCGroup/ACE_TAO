@@ -74,7 +74,6 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 EC_Wrapper::for_consumers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ec_impl_)
     return this->ec_impl_->for_consumers ();
@@ -84,7 +83,6 @@ EC_Wrapper::for_consumers (void)
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 EC_Wrapper::for_suppliers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ec_impl_)
     return this->ec_impl_->for_suppliers ();
@@ -94,7 +92,6 @@ EC_Wrapper::for_suppliers (void)
 
 void
 EC_Wrapper::destroy_ec (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   auto_ptr<TAO_EC_Event_Channel> ec_impl_aptr (this->ec_impl_);
   this->ec_impl_ = 0;
@@ -107,7 +104,6 @@ EC_Wrapper::destroy_ec (void)
 
 void
 EC_Wrapper::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister from POA.
   this->deactivator_.deactivate ();
@@ -127,10 +123,6 @@ EC_Wrapper::destroy (void)
 
 RtecEventChannelAdmin::Observer_Handle
 EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   if (this->ec_impl_)
     return this->ec_impl_->append_observer (observer);
@@ -140,10 +132,6 @@ EC_Wrapper::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
 
 void
 EC_Wrapper::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   if (this->ec_impl_)
     this->ec_impl_->remove_observer (handle);

@@ -30,10 +30,7 @@ class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
   /// chosen.
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &flow_spec)
-                            ACE_THROW_SPEC((CORBA::SystemException,
-                                            AVStreams::noSuchFlow,
-                                            AVStreams::QoSRequestFailed ));
+                             const AVStreams::flowSpec &flow_spec);
 
   /// The over-ridden modify_qos method to change the qos of the
   /// flows specified in the flow spec to that in the new_qos.

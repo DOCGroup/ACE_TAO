@@ -16,7 +16,6 @@ CORBA::Object_ptr
 Gateway_ObjRef_Factory::
 make_object (const char *interface_repository_id,
              const PortableInterceptor::ObjectId & id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
     this->old_factory_->make_object (interface_repository_id,

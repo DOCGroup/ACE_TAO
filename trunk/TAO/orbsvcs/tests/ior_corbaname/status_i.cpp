@@ -11,7 +11,6 @@ corbaname_Status_i::corbaname_Status_i (void)
 
 CORBA::Boolean
 corbaname_Status_i::print_status (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If the client makes a succesful request, return a true value
   // indicating that it has successfully reached the server.

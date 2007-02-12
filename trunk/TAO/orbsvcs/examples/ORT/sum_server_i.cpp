@@ -13,7 +13,6 @@ sum_server_i::sum_server_i ()
 CORBA::Long
 sum_server_i::add_variables (CORBA::Long a,
                              CORBA::Long b)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return a+b;
 }

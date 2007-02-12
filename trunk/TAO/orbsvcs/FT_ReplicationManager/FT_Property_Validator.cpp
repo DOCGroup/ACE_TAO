@@ -46,9 +46,6 @@ TAO::FT_Property_Validator::~FT_Property_Validator (void)
 void
 TAO::FT_Property_Validator::validate_property (
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   const CORBA::ULong len = props.length ();
 
@@ -135,9 +132,6 @@ TAO::FT_Property_Validator::validate_property (
 void
 TAO::FT_Property_Validator::validate_criteria (
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::CannotMeetCriteria))
 {
   const CORBA::ULong len = props.length ();
   PortableGroup::Criteria invalid_criteria;

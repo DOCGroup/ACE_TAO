@@ -55,10 +55,7 @@ public:
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
-  virtual void start (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void start (void);
 
   /// Register Supplier
   void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);

@@ -191,7 +191,6 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
 
 CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group (
     const char * type_id)
-  ACE_THROW_SPEC ( (CORBA::SystemException ))
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
 
@@ -244,7 +243,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group
 CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
     const char * role,
     int write_iors)
-  ACE_THROW_SPEC ( (CORBA::SystemException ))
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
 

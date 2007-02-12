@@ -41,10 +41,8 @@ public:
   /// Return 1 when all the messages have been received
   int done (void);
 
-  virtual void push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer (void);
 
 private:
   /// Roundtrip delays are recorded here
@@ -65,8 +63,7 @@ public:
   /// Constructor
   EC_Latency_Supplier (void);
 
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
 };
 
 // ****************************************************************

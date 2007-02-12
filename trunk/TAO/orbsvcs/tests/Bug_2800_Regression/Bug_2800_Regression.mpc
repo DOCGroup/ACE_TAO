@@ -8,7 +8,8 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): namingexe, naming_serv {
+project(*NsMain): namingexe, naming_serv {
+  exename = nsmain
   after += *idl
   Source_Files {
     Hello.cpp
@@ -28,6 +29,19 @@ project(*Client): namingexe {
   }
   Source_Files {
     TestC.cpp
+  }
+}
+
+project(*Server): namingexe, portableserver {
+  exename = server
+  after += *idl
+  Source_Files {
+    server.cpp
+    Hello.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
   }
 }
 

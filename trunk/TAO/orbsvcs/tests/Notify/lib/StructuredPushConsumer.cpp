@@ -38,7 +38,6 @@ TAO_Notify_Tests_StructuredPushConsumer::disconnect_from_proxy (void)
 
 void
 TAO_Notify_Tests_StructuredPushConsumer::disconnect_structured_push_consumer (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   bool this_method_used_only_by_notify_service = false;
   ACE_ASSERT(this_method_used_only_by_notify_service);
@@ -49,8 +48,6 @@ void
 TAO_Notify_Tests_StructuredPushConsumer::push_structured_event
    (const CosNotification::StructuredEvent &/*notification*/
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosEventComm::Disconnected))
 {
   // NOP
 }

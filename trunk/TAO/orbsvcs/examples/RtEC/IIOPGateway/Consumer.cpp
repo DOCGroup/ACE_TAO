@@ -130,7 +130,6 @@ Consumer::run (int argc, char* argv[])
 
 void
 Consumer::push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -150,7 +149,6 @@ Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Consumer::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have

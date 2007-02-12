@@ -41,7 +41,6 @@ Object1_impl::~Object1_impl()
 void Object1_impl::method1(const char* activity,
     CORBA::Long seconds,
     char* &output)
-  ACE_THROW_SPEC ((CORBA::SystemException, testSched::testSchedException))
 {
   const int scale_factor = 2000;
   int work;
