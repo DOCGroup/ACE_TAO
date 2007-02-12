@@ -14,14 +14,10 @@ use Getopt::Std;
 #
 # Add tests for these:
 #
-# - no relative path to tao_idl in the .dsp files
-# - Linking to wrong type of library in dsp's
 # - not setting up the release configs correctly in dsp files
 # - Guards in .h files
 # - no global functions
 # - other commit_check checks, tabs, trailing spaces.
-# - _narrow() should always have ACE_ENV_ARG_PARAMETER
-# - Using ACE_TRY_NEW_ENV (Nanbor suggests using ACE_DECLARE_NEW_CORBA_ENV)
 #
 # And others in ACE_Guidelines and Design Rules
 #
@@ -230,6 +226,10 @@ sub check_for_msc_ver_string ()
                     $mscline = $.;
                 }
                 if ($disable == 0 and /\_MSC_VER \>= 1200/) {
+                    $found = 1;
+                    $mscline = $.;
+                }
+                if ($disable == 0 and /\_MSC_VER \> 1200/) {
                     $found = 1;
                     $mscline = $.;
                 }

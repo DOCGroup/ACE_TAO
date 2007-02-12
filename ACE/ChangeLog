@@ -1,3 +1,20 @@
+Mon Feb 12 14:44:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Removed old todo's, extended msvc ver check
+
+        * ace/Codeset_IBM1047.cpp:
+        * ace/Functor.cpp:
+        * ace/Functor.inl:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Hash_Multi_Map_Manager_T.cpp:
+        * ace/Sched_Params.cpp:
+        * ace/Sched_Params.inl:
+          Converted to doxygen style documentation
+
+        * bin/doxygen-convert-h.pl:
+          Only handle source files
+
 Mon Feb 12 14:38:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CORBA_macros.h:
