@@ -3,7 +3,7 @@
 
 //=============================================================================
 /**
- *  @file    Reconfig_Schedul_Utils.h
+ *  @file    Reconfig_Sched_Utils.h
  *
  *  $Id$
  *
