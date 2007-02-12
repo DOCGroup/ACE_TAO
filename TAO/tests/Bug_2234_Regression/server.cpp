@@ -42,7 +42,6 @@ public:
     CORBA::Long_out b,
     CORBA::Long &c
  )
-    ACE_THROW_SPEC( (CORBA::SystemException ) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestLong\n") );
     if (static_cast<CORBA::Long>( 1 ) != a)
@@ -69,7 +68,6 @@ public:
     CORBA::String_out b,
     char *&c
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestString\n") );
     if (0 == a)
@@ -116,7 +114,6 @@ public:
     Test::MyNonVarStruct_out b,
     Test::MyNonVarStruct &c
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     Test::MyNonVarStruct
       newret;
@@ -154,7 +151,6 @@ public:
     Test::MyVarStruct_out b,
     Test::MyVarStruct &c
  )
-    ACE_THROW_SPEC(( CORBA::SystemException ))
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n") );
     if (0 == a.val.in())
@@ -218,7 +214,6 @@ public:
     Test::MyNonVarUnion_out b,
     Test::MyNonVarUnion &c
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     Test::MyNonVarUnion
       newret;
@@ -266,7 +261,6 @@ public:
     Test::MyVarUnion_out b,
     Test::MyVarUnion &c
  )
-    ACE_THROW_SPEC (( CORBA::SystemException ))
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarUnion\n") );
     if (static_cast<CORBA::Short>( 1 ) != a._d())
@@ -316,7 +310,6 @@ public:
     Test::MySeqOfLong_out b,
     Test::MySeqOfLong &c
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestSeqOfLong\n") );
     if (1u != a.length())
@@ -367,7 +360,6 @@ public:
     CORBA::Any_out b,
     CORBA::Any &c
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in TestAny\n") );
     CORBA::Long aL;
@@ -421,7 +413,6 @@ public:
 
   void ShutdownServer(
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, ". in ShutdownServer\n") );
     orb->shutdown(0);
@@ -435,24 +426,19 @@ class AnInterceptor : public PortableInterceptor::ServerRequestInterceptor
 {
 public:
   char *name( )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     return const_cast<char *>("");
   }
 
   void destroy( )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr
  )
-    ACE_THROW_SPEC( (CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest) )
   {
   }
-
   // Note this helper only deals with the types inserted into
   // the any that we defined for this test.
   static void display_any( const CORBA::Any &arg )
@@ -598,8 +584,6 @@ public:
   void receive_request(
     PortableInterceptor::ServerRequestInfo_ptr ri
  )
-    ACE_THROW_SPEC( (CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest) )
   {
     ACE_DEBUG( (LM_INFO, "AnInterceptor::receive_request\n") );
     Dynamic::ParameterList
@@ -615,7 +599,6 @@ public:
   void send_reply(
     PortableInterceptor::ServerRequestInfo_ptr ri
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     ACE_DEBUG( (LM_INFO, "AnInterceptor::send_reply\n") );
     Dynamic::ParameterList
@@ -631,16 +614,11 @@ public:
   void send_exception(
     PortableInterceptor::ServerRequestInfo_ptr
   )
-    ACE_THROW_SPEC( (CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest) )
   {
   }
-
   void send_other(
     PortableInterceptor::ServerRequestInfo_ptr
  )
-    ACE_THROW_SPEC( (CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest) )
   {
   }
 };
@@ -656,14 +634,12 @@ public:
   void pre_init(
     PortableInterceptor::ORBInitInfo_ptr
  )
-    ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void post_init(
      PortableInterceptor::ORBInitInfo_ptr info
  )
-     ACE_THROW_SPEC( (CORBA::SystemException) )
    {
      info->add_server_request_interceptor( interceptor_ );
    }

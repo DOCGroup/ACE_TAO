@@ -12,7 +12,6 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 
 void
 Visual_i::normal (CORBA::Long)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
 }
@@ -20,7 +19,6 @@ Visual_i::normal (CORBA::Long)
 CORBA::Long
 Visual_i::calculate (CORBA::Long one,
                      CORBA::Long two)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
   return (one + two);
@@ -28,7 +26,6 @@ Visual_i::calculate (CORBA::Long one,
 
 void
 Visual_i::user (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly))
 {
   // ACE_DEBUG ((LM_DEBUG, "Visual::user, throwning Silly\n"));
   throw Test_Interceptors::Silly ();
@@ -36,7 +33,6 @@ Visual_i::user (void)
 
 void
 Visual_i::system (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
   throw CORBA::INV_OBJREF ();
@@ -44,7 +40,6 @@ Visual_i::system (void)
 
 void
 Visual_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->_remove_ref ();
 

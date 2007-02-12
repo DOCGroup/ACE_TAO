@@ -11,7 +11,6 @@ ACE_RCSID (LongUpcalls,
 
 static void
 validate_connection (Test::Controller_ptr controller)
-  ACE_THROW_SPEC (())
 {
   try
     {
@@ -36,7 +35,6 @@ void
 Manager::start_workers (CORBA::Short worker_count,
                         CORBA::Long milliseconds,
                         Test::Controller_ptr controller)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Thread_Manager thread_manager;
 
@@ -53,7 +51,6 @@ Manager::start_workers (CORBA::Short worker_count,
 
 void
 Manager::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

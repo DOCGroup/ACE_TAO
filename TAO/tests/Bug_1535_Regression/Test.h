@@ -16,8 +16,7 @@ public:
   Hello (PortableServer::POA_ptr poa);
 
   // = The skeleton methods
-  virtual void print_hello_world (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void print_hello_world (void);
 
   PortableServer::POA_ptr _default_POA (void);
 

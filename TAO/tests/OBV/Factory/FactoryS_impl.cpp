@@ -13,7 +13,6 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 
 OBV_FactoryTest::BaseValue *
 Test_impl::get_base_value (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::BaseValue* ret_val = 0;
   ACE_NEW_RETURN (ret_val,
@@ -25,7 +24,6 @@ Test_impl::get_base_value (void)
 
 OBV_FactoryTest::Value1 *
 Test_impl::get_value1 (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::Value1* ret_val = 0;
   ACE_NEW_RETURN (ret_val,
@@ -37,7 +35,6 @@ Test_impl::get_value1 (void)
 
 OBV_FactoryTest::Value2 *
 Test_impl::get_value2 (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_RETURN (ret_val,
@@ -49,7 +46,6 @@ Test_impl::get_value2 (void)
 
 void
 Test_impl::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

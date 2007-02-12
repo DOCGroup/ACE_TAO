@@ -14,7 +14,6 @@ Hello::Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 
 Test::HelloWorld_ptr
 Hello::get_helloworld (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   HelloWorld *hello_world;
   ACE_NEW_THROW_EX (hello_world,
@@ -30,7 +29,6 @@ Hello::get_helloworld (void)
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

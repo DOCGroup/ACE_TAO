@@ -29,12 +29,9 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short method  (CORBA::Short boo)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Test::Oops));
+  CORBA::Short method  (CORBA::Short boo);
 
-  void shutdown  (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown  (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -48,8 +45,6 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 CORBA::Short
 Test_i :: method (CORBA::Short boo)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Test::Oops))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_i::method () invoked\n")));
@@ -61,7 +56,6 @@ Test_i :: method (CORBA::Short boo)
 
 void
 Test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

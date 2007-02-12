@@ -19,14 +19,12 @@ IORInterceptor::~IORInterceptor (void)
 
 char *
 IORInterceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("");
 }
 
 void
 IORInterceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (this->success_);
 }
@@ -34,7 +32,6 @@ IORInterceptor::destroy (void)
 void
 IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

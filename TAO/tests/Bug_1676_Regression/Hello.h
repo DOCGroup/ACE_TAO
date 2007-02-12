@@ -18,28 +18,18 @@ public:
 
   // = The skeleton methods
 	virtual ::Test::StringList * get_stringList (
-		)
-		ACE_THROW_SPEC ((
-		::CORBA::SystemException
-		));
+		);
 
     virtual void get_stringList2 (
         ::CORBA::Boolean initialize,
         ::Test::StringList_out osl
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     virtual void mod_stringList (
         ::Test::StringList & iosl
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

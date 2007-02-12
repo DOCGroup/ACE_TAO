@@ -30,14 +30,11 @@ public:
   Test_i (PortableServer::POA_ptr poa);
   // ctor
 
-  CORBA::Long instance_count (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long instance_count (void);
 
-  void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (void);
 
-  PortableServer::POA_ptr _default_POA (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr _default_POA (void);
 
 private:
   PortableServer::POA_var poa_;

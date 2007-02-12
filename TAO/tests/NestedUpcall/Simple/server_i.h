@@ -8,15 +8,12 @@ public:
   server_i (int quiet,
             CORBA::ORB_ptr orb);
 
-  void ping (CORBA::UShort time_to_live)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void ping (CORBA::UShort time_to_live);
 
   void start (client_ptr c,
-              CORBA::UShort time_to_live)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+              CORBA::UShort time_to_live);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   int quiet_;

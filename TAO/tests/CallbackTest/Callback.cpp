@@ -12,7 +12,6 @@ Callback::Callback (CORBA::ORB_ptr orb)
 
 CORBA::Boolean
 Callback::are_you_there (CORBA::String_out answer)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Callback - we are here!\n"));
@@ -24,7 +23,6 @@ Callback::are_you_there (CORBA::String_out answer)
 
 void
 Callback::test_oneway (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Callback - test_oneway!\n"));
@@ -32,7 +30,6 @@ Callback::test_oneway (void)
 
 void
 Callback::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Callback - shutdown!\n"));

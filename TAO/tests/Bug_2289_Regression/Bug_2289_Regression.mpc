@@ -25,7 +25,6 @@ project(*Server): taoserver, iortable {
 project(*Client): taoserver, iortable {
   exename = client
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
     TestC.cpp

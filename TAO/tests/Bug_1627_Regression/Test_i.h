@@ -18,8 +18,7 @@ public:
    ~Test_i (void);
 
    /// A method
-   void test_method(void)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+   void test_method(void);
 };
 
 #endif /* ! BUG_1330_REGRESSION_TEST_I_H */

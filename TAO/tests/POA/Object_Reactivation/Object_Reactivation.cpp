@@ -56,8 +56,7 @@ class test_i : public POA_test
 public:
   test_i (ACE_Auto_Event &event);
 
-  void deactivate_self (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void deactivate_self (void);
 
 private:
   ACE_Auto_Event &event_;
@@ -70,7 +69,6 @@ test_i::test_i (ACE_Auto_Event &event)
 
 void
 test_i::deactivate_self (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_var poa = this->_default_POA ();
 

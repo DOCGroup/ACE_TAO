@@ -16,21 +16,18 @@ ACE_RCSID(Collocation_Oneway_Tests, Hello, "$Id$")
 
 void
 Hello::system_exception_test (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::INTERNAL ();
 }
 
 void
 Hello::user_exception_expected (void)
-  ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A))
 {
   throw ::Test::Hello::A ();
 }
 
 void
 Hello::user_exception_not_expected (void)
-  ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A))
 {
   this->throw_internal_b ();
 }
@@ -43,7 +40,6 @@ Hello::throw_internal_b (void)
 
 char *
 Hello::get_string (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -86,7 +82,6 @@ Hello::get_string (void)
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

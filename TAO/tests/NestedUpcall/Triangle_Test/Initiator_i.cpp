@@ -37,7 +37,6 @@ Initiator_i::~Initiator_i (void)
 
 void
 Initiator_i::foo_object_B (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Initiator_i::foo_object_B ()\n"));

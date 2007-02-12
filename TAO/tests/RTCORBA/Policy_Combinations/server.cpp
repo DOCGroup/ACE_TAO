@@ -16,14 +16,11 @@ public:
           CORBA::Short server_priority,
           CORBA::Short client_priority);
 
-  CORBA::Short method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Short method (void);
 
-  void prioritized_method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void prioritized_method (void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -48,7 +45,6 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 CORBA::Short
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::method\n"));
@@ -58,7 +54,6 @@ test_i::method (void)
 
 void
 test_i::prioritized_method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTCurrent");
@@ -80,7 +75,6 @@ test_i::prioritized_method (void)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));

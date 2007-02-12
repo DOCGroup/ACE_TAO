@@ -17,7 +17,6 @@ test_i::method (CORBA::ULong request_number,
                 CORBA::Long start_time,
                 const test::data &,
                 CORBA::ULong work)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value start (0);
   start.msec (start_time);
@@ -35,14 +34,12 @@ test_i::method (CORBA::ULong request_number,
 
 void
 test_i::flush (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "server: got flush request\n"));
 }
 
 void
 test_i::shutdown (CORBA::Long start_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value start (0);
   start.msec (start_time);

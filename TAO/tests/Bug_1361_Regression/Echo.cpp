@@ -21,7 +21,6 @@ Echo::Echo(CORBA::ORB_ptr orb,
 
 void
 Echo::echo_payload(Test::Payload const &)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->abort_counter_--;
 
@@ -36,9 +35,6 @@ Echo::echo_payload(Test::Payload const &)
 void
 Echo::echo_payload_out (
                         Test::Payload_out data)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   int j = ACE_OS::rand() % 40000;
   data = new Test::Payload(j);

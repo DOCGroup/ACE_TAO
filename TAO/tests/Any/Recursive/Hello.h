@@ -27,11 +27,9 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // Return the any provide as an "in" argument.
-  virtual CORBA::Any * get_any (CORBA::Any const & the_any)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Any * get_any (CORBA::Any const & the_any);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
 

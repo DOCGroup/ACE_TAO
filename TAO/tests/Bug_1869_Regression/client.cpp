@@ -17,9 +17,6 @@ class AdderCallback
     virtual void add (
         CORBA::Long ami_return_val
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
       {
         ACE_DEBUG ((LM_DEBUG, "Return value: %d\n", ami_return_val));
       }
@@ -27,9 +24,6 @@ class AdderCallback
     virtual void add_excep (
         ::Messaging::ExceptionHolder *
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
       {
         ACE_DEBUG ((LM_DEBUG, "Caught exception in _excep\n"));
       }

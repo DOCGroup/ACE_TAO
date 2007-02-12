@@ -17,11 +17,9 @@ public:
   Process (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::Long get_process_id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_process_id (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

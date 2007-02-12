@@ -17,11 +17,9 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (const char * A, const char * B, const char * C)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * get_string (const char * A, const char * B, const char * C);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

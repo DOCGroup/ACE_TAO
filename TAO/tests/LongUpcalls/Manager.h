@@ -18,10 +18,8 @@ public:
   // = The skeleton methods
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
-                              Test::Controller_ptr controller)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                              Test::Controller_ptr controller);
+  virtual void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;

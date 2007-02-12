@@ -19,13 +19,9 @@ public:
     virtual void op (
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

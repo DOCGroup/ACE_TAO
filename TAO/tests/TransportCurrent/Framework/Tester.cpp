@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/TransportCurrent/Transport_Current.h"
+#include "tao/SystemException.h"
 
 using namespace TAO;
 
@@ -10,8 +11,6 @@ using namespace TAO;
 
 int
 test_transport_current (Transport::Current_ptr tc)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::UserException))
 {
   CORBA::Long id = tc->id ();
 
@@ -36,8 +35,6 @@ test_transport_current (Transport::Current_ptr tc)
 
 int
 test_transport_current (CORBA::ORB_ptr orb)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::UserException))
 {
   // Get the Current object.
   CORBA::Object_var tcobject =

@@ -13,14 +13,12 @@ ORT_test_i::ORT_test_i (CORBA::ORB_ptr orb)
 
 CORBA::Boolean
 ORT_test_i::request_server (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
 void
 ORT_test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

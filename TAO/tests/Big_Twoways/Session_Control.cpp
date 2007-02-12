@@ -42,7 +42,6 @@ Session_Control::~Session_Control (void)
 
 void
 Session_Control::session_finished (CORBA::Boolean success)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (this->session_count_ == 0)

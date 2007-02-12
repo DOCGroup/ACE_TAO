@@ -21,7 +21,7 @@ project(*Server): taoserver, messaging, ami {
 }
 
 project(*Client): messaging, taoexe, portableserver, ami {
-  after += *Server
+  after += *idl
   Source_Files {
     client.cpp
     ami_testS.cpp
@@ -32,7 +32,7 @@ project(*Client): messaging, taoexe, portableserver, ami {
 }
 
 project(*Simple Client): messaging, taoexe, portableserver, ami {
-  after += *Server
+  after += *idl
   Source_Files {
     simple_client.cpp
     ami_testS.cpp

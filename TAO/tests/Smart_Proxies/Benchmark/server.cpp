@@ -29,14 +29,11 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short box_prices  (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Short box_prices  (void);
 
-  CORBA::Long tickets  (CORBA::Short number)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long tickets  (CORBA::Short number);
 
-  void shutdown  (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown  (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -50,21 +47,18 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 CORBA::Short
 Test_i::box_prices (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125;
 }
 
 CORBA::Long
 Test_i::tickets (CORBA::Short number)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125 * number;
 }
 
 void
 Test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

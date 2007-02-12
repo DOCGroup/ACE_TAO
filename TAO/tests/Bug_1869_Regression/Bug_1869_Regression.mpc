@@ -21,7 +21,6 @@ project(*Server): taoserver, iortable, ami {
 
 project(*Client): taoclient, ami {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
     AMIC.cpp

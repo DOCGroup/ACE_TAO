@@ -20,7 +20,6 @@ test_i::test_i (CORBA::ORB_ptr orb,
 CORBA::Long
 test_i::method (CORBA::Long client_id,
                 CORBA::Long iteration)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -56,7 +55,6 @@ test_i::_default_POA (void)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
