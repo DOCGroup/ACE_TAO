@@ -46,17 +46,9 @@ namespace TAO_FTRTEC
       virtual void destroy (void);
 
       virtual RtecEventChannelAdmin::Observer_Handle
-        append_observer
-          (RtecEventChannelAdmin::Observer_ptr observer) ACE_THROW_SPEC((
-                             CORBA::SystemException,
-                             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-                             RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+        append_observer (RtecEventChannelAdmin::Observer_ptr observer);
 
-      virtual void remove_observer
-        (RtecEventChannelAdmin::Observer_Handle)  ACE_THROW_SPEC((
-                            CORBA::SystemException,
-                            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-                            RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+      virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
                 const RtecEventComm::EventSet & data);
