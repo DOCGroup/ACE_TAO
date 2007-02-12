@@ -43,7 +43,6 @@ namespace CIAO
       void
       PlanGenerator_exec_i::push_deployment (
         ::CIAO::RACE::Deploy_Input * ev)
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         try
         {
@@ -149,9 +148,6 @@ namespace CIAO
       void
       PlanGenerator_exec_i::set_session_context (
         ::Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         this->context_ =
         PlanGenerator_Context::_narrow (
@@ -165,45 +161,30 @@ namespace CIAO
 
       void
       PlanGenerator_exec_i::ciao_preactivate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       PlanGenerator_exec_i::ciao_postactivate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       PlanGenerator_exec_i::ccm_activate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       PlanGenerator_exec_i::ccm_passivate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       PlanGenerator_exec_i::ccm_remove ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
@@ -232,9 +213,6 @@ namespace CIAO
 
       ::Components::EnterpriseComponent_ptr
       PlanGenerator_Home_exec_i::create ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         ::Components::EnterpriseComponent_ptr retval =
         ::Components::EnterpriseComponent::_nil ();

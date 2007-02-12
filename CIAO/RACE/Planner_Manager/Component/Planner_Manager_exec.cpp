@@ -45,7 +45,6 @@ namespace CIAO
       Planner_Manager_I_exec_i::execute_planners (
       const ::Deployment::DeploymentPlan & /* plan */,
       const ::CIAO::RACE::PlannerFlow & /* flow */)
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
       }
@@ -68,7 +67,6 @@ namespace CIAO
 
       ::CIAO::RACE::RACE_Classifications *
       Planner_Manager_exec_i::classes ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return 0;
@@ -78,7 +76,6 @@ namespace CIAO
 
       ::CIAO::RACE::CCM_Planner_Manager_I_ptr
       Planner_Manager_exec_i::get_planner_manager_i ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return ::CIAO::RACE::CCM_Planner_Manager_I::_nil ();
@@ -89,9 +86,6 @@ namespace CIAO
       void
       Planner_Manager_exec_i::set_session_context (
       ::Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         this->context_ =
         Planner_Manager_Context::_narrow (
@@ -105,45 +99,30 @@ namespace CIAO
 
       void
       Planner_Manager_exec_i::ciao_preactivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Planner_Manager_exec_i::ciao_postactivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Planner_Manager_exec_i::ccm_activate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Planner_Manager_exec_i::ccm_passivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Planner_Manager_exec_i::ccm_remove ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
@@ -172,9 +151,6 @@ namespace CIAO
 
       ::Components::EnterpriseComponent_ptr
       Planner_Manager_Home_exec_i::create ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         ::Components::EnterpriseComponent_ptr retval =
         ::Components::EnterpriseComponent::_nil ();

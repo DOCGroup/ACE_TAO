@@ -87,7 +87,6 @@ namespace CIAO
                                   const char *package_uri,
                                   bool use_package_name,
                                   bool use_repoman)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       if (CIAO::debug_level () > 9)
         {
@@ -116,7 +115,6 @@ namespace CIAO
 
     const char *
     Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       try
         {
@@ -371,7 +369,6 @@ namespace CIAO
                                      const char *package_uri,
                                      bool use_package_name,
                                      bool use_repoman)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
 
@@ -390,7 +387,6 @@ namespace CIAO
 
     const char *
     Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
 
       if (CORBA::is_nil (this->em_.in ()))

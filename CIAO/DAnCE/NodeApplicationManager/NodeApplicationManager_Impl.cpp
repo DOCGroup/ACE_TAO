@@ -50,10 +50,6 @@ is_external_component (ACE_CString & name)
 Deployment::Connections *
 CIAO::NodeApplicationManager_Impl_Base::
 create_connections ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
 {
   CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_connections");
   Deployment::Connections_var retv;
@@ -182,10 +178,6 @@ CIAO::NodeApplicationManager_Impl_Base::
 startLaunch (const Deployment::Properties & configProperty,
              Deployment::Connections_out providedReference,
              CORBA::Boolean start)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
 {
   try
     {
@@ -380,14 +372,6 @@ perform_redeployment (const Deployment::Properties & configProperty,
                       Deployment::Connections_out providedReference,
                       CORBA::Boolean /*add_or_remove*/, // true means "add" only
                       CORBA::Boolean start)
-  ACE_THROW_SPEC ((::CORBA::SystemException,
-                   ::Deployment::PlanError,
-                   ::Deployment::InstallationFailure,
-                   ::Deployment::UnknownImplId,
-                   ::Deployment::ImplEntryPointNotFound,
-                   ::Deployment::InvalidConnection,
-                   ::Deployment::InvalidProperty,
-                   ::Components::RemoveFailure))
 {
   // Prerequisite:
   //    (1) If this is an existiing old NAM, then <nodeapp_> is ready to use.
@@ -518,13 +502,6 @@ perform_redeployment (const Deployment::Properties & configProperty,
 void
 CIAO::NodeApplicationManager_Impl_Base::
 add_new_components ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::PlanError,
-                   ::Deployment::InstallationFailure,
-                   ::Deployment::UnknownImplId,
-                   ::Deployment::ImplEntryPointNotFound,
-                   ::Deployment::InvalidConnection,
-                   ::Deployment::InvalidProperty))
 {
   try
     {
@@ -606,9 +583,6 @@ add_new_components ()
 void
 CIAO::NodeApplicationManager_Impl_Base::
 remove_existing_components ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::PlanError,
-                   ::Components::RemoveFailure))
 {
   try
     {
@@ -662,7 +636,6 @@ is_to_be_removed (const char * name)
 void
 CIAO::NodeApplicationManager_Impl_Base::
 set_shared_components (const Deployment::ComponentPlans & shared)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   this->shared_components_ = shared;
 }
@@ -670,8 +643,6 @@ set_shared_components (const Deployment::ComponentPlans & shared)
 void
 CIAO::NodeApplicationManager_Impl_Base::
 destroyApplication (Deployment::Application_ptr app)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StopError))
 {
   CIAO_TRACE("CIAO::NodeApplicationManager_Impl::destroyApplication");
   ACE_UNUSED_ARG (app);
@@ -722,7 +693,6 @@ destroyApplication (Deployment::Application_ptr app)
 CIAO::NodeApplicationManager_Impl_Base::set_priority (
                                                       const char * cid,
                                                       const ::Deployment::Sched_Params & params)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   if (CIAO::debug_level () > 20)
     {
@@ -811,8 +781,6 @@ CIAO::NodeApplicationManager_Impl::init (
                                          const Deployment::DeploymentPlan & plan,
                                          const PortableServer::POA_ptr callback_poa,
                                          NodeManager_Impl_Base * nm)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::InvalidProperty))
 {
   PortableServer::ObjectId_var oid;
 
@@ -886,10 +854,6 @@ CIAO::NodeApplicationManager_Impl::init (
 Deployment::NodeApplication_ptr
 CIAO::NodeApplicationManager_Impl::
 create_node_application (const ACE_CString & options)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
 {
   CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_node_application");
   Deployment::NodeApplication_var retval;
@@ -1057,8 +1021,6 @@ CIAO::Static_NodeApplicationManager_Impl::init (
                                                 const Deployment::DeploymentPlan & plan,
                                                 const PortableServer::POA_ptr callback_poa,
                                                 NodeManager_Impl_Base * nm)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::InvalidProperty))
 {
   PortableServer::ObjectId_var oid;
 
@@ -1097,10 +1059,6 @@ CIAO::Static_NodeApplicationManager_Impl::init (
 Deployment::NodeApplication_ptr
 CIAO::Static_NodeApplicationManager_Impl::
 create_node_application (const ACE_CString & options)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
 {
   ACE_UNUSED_ARG(options);
 

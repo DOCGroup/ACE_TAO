@@ -19,19 +19,16 @@ namespace CIAO
       // Supported operations.
       void
       Controller_exec_i::start ()
-        ACE_THROW_SPEC ((::CORBA::SystemException))
       {}
 
       void
       Controller_exec_i::stop ()
-        ACE_THROW_SPEC ((::CORBA::SystemException))
       {}
 
       // Attribute operations.
 
       ::CORBA::Double
       Controller_exec_i::sampling_period ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return 0.0;
@@ -44,9 +41,6 @@ namespace CIAO
       void
       Controller_exec_i::set_session_context (
         ::Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         this->context_ = Controller_Context::_narrow (ctx);
 
@@ -58,45 +52,30 @@ namespace CIAO
 
       void
       Controller_exec_i::ciao_preactivate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Controller_exec_i::ciao_postactivate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Controller_exec_i::ccm_activate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Controller_exec_i::ccm_passivate ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Controller_exec_i::ccm_remove ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         // Your code here.
       }
@@ -125,9 +104,6 @@ namespace CIAO
 
       ::Components::EnterpriseComponent_ptr
       Controller_Home_exec_i::create ()
-      ACE_THROW_SPEC ((
-                        ::CORBA::SystemException,
-                        ::Components::CCMException))
       {
         ::Components::EnterpriseComponent_ptr retval =
         ::Components::EnterpriseComponent::_nil ();

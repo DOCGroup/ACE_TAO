@@ -46,47 +46,28 @@ namespace CIDL_TargetManager_i
     // Port operations.
 
     virtual ::Deployment::CCM_TargetManager_ptr
-    get_targetMgr ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_targetMgr ();
 
     // Operations from Components::SessionComponent
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ::Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ciao_preactivate ();
 
     virtual void
-    ciao_postactivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-   ::Components::CCMException));
+    ciao_postactivate ();
 
     virtual void
-    ccm_activate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_activate ();
 
     virtual void
-    ccm_passivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_passivate ();
 
     virtual void
-    ccm_remove ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_remove ();
 
   protected:
     /// The service context pointer
@@ -95,8 +76,6 @@ namespace CIDL_TargetManager_i
     /// The exec Object
     ::Deployment::CCM_TargetManager_var exec_object_;
   };
- 
-  
   class TARGETMANAGER_EXEC_Export TargetManager_exec_i
   : public virtual ::Deployment::CCM_TargetManager,
   public virtual TAO_Local_RefCounted_Object
@@ -111,31 +90,24 @@ namespace CIDL_TargetManager_i
     // Operations from ::Deployment::TargetManager
 
     virtual ::Deployment::Domain *
-    getAllResources ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    getAllResources ();
 
     virtual ::Deployment::Domain *
-    getAvailableResources ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    getAvailableResources ();
 
     virtual void
     commitResources (
-    const ::Deployment::DeploymentPlan & plan)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Deployment::PlanError));
+    const ::Deployment::DeploymentPlan & plan);
 
     virtual void
     releaseResources (
-    const ::Deployment::DeploymentPlan & argname)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    const ::Deployment::DeploymentPlan & argname);
 
     virtual void
     updateDomain (
     const ::CORBA::StringSeq & elements,
     const ::Deployment::Domain & domainSubset,
-    ::Deployment::DomainUpdateKind updateKind)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ::Deployment::DomainUpdateKind updateKind);
 
     virtual ::Deployment::ResourceCommitmentManager_ptr 
     createResourceCommitment (
@@ -185,10 +157,7 @@ namespace CIDL_TargetManager_i
     // Implicit operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    create ();
   };
 
   extern "C" TARGETMANAGER_EXEC_Export ::Components::HomeExecutorBase_ptr
