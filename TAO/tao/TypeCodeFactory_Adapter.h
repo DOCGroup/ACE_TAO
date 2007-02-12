@@ -20,6 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CORBA_methods.h"
 #include "tao/Typecode_typesC.h"
 #include "tao/Pseudo_VarOut_T.h"
 
