@@ -35,7 +35,7 @@ public:
 
   CORBA::Long test_raise (CORBA::Long x);
 
-  void shutdown (void) ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;
