@@ -1,3 +1,9 @@
+Mon Feb 12 18:10:42 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Name_Request_Reply.cpp (timeout):
+        * netsvcs/lib/Time_Request_Reply.cpp (timeout, decode):
+          Truncate 64-bit time value down to the platform's time_t size.
+
 Mon Feb 12 15:18:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
