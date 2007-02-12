@@ -29,9 +29,6 @@ project(*Client): taoclient, utils, portableserver {
   avoids += repo
   after += *IDL
 
-  // XXX is this dependency necessary?
-  after += *Server
-
   IDL_Files {
   }
 
