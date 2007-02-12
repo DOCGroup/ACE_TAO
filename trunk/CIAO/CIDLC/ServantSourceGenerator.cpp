@@ -4367,6 +4367,7 @@ ServantSourceEmitter::pre (TranslationUnit&)
      << "#include \"ciao/Servant_Activator.h\"" << endl
      << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
      << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"tao/SystemException.h\"" << endl
      << "#include \"ace/SString.h\"" << endl << endl;
 }
 
