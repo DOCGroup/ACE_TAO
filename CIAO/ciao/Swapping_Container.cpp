@@ -35,14 +35,12 @@ namespace CIAO
 
   CORBA::Object_ptr
   Swapping_Container::get_home_objref (PortableServer::Servant p)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->the_home_servant_POA ()->servant_to_reference (p);
   }
 
   void
   Swapping_Container::deactivate_facet (const PortableServer::ObjectId &oid)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->the_facet_cons_POA ()->deactivate_object (oid);
   }
@@ -50,7 +48,6 @@ namespace CIAO
   int
   Swapping_Container::init (const char *name,
                             const CORBA::PolicyList *more_policies)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     char buffer[MAXPATHLEN];
 
@@ -213,7 +210,6 @@ namespace CIAO
 
   void
   Swapping_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::POA_ptr tmp = this->home_servant_poa_.in ();
     PortableServer::ObjectId_var oid =
@@ -225,7 +221,6 @@ namespace CIAO
   CORBA::Object_ptr
   Swapping_Container::install_servant (PortableServer::Servant p,
                                       Container::OA_Type t)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::POA_ptr tmp = 0;
 

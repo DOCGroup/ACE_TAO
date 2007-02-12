@@ -76,7 +76,7 @@ namespace CIAO
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
                       const CORBA::PolicyList *more_policies = 0)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      = 0;
 
     /// Install a new home
     virtual Components::CCMHome_ptr ciao_install_home (
@@ -86,19 +86,16 @@ namespace CIAO
         const char *sv_entrypt,
         const char *ins_name
       )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Deployment::InstallationFailure)) = 0;
+      = 0;
 
     // Uninstall a servant for component or home.
     virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      = 0;
 
     // Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
                                       PortableServer::ObjectId_out oid)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      = 0;
 
     // @@Jai, please see the Session Container class for comments.
     // @@ Jai, do you really need the environment variable?
@@ -108,7 +105,7 @@ namespace CIAO
     virtual void delete_servant_map (PortableServer::ObjectId &oid) = 0;
 
     virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
-      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+      = 0;
 
   protected:
     /// Reference to the ORB
@@ -179,8 +176,7 @@ namespace CIAO
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
                       const CORBA::PolicyList *more_policies = 0)
-
-      ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
     /**
      * @brief Simply installing a home executor into the component.
@@ -199,44 +195,33 @@ namespace CIAO
         const char *sv_dll_name,
         const char *sv_entrypt,
         const char *ins_name
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Deployment::InstallationFailure));
+      );
 
     /// Uninstall a servant for component or home.
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref);
 
     /// Uninstall a servant for component.
     virtual void uninstall_component (::Components::CCMObject_ptr objref,
-                                      PortableServer::ObjectId_out oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                      PortableServer::ObjectId_out oid);
 
     /// Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                       Container::OA_Type t)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                       Container::OA_Type t);
 
     /// Install a component servant.
     CORBA::Object_ptr install_component (PortableServer::Servant p,
-                                         PortableServer::ObjectId_out oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                         PortableServer::ObjectId_out oid);
 
     /// Get an object reference to a component or home from the servant.
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
 
     /// Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref,
-                    Container::OA_Type t)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                    Container::OA_Type t);
 
     /// Uninstall a servant for component or home.
     void uninstall (PortableServer::Servant svt,
-                    Container::OA_Type t)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                    Container::OA_Type t);
 
     // @@Jai, please consider naming this method as
     // "add_servant_to_map ()" to be more descriptive.
@@ -256,11 +241,9 @@ namespace CIAO
      * deactivate_facet from the Swapping_Conatiner's interface. It
      * would make the base container interface much cleaner.
      */
-    virtual void deactivate_facet (const PortableServer::ObjectId &oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid);
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p);
 
     /// Analog of the POA method that creates an object reference from
     /// an object id string.

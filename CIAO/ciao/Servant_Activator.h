@@ -57,8 +57,7 @@ namespace CIAO
 
     virtual ~Servant_Activator (void);
 
-    bool update_port_activator (const PortableServer::ObjectId &oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    bool update_port_activator (const PortableServer::ObjectId &oid);
 
     /// Template methods overridden to get callbacks.
     /**
@@ -68,16 +67,13 @@ namespace CIAO
      */
     PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::ForwardRequest));
+      PortableServer::POA_ptr poa);
 
     void etherealize (const PortableServer::ObjectId &oid,
                       PortableServer::POA_ptr adapter,
                       PortableServer::Servant servant,
                       CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Boolean remaining_activations);
 
     /// Local helper methods
     bool register_port_activator (Port_Activator *pa);

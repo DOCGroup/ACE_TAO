@@ -18,7 +18,6 @@ namespace CIAO
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_component_def (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -26,7 +25,6 @@ namespace CIAO
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_home_def (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }

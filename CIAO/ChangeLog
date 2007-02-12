@@ -1,10 +1,15 @@
+Mon Feb 12 12:53:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/*.{h,cpp,inl}:
+          Removed ACE_THROW_SPEC, layout changes, reduced includes
+
 Sat Feb 10 20:16:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/ResourceCommitmentManager.h:
         * DAnCE/TargetManager/ResourceCommitmentManager.cpp:
 
         * ciao/Deployment_ResourceCommitmentManager.idl:
-				  Added the $Id$ tags
+          Added missing Id tag
 
 Fri Feb  9 20:11:15 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
@@ -28,87 +33,88 @@ Fri Feb  9 20:11:15 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
         * ciao/CCM_Core.mpc:
         * ciao/Deployment_ResourceCommitmentManager.idl:
         * ciao/Deployment_TargetManager.idl:
-                                  Merged in changes from the branch TargetManager_Ext to introduce new
-                                        feature complying to the spec
 
-                                        Fri Feb  2 21:00:48 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+        Merged in changes from the branch TargetManager_Ext to introduce new
+        feature complying to the spec
 
-                                        * DAnCE/TargetManager/CmpClient.cpp:
-                                        * DAnCE/TargetManager/DomainDataManager.h:
-                                        * DAnCE/TargetManager/DomainDataManager.cpp:
-                                        * DAnCE/TargetManager/TargetManager.mpc:
-                                        * DAnCE/TargetManager/TargetManagerImpl.idl:
-                                        * DAnCE/TargetManager/TargetManager_exec.h:
-                                        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Fri Feb  2 21:00:48 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        Cleaning TM code to separate CIAO-specific functionality.
+          * DAnCE/TargetManager/CmpClient.cpp:
+          * DAnCE/TargetManager/DomainDataManager.h:
+          * DAnCE/TargetManager/DomainDataManager.cpp:
+          * DAnCE/TargetManager/TargetManager.mpc:
+          * DAnCE/TargetManager/TargetManagerImpl.idl:
+          * DAnCE/TargetManager/TargetManager_exec.h:
+          * DAnCE/TargetManager/TargetManager_exec.cpp:
 
-                                        Tue Jan 16 21:18:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+          Cleaning TM code to separate CIAO-specific functionality.
 
-                                        * DAnCE/TargetManager/CmpClient.cpp:
-                                        * DAnCE/TargetManager/DomainDataManager.h:
-                                        * DAnCE/TargetManager/DomainDataManager.cpp:
-                                        * DAnCE/TargetManager/TargetManagerExt.idl:
-                                        * DAnCE/TargetManager/TargetManagerImpl.idl:
-                                        * DAnCE/TargetManager/TargetManager_exec.h:
-                                        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Tue Jan 16 21:18:57 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        Added some comments to decrease doxygen warnings;Changed
-                                        ACE_DEBUG in many places to ACE_ERROR;Removed a lot of unwanted
-                                        debug messages
+          * DAnCE/TargetManager/CmpClient.cpp:
+          * DAnCE/TargetManager/DomainDataManager.h:
+          * DAnCE/TargetManager/DomainDataManager.cpp:
+          * DAnCE/TargetManager/TargetManagerExt.idl:
+          * DAnCE/TargetManager/TargetManagerImpl.idl:
+          * DAnCE/TargetManager/TargetManager_exec.h:
+          * DAnCE/TargetManager/TargetManager_exec.cpp:
 
-                                        Fri Jan 12 22:04:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+          Added some comments to decrease doxygen warnings;Changed
+          ACE_DEBUG in many places to ACE_ERROR;Removed a lot of unwanted
+          debug messages
 
-                                        * DAnCE/TargetManager/CmpClient.cpp:
-                                        * DAnCE/TargetManager/DomainDataManager.h:
-                                        * DAnCE/TargetManager/DomainDataManager.cpp:
-                                        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Fri Jan 12 22:04:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
+          * DAnCE/TargetManager/CmpClient.cpp:
+          * DAnCE/TargetManager/DomainDataManager.h:
+          * DAnCE/TargetManager/DomainDataManager.cpp:
+          * DAnCE/TargetManager/TargetManager_exec.cpp:
 
-                                        * ciao/Deployment_TargetManager.idl:
-                                        Changed to address Johnny's comments
+          * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl:
 
-                                        Thu Dec 28 22:59:45 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+          * ciao/Deployment_TargetManager.idl:
+          Changed to address Johnny's comments
 
-                                        * DAnCE/TargetManager/CmpClient.cpp:
-                                        * DAnCE/TargetManager/DomainDataManager.h:
-                                        * DAnCE/TargetManager/DomainDataManager.cpp:
-                                        * DAnCE/TargetManager/TargetManager_exec.h:
-                                        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Thu Dec 28 22:59:45 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        * ciao/Deployment_ResourceCommitmentManager.idl:
-                                        * ciao/Deployment_TargetManager.idl:
-                                        Modified defination to ResourceCommitmentManager
+          * DAnCE/TargetManager/CmpClient.cpp:
+          * DAnCE/TargetManager/DomainDataManager.h:
+          * DAnCE/TargetManager/DomainDataManager.cpp:
+          * DAnCE/TargetManager/TargetManager_exec.h:
+          * DAnCE/TargetManager/TargetManager_exec.cpp:
 
-                                        Wed Dec 27 19:59:32 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+          * ciao/Deployment_ResourceCommitmentManager.idl:
+          * ciao/Deployment_TargetManager.idl:
+          Modified defination to ResourceCommitmentManager
 
-                                        * DAnCE/TargetManager/CmpClient.cpp:
-                                        * DAnCE/TargetManager/DomainDataManager.h:
-                                        * DAnCE/TargetManager/DomainDataManager.cpp:
-                                        * DAnCE/TargetManager/TargetManager.mpc:
-                                        * DAnCE/TargetManager/TargetManager_exec.h:
-                                        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Wed Dec 27 19:59:32 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        * ciao/CCM_Core.mpc:
-                                        * ciao/Deployment_ResourceCommitmentManager.idl:
-                                        * ciao/Deployment_TargetManager.idl:
-                                        Changes made to accomodate the ResourceCommitmentManager
+          * DAnCE/TargetManager/CmpClient.cpp:
+          * DAnCE/TargetManager/DomainDataManager.h:
+          * DAnCE/TargetManager/DomainDataManager.cpp:
+          * DAnCE/TargetManager/TargetManager.mpc:
+          * DAnCE/TargetManager/TargetManager_exec.h:
+          * DAnCE/TargetManager/TargetManager_exec.cpp:
 
-                                        Tue Dec  5 17:44:49 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+          * ciao/CCM_Core.mpc:
+          * ciao/Deployment_ResourceCommitmentManager.idl:
+          * ciao/Deployment_TargetManager.idl:
+          Changes made to accomodate the ResourceCommitmentManager
 
-                                        * ciao/Deployment_TargetManager.idl:
-                                        Deleted some extraneous comments
+          Tue Dec  5 17:44:49 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        Tue Dec  5 06:29:22 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+          * ciao/Deployment_TargetManager.idl:
+          Deleted some extraneous comments
 
-                                        * DAnCE/TargetManager/CmpClient.cpp:
+          Tue Dec  5 06:29:22 UTC 2006  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
-                                        * ciao/CCM_Core.mpc:
-                                        * ciao/Deployment_ResourceCommitmentManager.idl:
-                                        * ciao/Deployment_TargetManager.idl:
-                                        Added in order to introduce ResourceCommitmenManager
-                                        to TargetManager
+          * DAnCE/TargetManager/CmpClient.cpp:
+
+          * ciao/CCM_Core.mpc:
+          * ciao/Deployment_ResourceCommitmentManager.idl:
+          * ciao/Deployment_TargetManager.idl:
+          Added in order to introduce ResourceCommitmenManager
+          to TargetManager
 
 Thu Feb  8 18:35:51 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

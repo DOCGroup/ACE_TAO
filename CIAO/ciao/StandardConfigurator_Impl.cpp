@@ -23,7 +23,6 @@ namespace CIAO
   void
   StandardConfigurator_Impl::set_configuration (
       const Components::ConfigValues &descr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->component_->set_attributes (descr);
   }
@@ -31,8 +30,6 @@ namespace CIAO
   void
   StandardConfigurator_Impl::configure (
     Components::CCMObject_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::WrongComponentType))
   {
 
   }
