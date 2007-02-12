@@ -167,7 +167,7 @@ Session::start (const Test::Session_List &other_sessions)
 }
 
 void
-Session::ping (void) ACE_THROW_SPEC ((CORBA::SystemException))
+Session::ping (void)
 {
 }
 
@@ -184,7 +184,7 @@ Session::receive_payload (const Test::Payload &the_payload)
 
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
-    this->expected_messages_--;
+    --this->expected_messages_;
 
 #if 0
     int verbose = 0;
