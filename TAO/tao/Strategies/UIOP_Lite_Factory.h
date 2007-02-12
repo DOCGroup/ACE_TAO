@@ -2,11 +2,12 @@
 
 //=============================================================================
 /**
- *  @file   UIOP_Factory.h
+ *  @file   UIOP_Lite_Factory.h
  *
  *  $Id$
  *
- *  @author Fred Kuhns <fredk@cs.wustl.edu>Ossama Othman <othman@cs.wustl.edu>
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author Ossama Othman <othman@cs.wustl.edu>
  */
 //=============================================================================
 
