@@ -19,7 +19,6 @@ Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
   (const char *pathname,
    Web_Server::Callback_ptr client_callback)
-  ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
     throw CORBA::BAD_PARAM ();

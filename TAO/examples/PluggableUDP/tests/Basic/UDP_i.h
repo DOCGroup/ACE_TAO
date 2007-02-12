@@ -46,11 +46,9 @@ public:
 
   virtual void invoke (const char *client_name,
                        UDP_ptr udpHandler,
-                       CORBA::Long request_id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                       CORBA::Long request_id);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   // Shutdown the server.
 

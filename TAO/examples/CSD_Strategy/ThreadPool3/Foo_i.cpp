@@ -17,14 +17,12 @@ Foo_i::~Foo_i()
 
 void
 Foo_i::op1(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
 }
 
 
 void
 Foo_i::op2(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->value_ = value;
 }
@@ -32,7 +30,6 @@ Foo_i::op2(CORBA::Long value)
 
 CORBA::Long
 Foo_i::op3(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -41,7 +38,6 @@ Foo_i::op3(void)
 
 void
 Foo_i::op4(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->value_ = value;
 }
@@ -49,7 +45,6 @@ Foo_i::op4(CORBA::Long value)
 
 void
 Foo_i::op5(void)
-  ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   throw FooException();
 }
@@ -57,7 +52,6 @@ Foo_i::op5(void)
 
 void
 Foo_i::done(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   unsigned num_left = --this->num_clients_;
 

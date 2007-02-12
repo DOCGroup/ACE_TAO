@@ -22,13 +22,11 @@ test_i::_default_POA (void)
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 test_i::oneway_method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -50,7 +48,6 @@ test_i::sleep (CORBA::ULong timeout,
 
 void
 test_i::timed_method (CORBA::ULong timeout)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->sleep (timeout,
                "test_i::timed_method");
@@ -58,7 +55,6 @@ test_i::timed_method (CORBA::ULong timeout)
 
 void
 test_i::timed_oneway_method (CORBA::ULong timeout)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->sleep (timeout,
                "test_i::timed_oneway_method");
@@ -66,7 +62,6 @@ test_i::timed_oneway_method (CORBA::ULong timeout)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

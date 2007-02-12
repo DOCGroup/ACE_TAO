@@ -30,7 +30,6 @@ void
 UDP_i::invoke (const char * client_name,
                UDP_ptr udpHandler,
                CORBA::Long request_id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -75,7 +74,6 @@ UDP_i::invoke (const char * client_name,
 
 void
 UDP_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",

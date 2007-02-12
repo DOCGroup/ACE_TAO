@@ -41,37 +41,28 @@ public:
   ~Grid_i (void);
   // Destructor
 
-  virtual CORBA::Short width (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Short width (void);
   // Returns the width of the grid
 
-  virtual CORBA::Short height (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Short height (void);
   // Returns the height of the grid
 
-  virtual void width (CORBA::Short)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void width (CORBA::Short);
   // Sets the width of the grid.
 
-  virtual void height (CORBA::Short)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void height (CORBA::Short);
   // Sets the height of the grid.
 
   virtual void set (CORBA::Short,
                     CORBA::Short,
-                    CORBA::Long)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Grid::RANGE_ERROR));
+                    CORBA::Long);
   // Sets the grid value.
 
   virtual CORBA::Long get (CORBA::Short,
-                           CORBA::Short)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Grid::RANGE_ERROR));
+                           CORBA::Short);
   // Gets the grid value.
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   // Destroy the grid.
 
@@ -99,12 +90,10 @@ public:
   // Destructor.
 
   virtual Grid_ptr make_grid (CORBA::Short,
-                              CORBA::Short)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                              CORBA::Short);
   // This function creates and returns a <Grid>.
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

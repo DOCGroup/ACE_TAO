@@ -65,8 +65,6 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
 PortableServer::Servant
 ServantActivator::incarnate (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
   // Obtain the servant else exception.
   PortableServer::Servant servant =
@@ -88,7 +86,6 @@ ServantActivator::etherealize (const PortableServer::ObjectId &oid,
                                PortableServer::Servant servant,
                                CORBA::Boolean,
                                CORBA::Boolean remaining_activations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with test servant, deactivate it by calling the

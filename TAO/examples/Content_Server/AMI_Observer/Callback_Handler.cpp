@@ -29,7 +29,6 @@ Callback_Handler::~Callback_Handler (void)
 
 void
 Callback_Handler::next_chunk (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->last_chunk_ == 1)
     {
@@ -84,7 +83,6 @@ Callback_Handler::next_chunk (void)
 void
 Callback_Handler::next_chunk_excep
   (::Messaging::ExceptionHolder *excep_holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->last_chunk_ = 1;
 
@@ -104,8 +102,6 @@ Callback_Handler::next_chunk_excep
 
 void
 Callback_Handler::run (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Web_Server::Error_Result))
 {
   // Open the file to be downloaded
   this->open_file ();
@@ -121,8 +117,6 @@ Callback_Handler::run (void)
 
 void
 Callback_Handler::open_file (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Web_Server::Error_Result))
 {
   // Create a temporary file to store the retrieved data.
   ACE_FILE_Connector connector;
@@ -139,7 +133,6 @@ Callback_Handler::open_file (void)
 
 void
 Callback_Handler::deactivate (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Close the file that was sent to the client.
   (void) this->file_io_.close ();
