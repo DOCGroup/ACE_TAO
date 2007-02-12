@@ -18,8 +18,7 @@ namespace CIDL_TargetManager_i
   TargetManager_exec_i::
   TargetManager_exec_i (TargetManagerImpl_exec_i* exec ,
                         CORBA::ORB_ptr orb,
-                        TargetManagerImpl_Context *context
-                       )
+                        TargetManagerImpl_Context *context)
     : _exec (exec),
       orb_ (CORBA::ORB::_duplicate (orb)),
       context_ (context)
@@ -33,9 +32,9 @@ namespace CIDL_TargetManager_i
             CIAO::TargetManagerImpl::_narrow (object.in ());
     ::Deployment::TargetManager_var target =
             target_impl->provide_targetMgr ();
-    
-    // Create Domain Data here 
-  
+
+    // Create Domain Data here
+
     CIAO::DomainDataManager::create (orb_, target.in ());
 //    CIAO::Domain_Singleton::instance ();
   }
@@ -115,12 +114,9 @@ namespace CIDL_TargetManager_i
 
   ::Deployment::ResourceCommitmentManager_ptr
   TargetManager_exec_i::createResourceCommitment (
-  const ::Deployment::ResourceAllocations& manager
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((::CORBA::SystemException,
-                   ::Deployment::ResourceCommitmentFailure))
+  const ::Deployment::ResourceAllocations& manager)
   {
-    
+
     CIAO::ResourceCommitmentManager_i *commit_servant =
       new CIAO::ResourceCommitmentManager_i ();
 

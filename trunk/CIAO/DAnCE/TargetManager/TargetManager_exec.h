@@ -83,25 +83,18 @@ namespace CIDL_TargetManager_i
     public:
     TargetManager_exec_i (TargetManagerImpl_exec_i* exec,
                           CORBA::ORB_ptr orb,
-                          TargetManagerImpl_Context *context
-                          );
+                          TargetManagerImpl_Context *context);
     virtual ~TargetManager_exec_i (void);
 
     // Operations from ::Deployment::TargetManager
 
-    virtual ::Deployment::Domain *
-    getAllResources ();
+    virtual ::Deployment::Domain * getAllResources ();
 
-    virtual ::Deployment::Domain *
-    getAvailableResources ();
+    virtual ::Deployment::Domain * getAvailableResources ();
 
-    virtual void
-    commitResources (
-    const ::Deployment::DeploymentPlan & plan);
+    virtual void commitResources (const ::Deployment::DeploymentPlan & plan);
 
-    virtual void
-    releaseResources (
-    const ::Deployment::DeploymentPlan & argname);
+    virtual void releaseResources (const ::Deployment::DeploymentPlan & argname);
 
     virtual void
     updateDomain (
@@ -109,24 +102,18 @@ namespace CIDL_TargetManager_i
     const ::Deployment::Domain & domainSubset,
     ::Deployment::DomainUpdateKind updateKind);
 
-    virtual ::Deployment::ResourceCommitmentManager_ptr 
+    virtual ::Deployment::ResourceCommitmentManager_ptr
     createResourceCommitment (
-    const ::Deployment::ResourceAllocations& manager
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Deployment::ResourceCommitmentFailure));
+    const ::Deployment::ResourceAllocations& manager);
 
-    virtual void 
+    virtual void
     destroyResourceCommitment (
-    ::Deployment::ResourceCommitmentManager_ptr resources
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+    ::Deployment::ResourceCommitmentManager_ptr resources);
 
   private:
     TargetManagerImpl_exec_i * _exec;
 
-    ///The pointer to the Domain Manager
+    /// The pointer to the Domain Manager
     auto_ptr<CIAO::DomainDataManager> dataManager_;
 
     /// The CORBA ORB ...
