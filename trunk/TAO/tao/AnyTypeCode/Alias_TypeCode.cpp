@@ -11,6 +11,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 
 #include "ace/Dynamic_Service.h"
