@@ -100,7 +100,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
       persistent_poa_.in ());
 
 
-    TAO_FTEC_Event_Channel_Impl* ec;
+    TAO_FTEC_Event_Channel_Impl* ec = 0;
     ACE_NEW_THROW_EX (ec,
       TAO_FTEC_Event_Channel_Impl (attr),
       CORBA::NO_MEMORY());

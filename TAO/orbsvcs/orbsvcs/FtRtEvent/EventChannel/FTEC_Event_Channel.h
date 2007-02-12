@@ -78,36 +78,34 @@ public:
 
   /// EventChannelFacade Interface, used by FTEC gateway
 
-      virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
-        RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos);
+  virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    const RtecEventChannelAdmin::ConsumerQOS & qos);
 
+  virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
+      RtecEventComm::PushSupplier_ptr push_supplier,
+      const RtecEventChannelAdmin::SupplierQOS & qos);
 
-    virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
-        RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos);
+  virtual void disconnect_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid);
+  virtual void disconnect_push_consumer (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid);
+  virtual void suspend_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid);
+  virtual void resume_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid);
-
-    virtual void push (
-        const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data);
+  virtual void push (
+      const FtRtecEventChannelAdmin::ObjectId & oid,
+      const RtecEventComm::EventSet & data);
 
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
-  void set_state (
-    const FTRT::State & s);
+  void set_state (const FTRT::State & s);
 
   virtual void set_update (const FTRT::State & s);
 
@@ -118,25 +116,21 @@ public:
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out cur);
 
-    virtual void create_group (
-        const FTRT::ManagerInfoList & info_list,
-        CORBA::ULong object_group_ref_version);
+  virtual void create_group (
+      const FTRT::ManagerInfoList & info_list,
+      CORBA::ULong object_group_ref_version);
 
-    virtual void join_group (
-        const FTRT::ManagerInfo & info
-      )ACE_THROW_SPEC ((CORBA::SystemException)) ;
+  virtual void join_group (const FTRT::ManagerInfo & info);
 
-    virtual void add_member (
-        const FTRT::ManagerInfo & info,
-        CORBA::ULong object_group_ref_version);
+  virtual void add_member (
+      const FTRT::ManagerInfo & info,
+      CORBA::ULong object_group_ref_version);
 
-    virtual void remove_member (
-        const FTRT::Location & crashed_location,
-        CORBA::ULong object_group_ref_version);
+  virtual void remove_member (
+      const FTRT::Location & crashed_location,
+      CORBA::ULong object_group_ref_version);
 
-    virtual void replica_crashed (
-        const FTRT::Location & location);
-
+  virtual void replica_crashed (const FTRT::Location & location);
 
 private:
   CORBA::ORB_var orb_;
