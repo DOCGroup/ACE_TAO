@@ -45,22 +45,17 @@ namespace CIAO
     virtual ~Upgradeable_Context_Impl (void);
 
     virtual void
-    deactivate_facet (const PortableServer::ObjectId &oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    deactivate_facet (const PortableServer::ObjectId &oid);
 
     virtual void
-    update_port_activator (const PortableServer::ObjectId &oid)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    update_port_activator (const PortableServer::ObjectId &oid);
 
     virtual void
-    remove_facet (CORBA::Object_ptr reference)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    remove_facet (CORBA::Object_ptr reference);
 
     virtual ::Components::ConsumerDescriptions *
     get_registered_consumers (const char *publisher_name)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection)) = 0;
+      = 0;
 
   private:
     /// Not to be used

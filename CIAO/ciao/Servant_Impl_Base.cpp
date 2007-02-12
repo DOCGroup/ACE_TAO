@@ -24,8 +24,6 @@ namespace CIAO
   ::Components::PrimaryKeyBase *
   Servant_Impl_Base::get_primary_key (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ::Components::NoKeyAvailable))
   {
     throw ::Components::NoKeyAvailable ();
   }
@@ -33,7 +31,6 @@ namespace CIAO
   CORBA::IRObject_ptr
   Servant_Impl_Base::get_component_def (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -41,8 +38,6 @@ namespace CIAO
   void
   Servant_Impl_Base::configuration_complete (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidConfiguration))
   {
     // CIAO to-do
   }
@@ -50,8 +45,6 @@ namespace CIAO
   void
   Servant_Impl_Base::remove (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::RemoveFailure))
   {
     try
     {
@@ -122,8 +115,6 @@ namespace CIAO
   Servant_Impl_Base::get_connections (
       const char * /* name */
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -131,7 +122,6 @@ namespace CIAO
   ::Components::ComponentPortDescription *
   Servant_Impl_Base::get_all_ports (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     OBV_Components::ComponentPortDescription *cps = 0;
     ACE_NEW_RETURN (cps,
@@ -167,8 +157,6 @@ namespace CIAO
   Servant_Impl_Base::provide_facet (
       const char *name
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     if (0 == name)
       {
@@ -189,8 +177,6 @@ namespace CIAO
   Servant_Impl_Base::get_named_facets (
       const ::Components::NameList & names
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     Components::FacetDescriptions *retval = 0;
     ACE_NEW_RETURN (retval,
@@ -219,7 +205,6 @@ namespace CIAO
   ::Components::FacetDescriptions *
   Servant_Impl_Base::get_all_facets (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::FacetDescriptions *tmp = 0;
     ACE_NEW_RETURN (tmp,
@@ -246,7 +231,6 @@ namespace CIAO
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::ConsumerDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
@@ -275,8 +259,6 @@ namespace CIAO
   Servant_Impl_Base::get_consumer (
       const char *sink_name
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     if (0 == sink_name)
       {
@@ -298,8 +280,6 @@ namespace CIAO
   Servant_Impl_Base::get_named_consumers (
       const ::Components::NameList & names
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     Components::ConsumerDescriptions *retval = 0;
     ACE_NEW_RETURN (retval,
@@ -329,8 +309,6 @@ namespace CIAO
   Servant_Impl_Base::get_named_emitters (
       const ::Components::NameList & /* names */
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -339,7 +317,6 @@ namespace CIAO
 
   Servant_Impl_Base::get_all_receptacles (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "In Servant_Impl_Base::get_all_receptacles\n"));
 
@@ -373,8 +350,6 @@ namespace CIAO
   Servant_Impl_Base::get_named_receptacles (
       const ::Components::NameList & /* names */
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     throw ::CORBA::NO_IMPLEMENT ();
   }
@@ -383,8 +358,6 @@ namespace CIAO
   Servant_Impl_Base::get_named_publishers (
       const ::Components::NameList & /* names */
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::InvalidName))
   {
     throw ::CORBA::NO_IMPLEMENT ();
   }
@@ -393,7 +366,6 @@ namespace CIAO
   void
   Servant_Impl_Base::add_facet (const char *port_name,
                                 ::CORBA::Object_ptr port_ref)
-    ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
@@ -540,7 +512,6 @@ namespace CIAO
       const char *port_name,
       ::Components::EventConsumerBase_ptr port_ref
     )
-    ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
@@ -626,7 +597,6 @@ namespace CIAO
 
   ::Components::StandardConfigurator_ptr
   Servant_Impl_Base::get_standard_configurator ()
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Create the configurator servant.
     StandardConfigurator_Impl *config_impl = 0;

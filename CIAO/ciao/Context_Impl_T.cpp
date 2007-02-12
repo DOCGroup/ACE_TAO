@@ -34,8 +34,6 @@ namespace CIAO
   CORBA::Object_ptr
   Context_Impl<BASE_CTX, SVNT, COMP>::get_CCM_object (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::IllegalState))
   {
     if (CORBA::is_nil (this->component_.in ()))
       {

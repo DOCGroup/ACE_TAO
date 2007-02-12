@@ -31,7 +31,6 @@ namespace CIAO
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP>::deactivate_facet (
       const PortableServer::ObjectId &oid)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->container_->deactivate_facet (oid);
   }
@@ -42,7 +41,6 @@ namespace CIAO
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP>::remove_facet (
       CORBA::Object_ptr reference)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid =
       this->container_->the_facet_cons_POA ()->reference_to_id (reference);
@@ -58,7 +56,6 @@ namespace CIAO
   void
   Upgradeable_Context_Impl<BASE_CTX, SVNT, COMP>::update_port_activator (
       const PortableServer::ObjectId &oid)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO::Servant_Activator *sa =
       this->container_->ports_servant_activator ();

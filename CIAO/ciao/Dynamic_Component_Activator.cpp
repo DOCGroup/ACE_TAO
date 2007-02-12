@@ -22,8 +22,6 @@ namespace CIAO
   PortableServer::Servant
   Dynamic_Component_Activator::incarnate (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest))
   {
     Dynamic_Component_Servant_Base* servant = 0;
     PortableServer::ObjectId new_oid (oid);
@@ -43,7 +41,6 @@ namespace CIAO
     PortableServer::Servant ,
     CORBA::Boolean ,
     CORBA::Boolean)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 

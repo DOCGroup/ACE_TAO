@@ -25,7 +25,6 @@ namespace CIAO
   Components::Principal_ptr
   Context_Impl_Base::get_caller_principal (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -33,7 +32,6 @@ namespace CIAO
   Components::CCMHome_ptr
   Context_Impl_Base::get_CCM_home (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return Components::CCMHome::_duplicate (this->home_.in ());
   }
@@ -41,8 +39,6 @@ namespace CIAO
   CORBA::Boolean
   Context_Impl_Base::get_rollback_only (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::IllegalState))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -50,8 +46,6 @@ namespace CIAO
   Components::Transaction::UserTransaction_ptr
   Context_Impl_Base::get_user_transaction (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::IllegalState))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -60,7 +54,6 @@ namespace CIAO
   Context_Impl_Base::is_caller_in_role (
       const char * /* role */
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -68,8 +61,6 @@ namespace CIAO
   void
   Context_Impl_Base::set_rollback_only (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::IllegalState))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
