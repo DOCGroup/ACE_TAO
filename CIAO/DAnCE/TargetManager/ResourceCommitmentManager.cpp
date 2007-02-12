@@ -14,10 +14,7 @@ CIAO::ResourceCommitmentManager_i::~ResourceCommitmentManager_i (void)
 }
 
 void CIAO::ResourceCommitmentManager_i::commitResources (
-    const ::Deployment::ResourceAllocations& resources
-  )
-  ACE_THROW_SPEC ((::CORBA::SystemException,
-        ::Deployment::ResourceCommitmentFailure))
+    const ::Deployment::ResourceAllocations& resources)
 {
   CIAO::DomainDataManager::get_data_manager ()->commitResourceAllocation (resources);
 
@@ -27,10 +24,7 @@ void CIAO::ResourceCommitmentManager_i::commitResources (
 }
 
 void CIAO::ResourceCommitmentManager_i::releaseResources (
-    const ::Deployment::ResourceAllocations & resources
-  )
-  ACE_THROW_SPEC ((::CORBA::SystemException,
-        ::Deployment::ResourceCommitmentFailure))
+    const ::Deployment::ResourceAllocations & resources)
 {
   ::Deployment::ResourceAllocations res;
 
