@@ -27,7 +27,6 @@ Roundtrip_Handler::dump_results (ACE_UINT32 gsf)
 
 void
 Roundtrip_Handler::test_octet_method (Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
 
@@ -37,7 +36,6 @@ Roundtrip_Handler::test_octet_method (Test::Timestamp send_time)
 
 void
 Roundtrip_Handler::test_octet_method_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -54,7 +52,6 @@ Roundtrip_Handler::test_octet_method_excep (::Messaging::ExceptionHolder *holder
 
 void
 Roundtrip_Handler::test_char_method (Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
 
@@ -64,7 +61,6 @@ Roundtrip_Handler::test_char_method (Test::Timestamp send_time)
 
 void
 Roundtrip_Handler::test_char_method_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -81,7 +77,6 @@ Roundtrip_Handler::test_char_method_excep (::Messaging::ExceptionHolder *holder)
 
 void
 Roundtrip_Handler::test_long_method (Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
 
@@ -91,7 +86,6 @@ Roundtrip_Handler::test_long_method (Test::Timestamp send_time)
 
 void
 Roundtrip_Handler::test_long_method_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -108,7 +102,6 @@ Roundtrip_Handler::test_long_method_excep (::Messaging::ExceptionHolder *holder)
 
 void
 Roundtrip_Handler::test_short_method (Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
 
@@ -118,7 +111,6 @@ Roundtrip_Handler::test_short_method (Test::Timestamp send_time)
 
 void
 Roundtrip_Handler::test_short_method_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -135,7 +127,6 @@ Roundtrip_Handler::test_short_method_excep (::Messaging::ExceptionHolder *holder
 
 void
 Roundtrip_Handler::test_double_method (Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
 
@@ -145,7 +136,6 @@ Roundtrip_Handler::test_double_method (Test::Timestamp send_time)
 
 void
 Roundtrip_Handler::test_double_method_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -162,7 +152,6 @@ Roundtrip_Handler::test_double_method_excep (::Messaging::ExceptionHolder *holde
 
 void
 Roundtrip_Handler::test_longlong_method (Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   --this->pending_callbacks_;
 
@@ -172,7 +161,6 @@ Roundtrip_Handler::test_longlong_method (Test::Timestamp send_time)
 
 void
 Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -190,13 +178,11 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
 
 void
 Roundtrip_Handler::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

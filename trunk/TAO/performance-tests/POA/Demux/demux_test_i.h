@@ -29,11 +29,9 @@ public:
       return PortableServer::POA::_duplicate (this->poa_.in ());
     };
 
-  virtual void M302 (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void M302 (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   PortableServer::POA_var poa_;

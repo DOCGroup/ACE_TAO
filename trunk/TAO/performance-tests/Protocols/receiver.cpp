@@ -65,30 +65,23 @@ public:
 		   const char *protocol,
 		   CORBA::ULong invocation_rate,
 		   CORBA::ULong message_size,
-		   CORBA::ULong iterations)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+		   CORBA::ULong iterations);
 
-  void end_test (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void end_test (void);
 
-  void oneway_sync (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void oneway_sync (void);
 
-  void twoway_sync (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void twoway_sync (void);
 
   void oneway_method (CORBA::Long session_id,
 		      CORBA::ULong iteration,
-		      const ::test::octets &payload)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+		      const ::test::octets &payload);
 
   void twoway_method (CORBA::Long &session_id,
 		      CORBA::ULong &iteration,
-		      ::test::octets &payload)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+		      ::test::octets &payload);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -127,7 +120,6 @@ test_i::start_test (CORBA::Long session_id,
 		    CORBA::ULong invocation_rate,
 		    CORBA::ULong message_size,
 		    CORBA::ULong iterations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     {
@@ -170,7 +162,6 @@ test_i::start_test (CORBA::Long session_id,
 
 void
 test_i::end_test (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Record end time.
   this->test_end_ =
@@ -234,13 +225,11 @@ test_i::end_test (void)
 
 void
 test_i::oneway_sync (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 test_i::twoway_sync (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -248,7 +237,6 @@ void
 test_i::oneway_method (CORBA::Long session_id,
 		       CORBA::ULong iteration,
 		       const ::test::octets &payload)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->session_id_ != session_id)
     {
@@ -285,7 +273,6 @@ void
 test_i::twoway_method (CORBA::Long &session_id,
 		       CORBA::ULong &iteration,
 		       ::test::octets &payload)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->session_id_ != session_id)
     {
@@ -326,7 +313,6 @@ test_i::_default_POA (void)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));

@@ -17,15 +17,12 @@ public:
 
   /// Implement the CORBA methods
   //@{
-  void set_callback (Test::Callback_ptr callback)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void set_callback (Test::Callback_ptr callback);
 
   void request (Test::TimeStamp,
-                const Test::Payload &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                const Test::Payload &);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
   //@}
 
