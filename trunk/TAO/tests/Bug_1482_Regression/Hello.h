@@ -17,8 +17,7 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong next_prime (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong next_prime (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

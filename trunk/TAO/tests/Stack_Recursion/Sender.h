@@ -27,17 +27,13 @@ public:
 
   // = The skeleton methods
   virtual CORBA::Boolean get_data (CORBA::ULong size,
-                                   Test::Payload_out payload)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                   Test::Payload_out payload);
 
-  virtual CORBA::Long get_event_count (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_event_count (void);
 
-  virtual void ping (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   ACE_SYNCH_MUTEX mutex_;

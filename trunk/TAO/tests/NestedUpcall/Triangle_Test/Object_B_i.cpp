@@ -37,7 +37,6 @@ Object_B_i::~Object_B_i (void)
 
 void
 Object_B_i::foo (Object_A_ptr theObject_A_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

@@ -30,8 +30,7 @@ public:
 
   test_i (PortableServer::POA_ptr poa);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
   PortableServer::POA_var poa_;
 };
@@ -43,7 +42,6 @@ test_i::test_i (PortableServer::POA_ptr poa)
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -90,16 +88,13 @@ public:
   ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,
                                        PortableServer::POA_ptr,
                                        const char *,
-                                       PortableServer::ServantLocator::Cookie &)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+                                       PortableServer::ServantLocator::Cookie &);
 
   void postinvoke (const PortableServer::ObjectId &,
                    PortableServer::POA_ptr,
                    const char *,
                    PortableServer::ServantLocator::Cookie,
-                   PortableServer::Servant)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                   PortableServer::Servant);
 
   test_i servant_;
 };
@@ -114,8 +109,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr,
                             const char *,
                             PortableServer::ServantLocator::Cookie &)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
   CORBA::String_var name =
     PortableServer::ObjectId_to_string (oid);
@@ -148,7 +141,6 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
                              const char *,
                              PortableServer::ServantLocator::Cookie,
                              PortableServer::Servant)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var name =
     PortableServer::ObjectId_to_string (oid);

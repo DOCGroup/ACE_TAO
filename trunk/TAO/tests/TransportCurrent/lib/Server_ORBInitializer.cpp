@@ -27,14 +27,12 @@ namespace Test
 
   void
   Server_ORBInitializer::pre_init(PortableInterceptor::ORBInitInfo*)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     /* no-op */
   }
 
   // A specialization to handle client-side interceptors
   void Server_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo* oii)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     oii->add_server_request_interceptor (this->interceptor_.in ());
   }

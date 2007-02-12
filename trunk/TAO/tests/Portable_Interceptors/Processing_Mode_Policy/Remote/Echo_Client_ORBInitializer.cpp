@@ -17,14 +17,12 @@ Echo_Client_ORBInitializer::Echo_Client_ORBInitializer (
 void
 Echo_Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Echo_Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TAO-Specific way to get to the ORB Core (and thus, the ORB).
   TAO_ORBInitInfo_var tao_info =

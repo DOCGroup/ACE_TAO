@@ -31,7 +31,6 @@ project(*Server) : taoserver, messaging {
 project(*Client) : taoclient, messaging {
   exename   = client
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
   }

@@ -55,50 +55,38 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * name (void);
 
     /// incomming interception point
-    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
 
     /// outgoing interception point
-    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
 
     /// outgoing interception point
-    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
 
     /// outgoing interception point
-    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
     //@}
 
   protected:
 
     /// process incomming requests context
     void inbound_process_context
-    (PortableInterceptor::ServerRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    (PortableInterceptor::ServerRequestInfo_ptr ri);
 
     /// process outgoing requests context
     void outbound_process_context
-    (PortableInterceptor::ServerRequestInfo_ptr ri)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    (PortableInterceptor::ServerRequestInfo_ptr ri);
 
     /// saves the incomming request info
-    void push_request_info (size_t requestID)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void push_request_info (size_t requestID);
 
     /// clears the outgoing request info
     void pop_request_info (size_t requestID);
 
-    TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid);
 
   private:
 

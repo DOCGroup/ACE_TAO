@@ -11,8 +11,6 @@ ACE_RCSID (PolicyFactory,
 CORBA::Policy_ptr
 PolicyFactory::create_policy (CORBA::PolicyType type,
                               const CORBA::Any & value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   // Sanity check since this condition should be caught earlier by the
   // TAO_PolicyFactory_Registry.

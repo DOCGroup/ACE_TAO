@@ -29,11 +29,9 @@ public:
   test_i (ORB_Killer *k);
 
   // = The skeleton methods
-  virtual void ping (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

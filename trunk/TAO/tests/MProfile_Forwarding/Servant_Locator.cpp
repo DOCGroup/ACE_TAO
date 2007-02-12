@@ -44,8 +44,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr /* poa_ptr */,
                             const char * /*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -79,7 +77,6 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              const char *,
                              PortableServer::ServantLocator::Cookie ,
                              PortableServer::Servant)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

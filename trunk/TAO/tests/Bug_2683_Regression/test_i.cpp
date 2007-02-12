@@ -11,14 +11,12 @@ test_i::test_i (ORB_Killer *k)
 
 void
 test_i::ping (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) requesting shutdown \n"));
   this->killer_->activate ();

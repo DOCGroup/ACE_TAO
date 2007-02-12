@@ -34,11 +34,9 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void remote_call (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void remote_call (void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
  private:
   CORBA::ORB_var orb_;

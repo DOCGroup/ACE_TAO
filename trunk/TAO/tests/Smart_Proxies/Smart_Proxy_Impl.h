@@ -23,9 +23,7 @@ public:
   virtual char* convert_to_ior (bool use_omg_ior_format,
                                 const char* ior_prefix) const;
 
-  virtual CORBA::Short method (CORBA::Short boo)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Test::Oops));
+  virtual CORBA::Short method (CORBA::Short boo);
   // "Smartify" the method call!
 
   static const ACE_CString& fake_ior (void);

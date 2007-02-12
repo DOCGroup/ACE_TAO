@@ -11,14 +11,12 @@ Collocated_ORBInitializer::Collocated_ORBInitializer (void)
 void
 Collocated_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Collocated_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::String_var orb_id =

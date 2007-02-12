@@ -13,7 +13,6 @@ LongDoubleTest::LongDoubleTest (CORBA::ORB_ptr orb)
 
 CORBA::LongDouble
 LongDoubleTest::get_long_double ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::LongDouble ld;
   ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld, Global::get_long_double ());
@@ -22,7 +21,6 @@ LongDoubleTest::get_long_double ()
 
 void
 LongDoubleTest::shutdown ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

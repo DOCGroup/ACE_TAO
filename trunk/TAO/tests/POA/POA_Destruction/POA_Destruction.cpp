@@ -22,13 +22,11 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy_poa (void);
 };
 
 void
 test_i::destroy_poa (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_var poa = this->_default_POA ();
 

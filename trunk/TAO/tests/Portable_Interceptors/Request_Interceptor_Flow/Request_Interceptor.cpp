@@ -15,14 +15,12 @@ Request_Interceptor::Request_Interceptor (const char *name)
 
 char *
 Request_Interceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
 Request_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::ULong s_count =

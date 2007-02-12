@@ -15,9 +15,6 @@ Hello::op (
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct
       )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ))
 {
   Test::Fls a = {5, 1.0};
   fstruct = a;
@@ -26,7 +23,6 @@ Hello::op (
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

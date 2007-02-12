@@ -11,7 +11,6 @@ ACE_RCSID (LongUpcalls,
 
 static void
 validate_connection (Test::Controller_ptr controller)
-  ACE_THROW_SPEC (())
 {
   try
     {
@@ -36,7 +35,6 @@ void
 AMI_Manager::start_workers (CORBA::Short worker_count,
                             CORBA::Long milliseconds,
                             Test::Controller_ptr controller)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Thread_Manager thread_manager;
 
@@ -54,7 +52,6 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
 
 void
 AMI_Manager::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -134,7 +131,6 @@ Controller_Handler::Controller_Handler (TAO_SYNCH_MUTEX *mutex,
 
 void
 Controller_Handler::worker_started (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
@@ -143,7 +139,6 @@ Controller_Handler::worker_started (void)
 void
 Controller_Handler::worker_started_excep
     (::Messaging::ExceptionHolder* h)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -158,7 +153,6 @@ Controller_Handler::worker_started_excep
 
 void
 Controller_Handler::worker_finished (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   (*this->pending_replies_)--;
@@ -167,7 +161,6 @@ Controller_Handler::worker_finished (void)
 void
 Controller_Handler::worker_finished_excep
     (::Messaging::ExceptionHolder *h)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

@@ -42,8 +42,7 @@ public:
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoked_during_upcall (void)
-    ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual void invoked_during_upcall (void);
 
   /// Shutdown the ORB.
   virtual void shutdown (void) ACE_THROW_SPEC ((CORBA::SystemException));
@@ -60,8 +59,7 @@ private:
   void test_transport_current (void) ACE_THROW_SPEC ((::CORBA::SystemException));
 
   /// Main servant test method.
-  void invoked_by_client_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException, TAO::Transport::NoContext));
+  void invoked_by_client_i (void);
 
 private:
   /// Pseudo-reference to the ORB.

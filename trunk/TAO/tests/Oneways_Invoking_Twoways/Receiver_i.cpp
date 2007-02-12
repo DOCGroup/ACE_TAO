@@ -20,7 +20,6 @@ Receiver_i::~Receiver_i (void)
 
 CORBA::Long
 Receiver_i::receive_call (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t)  Doing a ping... \n"));
@@ -32,7 +31,6 @@ Receiver_i::receive_call (void)
 
 CORBA::Long
 Receiver_i::get_call_count ( /**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->iteration_;
 }

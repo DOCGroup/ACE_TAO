@@ -23,7 +23,6 @@ project(*Server): taoserver {
 
 project(*Client): taoexe, portableserver {
   after += *idl
-  after += *Server
   Source_Files {
     Peer.cpp
     Session.cpp

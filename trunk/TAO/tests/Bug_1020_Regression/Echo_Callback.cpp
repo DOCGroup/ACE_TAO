@@ -17,7 +17,6 @@ Echo_Callback::Echo_Callback()
 void
 Echo_Callback::echo_payload(Test::Payload const &
                             TAO_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   static int n = 0;
   n++;
@@ -31,6 +30,5 @@ Echo_Callback::echo_payload(Test::Payload const &
 void
 Echo_Callback::echo_payload_excep(Test::AMI_EchoExceptionHolder *
                                   TAO_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

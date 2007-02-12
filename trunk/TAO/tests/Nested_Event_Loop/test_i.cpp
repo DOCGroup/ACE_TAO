@@ -14,7 +14,6 @@ void
 server_i::loop (client_ptr remote_partner,
                 CORBA::ULong event_loop_depth,
                 CORBA::ULong event_loop_iterations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "server_i::loop: event_loop_depth = %2.2d; event_loop_iterations = %2.2d\n",
@@ -37,7 +36,6 @@ server_i::loop (client_ptr remote_partner,
 void
 server_i::run_no_ops (client_ptr remote_partner,
                       CORBA::ULong iterations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   while (iterations != 0)
     {
@@ -77,7 +75,6 @@ void
 server_i::no_op (client_ptr remote_partner,
                  const act &act_for_iterations,
                  const act &act_for_flag)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong *pointer_to_iterations = 0;
 
@@ -104,7 +101,6 @@ server_i::no_op (client_ptr remote_partner,
 
 void
 server_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -117,7 +113,6 @@ client_i::client_i (server_ptr remote_partner)
 void
 client_i::loop (CORBA::ULong event_loop_depth,
                 CORBA::ULong event_loop_iterations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "client_i::loop: event_loop_depth = %2.2d; event_loop_iterations = %2.2d\n",
@@ -143,7 +138,6 @@ client_i::loop (CORBA::ULong event_loop_depth,
 void
 client_i::oneway_no_op (const act &act_for_iterations,
                         const act &act_for_flag)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   try
@@ -163,7 +157,6 @@ client_i::oneway_no_op (const act &act_for_iterations,
 
 void
 client_i::twoway_no_op (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "client_i::twoway_no_op\n"));

@@ -16,14 +16,12 @@ ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
 
 char *
 ORT_test_IORInterceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ORT_IORInterceptor");
 }
 
 void
 ORT_test_IORInterceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (this->establish_count_ > 0
               && this->components_establish_count_ > 0
@@ -33,7 +31,6 @@ ORT_test_IORInterceptor::destroy (void)
 void
 ORT_test_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr /* info */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->establish_count_;
 
@@ -45,7 +42,6 @@ ORT_test_IORInterceptor::establish_components (
 void
 ORT_test_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++this->components_establish_count_;
 
@@ -78,7 +74,6 @@ void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
     const char * id,
     PortableInterceptor::AdapterState)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "The AdapterManager [id=%s] state has changed.\n", id));
@@ -88,6 +83,5 @@ void
 ORT_test_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
     PortableInterceptor::AdapterState)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

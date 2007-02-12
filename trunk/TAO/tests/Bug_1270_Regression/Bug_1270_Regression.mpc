@@ -23,7 +23,6 @@ project(*Server): taoserver, messaging {
 
 project(*Client): taoclient, messaging {
   after += *idl
-  after += *Server
   Source_Files {
     Echo.cpp
     client.cpp
@@ -36,7 +35,6 @@ project(*Client): taoclient, messaging {
 
 project(*Shutdown): taoexe, messaging {
   after += *idl
-  after += *Client
   Source_Files {
     shutdown.cpp
     TestC.cpp

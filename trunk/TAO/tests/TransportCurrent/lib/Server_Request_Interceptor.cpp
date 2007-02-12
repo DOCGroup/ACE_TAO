@@ -25,7 +25,6 @@ namespace Test
 
   void
   Server_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
     ACE_DEBUG ((LM_DEBUG,
@@ -71,48 +70,41 @@ namespace Test
 
   char *
   Server_Request_Interceptor::name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup ("SRI   ");
   }
 
   void
   Server_Request_Interceptor::destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   Server_Request_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableInterceptor::ForwardRequest))
   {
     test_transport_current ("receive_request_service_contexts");
   }
 
   void
   Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableInterceptor::ForwardRequest))
   {
     test_transport_current ("receive_request");
   }
 
   void
   Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     test_transport_current ("send_reply");
   }
 
   void
   Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableInterceptor::ForwardRequest))
   {
     test_transport_current ("send_exception");
   }
 
   void
   Server_Request_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableInterceptor::ForwardRequest))
   {
     test_transport_current ("send_other");
   }

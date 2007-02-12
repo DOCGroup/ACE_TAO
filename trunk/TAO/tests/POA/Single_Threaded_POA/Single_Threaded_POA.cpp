@@ -28,8 +28,7 @@ class test_i : public virtual POA_test
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -46,7 +45,6 @@ test_i::test_i (PortableServer::POA_ptr poa)
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Entering Worker::svc from %t and sleeping....\n"));
