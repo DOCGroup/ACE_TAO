@@ -135,7 +135,7 @@ namespace TAO
       /**
        * Often used to implement strong exception safety.
        */
-      void swap(Servant_Var<T> & rhs);
+      void swap(Servant_Var<T> & rhs) throw ();
 
     private:
       T * ptr_;
