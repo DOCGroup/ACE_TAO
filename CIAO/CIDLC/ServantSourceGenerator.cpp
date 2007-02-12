@@ -3116,7 +3116,7 @@ namespace
       os << "if (name == 0)" << endl
          << "{"
          << "throw "
-         << STRS[EXCP_BP] << ";" << endl
+         << STRS[EXCP_BP] << " ();" << endl
          << "}";
 
       // Generate IF block in disconnect operation for each receptacle.
@@ -3230,7 +3230,7 @@ namespace
 
       os << "if (emitter_name == 0)" << endl
          << "{"
-         << "throw " << STRS[EXCP_BP] << ";" << endl
+         << "throw " << STRS[EXCP_BP] << " ();" << endl
          << "}";
 
       // Generate an IF block for each 'emits' declaration.
