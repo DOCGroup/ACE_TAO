@@ -1,11 +1,11 @@
 // $Id$
-// 
+//
 /**
  * @file ResourceCommitmentManager.h
  *
  * @brief This file declares the ResourceCommitmentManager class
- * 
- * This class acts as the servant of the interface 
+ *
+ * This class acts as the servant of the interface
  * ResourceCommitmentManager
  */
 #ifndef DEPLOYMENT_RESOURCECOMMITMENTMANAGERI_H_
@@ -31,31 +31,25 @@ namespace CIAO {
 
         /**
          * @function commitResources
-         * @brief Commits the resources 
+         * @brief Commits the resources
          *
          * @description This function makes a call to the DomainDataManager in order
-         * to commit the resources mentioned in the ResourceAllocation 
-         * sequence. If the resource cannot be allocated throws a 
+         * to commit the resources mentioned in the ResourceAllocation
+         * sequence. If the resource cannot be allocated throws a
          * ResourceCommitmentFailed exception
          */
         virtual
           void commitResources (
-              const ::Deployment::ResourceAllocations& resources
-              )
-          ACE_THROW_SPEC ((::CORBA::SystemException,
-                ::Deployment::ResourceCommitmentFailure));
+              const ::Deployment::ResourceAllocations& resources);
 
         virtual
           void releaseResources (
-              const ::Deployment::ResourceAllocations & resources
-              )
-          ACE_THROW_SPEC ((::CORBA::SystemException,
-                ::Deployment::ResourceCommitmentFailure));
+              const ::Deployment::ResourceAllocations & resources);
 
       private:
         /**
          * @function add_to_commited_resource
-         * @brief This function adds the res to already commited resources. 
+         * @brief This function adds the res to already commited resources.
          *        This is to be called from within commitResources
          */
         int add_to_commited_resource (::Deployment::ResourceAllocations res);
