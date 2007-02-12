@@ -68,31 +68,22 @@ namespace CIAO
     // Operations from ::Components::CCMContext.
 
     virtual Components::Principal_ptr
-    get_caller_principal ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    get_caller_principal ();
 
     virtual Components::CCMHome_ptr
-    get_CCM_home ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    get_CCM_home ();
 
     virtual CORBA::Boolean
-    get_rollback_only ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::IllegalState));
+    get_rollback_only ();
 
     virtual Components::Transaction::UserTransaction_ptr
-    get_user_transaction ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::IllegalState));
+    get_user_transaction ();
 
     virtual CORBA::Boolean
-    is_caller_in_role (const char *role)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    is_caller_in_role (const char *role);
 
     virtual void
-    set_rollback_only ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::IllegalState));
+    set_rollback_only ();
 
     // CIAO-specific.
 

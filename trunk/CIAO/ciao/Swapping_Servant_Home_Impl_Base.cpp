@@ -18,14 +18,12 @@ namespace CIAO
 
   CORBA::IRObject_ptr
   Swapping_Home_Servant_Impl_Base::get_component_def (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   CORBA::IRObject_ptr
   Swapping_Home_Servant_Impl_Base::get_home_def (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     throw CORBA::NO_IMPLEMENT ();
   }
