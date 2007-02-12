@@ -429,15 +429,15 @@
 
 # define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw (EXCEPTION);
+    if (OBJ.locked () == 0) throw EXCEPTION;
 
 # define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw (EXCEPTION);
+    if (OBJ.locked () == 0) throw EXCEPTION;
 
 # define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw (EXCEPTION);
+    if (OBJ.locked () == 0) throw EXCEPTION;
 
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
 
