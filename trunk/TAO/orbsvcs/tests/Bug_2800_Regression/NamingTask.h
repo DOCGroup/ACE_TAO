@@ -6,6 +6,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/ORB.h"
 #include "ace/Task.h"
+#include "ace/Synch_Traits.h"
 
 class NamingTask : public ACE_Task<ACE_MT_SYNCH>
 {
