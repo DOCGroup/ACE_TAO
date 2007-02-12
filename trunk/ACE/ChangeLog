@@ -1,3 +1,11 @@
+Mon Feb 12 20:24:04 UTC 2007  Steve Huston  <shuston@localhost.localdomain>
+
+        * examples/Logger/Acceptor-server/server_loggerd.cpp (handle_input):
+        * examples/Logger/simple-server/Logging_Handler.cpp (handle_input):
+          Log the host name of the peer, not "<localhost>", as previous code
+          did; also make sure to put it in ACE_TCHAR form. See also
+          Thu Feb  8 23:09:59 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
 Mon Feb 12 19:20:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CORBA_macros.h:
