@@ -20,15 +20,13 @@ class SimpleNamingService_i : public virtual POA_SimpleNamingService
 {
 public:
 
-  virtual void
-  bind (CORBA::Object_ptr obj) ACE_THROW_SPEC ((CORBA::SystemException))
+  virtual void bind (CORBA::Object_ptr obj)
   {
     obj_ = CORBA::Object::_duplicate (obj);
   }
 
 
-  virtual CORBA::Object_ptr
-  resolve () ACE_THROW_SPEC ((CORBA::SystemException))
+  virtual CORBA::Object_ptr resolve ()
   {
     return CORBA::Object::_duplicate (obj_.in ());
   }
