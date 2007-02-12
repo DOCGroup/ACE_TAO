@@ -1,3 +1,20 @@
+Mon Feb 12 14:38:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CORBA_macros.h:
+          Use ACE_LACKS_DEPRECATED_MACROS to make it possible to build without
+          all the emulated exception macros. Will make sure people can't use them
+          anymore in core code without noticing that
+
+        * ace/Global_Macros.h:
+          Just define ACE_THROW_SPEC again as about a week ago, we need a fuzz check
+          to make sure people don't use this anymore in TAO
+
+        * ace/Reactor.h:
+          Layout change
+
+        * tests/Thread_Manager_Test.cpp:
+          Layout change to debug message
+
 Mon Feb 12 14:35:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/doxygen-convert-h.pl:
