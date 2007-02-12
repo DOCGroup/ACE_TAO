@@ -15,8 +15,7 @@ ACE_RCSID (FaultTolerance,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_FT_ServerORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+TAO_FT_ServerORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 

@@ -46,12 +46,10 @@ public:
 private:
 
   /// Register FTCORBA policy factories.
-  void register_policy_factories (
-         PortableInterceptor::ORBInitInfo_ptr info);
+  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
   /// Register the necessary interceptors.
-  void register_server_request_interceptors (
-         PortableInterceptor::ORBInitInfo_ptr info);
+  void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
 
 };
 

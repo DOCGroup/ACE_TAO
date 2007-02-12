@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
 
 #if !defined (__ACE_INLINE__)
