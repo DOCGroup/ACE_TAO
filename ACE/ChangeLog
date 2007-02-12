@@ -1,3 +1,10 @@
+Mon Feb 12 15:18:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Check for the use of ACE_THROW_SPEC in TAO or CIAO code only. 
+          It's usage within ACE is still ok in some situations.
+
 Mon Feb 12 14:44:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
