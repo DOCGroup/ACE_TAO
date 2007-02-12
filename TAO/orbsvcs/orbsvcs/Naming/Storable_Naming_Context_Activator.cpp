@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- *  @file   Storable_Naming_Context_Activator.h
+ *  @file   Storable_Naming_Context_Activator.cpp
  *
  *  $Id$
  *
