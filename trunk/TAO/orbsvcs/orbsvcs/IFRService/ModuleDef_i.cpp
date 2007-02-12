@@ -28,14 +28,12 @@ TAO_ModuleDef_i::~TAO_ModuleDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ModuleDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Module;
 }
 
 void
 TAO_ModuleDef_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -46,7 +44,6 @@ TAO_ModuleDef_i::destroy (void)
 
 void
 TAO_ModuleDef_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -57,7 +54,6 @@ TAO_ModuleDef_i::destroy_i (void)
 
 CORBA::Contained::Description *
 TAO_ModuleDef_i::describe (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -68,7 +64,6 @@ TAO_ModuleDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_ModuleDef_i::describe_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,

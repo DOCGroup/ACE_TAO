@@ -69,11 +69,9 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
 
-      virtual CORBA::Boolean request_is_local (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean request_is_local (void);
       //@}
 
       /// Return the TSS slot ID assigned to the "SecurityCurrent"

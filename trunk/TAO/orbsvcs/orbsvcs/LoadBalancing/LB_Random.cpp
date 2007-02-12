@@ -29,14 +29,12 @@ TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
 
 char *
 TAO_LB_Random::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Random");
 }
 
 CosLoadBalancing::Properties *
 TAO_LB_Random::get_properties (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -54,8 +52,6 @@ void
 TAO_LB_Random::push_loads (
     const PortableGroup::Location & /* the_location */,
     const CosLoadBalancing::LoadList & /* loads */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::StrategyNotAdaptive))
 {
   throw CosLoadBalancing::StrategyNotAdaptive ();
 }
@@ -63,8 +59,6 @@ TAO_LB_Random::push_loads (
 CosLoadBalancing::LoadList *
 TAO_LB_Random::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
                           const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::LocationNotFound))
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -76,9 +70,6 @@ CORBA::Object_ptr
 TAO_LB_Random::next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   if (CORBA::is_nil (load_manager))
     throw CORBA::BAD_PARAM ();
@@ -95,7 +86,6 @@ void
 TAO_LB_Random::analyze_loads (
     PortableGroup::ObjectGroup_ptr /* object_group */,
     CosLoadBalancing::LoadManager_ptr /* load_manager */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -110,9 +100,6 @@ TAO_LB_Random::_tao_next_member (
     PortableGroup::ObjectGroup_ptr object_group,
     CosLoadBalancing::LoadManager_ptr load_manager,
     const PortableGroup::Locations & locations)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   const CORBA::ULong len = locations.length ();
   if (len == 0)

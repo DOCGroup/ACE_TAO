@@ -52,18 +52,15 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Return our definition kind.
 
   virtual CORBA::TypeCode_ptr type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From IDLType_i's pure virtual function.
 };
 

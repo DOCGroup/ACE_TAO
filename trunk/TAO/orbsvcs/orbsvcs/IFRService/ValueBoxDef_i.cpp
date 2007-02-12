@@ -30,14 +30,12 @@ TAO_ValueBoxDef_i::~TAO_ValueBoxDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ValueBoxDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_ValueBox;
 }
 
 CORBA::TypeCode_ptr
 TAO_ValueBoxDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -48,7 +46,6 @@ TAO_ValueBoxDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_ValueBoxDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -78,7 +75,6 @@ TAO_ValueBoxDef_i::type_i (void)
 
 CORBA::IDLType_ptr
 TAO_ValueBoxDef_i::original_type_def (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -89,7 +85,6 @@ TAO_ValueBoxDef_i::original_type_def (void)
 
 CORBA::IDLType_ptr
 TAO_ValueBoxDef_i::original_type_def_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString boxed_type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -105,7 +100,6 @@ TAO_ValueBoxDef_i::original_type_def_i (void)
 
 void
 TAO_ValueBoxDef_i::original_type_def (CORBA::IDLType_ptr original_type_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -116,7 +110,6 @@ TAO_ValueBoxDef_i::original_type_def (CORBA::IDLType_ptr original_type_def)
 
 void
 TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *boxed_type =
     TAO_IFR_Service_Utils::reference_to_path (original_type_def);

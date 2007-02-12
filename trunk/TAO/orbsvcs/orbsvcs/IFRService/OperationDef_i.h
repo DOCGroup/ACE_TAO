@@ -51,102 +51,75 @@ public:
   virtual ~TAO_OperationDef_i (void);
   // Destructor
 
-  virtual CORBA::DefinitionKind def_kind ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::DefinitionKind def_kind ();
   // Return our definition kind.
 
-  virtual CORBA::Contained::Description *describe ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Contained::Description *describe ();
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Contained::Description *describe_i ();
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::TypeCode_ptr result ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::TypeCode_ptr result ();
 
-  CORBA::TypeCode_ptr result_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::TypeCode_ptr result_i ();
 
-  virtual CORBA::IDLType_ptr result_def ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::IDLType_ptr result_def ();
 
-  CORBA::IDLType_ptr result_def_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::IDLType_ptr result_def_i ();
 
   virtual void result_def (
-      CORBA::IDLType_ptr result_def)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::IDLType_ptr result_def);
 
   void result_def_i (
-      CORBA::IDLType_ptr result_def)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::IDLType_ptr result_def);
 
-  virtual CORBA::ParDescriptionSeq *params ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ParDescriptionSeq *params ();
 
-  CORBA::ParDescriptionSeq *params_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::ParDescriptionSeq *params_i ();
 
   virtual void params (
-      const CORBA::ParDescriptionSeq &params)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ParDescriptionSeq &params);
 
   void params_i (
-      const CORBA::ParDescriptionSeq &params)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ParDescriptionSeq &params);
 
-  virtual CORBA::OperationMode mode ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::OperationMode mode ();
 
-  CORBA::OperationMode mode_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::OperationMode mode_i ();
 
   virtual void mode (
-      CORBA::OperationMode mode)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::OperationMode mode);
 
   void mode_i (
-      CORBA::OperationMode mode)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::OperationMode mode);
 
-  virtual CORBA::ContextIdSeq *contexts ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ContextIdSeq *contexts ();
 
-  CORBA::ContextIdSeq *contexts_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::ContextIdSeq *contexts_i ();
 
   virtual void contexts (
-      const CORBA::ContextIdSeq &contexts)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ContextIdSeq &contexts);
 
   void contexts_i (
-      const CORBA::ContextIdSeq &contexts)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ContextIdSeq &contexts);
 
-  virtual CORBA::ExceptionDefSeq *exceptions ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ExceptionDefSeq *exceptions ();
 
-  CORBA::ExceptionDefSeq *exceptions_i ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::ExceptionDefSeq *exceptions_i ();
 
   virtual void exceptions (
-      const CORBA::ExceptionDefSeq &exceptions)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ExceptionDefSeq &exceptions);
 
   void exceptions_i (
-      const CORBA::ExceptionDefSeq &exceptions)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CORBA::ExceptionDefSeq &exceptions);
 
   // Common code for containers to call in
   // making descriptions.
 
-  void make_description (CORBA::OperationDescription &desc)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void make_description (CORBA::OperationDescription &desc);
 
-  CORBA::TypeCode_ptr type_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::TypeCode_ptr type_i (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

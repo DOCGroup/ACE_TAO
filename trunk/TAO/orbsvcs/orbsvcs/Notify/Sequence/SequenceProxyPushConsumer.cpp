@@ -30,19 +30,12 @@ TAO_Notify_SequenceProxyPushConsumer::release (void)
 
 CosNotifyChannelAdmin::ProxyType
 TAO_Notify_SequenceProxyPushConsumer::MyType (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return CosNotifyChannelAdmin::PUSH_SEQUENCE;
 }
 
 void
 TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventChannelAdmin::AlreadyConnected
-                   ))
 {
   // Convert Supplier to Base Type
   TAO_Notify_SequencePushSupplier *supplier;
@@ -58,10 +51,6 @@ TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyC
 
 void
 TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotification::EventBatch& event_batch)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventComm::Disconnected
-                   ))
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1 && this->admin_properties().queue_full ())
@@ -83,9 +72,6 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
 
 void
 TAO_Notify_SequenceProxyPushConsumer::disconnect_sequence_push_consumer (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_SequenceProxyPushConsumer::Ptr guard( this );
   this->destroy ();

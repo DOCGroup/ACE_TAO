@@ -55,12 +55,12 @@ public:
 
   virtual CORBA::TypeCode_ptr type ()
 
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
   // Defined in concrete classes.
 
   virtual CORBA::TypeCode_ptr type_i ()
 
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
   // Defined in concrete classes.
 };
 

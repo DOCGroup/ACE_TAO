@@ -15,8 +15,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
                                         const CORBA::Any & value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 

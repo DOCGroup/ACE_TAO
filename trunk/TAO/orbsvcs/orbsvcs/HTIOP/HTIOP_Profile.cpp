@@ -7,7 +7,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #include "tao/CDR.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

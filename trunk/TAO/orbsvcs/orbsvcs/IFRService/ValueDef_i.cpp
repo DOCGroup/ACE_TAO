@@ -30,14 +30,12 @@ TAO_ValueDef_i::~TAO_ValueDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ValueDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Value;
 }
 
 void
 TAO_ValueDef_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -48,7 +46,6 @@ TAO_ValueDef_i::destroy (void)
 
 void
 TAO_ValueDef_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->TAO_Container_i::destroy_i ();
 
@@ -71,7 +68,6 @@ TAO_ValueDef_i::destroy_i (void)
 
 CORBA::Contained::Description *
 TAO_ValueDef_i::describe (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -82,7 +78,6 @@ TAO_ValueDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_ValueDef_i::describe_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ValueDescription *vd = 0;
   ACE_NEW_RETURN (vd,
@@ -104,7 +99,6 @@ TAO_ValueDef_i::describe_i (void)
 
 CORBA::TypeCode_ptr
 TAO_ValueDef_i::type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -115,7 +109,6 @@ TAO_ValueDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_ValueDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// Since valuetype type codes may encapsultate the type code of a
   /// base class, this call could be recursive, with the
@@ -128,7 +121,6 @@ TAO_ValueDef_i::type_i (void)
 
 CORBA::InterfaceDefSeq *
 TAO_ValueDef_i::supported_interfaces (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -139,7 +131,6 @@ TAO_ValueDef_i::supported_interfaces (void)
 
 CORBA::InterfaceDefSeq *
 TAO_ValueDef_i::supported_interfaces_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::InterfaceDefSeq *seq = 0;
   ACE_NEW_RETURN (seq,
@@ -191,7 +182,6 @@ void
 TAO_ValueDef_i::supported_interfaces (
     const CORBA::InterfaceDefSeq &supported_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -204,7 +194,6 @@ void
 TAO_ValueDef_i::supported_interfaces_i (
     const CORBA::InterfaceDefSeq &supported_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
@@ -276,7 +265,6 @@ TAO_ValueDef_i::supported_interfaces_i (
 
 CORBA::InitializerSeq *
 TAO_ValueDef_i::initializers (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -287,7 +275,6 @@ TAO_ValueDef_i::initializers (void)
 
 CORBA::InitializerSeq *
 TAO_ValueDef_i::initializers_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::InitializerSeq *iseq = 0;
   ACE_NEW_RETURN (iseq,
@@ -381,7 +368,6 @@ TAO_ValueDef_i::initializers_i (void)
 
 void
 TAO_ValueDef_i::initializers (const CORBA::InitializerSeq &initializers)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -392,7 +378,6 @@ TAO_ValueDef_i::initializers (const CORBA::InitializerSeq &initializers)
 
 void
 TAO_ValueDef_i::initializers_i (const CORBA::InitializerSeq &initializers)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "initializers",
@@ -406,7 +391,6 @@ TAO_ValueDef_i::initializers_i (const CORBA::InitializerSeq &initializers)
 
 CORBA::ValueDef_ptr
 TAO_ValueDef_i::base_value (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
@@ -417,7 +401,6 @@ TAO_ValueDef_i::base_value (void)
 
 CORBA::ValueDef_ptr
 TAO_ValueDef_i::base_value_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   int status =
@@ -442,7 +425,6 @@ TAO_ValueDef_i::base_value_i (void)
 
 void
 TAO_ValueDef_i::base_value (CORBA::ValueDef_ptr base_value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -453,7 +435,6 @@ TAO_ValueDef_i::base_value (CORBA::ValueDef_ptr base_value)
 
 void
 TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (base_value))
     {
@@ -488,7 +469,6 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
 
 CORBA::ValueDefSeq *
 TAO_ValueDef_i::abstract_base_values (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -499,7 +479,6 @@ TAO_ValueDef_i::abstract_base_values (void)
 
 CORBA::ValueDefSeq *
 TAO_ValueDef_i::abstract_base_values_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ValueDefSeq *vd_seq = 0;
   ACE_NEW_RETURN (vd_seq,
@@ -551,7 +530,6 @@ void
 TAO_ValueDef_i::abstract_base_values (
     const CORBA::ValueDefSeq &abstract_base_values
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -564,7 +542,6 @@ void
 TAO_ValueDef_i::abstract_base_values_i (
     const CORBA::ValueDefSeq &abstract_base_values
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "abstract_bases",
@@ -619,7 +596,6 @@ TAO_ValueDef_i::abstract_base_values_i (
 
 CORBA::Boolean
 TAO_ValueDef_i::is_abstract (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -630,7 +606,6 @@ TAO_ValueDef_i::is_abstract (void)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_abstract_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -641,7 +616,6 @@ TAO_ValueDef_i::is_abstract_i (void)
 
 void
 TAO_ValueDef_i::is_abstract (CORBA::Boolean is_abstract)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -652,7 +626,6 @@ TAO_ValueDef_i::is_abstract (CORBA::Boolean is_abstract)
 
 void
 TAO_ValueDef_i::is_abstract_i (CORBA::Boolean is_abstract)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
@@ -662,7 +635,6 @@ TAO_ValueDef_i::is_abstract_i (CORBA::Boolean is_abstract)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_custom (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -673,7 +645,6 @@ TAO_ValueDef_i::is_custom (void)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_custom_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -684,7 +655,6 @@ TAO_ValueDef_i::is_custom_i (void)
 
 void
 TAO_ValueDef_i::is_custom (CORBA::Boolean is_custom)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -695,7 +665,6 @@ TAO_ValueDef_i::is_custom (CORBA::Boolean is_custom)
 
 void
 TAO_ValueDef_i::is_custom_i (CORBA::Boolean is_custom)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
@@ -705,7 +674,6 @@ TAO_ValueDef_i::is_custom_i (CORBA::Boolean is_custom)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_truncatable (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -716,7 +684,6 @@ TAO_ValueDef_i::is_truncatable (void)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_truncatable_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -727,7 +694,6 @@ TAO_ValueDef_i::is_truncatable_i (void)
 
 void
 TAO_ValueDef_i::is_truncatable (CORBA::Boolean is_truncatable)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -738,7 +704,6 @@ TAO_ValueDef_i::is_truncatable (CORBA::Boolean is_truncatable)
 
 void
 TAO_ValueDef_i::is_truncatable_i (CORBA::Boolean is_truncatable)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
@@ -748,7 +713,6 @@ TAO_ValueDef_i::is_truncatable_i (CORBA::Boolean is_truncatable)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_a (const char *id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -759,7 +723,6 @@ TAO_ValueDef_i::is_a (const char *id)
 
 CORBA::Boolean
 TAO_ValueDef_i::is_a_i (const char *id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
     {
@@ -835,7 +798,6 @@ TAO_ValueDef_i::is_a_i (const char *id)
 
 CORBA::ValueDef::FullValueDescription *
 TAO_ValueDef_i::describe_value (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -846,7 +808,6 @@ TAO_ValueDef_i::describe_value (void)
 
 CORBA::ValueDef::FullValueDescription *
 TAO_ValueDef_i::describe_value_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ValueDef::FullValueDescription *fv_desc = 0;
   ACE_NEW_RETURN (fv_desc,
@@ -1317,7 +1278,6 @@ TAO_ValueDef_i::create_value_member (const char *id,
                                      const char *version,
                                      CORBA::IDLType_ptr type,
                                      CORBA::Visibility access)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueMemberDef::_nil ());
 
@@ -1336,7 +1296,6 @@ TAO_ValueDef_i::create_value_member_i (const char *id,
                                        const char *version,
                                        CORBA::IDLType_ptr type,
                                        CORBA::Visibility access)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1386,7 +1345,6 @@ TAO_ValueDef_i::create_attribute (
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AttributeDef::_nil ());
 
@@ -1407,7 +1365,6 @@ TAO_ValueDef_i::create_attribute_i (
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1460,7 +1417,6 @@ TAO_ValueDef_i::create_operation (
     const CORBA::ExceptionDefSeq &exceptions,
     const CORBA::ContextIdSeq &contexts
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::OperationDef::_nil ());
 
@@ -1487,7 +1443,6 @@ TAO_ValueDef_i::create_operation_i (
     const CORBA::ExceptionDefSeq &exceptions,
     const CORBA::ContextIdSeq &contexts
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

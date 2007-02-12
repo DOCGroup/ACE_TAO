@@ -8,7 +8,6 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Environment.h"
 #include "tao/CDR.h"
 
 #if ! defined (__ACE_INLINE__)

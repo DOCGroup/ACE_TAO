@@ -56,32 +56,18 @@ public:
 protected:
 
   // = interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
 
   virtual void connect_structured_push_supplier (
     CosNotifyComm::StructuredPushSupplier_ptr push_supplier
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosEventChannelAdmin::AlreadyConnected
-  ));
+  );
 
   virtual void push_structured_event (
       const CosNotification::StructuredEvent & notification
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      CosEventComm::Disconnected
-    ));
+    );
 
   virtual void disconnect_structured_push_consumer (
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  );
 
   virtual const char * get_proxy_type_name (void) const;
 

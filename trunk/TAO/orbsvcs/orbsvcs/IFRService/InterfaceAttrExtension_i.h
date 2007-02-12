@@ -53,13 +53,11 @@ public:
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,
@@ -69,8 +67,7 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
       const char *id,
@@ -80,8 +77,7 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

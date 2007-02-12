@@ -53,78 +53,62 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Return our definition kind.
 
   virtual void destroy ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Remove the repository entry and its contents.
 
   virtual void destroy_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::TypeCode_ptr type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr discriminator_type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::TypeCode_ptr discriminator_type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::IDLType_ptr discriminator_type_def ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::IDLType_ptr discriminator_type_def_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void discriminator_type_def (
       CORBA::IDLType_ptr discriminator_type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void discriminator_type_def_i (
       CORBA::IDLType_ptr discriminator_type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::UnionMemberSeq *members ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::UnionMemberSeq *members_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void members (
       const CORBA::UnionMemberSeq &members)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void members_i (
       const CORBA::UnionMemberSeq &members)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
 private:
   void fetch_label (
       const ACE_Configuration_Section_Key member_key,
-      CORBA::UnionMember &member)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::UnionMember &member);
   // Used by members() to get each member's label value.
 };
 

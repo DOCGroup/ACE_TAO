@@ -53,8 +53,7 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Return our definition kind.
 };
 

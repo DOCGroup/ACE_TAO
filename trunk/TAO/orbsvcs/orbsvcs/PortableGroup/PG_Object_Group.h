@@ -176,16 +176,12 @@ namespace TAO
      * @@TODO DOC
      */
     void set_properties_dynamically (
-        const PortableGroup::Properties & overrides)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableGroup::InvalidProperty,
-                       PortableGroup::UnsupportedProperty));
+        const PortableGroup::Properties & overrides);
 
     /**
      * @@TODO DOC
      */
-    void get_properties (PortableGroup::Properties_var & result) const
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void get_properties (PortableGroup::Properties_var & result) const;
 
     /**
      * @@TODO DOC
@@ -199,9 +195,7 @@ namespace TAO
      */
     void add_member (
         const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-                       PortableGroup::ObjectNotAdded));
+        CORBA::Object_ptr member);
 
     /**
      * set the replica at the given location to be primary.
@@ -212,19 +206,13 @@ namespace TAO
      */
     int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
-      const PortableGroup::Location & the_location)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::MemberNotFound
-      ));
+      const PortableGroup::Location & the_location);
 
     /**
      * @@TODO DOC
      */
     void remove_member (
-        const PortableGroup::Location & the_location)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-                       PortableGroup::MemberNotFound));
+        const PortableGroup::Location & the_location);
 
 
     /**
@@ -233,28 +221,18 @@ namespace TAO
     void create_member (
         const PortableGroup::Location & the_location,
         const char * type_id,
-        const PortableGroup::Criteria & the_criteria)
-      ACE_THROW_SPEC ( (CORBA::SystemException,
-        PortableGroup::MemberAlreadyPresent,
-        PortableGroup::NoFactory,
-        PortableGroup::ObjectNotCreated,
-        PortableGroup::InvalidCriteria,
-        PortableGroup::CannotMeetCriteria));
+        const PortableGroup::Criteria & the_criteria);
 
     /**
      * @@TODO DOC
      */
-    PortableGroup::Locations * locations_of_members (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    PortableGroup::Locations * locations_of_members (void);
 
     /**
      * @@TODO DOC
      */
     CORBA::Object_ptr get_member_reference (
-        const PortableGroup::Location & the_location)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::MemberNotFound));
+        const PortableGroup::Location & the_location);
 
 
     /**
@@ -284,11 +262,7 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
 
-    void create_members (size_t count)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableGroup::NoFactory
-        ));
+    void create_members (size_t count);
 
 
     /////////////////////////

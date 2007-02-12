@@ -69,11 +69,10 @@ public:
   /// Activate in the POA
   virtual void activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy)
-   ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+   = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (void)
-    ACE_THROW_SPEC (());
+  virtual void deactivate (void);
 
   /// Disconnect this from
   virtual void disconnect_push_supplier () = 0;
@@ -152,14 +151,10 @@ protected:
   void consumer (RtecEventComm::PushConsumer_ptr consumer);
   void consumer_i (RtecEventComm::PushConsumer_ptr consumer);
 
-  void suspend_connection_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void resume_connection_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void suspend_connection_locked (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  void resume_connection_locked (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void suspend_connection_i (void);
+  void resume_connection_i (void);
+  void suspend_connection_locked (void);
+  void resume_connection_locked (void);
 
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i (void) const;
@@ -200,7 +195,7 @@ private:
   virtual void pre_dispatch_hook (RtecEventComm::EventSet&);
   virtual PortableServer::ObjectId
             object_id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -83,28 +83,24 @@ TAO::SSLIOP_Credentials::~SSLIOP_Credentials (void)
 
 char *
 TAO::SSLIOP_Credentials::creds_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 SecurityLevel3::CredentialsUsage
 TAO::SSLIOP_Credentials::creds_usage (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CU_Indefinite;
 }
 
 TimeBase::UtcT
 TAO::SSLIOP_Credentials::expiry_time (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->expiry_time_;
 }
 
 SecurityLevel3::CredentialsState
 TAO::SSLIOP_Credentials::creds_state (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const ::X509 *x = this->x509_.in ();
 
@@ -150,14 +146,12 @@ TAO::SSLIOP_Credentials::creds_state (void)
 char *
 TAO::SSLIOP_Credentials::add_relinquished_listener (
     SecurityLevel3::RelinquishedCredentialsListener_ptr /* listener */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

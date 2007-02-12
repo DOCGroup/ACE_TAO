@@ -30,14 +30,12 @@ TAO_StructDef_i::~TAO_StructDef_i (void)
 
 CORBA::DefinitionKind
 TAO_StructDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Struct;
 }
 
 void
 TAO_StructDef_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -48,7 +46,6 @@ TAO_StructDef_i::destroy (void)
 
 void
 TAO_StructDef_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -59,7 +56,6 @@ TAO_StructDef_i::destroy_i (void)
 
 CORBA::TypeCode_ptr
 TAO_StructDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -70,7 +66,6 @@ TAO_StructDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_StructDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -110,7 +105,6 @@ TAO_StructDef_i::type_i (void)
 
 CORBA::StructMemberSeq *
 TAO_StructDef_i::members (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -121,7 +115,6 @@ TAO_StructDef_i::members (void)
 
 CORBA::StructMemberSeq *
 TAO_StructDef_i::members_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -241,7 +234,6 @@ TAO_StructDef_i::members_i (void)
 
 void
 TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -252,7 +244,6 @@ TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
 
 void
 TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our old members, both refs and defns.
   TAO_Container_i::destroy_i ();

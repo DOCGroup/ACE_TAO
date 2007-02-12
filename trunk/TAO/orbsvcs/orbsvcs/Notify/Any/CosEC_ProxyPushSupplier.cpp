@@ -27,11 +27,6 @@ TAO_Notify_CosEC_ProxyPushSupplier::release (void)
 
 void
 TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventChannelAdmin::AlreadyConnected,
-                   CosEventChannelAdmin::TypeError
-                   ))
 {
   // Convert Consumer to Base Type
   TAO_Notify_PushConsumer* consumer;
@@ -46,9 +41,6 @@ TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushCon
 
 void
 TAO_Notify_CosEC_ProxyPushSupplier::disconnect_push_supplier (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_CosEC_ProxyPushSupplier::Ptr guard( this );
   this->destroy ();

@@ -46,7 +46,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::_default_POA ()
 template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     CosNaming::Binding_out b)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNaming::Binding *binding = 0;
 
@@ -101,7 +100,6 @@ template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
     CORBA::ULong how_many,
     CosNaming::BindingList_out bl)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We perform an allocation before obtaining the lock so that an out
   // parameter is allocated in case we fail to obtain the lock.
@@ -164,7 +162,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 
 template <class ITERATOR, class TABLE_ENTRY> void
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,

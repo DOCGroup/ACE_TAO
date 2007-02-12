@@ -58,18 +58,10 @@ public:
   // = Interface methods
   virtual void connect_push_consumer (
     CosEventComm::PushConsumer_ptr push_consumer
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosEventChannelAdmin::AlreadyConnected,
-    CosEventChannelAdmin::TypeError
-  ));
+  );
 
   virtual void disconnect_push_supplier (
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  );
 
 private:
   /// Release

@@ -72,11 +72,6 @@ TAO_FDev<T_Producer, T_Consumer>::create_producer (AVStreams::FlowConnection_ptr
                                                    AVStreams::QoS & the_qos,
                                                    CORBA::Boolean_out met_qos,
                                                    char *& named_fdev)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
-                   AVStreams::streamOpDenied,
-                   AVStreams::notSupported,
-                   AVStreams::QoSRequestFailed))
 {
   // call the bridge method.
   return this->make_producer (the_requester,
@@ -142,11 +137,6 @@ TAO_FDev<T_Producer, T_Consumer>::create_consumer (AVStreams::FlowConnection_ptr
                                                    AVStreams::QoS & the_qos,
                                                    CORBA::Boolean_out met_qos,
                                                    char *& named_fdev)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
-                   AVStreams::streamOpDenied,
-                   AVStreams::notSupported,
-                   AVStreams::QoSRequestFailed))
 {
   return this->make_consumer (the_requester,
                               the_qos,
@@ -160,9 +150,6 @@ AVStreams::FlowConnection_ptr
 TAO_FDev<T_Producer, T_Consumer>::bind (AVStreams::FDev_ptr peer_device,
                                         AVStreams::QoS & the_qos,
                                         CORBA::Boolean_out is_met)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
-                   AVStreams::QoSRequestFailed))
 {
   ACE_UNUSED_ARG (peer_device);
   ACE_UNUSED_ARG (the_qos);
@@ -176,9 +163,6 @@ AVStreams::FlowConnection_ptr
 TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
                                               AVStreams::QoS & the_qos,
                                               CORBA::Boolean_out is_met)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
-                   AVStreams::QoSRequestFailed))
 {
   ACE_UNUSED_ARG (first_peer);
   ACE_UNUSED_ARG (the_qos);
@@ -190,8 +174,6 @@ template <class T_Producer, class T_Consumer>
 void
 TAO_FDev<T_Producer, T_Consumer>::destroy (AVStreams::FlowEndPoint_ptr /* the_ep */,
                                            const char * /* fdev_name */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::notSupported))
 {
   // @@ Shouldn't the parameters be made use of!
   // Destroy/delete all the producers and consumers.

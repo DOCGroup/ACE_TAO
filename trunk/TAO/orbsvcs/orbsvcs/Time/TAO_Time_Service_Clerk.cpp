@@ -41,8 +41,6 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable))
 {
   TAO_UTO *uto = 0;
 
@@ -62,8 +60,6 @@ TAO_Time_Service_Clerk::universal_time (void)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -74,7 +70,6 @@ CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
                                             TimeBase::TdfT tdf)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -91,7 +86,6 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -115,7 +109,6 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc)
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                                       TimeBase::TimeT upper)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 

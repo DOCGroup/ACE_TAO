@@ -15,8 +15,6 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
     const char* constraints
   )
-  ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                   CORBA::NO_MEMORY))
   : TAO_Interpreter ()
 {
   // @@ Throwing Exception from constructor is very nasty situation to
@@ -43,8 +41,6 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
 TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                            const char* constraints)
-  ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
-                   CORBA::NO_MEMORY))
 {
   if (TAO_Interpreter::is_empty_string (constraints))
     {
@@ -83,8 +79,6 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
     const char* preference
   )
-  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                   CORBA::NO_MEMORY))
     : TAO_Interpreter ()
 {
   TAO_Trader_Constraint_Validator type_checker (ts);
@@ -108,8 +102,6 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                            const char* preference)
-  ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
-                   CORBA::NO_MEMORY))
     : TAO_Interpreter ()
 {
   if (TAO_Interpreter::is_empty_string (preference))

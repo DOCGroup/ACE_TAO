@@ -43,8 +43,6 @@ PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
     const PortableServer::ObjectId &oid,
     PortableServer::POA_ptr poa)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
 
   // Make sure complete initialization has been done
@@ -108,7 +106,6 @@ TAO_Storable_Naming_Context_Activator::etherealize (
     PortableServer::Servant servant,
     CORBA::Boolean /*cleanup_in_progress*/,
     CORBA::Boolean remaining_activations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!remaining_activations) {
     delete servant;

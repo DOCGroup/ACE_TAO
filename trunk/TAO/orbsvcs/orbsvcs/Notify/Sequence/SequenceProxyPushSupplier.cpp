@@ -27,11 +27,6 @@ TAO_Notify_SequenceProxyPushSupplier::release (void)
 
 void
 TAO_Notify_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventChannelAdmin::AlreadyConnected
-                   , CosEventChannelAdmin::TypeError
-                   ))
 {
   // Convert Consumer to Base Type
   TAO_Notify_SequencePushConsumer* consumer;
@@ -47,9 +42,6 @@ TAO_Notify_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyC
 
 void
 TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 
 {
   TAO_Notify_SequenceProxyPushSupplier::Ptr guard( this );
@@ -59,9 +51,6 @@ TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier (void)
 
 CosNotifyChannelAdmin::ProxyType
 TAO_Notify_SequenceProxyPushSupplier::MyType (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return CosNotifyChannelAdmin::PUSH_SEQUENCE;
 }

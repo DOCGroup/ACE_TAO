@@ -36,7 +36,6 @@ TAO_Iterator_i::~TAO_Iterator_i (void)
 
 void
 TAO_Iterator_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
     this->poa_->servant_to_id (this);

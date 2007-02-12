@@ -140,11 +140,6 @@ void TAO_FTEC_Event_Channel::set_listener(TAO_FTEC_Become_Primary_Listener* list
 void TAO_FTEC_Event_Channel::set_update (
         const FTRT::State & s
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , FTRT::InvalidUpdate
-        , FTRT::OutOfSequence
-      ))
 {
     ec_impl_->set_update(s);
 }
@@ -152,9 +147,6 @@ void TAO_FTEC_Event_Channel::set_update (
 void TAO_FTEC_Event_Channel::oneway_set_update (
         const FTRT::State & s
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
     ec_impl_->set_update(s);
 }
@@ -162,14 +154,12 @@ void TAO_FTEC_Event_Channel::oneway_set_update (
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_FTEC_Event_Channel::for_consumers (void)
-        ACE_THROW_SPEC ((CORBA::SystemException))
 {
     return ec_impl_->for_consumers();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_FTEC_Event_Channel::for_suppliers (void)
-        ACE_THROW_SPEC ((CORBA::SystemException))
 {
     return ec_impl_->for_suppliers();
 }
@@ -177,7 +167,6 @@ TAO_FTEC_Event_Channel::for_suppliers (void)
 
 void
 TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
-  ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidState))
 {
   ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Event_Channel::set_state\n"));
   ec_impl_->set_state(s);
@@ -185,7 +174,6 @@ TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
 
 void
 TAO_FTEC_Event_Channel::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Fault_Detector::instance())
     Fault_Detector::instance()->stop();
@@ -196,10 +184,6 @@ TAO_FTEC_Event_Channel::destroy (void)
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   /// we have yet to implement the replication of observers
   /// throw an exception for the moment
@@ -210,10 +194,6 @@ TAO_FTEC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr)
 
 void
 TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   /// we have yet to implement the replication of observers
   /// throw an exception for the moment
@@ -229,9 +209,6 @@ TAO_FTEC_Event_Channel::start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out location
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   return ec_impl_->start(listener, location);
 }
@@ -241,10 +218,6 @@ TAO_FTEC_Event_Channel::create_group (
         const FTRT::ManagerInfoList & info_list,
         CORBA::ULong object_group_ref_version
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      , FTRT::PredecessorUnreachable
-      ))
 {
   ec_impl_->create_group(info_list, object_group_ref_version);
 }
@@ -253,9 +226,6 @@ void
 TAO_FTEC_Event_Channel::join_group (
         const FTRT::ManagerInfo & info
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   ec_impl_->join_group(info);
 }
@@ -265,9 +235,6 @@ TAO_FTEC_Event_Channel::add_member (
         const FTRT::ManagerInfo & info,
         CORBA::ULong object_group_ref_version
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   ec_impl_->add_member(info, object_group_ref_version);
 }
@@ -276,9 +243,6 @@ void
 TAO_FTEC_Event_Channel::remove_member (
         const FTRT::Location & crashed_location,
         CORBA::ULong object_group_ref_version)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   ec_impl_->remove_member(crashed_location,
                             object_group_ref_version);
@@ -288,9 +252,6 @@ void
 TAO_FTEC_Event_Channel::replica_crashed (
         const FTRT::Location & location
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   ec_impl_->replica_crashed(location);
 }
@@ -303,10 +264,6 @@ TAO_FTEC_Event_Channel::connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
         const RtecEventChannelAdmin::ConsumerQOS & qos
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RtecEventChannelAdmin::TypeError
-      ))
 {
   return ec_impl_->connect_push_consumer(push_consumer, qos);
 }
@@ -317,9 +274,6 @@ TAO_FTEC_Event_Channel::connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
         const RtecEventChannelAdmin::SupplierQOS & qos
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   return ec_impl_->connect_push_supplier(push_supplier, qos);
 
@@ -329,9 +283,6 @@ void
 TAO_FTEC_Event_Channel::disconnect_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   ec_impl_->disconnect_push_supplier(oid);
 }
@@ -340,9 +291,6 @@ void
 TAO_FTEC_Event_Channel::disconnect_push_consumer (
         const FtRtecEventChannelAdmin::ObjectId & oid
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   ec_impl_->disconnect_push_consumer(oid);
 }
@@ -351,10 +299,6 @@ void
 TAO_FTEC_Event_Channel::suspend_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , FtRtecEventComm::InvalidObjectID
-      ))
 {
   ec_impl_->suspend_push_supplier(oid);
 }
@@ -363,10 +307,6 @@ void
 TAO_FTEC_Event_Channel::resume_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , FtRtecEventComm::InvalidObjectID
-      ))
 {
   ec_impl_->resume_push_supplier(oid);
 }
@@ -376,10 +316,6 @@ TAO_FTEC_Event_Channel::push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
         const RtecEventComm::EventSet & data
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , FtRtecEventComm::InvalidObjectID
-      ))
 {
   ec_impl_->push(oid,
                  data);

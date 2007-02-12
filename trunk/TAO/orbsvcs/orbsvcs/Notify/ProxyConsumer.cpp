@@ -66,10 +66,6 @@ TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent* topology_parent)
 
 void
 TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventChannelAdmin::AlreadyConnected
-                   ))
 {
   // Adopt the supplier
   ACE_Auto_Ptr< TAO_Notify_Supplier > auto_supplier (supplier);

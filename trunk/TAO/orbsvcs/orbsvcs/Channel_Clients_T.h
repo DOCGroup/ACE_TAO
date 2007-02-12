@@ -45,12 +45,10 @@ public:
   ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void push (const RtecEventComm::EventSet& events)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
 
   /// Forwards to target_.
-  virtual void disconnect_push_consumer (void)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
 
 private:
   TARGET *target_;
@@ -73,8 +71,7 @@ public:
   ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void disconnect_push_supplier (void)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
 
 private:
   TARGET *target_;

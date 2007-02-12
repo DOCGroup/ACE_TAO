@@ -24,8 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
     CORBA::Object_ptr &ior)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_IOP::Invalid_IOR))
 {
   // We need to apply the property for every profile in the IOR
 
@@ -77,9 +75,6 @@ TAO_FT_IOGR_Property::set_property (
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
     CORBA::Object_ptr ior)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   if (this->get_primary_profile (ior) != 0)
     return 1;
@@ -91,10 +86,6 @@ TAO_FT_IOGR_Property::is_primary_set (
 CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
     CORBA::Object_ptr ior)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::NotFound
-      ))
 {
 
   TAO_Profile *pfile =
@@ -160,11 +151,6 @@ CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
     CORBA::Object_ptr &ior1,
     CORBA::Object_ptr ior2)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        TAO_IOP::NotFound,
-        TAO_IOP::Duplicate
-      ))
 {
   // Check for primary in <ior2>
   IOP::TaggedComponent tagged_components;
@@ -338,7 +324,6 @@ CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
     const CORBA::Object_ptr iogr,
     FT::TagFTGroupTaggedComponent &fgtc) const
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
@@ -388,7 +373,6 @@ TAO_FT_IOGR_Property::get_tagged_component (
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
     CORBA::Object_ptr &iogr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the MProfile
   TAO_MProfile &mprofile =

@@ -73,8 +73,7 @@ public:
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
-  CORBA::Boolean next_one (CosNaming::Binding_out b)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Boolean next_one (CosNaming::Binding_out b);
 
   /**
    * This operation passes back at most <how_many> unseen bindings.
@@ -82,12 +81,10 @@ public:
    * returned if no bindings were passed back.
    */
   CORBA::Boolean next_n (CORBA::ULong how_many,
-                         CosNaming::BindingList_out bl)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                         CosNaming::BindingList_out bl);
 
   /// This operation destroys the iterator.
-  void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (void);
 
   // = Helper method.
 

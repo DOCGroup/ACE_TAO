@@ -206,9 +206,6 @@ TAO_Notify_EventChannel::shutdown (void)
 
 void
 TAO_Notify_EventChannel::destroy (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_EventChannel::Ptr guard( this );
 
@@ -236,37 +233,24 @@ TAO_Notify_EventChannel::remove (TAO_Notify_SupplierAdmin* supplier_admin)
 
 void
 TAO_Notify_EventChannel::set_qos (const CosNotification::QoSProperties & qos)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotification::UnsupportedQoS
-                   ))
 {
   this->TAO_Notify_Object::set_qos (qos);
 }
 
 CosNotification::QoSProperties*
 TAO_Notify_EventChannel::get_qos (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->TAO_Notify_Object::get_qos ();
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_EventChannel::MyFactory (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->ecf_->_this ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel::default_consumer_admin (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   if (CORBA::is_nil (default_consumer_admin_.in ()))
     {
@@ -292,9 +276,6 @@ TAO_Notify_EventChannel::default_consumer_admin (void)
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel::default_supplier_admin (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   if (CORBA::is_nil (default_supplier_admin_.in ()))
     {
@@ -318,9 +299,6 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
 }
 
 ::CosNotifyFilter::FilterFactory_ptr TAO_Notify_EventChannel::default_filter_factory (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->ecf_->get_default_filter_factory ();
 }
@@ -329,9 +307,6 @@ TAO_Notify_EventChannel::default_supplier_admin (void)
 TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                         CosNotifyChannelAdmin::AdminID_out id
                                         )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 
 {
   ::CosNotifyChannelAdmin::ConsumerAdmin_var ca =
@@ -344,9 +319,6 @@ TAO_Notify_EventChannel::new_for_consumers (CosNotifyChannelAdmin::InterFilterGr
 TAO_Notify_EventChannel::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                         CosNotifyChannelAdmin::AdminID_out id
                                         )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   ::CosNotifyChannelAdmin::SupplierAdmin_var sa =
     TAO_Notify_PROPERTIES::instance()->builder()->build_supplier_admin (this, op, id);
@@ -356,10 +328,6 @@ TAO_Notify_EventChannel::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGr
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyChannelAdmin::AdminNotFound
-                   ))
 {
   TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
 
@@ -368,10 +336,6 @@ TAO_Notify_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotifyChannelAdmin::AdminNotFound
-                   ))
 {
   TAO_Notify_SupplierAdmin_Find_Worker find_worker;
 
@@ -380,9 +344,6 @@ TAO_Notify_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
 
 CosNotifyChannelAdmin::AdminIDSeq*
 TAO_Notify_EventChannel::get_all_consumeradmins (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_ConsumerAdmin_Seq_Worker seq_worker;
 
@@ -391,9 +352,6 @@ TAO_Notify_EventChannel::get_all_consumeradmins (void)
 
 CosNotifyChannelAdmin::AdminIDSeq*
 TAO_Notify_EventChannel::get_all_supplieradmins (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_SupplierAdmin_Seq_Worker seq_worker;
 
@@ -402,19 +360,12 @@ TAO_Notify_EventChannel::get_all_supplieradmins (void)
 
 void
 TAO_Notify_EventChannel::set_admin (const CosNotification::AdminProperties & admin)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotification::UnsupportedAdmin
-                   ))
 {
   this->admin_properties().init (admin);
 }
 
 CosNotification::AdminProperties*
 TAO_Notify_EventChannel::get_admin (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   CosNotification::AdminProperties_var properties;
 
@@ -429,18 +380,12 @@ TAO_Notify_EventChannel::get_admin (void)
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_EventChannel::for_consumers (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->default_consumer_admin();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_EventChannel::for_suppliers (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->default_supplier_admin ();
 }
@@ -449,10 +394,6 @@ void
 TAO_Notify_EventChannel::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
                                    CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
                                    )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosNotification::UnsupportedQoS
-                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

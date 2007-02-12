@@ -51,19 +51,16 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Return our definition kind.
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

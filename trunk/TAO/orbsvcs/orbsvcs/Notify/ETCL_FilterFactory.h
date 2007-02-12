@@ -58,20 +58,12 @@ public:
 
   virtual CosNotifyFilter::Filter_ptr create_filter (
       const char * constraint_grammar
-    )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidGrammar
-                     ));
+    );
 
   virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
       const char * constraint_grammar,
       const CORBA::Any & default_value
-    )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosNotifyFilter::InvalidGrammar
-                     ));
+    );
 
 protected:
   /// The POA in which to activate the Filters.

@@ -36,7 +36,6 @@ TAO_Container_i::~TAO_Container_i (void)
 
 void
 TAO_Container_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -47,7 +46,6 @@ TAO_Container_i::destroy (void)
 
 void
 TAO_Container_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int index = 0;
   int status;
@@ -174,7 +172,6 @@ TAO_Container_i::destroy_i (void)
 
 CORBA::Contained_ptr
 TAO_Container_i::lookup (const char *search_name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -185,7 +182,6 @@ TAO_Container_i::lookup (const char *search_name)
 
 CORBA::Contained_ptr
 TAO_Container_i::lookup_i (const char *search_name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key iter_key;
   ACE_Configuration_Section_Key work_key;
@@ -397,7 +393,6 @@ TAO_Container_i::lookup_i (const char *search_name)
 CORBA::ContainedSeq *
 TAO_Container_i::contents (CORBA::DefinitionKind limit_type,
                            CORBA::Boolean exclude_inherited)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -410,7 +405,6 @@ TAO_Container_i::contents (CORBA::DefinitionKind limit_type,
 CORBA::ContainedSeq *
 TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                              CORBA::Boolean exclude_inherited)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ContainedSeq *contents = 0;
   ACE_NEW_THROW_EX (contents,
@@ -539,7 +533,6 @@ TAO_Container_i::lookup_name (const char *search_name,
                               CORBA::Long levels_to_search,
                               CORBA::DefinitionKind limit_type,
                               CORBA::Boolean exclude_inherited)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -556,7 +549,6 @@ TAO_Container_i::lookup_name_i (const char *search_name,
                                 CORBA::Long levels_to_search,
                                 CORBA::DefinitionKind limit_type,
                                 CORBA::Boolean exclude_inherited)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -604,7 +596,6 @@ CORBA::Container::DescriptionSeq *
 TAO_Container_i::describe_contents (CORBA::DefinitionKind limit_type,
                                     CORBA::Boolean exclude_inherited,
                                     CORBA::Long max_returned_objs)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -619,7 +610,6 @@ CORBA::Container::DescriptionSeq *
 TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
                                       CORBA::Boolean exclude_inherited,
                                       CORBA::Long max_returned_objs)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ContainedSeq_var contents = this->contents_i (limit_type,
                                                       exclude_inherited);
@@ -675,7 +665,6 @@ CORBA::ModuleDef_ptr
 TAO_Container_i::create_module (const char *id,
                                 const char *name,
                                 const char *version)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ModuleDef::_nil ());
 
@@ -690,7 +679,6 @@ CORBA::ModuleDef_ptr
 TAO_Container_i::create_module_i (const char *id,
                                   const char *name,
                                   const char *version)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // new_key is not needed when creating a module, but it is needed
   // by most of the other creation methods, so a blank one gets passed in.
@@ -723,7 +711,6 @@ TAO_Container_i::create_constant (const char *id,
                                   const char *version,
                                   CORBA::IDLType_ptr type,
                                   const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ConstantDef::_nil ());
 
@@ -742,7 +729,6 @@ TAO_Container_i::create_constant_i (const char *id,
                                     const char *version,
                                     CORBA::IDLType_ptr type,
                                     const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -826,7 +812,6 @@ TAO_Container_i::create_struct (const char *id,
                                 const char *name,
                                 const char *version,
                                 const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::StructDef::_nil ());
 
@@ -843,7 +828,6 @@ TAO_Container_i::create_struct_i (const char *id,
                                   const char *name,
                                   const char *version,
                                   const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -921,7 +905,6 @@ TAO_Container_i::create_union (const char *id,
                                const char *version,
                                CORBA::IDLType_ptr discriminator_type,
                                const CORBA::UnionMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::UnionDef::_nil ());
 
@@ -940,7 +923,6 @@ TAO_Container_i::create_union_i (const char *id,
                                  const char *version,
                                  CORBA::IDLType_ptr discriminator_type,
                                  const CORBA::UnionMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1029,7 +1011,6 @@ TAO_Container_i::create_enum (const char *id,
                               const char *name,
                               const char *version,
                               const CORBA::EnumMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::EnumDef::_nil ());
 
@@ -1046,7 +1027,6 @@ TAO_Container_i::create_enum_i (const char *id,
                                 const char *name,
                                 const char *version,
                                 const CORBA::EnumMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1109,7 +1089,6 @@ TAO_Container_i::create_alias (const char *id,
                                const char *name,
                                const char *version,
                                CORBA::IDLType_ptr original_type)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AliasDef::_nil ());
 
@@ -1126,7 +1105,6 @@ TAO_Container_i::create_alias_i (const char *id,
                                  const char *name,
                                  const char *version,
                                  CORBA::IDLType_ptr original_type)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1164,7 +1142,6 @@ TAO_Container_i::create_interface (const char *id,
                                    const char *name,
                                    const char *version,
                                    const CORBA::InterfaceDefSeq &base_interfaces)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -1181,7 +1158,6 @@ TAO_Container_i::create_interface_i (const char *id,
                                      const char *name,
                                      const char *version,
                                      const CORBA::InterfaceDefSeq &base_interfaces)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1245,7 +1221,6 @@ TAO_Container_i::create_value (
     const CORBA::InterfaceDefSeq &supported_interfaces,
     const CORBA::InitializerSeq &initializers
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
@@ -1276,7 +1251,6 @@ TAO_Container_i::create_value_i (
     const CORBA::InterfaceDefSeq &supported_interfaces,
     const CORBA::InitializerSeq &initializers
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key new_key;
   ACE_TString path =
@@ -1313,7 +1287,6 @@ TAO_Container_i::create_value_box (const char *id,
                                    const char *name,
                                    const char *version,
                                    CORBA::IDLType_ptr original_type_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueBoxDef::_nil ());
 
@@ -1331,7 +1304,6 @@ TAO_Container_i::create_value_box_i (const char *id,
                                      const char *version,
                                      CORBA::IDLType_ptr original_type_def
  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1369,7 +1341,6 @@ TAO_Container_i::create_exception (const char *id,
                                    const char *name,
                                    const char *version,
                                    const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExceptionDef::_nil ());
 
@@ -1386,7 +1357,6 @@ TAO_Container_i::create_exception_i (const char *id,
                                      const char *name,
                                      const char *version,
                                      const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1450,7 +1420,6 @@ CORBA::NativeDef_ptr
 TAO_Container_i::create_native (const char *id,
                                 const char *name,
                                 const char *version)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::NativeDef::_nil ());
 
@@ -1465,7 +1434,6 @@ CORBA::NativeDef_ptr
 TAO_Container_i::create_native_i (const char *id,
                                   const char *name,
                                   const char *version)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1497,7 +1465,6 @@ TAO_Container_i::create_abstract_interface (
     const char *version,
     const CORBA::AbstractInterfaceDefSeq &base_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AbstractInterfaceDef::_nil ());
 
@@ -1516,7 +1483,6 @@ TAO_Container_i::create_abstract_interface_i (
     const char *version,
     const CORBA::AbstractInterfaceDefSeq &base_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1574,7 +1540,6 @@ TAO_Container_i::create_local_interface (
     const char *version,
     const CORBA::InterfaceDefSeq &base_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::LocalInterfaceDef::_nil ());
 
@@ -1593,7 +1558,6 @@ TAO_Container_i::create_local_interface_i (
     const char *version,
     const CORBA::InterfaceDefSeq &base_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1657,7 +1621,6 @@ TAO_Container_i::create_ext_value (
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtValueDef::_nil ());
 
@@ -1688,7 +1651,6 @@ TAO_Container_i::create_ext_value_i (
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key new_key;
   ACE_TString path =
@@ -2082,7 +2044,6 @@ TAO_Container_i::lookup_op (
 void
 TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
                               const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_var tc = value.type ();
 

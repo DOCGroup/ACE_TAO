@@ -143,9 +143,6 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
     const char * adapter_name,
     PortableServer::POAManager_ptr a_POAManager,
     const CORBA::PolicyList & policies)
-  ACE_THROW_SPEC (( CORBA::SystemException
-    , PortableServer::POA::AdapterAlreadyExists
-    , PortableServer::POA::InvalidPolicy))
 {
   try
     {
@@ -265,8 +262,6 @@ void
 RTCosScheduling_ServerScheduler_i::schedule_object (
     CORBA::Object_ptr obj,
     const char * name)
-  ACE_THROW_SPEC ((CORBA::SystemException
-    , RTCosScheduling::UnknownName))
 {
   /// Check and see if the object name is in the resource map,
   /// if it is, then there is a ceiling for it and we can add it to the
@@ -380,9 +375,6 @@ RTCosScheduling_ServerScheduler_Interceptor::~RTCosScheduling_ServerScheduler_In
 void
 RTCosScheduling_ServerScheduler_Interceptor::receive_request(
   PortableInterceptor::ServerRequestInfo_ptr ri)
-ACE_THROW_SPEC((
-  CORBA::SystemException,
-  PortableInterceptor::ForwardRequest))
 {
   try
     {
@@ -526,9 +518,6 @@ ACE_THROW_SPEC((
 void
 RTCosScheduling_ServerScheduler_Interceptor::send_reply(
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC((
-    CORBA::SystemException
-  ))
 {
   ACE_UNUSED_ARG(ri);
   finish_execution();
@@ -550,23 +539,18 @@ RTCosScheduling_ServerScheduler_Interceptor::finish_execution()
 
 char*
 RTCosScheduling_ServerScheduler_Interceptor::name(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   return CORBA::string_dup(this->name_);
 }
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::destroy(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ServerScheduler_Interceptor::receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC((
-    CORBA::SystemException,
-    PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
 }
@@ -574,8 +558,6 @@ RTCosScheduling_ServerScheduler_Interceptor::receive_request_service_contexts(
 void
 RTCosScheduling_ServerScheduler_Interceptor::send_exception(
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC((CORBA::SystemException,
-    PortableInterceptor::ForwardRequest))
 {
   ACE_UNUSED_ARG(ri);
   finish_execution();
@@ -584,9 +566,6 @@ RTCosScheduling_ServerScheduler_Interceptor::send_exception(
 void
 RTCosScheduling_ServerScheduler_Interceptor::send_other(
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC((
-    CORBA::SystemException,
-    PortableInterceptor::ForwardRequest))
   {
     ACE_UNUSED_ARG(ri);
     finish_execution();

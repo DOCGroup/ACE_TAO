@@ -32,14 +32,12 @@ TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor (
 
 char *
 TAO::SSLIOP::Server_Invocation_Interceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor");
 }
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -47,8 +45,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::destroy ()
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
                                               PortableInterceptor::ServerRequestInfo_ptr /*ri*/)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   // The current upcall is not being performed through an SSL
   // connection.  If server is configured to disallow insecure
@@ -132,31 +128,24 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 

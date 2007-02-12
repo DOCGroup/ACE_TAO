@@ -23,8 +23,6 @@ CORBA::Policy_ptr
 TAO::Security::PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   // Not all security policies can be created using the
   // ORB::create_policy() mechanism.  Only those that can be created

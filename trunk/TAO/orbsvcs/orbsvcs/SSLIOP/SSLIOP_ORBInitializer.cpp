@@ -39,7 +39,6 @@ TAO::SSLIOP::ORBInitializer::ORBInitializer (
 void
 TAO::SSLIOP::ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info);
@@ -76,7 +75,6 @@ TAO::SSLIOP::ORBInitializer::pre_init (
 void
 TAO::SSLIOP::ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Note we do not store the SSLIOP::Current as a class member since
   // we need to avoid potential problems where the same

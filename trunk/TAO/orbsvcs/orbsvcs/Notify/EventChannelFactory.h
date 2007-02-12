@@ -106,8 +106,7 @@ public:
 
   void load_event_persistence (void);
 
-  virtual void save_topology (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void save_topology (void);
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
@@ -123,25 +122,19 @@ public:
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
 
   /// = NotifyExt methods
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void destroy (void);
 
   /// shutdown
   virtual int shutdown (void);
 
   virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
-      NotifyExt::ReconnectionCallback_ptr reconnection)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      NotifyExt::ReconnectionCallback_ptr reconnection);
 
   virtual void unregister_callback (
-      NotifyExt::ReconnectionRegistry::ReconnectionID id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
-  virtual CORBA::Boolean is_alive (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_alive (void);
 
   /// = CosNotifyChannelAdmin Methods
 
@@ -149,20 +142,14 @@ public:
       const CosNotification::QoSProperties & initial_qos,
       const CosNotification::AdminProperties & initial_admin,
       CosNotifyChannelAdmin::ChannelID_out id
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotification::UnsupportedQoS,
-                     CosNotification::UnsupportedAdmin));
+    );
 
   virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
       CosNotifyChannelAdmin::ChannelID id
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosNotifyChannelAdmin::ChannelNotFound));
+    );
 
 private:
   typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;

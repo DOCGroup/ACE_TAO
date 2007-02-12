@@ -190,7 +190,6 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec(void)
 void
 TAO_EC_Gateway_IIOP::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& c_qos)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (c_qos.dependencies.length () == 0)
     return;
@@ -422,7 +421,6 @@ TAO_EC_Gateway_IIOP::open_i (
 void
 TAO_EC_Gateway_IIOP::update_supplier (
     const RtecEventChannelAdmin::SupplierQOS&)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do nothing...
 }

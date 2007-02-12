@@ -58,12 +58,6 @@ TAO_PG_GenericFactory::create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria))
 {
   PortableGroup::Properties_var properties =
     this->property_manager_.get_type_properties (type_id);
@@ -190,8 +184,6 @@ void
 TAO_PG_GenericFactory::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
       factory_creation_id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectNotFound))
 {
   CORBA::ULong fcid = 0;
 
@@ -654,13 +646,6 @@ TAO_PG_GenericFactory::create_member (
     const PortableGroup::FactoryInfo & factory_info,
     const char * type_id,
     const CORBA::Boolean propagate_member_already_present)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria,
-                   PortableGroup::MemberAlreadyPresent))
 {
   PortableGroup::GenericFactory::FactoryCreationId_var fcid;
 

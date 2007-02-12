@@ -152,9 +152,6 @@ TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id)
 
 DsLogAdmin::LogList*
 TAO_LogMgr_i::list_logs (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->logstore_->list_logs ();
 }
@@ -162,9 +159,6 @@ TAO_LogMgr_i::list_logs (void)
 
 DsLogAdmin::LogIdList*
 TAO_LogMgr_i::list_logs_by_id (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->logstore_->list_logs_by_id ();
 }
@@ -172,9 +166,6 @@ TAO_LogMgr_i::list_logs_by_id (void)
 
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::find_log (DsLogAdmin::LogId id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return this->logstore_->find_log (id);
 }

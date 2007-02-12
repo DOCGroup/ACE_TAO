@@ -36,8 +36,8 @@ TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
 
   if (this->is_special () == 1)
     {
-      this->event_type_.domain_name = (const char* )"*";
-      this->event_type_.type_name = (const char* )"%ALL";
+      this->event_type_.domain_name = CORBA::string_dup ("*");
+      this->event_type_.type_name = CORBA::string_dup ("%ALL");
     }
 
   this->recompute_hash ();
@@ -130,9 +130,9 @@ TAO_Notify_EventType::is_special (void) const
              ACE_OS::strcmp (this->event_type_.type_name, "") == 0 ||
              ACE_OS::strcmp (this->event_type_.type_name, "*") == 0 ||
              ACE_OS::strcmp (this->event_type_.type_name, "%ALL") == 0))
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 void

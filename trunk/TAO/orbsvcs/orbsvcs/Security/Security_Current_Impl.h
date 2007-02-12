@@ -62,7 +62,7 @@ namespace TAO
       /// request.
       virtual ::Security::AttributeList * get_attributes (
           const ::Security::AttributeTypeList & attributes)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+        = 0;
       //@}
 
       /**
@@ -75,7 +75,7 @@ namespace TAO
       /// Return the Credentials received from the client associate with
       /// the current request.
       virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ()
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+        = 0;
       //@}
 
       /// Return the unique tag that identifies the concrete subclass.

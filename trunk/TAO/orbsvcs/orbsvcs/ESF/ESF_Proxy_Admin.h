@@ -72,8 +72,7 @@ public:
   virtual ~TAO_ESF_Proxy_Admin (void);
 
   /// Iterate over its internal collection.
-  void for_each (TAO_ESF_Worker<PROXY> *worker)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void for_each (TAO_ESF_Worker<PROXY> *worker);
 
   // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
   // the MSVC compiler (v6.0) gets confused when we do so.  So we have
@@ -82,24 +81,21 @@ public:
   // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
-      obtain (void)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain (void);
 
   /**
    * The Event Channel that owns this Admin object is going
    * down. Invoke <shutdown> on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
-  virtual void shutdown (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   /**
    * A <proxy> has connected, this is invoked when the proxy's client
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void connected (PROXY *proxy)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void connected (PROXY *proxy);
 
   /**
    * A <proxy> has reconnected, i.e. its client has invoked the
@@ -107,16 +103,14 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void reconnected (PROXY *proxy)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void reconnected (PROXY *proxy);
 
   /**
    * A <proxy> has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void disconnected (PROXY *proxy)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnected (PROXY *proxy);
 
 protected:
   /// The Event Channel we belong to

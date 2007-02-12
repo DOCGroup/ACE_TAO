@@ -65,32 +65,23 @@ namespace TAO
        * SecurityLevel3::ContextEstablishmentPolicy interface.
        */
       //@{
-      virtual SecurityLevel3::CredsDirective creds_directive ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredsDirective creds_directive ();
 
-      virtual SecurityLevel3::OwnCredentialsList * creds_list ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::OwnCredentialsList * creds_list ();
 
-      virtual SecurityLevel3::FeatureDirective use_client_auth ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_client_auth ();
 
-      virtual SecurityLevel3::FeatureDirective use_target_auth ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_target_auth ();
 
-      virtual SecurityLevel3::FeatureDirective use_confidentiality ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_confidentiality ();
 
-      virtual SecurityLevel3::FeatureDirective use_integrity ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::FeatureDirective use_integrity ();
 
-      virtual CORBA::PolicyType policy_type (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type (void);
 
-      virtual CORBA::Policy_ptr copy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy (void);
 
-      virtual void destroy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy (void);
       //@}
 
     protected:

@@ -35,21 +35,14 @@ public:
                            int validate_connection);
     /// Activate in the POA
  virtual void activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy)
-   ACE_THROW_SPEC ((CORBA::SystemException));
+       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
     // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected,
-                       RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  virtual void disconnect_push_supplier (void);
+  virtual void suspend_connection (void);
+  virtual void resume_connection (void);
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
 
