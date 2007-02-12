@@ -3,6 +3,7 @@
 #include "ace/CDR_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/arpa/os_inet.h"
 
@@ -187,8 +188,8 @@ ACE_Time_Value
 ACE_Name_Request::timeout (void) const
 {
   ACE_TRACE ("ACE_Name_Request::timeout");
-  return ACE_Time_Value (this->transfer_.sec_timeout_,
-                         this->transfer_.usec_timeout_);
+  time_t sec = ACE_Utils::Truncate<time_t> (this->transfer_.sec_timeout_);
+  return ACE_Time_Value (sec, this->transfer_.usec_timeout_);
 }
 
 void

@@ -3,6 +3,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/CDR_Base.h"
 #include "ace/Log_Msg.h"
+#include "ace/Truncate.h"
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/arpa/os_inet.h"
 
@@ -98,7 +99,8 @@ ACE_Time_Value
 ACE_Time_Request::timeout (void) const
 {
   ACE_TRACE ("ACE_Time_Request::timeout");
-  return ACE_Time_Value (this->transfer_.sec_timeout_, this->transfer_.usec_timeout_);
+  time_t sec = ACE_Utils::Truncate<time_t> (this->transfer_.sec_timeout_);
+  return ACE_Time_Value (sec, this->transfer_.usec_timeout_);
 }
 
 void
@@ -163,7 +165,7 @@ ACE_Time_Request::decode (void)
   ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.time_);
 #endif
 
-  this->time_ = this->transfer_.time_;
+  this->time_ = ACE_Utils::Truncate<time_t> (this->transfer_.time_);
   return 0;
 }
 
