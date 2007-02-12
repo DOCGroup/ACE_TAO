@@ -204,9 +204,9 @@ TAO_Service_Type_Repository::
 describe_type (const char * name)
 {
   if (TAO_Trader_Base::is_valid_identifier_name (name) == 0)
-    ACE_THROW_RETURN
-      (CosTrading::IllegalServiceType (name),
-       (CosTradingRepos::ServiceTypeRepository::TypeStruct *) 0);
+    {
+      throw CosTrading::IllegalServiceType (name);
+    }
 
   ACE_READ_GUARD_THROW_EX
     (ACE_Lock,
