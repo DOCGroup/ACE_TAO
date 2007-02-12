@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tao
-//
-// = FILENAME
-//    UTF16_BOM_Factory.cpp
-//
-// = DESCRIPTION
-//    Loader for an instance of the UTF16_BOM_Translator.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF16_BOM_Factory.cpp
+ *
+ *  $Id$
+ *
+ *  Loader for an instance of the UTF16_BOM_Translator.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "tao/debug.h"
 #include "tao/Codeset/UTF16_BOM_Factory.h"

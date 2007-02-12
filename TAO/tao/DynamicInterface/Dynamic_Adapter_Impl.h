@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    DynamicInterface
-//
-// = FILENAME
-//    Dynamic_Adapter_Impl.h
-//
-// = DESCRIPTION
-//    Header file for class TAO_Dynamic_Adapter_Impl.
-//
-// = AUTHOR
-//     Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic_Adapter_Impl.h
+ *
+ *  $Id$
+ *
+ *  Header file for class TAO_Dynamic_Adapter_Impl.
+ *
+ *
+ *  @author  Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNAMIC_ADAPTER_IMPL_H
 #define TAO_DYNAMIC_ADAPTER_IMPL_H

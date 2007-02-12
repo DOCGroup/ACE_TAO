@@ -1,19 +1,16 @@
 // -*- C++ -*-
 
-// $Id$
 
-// =================================================================
-//
-// = LIBRARY
-//    TAO/tao/TypeCodeFactory
-//
-// = FILENAME
-//    TypeCodeFactory_Loader.cpp
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// =================================================================
+//=============================================================================
+/**
+ *  @file    TypeCodeFactory_Loader.cpp
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
