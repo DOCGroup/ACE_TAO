@@ -1,19 +1,16 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Storable_Naming_Context_Activator.h
-//
-// = AUTHOR
-//    Byron Harris <harris_b@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Storable_Naming_Context_Activator.h
+ *
+ *  $Id$
+ *
+ *  @author Byron Harris <harris_b@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
 #define TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H

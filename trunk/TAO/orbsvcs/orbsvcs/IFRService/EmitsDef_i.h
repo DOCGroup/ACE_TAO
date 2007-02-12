@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    EmitsDef_i.h
-//
-// = DESCRIPTION
-//    EmitsDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    EmitsDef_i.h
+ *
+ *  $Id$
+ *
+ *  EmitsDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EMITSDEF_I_H
 #define TAO_EMITSDEF_I_H
@@ -46,15 +43,15 @@ class TAO_IFRService_Export TAO_EmitsDef_i
   //    by a component.
   //
 public:
+  /// Constructor
     TAO_EmitsDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_EmitsDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

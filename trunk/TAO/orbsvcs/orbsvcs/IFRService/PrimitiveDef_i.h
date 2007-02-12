@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    PrimitiveDef_i.h
-//
-// = DESCRIPTION
-//    PrimitiveDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PrimitiveDef_i.h
+ *
+ *  $Id$
+ *
+ *  PrimitiveDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_PRIMITIVEDEF_I_H
 #define TAO_PRIMITIVEDEF_I_H
@@ -35,37 +32,38 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_PrimitiveDef_i
+ *
+ * @brief TAO_PrimitiveDef_i
+ *
+ * Represents any of the OMG IDL primitive types
+ */
 class TAO_IFRService_Export TAO_PrimitiveDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_PrimitiveDef_i
-  //
-  // = DESCRIPTION
-  //    Represents any of the OMG IDL primitive types
-  //
 public:
+  /// Constructor.
   TAO_PrimitiveDef_i (TAO_Repository_i *repo);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_PrimitiveDef_i (void);
-  // Destructor.
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// May not be called on a primitive kind - raises BAD_INV_ORDER.
   virtual void destroy ()
 ;
-  // May not be called on a primitive kind - raises BAD_INV_ORDER.
 
+  /// Must implement this here because it's pure virtual in the
+  /// base class.
   virtual void destroy_i ()
 ;
-  // Must implement this here because it's pure virtual in the
-  // base class.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type ()
 ;
-  // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i ()
 ;

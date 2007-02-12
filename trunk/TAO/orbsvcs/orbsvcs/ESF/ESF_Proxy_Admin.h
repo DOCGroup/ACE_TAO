@@ -32,32 +32,32 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * The EVENT_CHANNEL interface must implement:
  *
  * @verbatim
+ * /// create a new proxy
  * void create_proxy (PROXY*&);
- * // create a new proxy
  *
+ * /// destroy a proxy
  * void destroy_proxy (PROXY*);
- * // destroy a proxy
  *
+ * /// create a proxy collection
  * void create_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
- * // create a proxy collection
  *
+ * /// destroy a proxy collection
  * void destroy_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
- * // destroy a proxy collection
  * @endverbatim
  *
  * In addition to the requirements imposed by
  * TAO_ESF_Proxy_Collection<>, the PROXY interface must define:
  *
  * @verbatim
+ * /// The T_ptr for the IDL interface implemented by the PROXY.
  * typename .... _ptr_type;
- * // The T_ptr for the IDL interface implemented by the PROXY.
  *
+ * /// The T_var for the IDL interface implemented by the PROXY.
  * typename .... _var_type;
- * // The T_var for the IDL interface implemented by the PROXY.
  *
+ * /// activate the proxy and return the object reference
  * PROXY::_ptr_type
  * PROXY::activate (void) throw ();
- * // activate the proxy and return the object reference
  * @endverbatim
  *
  */

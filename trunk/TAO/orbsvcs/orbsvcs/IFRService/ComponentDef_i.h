@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ComponentDef_i.h
-//
-// = DESCRIPTION
-//    ComponentDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ComponentDef_i.h
+ *
+ *  $Id$
+ *
+ *  ComponentDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_COMPONENTDEF_I_H
 #define TAO_COMPONENTDEF_I_H
@@ -48,39 +45,39 @@ class TAO_IFRService_Export TAO_ComponentDef_i
   //    Represents a component definition.
   //
 public:
+  /// Constructor
   TAO_ComponentDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ComponentDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy (
     );
-  // Remove the repository entry.
 
+  /// Remove the repository entry.
   void destroy_i (
     );
-  // Remove the repository entry.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   CORBA::Contained::Description *describe_i (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type (
     );
-  // From IDLType_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   CORBA::TypeCode_ptr type_i (
     );
-  // From IDLType_i's pure virtual function.
 
   virtual CORBA::InterfaceDefSeq *supported_interfaces (
     );
@@ -182,9 +179,9 @@ public:
       CORBA::ValueDef_ptr value
     );
 
+  /// Called from TAO_IFR_Service_Utils::name_exists() when we
+  /// are a base component.
   static int name_clash (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exists() when we
-  // are a base component.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

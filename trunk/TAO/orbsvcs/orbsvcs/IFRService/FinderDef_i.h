@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    FinderDef_i.h
-//
-// = DESCRIPTION
-//    FinderDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FinderDef_i.h
+ *
+ *  $Id$
+ *
+ *  FinderDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FINDERDEF_I_H
 #define TAO_FINDERDEF_I_H
@@ -36,24 +33,25 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_FinderDef_i
+ *
+ * @brief TAO_FinderDef_i
+ *
+ * Represents the definition of a finder operation in a home.
+ */
 class TAO_IFRService_Export TAO_FinderDef_i : public virtual TAO_OperationDef_i
 {
-  // = TITLE
-  //    TAO_FinderDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the definition of a finder operation in a home.
-  //
 public:
+  /// Constructor
   TAO_FinderDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_FinderDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

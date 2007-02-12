@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    Container_i.h
-//
-// = DESCRIPTION
-//    Container servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Container_i.h
+ *
+ *  $Id$
+ *
+ *  Container servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONTAINER_I_H
 #define TAO_CONTAINER_I_H
@@ -37,29 +34,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Repository_i;
 
+/**
+ * @class TAO_Container_i
+ *
+ * @brief TAO_Container_i
+ *
+ * Abstract base class used to form a containment hierarchy
+ * in the Interface Repository, by containing objects
+ * derived from the Contained interface.
+ */
 class TAO_IFRService_Export TAO_Container_i : public virtual TAO_IRObject_i
 {
-  // = TITLE
-  //    TAO_Container_i
-  //
-  // = DESCRIPTION
-  //    Abstract base class used to form a containment hierarchy
-  //    in the Interface Repository, by containing objects
-  //    derived from the Contained interface.
-  //
 public:
 //  template<typename T>
 //  friend class TAO_Port_Utils;
 
+  /// Constructor.
   TAO_Container_i (TAO_Repository_i *repo);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Container_i (void);
-  // Destructor.
 
+  /// Remove our contents.
   virtual void destroy (
     );
-  // Remove our contents.
 
   virtual void destroy_i (
     );
@@ -328,24 +326,24 @@ public:
       const CORBA::ExtInitializerSeq &initializers
     );
 
+  /// Called from TAO_IFR_Service_Utils::name_exisits.
   static int same_as_tmp_name (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exisits.
 
+  /// Accesses the static member.
   static void tmp_name_holder (const char *name);
-  // Accesses the static member.
 
+  /// Used with structs, unions and exceptions.
   void update_refs (
       const char *path,
       const char *name = 0
     );
-  // Used with structs, unions and exceptions.
 
 protected:
+  /// Store a union member's label value.
    void store_label (
       ACE_Configuration_Section_Key key,
       const CORBA::Any &value
     );
-  // Store a union member's label value.
 
   void lookup_attr (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
@@ -370,6 +368,7 @@ private:
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
 
+  /// Common code for create_value_i and create_ext_value_i.
   ACE_TString create_value_common (
       CORBA::DefinitionKind container_kind,
       ACE_Configuration_Section_Key &container_key,
@@ -384,7 +383,6 @@ private:
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces
     );
-  // Common code for create_value_i and create_ext_value_i.
 
 protected:
   static const char *tmp_name_holder_;

@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ComponentContainer_i.h
-//
-// = DESCRIPTION
-//    ComponentContainer_i servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ComponentContainer_i.h
+ *
+ *  $Id$
+ *
+ *  ComponentContainer_i servant class.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_COMPONENTCONTAINER_I_H
 #define TAO_COMPONENTCONTAINER_I_H
@@ -115,8 +112,8 @@ public:
       const CORBA::ExtInitializerSeq &initializers
     );
 
+  /// Called from TAO_IFR_Service_Utils::name_exisits.
   static int same_as_tmp_name (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exisits.
 
 protected:
   static const char *tmp_name_holder_;

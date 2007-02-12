@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    AttributeDef_i.h
-//
-// = DESCRIPTION
-//    AttributeDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    AttributeDef_i.h
+ *
+ *  $Id$
+ *
+ *  AttributeDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ATTRIBUTEDEF_I_H
 #define TAO_ATTRIBUTEDEF_I_H
@@ -35,33 +32,34 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_AttributeDef_i
+ *
+ * @brief TAO_AttributeDef_i
+ *
+ * Represents the information that describes an attribute
+ * of an interface.
+ */
 class TAO_IFRService_Export TAO_AttributeDef_i : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_AttributeDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the information that describes an attribute
-  //    of an interface.
-  //
 public:
+  /// Constructor
   TAO_AttributeDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_AttributeDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i (
     );
-  // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type (
     );
@@ -97,11 +95,11 @@ public:
       CORBA::AttributeMode mode
     );
 
+  /// Common code for InterfaceDef to call in
+  /// making its own description.
   void make_description (
       CORBA::AttributeDescription &ad
     );
-  // Common code for InterfaceDef to call in
-  // making its own description.
 
   // These two are called by Contained::move().
   CORBA::ExceptionDefSeq *get_exceptions (

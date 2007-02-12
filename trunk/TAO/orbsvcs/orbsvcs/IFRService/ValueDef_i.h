@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ValueDef_i.h
-//
-// = DESCRIPTION
-//    ValueDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ValueDef_i.h
+ *
+ *  $Id$
+ *
+ *  ValueDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEDEF_I_H
 #define TAO_VALUEDEF_I_H
@@ -47,38 +44,38 @@ class TAO_IFRService_Export TAO_ValueDef_i : public virtual TAO_Container_i,
   //    Represents a valuetype definition.
   //
 public:
+  /// Constructor
   TAO_ValueDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ValueDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy (
     );
-  // Remove the repository entry.
 
   virtual void destroy_i (
     );
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type (
     );
-  // From IDLType_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i (
     );
-  // From IDLType_i's pure virtual function.
 
   virtual CORBA::InterfaceDefSeq *supported_interfaces (
     );
@@ -246,9 +243,9 @@ public:
       const CORBA::ContextIdSeq &contexts
     );
 
+  /// Called from TAO_IFR_Service_Utils::name_exists() when we
+  /// are a base valuetype.
   static int name_clash (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exists() when we
-  // are a base valuetype.
 
   void fill_value_description (CORBA::ValueDescription &desc);
 };

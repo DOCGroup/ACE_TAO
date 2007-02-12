@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    RecursDef_i.h
-//
-// = DESCRIPTION
-//    StructDef & UnionDef support class.
-//
-// = AUTHOR
-//    Simon Massey <sma@prismtech.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RecursDef_i.h
+ *
+ *  $Id$
+ *
+ *  StructDef & UnionDef support class.
+ *
+ *
+ *  @author Simon Massey <sma@prismtech.com>
+ */
+//=============================================================================
+
 
 #ifndef TAO_RECURSDEF_I_H
 #define TAO_RECURSDEF_I_H

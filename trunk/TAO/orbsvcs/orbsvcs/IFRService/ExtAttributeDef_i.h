@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ExtAttributeDef_i.h
-//
-// = DESCRIPTION
-//    ExtAttributeDef_i servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ExtAttributeDef_i.h
+ *
+ *  $Id$
+ *
+ *  ExtAttributeDef_i servant class.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EXTATTRIBUTEDEF_I_H
 #define TAO_EXTATTRIBUTEDEF_I_H
@@ -45,11 +42,11 @@ class TAO_IFRService_Export TAO_ExtAttributeDef_i
   //    Adds IDL3 extensions to AttributeDef.
   //
 public:
+  /// Constructor
   TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ExtAttributeDef_i (void);
-  // Destructor
 
   virtual CORBA::ExcDescriptionSeq *get_exceptions (
     );

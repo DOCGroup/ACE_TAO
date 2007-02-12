@@ -1,17 +1,13 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_CosNaming
-//
-// = FILENAME
-//   Hash_Naming_Context.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Hash_Naming_Context.cpp
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/nsconf.h"
