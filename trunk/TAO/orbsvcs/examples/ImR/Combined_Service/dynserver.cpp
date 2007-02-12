@@ -18,13 +18,15 @@ DynServer::DynServer()
 DynServer::~DynServer() {
 }
 
-Long DynServer::get() ACE_THROW_SPEC ((SystemException)) {
+Long DynServer::get()
+{
   ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
   return n_;
 }
 
 namespace {
-  POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poaman) {
+  POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poaman)
+  {
     PolicyList policies (2);
     policies.length (2);
     policies[0] = root_poa->create_id_assignment_policy(USER_ID);
