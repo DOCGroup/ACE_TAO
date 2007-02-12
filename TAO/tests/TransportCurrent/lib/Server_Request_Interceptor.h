@@ -72,9 +72,9 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void) ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * name (void);
 
-    virtual void destroy (void) ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void destroy (void);
 
     virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri);
 
