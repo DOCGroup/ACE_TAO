@@ -28,7 +28,7 @@ TAO::Utils::Servant_Var<T>::_duplicate (T * p)
 
 template <class T>
 ACE_INLINE void
-TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) ACE_THROW_SPEC(())
+TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) throw ()
 {
   ACE_Swap<T*>::swap (this->ptr_, rhs.ptr_);
 }
