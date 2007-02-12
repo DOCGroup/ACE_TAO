@@ -1,22 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    UTF8_Latin1_Translator.cpp
-//
-// = DESCRIPTION
-//    Defines the methods required to convert UTF-8 based unicode strings
-//    to the Latin-1 codeset.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF8_Latin1_Translator.cpp
+ *
+ *  $Id$
+ *
+ *  Defines the methods required to convert UTF-8 based unicode strings
+ *  to the Latin-1 codeset.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 #include "tao/Codeset/UTF8_Latin1_Translator.h"
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"

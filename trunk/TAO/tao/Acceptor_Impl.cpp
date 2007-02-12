@@ -1,20 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Acceptor_Impl.cpp
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@uci.edu>
-//     Ossama Othman <ossama@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Acceptor_Impl.cpp
+ *
+ *  $Id$
+ *
+ *  @author  Carlos O'Ryan <coryan@uci.edu>  Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ACCEPTOR_IMPL_CPP
 #define TAO_ACCEPTOR_IMPL_CPP

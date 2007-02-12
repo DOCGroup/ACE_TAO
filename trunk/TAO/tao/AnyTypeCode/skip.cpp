@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     skip.cpp
-//
-// = DESCRIPTION
-//     Code for skipping different data types
-//
-//     Data types encoded as CDR streams need to be skipped when they
-//     are part of an Any.
-//
-// = AUTHOR
-//     Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     skip.cpp
+ *
+ *  $Id$
+ *
+ *   Code for skipping different data types
+ *
+ *   Data types encoded as CDR streams need to be skipped when they
+ *   are part of an Any.
+ *
+ *
+ *  @author  Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/TypeCode.h"

@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   Linear_Network_Priority_Mapping.h
-//
-// = DESCRIPTION
-//   Declares the Linear_Network_Priority_Mapping interface,
-//
-// = AUTHOR
-//   Yamuna Krishnamurthy (yamuna@oomworks.com)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Linear_Network_Priority_Mapping.h
+ *
+ *  $Id$
+ *
+ * Declares the Linear_Network_Priority_Mapping interface,
+ *
+ *
+ *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
+ */
+//=============================================================================
+
 
 #ifndef TAO_LINEAR_NETWORK_PRIORITY_MAPPING_H
 #define TAO_LINEAR_NETWORK_PRIORITY_MAPPING_H

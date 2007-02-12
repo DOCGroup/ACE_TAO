@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    DynamicInterface
-//
-// = FILENAME
-//    ExceptionList.h
-//
-// = DESCRIPTION
-//    This file defines the ExceptionList datatype used in
-//    dynamic invocations.
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ExceptionList.h
+ *
+ *  $Id$
+ *
+ *  This file defines the ExceptionList datatype used in
+ *  dynamic invocations.
+ *
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ */
+//=============================================================================
+
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H

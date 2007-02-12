@@ -1,21 +1,20 @@
 // -*- C++ -*-
 
-// =====================================================================
-//
-// = LIBRARY
-//    TAO/tao
-//
-// = FILENAME
-//    Codeset_Translator_Base.cpp
-//
-// = DESCRIPTION The base for all the translator factories. Translator
-// factories are responsible for supplying the proper translator on
-// demand.
-//
-// = AUTHORS
-//      Phil Mesnier <mesnier_p@ociweb.com>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file    Codeset_Translator_Base.cpp
+ *
+ *  $Id$
+
+ *
+ * factories are responsible for supplying the proper translator on
+ * demand.
+ *
+ *
+ *  @author   Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "tao/Codeset_Translator_Base.h"
 
