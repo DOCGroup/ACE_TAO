@@ -42,69 +42,50 @@ public:
   //Destructor
   virtual ~interop_WChar_Passer_i (void);
 
-  virtual char * orb_name (void)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual char * orb_name (void);
 
   virtual CORBA::Boolean wchar_to_server (CORBA::WChar test,
-                                          CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                          CORBA::Short key);
 
-  virtual CORBA::WChar wchar_from_server (CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual CORBA::WChar wchar_from_server (CORBA::Short key);
 
   virtual CORBA::Boolean wstring_to_server (const CORBA::WChar * test,
-                                            CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                            CORBA::Short key);
 
-  virtual CORBA::WChar * wstring_from_server (CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual CORBA::WChar * wstring_from_server (CORBA::Short key);
 
   virtual CORBA::Boolean warray_to_server (const interop::warray test,
-                                           CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                           CORBA::Short key);
 
-  virtual interop::warray_slice * warray_from_server (CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual interop::warray_slice * warray_from_server (CORBA::Short key);
 
   virtual CORBA::Boolean wstruct_to_server (const interop::wstruct & test,
-                                            CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                            CORBA::Short key);
 
-  virtual interop::wstruct * wstruct_from_server (CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual interop::wstruct * wstruct_from_server (CORBA::Short key);
 
   virtual CORBA::Boolean wstructseq_to_server (const interop::wstructseq & test,
-                                            CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                            CORBA::Short key);
 
-  virtual interop::wstructseq * wstructseq_from_server (CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual interop::wstructseq * wstructseq_from_server (CORBA::Short key);
 
  virtual CORBA::Boolean wunion_to_server (const interop::wunion & test,
-                                           CORBA::Short key)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                           CORBA::Short key);
 
   virtual interop::wunion * wunion_from_server (CORBA::Short key,
-                                                interop::wchar_types type)
-    ACE_THROW_SPEC (( CORBA::SystemException ));
+                                                interop::wchar_types type);
 
   virtual CORBA::Boolean any_to_server (const CORBA::Any &test,
-                                        CORBA::Short key)
-  ACE_THROW_SPEC (( CORBA::SystemException ));
+                                        CORBA::Short key);
 
   virtual CORBA::Any* any_from_server (CORBA::Short key,
-                                       interop::wchar_types type)
-  ACE_THROW_SPEC (( CORBA::SystemException ));
+                                       interop::wchar_types type);
 
-  virtual CORBA::Any* any_echo (const CORBA::Any &test)
-  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual CORBA::Any* any_echo (const CORBA::Any &test);
 
-virtual void exception_test (CORBA::Short key)
-  ACE_THROW_SPEC (( CORBA::SystemException,
-                    interop::WChar_Passer::WStringException ));
+virtual void exception_test (CORBA::Short key);
 
-virtual void shutdown (void)
-  ACE_THROW_SPEC (( CORBA::SystemException ));
+virtual void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;
