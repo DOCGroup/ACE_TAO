@@ -1,3 +1,8 @@
+Mon Feb 12 12:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/*.{h,cpp,inl}:
+          Removed ACE_THROW_SPEC, layout changes, reduced includes
+
 Mon Feb 12 11:40:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/*.{h,cpp,inl}:
