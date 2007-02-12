@@ -51,8 +51,7 @@ namespace CIAO
         virtual void
         execute_planners (
         const ::Deployment::DeploymentPlan & plan,
-        const ::CIAO::RACE::PlannerFlow & flow)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        const ::CIAO::RACE::PlannerFlow & flow);
       };
 
       class PLANNER_MANAGER_EXEC_Export Planner_Manager_exec_i
@@ -68,53 +67,33 @@ namespace CIAO
         // Attribute operations.
 
         virtual ::CIAO::RACE::RACE_Classifications *
-        classes ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        classes ();
 
         // Port operations.
 
         virtual ::CIAO::RACE::CCM_Planner_Manager_I_ptr
-        get_planner_manager_i ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        get_planner_manager_i ();
 
         // Operations from Components::SessionComponent
 
         virtual void
         set_session_context (
-        ::Components::SessionContext_ptr ctx)
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ::Components::SessionContext_ptr ctx);
 
         virtual void
-        ciao_preactivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ciao_preactivate ();
 
         virtual void
-        ciao_postactivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ciao_postactivate ();
 
         virtual void
-        ccm_activate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_activate ();
 
         virtual void
-        ccm_passivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_passivate ();
 
         virtual void
-        ccm_remove ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_remove ();
 
         protected:
         Planner_Manager_Context *context_;
@@ -139,10 +118,7 @@ namespace CIAO
         // Implicit operations.
 
         virtual ::Components::EnterpriseComponent_ptr
-        create ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        create ();
       };
 
       extern "C" PLANNER_MANAGER_EXEC_Export ::Components::HomeExecutorBase_ptr

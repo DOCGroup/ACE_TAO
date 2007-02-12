@@ -28,49 +28,28 @@ namespace CIAO
         virtual ~Controller_exec_i (void);
 
         // Supported operations.
-        virtual void start ()
-        ACE_THROW_SPEC ((::CORBA::SystemException));
+        virtual void start ();
 
-        virtual void stop ()
-        ACE_THROW_SPEC ((::CORBA::SystemException));
+        virtual void stop ();
 
         // Attribute operations.
-        virtual ::CORBA::Double sampling_period ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        virtual ::CORBA::Double sampling_period ();
 
         // Port operations.
 
         // Operations from Components::SessionComponent
 
-        virtual void set_session_context (::Components::SessionContext_ptr ctx)
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual void set_session_context (::Components::SessionContext_ptr ctx);
 
-        virtual void ciao_preactivate ()
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual void ciao_preactivate ();
 
-        virtual void ciao_postactivate ()
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual void ciao_postactivate ();
 
-        virtual void ccm_activate ()
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual void ccm_activate ();
 
-        virtual void ccm_passivate ()
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual void ccm_passivate ();
 
-        virtual void ccm_remove ()
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual void ccm_remove ();
 
         protected:
         Controller_Context *context_;
@@ -94,10 +73,7 @@ namespace CIAO
 
         // Implicit operations.
 
-        virtual ::Components::EnterpriseComponent_ptr create ()
-        ACE_THROW_SPEC ((
-                          ::CORBA::SystemException,
-                          ::Components::CCMException));
+        virtual ::Components::EnterpriseComponent_ptr create ();
       };
 
       extern "C" CONTROLLER_EXEC_Export ::Components::HomeExecutorBase_ptr

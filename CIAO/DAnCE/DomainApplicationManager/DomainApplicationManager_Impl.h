@@ -90,8 +90,7 @@ namespace CIAO
                                    Deployment::TargetManager_ptr manager,
                                    Execution_Manager::Execution_Manager_Impl * em,
                                    const Deployment::DeploymentPlan &plan,
-                                   const char * deployment_file)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                   const char * deployment_file);
 
 
     /*===========================================================
@@ -116,11 +115,7 @@ namespace CIAO
      *
      * @@ What else do we need to initialize here?
      */
-    void init ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::StartError,
-                       Deployment::PlanError));
+    void init ();
 
     /**
      * set_uuid method on the DomainApplicationManager assigns the
@@ -141,10 +136,7 @@ namespace CIAO
      * Fetch the NodeApplication object reference based on the NodeManager name.
      */
     virtual Deployment::NodeApplication_ptr get_node_app (
-        const char * node_name)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Deployment::NoSuchName));
+        const char * node_name);
 
     /**
      * Executes the application, but does not start it yet. Users can
@@ -159,11 +151,7 @@ namespace CIAO
      */
     virtual void
       startLaunch (const ::Deployment::Properties & configProperty,
-                   ::CORBA::Boolean start)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Deployment::ResourceNotAvailable,
-                       ::Deployment::StartError,
-                       ::Deployment::InvalidProperty));
+                   ::CORBA::Boolean start);
 
     /**
      * The second step in launching an application in the
@@ -172,9 +160,7 @@ namespace CIAO
      * launching or starting the application fails.
      */
     virtual void finishLaunch (CORBA::Boolean start,
-                               CORBA::Boolean is_ReDAC)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Deployment::StartError));
+                               CORBA::Boolean is_ReDAC);
 
     /**
      * The last step in launching an application in the
@@ -184,25 +170,17 @@ namespace CIAO
      * Internally, this operation will invoke some operations
      * on ExecutionManager to finish up this task.
      */
-    virtual void post_finishLaunch (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+    virtual void post_finishLaunch (void);
 
-    virtual void passivate_shared_components (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+    virtual void passivate_shared_components (void);
 
-    virtual void activate_shared_components (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+    virtual void activate_shared_components (void);
 
     /**
      * Starts the application. Raises the StartError exception if
      * starting the application fails.
      */
-    virtual void start ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Deployment::StartError));
+    virtual void start ();
 
     /**
      * Terminates a running application. Raises the StopError
@@ -210,15 +188,12 @@ namespace CIAO
      * InvalidReference exception if the appliction reference is
      * unknown.
      */
-    virtual void destroyApplication ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Deployment::StopError));
+    virtual void destroyApplication ();
 
     /**
      * Returns the DeploymentPlan associated with this ApplicationManager.
      */
-    virtual ::Deployment::DeploymentPlan * getPlan ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual ::Deployment::DeploymentPlan * getPlan ();
 
     /**
      * This is a helper function to destroy the NodeAppManager.
@@ -227,22 +202,13 @@ namespace CIAO
      * op invoked on it. This is part of the result for merging DAM
      * with DA.
      */
-    virtual void destroyManager ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError));
+    virtual void destroyManager ();
 
     // The input parameter is a *new_plan* which has the
     // same UUID of the existing running plan.
     virtual void
     perform_redeployment (
-      const Deployment::DeploymentPlan & plan)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                        Deployment::PlanError,
-                        Deployment::InstallationFailure,
-                        Deployment::UnknownImplId,
-                        Deployment::ImplEntryPointNotFound,
-                        Deployment::InvalidConnection,
-                        ::Components::RemoveFailure));
+      const Deployment::DeploymentPlan & plan);
 
   protected:
     /// Destructor
@@ -336,32 +302,28 @@ namespace CIAO
     get_outgoing_connections_i (const char * instname,
                                 Deployment::Connections & retv,
                                 bool is_ReDAC,
-                                bool is_search_new_plan)
-      ACE_THROW_SPEC ((Deployment::StartError));
+                                bool is_search_new_plan);
 
     bool
     populate_connection_for_binding (
         const char * instname,
         const Deployment::PlanConnectionDescription & binding,
         const Deployment::DeploymentPlan & plan,
-        Deployment::Connections & retv)
-      ACE_THROW_SPEC ((Deployment::StartError));
+        Deployment::Connections & retv);
 
     bool
     handle_es_connection (
         const char * instname,
         const Deployment::PlanConnectionDescription & binding,
         const Deployment::DeploymentPlan & plan,
-        Deployment::Connections & retv)
-      ACE_THROW_SPEC ((Deployment::StartError));
+        Deployment::Connections & retv);
 
     bool
     handle_direct_connection (
         const char * instname,
         const Deployment::PlanConnectionDescription & binding,
         const Deployment::DeploymentPlan & plan,
-        Deployment::Connections & retv)
-      ACE_THROW_SPEC ((Deployment::StartError));
+        Deployment::Connections & retv);
 
     /// Dump connections, a static method
     void dump_connections (const ::Deployment::Connections & connections);
@@ -385,18 +347,14 @@ namespace CIAO
      * Internally, this operation will invoke an operation on each cached
      * NodeApplication object.
      */
-    virtual void install_all_es (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+    virtual void install_all_es (void);
 
     /**
      * Add all CIAO_Event_Service objects into the cached map.
      */
     virtual void
     add_es_to_map (const char* node_name,
-                   CIAO::CIAO_Event_Service * ciao_es)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::StartError));
+                   CIAO::CIAO_Event_Service * ciao_es);
 
     /**
      * Get the actual event connection QoS properties based on the

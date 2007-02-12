@@ -44,7 +44,6 @@ namespace CIAO
       void
       PlanIngress_exec_i::analyze_plan (
       const ::Deployment::DeploymentPlan & /* plan */)
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
       }
@@ -67,7 +66,6 @@ namespace CIAO
 
       ::CIAO::RACE::RACE_Classifications *
       Plan_Analyzer_exec_i::classes ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return 0;
@@ -77,7 +75,6 @@ namespace CIAO
 
       ::CIAO::RACE::CCM_PlanIngress_ptr
       Plan_Analyzer_exec_i::get_plan_ingress ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return ::CIAO::RACE::CCM_PlanIngress::_nil ();
@@ -88,9 +85,6 @@ namespace CIAO
       void
       Plan_Analyzer_exec_i::set_session_context (
       ::Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         this->context_ =
         Plan_Analyzer_Context::_narrow (
@@ -104,45 +98,30 @@ namespace CIAO
 
       void
       Plan_Analyzer_exec_i::ciao_preactivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Plan_Analyzer_exec_i::ciao_postactivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Plan_Analyzer_exec_i::ccm_activate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Plan_Analyzer_exec_i::ccm_passivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       Plan_Analyzer_exec_i::ccm_remove ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
@@ -171,9 +150,6 @@ namespace CIAO
 
       ::Components::EnterpriseComponent_ptr
       Plan_Analyzer_Home_exec_i::create ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         ::Components::EnterpriseComponent_ptr retval =
         ::Components::EnterpriseComponent::_nil ();

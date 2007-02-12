@@ -50,8 +50,7 @@ namespace CIAO
 
         virtual ::CORBA::Boolean
         output_plan (
-        const ::Deployment::DeploymentPlan & plan)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        const ::Deployment::DeploymentPlan & plan);
       };
 
       class XML_OUTPUT_ADAPTER_EXEC_Export XML_Output_Adapter_exec_i
@@ -69,47 +68,28 @@ namespace CIAO
         // Port operations.
 
         virtual ::CIAO::RACE::CCM_PlanEgress_ptr
-        get_plan_egress ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+        get_plan_egress ();
 
         // Operations from Components::SessionComponent
 
         virtual void
         set_session_context (
-        ::Components::SessionContext_ptr ctx)
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ::Components::SessionContext_ptr ctx);
 
         virtual void
-        ciao_preactivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ciao_preactivate ();
 
         virtual void
-        ciao_postactivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ciao_postactivate ();
 
         virtual void
-        ccm_activate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_activate ();
 
         virtual void
-        ccm_passivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_passivate ();
 
         virtual void
-        ccm_remove ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_remove ();
 
         protected:
         XML_Output_Adapter_Context *context_;
@@ -134,10 +114,7 @@ namespace CIAO
         // Implicit operations.
 
         virtual ::Components::EnterpriseComponent_ptr
-        create ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        create ();
       };
 
       extern "C" XML_OUTPUT_ADAPTER_EXEC_Export ::Components::HomeExecutorBase_ptr

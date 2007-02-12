@@ -98,97 +98,63 @@ namespace CIAO
     virtual void
     finishLaunch (const Deployment::Connections & connections,
                   CORBA::Boolean start,
-                  CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StartError,
-                       Deployment::InvalidConnection));
+                  CORBA::Boolean add_connection);
 
     virtual void
-    start ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StartError));
+    start ();
 
     /*-------------  CIAO specific IDL operations (idl)----------
      *
      *-----------------------------------------------------------*/
 
     virtual void
-    ciao_preactivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StartError));
+    ciao_preactivate ();
 
     virtual void
-    ciao_postactivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StartError));
+    ciao_postactivate ();
 
     virtual void
-    ciao_passivate ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError));
+    ciao_passivate ();
 
     /// Initialize the NodeApplication
-    virtual CORBA::Long init ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Long init ();
 
     /// Start install homes and components.
     virtual ::Deployment::ComponentInfos *
-      install (const ::Deployment::NodeImplementationInfo & node_impl_info)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InstallationFailure,
-                       ::Components::InvalidConfiguration));
+      install (const ::Deployment::NodeImplementationInfo & node_impl_info);
 
     /// Install a number of CIAO_Event_Service objects within the NA
     virtual ::CIAO::CIAO_Event_Service *
-      install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::InstallationFailure));
+      install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info);
 
     /// Get the object reference of the NodeApplicationManager.
     /// This might come in handy later.
     virtual ::CORBA::Object_ptr
-    get_node_application_manager ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    get_node_application_manager ();
 
     /// Access the readonly attribute.
     virtual ::Deployment::Properties *
-    properties ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    properties ();
 
     /// Remove a component instance from the NodeApplication
-    virtual void remove_component (const char * inst_name)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::RemoveFailure));
+    virtual void remove_component (const char * inst_name);
 
-    virtual void activate_component (const char * name)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::StartError));
+    virtual void activate_component (const char * name);
 
-    virtual void passivate_component (const char * name)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Components::RemoveFailure));
+    virtual void passivate_component (const char * name);
 
     /// Remove everything inside including all components and homes.
-    virtual void remove ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void remove ();
 
     /// Create a container interface, which will be hosted in this NodeApplication.
     virtual ::Deployment::Container_ptr
-      create_container (const ::Deployment::Properties &properties)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::CreateFailure,
-                       ::Components::InvalidConfiguration));
+      create_container (const ::Deployment::Properties &properties);
 
     /// Remove a container interface.
-    virtual void remove_container (::Deployment::Container_ptr cref)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::RemoveFailure));
+    virtual void remove_container (::Deployment::Container_ptr cref);
 
     /// Get all container object refs
-    virtual ::Deployment::Containers * get_containers ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual ::Deployment::Containers * get_containers ();
 
     /*-------------  CIAO specific helper functions (C++)---------
      *
@@ -215,9 +181,7 @@ namespace CIAO
     /// event connection.
     void build_event_connection (
         const Deployment::Connection & connection,
-        bool add_or_remove)
-      ACE_THROW_SPEC ((Deployment::InvalidConnection,
-                       CORBA::SystemException));
+        bool add_or_remove);
 
   protected:
     /// If <add_connection> is "false", then we shall "remove"
@@ -225,33 +189,24 @@ namespace CIAO
     virtual void
     finishLaunch_i (const Deployment::Connections & connections,
                     CORBA::Boolean start,
-                    CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StartError,
-                       Deployment::InvalidConnection));
+                    CORBA::Boolean add_connection);
     virtual void
     handle_facet_receptable_connection (
         Components::CCMObject_ptr comp,
         const Deployment::Connection & connection,
-        CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidConnection));
+        CORBA::Boolean add_connection);
 
     virtual void
     handle_emitter_consumer_connection (
         Components::CCMObject_ptr comp,
         const Deployment::Connection & connection,
-        CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidConnection));
+        CORBA::Boolean add_connection);
 
     virtual void
     handle_publisher_consumer_connection (
         Components::CCMObject_ptr comp,
         const Deployment::Connection & connection,
-        CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidConnection));
+        CORBA::Boolean add_connection);
 
     virtual bool
     _is_es_consumer_conn (Deployment::Connection conn);
@@ -266,22 +221,17 @@ namespace CIAO
     handle_publisher_es_connection (
         Components::CCMObject_ptr comp,
         const Deployment::Connection & connection,
-        CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::InvalidConnection));
+        CORBA::Boolean add_connection);
 
     /// Register the consumer to the CIAO event service
     virtual void
     handle_es_consumer_connection (
         const Deployment::Connection & connection,
-        CORBA::Boolean add_connection)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      Deployment::InvalidConnection));
+        CORBA::Boolean add_connection);
 
     /// Create and initialize all the containers
     virtual CORBA::Long create_all_containers (
-        const ::Deployment::ContainerImplementationInfos & container_infos)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        const ::Deployment::ContainerImplementationInfos & container_infos);
 
     /// Create a "key" for the connection
     virtual ACE_CString *

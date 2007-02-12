@@ -56,40 +56,22 @@ namespace CIAO
 
         virtual void
         set_session_context (
-        ::Components::SessionContext_ptr ctx)
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ::Components::SessionContext_ptr ctx);
 
         virtual void
-        ciao_preactivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ciao_preactivate ();
 
         virtual void
-        ciao_postactivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ciao_postactivate ();
 
         virtual void
-        ccm_activate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_activate ();
 
         virtual void
-        ccm_passivate ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_passivate ();
 
         virtual void
-        ccm_remove ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        ccm_remove ();
 
         protected:
         Interactive_Input_Adapter_Context *context_;
@@ -114,10 +96,7 @@ namespace CIAO
         // Implicit operations.
 
         virtual ::Components::EnterpriseComponent_ptr
-        create ()
-        ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Components::CCMException));
+        create ();
       };
 
       extern "C" INTERACTIVE_INPUT_ADAPTER_EXEC_Export ::Components::HomeExecutorBase_ptr

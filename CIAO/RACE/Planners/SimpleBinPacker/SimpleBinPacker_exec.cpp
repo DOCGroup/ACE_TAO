@@ -44,7 +44,6 @@ namespace CIAO
       ::CORBA::Boolean
       Planner_I_exec_i::process_plan (
       ::Deployment::DeploymentPlan & /* plan */)
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return false;
@@ -68,7 +67,6 @@ namespace CIAO
 
       char *
       SimpleBinPacker_exec_i::name ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return 0;
@@ -77,14 +75,12 @@ namespace CIAO
       void
       SimpleBinPacker_exec_i::name (
       const char * /* name */)
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
       }
 
       char *
       SimpleBinPacker_exec_i::type ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return 0;
@@ -93,7 +89,6 @@ namespace CIAO
       void
       SimpleBinPacker_exec_i::type (
       const char * /* type */)
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
       }
@@ -102,7 +97,6 @@ namespace CIAO
 
       ::CIAO::RACE::CCM_Planner_I_ptr
       SimpleBinPacker_exec_i::get_planner_i ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
       {
         // Your code here.
         return ::CIAO::RACE::CCM_Planner_I::_nil ();
@@ -113,9 +107,6 @@ namespace CIAO
       void
       SimpleBinPacker_exec_i::set_session_context (
       ::Components::SessionContext_ptr ctx)
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         this->context_ =
         SimpleBinPacker_Context::_narrow (
@@ -129,45 +120,30 @@ namespace CIAO
 
       void
       SimpleBinPacker_exec_i::ciao_preactivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       SimpleBinPacker_exec_i::ciao_postactivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       SimpleBinPacker_exec_i::ccm_activate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       SimpleBinPacker_exec_i::ccm_passivate ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
 
       void
       SimpleBinPacker_exec_i::ccm_remove ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         // Your code here.
       }
@@ -196,9 +172,6 @@ namespace CIAO
 
       ::Components::EnterpriseComponent_ptr
       SimpleBinPacker_Home_exec_i::create ()
-      ACE_THROW_SPEC ((
-      ::CORBA::SystemException,
-      ::Components::CCMException))
       {
         ::Components::EnterpriseComponent_ptr retval =
         ::Components::EnterpriseComponent::_nil ();

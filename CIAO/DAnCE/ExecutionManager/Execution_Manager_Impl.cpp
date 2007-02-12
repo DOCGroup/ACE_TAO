@@ -30,11 +30,6 @@ namespace CIAO
     Execution_Manager_Impl::preparePlan (
       const Deployment::DeploymentPlan &plan,
       CORBA::Boolean)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::PlanError,
-                       Deployment::StartError
-                       ))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::preparePlan");
 
@@ -126,7 +121,6 @@ namespace CIAO
 
     Deployment::DomainApplicationManagers *
     Execution_Manager_Impl::getManagers ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::getManagers");
 
@@ -137,7 +131,6 @@ namespace CIAO
 
     Deployment::DomainApplicationManager_ptr
     Execution_Manager_Impl::getManager (const char * plan_uuid)
-      ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist))
     {
       return this->map_.fetch_dam_reference (plan_uuid);
     }
@@ -145,7 +138,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::destroyManager (
       Deployment::DomainApplicationManager_ptr manager)
-      ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagers");
       try
@@ -179,8 +171,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::destroyManagerByPlan (
       const char * plan_uuid)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagerByPlan");
       try
@@ -232,7 +222,6 @@ namespace CIAO
 
     void
     Execution_Manager_Impl::shutdown ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::shutdown");
       // Shutdown the ORB on which it is runing
@@ -242,14 +231,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::perform_redeployment (
       const Deployment::DeploymentPlan & plan)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::PlanError,
-                       ::Deployment::InstallationFailure,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InvalidConnection,
-                       ::Deployment::InvalidProperty,
-                       ::Components::RemoveFailure))
     {
       CIAO_TRACE ("CIAO::Execution_Manager_Impl::perform_redeployment");
 
@@ -290,7 +271,6 @@ namespace CIAO
 
     Deployment::DeploymentPlan *
     Execution_Manager_Impl::getPlan (const char * plan_uuid)
-      ACE_THROW_SPEC ((::CORBA::SystemException))
     {
       Deployment::DomainApplicationManager_var dam;
 
@@ -322,9 +302,6 @@ namespace CIAO
     Execution_Manager_Impl::finalize_global_binding (
           const Component_Binding_Info & binding,
           CORBA::Boolean add_or_remove)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          ::Deployment::InvalidConnection))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::finalizing  global bindings.\n"));
@@ -365,9 +342,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::passivate_shared_components (
           const Component_Binding_Info & binding)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          Deployment::StartError))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::passivate shared components.\n"));
@@ -400,9 +374,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::activate_shared_components (
           const Component_Binding_Info & binding)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          Deployment::StartError))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::activate shared components.\n"));
@@ -435,7 +406,6 @@ namespace CIAO
     Deployment::NodeApplication_ptr
     Execution_Manager_Impl::find_node_application (
       const Component_Binding_Info & binding)
-      ACE_THROW_SPEC ((::CORBA::SystemException, ::Deployment::InvalidConnection))
     {
       // Find the DAM based on plan_UUID
       Deployment::DomainApplicationManager_var dam;
