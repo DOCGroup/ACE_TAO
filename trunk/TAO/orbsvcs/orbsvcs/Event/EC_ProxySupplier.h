@@ -68,19 +68,18 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy)
-   = 0;
+    RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate (void) throw ();
 
   /// Disconnect this from
   virtual void disconnect_push_supplier () = 0;
 
-  /// Return 0 if no consumer is connected...
+  /// Return false if no consumer is connected...
   CORBA::Boolean is_connected (void) const;
 
-  /// Return 1 if it is suspended.
+  /// Return true if it is suspended.
   CORBA::Boolean is_suspended (void) const;
 
   /**
