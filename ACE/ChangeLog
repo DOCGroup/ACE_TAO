@@ -1,3 +1,10 @@
+Mon Feb 12 14:35:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/doxygen-convert-h.pl:
+
+          Allow filenames or directories.  If a directory is passed, it is
+          recursively searched for any file.
+
 Mon Feb 12 13:57:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
