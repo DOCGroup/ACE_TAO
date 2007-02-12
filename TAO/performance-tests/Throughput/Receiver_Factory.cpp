@@ -13,7 +13,6 @@ Receiver_Factory::Receiver_Factory (CORBA::ORB_ptr orb)
 
 Test::Receiver_ptr
 Receiver_Factory::create_receiver (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Receiver *receiver_impl = 0;
   ACE_NEW_THROW_EX (receiver_impl,
@@ -26,7 +25,6 @@ Receiver_Factory::create_receiver (void)
 
 void
 Receiver_Factory::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

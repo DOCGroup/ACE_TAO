@@ -23,11 +23,9 @@ public:
 
   // = The skeleton methods
 
-  virtual Test::Simple_ptr create_simple_object (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual Test::Simple_ptr create_simple_object (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Keep a reference to the ORB

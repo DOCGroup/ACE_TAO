@@ -13,7 +13,6 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 Test::Timestamp
 Roundtrip::test_octet_method (const Test::octet_load &,
                               Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
@@ -21,7 +20,6 @@ Roundtrip::test_octet_method (const Test::octet_load &,
 Test::Timestamp
 Roundtrip::test_long_method (const Test::long_load &,
                               Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
@@ -29,7 +27,6 @@ Roundtrip::test_long_method (const Test::long_load &,
 Test::Timestamp
 Roundtrip::test_char_method (const Test::char_load &,
                              Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
@@ -37,7 +34,6 @@ Roundtrip::test_char_method (const Test::char_load &,
 Test::Timestamp
 Roundtrip::test_longlong_method (const Test::longlong_load &,
                                  Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
@@ -45,7 +41,6 @@ Roundtrip::test_longlong_method (const Test::longlong_load &,
 Test::Timestamp
 Roundtrip::test_double_method (const Test::double_load &,
                                Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
@@ -54,14 +49,12 @@ Roundtrip::test_double_method (const Test::double_load &,
 Test::Timestamp
 Roundtrip::test_short_method (const Test::short_load &,
                               Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;
 }
 
 void
 Roundtrip::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
