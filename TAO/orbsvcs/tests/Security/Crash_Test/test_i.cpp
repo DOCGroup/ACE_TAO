@@ -12,7 +12,6 @@ ACE_RCSID (Send_File,
 
 void
 Simple_Server_i::send_line (const char *)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   /*
@@ -33,7 +32,6 @@ Simple_Server_i::send_line (const char *)
 
 void
 Simple_Server_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

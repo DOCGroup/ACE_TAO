@@ -48,8 +48,7 @@ public:
 
   void wait_for_startup (
    ImplementationRepository::AMH_AsyncStartupWaiterResponseHandler_ptr rh,
-   const char* name)
-   ACE_THROW_SPEC ((CORBA::SystemException));
+   const char* name);
 
   void unblock_one(const char* name, const char* partial_ior, const char* ior, bool queue);
   void unblock_all(const char* name);

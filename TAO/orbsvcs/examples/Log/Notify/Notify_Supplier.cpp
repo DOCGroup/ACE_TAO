@@ -299,10 +299,6 @@ void
 Filter_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   //No-Op.
 }
@@ -319,9 +315,6 @@ Filter_StructuredPushSupplier::send_event
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   // No-Op.
 }

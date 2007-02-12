@@ -45,8 +45,6 @@ void
 Throughput_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosEventComm::Disconnected))
 {
   // Extract payload.
   const char* msg;

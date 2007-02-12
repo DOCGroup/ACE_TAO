@@ -21,7 +21,6 @@ INS_Locator::INS_Locator (ImR_Locator_i& loc)
 
 char *
 INS_Locator::locate (const char* object_key)
-ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_ASSERT (object_key != 0);
   try

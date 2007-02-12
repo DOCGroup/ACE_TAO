@@ -57,11 +57,7 @@ protected:
 
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      );
 
   void handle_start_event (const CosNotification::PropertySeq& prop_seq);
   void check_priority (const CosNotification::PropertySeq& prop_seq);

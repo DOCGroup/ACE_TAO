@@ -94,9 +94,6 @@ Supplier::send_event (const CORBA::Any & data)
 
 void
 Supplier::disconnect_push_supplier (void)
-  ACE_THROW_SPEC ((
-        CORBA::SystemException
-        ))
 {
   // Deactivate this object.
 

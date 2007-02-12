@@ -123,10 +123,6 @@ int StubBatchConsumer::idle(int & result)
 void StubBatchConsumer::push_structured_events (
     const CosNotification::EventBatch & notifications
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-    , CosEventComm::Disconnected
-  ))
 {
   ACE_UNUSED_ARG (notifications);
   //@@ sequence of structured event handling not written yet
@@ -136,7 +132,6 @@ void StubBatchConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -149,9 +144,6 @@ void StubBatchConsumer::offer_change (
 //virtual
 void StubBatchConsumer::disconnect_sequence_push_consumer (
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   ACE_ERROR ((LM_ERROR,
     "StubBatchConsumer:disconnect_sequence_push_consumer interpreted as quit request.\n"

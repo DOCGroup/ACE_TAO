@@ -39,11 +39,9 @@ public:
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
       ImplementationRepository::ServerInformationList_out server_list
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
 private:
   Locator_Repository& repo_;

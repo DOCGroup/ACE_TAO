@@ -62,75 +62,46 @@ public:
   // Activator->Locator
 
   virtual CORBA::Long register_activator (const char* name,
-    ImplementationRepository::Activator_ptr admin)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ImplementationRepository::Activator_ptr admin);
   virtual void unregister_activator (const char* name,
-    CORBA::Long token)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void notify_child_death (const char* name)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::Long token);
+  virtual void notify_child_death (const char* name);
 
   // tao_imr->Locator
 
-  virtual void activate_server (const char * name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::NotFound,
-    ImplementationRepository::CannotActivate));
+  virtual void activate_server (const char * name);
   virtual void add_or_update_server (const char * name,
-    const ImplementationRepository::StartupOptions &options)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
-  virtual void remove_server (const char * name)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
-  virtual void shutdown_server (const char * name)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
+    const ImplementationRepository::StartupOptions &options);
+  virtual void remove_server (const char * name);
+  virtual void shutdown_server (const char * name);
   virtual void find (const char * name,
-    ImplementationRepository::ServerInformation_out info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ImplementationRepository::ServerInformation_out info);
   virtual void list (
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
-    ImplementationRepository::ServerInformationIterator_out server_iterator)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown(CORBA::Boolean activators, CORBA::Boolean servers)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ImplementationRepository::ServerInformationIterator_out server_iterator);
+  virtual void shutdown(CORBA::Boolean activators, CORBA::Boolean servers);
 
   // Server->Locator
 
   virtual void server_is_running (const char* name,
     const char* partial_ior,
-    ImplementationRepository::ServerObject_ptr server_object)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
-  virtual void server_is_shutting_down (const char * name)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
+    ImplementationRepository::ServerObject_ptr server_object);
+  virtual void server_is_shutting_down (const char * name);
 
   // Used by the INS_Locator to start a sever given an object name
-  char* activate_server_by_object (const char* object_name)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::NotFound,
-    ImplementationRepository::CannotActivate));
+  char* activate_server_by_object (const char* object_name);
 
-  char* activate_server_by_name (const char * name, bool manual_start)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::NotFound,
-    ImplementationRepository::CannotActivate));
+  char* activate_server_by_name (const char * name, bool manual_start);
 
 private:
 
-  char* activate_server_i (Server_Info& info, bool manual_start)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::NotFound,
-    ImplementationRepository::CannotActivate));
+  char* activate_server_i (Server_Info& info, bool manual_start);
 
-  char* activate_perclient_server_i (Server_Info info, bool manual_start)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::NotFound,
-    ImplementationRepository::CannotActivate));
+  char* activate_perclient_server_i (Server_Info info, bool manual_start);
 
   ImplementationRepository::StartupInfo*
-    start_server(Server_Info& info, bool manual_start, int& waiting_clients)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::NotFound,
-    ImplementationRepository::CannotActivate));
+    start_server(Server_Info& info, bool manual_start, int& waiting_clients);
 
   bool is_alive(Server_Info& info);
   int is_alive_i(Server_Info& info);

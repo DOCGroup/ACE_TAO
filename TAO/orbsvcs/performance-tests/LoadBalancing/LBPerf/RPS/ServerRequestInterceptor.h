@@ -60,35 +60,24 @@ public:
    * ServerRequestInterceptors.
    */
   //@{
-  virtual char * name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      PortableInterceptor::ServerRequestInfo_ptr ri);
   //@}
 
   CORBA::Long request_count (void);

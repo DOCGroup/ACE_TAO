@@ -355,7 +355,6 @@ int TAO::FT_ReplicationManager::fini (void)
 void
 TAO::FT_ReplicationManager::register_fault_notifier (
   FT::FaultNotifier_ptr fault_notifier)
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   this->register_fault_notifier_i (fault_notifier);
 }
@@ -364,7 +363,6 @@ TAO::FT_ReplicationManager::register_fault_notifier (
 void
 TAO::FT_ReplicationManager::register_fault_notifier_i (
   FT::FaultNotifier_ptr fault_notifier)
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   if (CORBA::is_nil (fault_notifier))
   {
@@ -446,7 +444,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 //CORBA
 FT::FaultNotifier_ptr
 TAO::FT_ReplicationManager::get_fault_notifier ()
-  ACE_THROW_SPEC ( (CORBA::SystemException, FT::InterfaceNotFound))
 {
   if (CORBA::is_nil (this->fault_notifier_.in ()))
   {
@@ -461,7 +458,6 @@ TAO::FT_ReplicationManager::get_fault_notifier ()
 ::PortableGroup::FactoryRegistry_ptr
 TAO::FT_ReplicationManager::get_factory_registry (
   const PortableGroup::Criteria & selection_criteria)
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   ACE_UNUSED_ARG (selection_criteria);
   return this->factory_registry_.reference ();
@@ -470,7 +466,6 @@ TAO::FT_ReplicationManager::get_factory_registry (
 // TAO-specific shutdown operation.
 //public
 void TAO::FT_ReplicationManager::shutdown ()
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   this->quit_ = 1;
 }
@@ -500,9 +495,6 @@ char * TAO::FT_ReplicationManager::type_id (
 void
 TAO::FT_ReplicationManager::set_default_properties (
   const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
 
   this->properties_support_.set_default_properties (props);
@@ -512,7 +504,6 @@ TAO::FT_ReplicationManager::set_default_properties (
 //CORBA
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_default_properties ()
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   return this->properties_support_.get_default_properties ();
 }
@@ -521,9 +512,6 @@ TAO::FT_ReplicationManager::get_default_properties ()
 void
 TAO::FT_ReplicationManager::remove_default_properties (
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   this->properties_support_.remove_default_properties (props);
 }
@@ -533,9 +521,6 @@ void
 TAO::FT_ReplicationManager::set_type_properties (
     const char *type_id,
     const PortableGroup::Properties & overrides)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   this->properties_support_.set_type_properties (
     type_id,
@@ -546,7 +531,6 @@ TAO::FT_ReplicationManager::set_type_properties (
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_type_properties (
     const char *type_id)
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   return this->properties_support_.get_type_properties (type_id);
 }
@@ -556,9 +540,6 @@ void
 TAO::FT_ReplicationManager::remove_type_properties (
     const char *type_id,
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   this->properties_support_.remove_type_properties (
     type_id,
@@ -570,10 +551,6 @@ void
 TAO::FT_ReplicationManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Properties & overrides)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
 
   TAO::PG_Object_Group * group = 0;
@@ -591,8 +568,6 @@ TAO::FT_ReplicationManager::set_properties_dynamically (
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   PortableGroup::Properties_var result;
   ACE_NEW_THROW_EX (result, PortableGroup::Properties(), CORBA::NO_MEMORY ());
@@ -619,13 +594,6 @@ PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::set_primary_member (
   PortableGroup::ObjectGroup_ptr object_group,
   const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ( (
-    CORBA::SystemException
-    , PortableGroup::ObjectGroupNotFound
-    , PortableGroup::MemberNotFound
-    , FT::PrimaryNotSet
-    , FT::BadReplicationStyle
-  ))
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::set_primary_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
@@ -660,13 +628,6 @@ TAO::FT_ReplicationManager::create_member (
     const PortableGroup::Location & the_location,
     const char * type_id,
     const PortableGroup::Criteria & the_criteria)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::CannotMeetCriteria))
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
   TAO::PG_Object_Group * group = 0;
@@ -695,10 +656,6 @@ TAO::FT_ReplicationManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::ObjectNotAdded))
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::add_member);
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
@@ -732,9 +689,6 @@ PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
@@ -762,8 +716,6 @@ TAO::FT_ReplicationManager::remove_member (
 PortableGroup::Locations *
 TAO::FT_ReplicationManager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   PortableGroup::Locations * result = 0;
 
@@ -790,7 +742,6 @@ TAO::FT_ReplicationManager::locations_of_members (
 PortableGroup::ObjectGroups *
 TAO::FT_ReplicationManager::groups_at_location (
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   return this->group_factory_.groups_at_location (the_location);
 }
@@ -799,8 +750,6 @@ TAO::FT_ReplicationManager::groups_at_location (
 PortableGroup::ObjectGroupId
 TAO::FT_ReplicationManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   PortableGroup::ObjectGroupId result = 0;
   TAO::PG_Object_Group * group = 0;
@@ -826,8 +775,6 @@ TAO::FT_ReplicationManager::get_object_group_id (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::get_object_group_ref (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
@@ -854,10 +801,6 @@ TAO::FT_ReplicationManager::get_object_group_ref (
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::get_object_group_ref_from_id (
     PortableGroup::ObjectGroupId group_id)
-  ACE_THROW_SPEC ( (
-    CORBA::SystemException
-    , PortableGroup::ObjectGroupNotFound
-  ))
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
 
@@ -885,9 +828,6 @@ CORBA::Object_ptr
 TAO::FT_ReplicationManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberNotFound))
 {
   CORBA::Object_var result = CORBA::Object::_nil();
 
@@ -920,12 +860,6 @@ TAO::FT_ReplicationManager::create_object (
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::NoFactory,
-                   PortableGroup::ObjectNotCreated,
-                   PortableGroup::InvalidCriteria,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::CannotMeetCriteria))
 {
   METHOD_ENTRY (TAO::FT_ReplicationManager::create_object)
 
@@ -968,8 +902,6 @@ TAO::FT_ReplicationManager::create_object (
 void
 TAO::FT_ReplicationManager::delete_object (
   const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
-                   PortableGroup::ObjectNotFound))
 {
 
   PortableGroup::ObjectGroupId group_id = 0;

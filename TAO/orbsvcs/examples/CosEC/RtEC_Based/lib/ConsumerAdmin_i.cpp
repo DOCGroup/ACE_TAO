@@ -27,7 +27,6 @@ TAO_CosEC_ConsumerAdmin_i::init (const RtecEventChannelAdmin::ConsumerQOS &consu
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CosEC_ConsumerAdmin_i::obtain_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPushSupplier_ptr proxysupplier_nil =
     CosEventChannelAdmin::ProxyPushSupplier::_nil ();
@@ -57,7 +56,6 @@ TAO_CosEC_ConsumerAdmin_i::obtain_push_supplier (void)
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_CosEC_ConsumerAdmin_i::obtain_pull_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO: implement this.
   return CosEventChannelAdmin::ProxyPullSupplier::_nil ();

@@ -358,7 +358,6 @@ RND_Driver::event (const RtecEventComm::Event &e)
 
 void
 RND_Timer::push (const RtecEventComm::EventSet &event)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -406,14 +405,12 @@ RND_Consumer::disconnect (void)
 
 void
 RND_Consumer::push (const RtecEventComm::EventSet &event)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->event (event[0]);
 }
 
 void
 RND_Consumer::disconnect_push_consumer (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -483,7 +480,6 @@ RND_Supplier::push (RtecEventComm::EventSet &event)
 
 void
 RND_Supplier::disconnect_push_supplier (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

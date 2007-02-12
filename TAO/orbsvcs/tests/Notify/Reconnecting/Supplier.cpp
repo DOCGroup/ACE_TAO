@@ -21,9 +21,6 @@ StructuredPushSupplier_i::subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -36,7 +33,6 @@ StructuredPushSupplier_i::subscription_change (
 void
 StructuredPushSupplier_i::disconnect_structured_push_supplier (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Supplier StructuredPushSupplier received disconnect\n")
@@ -51,9 +47,6 @@ SequencePushSupplier_i::subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -66,7 +59,6 @@ SequencePushSupplier_i::subscription_change (
 void
 SequencePushSupplier_i::disconnect_sequence_push_supplier (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Supplier SequencePushSupplier received disconnect\n")
@@ -81,9 +73,6 @@ AnyPushSupplier_i::subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -96,7 +85,6 @@ AnyPushSupplier_i::subscription_change (
 void
 AnyPushSupplier_i::disconnect_push_supplier (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Suppleir AnyPushSupplier received disconnect\n")
@@ -143,7 +131,6 @@ ReconnectionCallback_i::reconnect (
 
 CORBA::Boolean
 ReconnectionCallback_i::is_alive (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Boolean (1);
 }
@@ -497,7 +484,6 @@ Supplier_Main::load_ids()
 void
 Supplier_Main::reconnect (
     CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->ecf_ = CosNotifyChannelAdmin::EventChannelFactory::_duplicate (dest_factory);
   this->reconnecting_ = true;

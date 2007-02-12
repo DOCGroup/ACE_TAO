@@ -144,7 +144,6 @@ Object_ptr
 DynServer_Loader::create_object (ORB_ptr,
                                  int,
                                  ACE_TCHAR **)
-                                 ACE_THROW_SPEC ((SystemException))
 {
   throw NO_IMPLEMENT();
 }

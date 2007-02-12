@@ -27,7 +27,6 @@ ImR_Adapter::init (PortableServer::ServantLocator_ptr servant)
 CORBA::Boolean
 ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ASSERT (! CORBA::is_nil(parent));
   ACE_ASSERT (name != 0);

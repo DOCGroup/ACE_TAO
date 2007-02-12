@@ -38,7 +38,6 @@ Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
 
 CORBA::Boolean
 Life_Cycle_Service_i::supports (const CosLifeCycle::Key &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
@@ -46,10 +45,6 @@ Life_Cycle_Service_i::supports (const CosLifeCycle::Key &)
 CORBA::Object_ptr
 Life_Cycle_Service_i::create_object (const CosLifeCycle::Key &factory_key,
                                      const CosLifeCycle::Criteria &the_criteria)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLifeCycle::NoFactory,
-                   CosLifeCycle::InvalidCriteria,
-                   CosLifeCycle::CannotMeetCriteria))
 {
   if (this->debug_level_ >= 2)
     ACE_DEBUG ((LM_DEBUG, "Life_Cycle_Service_i:create_object: called.\n"));
@@ -144,7 +139,6 @@ Life_Cycle_Service_i::register_factory (const char * name,
                                         const char * location,
                                         const char * description,
                                         CORBA::Object_ptr object)
-  ACE_THROW_SPEC (( CORBA::SystemException))
 {
   if (factory_trader_ptr_ == 0)
     ACE_NEW (factory_trader_ptr_, Factory_Trader(this->debug_level_));

@@ -9,7 +9,6 @@ MCast_Server_i::MCast_Server_i (void)
 
 CORBA::Boolean
 MCast_Server_i::connect_server (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }

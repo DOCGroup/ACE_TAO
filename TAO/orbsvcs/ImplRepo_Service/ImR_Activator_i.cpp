@@ -256,7 +256,6 @@ ImR_Activator_i::run (void)
 
 void
 ImR_Activator_i::shutdown (void)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   shutdown (false);
 }
@@ -272,7 +271,6 @@ ImR_Activator_i::start_server(const char* name,
                               const char* cmdline,
                               const char* dir,
                               const ImplementationRepository::EnvironmentList & env)
-                              ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate))
 {
   if (debug_ > 1)
     ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting server <%s>...\n", name));

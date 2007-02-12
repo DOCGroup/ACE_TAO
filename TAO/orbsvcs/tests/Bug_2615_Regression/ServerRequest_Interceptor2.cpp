@@ -33,30 +33,24 @@ ServerRequest_Interceptor2::~ServerRequest_Interceptor2 (void)
 
 char *
 ServerRequest_Interceptor2::name (void)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ServerRequest_Interceptor2");
 }
 
 void
 ServerRequest_Interceptor2::destroy (void)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerRequest_Interceptor2::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                 PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 ServerRequest_Interceptor2::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                 PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var op = ri->operation ();
 
@@ -90,23 +84,18 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 void
 ServerRequest_Interceptor2::send_reply (
   PortableInterceptor::ServerRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerRequest_Interceptor2::send_exception (
   PortableInterceptor::ServerRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                 PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 ServerRequest_Interceptor2::send_other (
   PortableInterceptor::ServerRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                 PortableInterceptor::ForwardRequest))
 {
 }
 

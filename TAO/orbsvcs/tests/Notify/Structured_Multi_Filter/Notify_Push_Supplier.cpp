@@ -6,7 +6,6 @@ Notify_Push_Supplier::_connect (
                 CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
                 bool useFilter)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::StructuredPushSupplier_var objref =
     this->_this ();

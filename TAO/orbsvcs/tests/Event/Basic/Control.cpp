@@ -159,7 +159,6 @@ Consumer::Consumer (const char* name,
 
 void
 Consumer::push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {

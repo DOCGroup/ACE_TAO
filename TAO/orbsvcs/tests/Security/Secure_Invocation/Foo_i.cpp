@@ -19,8 +19,6 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 
 void
 Foo_i::baz (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Foo::Bar::NoSecurityAttributes))
 {
   SecurityLevel3::ClientCredentials_var credentials =
     this->current_->client_credentials ();
@@ -38,7 +36,6 @@ Foo_i::baz (void)
 
 void
 Foo_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

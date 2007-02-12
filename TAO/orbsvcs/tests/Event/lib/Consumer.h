@@ -77,10 +77,8 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer (void);
 
 private:
   /// The main driver for the test.

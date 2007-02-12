@@ -337,10 +337,6 @@ Filter_StructuredPushConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
     )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ))
 {
   // No-Op.
 }
@@ -348,10 +344,6 @@ Filter_StructuredPushConsumer::offer_change
 void
 Filter_StructuredPushConsumer::push_structured_event
    (const CosNotification::StructuredEvent & notification)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
     CORBA::Long val;
 
@@ -374,9 +366,6 @@ Filter_StructuredPushConsumer::push_structured_event
 void
 Filter_StructuredPushConsumer::disconnect_structured_push_consumer
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   // No-Op.
 }
@@ -426,10 +415,6 @@ Filter_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
     )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   //No-Op.
 }
@@ -449,9 +434,6 @@ Filter_StructuredPushSupplier::send_event
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   // No-Op.
 }

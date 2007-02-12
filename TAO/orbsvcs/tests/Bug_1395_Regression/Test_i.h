@@ -18,11 +18,9 @@ public:
    ~Test_i (void);
 
    /// Try and create a persistant POA
-   int try_and_create_POA (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+   int try_and_create_POA (void);
 
-   void shutdown (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+   void shutdown (void);
 
 protected:
    CORBA::ORB_var orb_;

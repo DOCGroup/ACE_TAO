@@ -15,7 +15,6 @@ Manager_i::~Manager_i (void)
 }
 
 CORBA::Long Manager_i::registerServer ()
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (retry_attempt_ < retry_count_)
   {
@@ -26,14 +25,12 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 }
 
 void Manager_i::startRetry (CORBA::Long count)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   retry_count_ = count;
   retry_attempt_ = 0;
 }
 
 CORBA::Long Manager_i::endRetry ()
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return retry_count_ - retry_attempt_;
 }

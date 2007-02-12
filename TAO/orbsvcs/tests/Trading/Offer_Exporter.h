@@ -25,95 +25,37 @@ class TAO_TTest_Export TAO_Offer_Exporter
 public:
 
   TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
-                      CORBA::Boolean verbose)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Boolean verbose);
 
   ~TAO_Offer_Exporter (void);
 
-  void export_offers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Register::InvalidObjectRef,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::Register::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::MissingMandatoryProperty,
-                     CosTrading::DuplicatePropertyName));
+  void export_offers (void);
   // Export a number of offers to the Trading Service.
 
-  void export_offers_to_all (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Register::InvalidObjectRef,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::Register::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::MissingMandatoryProperty,
-                     CosTrading::DuplicatePropertyName));
+  void export_offers_to_all (void);
   // Export a number of offers to all traders accessible by the
   // bootstrapped trader.
 
-  void withdraw_offers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalOfferId,
-                     CosTrading::UnknownOfferId,
-                     CosTrading::Register::ProxyOfferId));
+  void withdraw_offers (void);
   // Withdraw all exported offers.
 
-  void describe_offers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalOfferId,
-                     CosTrading::UnknownOfferId,
-                     CosTrading::Register::ProxyOfferId));
+  void describe_offers (void);
   // Describe all the offers registered with the bootstrapped trader.
 
-  void modify_offers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::NotImplemented,
-                     CosTrading::IllegalOfferId,
-                     CosTrading::UnknownOfferId,
-                     CosTrading::Register::ProxyOfferId,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::Register::UnknownPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::Register::MandatoryProperty,
-                     CosTrading::Register::ReadonlyProperty,
-                     CosTrading::DuplicatePropertyName));
+  void modify_offers (void);
   // Remove some properties and change some properties in each offer.
 
-  void withdraw_offers_using_constraints (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::IllegalConstraint,
-                     CosTrading::Register::NoMatchingOffers));
+  void withdraw_offers_using_constraints (void);
   // Withdraw a number of offers based on a constraint string.
 
 private:
 
-  CosTrading::OfferIdSeq* grab_offerids (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::NotImplemented));
+  CosTrading::OfferIdSeq* grab_offerids (void);
 
   void create_offers (void);
   // Fill in each of the offer structures.
 
-  void export_to (CosTrading::Register_ptr reg)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Register::InvalidObjectRef,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::Register::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::MissingMandatoryProperty,
-                     CosTrading::DuplicatePropertyName));
+  void export_to (CosTrading::Register_ptr reg);
   // Export the offers to the give Register interface.
 
   typedef ACE_Unbounded_Queue<TAO_Dynamic_Property*> DP_Queue;

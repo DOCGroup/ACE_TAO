@@ -304,10 +304,6 @@ Subscribe_StructuredPushConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
     )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ))
 {
   // No-Op.
 }
@@ -315,10 +311,6 @@ Subscribe_StructuredPushConsumer::offer_change
 void
 Subscribe_StructuredPushConsumer::push_structured_event
    (const CosNotification::StructuredEvent & notification)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
   const char* domain_name =
     notification.header.fixed_header.event_type.domain_name;
@@ -349,9 +341,6 @@ Subscribe_StructuredPushConsumer::push_structured_event
 void
 Subscribe_StructuredPushConsumer::disconnect_structured_push_consumer
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   // No-Op.
 }
@@ -406,10 +395,6 @@ Subscribe_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
     )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   //No-Op.
 }
@@ -426,9 +411,6 @@ Subscribe_StructuredPushSupplier::send_event
 void
 Subscribe_StructuredPushSupplier::disconnect_structured_push_supplier
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   // No-Op.
 }
