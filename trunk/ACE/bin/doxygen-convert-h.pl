@@ -49,9 +49,7 @@ sub recursive_find {
         }
         else {
           push(@rfiles, $full)
-          ## If we want to limit the recursive find to "source" files,
-          ## un-comment this line :
-          ##if ($f =~ /\.(h|hxx|hpp|hh|inl|cpp|cxx|cc|c|C)$/)
+          if ($f =~ /\.(h|hxx|hpp|hh|inl|cpp|cxx|cc|c|C)$/)
           ;
         }
       }
