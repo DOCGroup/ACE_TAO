@@ -17,7 +17,6 @@ TAO_Offer_Iterator::~TAO_Offer_Iterator (void)
 
 void
 TAO_Offer_Iterator::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
 
@@ -50,8 +49,6 @@ TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 
 CORBA::ULong
 TAO_Query_Only_Offer_Iterator::max_left (void)
-  ACE_THROW_SPEC((CORBA::SystemException,
-                 CosTrading::UnknownMaxLeft))
 {
   return static_cast<CORBA::ULong> (this->offers_.size ());
 }
@@ -59,7 +56,6 @@ TAO_Query_Only_Offer_Iterator::max_left (void)
 CORBA::Boolean
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
 
@@ -115,7 +111,6 @@ add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter)
 CORBA::Boolean
 TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong offers_left = n;
   CORBA::Boolean return_value = 1;
@@ -167,7 +162,6 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 
 void
 TAO_Offer_Iterator_Collection::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy all iterators in the collection.
   for (Offer_Iters::ITERATOR iters_iter (this->iters_);
@@ -193,8 +187,6 @@ TAO_Offer_Iterator_Collection::destroy (void)
 
 CORBA::ULong
 TAO_Offer_Iterator_Collection::max_left (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::UnknownMaxLeft))
 {
   throw CosTrading::UnknownMaxLeft();
 }
@@ -220,15 +212,12 @@ TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 
 CORBA::ULong
 TAO_Offer_Id_Iterator::max_left (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                  CosTrading::UnknownMaxLeft))
 {
   return static_cast<CORBA::ULong> (this->ids_.size ());
 }
 
 void
 TAO_Offer_Id_Iterator::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
 
@@ -244,7 +233,6 @@ TAO_Offer_Id_Iterator::destroy (void)
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
                                CosTrading::OfferIdSeq_out _ids)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.
   CORBA::ULong items_left = static_cast<CORBA::ULong> (this->ids_.size());

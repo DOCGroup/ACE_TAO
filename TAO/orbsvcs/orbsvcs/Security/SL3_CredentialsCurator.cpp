@@ -76,7 +76,6 @@ TAO::SL3::CredentialsCurator::_nil (void)
 
 SecurityLevel3::AcquisitionMethodList *
 TAO::SL3::CredentialsCurator::supported_methods (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::AcquisitionMethodList * list;
   ACE_NEW_THROW_EX (list,
@@ -108,7 +107,6 @@ SecurityLevel3::CredentialsAcquirer_ptr
 TAO::SL3::CredentialsCurator::acquire_credentials (
     const char * acquisition_method,
     const CORBA::Any & acquisition_arguments)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SL3::CredentialsAcquirerFactory * factory;
 
@@ -125,7 +123,6 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
 
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::CredentialsCurator::default_creds_list (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentialsList * list;
   ACE_NEW_THROW_EX (list,
@@ -157,7 +154,6 @@ TAO::SL3::CredentialsCurator::default_creds_list (void)
 
 SecurityLevel3::CredentialsIdList *
 TAO::SL3::CredentialsCurator::default_creds_ids (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::CredentialsIdList * list;
   ACE_NEW_THROW_EX (list,
@@ -188,7 +184,6 @@ TAO::SL3::CredentialsCurator::default_creds_ids (void)
 SecurityLevel3::OwnCredentials_ptr
 TAO::SL3::CredentialsCurator::get_own_credentials (
     const char * credentials_id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Credentials_Table::ENTRY * entry;
 
@@ -209,7 +204,6 @@ TAO::SL3::CredentialsCurator::get_own_credentials (
 void
 TAO::SL3::CredentialsCurator::release_own_credentials (
     const char * credentials_id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Credentials_Table::ENTRY * entry;
 

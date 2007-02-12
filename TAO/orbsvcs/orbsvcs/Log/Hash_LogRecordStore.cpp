@@ -250,9 +250,6 @@ void
 TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
                 const DsLogAdmin::NVList
                 &attr_list)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidRecordId,
-                   DsLogAdmin::InvalidAttribute))
 {
   // TODO: validate attributes here.
 
@@ -276,10 +273,6 @@ TAO_Hash_LogRecordStore::set_records_attribute (
   const char *constraint,
   const DsLogAdmin::NVList
   &attr_list)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidGrammar,
-                   DsLogAdmin::InvalidConstraint,
-                   DsLogAdmin::InvalidAttribute))
 {
   this->check_grammar (grammar);
 
@@ -312,8 +305,6 @@ TAO_Hash_LogRecordStore::set_records_attribute (
 
 DsLogAdmin::NVList*
 TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidRecordId))
 {
   DsLogAdmin::LogRecord rec;
 
@@ -366,8 +357,6 @@ DsLogAdmin::RecordList*
 TAO_Hash_LogRecordStore::query_i (const char *constraint,
                                   DsLogAdmin::Iterator_out &iter_out,
                                   CORBA::ULong how_many)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidConstraint))
 {
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint);
@@ -452,9 +441,6 @@ DsLogAdmin::RecordList*
 TAO_Hash_LogRecordStore::query (const char *grammar,
                                 const char *constraint,
                                 DsLogAdmin::Iterator_out iter_out)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidGrammar,
-                   DsLogAdmin::InvalidConstraint))
 {
   this->check_grammar (grammar);
 
@@ -467,7 +453,6 @@ DsLogAdmin::RecordList*
 TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                                    CORBA::Long how_many,
                                    DsLogAdmin::Iterator_out iter_out)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Decide between forward vs backward retrieval.
   char constraint[32];
@@ -499,9 +484,6 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 CORBA::ULong
 TAO_Hash_LogRecordStore::match (const char* grammar,
 				const char *constraint)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidGrammar,
-                   DsLogAdmin::InvalidConstraint))
 {
   this->check_grammar (grammar);
 
@@ -532,9 +514,6 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
 CORBA::ULong
 TAO_Hash_LogRecordStore::delete_records (const char *grammar,
 					 const char *constraint)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint))
 {
   this->check_grammar (grammar);
 
@@ -569,7 +548,6 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong count (0);
 
@@ -642,8 +620,6 @@ TAO_Hash_LogRecordStore::lock()
 
 void
 TAO_Hash_LogRecordStore::check_grammar (const char* grammar)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidGrammar))
 {
   // Verify grammar
   if (ACE_OS::strcmp (grammar, "TCL") != 0 &&

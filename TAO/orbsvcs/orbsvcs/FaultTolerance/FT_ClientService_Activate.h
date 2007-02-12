@@ -54,8 +54,7 @@ public:
    * This method cannot throw any exception, but it can return a nil
    * object to indicate an error condition.
    */
-  virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb);
 
   /// Used to force the initialization.
   static int Initializer (void);

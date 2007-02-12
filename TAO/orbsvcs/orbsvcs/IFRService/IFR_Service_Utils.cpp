@@ -465,7 +465,6 @@ TAO_IFR_Service_Utils::valid_container (
     CORBA::DefinitionKind container_kind,
     CORBA::DefinitionKind contained_kind
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int error_flag = 0;
 
@@ -550,7 +549,6 @@ TAO_IFR_Service_Utils::pre_exist (
 void
 TAO_IFR_Service_Utils::id_exists (const char *id,
                                   TAO_Repository_i *repo)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The repo id must not already exist.
   ACE_TString holder;
@@ -570,7 +568,6 @@ TAO_IFR_Service_Utils::name_exists (
     TAO_Repository_i *repo,
     CORBA::DefinitionKind kind
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int status = 0;
   ACE_TString section_name;
@@ -705,7 +702,6 @@ TAO_IFR_Service_Utils::check_subsection (
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key sub_key;
   int status =

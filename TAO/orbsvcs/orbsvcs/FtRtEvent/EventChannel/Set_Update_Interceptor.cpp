@@ -22,21 +22,18 @@ TAO_Set_Update_Interceptor::~TAO_Set_Update_Interceptor (void)
 
 char *
 TAO_Set_Update_Interceptor::name (void)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 TAO_Set_Update_Interceptor::destroy (void)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_Set_Update_Interceptor::send_poll (
                                    PortableInterceptor::ClientRequestInfo_ptr)
-                                   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
 }
@@ -44,8 +41,6 @@ TAO_Set_Update_Interceptor::send_poll (
 void
 TAO_Set_Update_Interceptor::send_request (
                                       PortableInterceptor::ClientRequestInfo_ptr ri)
-                                      ACE_THROW_SPEC ((CORBA::SystemException,
-                                      PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var operation = ri->operation ();
 
@@ -134,23 +129,18 @@ TAO_Set_Update_Interceptor::send_request (
 void
 TAO_Set_Update_Interceptor::receive_reply (
   PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_Set_Update_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO_Set_Update_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 

@@ -55,110 +55,87 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Return our definition kind.
 
   virtual void destroy (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Remove the repository entry.
 
   virtual void destroy_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::Contained::Description *describe (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From Contained_i's pure virtual function.
 
   virtual CORBA::Contained::Description *describe_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::ComponentIR::HomeDef_ptr base_home (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::HomeDef_ptr base_home_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void base_home (
       CORBA::ComponentIR::HomeDef_ptr base_home
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void base_home_i (
       CORBA::ComponentIR::HomeDef_ptr base_home
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::InterfaceDefSeq *supported_interfaces (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::InterfaceDefSeq *supported_interfaces_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void supported_interfaces_i (
       const CORBA::InterfaceDefSeq &supported_interfaces
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ComponentIR::ComponentDef_ptr managed_component (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::ComponentDef_ptr managed_component_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void managed_component (
       CORBA::ComponentIR::ComponentDef_ptr managed_component
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void managed_component_i (
       CORBA::ComponentIR::ComponentDef_ptr managed_component
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ValueDef_ptr primary_key (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ValueDef_ptr primary_key_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void primary_key (
       CORBA::ValueDef_ptr primary_key
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void primary_key_i (
       CORBA::ValueDef_ptr primary_key
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ComponentIR::FactoryDef_ptr create_factory (
       const char *id,
@@ -166,8 +143,7 @@ public:
       const char *version,
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::FactoryDef_ptr create_factory_i (
       const char *id,
@@ -175,8 +151,7 @@ public:
       const char *version,
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::ComponentIR::FinderDef_ptr create_finder (
       const char *id,
@@ -184,8 +159,7 @@ public:
       const char *version,
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::FinderDef_ptr create_finder_i (
       const char *id,
@@ -193,8 +167,7 @@ public:
       const char *version,
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
 private:
   // Common code for create_factory_i and create_finder_i.

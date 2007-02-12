@@ -49,9 +49,7 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  void build_tree (const char* constraints)
-    ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
-                     CORBA::NO_MEMORY));
+  void build_tree (const char* constraints);
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.

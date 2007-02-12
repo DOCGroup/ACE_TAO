@@ -26,7 +26,6 @@ TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin (void)
 
 CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (new_filter))
     throw CORBA::BAD_PARAM ();
@@ -47,10 +46,6 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
 
 void
 TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::FilterNotFound
-                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -61,10 +56,6 @@ TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::FilterNotFound
-                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -80,9 +71,6 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
 
 CosNotifyFilter::FilterIDSeq*
 TAO_Notify_FilterAdmin::get_all_filters (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -116,7 +104,6 @@ TAO_Notify_FilterAdmin::get_all_filters (void)
 
 void
 TAO_Notify_FilterAdmin::remove_all_filters (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());

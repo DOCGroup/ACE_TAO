@@ -28,7 +28,6 @@ TAO::PG_Property_Set::PG_Property_Set()
 
 TAO::PG_Property_Set::PG_Property_Set (
   const PortableGroup::Properties & property_set)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (0)
 {
   this->decode (property_set);
@@ -37,7 +36,6 @@ TAO::PG_Property_Set::PG_Property_Set (
 TAO::PG_Property_Set::PG_Property_Set (
     const PortableGroup::Properties & property_set,
     PG_Property_Set * defaults)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (defaults)
 {
   this->decode (property_set);
@@ -57,7 +55,6 @@ TAO::PG_Property_Set::~PG_Property_Set ()
 
 void
 TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -117,7 +114,6 @@ void TAO::PG_Property_Set::clear ()
 }
 
 void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_set)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   size_t count = property_set.length ();

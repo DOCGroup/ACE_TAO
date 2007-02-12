@@ -71,115 +71,89 @@ public:
    */
   //@{
   /// Return the factory of the log.
-  DsLogAdmin::LogMgr_ptr my_factory (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  DsLogAdmin::LogMgr_ptr my_factory (void);
 
   /// Return the id of the log.
-  DsLogAdmin::LogId id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  DsLogAdmin::LogId id (void);
 
   /// Get the list of the QoS properties supported by the log.
   DsLogAdmin::QoSList*
-  get_log_qos (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_log_qos (void);
 
   /// Set the list of the QoS properties supported by the log.
-  void set_log_qos (const DsLogAdmin::QoSList & qos)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::UnsupportedQoS));
+  void set_log_qos (const DsLogAdmin::QoSList & qos);
 
   /// Get the record life in seconds (0 infinite).
   CORBA::ULong
-  get_max_record_life (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_max_record_life (void);
 
   /// Set the record life in seconds (0 infinite).
   void
-  set_max_record_life (CORBA::ULong life)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  set_max_record_life (CORBA::ULong life);
 
   /// Get the maximum size in octets.
   CORBA::ULongLong
-  get_max_size (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_max_size (void);
 
   /// Set the maximum size in octets.
   void
-  set_max_size (CORBA::ULongLong size)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidParam));
+  set_max_size (CORBA::ULongLong size);
 
   /// Get the current size of the log in octets.
   CORBA::ULongLong
-  get_current_size (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_current_size (void);
 
   /// Return the number of records in the log.
   CORBA::ULongLong
-  get_n_records (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_n_records (void);
 
   /// Get the action to be taken when the log reaches its maximum size.
   DsLogAdmin::LogFullActionType
-  get_log_full_action (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_log_full_action (void);
 
   /// Set the action to be taken when the log reaches its maximum size.
   void
-  set_log_full_action (DsLogAdmin::LogFullActionType action)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-		     DsLogAdmin::InvalidLogFullAction));
+  set_log_full_action (DsLogAdmin::LogFullActionType action);
 
   /// Get the administrative state of the log.
   DsLogAdmin::AdministrativeState
-  get_administrative_state (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_administrative_state (void);
 
   /// Set the administrative state of the log.
   void
-  set_administrative_state (DsLogAdmin::AdministrativeState state)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  set_administrative_state (DsLogAdmin::AdministrativeState state);
 
   /// Get the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
   /// @@@ Of course!  get_forwarding_state() is virtual in the base
   ///     class dictated by the IDL!  -Ossama
   virtual DsLogAdmin::ForwardingState
-  get_forwarding_state (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_forwarding_state (void);
 
   /// Set the forwarding state of the log.
   /// @@ Note: is it ok to make this method virtual?
   void
-    set_forwarding_state (DsLogAdmin::ForwardingState state)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    set_forwarding_state (DsLogAdmin::ForwardingState state);
 
   /// Get the operational state of the log.
   DsLogAdmin::OperationalState
-  get_operational_state (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_operational_state (void);
 
   /// Get the log duration
   DsLogAdmin::TimeInterval
-  get_interval (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_interval (void);
 
   /// Set the log duration.
   void
-  set_interval (const DsLogAdmin::TimeInterval & interval)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidTime,
-                     DsLogAdmin::InvalidTimeInterval));
+  set_interval (const DsLogAdmin::TimeInterval & interval);
 
   /// Get the availability status
   DsLogAdmin::AvailabilityStatus
-  get_availability_status (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_availability_status (void);
 
   /// Get the capacity alarm threshold
   DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_capacity_alarm_thresholds (void);
 
   /**
    * Set the capacity alarm threshold. Threshold values represent
@@ -191,155 +165,108 @@ public:
    */
   void
   set_capacity_alarm_thresholds
-  (const DsLogAdmin::CapacityAlarmThresholdList & threshs)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidThreshold));
+  (const DsLogAdmin::CapacityAlarmThresholdList & threshs);
 
   /// Get the weekly scheduling parameters
   DsLogAdmin::WeekMask*
-  get_week_mask (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_week_mask (void);
 
   /// Set the weekly scheduling parameters.
   void
-  set_week_mask (const DsLogAdmin::WeekMask & masks)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidTime,
-                     DsLogAdmin::InvalidTimeInterval,
-                     DsLogAdmin::InvalidMask));
+  set_week_mask (const DsLogAdmin::WeekMask & masks);
 
   /// Returns all records in the log that match the given constraint
   /// <c>.
   DsLogAdmin::RecordList*
   query (const char * grammar,
          const char * c,
-         DsLogAdmin::Iterator_out i)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint));
+         DsLogAdmin::Iterator_out i);
 
   /// Retrieve <how_many> records from time <from_time> using iterator
   /// <i>.
   DsLogAdmin::RecordList*
   retrieve (DsLogAdmin::TimeT from_time,
             CORBA::Long how_many,
-            DsLogAdmin::Iterator_out i)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+            DsLogAdmin::Iterator_out i);
 
   /// Returns the number of records matching constraint <c>.
   CORBA::ULong
   match (const char * grammar,
-         const char * c)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint));
+         const char * c);
 
   /// Delete records matching constraint <c>.
   CORBA::ULong
   delete_records (const char * grammar,
-                  const char * c)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint));
+                  const char * c);
 
   /// Delete records matching ids in <ids>
   CORBA::ULong
-  delete_records_by_id (const DsLogAdmin::RecordIdList & ids)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
 
 
   /// Write records to the log storage.
   void
-  write_records (const DsLogAdmin::Anys & records)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::LogFull,
-                     DsLogAdmin::LogOffDuty,
-                     DsLogAdmin::LogLocked,
-                     DsLogAdmin::LogDisabled));
+  write_records (const DsLogAdmin::Anys & records);
 
   /// Write a list of record ids to storage. Raises DsLogAdmin::LogFull
   /// and DsLogAdmin::LogLocked
   void
-  write_recordlist (const DsLogAdmin::RecordList & list)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::LogFull,
-                     DsLogAdmin::LogOffDuty,
-                     DsLogAdmin::LogLocked,
-                     DsLogAdmin::LogDisabled));
+  write_recordlist (const DsLogAdmin::RecordList & list);
 
   /// Set single record attributes.
   void
   set_record_attribute (DsLogAdmin::RecordId id,
-                        const DsLogAdmin::NVList & attr_list)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidRecordId,
-                     DsLogAdmin::InvalidAttribute));
+                        const DsLogAdmin::NVList & attr_list);
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
   CORBA::ULong
   set_records_attribute (const char * grammar,
                          const char * c,
-                         const DsLogAdmin::NVList & attr_list)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint,
-                     DsLogAdmin::InvalidAttribute));
+                         const DsLogAdmin::NVList & attr_list);
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList*
-  get_record_attribute (DsLogAdmin::RecordId id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidRecordId));
+  get_record_attribute (DsLogAdmin::RecordId id);
 
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void
-  flush (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::UnsupportedQoS));
+  flush (void);
   //@}
 
   /// Remove records that have exceeded max_record_life_.
-  void remove_old_records (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void remove_old_records (void);
 
 protected:
   /// Get the availability status
   /// @note must be called with locks held
   DsLogAdmin::AvailabilityStatus
-  get_availability_status_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  get_availability_status_i (void);
 
   /// Tells if the Log is scheduled to run now.
   /// @note must be called with locks held
-  CORBA::Boolean scheduled (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Boolean scheduled (void);
 
   /// Copy the attributes of the log being passed.
-  void copy_attributes (DsLogAdmin::Log_ptr log)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void copy_attributes (DsLogAdmin::Log_ptr log);
 
   /// Check if threshold reached.
-  void check_capacity_alarm_threshold (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void check_capacity_alarm_threshold (void);
 
   /// Reset capacity alarm threshold.
-  void reset_capacity_alarm_threshold (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void reset_capacity_alarm_threshold (void);
 
   /// Check that valid threshold values have been given.
   static CORBA::Boolean validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    const DsLogAdmin::CapacityAlarmThresholdList & threshs);
 
   /// Reset Log QoS
   void reset_log_qos (const DsLogAdmin::QoSList& qos);
 
   /// Validate log QoS
-  void validate_log_qos (const DsLogAdmin::QoSList& qos)
-    ACE_THROW_SPEC ((DsLogAdmin::UnsupportedQoS));
+  void validate_log_qos (const DsLogAdmin::QoSList& qos);
 
   /// Reset Week Mask
   ///
@@ -354,10 +281,7 @@ protected:
   /// Used to check whether week mask is valid.  If not, throws an
   /// InvalidTime, InvalidTimeInterval, or InvalidMask exception.
   ///
-  void validate_week_mask (const DsLogAdmin::WeekMask& masks)
-    ACE_THROW_SPEC ((DsLogAdmin::InvalidTime,
-                     DsLogAdmin::InvalidTimeInterval,
-                     DsLogAdmin::InvalidMask));
+  void validate_week_mask (const DsLogAdmin::WeekMask& masks);
 
 protected:
   /// Reference to the LogMgr servant

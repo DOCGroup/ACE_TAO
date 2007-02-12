@@ -16,14 +16,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 FTEC_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FTEC_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   Request_Context_Repository().allocate_slots(info);

@@ -15,14 +15,12 @@ TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler (void)
 
 void
 TAO_LB_LoadAlert_Handler::enable_alert (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_LoadAlert_Handler::enable_alert_excep (
     ::Messaging::ExceptionHolder *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_ERROR ((LM_ERROR,
@@ -32,14 +30,12 @@ TAO_LB_LoadAlert_Handler::enable_alert_excep (
 
 void
 TAO_LB_LoadAlert_Handler::disable_alert (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_LoadAlert_Handler::disable_alert_excep (
     ::Messaging::ExceptionHolder *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_ERROR ((LM_ERROR,

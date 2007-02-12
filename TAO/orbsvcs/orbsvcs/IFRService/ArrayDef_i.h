@@ -51,75 +51,59 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Return our definition kind.
 
   virtual void destroy ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Remove the repository entry.
 
   virtual void destroy_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::TypeCode_ptr type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::ULong length ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::ULong length_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void length (
       CORBA::ULong length)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void length_i (
       CORBA::ULong length)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::TypeCode_ptr element_type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::TypeCode_ptr element_type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual CORBA::IDLType_ptr element_type_def ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::IDLType_ptr element_type_def_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void element_type_def (
       CORBA::IDLType_ptr element_type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void element_type_def_i (
       CORBA::IDLType_ptr element_type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
 private:
   void destroy_element_type ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
   // Destroys an anonymous non-primitive element type.
 };
 

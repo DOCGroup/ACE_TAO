@@ -18,8 +18,6 @@ CORBA::Policy_ptr
 TAO_FT_ServerPolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &val)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
 
   if (type == FT::HEARTBEAT_ENABLED_POLICY)

@@ -31,14 +31,12 @@ TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
 
 char *
 TAO_LB_IORInterceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_LB_IORInterceptor");
 }
 
 void
 TAO_LB_IORInterceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Force the LoadManager reference to be released since the ORB's
   // lifetime is tied to object reference lifetimes.
@@ -48,14 +46,12 @@ TAO_LB_IORInterceptor::destroy (void)
 void
 TAO_LB_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int argc = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -89,7 +85,6 @@ void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
     const char *,
     PortableInterceptor::AdapterState state)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (state == PortableInterceptor::ACTIVE)
     {
@@ -101,7 +96,6 @@ void
 TAO_LB_IORInterceptor::adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
     PortableInterceptor::AdapterState state)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (state == PortableInterceptor::ACTIVE)
     {

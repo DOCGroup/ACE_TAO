@@ -55,50 +55,41 @@ public:
   /// Destructor
 
   virtual CORBA::ComponentIR::EventDef_ptr event (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::ComponentIR::EventDef_ptr event_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual void event (
       CORBA::ComponentIR::EventDef_ptr event
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   void event_i (
       CORBA::ComponentIR::EventDef_ptr event
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   virtual CORBA::Boolean is_a (
       const char *event_id
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   CORBA::Boolean is_a_i (
       const char *event_id
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   /// This can be the same for the three derived classes, so it is
   /// implemented here.
 
   virtual CORBA::Contained::Description *describe (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From Contained_i's pure virtual function.
 
   virtual CORBA::Contained::Description *describe_i (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // From Contained_i's pure virtual function.
 
 private:
   virtual CORBA::DefinitionKind def_kind (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   // Dummy method so we can consolidate derived class methods
   // in this 'abstract' base class.
 };

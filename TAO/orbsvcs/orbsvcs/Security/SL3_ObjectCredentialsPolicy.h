@@ -65,17 +65,13 @@ namespace TAO
        * SecurityLevel3::ObjectCredentialsPolicy interface.
        */
       //@{
-      virtual SecurityLevel3::OwnCredentialsList * creds_list ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::OwnCredentialsList * creds_list ();
 
-      virtual CORBA::PolicyType policy_type (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::PolicyType policy_type (void);
 
-      virtual CORBA::Policy_ptr copy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Policy_ptr copy (void);
 
-      virtual void destroy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy (void);
       //@}
 
     protected:

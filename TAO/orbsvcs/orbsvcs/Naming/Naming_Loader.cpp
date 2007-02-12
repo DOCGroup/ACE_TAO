@@ -71,7 +71,6 @@ CORBA::Object_ptr
 TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
                                   int argc,
                                   ACE_TCHAR *argv[])
-   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initializes the Naming Service. Returns -1
   // on an error.

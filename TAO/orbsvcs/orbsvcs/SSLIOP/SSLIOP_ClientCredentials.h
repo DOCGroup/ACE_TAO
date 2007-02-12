@@ -66,8 +66,7 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredentialsType creds_type ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsType creds_type ();
       //@}
 
       /**
@@ -77,41 +76,29 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * context_id (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual char * context_id (void);
 
-      virtual SecurityLevel3::Principal * client_principal ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::Principal * client_principal ();
 
-      virtual SecurityLevel3::StatementList * client_supporting_statements ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::StatementList * client_supporting_statements ();
 
-      virtual SecurityLevel3::ResourceNameList * client_restricted_resources ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::ResourceNameList * client_restricted_resources ();
 
-      virtual SecurityLevel3::Principal * target_principal ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::Principal * target_principal ();
 
-      virtual SecurityLevel3::StatementList * target_supporting_statements ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::StatementList * target_supporting_statements ();
 
-      virtual SecurityLevel3::ResourceNameList * target_restricted_resources ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::ResourceNameList * target_restricted_resources ();
 
-      virtual SecurityLevel3::OwnCredentials_ptr parent_credentials ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::OwnCredentials_ptr parent_credentials ();
 
-      virtual CORBA::Boolean client_authentication (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean client_authentication (void);
 
-      virtual CORBA::Boolean target_authentication (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean target_authentication (void);
 
-      virtual CORBA::Boolean confidentiality (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean confidentiality (void);
 
-      virtual CORBA::Boolean integrity (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean integrity (void);
       //@}
 
     protected:

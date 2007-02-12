@@ -70,8 +70,7 @@ public:
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                         RtecUDPAdmin::UDP_Addr_out addr);
 
   /// Prints out complete content of the address server. Useful for
   /// debugging.

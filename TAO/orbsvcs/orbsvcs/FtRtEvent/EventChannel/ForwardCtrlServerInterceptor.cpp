@@ -73,19 +73,15 @@ ForwardCtrlServerInterceptor::~ForwardCtrlServerInterceptor()
 }
 
 char * ForwardCtrlServerInterceptor::name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup("ForwardCtrlServerInterceptor");
 }
 
 void ForwardCtrlServerInterceptor::destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
-                                                    ACE_THROW_SPEC ((CORBA::SystemException,
-                                                    PortableInterceptor::ForwardRequest))
 {
   try{
     IOP::ServiceContext_var service_context =
@@ -107,8 +103,6 @@ void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerR
 
 void ForwardCtrlServerInterceptor::receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest))
 {
 }
 
@@ -135,7 +129,6 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
 
 
 void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::ServiceContext_var service_context;
   FT::ObjectGroupRefVersion version=0;
@@ -207,14 +200,10 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 }
 
 void ForwardCtrlServerInterceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
 {
 }
 
 void ForwardCtrlServerInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest))
 {
 }
 

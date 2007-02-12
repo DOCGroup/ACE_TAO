@@ -91,7 +91,6 @@ TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer (void)
 
 char *
 TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -100,7 +99,6 @@ TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::current_status (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -109,7 +107,6 @@ TAO::SSLIOP::CredentialsAcquirer::current_status (void)
 
 CORBA::ULong
 TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -120,7 +117,6 @@ TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
 
 CORBA::Any *
 TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
   throw CORBA::BAD_INV_ORDER ();
@@ -129,7 +125,6 @@ TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
     const CORBA::Any & /* acquisition_arguments */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
   throw CORBA::BAD_INV_ORDER ();
@@ -137,7 +132,6 @@ TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
 
 SecurityLevel3::OwnCredentials_ptr
 TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -186,7 +180,6 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 
 void
 TAO::SSLIOP::CredentialsAcquirer::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 

@@ -16,8 +16,6 @@ CORBA::Policy_ptr
 TAO_FT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &val)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
 
   if (type ==  FT::REQUEST_DURATION_POLICY)

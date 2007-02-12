@@ -52,24 +52,15 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    list_logs (void);
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    list_logs_by_id (void);
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+    find_log (DsLogAdmin::LogId id);
 
   /// Returns true if log exists, otherwise false
   bool exists (DsLogAdmin::LogId id);

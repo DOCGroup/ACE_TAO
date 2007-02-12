@@ -82,7 +82,6 @@ CORBA::Object_ptr
 TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                                      int argc,
                                      ACE_TCHAR *argv[])
-   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

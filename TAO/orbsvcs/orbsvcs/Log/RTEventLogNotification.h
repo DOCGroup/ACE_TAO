@@ -58,8 +58,7 @@ public:
   ~TAO_RTEventLogNotification (void);
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
 
 protected:
   // = Helper methods
@@ -69,8 +68,7 @@ protected:
   void obtainProxyConsumer (void);
 
   // Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_notification (const CORBA::Any& any);
 
 private:
   /// The ORB reference.

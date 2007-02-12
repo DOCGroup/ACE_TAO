@@ -54,13 +54,11 @@ namespace TAO
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::client_credentials() method.
-      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::ClientCredentials_ptr client_credentials ();
 
       /// Implementation of the SSLIOP-specific
       /// SecurityLevel3::request_is_local() method.
-      virtual CORBA::Boolean request_is_local ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Boolean request_is_local ();
 
       /// Return the SSL peer certificate associated with the
       /// current request as an octet sequence, i.e. a DER encoded
