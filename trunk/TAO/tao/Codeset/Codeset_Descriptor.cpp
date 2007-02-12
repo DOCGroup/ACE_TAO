@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    Codeset_Translator_Factory.cpp
+ *  @file    Codeset_Descriptor.cpp
  *
  *  $Id$
  *
