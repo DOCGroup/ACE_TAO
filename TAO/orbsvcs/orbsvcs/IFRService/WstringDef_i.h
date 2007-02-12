@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    WstringDef_i.h
-//
-// = DESCRIPTION
-//    WstringDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    WstringDef_i.h
+ *
+ *  $Id$
+ *
+ *  WstringDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_WSTRINGDEF_I_H
 #define TAO_WSTRINGDEF_I_H
@@ -35,40 +32,41 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_WstringDef_i
+ *
+ * @brief TAO_WstringDef_i
+ *
+ * Represents a bounded wstring (unbounded wstrings
+ * are included in PrimitiveDef).
+ */
 class TAO_IFRService_Export TAO_WstringDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_WstringDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a bounded wstring (unbounded wstrings
-  //    are included in PrimitiveDef).
-  //
 public:
+  /// Constructor.
   TAO_WstringDef_i (TAO_Repository_i *repo);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_WstringDef_i (void);
-  // Destructor.
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy ()
 ;
-  // Remove the repository entry.
 
   virtual void destroy_i ()
 ;
 
+  /// From IDLType_i's virtual function.
   virtual CORBA::TypeCode_ptr type ()
 ;
-  // From IDLType_i's virtual function.
 
+  /// From IDLType_i's virtual function.
   virtual CORBA::TypeCode_ptr type_i ()
 ;
-  // From IDLType_i's virtual function.
 
   virtual CORBA::ULong bound ()
 ;

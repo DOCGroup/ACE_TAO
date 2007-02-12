@@ -1,19 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Security_ORBInitializer.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Security_ORBInitializer.h
+ *
+ *  $Id$
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SECURITY_ORB_INITIALIZER_H
 #define TAO_SECURITY_ORB_INITIALIZER_H

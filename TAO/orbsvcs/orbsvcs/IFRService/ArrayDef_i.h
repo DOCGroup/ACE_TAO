@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ArrayDef_i.h
-//
-// = DESCRIPTION
-//    ArrayDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ArrayDef_i.h
+ *
+ *  $Id$
+ *
+ *  ArrayDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ARRAYDEF_I_H
 #define TAO_ARRAYDEF_I_H
@@ -35,28 +32,29 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_ArrayDef_i
+ *
+ * @brief TAO_ArrayDef_i
+ *
+ * Represents an IDL array type.
+ */
 class TAO_IFRService_Export TAO_ArrayDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_ArrayDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an IDL array type.
-  //
 public:
+  /// Constructor
   TAO_ArrayDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ArrayDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy ()
 ;
-  // Remove the repository entry.
 
   virtual void destroy_i ()
 ;
@@ -102,9 +100,9 @@ public:
 ;
 
 private:
+  /// Destroys an anonymous non-primitive element type.
   void destroy_element_type ()
 ;
-  // Destroys an anonymous non-primitive element type.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

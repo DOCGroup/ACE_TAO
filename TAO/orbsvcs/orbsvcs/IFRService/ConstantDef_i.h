@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ConstantDef_i.h
-//
-// = DESCRIPTION
-//    ConstantDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ConstantDef_i.h
+ *
+ *  $Id$
+ *
+ *  ConstantDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONSTANTDEF_I_H
 #define TAO_CONSTANTDEF_I_H
@@ -35,32 +32,33 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_ConstantDef_i
+ *
+ * @brief TAO_ConstantDef_i
+ *
+ * Represents a named constant.
+ */
 class TAO_IFRService_Export TAO_ConstantDef_i : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_ConstantDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a named constant.
-  //
 public:
+  /// Constructor
     TAO_ConstantDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ConstantDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe ()
 ;
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i ()
 ;
-  // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type ()
 ;

@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    EventPortDef_i.h
-//
-// = DESCRIPTION
-//    EventPortDef_i servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    EventPortDef_i.h
+ *
+ *  $Id$
+ *
+ *  EventPortDef_i servant class.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EVENTPORTDEF_I_H
 #define TAO_EVENTPORTDEF_I_H
@@ -48,11 +45,11 @@ class TAO_IFRService_Export TAO_EventPortDef_i
   //    and ConsumesDef_i inherit from this.
   //
 public:
+  //// Constructor
   TAO_EventPortDef_i (TAO_Repository_i *repo);
-  /// Constructor
 
+  //// Destructor
   virtual ~TAO_EventPortDef_i (void);
-  /// Destructor
 
   virtual CORBA::ComponentIR::EventDef_ptr event (
     );
@@ -79,19 +76,19 @@ public:
   /// This can be the same for the three derived classes, so it is
   /// implemented here.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i (
     );
-  // From Contained_i's pure virtual function.
 
 private:
+  /// Dummy method so we can consolidate derived class methods
+  /// in this 'abstract' base class.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Dummy method so we can consolidate derived class methods
-  // in this 'abstract' base class.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

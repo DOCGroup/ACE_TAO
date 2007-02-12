@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ValueMemberDef_i.h
-//
-// = DESCRIPTION
-//    ValueMemberDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ValueMemberDef_i.h
+ *
+ *  $Id$
+ *
+ *  ValueMemberDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEMEMBERDEF_I_H
 #define TAO_VALUEMEMBERDEF_I_H
@@ -35,32 +32,33 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_ValueMemberDef_i
+ *
+ * @brief TAO_ValeMemberDef_i
+ *
+ * Represents the definition of a valuemember structure.
+ */
 class TAO_IFRService_Export TAO_ValueMemberDef_i : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_ValeMemberDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the definition of a valuemember structure.
-  //
 public:
+  /// Constructor
   TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ValueMemberDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe ()
 ;
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i ()
 ;
-  // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type ()
 ;

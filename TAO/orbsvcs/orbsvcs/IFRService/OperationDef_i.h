@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    OperationDef_i.h
-//
-// = DESCRIPTION
-//    OperationDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    OperationDef_i.h
+ *
+ *  $Id$
+ *
+ *  OperationDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_OPERATIONDEF_I_H
 #define TAO_OPERATIONDEF_I_H
@@ -35,30 +32,31 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_OperationDef_i
+ *
+ * @brief TAO_OperationDef_i
+ *
+ * Represents the information needed to describe an operation
+ * of an interface.
+ */
 class TAO_IFRService_Export TAO_OperationDef_i : public virtual TAO_Contained_i
 {
-  // = TITLE
-  //    TAO_OperationDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the information needed to describe an operation
-  //    of an interface.
-  //
 public:
+  /// Constructor
   TAO_OperationDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_OperationDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();
-  // Return our definition kind.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe ();
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i ();
-  // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr result ();
 

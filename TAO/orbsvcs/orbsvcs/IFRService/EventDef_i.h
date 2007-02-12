@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    EventDef_i.h
-//
-// = DESCRIPTION
-//    EventDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    EventDef_i.h
+ *
+ *  $Id$
+ *
+ *  EventDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_EVENTDEF_I_H
 #define TAO_EVENTDEF_I_H
@@ -35,40 +32,41 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_EventDef_i
+ *
+ * @brief TAO_EventDef_i
+ *
+ * Represents an event definition. It refers to a ValueDef
+ * object that contains information about the event.
+ */
 class TAO_IFRService_Export TAO_EventDef_i : public virtual TAO_ExtValueDef_i
 {
-  // = TITLE
-  //    TAO_EventDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an event definition. It refers to a ValueDef
-  //    object that contains information about the event.
-  //
 public:
+  /// Constructor
     TAO_EventDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_EventDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy (
     );
-  // Remove the repository entry.
 
   virtual void destroy_i (
     );
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
     );
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i (
     );
-  // From Contained_i's pure virtual function.
 
   virtual CORBA::Boolean is_a (
       const char *event_id

@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    Contained_i.h
-//
-// = DESCRIPTION
-//    Contained servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Contained_i.h
+ *
+ *  $Id$
+ *
+ *  Contained servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_CONTAINED_I_H
 #define TAO_CONTAINED_I_H
@@ -35,25 +32,26 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_Contained_i
+ *
+ * @brief TAO_Contained_i
+ *
+ * Abstract base class for all IR objects that are contained
+ * by other IR objects.
+ */
 class TAO_IFRService_Export TAO_Contained_i : public virtual TAO_IRObject_i
 {
-  // = TITLE
-  //    TAO_Contained_i
-  //
-  // = DESCRIPTION
-  //    Abstract base class for all IR objects that are contained
-  //    by other IR objects.
-  //
 public:
+  /// Constructor.
   TAO_Contained_i (TAO_Repository_i *repo);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_Contained_i (void);
-  // Destructor.
 
+  /// Remove the repository entry.
   virtual void destroy (
     );
-  // Remove the repository entry.
 
   virtual void destroy_i (
     );
@@ -126,49 +124,55 @@ public:
       const char *new_version
     );
 
+  /// Called from TAO_IFR_Service_Utils::name_exists.
   static int same_as_tmp_name (const char *name);
-  // Called from TAO_IFR_Service_Utils::name_exists.
 
 protected:
+  /**
+   * Engine for move() with an extra 'cleanup'
+   * parameter. Since a section removal can be
+   * recursive, this need be done only at the top
+   * level.
+   */
   void move_i (
       CORBA::Container_ptr new_container,
       const char *new_name,
       const char *new_version,
       CORBA::Boolean cleanup
     );
-  // Engine for move() with an extra 'cleanup'
-  // parameter. Since a section removal can be
-  // recursive, this need be done only at the top
-  // level.
 
 private:
+  /// Check if <name> already exists in our container
   CORBA::Boolean name_exists (
       const char *name
     );
-  // Check if <name> already exists in our container
 
+  /// Recursively update the scoped name of our contents.
   void contents_name_update (
       ACE_TString stem,
       ACE_Configuration_Section_Key key
     );
-  // Recursively update the scoped name of our contents.
 
+  /**
+   * Mangle the names of references that are also
+   * defined in the scope, so a name clash will
+   * not occur when create_* is called. Create_*
+   * unmangles the names.
+   */
   void move_pre_process (
       CORBA::Container_ptr container,
       const char *contained_path,
       const char *name
     );
-  // Mangle the names of references that are also
-  // defined in the scope, so a name clash will
-  // not occur when create_* is called. Create_*
-  // unmangles the names.
 
+  /**
+   * Recursively calls move_i for definitions,
+   * as well as operations and attributes if
+   * applicable.
+   */
   void move_contents (
       CORBA::Container_ptr new_container
     );
-  // Recursively calls move_i for definitions,
-  // as well as operations and attributes if
-  // applicable.
 
 private:
   static const char *tmp_name_holder_;

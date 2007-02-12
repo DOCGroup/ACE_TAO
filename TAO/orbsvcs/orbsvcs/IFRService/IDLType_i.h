@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    IDLType_i.h
-//
-// = DESCRIPTION
-//    IDLType servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    IDLType_i.h
+ *
+ *  $Id$
+ *
+ *  IDLType servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDLTYPE_I_H
 #define TAO_IDLTYPE_I_H
@@ -36,32 +33,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Repository_i;
 
+/**
+ * @class TAO_IDLType_i
+ *
+ * @brief TAO_IDLType_i
+ *
+ * Abstract base class for all IR objects that represent
+ * OMG IDL types. Provides access to the TypeCode describing
+ * the type.
+ */
 class TAO_IFRService_Export TAO_IDLType_i : public virtual TAO_IRObject_i
 {
-  // = TITLE
-  //    TAO_IDLType_i
-  //
-  // = DESCRIPTION
-  //    Abstract base class for all IR objects that represent
-  //    OMG IDL types. Provides access to the TypeCode describing
-  //    the type.
-  //
 public:
+  /// Constructor.
   TAO_IDLType_i (TAO_Repository_i *repo);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_IDLType_i (void);
-  // Destructor.
-
+  /// Defined in concrete classes.
   virtual CORBA::TypeCode_ptr type ()
 
     = 0;
-  // Defined in concrete classes.
-
+  /// Defined in concrete classes.
   virtual CORBA::TypeCode_ptr type_i ()
 
     = 0;
-  // Defined in concrete classes.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

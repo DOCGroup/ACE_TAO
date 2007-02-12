@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ModuleDef_i.h
-//
-// = DESCRIPTION
-//    ModuleDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ModuleDef_i.h
+ *
+ *  $Id$
+ *
+ *  ModuleDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_MODULEDEF_I_H
 #define TAO_MODULEDEF_I_H
@@ -48,31 +45,31 @@ class TAO_IFRService_Export TAO_ModuleDef_i
   //    Represents a module definition.
   //
 public:
+  /// Constructor
   TAO_ModuleDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ModuleDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
 ;
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy ()
 ;
-  // Remove the repository entry.
 
+  /// Remove the repository entry.
   virtual void destroy_i ()
 ;
-  // Remove the repository entry.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe ()
 ;
-  // From Contained_i's pure virtual function.
 
+  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i ()
 ;
-  // From Contained_i's pure virtual function.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

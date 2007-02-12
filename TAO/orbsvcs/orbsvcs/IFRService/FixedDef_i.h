@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    FixedDef_i.h
-//
-// = DESCRIPTION
-//    FixedDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FixedDef_i.h
+ *
+ *  $Id$
+ *
+ *  FixedDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FIXEDDEF_I_H
 #define TAO_FIXEDDEF_I_H
@@ -35,39 +32,40 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_FixedDef_i
+ *
+ * @brief TAO_FixedDef_i
+ *
+ * Represents an IDL fixed type.
+ */
 class TAO_IFRService_Export TAO_FixedDef_i : public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_FixedDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an IDL fixed type.
-  //
 public:
+  /// Constructor
   TAO_FixedDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_FixedDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
     );
-  // Return our definition kind.
 
+  /// Remove the repository entry.
   virtual void destroy (
     );
-  // Remove the repository entry.
 
   virtual void destroy_i (
     );
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type (
     );
-  // From IDLType_i's pure virtual function.
 
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i (
     );
-  // From IDLType_i's pure virtual function.
 
   virtual CORBA::UShort digits (
     );
