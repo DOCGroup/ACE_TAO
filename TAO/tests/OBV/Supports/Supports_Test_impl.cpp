@@ -153,7 +153,7 @@ test_impl::pass_vt_graph_inout (
 }
 
 void
-test_impl::start (void) ACE_THROW_SPEC ((CORBA::SystemException))
+test_impl::start (void)
 {
 }
 
