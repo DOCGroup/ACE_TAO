@@ -1,0 +1,21 @@
+//$Id$:
+
+#ifndef CIAO_HELLO_IDL
+#define CIAO_HELLO_IDL
+
+#include <Components.idl>
+
+module Hello
+{
+  interface ReadMessage
+  {
+    string get_message();
+  };
+
+  eventtype TimeOut
+  {
+    public string data;
+  };
+};
+
+#endif /* CIAO_HELLO_IDL */
