@@ -1,3 +1,9 @@
+Tue Feb 13 07:41:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Metrics.idl
+        * orbsvcs/orbsvcs/Metrics/*:
+          Removed, wasn't maintained for years
+
 Mon Feb 12 20:15:22 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
