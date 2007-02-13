@@ -1997,7 +1997,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 if (av[i][4] == 'p' && av[i][5] =='s' && '\0' == av[i][6])
                   {
-                    // DDS DCSP type support.
+                    // DDS DCPS type support.
                     be_global->gen_dcps_type_support (true);
                   }
                 else
@@ -2529,6 +2529,10 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
       ACE_TEXT ("is thru-POA collocation\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type definitions.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
