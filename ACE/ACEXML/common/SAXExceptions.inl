@@ -1,7 +1,7 @@
 // -*- C++ -*- $Id$
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_SAXException::message (void)
+ACEXML_SAXException::message (void) const
 {
   return (this->message_ == 0 ?
           ACEXML_Exception::null_ :
