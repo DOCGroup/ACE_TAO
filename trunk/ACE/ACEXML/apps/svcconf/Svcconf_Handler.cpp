@@ -147,6 +147,11 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                               mp->name ()));
                   mp->name (active_info->name ());
                 }
+              ACE_Service_Type *stype
+                = ACE_Service_Config::create_service_type (active_info->name (),
+                                                           stp,
+                                                           svc_dll,
+                                                           active_info->active ());
 
               if (mt->init (args.argc (), args.argv ()) == -1
                   || this->stream_->push (mt) == -1)

@@ -1,18 +1,22 @@
+Tue Feb 13 20:33:58 UTC 2007  Krishnakumar B  <kitty@dre.vanderbilt.edu>
+
+        * THANKS: Added gzeleniy@gmail.com to the THANKS list.
+
 Tue Feb 13 15:35:54 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.{h,inl,cpp}:
 
           Refactoring to simplify the TSS usage, reduce overhead and
           eliminate a memory leak.
-          
+
         * ace/Service_Gestalt.cpp:
-        
+
           Fixed a memory leak in Service_Type_Dynamic_Guard dtor. Updated
           logging.
 
         * ace/Dynamic_Service_Base.cpp:
         * ace/Dynamic_Service_Dependency.cpp:
-        
+
           Updated to use SC::instance () to better express the contract
           for these classes. They simply don't need to be aware whether
           they are using a global, or a TSS-local gestalt .
