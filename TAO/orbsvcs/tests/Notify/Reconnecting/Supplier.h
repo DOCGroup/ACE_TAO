@@ -27,33 +27,27 @@ class StructuredPushSupplier_i : public virtual POA_CosNotifyComm::StructuredPus
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_structured_push_supplier (
-    );
+  virtual void disconnect_structured_push_supplier (void);
 };
 
 class SequencePushSupplier_i : public virtual POA_CosNotifyComm::SequencePushSupplier
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_sequence_push_supplier (
-    );
+  virtual void disconnect_sequence_push_supplier (void);
 };
 
 class AnyPushSupplier_i : public virtual POA_CosNotifyComm::PushSupplier
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_push_supplier (
-    );
+  virtual void disconnect_push_supplier (void);
 };
 
 class ReconnectionCallback_i : public virtual POA_NotifyExt::ReconnectionCallback
@@ -71,7 +65,7 @@ public:
 
   size_t reconnect_count () const;
 
-  virtual void reconnect (CORBA::Object_ptr reconnection)
+  virtual void reconnect (CORBA::Object_ptr reconnection);
 
   virtual CORBA::Boolean is_alive (void);
 
