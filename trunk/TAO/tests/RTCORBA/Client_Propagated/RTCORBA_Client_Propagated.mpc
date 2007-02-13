@@ -20,7 +20,7 @@ project(*Server): rt_server {
 }
 
 project(*Client): rt_client, interceptors {
-  after += *Server
+  after += *idl
   Source_Files {
     testC.cpp
     interceptors.cpp

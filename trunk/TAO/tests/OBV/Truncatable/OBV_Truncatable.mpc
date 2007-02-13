@@ -27,7 +27,6 @@ project(*Server): taoexe, portableserver, valuetype {
 
 project(*Client): taoexe, valuetype {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
   }
