@@ -1,3 +1,17 @@
+Tue Feb 13 12:59:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Portable_Interceptors/AdvSlotExt/AdvSlotExt.mpc:
+
+          Re-arranged the generated source files so that they are at the
+          beginning (like MPC would do if it were automatically generating
+          the list of source files).  This is required for template
+          instantiation to work properly for Visual Age 6.0.
+
+        * tests/Server_Connection_Purging/client.cpp:
+
+          Decreased the number of connections from 80 to 55 to support
+          platforms with limited resources.
+
 Tue Feb 13 08:10:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/AMI.mpc:
