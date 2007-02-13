@@ -51,6 +51,47 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   return ACE_Service_Config::current ()->parse_args (argc, argv);
 }
 
+
+/// Return the global configuration instance. Allways returns the same
+/// instance
+ACE_INLINE ACE_Service_Gestalt *
+ACE_Service_Config::global (void)
+{
+  return ACE_SERVICE_CONFIG_SINGLETON::instance ();
+}
+
+
+/// Return the configuration instance, considered "global" in the
+/// current thread. This may be the same as instance(), but on some
+/// occasions, it may be a different one. For example,
+/// ACE_Service_Config_Guard provides a way of temporarily replacing
+/// the "current" configuration instance in the context of a thread.
+ACE_INLINE ACE_Service_Gestalt *
+ACE_Service_Config::instance (void)
+{
+  return  ACE_SERVICE_CONFIG_SINGLETON::instance ()->tss_->ptr ();
+}
+
+
+/// Return the configuration instance, considered "global" in the
+/// current thread. This may be the same as instance(), but on some
+/// occasions, it may be a different one. For example,
+/// ACE_Service_Config_Guard provides a way of temporarily replacing
+/// the "current" configuration instance in the context of a thread.
+ACE_INLINE ACE_Service_Gestalt *
+ACE_Service_Config::current (void)
+{
+  return  ACE_SERVICE_CONFIG_SINGLETON::instance ()->tss_->ptr ();
+}
+
+/// A mutator to set the "current" (TSS) gestalt instance.
+ACE_INLINE ACE_Service_Gestalt*
+ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
+{
+  return  ACE_SERVICE_CONFIG_SINGLETON::instance ()->tss_->ptr (newcurrent);
+}
+
+
 // Compare two service descriptors for equality.
 
 ACE_INLINE bool
