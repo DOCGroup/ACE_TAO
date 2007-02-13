@@ -26,6 +26,7 @@ project(*Client): messaging, taoexe, portableserver, ami {
     client.cpp
     ami_testS.cpp
     ami_testC.cpp
+    ami_test_i.cpp
   }
   IDL_Files {
   }
