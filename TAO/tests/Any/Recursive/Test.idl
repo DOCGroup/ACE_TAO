@@ -133,6 +133,21 @@ module Test
     OctetSeq octet_seq_val;
   };
 
+  // --------------------------
+
+  enum ValueSort2 {
+    SYMBOL_TYPE
+  };
+
+  struct Symbol {
+    string name;
+  };
+
+  union NonRecursiveUnionWithStringStruct switch (ValueSort2) {
+  case SYMBOL_TYPE:
+    Symbol symbol_val;
+  };
+
   /// Simple test interface.
   interface Hello
   {
