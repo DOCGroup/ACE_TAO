@@ -1,3 +1,84 @@
+Tue Feb 13 14:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/simple/CodeSets_simple.mpc:
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+        * tests/Exposed_Policies/Exposed_Policies.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/Forwarding/Forwarding.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/IPV6/IPV6_Hello.mpc:
+        * tests/Leader_Followers/Leader_Followers.mpc:
+        * tests/LongUpcalls/LongUpcalls.mpc:
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/MT_Client/MT_Client.mpc:
+        * tests/MT_Server/MT_Server.mpc:
+        * tests/MT_Timeout/MT_Timeout.mpc:
+        * tests/Multiple/Multiple.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Muxing/Muxing.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
+        * tests/Ondemand_Write/Ondemand_Write.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * tests/Parallel_Connect_Strategy/Parallel_Connect_Strategy.mpc:
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+        * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
+        * tests/Portable_Interceptors/Bug_2510_Regression/Bug_2510_Regression.mpc:
+        * tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/PICurrent/PI_PICurrent.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc:
+        * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Conn.mpc:
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
+        * tests/RTCORBA/Dynamic_Thread_Pool/RT_Dynamic_Thread_Pool.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
+        * tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Smart_Proxies/Benchmark/SP_Benchmark.mpc:
+        * tests/Smart_Proxies/dtor/dtor.mpc:
+        * tests/Smart_Proxies/On_Demand/SP_On_Demand.mpc:
+        * tests/Smart_Proxies/Policy/SP_Policy.mpc:
+        * tests/Smart_Proxies/Smart_Proxies.mpc:
+        * tests/Stack_Recursion/Stack_Recursion.mpc:
+        * tests/Strategies/Strategies.mpc:
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/Typedef_String_Array/typedef_string_array.mpc:
+          Simplified these mpc files, these all have a custom idl project
+          so the client and server can both have an after on this idl
+          project, the client doesn't need an after on the server
+
 Tue Feb 13 14:09:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:

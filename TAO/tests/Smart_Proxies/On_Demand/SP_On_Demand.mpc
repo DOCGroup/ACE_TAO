@@ -23,7 +23,6 @@ project(*Server): taoserver, smart_proxies {
 
 project(*Client): taoclient, smart_proxies {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
     Smart_Proxy_Impl.cpp
