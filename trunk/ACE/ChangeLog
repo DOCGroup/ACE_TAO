@@ -1,3 +1,8 @@
+Tue Feb 13 14:44:06 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Removed VxWorks 5.4.2 support, we haven't build for it in years
+
 Tue Feb 13 12:58:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/common/Exception.h:
