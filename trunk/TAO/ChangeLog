@@ -1,3 +1,14 @@
+Tue Feb 13 08:10:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/AMI.mpc:
+        * tests/AMI/ami_test_i.cpp:
+        * tests/AMI/ami_test_i.h:
+        * tests/AMI/client.cpp:
+        * tests/AMI/run_test.pl:
+        * tests/AMI/simple_client.cpp:
+          Extended this test to detect argument corruption when using AMI
+          collocated. This bug is not fixed, just adding a new regression
+
 Tue Feb 13 07:41:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Metrics.idl
