@@ -1,3 +1,8 @@
+Tue Feb 13 14:09:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+          Fixed compile error
+
 Tue Feb 13 14:08:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/ami_test_i.cpp:
