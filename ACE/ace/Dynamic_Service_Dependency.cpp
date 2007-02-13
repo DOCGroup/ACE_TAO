@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 
 ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_TCHAR *principal)
 {
-  this->init (ACE_Service_Config::current (), principal);
+  this->init (ACE_Service_Config::instance (), principal);
 }
 
 ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Service_Gestalt *cfg,
