@@ -260,6 +260,13 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   ::perform_invocation<Test::NonRecursiveUnionWithEnum> (hello,
                                                          the_any);
+
+  // Non-recursive member case with recursive struct .
+
+  Test::NonRecursiveUnionWithStringStruct val2;
+  the_any <<= val2;
+
+  ::perform_invocation<Test::NonRecursiveUnionWithStringStruct> (hello, the_any);
 }
 
 
@@ -442,8 +449,8 @@ main (int argc, char *argv[])
       static test_func const tests[] =
         {
           recursive_struct_test
-          , nested_recursive_struct_test
           , recursive_union_test
+          , nested_recursive_struct_test
           , indirectly_recursive_valuetype_test
           , directly_recursive_valuetype_test
 #if TAO_HAS_MINIMUM_CORBA == 0
