@@ -30,16 +30,15 @@ ACE_RCSID (ace,
 
 ///
 ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
-  : saved_ (ACE_Service_Config::instance ())
+  : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) Service_Config_Guard:<ctor>")
-                ACE_LIB_TEXT (" - repo=%@ superceded by repo=%@\n"),
+                ACE_LIB_TEXT ("(%P|%t) SCG::ctor, repo=%@ - guard with %@\n"),
                 this->saved_->repo_,
                 psg->repo_));
 
-  // Modify the TSS if the repo has changed
+  // Modify the TSS - no locking needed
   if (saved_ != psg)
       (void)ACE_Service_Config::current (psg);
 }
@@ -51,8 +50,7 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) Service_Config_Guard:<dtor>")
-                ACE_LIB_TEXT (" - new repo=%@\n"),
+                ACE_LIB_TEXT ("(%P|%t) SCG::dtor, repo=%@ - un-guard\n"),
                 this->saved_->repo_));
 }
 
@@ -75,25 +73,6 @@ int ACE_Service_Config::be_a_daemon_ = 0;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
-
-
-///
-ACE_Service_Config::TSS_Resources::TSS_Resources (void) 
-  : ptr_ (ACE_Service_Config::global()) 
-{
-}
-
-///
-ACE_Service_Gestalt *ACE_Service_Config::TSS_Resources::ptr () const 
-{
-  return ptr_;
-}
-
-///
-ACE_Service_Gestalt *ACE_Service_Config::TSS_Resources::ptr (ACE_Service_Gestalt *n) 
-{
-  return ptr_ = n;
-}
 
 
 void
@@ -308,6 +287,104 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
                                       ignore_debug_flag);
 }
 
+/// Return the global configuration instance. Allways returns the same
+/// instance
+ACE_Service_Gestalt *
+ACE_Service_Config::global (void)
+{
+  return ACE_Singleton<ACE_Service_Config, ACE_SYNCH_MUTEX>::instance ();
+}
+
+
+///
+ACE_Service_Gestalt *
+ACE_Service_Config::instance (void)
+{
+  return  ACE_Service_Config::current ();
+}
+
+
+// A thread-specific storage to keep a pointer to the (current) global
+// configuration. Using a pointer to avoid the order of initialization
+// debacle possible when using static class instances. The memory is
+// dynamicaly allocated and leaked from current()
+
+/// Provides access to the static ptr, containing the TSS
+/// accessor. Ensures the desired order of initialization, even when
+/// other static initializers need the value.
+ACE_Service_Config::TSS_Service_Gestalt_Ptr *
+ACE_Service_Config::impl_ (void)
+{
+  /// A "straight" static ptr does not work in static builds, because
+  /// some static initializer may call current() method and assign
+  /// value to instance_ *before* the startup code has had a chance to
+  /// initialize it . This results in instance_ being "zeroed" out
+  /// after it was assigned the correct value. Having a method scoped
+  /// static guarantees that the first time the method is invoked, the
+  /// instance_ will be initialized before returning.
+
+  static TSS_Service_Gestalt_Ptr * instance_ = 0;
+
+  // We can't possibly rely on ACE_STATIC_OBJECT_LOCK or any other
+  // object that may be managed by the Object Manager. It is very
+  // likely we are called in a static initializer context, before the
+  // ACE_Object_Manager has been instantiated. This of course only
+  // matters for threaded environments.
+  ACE_MT (static ACE_SYNCH_RECURSIVE_MUTEX guardian_);
+
+  if (instance_ == 0)
+    {
+      // TSS not initialized yet - first thread to hit this, so doing
+      // the double-checked locking thing
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                guardian_, 0));
+
+      if (instance_ == 0)
+        ACE_NEW_RETURN (instance_,
+                        TSS_Service_Gestalt_Ptr,
+                        0);
+    }
+
+  return instance_;
+}
+
+/// Return the configuration instance, considered "global" in the
+/// current thread. This may be the same as instance(), but on some
+/// occasions, it may be a different one. For example,
+/// ACE_Service_Config_Guard provides a way of temporarily replacing
+/// the "current" configuration instance in the context of a thread.
+ACE_Service_Gestalt *
+ACE_Service_Config::current (void)
+{
+  TSS_Service_Gestalt_Ptr * const impl = ACE_Service_Config::impl_ ();
+  if (impl == 0)
+    return 0;
+
+  ACE_Service_Gestalt* & gestalt =
+    ACE_TSS_GET (impl, TSS_Resources)->ptr_;
+
+  if (gestalt == 0)
+    gestalt = ACE_Service_Config::global ();
+
+  return gestalt;
+}
+
+/// A mutator to set the "current" (TSS) gestalt instance.
+ACE_Service_Gestalt*
+ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
+{
+  TSS_Service_Gestalt_Ptr * const impl = ACE_Service_Config::impl_ ();
+  if (impl == 0)
+    return 0;
+
+  ACE_Service_Gestalt* & gestalt =
+    ACE_TSS_GET (impl, TSS_Resources)->ptr_;
+
+  gestalt = newcurrent;
+
+  return gestalt;
+}
+
 // This method has changed to return the gestalt instead of the
 // container, underlying the service repository and defined
 // ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). This way
@@ -319,14 +396,14 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 ACE_Service_Gestalt *
 ACE_Service_Config::static_svcs (void)
 {
-  return ACE_Service_Config::instance ();
+  return ACE_Service_Config::current ();
 }
 
 ///
 int
 ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
 {
-  return ACE_Service_Config::instance ()->insert (stsd);
+  return ACE_Service_Config::current ()->insert (stsd);
 }
 
 
@@ -499,14 +576,11 @@ ACE_Service_Config::reconfigure (void)
 int
 ACE_Service_Config::close (void)
 {
-  int result1 = ACE_Service_Config::instance ()->close ();
+  int result1 = ACE_Service_Config::current ()->close ();
 
   // Delete the service repository.  All the objects inside the
   // service repository should already have been finalized.
   int result2 = ACE_Service_Config::close_svcs ();
-
-  // Do away with the Singleton
-  ACE_SERVICE_CONFIG_SINGLETON::close ();
 
   return (result1 | result2);
 }
@@ -517,7 +591,7 @@ ACE_Service_Config::close_svcs (void)
   ACE_TRACE ("ACE_Service_Config::close_svcs");
 
   ACE_Service_Repository::close_singleton ();
-  ACE_Service_Config::current (global ());
+  ACE_Service_Config::current (0);
   return 0;
 }
 

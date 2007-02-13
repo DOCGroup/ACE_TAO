@@ -134,11 +134,12 @@ TAO_EC_ProxyPushSupplier::cleanup_i (void)
 }
 
 void
-TAO_EC_ProxyPushSupplier::deactivate (void) throw ()
+TAO_EC_ProxyPushSupplier::deactivate (void) ACE_THROW_SPEC (())
 {
   try
     {
-      PortableServer::ObjectId id = this->object_id ();
+      PortableServer::ObjectId id =
+        this->object_id ();
       this->default_POA_->deactivate_object (id);
     }
   catch (const CORBA::Exception&)
@@ -169,7 +170,7 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    --this->refcount_;
+    this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
   }
@@ -197,7 +198,8 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
     if (this->is_connected_i () == 0)
       return 0;
 
-    result = this->child_->filter (event, qos_info);
+    result =
+      this->child_->filter (event, qos_info);
   }
   return result;
 }
@@ -219,7 +221,8 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
     if (this->is_connected_i () == 0)
       return 0;
 
-    result = this->child_->filter_nocopy (event, qos_info);
+    result =
+      this->child_->filter_nocopy (event, qos_info);
   }
   return result;
 }

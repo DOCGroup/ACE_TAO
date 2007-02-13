@@ -424,6 +424,12 @@ public:
   bool gen_direct_collocation (void) const;
   // Check if we want to generate Direct collocation stubs.
 
+  void use_raw_throw (bool);
+  // Set replacement of 'ACE_THROW_SPEC' with 'throw'.
+
+  bool use_raw_throw (void) const;
+  // Check if raw 'throw' generation option is set.
+
   void opt_tc (bool);
   // Set optimized typecodes.
 
@@ -691,6 +697,9 @@ private:
 
   bool gen_direct_collocation_;
   // are we generating Direct collocated stubs?
+
+  bool use_raw_throw_;
+  // Another possible option if the above is TRUE.
 
   bool opt_tc_;
   // do we generate optimized typecodes?

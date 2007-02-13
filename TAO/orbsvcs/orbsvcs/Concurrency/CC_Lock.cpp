@@ -75,7 +75,8 @@ CC_Lock::try_lock (void)
           return 0;
         }
       else
-        throw CORBA::INTERNAL ();
+        ACE_THROW_RETURN (CORBA::INTERNAL (),
+                          0);
     }
   ACE_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",

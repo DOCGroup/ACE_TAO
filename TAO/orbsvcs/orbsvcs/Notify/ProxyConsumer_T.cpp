@@ -29,6 +29,9 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotifica
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   CosNotifyChannelAdmin::SupplierAdmin_var ret;
 
@@ -41,6 +44,10 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (void)
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType
+                   ))
 {
   TAO_Notify_EventTypeSeq seq_added (added);
   TAO_Notify_EventTypeSeq seq_removed (removed);
@@ -60,6 +67,7 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::E
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
 TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     this->obtain_types (mode, this->event_manager().subscription_types ());

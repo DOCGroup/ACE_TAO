@@ -68,7 +68,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
           << be_idt << be_idt_nl
-          << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
+          << node->name () << "_ptr p" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
           << "}";
@@ -77,7 +78,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
-          << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
+          << node->name () << "_ptr p" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::release (p);" << be_uidt_nl
           << "}";
@@ -95,7 +97,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
           << "const " << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr)" << be_uidt << be_uidt_nl
+          << "TAO_OutputCDR & cdr" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "return ";
 
@@ -339,11 +342,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_preactivate (void)" << be_nl
+          << node->full_name () << "::ciao_preactivate (void)" << be_idt_nl
+          << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
+          << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_postactivate (void)" << be_nl
+          << node->full_name () << "::ciao_postactivate (void)" << be_idt_nl
+          << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
+          << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl;
     }

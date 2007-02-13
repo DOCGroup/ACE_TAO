@@ -13,12 +13,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TimeBase::TimeT
 TAO_FT_Request_Duration_Policy::request_duration_policy_value (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->request_duration_;
 }
 
 CORBA::PolicyType
 TAO_FT_Request_Duration_Policy::policy_type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return FT::REQUEST_DURATION_POLICY;
 }
@@ -28,7 +30,8 @@ TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val)
 {
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                      CORBA::Policy::_nil ());
 
   TAO_FT_Request_Duration_Policy *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -51,6 +54,7 @@ TAO_FT_Request_Duration_Policy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_FT_Request_Duration_Policy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FT_Request_Duration_Policy* tmp;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Request_Duration_Policy (*this),
@@ -62,6 +66,7 @@ TAO_FT_Request_Duration_Policy::copy (void)
 
 void
 TAO_FT_Request_Duration_Policy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -89,6 +94,7 @@ TAO_FT_Request_Duration_Policy::set_time_value (ACE_Time_Value &time_value)
 
 FT::HeartbeatPolicyValue
 TAO_FT_Heart_Beat_Policy::heartbeat_policy_value (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::HeartbeatPolicyValue val;
   val.heartbeat = this->heartbeat_;
@@ -104,7 +110,8 @@ TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
 {
   FT::HeartbeatPolicyValue *value;
   if ((val >>= value) == 0)
-    throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                      CORBA::Policy::_nil ());
 
   TAO_FT_Heart_Beat_Policy *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -120,6 +127,7 @@ TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
 
 CORBA::PolicyType
 TAO_FT_Heart_Beat_Policy::policy_type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return FT::HEARTBEAT_POLICY;
 }
@@ -127,6 +135,7 @@ TAO_FT_Heart_Beat_Policy::policy_type (void)
 
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FT_Heart_Beat_Policy * tmp;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Policy (*this),
@@ -148,6 +157,7 @@ TAO_FT_Heart_Beat_Policy::clone (void) const
 
 void
 TAO_FT_Heart_Beat_Policy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -175,6 +185,7 @@ TAO_FT_Heart_Beat_Policy::set_time_value (ACE_Time_Value &time_value,
 
 CORBA::Boolean
 TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->heartbeat_enabled_value_;
 }
@@ -186,7 +197,8 @@ TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val)
   CORBA::Boolean value;
 
   if ((val >>= CORBA::Any::to_boolean (value)) == 0)
-    throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                      CORBA::Policy::_nil ());
 
   TAO_FT_Heart_Beat_Enabled_Policy *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -199,6 +211,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val)
 
 CORBA::PolicyType
 TAO_FT_Heart_Beat_Enabled_Policy::policy_type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return FT::HEARTBEAT_ENABLED_POLICY;
 }
@@ -206,6 +219,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::policy_type (void)
 
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FT_Heart_Beat_Enabled_Policy * tmp;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Enabled_Policy (*this),
@@ -228,6 +242,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::clone (void) const
 
 void
 TAO_FT_Heart_Beat_Enabled_Policy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

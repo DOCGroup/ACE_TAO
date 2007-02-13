@@ -32,11 +32,16 @@ public:
   int svc (void);
 
   // = The skeleton methods
-  virtual void start (const Test::Session_List &other_sessions);
+  virtual void start (const Test::Session_List &other_sessions)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Test::Already_Running,
+                     Test::No_Peers));
 
-  virtual Test::Payload* echo_payload (const Test::Payload &the_payload);
+  virtual Test::Payload* echo_payload (const Test::Payload &the_payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
@@ -45,13 +50,15 @@ protected:
 private:
   /// Helper function used to report any problems and destroy local
   /// resources
-  void terminate (CORBA::Boolean success);
+  void terminate (CORBA::Boolean success)
+    ACE_THROW_SPEC (());
 
   /// Return 1 if all the work in this session has been completed
   int more_work (void) const;
 
   /// Validate all the connections
-  void validate_connections (void);
+  void validate_connections (void)
+    ACE_THROW_SPEC (());
 
 private:
   /// Synchronize the internal state

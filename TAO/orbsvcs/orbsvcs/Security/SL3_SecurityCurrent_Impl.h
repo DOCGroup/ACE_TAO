@@ -61,11 +61,11 @@ namespace TAO
       /// Return the Credentials received from the client associate with
       /// the current request.
       virtual SecurityLevel3::ClientCredentials_ptr client_credentials ()
-        = 0;
+        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
       /// Is the current request local?
       virtual CORBA::Boolean request_is_local ()
-        = 0;
+        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
       //@}
 
       /// Return the unique tag that identifies the concrete subclass.

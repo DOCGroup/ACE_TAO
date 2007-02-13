@@ -68,7 +68,7 @@ main (int argc, char *argv[])
         PortableInterceptor::register_orb_initializer (initializer.in ());
 
         CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
         if (parse_args (argc, argv) != 0)
         return 1;

@@ -12,11 +12,13 @@ Ping_Service::Ping_Service (CORBA::ORB_ptr orb)
 
 void
 Ping_Service::ping (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Ping_Service::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

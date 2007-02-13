@@ -101,6 +101,9 @@ TAO_EventLogFactory_i::create (
     CORBA::ULongLong max_size,
     const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
     DsLogAdmin::LogId_out id_out)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidLogFullAction,
+                   DsLogAdmin::InvalidThreshold))
 {
   this->create_i (full_action,
 		  max_size,
@@ -132,6 +135,10 @@ TAO_EventLogFactory_i::create_with_id (
     DsLogAdmin::LogFullActionType full_action,
     CORBA::ULongLong max_size,
     const DsLogAdmin::CapacityAlarmThresholdList & thresholds)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::LogIdAlreadyExists,
+                   DsLogAdmin::InvalidLogFullAction,
+                   DsLogAdmin::InvalidThreshold))
 {
   this->create_with_id_i (id,
 			  full_action,
@@ -189,12 +196,14 @@ TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_EventLogFactory_i::obtain_push_supplier (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return consumer_admin_->obtain_push_supplier ();
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_EventLogFactory_i::obtain_pull_supplier (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
   return consumer_admin_->obtain_pull_supplier ();

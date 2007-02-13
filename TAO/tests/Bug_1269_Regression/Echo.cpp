@@ -20,6 +20,7 @@ Echo::Echo(CORBA::ORB_ptr orb,
 
 void
 Echo::echo_payload(Test::Payload const &)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->abort_counter_--;
 

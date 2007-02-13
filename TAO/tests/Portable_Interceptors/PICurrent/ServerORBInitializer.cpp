@@ -16,12 +16,14 @@ void
 ServerORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
     )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
     info->resolve_initial_references ("PICurrent");

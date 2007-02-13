@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
 #include "tao/Stub.h"
+#include "tao/Environment.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/IFR_Client_Adapter.h"
 
@@ -75,13 +76,16 @@ TAO_ServantBase::~TAO_ServantBase (void)
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA (void)
 {
-  CORBA::Object_var object = TAO_ORB_Core_instance ()->root_poa ();
+  CORBA::Object_var object =
+    TAO_ORB_Core_instance ()->root_poa ();
 
-  return PortableServer::POA::_narrow (object.in ());
+  return PortableServer::POA::_narrow (object.in ()
+                                      );
 }
 
 CORBA::Boolean
-TAO_ServantBase::_is_a (const char *logical_type_id)
+TAO_ServantBase::_is_a (const char *logical_type_id
+                        )
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
@@ -98,17 +102,20 @@ TAO_ServantBase::_get_interface (void)
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ());
+        TAO_ORB_Core::ifr_client_adapter_name ()
+      );
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTF_REPOS ();
+      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
+                        0);
     }
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
   return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
-                                 this->_interface_repository_id ());
+                                 this->_interface_repository_id ()
+                                );
 }
 
 CORBA::Object_ptr
@@ -168,9 +175,11 @@ TAO_ServantBase::_create_stub (void)
     }
   else
     {
-      PortableServer::POA_var poa = this->_default_POA ();
+      PortableServer::POA_var poa =
+        this->_default_POA ();
 
-      CORBA::Object_var object = poa->servant_to_reference (this);
+      CORBA::Object_var object =
+        poa->servant_to_reference (this);
 
       // Get the stub object
       stub = object->_stubobj ();
@@ -188,7 +197,8 @@ TAO_ServantBase::_create_stub (void)
 
 void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
                                                    void * servant_upcall,
-                                                   void * derived_this)
+                                                   void * derived_this
+                                                   )
 {
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
@@ -222,7 +232,10 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
       // the right operation on the skeleton class, and marshal any
       // results.  De/marshaling will only occur in the uncollocated
       // case.
-      skel (req, servant_upcall, derived_this);
+      skel (req,
+            servant_upcall,
+            derived_this
+           );
 
       /*
        * Dispatch resolution specialization add hook.
@@ -240,7 +253,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
           req.tao_send_reply ();
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
@@ -261,7 +274,8 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
 
 void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                                                     void * servant_upcall,
-                                                    void * derived_this)
+                                                    void * derived_this
+                                                    )
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();
@@ -290,7 +304,10 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       // the right operation on the skeleton class, and marshal any
       // results.  De/marshaling will only occur in the uncollocated
       // case.
-      skel (req, servant_upcall, derived_this);
+      skel (req,
+            servant_upcall,
+            derived_this
+           );
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent

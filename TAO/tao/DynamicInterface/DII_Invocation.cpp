@@ -16,7 +16,6 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -50,6 +49,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
   Dynamic::ParameterList *
   DII_Invocation::arguments (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
@@ -57,7 +57,8 @@ namespace TAO
 
     Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-    TAO::Argument **args = this->details_.args ();
+    TAO::Argument **args =
+      this->details_.args ();
 
     if (this->details_.args_num () > 1)
       {
@@ -74,14 +75,17 @@ namespace TAO
 
   Invocation_Status
   DII_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
     return Synch_Twoway_Invocation::remote_twoway (max_wait_time);
   }
 
   Invocation_Status
   DII_Invocation::handle_user_exception (TAO_InputCDR &cdr)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
-    Reply_Guard mon (this, TAO_INVOKE_FAILURE);
+    Reply_Guard mon (this,
+                     TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
       {
@@ -102,14 +106,18 @@ namespace TAO
     // Pull the exception ID out of the marshaling buffer.
     if (tmp_stream.read_string (buf.inout ()) == 0)
       {
-        throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
+        ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
+                                          CORBA::COMPLETED_YES),
+                          TAO_INVOKE_FAILURE);
       }
 
     for (CORBA::ULong i = 0;
          this->excp_list_ != 0 && i < this->excp_list_->count ();
          i++)
       {
-          CORBA::TypeCode_var tc = this->excp_list_->item (i);
+          CORBA::TypeCode_var tc =
+            this->excp_list_->item (i
+                                   );
 
           const char *xid = tc->id ();
 
@@ -131,7 +139,8 @@ namespace TAO
 
           mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
-          throw ::CORBA::UnknownUserException (any);
+          ACE_THROW_RETURN (CORBA::UnknownUserException (any),
+                            TAO_INVOKE_USER_EXCEPTION);
         }
 
     // If we couldn't find the right exception, report it as
@@ -146,7 +155,9 @@ namespace TAO
     // @@ It would seem that if the remote exception is a
     //    UserException we can assume that the request was
     //    completed.
-    throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
+    ACE_THROW_RETURN (CORBA::UNKNOWN (TAO::VMCID,
+                                      CORBA::COMPLETED_YES),
+                      TAO_INVOKE_USER_EXCEPTION);
 
   }
 
@@ -172,6 +183,7 @@ namespace TAO
   //@NOTE: Need to figure a way to share this code
   Dynamic::ParameterList *
   DII_Deferred_Invocation::arguments (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
@@ -179,7 +191,8 @@ namespace TAO
 
     Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-    TAO::Argument **args = this->details_.args ();
+    TAO::Argument **args =
+      this->details_.args ();
 
     if (this->details_.args_num () > 1)
       {
@@ -196,6 +209,7 @@ namespace TAO
 
   Invocation_Status
   DII_Deferred_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
     this->safe_rd_->transport (this->resolver_.transport ());
 

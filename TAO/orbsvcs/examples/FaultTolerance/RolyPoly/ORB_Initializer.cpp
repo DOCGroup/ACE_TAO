@@ -12,11 +12,13 @@
 
 void
 ORB_Initializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Allocate slot id.
   //

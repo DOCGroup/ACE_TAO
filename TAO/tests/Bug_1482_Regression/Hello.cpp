@@ -19,6 +19,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 
 CORBA::ULong
 Hello::next_prime (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,

@@ -89,31 +89,48 @@ namespace MyImpl
 
     // Attribute operations.
 
-    virtual CORBA::Long hertz ();
+    virtual CORBA::Long hertz ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void hertz (CORBA::Long hertz);
+    virtual void hertz (CORBA::Long hertz)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from supported interface(s)
 
-    virtual void start ();
+    virtual void start ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void stop ();
+    virtual void stop ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Boolean active ();
+    virtual CORBA::Boolean active ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
-    virtual void set_session_context (Components::SessionContext_ptr ctx);
+    virtual void set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ciao_preactivate ();
+    virtual void ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_activate ();
+    virtual void ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ciao_postactivate ();
+    virtual void ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_passivate ();
+    virtual void ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_remove ();
+    virtual void ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     /// Helper function to be called back by Pulse_Handler
     void pulse (void);
@@ -149,12 +166,15 @@ namespace MyImpl
     // Explicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    new_RateGen (CORBA::Long hertz);
+    new_RateGen (CORBA::Long hertz)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   };
 
 }

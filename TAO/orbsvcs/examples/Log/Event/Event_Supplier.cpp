@@ -34,7 +34,7 @@ Supplier::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       this->orb_ =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RootPOA");
@@ -50,7 +50,7 @@ Supplier::run (int argc, char* argv[])
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        throw CORBA::UNKNOWN ();
+        ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -203,6 +203,7 @@ Supplier::run (int argc, char* argv[])
 
 void
 Supplier::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

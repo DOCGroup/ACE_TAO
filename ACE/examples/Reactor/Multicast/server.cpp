@@ -171,7 +171,7 @@ Server_Events::handle_input (ACE_HANDLE)
       total_messages_received_++;
       total_bytes_received_ += retcode;
       last_sequence_number_ =
-        ACE_NTOHL (log_record_->sequence_number);
+        ntohl (log_record_->sequence_number);
 
       for (char *message_end = this->message_ + ACE_OS::strlen (this->message_) - 1;
            ACE_OS::strchr ("\r\n \t", *message_end) != 0;

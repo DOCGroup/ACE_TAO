@@ -23,6 +23,9 @@ TAO_Hash_LogStore::~TAO_Hash_LogStore()
 
 DsLogAdmin::LogList*
 TAO_Hash_LogStore::list_logs (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -59,6 +62,9 @@ TAO_Hash_LogStore::list_logs (void)
 
 DsLogAdmin::LogIdList*
 TAO_Hash_LogStore::list_logs_by_id (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -96,6 +102,9 @@ TAO_Hash_LogStore::list_logs_by_id (void)
 
 DsLogAdmin::Log_ptr
 TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,

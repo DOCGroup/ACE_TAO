@@ -31,13 +31,18 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void ping (void);
+  void ping (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void validate_protocol (void);
+  void validate_protocol (void)
+    ACE_THROW_SPEC ((Simple_Server::WrongProtocolType,
+                     CORBA::SystemException));
 
-  CORBA::Long test_method (CORBA::Long x);
+  CORBA::Long test_method (CORBA::Long x)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// The ORB

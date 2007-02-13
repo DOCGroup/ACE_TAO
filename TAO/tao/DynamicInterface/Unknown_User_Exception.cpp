@@ -3,14 +3,16 @@
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+
 
 ACE_RCSID (DynamicInterface,
            Unknown_User_Exception,
@@ -69,7 +71,7 @@ CORBA::UnknownUserException::_downcast (CORBA::Exception const * ex)
 void
 CORBA::UnknownUserException::_raise (void) const
 {
-  throw *this;
+  TAO_RAISE (*this);
 }
 
 CORBA::Exception *
@@ -85,13 +87,17 @@ CORBA::UnknownUserException::_tao_duplicate (void) const
 }
 
 void
-CORBA::UnknownUserException::_tao_encode (TAO_OutputCDR &) const
+CORBA::UnknownUserException::_tao_encode (
+    TAO_OutputCDR &
+
+  ) const
 {
   throw ::CORBA::MARSHAL ();
 }
 
 void
-CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
+CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &
+                                         )
 {
   throw ::CORBA::MARSHAL ();
 }

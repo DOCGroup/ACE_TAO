@@ -30,7 +30,7 @@ namespace ACE_RMCast
         stop_ (false)
 
   {
-    srand ((unsigned int) time (0));
+    srand (time (0));
 
 
     rsock_.set_option (IP_MULTICAST_LOOP, 0);

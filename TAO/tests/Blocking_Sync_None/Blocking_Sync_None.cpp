@@ -14,6 +14,7 @@ Blocking_Sync_None::Blocking_Sync_None (CORBA::ORB_ptr orb)
 void
 Blocking_Sync_None::slow_operation (const Test::Payload &,
                                     CORBA::ULong sleep_microseconds)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value sleep_time (0, sleep_microseconds);
   ACE_OS::sleep (sleep_time);
@@ -21,6 +22,7 @@ Blocking_Sync_None::slow_operation (const Test::Payload &,
 
 void
 Blocking_Sync_None::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

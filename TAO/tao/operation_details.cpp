@@ -22,20 +22,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception *
 TAO_Operation_Details::corba_exception (const char *id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {
-      if (ACE_OS::strcmp (id, this->ex_data_[i].id) != 0)
+      if (ACE_OS::strcmp (id,
+                          this->ex_data_[i].id) != 0)
         {
           continue;
         }
 
       // Create an exception object
-      CORBA::Exception *exception = this->ex_data_[i].alloc ();
+      CORBA::Exception *exception =
+        this->ex_data_[i].alloc ();
 
       if (exception == 0)
         {
-          throw ::CORBA::NO_MEMORY (0, CORBA::COMPLETED_YES);
+          ACE_THROW_RETURN (CORBA::NO_MEMORY (0,
+                                              CORBA::COMPLETED_YES),
+                            0);
         }
 
       // Return the exception object that we just created.
@@ -43,20 +48,9 @@ TAO_Operation_Details::corba_exception (const char *id)
     }
 
   // If there are no matches return an unknown exception.
-  throw ::CORBA::UNKNOWN (0, CORBA::COMPLETED_YES);
-}
-
-bool
-TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
-{
-  for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
-    {
-      if (ACE_OS::strcmp (ex._rep_id (), this->ex_data_[i].id) == 0)
-        {
-          return true;
-        }
-    }
-  return false;
+  ACE_THROW_RETURN (CORBA::UNKNOWN (0,
+                                    CORBA::COMPLETED_YES),
+                    0);
 }
 
 bool

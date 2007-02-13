@@ -21,6 +21,7 @@ project(*Server): rt_server, strategies, portableserver, avoids_minimum_corba, a
 
 project(*Client): rt_client, strategies, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }

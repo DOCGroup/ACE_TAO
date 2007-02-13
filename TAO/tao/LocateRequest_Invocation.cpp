@@ -8,7 +8,6 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/Profile.h"
 #include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
 
 #include "ace/Countdown_Time.h"
 
@@ -33,6 +32,7 @@ namespace TAO
 
   Invocation_Status
   LocateRequest_Invocation::invoke (ACE_Time_Value *max_wait_time)
+    ACE_THROW_SPEC ((CORBA::Exception))
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
@@ -51,23 +51,33 @@ namespace TAO
         // to call the interceptors in this case?
         this->resolver_.transport ()->close_connection ();
 
-        throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
+        ACE_THROW_RETURN (CORBA::INTERNAL (TAO::VMCID,
+                                           CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
       }
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec);
 
-    TAO_Transport *transport = this->resolver_.transport ();
+    TAO_Transport *transport =
+      this->resolver_.transport ();
 
     TAO_OutputCDR &cdr = transport->out_stream ();
 
-    if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
+    int const retval =
+      transport->generate_locate_request (tspec,
+                                          this->details_,
+                                          cdr);
+
+    if (retval == -1)
       return TAO_INVOKE_FAILURE;
 
     countdown.update ();
 
     Invocation_Status s =
-      this->send_message (cdr, TAO_Transport::TAO_TWOWAY_REQUEST, max_wait_time);
+      this->send_message (cdr,
+                          TAO_Transport::TAO_TWOWAY_REQUEST,
+                          max_wait_time);
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -80,7 +90,10 @@ namespace TAO
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
 
-    s = this->wait_for_reply (max_wait_time, rd, dispatch_guard);
+    s =
+      this->wait_for_reply (max_wait_time,
+                            rd,
+                            dispatch_guard);
 
     s = this->check_reply (rd);
 
@@ -96,7 +109,8 @@ namespace TAO
   Invocation_Status
   LocateRequest_Invocation::check_reply (TAO_Synch_Reply_Dispatcher &rd)
   {
-    TAO_InputCDR &cdr = rd.reply_cdr ();
+    TAO_InputCDR &cdr =
+      rd.reply_cdr ();
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
@@ -106,7 +120,9 @@ namespace TAO
       case TAO_GIOP_OBJECT_HERE:
         break;
       case TAO_GIOP_UNKNOWN_OBJECT:
-        throw ::CORBA::OBJECT_NOT_EXIST (TAO::VMCID, CORBA::COMPLETED_YES);
+        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO::VMCID,
+                                                   CORBA::COMPLETED_YES),
+                          TAO_INVOKE_FAILURE);
       case TAO_GIOP_OBJECT_FORWARD:
       case TAO_GIOP_OBJECT_FORWARD_PERM:
         return this->location_forward (cdr
@@ -121,12 +137,16 @@ namespace TAO
             {
               // Could not demarshal the exception id, raise a local
               // CORBA::MARSHAL exception.
-              throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
+              ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
+                                                CORBA::COMPLETED_MAYBE),
+                                TAO_INVOKE_SYSTEM_EXCEPTION);
             }
 
           // This kind of exception shouldn't happen with locate requests,
           // but if it does, we turn it into a CORBA::UNKNOWN exception.
-          throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
+          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO::VMCID,
+                                            CORBA::COMPLETED_YES),
+                            TAO_INVOKE_SYSTEM_EXCEPTION);
         }
       case TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE:
         {
@@ -139,7 +159,9 @@ namespace TAO
             {
               // Could not demarshal the addressing disposition, raise a local
               // CORBA::MARSHAL exception.
-              throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
+              ACE_THROW_RETURN (CORBA::MARSHAL (TAO::VMCID,
+                                                CORBA::COMPLETED_MAYBE),
+                                TAO_INVOKE_SUCCESS);
             }
 
           // Now set this addressing mode in the profile, so that

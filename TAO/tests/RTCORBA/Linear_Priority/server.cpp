@@ -15,9 +15,11 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (void);
+  void method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -36,6 +38,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 void
 test_i::method (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::method\n"));
@@ -43,6 +46,7 @@ test_i::method (void)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));

@@ -124,8 +124,8 @@ worker (int iterations)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%t) has been cancelled ")
-                              ACE_TEXT ("before iteration %d!\n"),
-                              i));
+			      ACE_TEXT ("before iteration %d!\n"),
+			      i));
                   break;
                 }
             }

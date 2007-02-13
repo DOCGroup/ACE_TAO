@@ -11,6 +11,7 @@ Simple::Simple (void)
 
 void
 Simple::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_var poa = this->_default_POA ();
 

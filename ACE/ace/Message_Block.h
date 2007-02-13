@@ -864,7 +864,7 @@ private:
  * @brief An abstract base class which provides dynamic priority
  * evaluation methods for use by the ACE_Dynamic_Message_Queue
  * class or any other class which needs to manage the priorities
- * of a collection of ACE_Message_Blocks dynamically.
+ * of a collection of ACE_Message_Block's dynamically.
  *
  * Methods for deadline and laxity based priority evaluation are
  * provided.  These methods assume a specific partitioning of

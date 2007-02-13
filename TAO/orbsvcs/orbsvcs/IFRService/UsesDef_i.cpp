@@ -26,12 +26,14 @@ TAO_UsesDef_i::~TAO_UsesDef_i (void)
 
 CORBA::DefinitionKind
 TAO_UsesDef_i::def_kind (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Uses;
 }
 
 CORBA::Contained::Description *
 TAO_UsesDef_i::describe (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -42,6 +44,7 @@ TAO_UsesDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_UsesDef_i::describe_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::UsesDescription ud;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::UsesDescription,
@@ -70,6 +73,7 @@ TAO_UsesDef_i::describe_i (void)
 
 CORBA::InterfaceDef_ptr
 TAO_UsesDef_i::interface_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -80,6 +84,7 @@ TAO_UsesDef_i::interface_type (void)
 
 CORBA::InterfaceDef_ptr
 TAO_UsesDef_i::interface_type_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -99,6 +104,7 @@ void
 TAO_UsesDef_i::interface_type (
     CORBA::InterfaceDef_ptr interface_type
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -111,6 +117,7 @@ void
 TAO_UsesDef_i::interface_type_i (
     CORBA::InterfaceDef_ptr interface_type
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");
@@ -143,6 +150,7 @@ TAO_UsesDef_i::interface_type_i (
 
 CORBA::Boolean
 TAO_UsesDef_i::is_multiple (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -153,6 +161,7 @@ TAO_UsesDef_i::is_multiple (void)
 
 CORBA::Boolean
 TAO_UsesDef_i::is_multiple_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -165,6 +174,7 @@ void
 TAO_UsesDef_i::is_multiple (
     CORBA::Boolean is_multiple
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -177,6 +187,7 @@ void
 TAO_UsesDef_i::is_multiple_i (
     CORBA::Boolean is_multiple
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
                                              "is_multiple",

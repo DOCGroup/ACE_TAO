@@ -96,7 +96,7 @@ Nestea_Server_i::init (int argc, char** argv)
   try
     {
       // Initialize the ORB
-      this->orb_ = CORBA::ORB_init (argc, argv);
+      this->orb_ = CORBA::ORB_init (argc, argv, 0);
 
       // Save pointers to the command line arguments
       this->argc_ = argc;

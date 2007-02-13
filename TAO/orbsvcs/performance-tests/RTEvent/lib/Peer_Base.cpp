@@ -50,6 +50,7 @@ Peer_Base::~Peer_Base (void)
 
 void
 Peer_Base::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     EC_Destroyer ec_destroyer (this->event_channel_.in ());
@@ -62,12 +63,14 @@ Peer_Base::shutdown (void)
 
 CORBA::Object_ptr
 Peer_Base::channel (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Object::_duplicate (this->event_channel_.in ());
 }
 
 void
 Peer_Base::connect (Federated_Test::Peer_ptr remote_peer)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Connecting....\n"));
   CORBA::Object_var remote_ec_object =
@@ -92,6 +95,7 @@ Peer_Base::connect (Federated_Test::Peer_ptr remote_peer)
 Federated_Test::Loopback_ptr
 Peer_Base::setup_loopback (CORBA::Long experiment_id,
                            CORBA::Long base_event_type)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Servant_var<Loopback> loopback (
       new Loopback (experiment_id,
@@ -112,6 +116,7 @@ Peer_Base::setup_loopback (CORBA::Long experiment_id,
 
 PortableServer::POA_ptr
 Peer_Base::_default_POA (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

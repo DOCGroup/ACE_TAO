@@ -21,11 +21,14 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  char* remote_call (void);
+  char* remote_call (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char* shutdown (const char* key);
+  char* shutdown (const char* key)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char* abort (const char* key);
+  char* abort (const char* key)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

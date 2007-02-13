@@ -17,7 +17,7 @@ In_Fixed_Array_Argument_T (const typename S_forany::_slice_type * x)
         //         doesn't work either).  It's not clear if this is
         //         really the right thing to do but the code won't
         //         compile without it.
-        (S_forany::_slice_type *) x
+        (S_forany::slice_type *) x
 #else
         const_cast<typename S_forany::_slice_type *> (x)
 #endif  /* IBMCPP <= 600 */

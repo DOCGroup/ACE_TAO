@@ -164,7 +164,9 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual void
     set_record_attribute (DsLogAdmin::RecordId id,
                           const DsLogAdmin::NVList & attr_list)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidRecordId,
+                     DsLogAdmin::InvalidAttribute))		= 0;
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
@@ -172,13 +174,17 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
     set_records_attribute (const char * grammar,
                            const char * c,
                            const DsLogAdmin::NVList & attr_list)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint,
+                     DsLogAdmin::InvalidAttribute))		= 0;
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
   virtual DsLogAdmin::NVList*
     get_record_attribute (DsLogAdmin::RecordId id)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidRecordId))		= 0;
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure
@@ -192,7 +198,9 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
     query (const char * grammar,
 	   const char * c,
 	   DsLogAdmin::Iterator_out i)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint))		= 0;
 
   /// Retrieve <how_many> records from time <from_time> using iterator
   /// <i>.
@@ -200,24 +208,28 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
     retrieve (DsLogAdmin::TimeT from_time,
 	      CORBA::Long how_many,
 	      DsLogAdmin::Iterator_out i)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException))			= 0;
 
   /// Returns the number of records matching constraint <c>.
   virtual CORBA::ULong
     match (const char * grammar,
 	   const char * c)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint))		= 0;
 
   /// Delete records matching constraint <c>.
   virtual CORBA::ULong
     delete_records (const char * grammar,
 		    const char * c)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint)) 		= 0;
 
   /// Delete records matching ids in <ids>
   virtual CORBA::ULong
     delete_records_by_id (const DsLogAdmin::RecordIdList & ids)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException))			= 0;
 
 
   virtual CORBA::ULong

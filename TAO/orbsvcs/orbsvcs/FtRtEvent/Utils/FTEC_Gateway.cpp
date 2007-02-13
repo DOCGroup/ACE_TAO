@@ -24,7 +24,8 @@ public:
   ~FTEC_Gateway_ConsumerAdmin();
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (void);
+      obtain_push_supplier (void)
+          ACE_THROW_SPEC ((CORBA::SystemException));
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -36,7 +37,8 @@ public:
   ~FTEC_Gateway_SupplierAdmin();
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (void);
+      obtain_push_consumer (void)
+          ACE_THROW_SPEC ((CORBA::SystemException));
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -49,10 +51,16 @@ public:
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier (void);
-  virtual void suspend_connection (void);
-  virtual void resume_connection (void);
+                const RtecEventChannelAdmin::ConsumerQOS &qos)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected,
+                       RtecEventChannelAdmin::TypeError));
+  virtual void disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void suspend_connection (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void resume_connection (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   FTEC_Gateway_Impl* impl_;
 };
 
@@ -63,12 +71,16 @@ public:
   FTEC_Gateway_ProxyPushConsumer(FTEC_Gateway_Impl* impl);
   ~FTEC_Gateway_ProxyPushConsumer();
 
-  virtual void push (const RtecEventComm::EventSet & data);
+  virtual void push (const RtecEventComm::EventSet & data)
+      ACE_THROW_SPEC ((CORBA::SystemException));
       // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void disconnect_push_consumer (void);
+                const RtecEventChannelAdmin::SupplierQOS& qos)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected));
+  virtual void disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   FTEC_Gateway_Impl* impl_;
 };
@@ -78,9 +90,11 @@ class PushConsumerHandler : public POA_FtRtecEventComm::AMI_PushConsumerHandler
 public:
   PushConsumerHandler();
   ~PushConsumerHandler();
-  virtual void push (void);
+  virtual void push (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void push_excep (::Messaging::ExceptionHolder * excep_holder);
+  virtual void push_excep (::Messaging::ExceptionHolder * excep_holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 /**
@@ -214,29 +228,40 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
 //= The RtecEventChannelAdmin::EventChannel methods
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 FTEC_Gateway::for_consumers (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RtecEventChannelAdmin::ConsumerAdmin::_duplicate(impl_->consumer_admin.in());
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 FTEC_Gateway::for_suppliers (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
   return RtecEventChannelAdmin::SupplierAdmin::_duplicate(impl_->supplier_admin.in());
 }
 
 void FTEC_Gateway::destroy (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   impl_->ftec->destroy();
 }
 
 RtecEventChannelAdmin::Observer_Handle
 FTEC_Gateway::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
+                               ACE_THROW_SPEC ((
+                               CORBA::SystemException,
+                               RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+                               RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   return impl_->ftec->append_observer(observer);
 }
 
 void FTEC_Gateway::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
+                                    ACE_THROW_SPEC ((
+                                    CORBA::SystemException,
+                                    RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+                                    RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   impl_->ftec->remove_observer(handle);
 }
@@ -266,6 +291,7 @@ FTEC_Gateway_ConsumerAdmin::~FTEC_Gateway_ConsumerAdmin()
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 FTEC_Gateway_ConsumerAdmin::obtain_push_supplier (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
@@ -296,6 +322,7 @@ FTEC_Gateway_SupplierAdmin::~FTEC_Gateway_SupplierAdmin()
 // = The RtecEventChannelAdmin::SupplierAdmin methods...
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 FTEC_Gateway_SupplierAdmin::obtain_push_consumer (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FtRtecEventComm::ObjectId** remote_proxy_oid_ptr;
   ACE_NEW_THROW_EX(remote_proxy_oid_ptr, FtRtecEventComm::ObjectId*, CORBA::NO_MEMORY());
@@ -343,6 +370,9 @@ FTEC_Gateway_ProxyPushSupplier::~FTEC_Gateway_ProxyPushSupplier()
 void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   RtecEventComm::PushConsumer_ptr push_consumer,
   const RtecEventChannelAdmin::ConsumerQOS &qos)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+    RtecEventChannelAdmin::AlreadyConnected,
+    RtecEventChannelAdmin::TypeError))
 {
 
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
@@ -351,6 +381,7 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
 }
 
 void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->disconnect_push_supplier(**oid_ptr);
@@ -359,12 +390,14 @@ void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (void)
 }
 
 void FTEC_Gateway_ProxyPushSupplier::suspend_connection (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->suspend_push_supplier(**oid_ptr);
 }
 
 void FTEC_Gateway_ProxyPushSupplier::resume_connection (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->resume_push_supplier(**oid_ptr);
@@ -385,6 +418,7 @@ FTEC_Gateway_ProxyPushConsumer::~FTEC_Gateway_ProxyPushConsumer()
 // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 
 void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
+                         ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
 
@@ -403,12 +437,15 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data)
 void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
   RtecEventComm::PushSupplier_ptr push_supplier,
   const RtecEventChannelAdmin::SupplierQOS& qos)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+    RtecEventChannelAdmin::AlreadyConnected))
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   *oid_ptr = impl_->ftec->connect_push_supplier(push_supplier, qos);
 }
 
 void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FtRtecEventComm::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in());
   impl_->ftec->disconnect_push_consumer(**oid_ptr);
@@ -425,10 +462,12 @@ PushConsumerHandler::~PushConsumerHandler()
 }
 
 void PushConsumerHandler::push (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void PushConsumerHandler::push_excep (::Messaging::ExceptionHolder *)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

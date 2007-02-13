@@ -76,6 +76,7 @@ AMH_Servant::parse_args (int &argc, char **argv)
 void
 AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                           Test::Timestamp send_time)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -120,6 +121,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 
 void
 AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -133,6 +135,7 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
 
 void
 AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

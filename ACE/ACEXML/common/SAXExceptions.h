@@ -57,13 +57,13 @@ public:
   virtual const ACEXML_Char *id (void) const;
 
   /// Return the extra message accompanying the exception.
-  const ACEXML_Char *message (void) const;
+  const ACEXML_Char *message (void);
 
   virtual ACEXML_Exception *duplicate (void) const;
 
   virtual int is_a (const ACEXML_Char *name);
 
-  virtual void print (void) const;
+  virtual void print (void);
 
 protected:
   static const ACEXML_Char * exception_name_;
@@ -108,7 +108,7 @@ public:
 
   virtual int is_a (const ACEXML_Char *name);
 
-  virtual void print (void) const;
+  virtual void print (void);
 
 protected:
   static const ACEXML_Char exception_name_[];
@@ -150,7 +150,7 @@ public:
 
   virtual int is_a (const ACEXML_Char *name);
 
-  virtual void print (void) const;
+  virtual void print (void);
 
 protected:
   static const ACEXML_Char exception_name_[];
@@ -193,7 +193,7 @@ public:
 
   virtual int is_a (const ACEXML_Char *name);
 
-  virtual void print (void) const;
+  virtual void print (void);
 
 protected:
   static const ACEXML_Char exception_name_[];

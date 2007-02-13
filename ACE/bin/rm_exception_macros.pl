@@ -36,8 +36,7 @@ my(%macros) = ('ACE_ENV_TYPE'                  => 'CORBA::Environment',
                'ACE_CHECK_RETURN *\(.*\)'      => '',
                'ACE_THROW_INT *\((.*)\)'       => 'throw $1',
                'ACE_THROW *\((.*)\)'           => 'throw $1',
-               'ACE_THROW_RETURN *\((.*),.+\)' => 'throw $1',
-               'ACE_THROW_SPEC *\((.*)\)'      => '',
+#               'ACE_THROW_RETURN *\((.*),.+\)' => 'throw $1',
                'ACE_TRY'                       => 'try',
                'ACE_TRY_NEW_ENV'               => 'try',
                'ACE_TRY_EX *\([^\)]+\)'        => 'try',
@@ -73,18 +72,18 @@ sub process_file {
     my(@lines) = ();
     my($mod)   = undef;
     my($line)  = '';
-    my($cont_until_this) = undef;
+    my($cont_until_semicolon) = undef;
     while(<$fh>) {
       my($part) = $_;
       $part =~ s/\s+$//;
 
-      if ($cont_until_this) {
+      if ($cont_until_semicolon) {
         if ($part =~ s/^\s+// && $line =~ /[,\)]$/) {
           $part = ' ' . $part;
         }
         $line .= $part;
-        if (index($part, $cont_until_this) >= 0) {
-          $cont_until_this = undef;
+        if (index($part, ';') >= 0) {
+          $cont_until_semicolon = undef;
         }
         else {
           next;
@@ -96,13 +95,10 @@ sub process_file {
 
       my($skip_blank) = undef;
       foreach my $key (@keys) {
-        my($ats)    = (index($key, 'ACE_THROW_SPEC') == 0);
-        my($search) = ($ats ? '))' : ';');
-        my($base)   = undef;
+        my($base) = undef;
         if ($key =~ /^([^\s]+\s\*\\\()/) {
           $base = $1;
         }
-
         if ($line =~ /^(\s*)?($key\s*[;]?)/) {
           my($space)  = $1;
           my($rest)   = $2;
@@ -127,22 +123,9 @@ sub process_file {
           }
 
           $line =~ s/^(\s*)?($key\s*[;]?)//;
-
-          ## A special concession for ACE_THROW_SPEC.  In the header
-          ## we want to ensure that the semi-colon is preserved and if
-          ## possible placed on the previous line.  In the source file
-          ## we want the whole thing to go away.
-          $val .= ';' if (($ats || $val ne '') && $rest =~ /;$/);
-          if ($ats && index($val, ';') == 0 &&
-              !($lines[$#lines] =~ /\/\/.*$/ ||
-                $lines[$#lines] =~ /\/\*.*\*\/$/)) {
-            $lines[$#lines] .= $val;                          
-            $line = '';
-          }
-          else {
-            $line = $space . $val . $line;
-            $line =~ s/^\s+$//;
-          }
+          $val .= ';' if ($val ne '' && $rest =~ /;$/);
+          $line = $space . $val . $line;
+          $line =~ s/^\s+$//;
 
           ## Fix up problems where ACE_TRY_THROW is used
           ## on a line by itself with the parenthesis following
@@ -205,8 +188,8 @@ sub process_file {
           last;
         }
         elsif (defined $base &&
-               index($line, $search) == -1 && $line =~ /^(\s*)?$base/) {
-          $cont_until_this = $search;
+               index($line, ';') == -1 && $line =~ /^(\s*)?$base/) {
+          $cont_until_semicolon = 1;
           last;
         }
       }
@@ -214,7 +197,7 @@ sub process_file {
       if ($line =~ s/ACE_ANY_EXCEPTION/ex/g) {
         $mod = 1;
       }
-      if (!$cont_until_this) {
+      if (!$cont_until_semicolon) {
         if ($line =~ s/(\s*)ACE_ENV(_SINGLE)?_ARG_DECL_WITH_DEFAULTS// ||
             $line =~ s/(\s*)ACE_ENV(_SINGLE)?_ARG_DECL_NOT_USED// ||
             $line =~ s/(\s*)ACE_ENV(_SINGLE)?_ARG_DECL// ||

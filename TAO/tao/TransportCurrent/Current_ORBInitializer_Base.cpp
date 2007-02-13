@@ -24,8 +24,9 @@ namespace TAO
 
 
     void
-    Current_ORBInitializer_Base::pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info)
+    Current_ORBInitializer_Base::pre_init (PortableInterceptor::ORBInitInfo_ptr info
+                                            )
+      ACE_THROW_SPEC( (CORBA::SystemException) )
     {
       // Narrow to a TAO_ORBInitInfo object to get access to the
       // allocate_tss_slot_id() TAO extension.
@@ -59,8 +60,9 @@ namespace TAO
     }
 
     void
-    Current_ORBInitializer_Base::post_init (
-      PortableInterceptor::ORBInitInfo_ptr)
+    Current_ORBInitializer_Base::post_init (PortableInterceptor::ORBInitInfo_ptr
+                                             )
+      ACE_THROW_SPEC( (CORBA::SystemException) )
     {
       // do nothing
     }

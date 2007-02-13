@@ -20,11 +20,14 @@ public:
   int shutdown_received (void);
 
   // = The skeleton methods
-  virtual Test::Process_ptr create_new_process (void);
+  virtual Test::Process_ptr create_new_process (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed));
 
-  virtual void noop (void);
+  virtual void noop (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

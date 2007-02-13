@@ -22,7 +22,7 @@
 
 ACE_RCSID(ace, Pagefile_Memory_Pool, "$Id$")
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 #if !defined (ACE_HAS_WINCE)
 #define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
   MapViewOfFileEx (_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)
@@ -381,4 +381,5 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
+

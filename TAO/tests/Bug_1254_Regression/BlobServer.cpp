@@ -16,6 +16,9 @@ BlobServerImpl::test(
             BlobType1& blob1,
             BlobType2& blob2
       )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      ))
 {
     blob1.length(10);
     for(int i = 0; i < 10; i++)
@@ -32,6 +35,7 @@ BlobServerImpl::test(
 
 void
 BlobServerImpl::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

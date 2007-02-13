@@ -50,7 +50,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
   try
     {
       this->orb_ =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");

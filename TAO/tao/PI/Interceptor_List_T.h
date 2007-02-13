@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

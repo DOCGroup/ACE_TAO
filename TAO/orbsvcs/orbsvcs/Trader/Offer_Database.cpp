@@ -151,6 +151,8 @@ remove_offer (const char* type, CORBA::ULong id)
 template <class LOCK_TYPE> int
 TAO_Offer_Database<LOCK_TYPE>::
 remove_offer (const CosTrading::OfferId offer_id)
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
+                  CosTrading::UnknownOfferId))
 {
   char* stype = 0;
   CORBA::ULong index;
@@ -161,7 +163,8 @@ remove_offer (const CosTrading::OfferId offer_id)
 
   if (this->remove_offer (stype,
                           index) == -1)
-    throw CosTrading::UnknownOfferId (offer_id);
+    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id),
+                      -1);
 
   return 0;
 }
@@ -170,13 +173,15 @@ template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id,
               char*& type_name)
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
+                  CosTrading::UnknownOfferId))
 {
   CORBA::ULong index;
   CosTrading::Offer* offer = 0;
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
-    throw CosTrading::UnknownOfferId (offer_id);
+    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
 
   return offer;
 }
@@ -185,6 +190,8 @@ lookup_offer (const CosTrading::OfferId offer_id,
 template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Offer_Database<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id)
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
+                  CosTrading::UnknownOfferId))
 {
   char* type_name;
   CORBA::ULong index;
@@ -193,7 +200,7 @@ lookup_offer (const CosTrading::OfferId offer_id)
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == 0)
-    throw CosTrading::UnknownOfferId (offer_id);
+    ACE_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
 
   return offer;
 }
@@ -263,6 +270,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 parse_offer_id (const CosTrading::OfferId offer_id,
                 char*&service_type,
                 CORBA::ULong& id)
+  ACE_THROW_SPEC ((CosTrading::IllegalOfferId))
 {
   // Get service type: it is everything from 17th character to the end.
   service_type = (char *) offer_id + 16;

@@ -6,12 +6,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::suspend_connection_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->suspended_ = 1;
 }
 
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::suspend_connection_locked (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -23,12 +25,14 @@ TAO_EC_ProxyPushSupplier::suspend_connection_locked (void)
 
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::resume_connection_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->suspended_ = 0;
 }
 
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::resume_connection_locked (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,

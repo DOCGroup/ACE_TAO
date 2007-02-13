@@ -60,19 +60,28 @@ public:
    */
   //@{
   virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+      PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+      PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+      PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+      PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+      PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
   //@}
 
 private:

@@ -27,14 +27,18 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
     this->orb_core_->lane_resources ().acceptor_registry ();
 
   // Get the right acceptor for the tag in the TaggedProfile
-  TAO_Acceptor *acceptor = acceptor_registry.get_acceptor (profile.tag);
+  TAO_Acceptor *acceptor =
+    acceptor_registry.get_acceptor (profile.tag);
 
   if (acceptor)
     {
       // Get the object key
-      if (acceptor->object_key (profile, this->object_key_) == -1)
+      int retval =
+        acceptor->object_key (profile,
+                              this->object_key_);
+      if (retval == -1)
         {
-          return false;
+          return 0;
         }
     }
   else
@@ -45,10 +49,10 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
                       ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")));
         }
 
-      return false;
+      return 0;
     }
 
-  return true;
+  return 1;
 }
 
 CORBA::Boolean
@@ -73,7 +77,7 @@ TAO_Tagged_Profile::unmarshall_target_address (TAO_InputCDR &cdr)
           break;
 
         default:
-          hdr_status = false;
+          hdr_status = 0;
           break;
         }
     }
@@ -120,7 +124,8 @@ CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_iop_profile_i (
     TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status =
+    (CORBA::Boolean) input.good_bit ();
 
   // Extract into the IOP::Tagged profile.
   hdr_status &= input >> this->profile_;
@@ -132,7 +137,8 @@ CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_ref_addr_i (
     TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status =
+    (CORBA::Boolean) input.good_bit ();
 
   /*
    * The GIOP::IORAddressingInfo is defined as follows
@@ -153,7 +159,8 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
   // First read the profile index
   CORBA::ULong prof_index =  0;
 
-  hdr_status = hdr_status && input.read_ulong (prof_index);
+  hdr_status =
+    hdr_status && input.read_ulong (prof_index);
 
   // Set the value in TAO_Tagged_Profile
   if (hdr_status)

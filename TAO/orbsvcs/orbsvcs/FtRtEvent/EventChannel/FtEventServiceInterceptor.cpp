@@ -126,13 +126,13 @@ get_transaction_depth_context(
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FTRT::TransactionDepth result;
   if ((cdr >> result) == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
   return result;
 }
@@ -153,12 +153,12 @@ get_sequence_number_context(
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   if ((cdr >> result) == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   return result;
 }
@@ -185,24 +185,30 @@ FtEventServiceInterceptor::instance()
 
 char *
 FtEventServiceInterceptor::name (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FtEventServiceInterceptor");
 }
 
 void
 FtEventServiceInterceptor::destroy (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FtEventServiceInterceptor::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+  PortableInterceptor::ForwardRequest))
 {
 }
 
 
 void
 FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
+                                            ACE_THROW_SPEC ((CORBA::SystemException,
+                                            PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var operation = ri->operation ();
   if (ACE_OS::strcmp(operation.in(), "push") == 0) {
@@ -251,6 +257,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
 void
 FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+                                       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::FTRequestServiceContext ft_request_service_context;
   IOP::ServiceContext_var service_context;
@@ -272,11 +279,15 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
 void
 FtEventServiceInterceptor::send_exception (
   PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+  PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 FtEventServiceInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
+                                       ACE_THROW_SPEC ((CORBA::SystemException,
+                                       PortableInterceptor::ForwardRequest))
 {
 }
 

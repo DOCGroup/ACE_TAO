@@ -7,7 +7,7 @@
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/Base_Transport_Property.h"
-#include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 

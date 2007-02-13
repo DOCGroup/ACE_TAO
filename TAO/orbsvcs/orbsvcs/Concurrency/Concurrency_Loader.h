@@ -50,7 +50,8 @@ public:
   /// This function call initializes the Concurrency Service given a
   /// reference to the ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                   int argc, char *argv[]);
+                                   int argc, char *argv[])
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
  protected:

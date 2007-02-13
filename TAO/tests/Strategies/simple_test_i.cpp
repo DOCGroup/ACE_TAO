@@ -11,6 +11,7 @@ ACE_RCSID(tests, simple_test_i, "$Id$")
 
 CORBA::Boolean
 Simple_Server_i::print_status (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -20,6 +21,7 @@ Simple_Server_i::print_status (void)
 
 void
 Simple_Server_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

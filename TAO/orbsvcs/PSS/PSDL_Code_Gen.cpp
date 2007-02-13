@@ -60,6 +60,7 @@ TAO_PSDL_Code_Gen::set_codec (void)
 int
 TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
                                      const char *string_obj_ref)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Invoke the helper encode method which will
   // convert the stringified object reference to a CORBA::OctetSeq.
@@ -92,6 +93,7 @@ TAO_PSDL_Code_Gen::set_name_obj_ref (const char *name,
 
 const char *
 TAO_PSDL_Code_Gen::get_obj_ref (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get from the hash_map saved in the database, the corresponding entry
   // (CORBA::OctetSeq *) for the name. Then, decode the octetseq to
@@ -122,6 +124,7 @@ TAO_PSDL_Code_Gen::get_obj_ref (const char *name)
 
 CORBA::OctetSeq *
 TAO_PSDL_Code_Gen::encode (const char *string_obj_ref)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any data;
   data <<= string_obj_ref;
@@ -137,6 +140,7 @@ TAO_PSDL_Code_Gen::encode (const char *string_obj_ref)
 
 const char *
 TAO_PSDL_Code_Gen::decode (const CORBA::OctetSeq &data)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *extracted_value;
 

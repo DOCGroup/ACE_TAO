@@ -1,19 +1,24 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    IFR_Service_Utils.h
- *
- *  $Id$
- *
- *    Implement wrappers useful to IFR Service clients and servers.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu> Jaiganesh Balasubramanian <jai@doc.ece.uci.edu> Priyanka Gontla <pgontla@doc.ece.uci.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    IFR_Service_Utils.h
+//
+// = DESCRIPTION
+//      Implement wrappers useful to IFR Service clients and servers.
+//
+// = AUTHORS
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//    Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+//    Priyanka Gontla <pgontla@doc.ece.uci.edu>
+//
+// ============================================================================
 
 #ifndef TAO_IFR_SERVICE_UTILS_H
 #define TAO_IFR_SERVICE_UTILS_H
@@ -44,18 +49,18 @@ class TAO_IFRService_Export TAO_IFR_Server
 public:
   TAO_IFR_Server (void);
 
-  //// Initialize the IFR Service with the command line arguments and
-  //// the ORB.
   int init_with_orb (int argc,
                      ACE_TCHAR *argv [],
                      CORBA::ORB_ptr orb,
                      int use_multicast_server = 0);
+  /// Initialize the IFR Service with the command line arguments and
+  /// the ORB.
 
-  //// Destroy the child POA created in <init_with_orb>.
   int fini (void);
+  /// Destroy the child POA created in <init_with_orb>.
 
-  //// Destructor.
   ~TAO_IFR_Server (void);
+  /// Destructor.
 
 protected:
 
@@ -109,7 +114,8 @@ public:
 
   /// Checks for illegal member type in given container type.
   static void valid_container (CORBA::DefinitionKind container_kind,
-                               CORBA::DefinitionKind contained_kind);
+                               CORBA::DefinitionKind contained_kind)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Wrapper for id_exists() and name_exists().
   static void pre_exist (const char *id,
@@ -120,20 +126,23 @@ public:
 
   /// Checks for a global repository id clash.
   static void id_exists (const char *id,
-                         TAO_Repository_i *repo);
+                         TAO_Repository_i *repo)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Checks for a local name clash.
   static void name_exists (name_clash_checker checker,
                            ACE_Configuration_Section_Key &key,
                            TAO_Repository_i *repo,
-                           CORBA::DefinitionKind kind);
+                           CORBA::DefinitionKind kind)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used by interfaces and components to check for name clashes
   /// in the attributes, operations, or component ports subsections.
   static void check_subsection (name_clash_checker checker,
                                 const char *sub_section,
                                 ACE_Configuration *config,
-                                ACE_Configuration_Section_Key &key);
+                                ACE_Configuration_Section_Key &key)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Top-level method which calls all the above error-checking methods.
   static void valid_creation (CORBA::DefinitionKind container_kind,

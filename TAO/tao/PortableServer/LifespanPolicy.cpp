@@ -5,8 +5,6 @@ ACE_RCSID (PortableServer,
            LifespanPolicy,
            "$Id$")
 
-#include "ace/CORBA_macros.h"
-
 #if !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,6 +21,7 @@ namespace TAO
 
     CORBA::Policy_ptr
     LifespanPolicy::copy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       LifespanPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -34,17 +33,20 @@ namespace TAO
 
     void
     LifespanPolicy::destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::LifespanPolicyValue
     LifespanPolicy::value (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
     LifespanPolicy::policy_type (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::LIFESPAN_POLICY_ID;
     }

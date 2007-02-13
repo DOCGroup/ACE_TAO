@@ -104,7 +104,8 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
           << "void" << be_nl
           << "operator<<= (" << be_idt << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << node->local_name () << " *_tao_elem)" << be_uidt << be_uidt_nl
+          << node->local_name () << " *_tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::add_ref (_tao_elem);" << be_nl
           << "_tao_any <<= &_tao_elem;" << be_uidt_nl
@@ -114,14 +115,16 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
           << "void" << be_nl
           << "operator<<= (" << be_idt << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << node->local_name () << " **_tao_elem)" << be_uidt << be_uidt_nl
+          << node->local_name () << " **_tao_elem" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO::Any_Impl_T<" << node->local_name () << ">::insert ("
           << be_idt << be_idt_nl
           << "_tao_any," << be_nl
           << node->local_name () << "::_tao_any_destructor," << be_nl
           << node->tc_name ()->last_component () << "," << be_nl
-          << "*_tao_elem);" << be_uidt << be_uidt << be_uidt_nl
+          << "*_tao_elem" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "::CORBA::Boolean" << be_nl

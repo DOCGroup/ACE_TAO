@@ -22,6 +22,10 @@ ZlibCompressor::compress (
     const ::CORBA::OctetSeq & source,
     ::CORBA::OctetSeq & target
   )
+  ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Compression::CompressionException
+  ))
 {
   ::CORBA::ULong max_length = static_cast <CORBA::ULong> (source.length () * 1.1) + 12;
   target.length (max_length);
@@ -46,6 +50,10 @@ void
 ZlibCompressor::decompress (
   const ::CORBA::OctetSeq & source,
   ::CORBA::OctetSeq & target)
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException,
+          ::Compression::CompressionException
+        ))
 {
   CORBA::ULong max_length = target.length ();
   int const retval = uncompress (reinterpret_cast <Bytef*>(target.get_buffer ()),

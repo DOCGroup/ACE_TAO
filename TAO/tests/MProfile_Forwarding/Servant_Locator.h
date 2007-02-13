@@ -39,7 +39,9 @@ public:
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr adapter,
                                              const char *operation,
-                                             PortableServer::ServantLocator::Cookie &the_cookie);
+                                             PortableServer::ServantLocator::Cookie &the_cookie)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::ForwardRequest));
   // This method is invoked by a POA whenever it receives a request
   // for MyFoo object that is not currently active.
 
@@ -47,7 +49,8 @@ public:
                            PortableServer::POA_ptr adapter,
                            const char *operation,
                            PortableServer::ServantLocator::Cookie the_cookie,
-                           PortableServer::Servant the_servant);
+                           PortableServer::Servant the_servant)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This method is invoked whenever a MyFooServant completes a
   // request.
 

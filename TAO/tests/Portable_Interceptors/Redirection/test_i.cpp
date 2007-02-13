@@ -19,12 +19,14 @@ test_i::~test_i (void)
 
 CORBA::Short
 test_i::number (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->number_;
 }
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server is shutting down via object %d.\n",

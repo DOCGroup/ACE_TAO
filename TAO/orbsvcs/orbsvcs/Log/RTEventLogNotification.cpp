@@ -40,6 +40,7 @@ TAO_RTEventLogNotification::~TAO_RTEventLogNotification (void)
 
 void
 TAO_RTEventLogNotification::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No-Op.
 }
@@ -69,6 +70,7 @@ TAO_RTEventLogNotification::obtainProxyConsumer (void)
 
 void
 TAO_RTEventLogNotification::send_notification (const CORBA::Any& any)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::EventSet event (1);
   event.length (1);

@@ -11,10 +11,12 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   Source_Files {
-    FileC.cpp
-    FileS.cpp
     File_i.cpp
     server.cpp
+  }
+  Source_Files {
+    FileC.cpp
+    FileS.cpp
   }
   IDL_Files {
   }
@@ -22,9 +24,12 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoid
 
 project(*Client): taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
+  after += *Server
+  Source_Files {
+    client.cpp
+  }
   Source_Files {
     FileC.cpp
-    client.cpp
   }
   IDL_Files {
   }

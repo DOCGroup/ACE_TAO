@@ -22,14 +22,12 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/MMAP_Allocator.h"
-#include "tao/SystemException.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/CORBA_macros.h"
 
 /*
  * Specialization hook to add include files from

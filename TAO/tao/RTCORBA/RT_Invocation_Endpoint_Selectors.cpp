@@ -17,7 +17,6 @@
 #include "tao/Endpoint.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Core.h"
-#include "tao/SystemException.h"
 
 ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,
@@ -112,7 +111,10 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
               r.profile (profile);
 
-              int const status = this->endpoint_from_profile (r, val);
+              int const status =
+                this->endpoint_from_profile (r,
+                                             val
+                                            );
 
               if (status == 1)
                 return;
@@ -127,7 +129,8 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     {
       if (r.inconsistent_policies ())
         {
-          CORBA::PolicyList *p = r.inconsistent_policies ();
+          CORBA::PolicyList *p =
+            r.inconsistent_policies ();
 
           p->length (1);
           (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
@@ -147,7 +150,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     ACE_Time_Value *val)
 {
   // Narrow to the RT Stub.
-  TAO_RT_Stub *rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub *rt_stub =
+    dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =
@@ -179,7 +183,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
             }
           // Indicate error.
-          throw ::CORBA::INV_POLICY ();
+          ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
         }
 
       // No priority model policy (and no bands policy): all endpoints
@@ -217,9 +221,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
              );
           if (status == -1)
             {
-              throw ::CORBA::DATA_CONVERSION (
-                CORBA::OMGVMCID | 1,
-                CORBA::COMPLETED_NO);
+              ACE_THROW_RETURN (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
+                                                        CORBA::COMPLETED_NO),
+                                0);
             }
 
           // If there are no bands.
@@ -258,7 +262,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                     }
 
                   // Indicate error.
-                  throw ::CORBA::INV_POLICY ();
+                  ACE_THROW_RETURN (CORBA::INV_POLICY (),
+                                    0);
                 }
 
               // Match the priority of the band with the endpoint.

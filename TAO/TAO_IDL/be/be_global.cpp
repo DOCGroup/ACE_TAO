@@ -83,6 +83,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_assign_op_ (false),
     gen_thru_poa_collocation_ (true), // Default is thru_poa.
     gen_direct_collocation_ (false),
+    use_raw_throw_ (false),
     opt_tc_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
@@ -1024,6 +1025,18 @@ BE_GlobalData::gen_direct_collocation (void) const
 }
 
 void
+BE_GlobalData::use_raw_throw (bool val)
+{
+  this->use_raw_throw_ = val;
+}
+
+bool
+BE_GlobalData::use_raw_throw (void) const
+{
+  return this->use_raw_throw_;
+}
+
+void
 BE_GlobalData::opt_tc (bool val)
 {
   this->opt_tc_ = val;
@@ -1938,6 +1951,15 @@ BE_GlobalData::parse_args (long &i, char **av)
             // Any operators into a separate set of files.
             be_global->gen_anyop_files (true);
           }
+        else if (av[i][2] == 'e')
+          {
+            idl_global->append_idl_flag (av[i + 1]);
+            int option = ACE_OS::atoi (av[i + 1]);
+
+            // Use of raw 'throw'.
+            be_global->use_raw_throw (option == 2);
+            ++i;
+          }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'p')
@@ -2529,6 +2551,11 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
       ACE_TEXT ("is thru-POA collocation\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ge 2\t\t\tUse raw throw instead of ACE_THROW macro")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

@@ -78,7 +78,12 @@ public:
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DsLogAdmin::InvalidLogFullAction,
+        DsLogAdmin::InvalidThreshold
+      ));
 
   /// Same as create (), but allows clients to specify the id.
   DsEventLogAdmin::EventLog_ptr create_with_id (
@@ -86,14 +91,26 @@ public:
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DsLogAdmin::LogIdAlreadyExists,
+        DsLogAdmin::InvalidLogFullAction,
+        DsLogAdmin::InvalidThreshold
+      ));
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
   CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
 protected:
   virtual CORBA::RepositoryId

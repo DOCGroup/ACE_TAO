@@ -3,15 +3,16 @@
 #include "tao/Policy_Set.h"
 #include "tao/SystemException.h"
 #include "tao/debug.h"
-#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Policy_Set,
            "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +29,7 @@ TAO_Policy_Set::~TAO_Policy_Set (void)
     {
       this->cleanup_i ();
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       // Ignore exceptions...
     }
@@ -71,7 +72,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
         }
 
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 4)
         ex._tao_print_exception ("TAO_Policy_Set::TAO_Policy_Set");
@@ -82,7 +83,8 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
 }
 
 void
-TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
+TAO_Policy_Set::copy_from (TAO_Policy_Set *source
+                           )
 {
   if (source == 0)
     {
@@ -144,7 +146,8 @@ TAO_Policy_Set::cleanup_i (void)
   // @@ !!! Add comments regarding Policy lifetimes, etc.
 void
 TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
-                                      CORBA::SetOverrideType set_add)
+                                      CORBA::SetOverrideType set_add
+                                      )
 {
   // @@ The spec does not say what to do on this case.
   if (set_add != CORBA::SET_OVERRIDE && set_add != CORBA::ADD_OVERRIDE)
@@ -196,7 +199,8 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 }
 
 void
-TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
+TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
+                            )
 {
   if (! this->compatible_scope (policy->_tao_scope()))
     {
@@ -247,7 +251,8 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
 }
 
 CORBA::PolicyList *
-TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
+TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
+                                      )
 {
   CORBA::ULong const slots = types.length ();
   CORBA::PolicyList *policy_list_ptr = 0;
@@ -331,7 +336,8 @@ TAO_Policy_Set::get_cached_const_policy (TAO_Cached_Policy_Type type) const
 }
 
 CORBA::Policy_ptr
-TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
+TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
+                                   )
 {
   if (type != TAO_CACHED_POLICY_UNCACHED
       && type < TAO_CACHED_POLICY_MAX_CACHED)

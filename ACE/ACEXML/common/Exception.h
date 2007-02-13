@@ -64,7 +64,7 @@ public:
   virtual int is_a (const ACEXML_Char *name);
 
   /// Print out exception using ACE_DEBUG.
-  virtual void print (void) const = 0;
+  virtual void print (void) = 0;
 
 protected:
   /// Default contructor.

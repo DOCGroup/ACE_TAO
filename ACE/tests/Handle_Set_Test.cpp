@@ -35,7 +35,7 @@ test_duplicates (size_t count)
 
   ACE_Handle_Set handle_set;
 
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
+  ACE_OS::srand (ACE_OS::time (0L));
 
   for (size_t i = 0; i < count; i++)
     {

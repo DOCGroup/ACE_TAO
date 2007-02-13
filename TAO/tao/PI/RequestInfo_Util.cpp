@@ -11,7 +11,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/StringSeqC.h"
 #include "tao/SystemException.h"
-#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            RequestInfo_Util,

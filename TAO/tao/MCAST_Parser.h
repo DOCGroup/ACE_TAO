@@ -51,7 +51,8 @@ public:
 
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb);
+                                          CORBA::ORB_ptr orb)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

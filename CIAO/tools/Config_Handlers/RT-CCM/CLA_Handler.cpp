@@ -35,7 +35,7 @@ namespace CIAO
             i < src.length ();
             ++i)
         {
-          co.add_arg (src[i].in ());
+          co.add_arg (src[i]);
         }
 
       return co;

@@ -33,6 +33,9 @@ simple_i::~simple_i (void)
 
 void simple_i::test (
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
   {
     //Add your implementation here
   }

@@ -21,30 +21,35 @@ Bottom_Impl::~Bottom_Impl (void)
 
 char *
 Bottom_Impl::top_quote ( )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::top);
 }
 
 char *
 Bottom_Impl::left_quote ( )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::left);
 }
 
 char *
 Bottom_Impl::right_quote ( )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::right);
 }
 
 char *
 Bottom_Impl::bottom_quote ( )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(Quote::bottom);
 }
 
 void
 Bottom_Impl::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -66,6 +71,7 @@ Delegated_Bottom_Impl::~Delegated_Bottom_Impl (void)
 
 char *
 Delegated_Bottom_Impl::top_quote (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <top_quote>\n")));
@@ -77,6 +83,7 @@ Delegated_Bottom_Impl::top_quote (void)
 
 char *
 Delegated_Bottom_Impl::left_quote (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <left_quote>\n")));
@@ -88,6 +95,7 @@ Delegated_Bottom_Impl::left_quote (void)
 
 char *
 Delegated_Bottom_Impl::right_quote (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <right_quote>\n")));
@@ -99,6 +107,7 @@ Delegated_Bottom_Impl::right_quote (void)
 
 char *
 Delegated_Bottom_Impl::bottom_quote (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating the call: <bottom_quote>\n")));
@@ -110,6 +119,7 @@ Delegated_Bottom_Impl::bottom_quote (void)
 
 void
 Delegated_Bottom_Impl::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating Shut-Down.\n")));

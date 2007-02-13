@@ -499,7 +499,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     String_Alloc.h
     String_Manager_T.h
     String_Sequence_Element_T.h
-    String_Const_Sequence_Element_T.h
     String_Traits_Base_T.h
     String_Traits_T.h
     Stub_Factory.h

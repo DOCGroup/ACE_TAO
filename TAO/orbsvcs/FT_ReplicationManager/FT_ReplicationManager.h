@@ -157,20 +157,33 @@ namespace TAO
     /// Registers the Fault Notifier with the Replication Manager.
     virtual void register_fault_notifier (
         FT::FaultNotifier_ptr fault_notifier
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     /// Returns the reference of the Fault Notifier.
     virtual FT::FaultNotifier_ptr get_fault_notifier (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , FT::InterfaceNotFound
+      ));
 
     /// TAO-specific find factory registry
     virtual ::PortableGroup::FactoryRegistry_ptr get_factory_registry (
         const PortableGroup::Criteria & selection_criteria
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     /// TAO-specific shutdown operation.
     virtual void shutdown (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     //@}
 
@@ -183,14 +196,21 @@ namespace TAO
 
     /// Set the default properties to be used by all object groups.
     virtual void set_default_properties (
-        const PortableGroup::Properties & props);
+        const PortableGroup::Properties & props)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::InvalidProperty,
+                      PortableGroup::UnsupportedProperty));
 
     /// Get the default properties used by all object groups.
-    virtual PortableGroup::Properties * get_default_properties ();
+    virtual PortableGroup::Properties * get_default_properties ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Remove default properties.
     virtual void remove_default_properties (
-        const PortableGroup::Properties & props);
+        const PortableGroup::Properties & props)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::InvalidProperty,
+                      PortableGroup::UnsupportedProperty));
 
     /**
      * Set properties associated with a given Replica type.  These
@@ -198,7 +218,10 @@ namespace TAO
      */
     virtual void set_type_properties (
         const char * type_id,
-        const PortableGroup::Properties & overrides);
+        const PortableGroup::Properties & overrides)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::InvalidProperty,
+                      PortableGroup::UnsupportedProperty));
 
     /**
      * Return the properties associated with a given Replica type.  These
@@ -206,12 +229,16 @@ namespace TAO
      * addition to the default properties that were not overridden.
      */
     virtual PortableGroup::Properties * get_type_properties (
-        const char * type_id);
+        const char * type_id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Remove the given properties associated with the Replica type ID.
     virtual void remove_type_properties (
         const char * type_id,
-        const PortableGroup::Properties & props);
+        const PortableGroup::Properties & props)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::InvalidProperty,
+                      PortableGroup::UnsupportedProperty));
 
     /**
      * Dynamically set the properties associated with a given object
@@ -221,7 +248,11 @@ namespace TAO
      */
     virtual void set_properties_dynamically (
         PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::Properties & overrides);
+        const PortableGroup::Properties & overrides)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound,
+                      PortableGroup::InvalidProperty,
+                      PortableGroup::UnsupportedProperty));
 
     /**
      * Return the properties currently in use by the given object
@@ -231,7 +262,9 @@ namespace TAO
      * that weren't overridden.
      */
     virtual PortableGroup::Properties * get_properties (
-        PortableGroup::ObjectGroup_ptr object_group);
+        PortableGroup::ObjectGroup_ptr object_group)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound));
 
     //@}
 
@@ -248,13 +281,24 @@ namespace TAO
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
         const char * type_id,
-        const PortableGroup::Criteria & the_criteria);
+        const PortableGroup::Criteria & the_criteria)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound,
+                      PortableGroup::MemberAlreadyPresent,
+                      PortableGroup::NoFactory,
+                      PortableGroup::ObjectNotCreated,
+                      PortableGroup::InvalidCriteria,
+                      PortableGroup::CannotMeetCriteria));
 
     /// Add an existing object to the ObjectGroup.
     virtual PortableGroup::ObjectGroup_ptr add_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
-        CORBA::Object_ptr member);
+        CORBA::Object_ptr member)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound,
+                      PortableGroup::MemberAlreadyPresent,
+                      PortableGroup::ObjectNotAdded));
 
     /**
      * Remove the member at a specific location from an
@@ -269,19 +313,27 @@ namespace TAO
      */
     virtual PortableGroup::ObjectGroup_ptr remove_member (
         PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::Location & the_location);
+        const PortableGroup::Location & the_location)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound,
+                      PortableGroup::MemberNotFound));
 
     /// Return the locations of the members in the given ObjectGroup.
     virtual PortableGroup::Locations * locations_of_members (
-        PortableGroup::ObjectGroup_ptr object_group);
+        PortableGroup::ObjectGroup_ptr object_group)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound));
 
     /// Return the locations of the members in the given ObjectGroup.
     virtual PortableGroup::ObjectGroups * groups_at_location (
-        const PortableGroup::Location & the_location);
+        const PortableGroup::Location & the_location)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Return the ObjectGroupId for the given ObjectGroup.
     virtual PortableGroup::ObjectGroupId get_object_group_id (
-        PortableGroup::ObjectGroup_ptr object_group);
+        PortableGroup::ObjectGroup_ptr object_group)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound));
 
     /**
      * Return an update the IOGR for an object group.  If no changes have
@@ -289,7 +341,9 @@ namespace TAO
      * parameter.
      */
     virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-        PortableGroup::ObjectGroup_ptr object_group);
+        PortableGroup::ObjectGroup_ptr object_group)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound));
 
     /**
      * TAO-specific extension.
@@ -297,7 +351,11 @@ namespace TAO
      */
      virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
           PortableGroup::ObjectGroupId group_id
-        );
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+          , PortableGroup::ObjectGroupNotFound
+        ));
 
     /**
      * Return the reference corresponding to the Replica of a given
@@ -305,13 +363,23 @@ namespace TAO
      */
     virtual CORBA::Object_ptr get_member_ref (
         PortableGroup::ObjectGroup_ptr object_group,
-        const PortableGroup::Location & loc);
+        const PortableGroup::Location & loc)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectGroupNotFound,
+                      PortableGroup::MemberNotFound));
 
     /// Sets the primary member of a group.
     virtual PortableGroup::ObjectGroup_ptr set_primary_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::ObjectGroupNotFound
+        , PortableGroup::MemberNotFound
+        , FT::PrimaryNotSet
+        , FT::BadReplicationStyle
+      ));
 
     //@}
 
@@ -336,7 +404,13 @@ namespace TAO
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
         PortableGroup::GenericFactory::FactoryCreationId_out
-          factory_creation_id);
+          factory_creation_id)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::NoFactory,
+                      PortableGroup::ObjectNotCreated,
+                      PortableGroup::InvalidCriteria,
+                      PortableGroup::InvalidProperty,
+                      PortableGroup::CannotMeetCriteria));
 
     /**
      * Delete the object group corresponding to the provided
@@ -346,7 +420,9 @@ namespace TAO
      */
     virtual void delete_object (
         const PortableGroup::GenericFactory::FactoryCreationId &
-          factory_creation_id);
+          factory_creation_id)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      PortableGroup::ObjectNotFound));
 
     //@}
 
@@ -361,7 +437,10 @@ namespace TAO
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
         FT::FaultNotifier_ptr fault_notifier
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     ////////////////
     // Forbidden methods

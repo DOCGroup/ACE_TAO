@@ -22,6 +22,7 @@ TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier (void)
 
 void
 TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n",
@@ -51,6 +52,9 @@ void
 TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
       const RtecEventChannelAdmin::ConsumerQOS& qos)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannelAdmin::AlreadyConnected,
+                     RtecEventChannelAdmin::TypeError))
 {
   BASECLASS::connect_push_consumer (push_consumer, qos);
 

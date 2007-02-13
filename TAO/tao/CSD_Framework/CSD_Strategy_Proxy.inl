@@ -20,18 +20,23 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::dispatch_request
                                 (TAO_ServerRequest& server_request,
-                                 TAO::Portable_Server::Servant_Upcall& upcall)
+                                 TAO::Portable_Server::Servant_Upcall& upcall
+                                 )
 {
 
   if (this->strategy_impl_ == 0)
     {
       // This is the "default" strategy implementation.
-      upcall.servant()->_dispatch(server_request, (void*)&upcall);
+      upcall.servant()->_dispatch(server_request,
+                                  (void*)&upcall
+                                 );
     }
   else
     {
       // Delegate to the custom strategy object.
-      this->strategy_impl_->dispatch_request(server_request, upcall);
+      this->strategy_impl_->dispatch_request(server_request,
+                                             upcall
+                                            );
     }
 }
 
@@ -62,13 +67,16 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_activated_event
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid)
+                                   const PortableServer::ObjectId& oid
+                                   )
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)
     {
       // Delegate to the custom strategy object.
-      this->strategy_impl_->servant_activated_event(servant, oid);
+      this->strategy_impl_->servant_activated_event(servant,
+                                               oid
+                                              );
     }
 }
 
@@ -76,13 +84,16 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_deactivated_event
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid)
+                                   const PortableServer::ObjectId& oid
+                                   )
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)
     {
       // Delegate to the custom strategy object.
-      this->strategy_impl_->servant_deactivated_event(servant, oid);
+      this->strategy_impl_->servant_deactivated_event(servant,
+                                                 oid
+                                                );
     }
 }
 

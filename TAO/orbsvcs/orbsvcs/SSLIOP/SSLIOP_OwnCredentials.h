@@ -72,7 +72,8 @@ namespace TAO
        * interface.
        */
       //@{
-      SecurityLevel3::CredentialsType creds_type (void);
+      SecurityLevel3::CredentialsType creds_type (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 
       /**
@@ -82,11 +83,14 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator ();
+      virtual SecurityLevel3::CredsInitiator_ptr creds_initiator ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor ();
+      virtual SecurityLevel3::CredsAcceptor_ptr creds_acceptor ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual void release_credentials (void);
+      virtual void release_credentials (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 
     protected:

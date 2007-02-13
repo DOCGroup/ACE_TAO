@@ -16,12 +16,14 @@ using namespace std;
 
 EDF_Scheduling::SchedulingParameter
 EDF_Sched_Param_Policy::value (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
 
 void
 EDF_Sched_Param_Policy::value (const EDF_Scheduling::SchedulingParameter& value)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->value_ = value;
 }
@@ -90,6 +92,7 @@ EDF_Scheduler::shutdown (void)
 
 EDF_Scheduling::SchedulingParameterPolicy_ptr
 EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingParameter & value)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /* MEASURE: Time to create scheduling parameter */
   DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM, 0, 0, NULL);
@@ -114,6 +117,8 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                                              const char *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -153,6 +158,8 @@ EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
                                                 const char *name,
                                                 CORBA::Policy_ptr sched_param,
                                                 CORBA::Policy_ptr implicit_sched_param)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -170,6 +177,8 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
                                           const char* name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   ACE_UNUSED_ARG ((name));
   ACE_UNUSED_ARG ((implicit_sched_param));
@@ -199,6 +208,7 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 void
 EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                        const char *)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   int int_guid;
@@ -217,6 +227,7 @@ void
 EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
                                               const char *,
                                               CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -228,6 +239,8 @@ EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
 
 void
 EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -335,6 +348,8 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::String_out /*name*/,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
@@ -462,6 +477,8 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
 void
 EDF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   PortableInterceptor::ForwardRequest))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -472,6 +489,7 @@ EDF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 
 void
 EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -558,6 +576,8 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
 void
 EDF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -570,6 +590,8 @@ EDF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
 
 void
 EDF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   int int_guid;
   ACE_OS::memcpy (&int_guid,
@@ -582,6 +604,7 @@ EDF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
 
 void
 EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int int_guid;
 
@@ -656,6 +679,8 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 
 void
 EDF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   DSUI_EVENT_LOG (EDF_SCHED_FAM, RECEIVE_EXCEPTION, 0, 0, NULL);
 
@@ -664,6 +689,8 @@ EDF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
 
 void
 EDF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, RECEIVE_OTHER, 0, 0, NULL);
@@ -675,45 +702,52 @@ EDF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 
 void
 EDF_Scheduler::cancel (const RTScheduling::Current::IdType &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::PolicyList*
 EDF_Scheduler::scheduling_policies (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
 EDF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::PolicyList*
 EDF_Scheduler::poa_policies (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 char *
 EDF_Scheduler::scheduling_discipline_name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 RTScheduling::ResourceManager_ptr
 EDF_Scheduler::create_resource_manager (const char *,
                                         CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
 EDF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                          const char *,
                                          CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

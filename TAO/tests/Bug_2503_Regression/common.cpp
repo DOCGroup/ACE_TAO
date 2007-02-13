@@ -7,7 +7,7 @@ CORBA::ORB_ptr
 initialize_orb_and_poa(int & argc, char * argv[])
 {
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv);
+    CORBA::ORB_init (argc, argv, "");
 
   CORBA::Object_var poa_object =
     orb->resolve_initial_references("RootPOA");

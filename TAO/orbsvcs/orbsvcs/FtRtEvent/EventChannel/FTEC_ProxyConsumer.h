@@ -34,14 +34,18 @@ public:
   TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   virtual void activate (
-     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
+     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void disconnect_push_consumer (void);
+                const RtecEventChannelAdmin::SupplierQOS& qos)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected));
+  virtual void disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   const FtRtecEventChannelAdmin::ObjectId& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);

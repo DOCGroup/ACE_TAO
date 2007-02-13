@@ -23,6 +23,7 @@ TAO_LB_LoadAlert::~TAO_LB_LoadAlert (void)
 
 void
 TAO_LB_LoadAlert::enable_alert (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
@@ -31,6 +32,7 @@ TAO_LB_LoadAlert::enable_alert (void)
 
 void
 TAO_LB_LoadAlert::disable_alert (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 

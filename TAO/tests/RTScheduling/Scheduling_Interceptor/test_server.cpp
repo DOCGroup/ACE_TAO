@@ -20,6 +20,7 @@ public:
   }
 
   virtual void one_way (const char * message)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
 		"One-Way Message = %s\n",
@@ -27,6 +28,7 @@ public:
   }
 
   virtual char * two_way (const char * message)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
 		"Two-Way Message = %s\n",
@@ -41,6 +43,7 @@ public:
   }
 
   virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     orb_->shutdown ();
   }

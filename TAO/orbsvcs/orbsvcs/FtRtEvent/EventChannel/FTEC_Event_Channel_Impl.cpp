@@ -234,6 +234,7 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
 ///    this->consumer_admin ()->_this ();
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_FTEC_Event_Channel_Impl::for_consumers (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj = consumer_admin()->reference();
   obj = IOGR_Maker::instance()->forge_iogr(obj.in());
@@ -245,6 +246,7 @@ TAO_FTEC_Event_Channel_Impl::for_consumers (void)
 ///    this->supplier_admin ()->_this ();
 RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_FTEC_Event_Channel_Impl::for_suppliers (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj = supplier_admin()->reference();
   obj = IOGR_Maker::instance()->forge_iogr(obj.in());
@@ -425,6 +427,7 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat)
 
 
 void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
+  ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate))
 {
   FTRTEC::Replication_Service::instance()->check_validity();
 

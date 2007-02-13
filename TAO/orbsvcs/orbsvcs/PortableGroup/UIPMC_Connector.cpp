@@ -5,6 +5,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 

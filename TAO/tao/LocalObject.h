@@ -140,7 +140,8 @@ namespace CORBA
      * different ORB protocols are in use) there is no default
      * implementation.
      */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
+    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj)
+      ACE_THROW_SPEC (());
 
     // = Reference count managment.
     /// Increment the reference count.

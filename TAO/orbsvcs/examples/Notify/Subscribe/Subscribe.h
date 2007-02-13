@@ -139,8 +139,6 @@ class Subscribe_StructuredPushConsumer
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
   // Accessor for the Proxy that we're connected to.
 
-  // public data member for evaluating the results of subscription.
-  CosNotification::EventTypeSeq expected_subscription_;
 protected:
   // = Data members
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
@@ -160,15 +158,26 @@ protected:
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ));
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventComm::Disconnected
+       ));
 
   virtual void disconnect_structured_push_consumer (
-        );
+        )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 };
 
 /*****************************************************************/
@@ -213,11 +222,18 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ));
 
   // = StructuredPushSupplier method
     virtual void disconnect_structured_push_supplier (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 };
 
 #endif /* NOTIFY_SUBSCRIBE_CLIENT_H */

@@ -52,6 +52,10 @@ void
 TAO_Notify_LogConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ))
 {
   // No-Op.
 }
@@ -59,6 +63,10 @@ TAO_Notify_LogConsumer::offer_change
 void
 TAO_Notify_LogConsumer::push
    (const CORBA::Any& event)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosEventComm::Disconnected
+                   ))
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);
@@ -116,6 +124,9 @@ TAO_Notify_LogConsumer::push
 void
 TAO_Notify_LogConsumer::disconnect_push_consumer
    (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
 }
 

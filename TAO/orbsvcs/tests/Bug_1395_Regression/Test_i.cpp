@@ -37,6 +37,7 @@ Test_i::~Test_i (void)
 
 int
 Test_i::try_and_create_POA (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -65,6 +66,7 @@ Test_i::try_and_create_POA (void)
 
 void
 Test_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
    orb_->shutdown (0);
 }

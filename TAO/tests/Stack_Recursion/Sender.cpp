@@ -35,6 +35,7 @@ Sender::is_done (void) const
 CORBA::Boolean
 Sender::get_data (CORBA::ULong size,
                   Test::Payload_out payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                     ace_mon,
@@ -52,6 +53,7 @@ Sender::get_data (CORBA::ULong size,
 
 CORBA::Long
 Sender::get_event_count (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                     ace_mon,
@@ -63,12 +65,14 @@ Sender::get_event_count (void)
 
 void
 Sender::ping (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
 
 void
 Sender::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->is_done_ == false)
     {

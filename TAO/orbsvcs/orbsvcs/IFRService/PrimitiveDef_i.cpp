@@ -23,24 +23,28 @@ TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i (void)
 
 CORBA::DefinitionKind
 TAO_PrimitiveDef_i::def_kind (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Primitive;
 }
 
 void
 TAO_PrimitiveDef_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_i ();
 }
 
 void
 TAO_PrimitiveDef_i::destroy_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
 
 CORBA::TypeCode_ptr
 TAO_PrimitiveDef_i::type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -51,6 +55,7 @@ TAO_PrimitiveDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_PrimitiveDef_i::type_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -110,6 +115,7 @@ TAO_PrimitiveDef_i::type_i (void)
 
 CORBA::PrimitiveKind
 TAO_PrimitiveDef_i::kind (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::pk_null);
 
@@ -120,6 +126,7 @@ TAO_PrimitiveDef_i::kind (void)
 
 CORBA::PrimitiveKind
 TAO_PrimitiveDef_i::kind_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

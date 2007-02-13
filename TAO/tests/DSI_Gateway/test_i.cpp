@@ -14,6 +14,7 @@ Simple_Server_i::test_method (CORBA::Long x,
                               const Structure& the_in_structure,
                               Structure_out the_out_structure,
                               char *&name)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Structure *tmp = 0;
   ACE_NEW_RETURN (tmp, Structure (the_in_structure), -1);
@@ -38,30 +39,36 @@ Simple_Server_i::test_method (CORBA::Long x,
 
 void
 Simple_Server_i::raise_user_exception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     test_exception))
 {
   throw test_exception (33, "reactor meltdown", "kaput");
 }
 
 void
 Simple_Server_i::raise_system_exception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_PERMISSION ();
 }
 
 void
 Simple_Server_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
 
 CORBA::Long
 Simple_Server_i::test_val (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return vlong_;
 }
 
 void
 Simple_Server_i::test_val (CORBA::Long tv)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     {

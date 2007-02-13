@@ -43,10 +43,12 @@ namespace CIDL_Sender_Impl
     virtual ~Sender_exec_2_i ();
 
     /// Operation to set the value of the attribute
-    virtual void local_message (const char * local_message);
+    virtual void local_message (const char * local_message)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Operation to get the value of the attribute
-    virtual char * local_message ();
+    virtual char * local_message ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /* Operations for obtaining the interface reference. */
     /* This method will be used in the assembly face so the
@@ -55,24 +57,38 @@ namespace CIDL_Sender_Impl
      */
     // Note: You can specify the return type as ::Hello::CCM_message *
     virtual Hello::CCM_ReadMessage_ptr
-    get_push_message ();
+    get_push_message ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     // Operation inside of the trigger interface.
-    virtual void start ();
+    virtual void start ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    virtual void set_session_context (Components::SessionContext_ptr ctx);
+    virtual void set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ciao_preactivate ();
+    virtual void ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_activate ();
+    virtual void ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ciao_postactivate ();
+    virtual void ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_passivate ();
+    virtual void ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_remove ();
+    virtual void ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     void swap_exec (SenderSwap_exec_i *p)
     {
@@ -101,7 +117,8 @@ namespace CIDL_Sender_Impl
     }
 
     virtual char *
-    get_message ();
+    get_message ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     Sender_exec_2_i& component_;

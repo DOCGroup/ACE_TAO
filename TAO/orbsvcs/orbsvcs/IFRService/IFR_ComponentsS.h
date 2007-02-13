@@ -674,7 +674,9 @@ namespace POA_CORBA
           ::CORBA::ComponentIR::ComponentDef_ptr base_component,
           const ::CORBA::InterfaceDefSeq & supports_interfaces
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_component_skel (
           TAO_ServerRequest & server_request,
@@ -694,7 +696,9 @@ namespace POA_CORBA
           const ::CORBA::InterfaceDefSeq & supports_interfaces,
           ::CORBA::ValueDef_ptr primary_key
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_home_skel (
           TAO_ServerRequest & server_request,
@@ -717,7 +721,9 @@ namespace POA_CORBA
           const ::CORBA::InterfaceDefSeq & supported_interfaces,
           const ::CORBA::ExtInitializerSeq & initializers
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_event_skel (
           TAO_ServerRequest & server_request,
@@ -1747,7 +1753,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::InterfaceDef_ptr interface_type (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_interface_type_skel (
           TAO_ServerRequest & server_request,
@@ -1761,7 +1769,9 @@ namespace POA_CORBA
       virtual void interface_type (
           ::CORBA::InterfaceDef_ptr interface_type
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_interface_type_skel (
           TAO_ServerRequest & server_request,
@@ -1941,7 +1951,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::InterfaceDef_ptr interface_type (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_interface_type_skel (
           TAO_ServerRequest & server_request,
@@ -1955,7 +1967,9 @@ namespace POA_CORBA
       virtual void interface_type (
           ::CORBA::InterfaceDef_ptr interface_type
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_interface_type_skel (
           TAO_ServerRequest & server_request,
@@ -1968,7 +1982,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::Boolean is_multiple (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_is_multiple_skel (
           TAO_ServerRequest & server_request,
@@ -1982,7 +1998,9 @@ namespace POA_CORBA
       virtual void is_multiple (
           ::CORBA::Boolean is_multiple
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_is_multiple_skel (
           TAO_ServerRequest & server_request,
@@ -2162,7 +2180,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::ComponentIR::EventDef_ptr event (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_event_skel (
           TAO_ServerRequest & server_request,
@@ -2176,7 +2196,9 @@ namespace POA_CORBA
       virtual void event (
           ::CORBA::ComponentIR::EventDef_ptr event
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_event_skel (
           TAO_ServerRequest & server_request,
@@ -2190,7 +2212,9 @@ namespace POA_CORBA
       virtual ::CORBA::Boolean is_a (
           const char * event_id
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void is_a_skel (
           TAO_ServerRequest & server_request,
@@ -2943,7 +2967,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::ComponentIR::ComponentDef_ptr base_component (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_base_component_skel (
           TAO_ServerRequest & server_request,
@@ -2957,7 +2983,9 @@ namespace POA_CORBA
       virtual void base_component (
           ::CORBA::ComponentIR::ComponentDef_ptr base_component
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_base_component_skel (
           TAO_ServerRequest & server_request,
@@ -2970,7 +2998,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::InterfaceDefSeq * supported_interfaces (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_supported_interfaces_skel (
           TAO_ServerRequest & server_request,
@@ -2984,7 +3014,9 @@ namespace POA_CORBA
       virtual void supported_interfaces (
           const ::CORBA::InterfaceDefSeq & supported_interfaces
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_supported_interfaces_skel (
           TAO_ServerRequest & server_request,
@@ -3001,7 +3033,9 @@ namespace POA_CORBA
           const char * version,
           ::CORBA::InterfaceDef_ptr interface_type
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_provides_skel (
           TAO_ServerRequest & server_request,
@@ -3019,7 +3053,9 @@ namespace POA_CORBA
           ::CORBA::InterfaceDef_ptr interface_type,
           ::CORBA::Boolean is_multiple
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_uses_skel (
           TAO_ServerRequest & server_request,
@@ -3036,7 +3072,9 @@ namespace POA_CORBA
           const char * version,
           ::CORBA::ComponentIR::EventDef_ptr event
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_emits_skel (
           TAO_ServerRequest & server_request,
@@ -3053,7 +3091,9 @@ namespace POA_CORBA
           const char * version,
           ::CORBA::ComponentIR::EventDef_ptr event
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_publishes_skel (
           TAO_ServerRequest & server_request,
@@ -3070,7 +3110,9 @@ namespace POA_CORBA
           const char * version,
           ::CORBA::ComponentIR::EventDef_ptr event
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_consumes_skel (
           TAO_ServerRequest & server_request,
@@ -3999,7 +4041,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::ComponentIR::HomeDef_ptr base_home (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_base_home_skel (
           TAO_ServerRequest & server_request,
@@ -4013,7 +4057,9 @@ namespace POA_CORBA
       virtual void base_home (
           ::CORBA::ComponentIR::HomeDef_ptr base_home
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_base_home_skel (
           TAO_ServerRequest & server_request,
@@ -4026,7 +4072,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::InterfaceDefSeq * supported_interfaces (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_supported_interfaces_skel (
           TAO_ServerRequest & server_request,
@@ -4040,7 +4088,9 @@ namespace POA_CORBA
       virtual void supported_interfaces (
           const ::CORBA::InterfaceDefSeq & supported_interfaces
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_supported_interfaces_skel (
           TAO_ServerRequest & server_request,
@@ -4053,7 +4103,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::ComponentIR::ComponentDef_ptr managed_component (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_managed_component_skel (
           TAO_ServerRequest & server_request,
@@ -4067,7 +4119,9 @@ namespace POA_CORBA
       virtual void managed_component (
           ::CORBA::ComponentIR::ComponentDef_ptr managed_component
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_managed_component_skel (
           TAO_ServerRequest & server_request,
@@ -4080,7 +4134,9 @@ namespace POA_CORBA
 
       virtual ::CORBA::ValueDef_ptr primary_key (
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _get_primary_key_skel (
           TAO_ServerRequest & server_request,
@@ -4094,7 +4150,9 @@ namespace POA_CORBA
       virtual void primary_key (
           ::CORBA::ValueDef_ptr primary_key
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void _set_primary_key_skel (
           TAO_ServerRequest & server_request,
@@ -4112,7 +4170,9 @@ namespace POA_CORBA
           const ::CORBA::ParDescriptionSeq & params,
           const ::CORBA::ExceptionDefSeq & exceptions
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_factory_skel (
           TAO_ServerRequest & server_request,
@@ -4130,7 +4190,9 @@ namespace POA_CORBA
           const ::CORBA::ParDescriptionSeq & params,
           const ::CORBA::ExceptionDefSeq & exceptions
         )
-        = 0;
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        )) = 0;
 
       static void create_finder_skel (
           TAO_ServerRequest & server_request,

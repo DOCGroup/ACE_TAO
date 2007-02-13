@@ -14,10 +14,16 @@ class Publisher_impl : public POA_Publisher
 
     virtual void subscribe (
       ::Subscriber_ptr subscriber
-    );
+    )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ));
 
   virtual void shutdown (
-    );
+    )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ));
 
 	private:
 		CORBA::ORB_var orb_;

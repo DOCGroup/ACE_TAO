@@ -18,9 +18,11 @@ public:
 
   // = The skeleton methods
   virtual void slow_operation (const Test::Payload &the_payload,
-                               CORBA::ULong sleep_microseconds);
+                               CORBA::ULong sleep_microseconds)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to shutdown the application.

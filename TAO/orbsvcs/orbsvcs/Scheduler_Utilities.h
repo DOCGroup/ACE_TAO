@@ -1,15 +1,18 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Scheduler_Utilities.h
- *
- *  $Id$
- *
- *  @author  Chris Gill <cdgill@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Scheduler_Utilities.h
+//
+// = AUTHOR
+//     Chris Gill <cdgill@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ACE_SCHEDULER_UTILITIES_H
 #define ACE_SCHEDULER_UTILITIES_H
@@ -23,20 +26,18 @@
 
 #include "orbsvcs/Sched/sched_export.h"
 
-/**
- * @class ACE_RT_Info
- *
- * @brief Offers a convenient C++ interface to the IDL RT_Info structure.
- *
- * For performance reasons the RT_Info data is represented as an
- * IDL structure, this permits sending complete RT_Info's from the
- * client to the server.  Unfortunately this precludes the usage
- * of member functions and constructors, this class serves as a
- * helper to implement those without loosing the performance on
- * IDL.
- */
 class TAO_RTSched_Export ACE_RT_Info : public RtecScheduler::RT_Info
 {
+  // = TITLE
+  //   Offers a convenient C++ interface to the IDL RT_Info structure.
+  //
+  // = DESCRIPTION
+  //   For performance reasons the RT_Info data is represented as an
+  //   IDL structure, this permits sending complete RT_Info's from the
+  //   client to the server.  Unfortunately this precludes the usage
+  //   of member functions and constructors, this class serves as a
+  //   helper to implement those without loosing the performance on
+  //   IDL.
 public:
 
   /// Construct a helper class instance from values for

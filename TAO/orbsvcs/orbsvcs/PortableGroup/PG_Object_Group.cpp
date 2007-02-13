@@ -193,6 +193,8 @@ TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member)
 void
 TAO::PG_Object_Group::add_member (const PortableGroup::Location & the_location,
                                   CORBA::Object_ptr member)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::ObjectNotAdded))
 
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
@@ -248,6 +250,8 @@ int
 TAO::PG_Object_Group::set_primary_member (
     TAO_IOP::TAO_IOR_Property * prop,
     const PortableGroup::Location & the_location)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::MemberNotFound))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -311,7 +315,8 @@ TAO::PG_Object_Group::set_primary_member (
                       ACE_TEXT ("TAO-PG (%P|%t) - set_primary_location ")
                       ACE_TEXT ("throwing MemberNotFound.\n")));
         }
-      throw PortableGroup::MemberNotFound();
+      ACE_THROW_RETURN (PortableGroup::MemberNotFound(),
+                        -1);
     }
 
   return result;
@@ -321,6 +326,8 @@ TAO::PG_Object_Group::set_primary_member (
 void
 TAO::PG_Object_Group::remove_member (
     const PortableGroup::Location & the_location)
+  ACE_THROW_SPEC ( (CORBA::SystemException,
+                   PortableGroup::MemberNotFound))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   MemberInfo * info = 0;
@@ -377,6 +384,9 @@ TAO::PG_Object_Group::get_object_group_id (void) const
 void
 TAO::PG_Object_Group::set_properties_dynamically (
     const PortableGroup::Properties & overrides)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::UnsupportedProperty))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -388,6 +398,7 @@ TAO::PG_Object_Group::set_properties_dynamically (
 void
 TAO::PG_Object_Group::get_properties (
     PortableGroup::Properties_var & result) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   this->properties_.export_properties(*result);
@@ -496,6 +507,7 @@ TAO::PG_Object_Group::distribute_iogr (void)
 
 PortableGroup::Locations *
 TAO::PG_Object_Group::locations_of_members (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -528,6 +540,9 @@ TAO::PG_Object_Group::locations_of_members (void)
 CORBA::Object_ptr
 TAO::PG_Object_Group::get_member_reference (
     const PortableGroup::Location & the_location)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    PortableGroup::MemberNotFound))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -543,7 +558,7 @@ TAO::PG_Object_Group::get_member_reference (
     }
   else
     {
-      throw PortableGroup::MemberNotFound();
+      ACE_THROW_RETURN (PortableGroup::MemberNotFound(), result._retn ());
     }
   return result._retn ();
 }
@@ -594,6 +609,12 @@ TAO::PG_Object_Group::create_member (
     const PortableGroup::Location & the_location,
     const char * type_id,
     const PortableGroup::Criteria & the_criteria)
+  ACE_THROW_SPEC ( (CORBA::SystemException,
+    PortableGroup::MemberAlreadyPresent,
+    PortableGroup::NoFactory,
+    PortableGroup::ObjectNotCreated,
+    PortableGroup::InvalidCriteria,
+    PortableGroup::CannotMeetCriteria))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
@@ -678,6 +699,8 @@ TAO::PG_Object_Group::create_member (
 
 void
 TAO::PG_Object_Group::create_members (size_t count)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::NoFactory))
 {
   // assume internals is locked
   // @@ what if factories were passed as criteria?

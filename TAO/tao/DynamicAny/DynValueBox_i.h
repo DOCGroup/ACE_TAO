@@ -46,21 +46,38 @@ public:
 
   virtual CORBA::Any * get_boxed_value (
       void
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void set_boxed_value (
       const CORBA::Any & boxed
 
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any (
       void
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void set_boxed_value_as_dyn_any (
       DynamicAny::DynAny_ptr boxed
 
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

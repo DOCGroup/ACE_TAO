@@ -6,8 +6,6 @@
 #include "tao/PI_Server/ServerRequestDetails.inl"
 #endif /* defined INLINE */
 
-#include "tao/SystemException.h"
-
 ACE_RCSID (PI_Server,
            ServerRequestDetails,
            "$Id$")
@@ -35,7 +33,8 @@ namespace TAO
           }
 
         // Obtain the PolicyType from the current Policy object.
-        CORBA::PolicyType const policy_type = policy->policy_type ();
+        CORBA::PolicyType const policy_type =
+          policy->policy_type ();
 
         if (policy_type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)
           {

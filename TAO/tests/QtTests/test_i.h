@@ -36,9 +36,11 @@ public:
 
   // ctor
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_val (CORBA::Long val);
+  void send_val (CORBA::Long val)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
  signals:
   void set_value (int val);

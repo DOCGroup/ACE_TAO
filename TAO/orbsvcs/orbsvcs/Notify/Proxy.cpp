@@ -83,6 +83,9 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
 
 CosNotification::EventTypeSeq*
 TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_Notify_EventTypeSeq& types)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   CosNotification::EventTypeSeq_var event_type_seq;
 

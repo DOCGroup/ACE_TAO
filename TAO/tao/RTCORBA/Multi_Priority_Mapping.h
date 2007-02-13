@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file   Multi_Priority_Mapping.h
- *
- *  $Id$
- *
- * Declares a priority mapping to support cross platform communication.
- *
- *
- *  @author Brian Mendel (brian.r.mendel@boeing.com)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Multi_Priority_Mapping.h
+//
+// = DESCRIPTION
+//   Declares a priority mapping to support cross platform communication.
+//
+// = AUTHOR
+//   Brian Mendel (brian.r.mendel@boeing.com)
+//
+// ============================================================================
 
 #ifndef TAO_MULTI_PRIORITY_MAPPING_H
 #define TAO_MULTI_PRIORITY_MAPPING_H
@@ -73,9 +76,9 @@ public:
 
 private:
 
-  /// The base settings
   int base_native_priority_;
   int base_corba_priority_;
+  // The base settings
 
   const int priority_spacing_;
   const int priorities_contiguous_;
@@ -83,9 +86,9 @@ private:
   /// The scheduling policy
   int policy_;
 
-  /// The range
   int const min_;
   int const max_;
+  // The range
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

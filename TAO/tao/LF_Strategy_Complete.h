@@ -44,7 +44,8 @@ public:
   virtual void set_upcall_thread (TAO_Leader_Follower &);
   virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
                                      TAO_Leader_Follower &);
-  virtual void reset_event_loop_thread (int call_reset, TAO_Leader_Follower &);
+  virtual void reset_event_loop_thread (int call_reset,
+                                        TAO_Leader_Follower &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

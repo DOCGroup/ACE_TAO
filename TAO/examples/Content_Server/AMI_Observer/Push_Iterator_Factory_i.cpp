@@ -19,9 +19,11 @@ Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
   (const char *pathname,
    Web_Server::Callback_ptr client_callback)
+  ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                      0);
 
   // What goes on in this method is a bit strange at first glance
   // since the client can potentially receive all of the data before
@@ -52,7 +54,8 @@ Push_Iterator_Factory_i::register_callback
   if (ACE_OS::stat (pathname,
                     &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
-    throw Web_Server::Error_Result (500);
+    ACE_THROW_RETURN (Web_Server::Error_Result (500),
+                      0);
 
   Web_Server::Metadata_Type *meta_tmp = 0;
   ACE_NEW_THROW_EX (meta_tmp,
@@ -64,12 +67,14 @@ Push_Iterator_Factory_i::register_callback
   if (this->modification_date (&file_status,
                                metadata.inout ()) != 0)
     // HTTP 1.1 "Internal Server Error.
-    throw Web_Server::Error_Result (500);
+    ACE_THROW_RETURN (Web_Server::Error_Result (500),
+                      0);
 
   if (this->content_type (pathname,
                           metadata.inout ()) != 0)
     // HTTP 1.1 "Internal Server Error.
-    throw Web_Server::Error_Result (500);
+    ACE_THROW_RETURN (Web_Server::Error_Result (500),
+                      0);
 
   return metadata._retn ();
 }

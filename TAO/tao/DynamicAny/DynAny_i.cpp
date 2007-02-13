@@ -211,6 +211,11 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr _tao_objref)
 
 void
 TAO_DynAny_i::from_any (const CORBA::Any &any)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
 {
   if (this->destroyed_)
     {
@@ -237,10 +242,12 @@ TAO_DynAny_i::from_any (const CORBA::Any &any)
 
 CORBA::Any_ptr
 TAO_DynAny_i::to_any (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
   CORBA::Any_ptr retval;
@@ -254,10 +261,12 @@ TAO_DynAny_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
   TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs);
@@ -503,6 +512,9 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynAny_i::destroy (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
@@ -518,13 +530,19 @@ TAO_DynAny_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynAny_i::current_component (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        DynamicAny::DynAny::_nil ());
     }
 
-  throw DynamicAny::DynAny::TypeMismatch ();
+  ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
+                    DynamicAny::DynAny::_nil ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

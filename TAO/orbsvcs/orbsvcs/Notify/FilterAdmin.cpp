@@ -26,9 +26,10 @@ TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin (void)
 
 CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (new_filter))
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -39,13 +40,18 @@ TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
     CosNotifyFilter::Filter::_duplicate (new_filter);
 
   if (this->filter_list_.bind (new_id, new_filter_var) == -1)
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        0);
   else
     return new_id;
 }
 
 void
 TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -56,6 +62,10 @@ TAO_Notify_FilterAdmin::remove_filter (CosNotifyFilter::FilterID filter_id)
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -64,13 +74,17 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
 
   if (this->filter_list_.find (filter_id,
                                filter_var) == -1)
-    throw CosNotifyFilter::FilterNotFound ();
+    ACE_THROW_RETURN (CosNotifyFilter::FilterNotFound (),
+                      0);
 
   return filter_var._retn ();
 }
 
 CosNotifyFilter::FilterIDSeq*
 TAO_Notify_FilterAdmin::get_all_filters (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -78,7 +92,7 @@ TAO_Notify_FilterAdmin::get_all_filters (void)
   // Figure out the length of the list.
   size_t len = this->filter_list_.current_size ();
 
-  CosNotifyFilter::FilterIDSeq* list_ptr = 0;
+  CosNotifyFilter::FilterIDSeq* list_ptr;
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list_ptr,
@@ -104,6 +118,7 @@ TAO_Notify_FilterAdmin::get_all_filters (void)
 
 void
 TAO_Notify_FilterAdmin::remove_all_filters (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -162,7 +177,7 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
     {
       this->filter_ids_.set_last_used(id);
       if (this->filter_list_.bind (id, filter) != 0)
-        throw CORBA::INTERNAL ();
+        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
   }
   return this;

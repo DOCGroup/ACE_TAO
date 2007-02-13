@@ -41,18 +41,22 @@ public:
   ~test_i (void);
 
   /// Main servant test method.
-  virtual void invoke_me (void);
+  virtual void invoke_me (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoke_you (void);
+  virtual void invoke_you (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Test just a set slot
-  virtual void invoke_we (void);
+  virtual void invoke_we (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

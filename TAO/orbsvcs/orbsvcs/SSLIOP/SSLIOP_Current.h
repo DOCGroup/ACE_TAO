@@ -69,7 +69,9 @@ namespace TAO
 
       /// Return the peer certificate associated with the current
       /// request.
-      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate ();
+      virtual ::SSLIOP::ASN_1_Cert * get_peer_certificate ()
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         ::SSLIOP::Current::NoContext));
 
       /**
        * Return the certificate chain associated with the current
@@ -79,7 +81,9 @@ namespace TAO
        * certficate.  However, the certificate chain on the server
        * side does NOT contain the peer (client) certificate.
        */
-      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain ();
+      virtual ::SSLIOP::SSL_Cert * get_peer_certificate_chain ()
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         ::SSLIOP::Current::NoContext));
 
       /**
        * This method is mostly useful as an inexpensive means of
@@ -88,7 +92,8 @@ namespace TAO
        * @return @c true if the current execution context is not
        *         within a SSL session.
        */
-      virtual CORBA::Boolean no_context (void);
+      virtual CORBA::Boolean no_context (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Set the TSS slot ID assigned to this object.
       void tss_slot (size_t slot);

@@ -54,6 +54,8 @@ namespace CIAO
                     COMP_SVNT>::remove_component (
       ::Components::CCMObject_ptr comp
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::RemoveFailure))
   {
     CIAO_TRACE ("Home_Servant_Impl<>::remove_component");
 
@@ -115,6 +117,8 @@ namespace CIAO
                     EXEC,
                     COMP_SVNT>::create_component (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CreateFailure))
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create_component");
 
@@ -131,12 +135,15 @@ namespace CIAO
                     EXEC,
                     COMP_SVNT>::create (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CreateFailure))
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create");
 
     if (this->executor_.in () == 0)
       {
-        throw CORBA::INTERNAL ();
+        ACE_THROW_RETURN (CORBA::INTERNAL (),
+                          COMP_SVNT::_stub_type::_nil ());
       }
 
     ::Components::EnterpriseComponent_var _ciao_ec =
@@ -160,6 +167,7 @@ namespace CIAO
                     COMP_SVNT>::_ciao_activate_component (
       typename COMP_SVNT::_exec_type::_ptr_type exe
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
 
@@ -209,6 +217,7 @@ namespace CIAO
                     COMP_SVNT>::_ciao_passivate_component (
       typename COMP_SVNT::_stub_ptr_type comp
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_passivate_component");
 

@@ -21,6 +21,7 @@ TAO_TIO::~TAO_TIO (void)
 
 TimeBase::IntervalT
 TAO_TIO::time_interval (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_time_interval;
 }
@@ -34,6 +35,7 @@ TAO_TIO::time_interval (void)
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
                 CosTime::TIO_out overlap)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
@@ -146,6 +148,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio_i = 0;
 
@@ -237,6 +240,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 
 CosTime::UTO_ptr
 TAO_TIO::time (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 

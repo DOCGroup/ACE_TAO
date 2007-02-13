@@ -5,8 +5,6 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/PortableInterceptorC.h"
-#include "tao/SystemException.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -24,6 +22,7 @@ TAO_ProcessingModePolicy::TAO_ProcessingModePolicy
 
 CORBA::Policy_ptr
 TAO_ProcessingModePolicy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ProcessingModePolicy *copy = 0;
   ACE_NEW_THROW_EX (copy,
@@ -35,17 +34,20 @@ TAO_ProcessingModePolicy::copy (void)
 
 void
 TAO_ProcessingModePolicy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 PortableInterceptor::ProcessingMode
 TAO_ProcessingModePolicy::processing_mode (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return processing_mode_;
 }
 
 CORBA::PolicyType
 TAO_ProcessingModePolicy::policy_type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableInterceptor::PROCESSING_MODE_POLICY_TYPE;
 }

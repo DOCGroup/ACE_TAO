@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ComponentRepository_i.h
- *
- *  $Id$
- *
- *  ComponentRepository servant class.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbiltl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    ComponentRepository_i.h
+//
+// = DESCRIPTION
+//    ComponentRepository servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbiltl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_COMPONENTREPOSITORY_I_H
 #define TAO_COMPONENTREPOSITORY_I_H
@@ -60,19 +63,18 @@ class TAO_IFRService_Export TAO_ComponentRepository_i
   //    CORBA Components.
   //
 public:
-  /// Constructor.
   TAO_ComponentRepository_i (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa,
                              ACE_Configuration *config);
+  // Constructor.
 
-  /// Destructor.
   virtual ~TAO_ComponentRepository_i (void);
+  // Destructor.
 
-  /// We create a default servant servant for each IR Object
-  /// type and its corresponding POA.
   virtual int create_servants_and_poas (void);
+  // We create a default servant servant for each IR Object
+  // type and its corresponding POA.
 
-  /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (
       CORBA::DefinitionKind def_kind
     ) const;
@@ -82,11 +84,12 @@ public:
   virtual TAO_Contained_i *select_contained (
       CORBA::DefinitionKind def_kind
     ) const;
+  // Return one of our servants for internal use.
 
-  /// Select the right POA for object creation.
   virtual PortableServer::POA_ptr select_poa (
       CORBA::DefinitionKind def_kind
     ) const;
+  // Select the right POA for object creation.
 
 protected:
 

@@ -30,14 +30,20 @@ public:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosNotifyComm::InvalidEventType));
 
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+        CosEventComm::Disconnected));
 
   virtual void disconnect_structured_push_consumer (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -67,14 +73,20 @@ public:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosNotifyComm::InvalidEventType));
 
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+        CosEventComm::Disconnected));
 
   virtual void disconnect_sequence_push_consumer (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -105,14 +117,20 @@ public:
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosNotifyComm::InvalidEventType));
 
   virtual void push (
         const CORBA::Any & data
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+        CosEventComm::Disconnected));
 
   virtual void disconnect_push_consumer (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
@@ -150,9 +168,12 @@ public:
 
   size_t reconnect_count () const;
 
-  virtual void reconnect (CORBA::Object_ptr reconnection);
+  virtual void reconnect (
+      CORBA::Object_ptr reconnection
+    ) ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   Consumer_Main & consumer_main_;
@@ -177,7 +198,8 @@ class Consumer_Main
   void usage (FILE * log) const;
 
   void reconnect (
-      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
+      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
   /// Find naming service.

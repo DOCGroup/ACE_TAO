@@ -36,8 +36,9 @@ Criteria_Evaluator::getInitialization (void)
     this->getCriteriaMember ("initialization");
 
   if (any_ptr == 0)
-    throw LifeCycleService::Criteria_Evaluator::NotAvailable(
-      "No initialization member found.\n");
+    ACE_THROW_RETURN (LifeCycleService::Criteria_Evaluator::NotAvailable
+                         ("No initialization member found.\n"),
+                      0);
 
   *any_ptr >>= sequence_ptr;
 
@@ -52,8 +53,9 @@ Criteria_Evaluator::getFilter (void)
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == 0)
-    throw LifeCycleService::Criteria_Evaluator::NotAvailable(
-      "No filter member found.\n");
+    ACE_THROW_RETURN (LifeCycleService::Criteria_Evaluator::NotAvailable
+                        ("No filter member found.\n"),
+                      0);
   *any_ptr >>= string;
   return CORBA::string_dup (string);
 }

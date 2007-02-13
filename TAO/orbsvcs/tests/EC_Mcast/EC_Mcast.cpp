@@ -43,7 +43,7 @@ ECM_Driver::run (int argc, char* argv[])
   try
     {
       this->orb_ =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");
@@ -704,6 +704,7 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events)
 
 void
 ECM_Supplier::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // this->supplier_proxy_->disconnect_push_supplier ();
 }
@@ -810,6 +811,7 @@ ECM_Consumer::close (void)
 
 void
 ECM_Consumer::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->federation_->consumer_push (arrival, events);
@@ -817,6 +819,7 @@ ECM_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 ECM_Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ExtAbstractInterfaceDef_i.h
- *
- *  $Id$
- *
- *  ExtAbstractInterfaceDef_i servant class.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    ExtAbstractInterfaceDef_i.h
+//
+// = DESCRIPTION
+//    ExtAbstractInterfaceDef_i servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 #ifndef TAO_EXTABSTRACTINTERFACEDEF_I_H
 #define TAO_EXTABSTRACTINTERFACEDEF_I_H
@@ -46,14 +49,15 @@ class TAO_IFRService_Export TAO_ExtAbstractInterfaceDef_i
   //    Mixes in IDL3 attribute exceptions.
   //
 public:
-  /// Constructor
   TAO_ExtAbstractInterfaceDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_ExtAbstractInterfaceDef_i (void);
+  // Destructor
 
   virtual void destroy (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

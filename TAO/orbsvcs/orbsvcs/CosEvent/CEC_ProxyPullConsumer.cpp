@@ -45,6 +45,7 @@ TAO_CEC_ProxyPullConsumer::~TAO_CEC_ProxyPullConsumer (void)
 void
 TAO_CEC_ProxyPullConsumer::activate (
     CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPullConsumer_var result;
   try
@@ -60,6 +61,7 @@ TAO_CEC_ProxyPullConsumer::activate (
 
 void
 TAO_CEC_ProxyPullConsumer::deactivate (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -257,6 +259,8 @@ TAO_CEC_ProxyPullConsumer::_decr_refcnt (void)
 void
 TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
       CosEventComm::PullSupplier_ptr pull_supplier)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventChannelAdmin::AlreadyConnected))
 {
   // Nil PullSuppliers are illegal
   if (CORBA::is_nil (pull_supplier))
@@ -330,6 +334,7 @@ TAO_CEC_ProxyPullConsumer::apply_policy (CosEventComm::PullSupplier_ptr pre)
 
 void
 TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PullSupplier_var supplier;
 

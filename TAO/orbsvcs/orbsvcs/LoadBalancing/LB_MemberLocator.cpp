@@ -23,6 +23,8 @@ TAO_LB_MemberLocator::preinvoke (
     PortableServer::POA_ptr /* adapter */,
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie & /* the_cookie */)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::ForwardRequest))
 {
   try
     {
@@ -49,7 +51,7 @@ TAO_LB_MemberLocator::preinvoke (
         ex._tao_print_exception ("LoadManager::next_member()");
     }
 
-  throw CORBA::OBJECT_NOT_EXIST ();
+  ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 }
 
 void
@@ -59,6 +61,7 @@ TAO_LB_MemberLocator::postinvoke (
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie /* the_cookie */,
     PortableServer::Servant /* the_servant */)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

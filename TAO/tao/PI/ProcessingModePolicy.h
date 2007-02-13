@@ -47,13 +47,17 @@ public:
   TAO_ProcessingModePolicy (PortableInterceptor::ProcessingMode mode);
 
   virtual PortableInterceptor::ProcessingMode processing_mode
-                                        (void);
+                                        (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// The attribute

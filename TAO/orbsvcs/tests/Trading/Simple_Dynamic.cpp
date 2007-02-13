@@ -17,6 +17,7 @@ template <class T> CORBA::Any*
 TAO_Simple_Dynamic_Property<T>::evalDP (const char*,
                                         CORBA::TypeCode_ptr,
                                         const CORBA::Any&)
+  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* return_value = 0;
   ACE_NEW_RETURN (return_value, CORBA::Any, 0);

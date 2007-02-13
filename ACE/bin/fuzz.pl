@@ -6,7 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   Fuzz is a script whose purpose is to check through ACE/TAO files for
 #   easy to spot (by a perl script, at least) problems.
 
-use Cwd;
 use File::Find;
 use File::Basename;
 use Getopt::Std;
@@ -15,10 +14,14 @@ use Getopt::Std;
 #
 # Add tests for these:
 #
+# - no relative path to tao_idl in the .dsp files
+# - Linking to wrong type of library in dsp's
 # - not setting up the release configs correctly in dsp files
 # - Guards in .h files
 # - no global functions
 # - other commit_check checks, tabs, trailing spaces.
+# - _narrow() should always have ACE_ENV_ARG_PARAMETER
+# - Using ACE_TRY_NEW_ENV (Nanbor suggests using ACE_DECLARE_NEW_CORBA_ENV)
 #
 # And others in ACE_Guidelines and Design Rules
 #
@@ -227,10 +230,6 @@ sub check_for_msc_ver_string ()
                     $mscline = $.;
                 }
                 if ($disable == 0 and /\_MSC_VER \>= 1200/) {
-                    $found = 1;
-                    $mscline = $.;
-                }
-                if ($disable == 0 and /\_MSC_VER \> 1200/) {
                     $found = 1;
                     $mscline = $.;
                 }
@@ -976,6 +975,151 @@ sub check_for_bad_ace_trace()
 }
 
 
+
+# This test checks missing ACE_ENV_ARG_PARAMETER when using
+# resolve_initial_references
+sub check_for_missing_rir_env ()
+{
+    print "Running resolve_initial_references() check\n";
+    foreach $file (@files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            my $native_try = 0;
+            my $in_rir = 0;
+            my $found_env = 0;
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_missing_rir_env/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_missing_rir_env/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    next if m/^\s*\/\//;
+
+                    if (m/^\s*try/) {
+                        $disable = 1;
+                        next;
+                    }
+
+                    if (m/[^\:]resolve_initial_references\s*\(/) {
+                        $found_env = 0;
+                        $in_rir = 1;
+                    }
+
+                    if (m/ACE_ENV_ARG_PARAMETER/) {
+                        $found_env = 1;
+                    }
+
+                    if ($in_rir == 1 && m/\;\s*$/) {
+                        $in_rir = 0;
+                        if ($found_env != 1) {
+                            print_error ("$file:$.: Missing ACE_ENV_ARG_PARAMETER in"
+                                         . " resolve_initial_references");
+                        }
+                        $found_env = 0;
+                    }
+
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
+# This test checks for usage of ACE_CHECK/ACE_TRY_CHECK
+sub check_for_ace_check ()
+{
+    print "Running ACE_CHECK check\n";
+    foreach $file (@files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            my $in_func = 0;
+            my $in_return = 0;
+            my $in_ace_try = 0;
+            my $found_env = 0;
+
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_ace_check/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_ace_check/) {
+                    $disable = 0;
+                }
+
+                if (/FUZZ\: ignore check_for_ace_check/) {
+                    next;
+                }
+
+                next if m/^\s*\/\//;
+                next if m/^\s*$/;
+
+                if (m/ACE_TRY\s*$/ || m/ACE_TRY_EX/ || m/ACE_TRY\s*{/) {
+                  $in_ace_try = 1;
+                }
+                if (m/ACE_CATCH/) {
+                  $in_ace_try = 0;
+                }
+
+                if ($disable == 0) {
+                    if (m/\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
+                        $env_line = $.;
+                        if ($found_env) {
+                            print_error ("$file:$env_line: Missing ACE_CHECK/ACE_TRY_CHECK");
+                        }
+                        $found_env = 1;
+                        $in_func = 1;
+                    }
+
+                    if (m/^\s*return/) {
+                      $in_return = 1;
+                    }
+                    if ($in_return && m/;/) {
+                      $in_return = 0;
+                      $found_env = 0;
+                    }
+
+                    # ignore quoted ACE_ENV_ARG_PARAMETERS's
+                    if (m/^[^\"]*\"[^\"]*ACE_ENV_(SINGLE_)?ARG_PARAMETER[^\"]*\"[^\"]*$/) {
+                        $found_env = 0;
+                    }
+
+                    if (m/ACE_ENV_(SINGLE_)?ARG_PARAMETER.*ACE_ENV_(SINGLE_)?ARG_PARAMETER/) {
+                        print_error ("$file:$.: Multiple ACE_ENV_ARG_PARAMETER");
+                    }
+
+                    if (m/ACE_THROW/ && $in_ace_try) {
+                        print_error ("$file:$.: ACE_THROW/ACE_THROW_RETURN used inside of an ACE_TRY");
+                    }
+
+                    if ($in_func && m/\)/) {
+                      $in_func = 0;
+                    }
+                    elsif (!$in_func && $found_env) {
+                        if (m/ACE_CHECK/ && $in_ace_try) {
+                            print_error ("$file:$.: ACE_CHECK/ACE_CHECK_RETURN used inside of an ACE_TRY");
+                        }
+                        elsif (!m/_CHECK/ && !m/^\}/ && !$in_return) {
+                            print_error ("$file:$env_line: Missing ACE_CHECK/ACE_TRY_CHECK");
+                        }
+                        $found_env = 0;
+                    }
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 # This test checks for broken ChangeLog entries.
 sub check_for_changelog_errors ()
 {
@@ -1011,15 +1155,6 @@ sub check_for_changelog_errors ()
 
 sub check_for_deprecated_macros ()
 {
-    ## Take the current working directory and remove everything up to
-    ## ACE_wrappers (or ACE for the peer-style checkout).  This will be
-    ## used to determine when the use of ACE_THROW_SPEC is an error.
-    my($cwd) = getcwd();
-    if ($cwd =~ s/.*(ACE_wrappers)/$1/) {
-    }
-    elsif ($cwd =~ s/.*(ACE)/$1/) {
-    }
-
     print "Running deprecated macros check\n";
     foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
@@ -1029,12 +1164,6 @@ sub check_for_deprecated_macros ()
                 # Check for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION usage.
                 if (m/ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION\)/) {
                     print_error ("$file:$.: ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION found.");
-                }
-                elsif (/ACE_THROW_SPEC/) {
-                    ## Do not use ACE_THROW_SPEC in TAO or CIAO.
-                    if ($file =~ /TAO|CIAO/i || $cwd =~ /TAO|CIAO/i) {
-                        print_error ("$file:$.: ACE_THROW_SPEC found.");
-                    }
                 }
             }
             close (FILE);
@@ -1276,6 +1405,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_bad_run_test
            check_for_absolute_ace_wrappers
            check_for_bad_ace_trace
+           check_for_missing_rir_env
+           check_for_ace_check
            check_for_changelog_errors
            check_for_ptr_arith_t
            check_for_include
@@ -1334,6 +1465,8 @@ check_for_mismatched_filename () if ($opt_l >= 2);
 check_for_bad_run_test () if ($opt_l >= 6);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
+check_for_missing_rir_env () if ($opt_l >= 6);
+check_for_ace_check () if ($opt_l >= 6);
 check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_include () if ($opt_l >= 5);

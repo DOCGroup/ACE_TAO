@@ -40,7 +40,9 @@ public:
   virtual void connect (void);
 
   void push_structured_event (const CosNotification::StructuredEvent &/*notification*/
-                              );
+                              )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 
 protected:
   /// Destination object.

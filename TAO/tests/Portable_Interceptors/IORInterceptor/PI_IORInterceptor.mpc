@@ -26,6 +26,7 @@ project(*Server): taoserver, iorinterceptor, interceptors {
 
 project(*Client): taoclient, pi, interceptors {
   after += *idl
+  after += *Server
   Source_Files {
     FOO_Client_ORBInitializer.cpp
     FOO_ClientRequestInterceptor.cpp

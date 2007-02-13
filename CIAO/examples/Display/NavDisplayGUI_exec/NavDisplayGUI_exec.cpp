@@ -35,6 +35,7 @@ MyImpl::NavDisplayGUI_exec_impl::~NavDisplayGUI_exec_impl ()
 void
 MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
     HUDisplay::tick * /* ev */)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
 
@@ -72,6 +73,8 @@ MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
 // Operations from Components::SessionComponent
 void
 MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext_ptr ctx)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::set_session_context\n"));
@@ -86,11 +89,15 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
 
 void
 MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
 }
 
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_activate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::ccm_activate\n"));
@@ -118,11 +125,15 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate ()
 
 void
 MyImpl::NavDisplayGUI_exec_impl::ciao_postactivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
 }
 
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_passivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::ccm_passivate\n"));
@@ -141,6 +152,8 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate ()
 
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_remove ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::NavDisplayGUI_exec_impl::ccm_remove\n"));
@@ -168,6 +181,8 @@ MyImpl::NavDisplayGUIHome_exec_impl::~NavDisplayGUIHome_exec_impl ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::NavDisplayGUIHome_exec_impl::create ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG,

@@ -18,7 +18,6 @@
 #include "tao/Policy_Set.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
@@ -71,7 +70,8 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core)
 
 RTCORBA::ProtocolProperties_ptr
 TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
-                                                    CORBA::Policy_ptr policy)
+                                                    CORBA::Policy_ptr policy
+                                                    )
 {
   if (CORBA::is_nil (policy))
     return 0;
@@ -176,7 +176,8 @@ TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_IIOP_Protocol_Propertie
                                                      )
 {
   RTCORBA::TCPProtocolProperties_var protocol_properties =
-    RTCORBA::TCPProtocolProperties::_narrow (from);
+    RTCORBA::TCPProtocolProperties::_narrow (from
+                                            );
 
   to.send_buffer_size_ = protocol_properties->send_buffer_size ();
   to.recv_buffer_size_ = protocol_properties->recv_buffer_size ();
@@ -187,7 +188,8 @@ TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_IIOP_Protocol_Propertie
 }
 
 void
-TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &to)
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &to
+                                                                 )
 {
   RTCORBA::ProtocolProperties_var from =
     this->server_protocol_properties_at_orb_level (IOP::TAG_INTERNET_IOP);
@@ -448,7 +450,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
           return -1;
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {

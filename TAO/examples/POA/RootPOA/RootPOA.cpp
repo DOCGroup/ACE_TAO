@@ -35,7 +35,7 @@ main (int argc, char **argv)
   try
     {
       // Initilize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Resolve the initial references for the name RootPOA thus getting
       // an object of type CORBA::Object.

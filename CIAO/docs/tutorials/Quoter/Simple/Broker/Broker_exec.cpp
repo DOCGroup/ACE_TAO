@@ -29,6 +29,8 @@ namespace CIDL_StockBroker_Impl
   void
   StockBroker_exec_i::stock_subscribe (
   const char * stock_name)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Stock::Invalid_Stock))
   {
     if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
     {
@@ -47,6 +49,8 @@ namespace CIDL_StockBroker_Impl
   void
   StockBroker_exec_i::stock_unsubscribe (
   const char * stock_name)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Stock::Invalid_Stock))
   {
     if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
     {
@@ -67,6 +71,7 @@ namespace CIDL_StockBroker_Impl
   void
   StockBroker_exec_i::push_notify_in (
   Stock::StockName *ev)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
     ACE_DEBUG ((LM_INFO,
@@ -97,6 +102,9 @@ namespace CIDL_StockBroker_Impl
   void
   StockBroker_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     this->context_ = StockBroker_Context::_narrow (ctx);
 
@@ -108,26 +116,41 @@ namespace CIDL_StockBroker_Impl
 
   void
   StockBroker_exec_i::ciao_preactivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
   void
   StockBroker_exec_i::ciao_postactivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
   void
   StockBroker_exec_i::ccm_activate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
   void
   StockBroker_exec_i::ccm_passivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
   void
   StockBroker_exec_i::ccm_remove ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
@@ -145,6 +168,9 @@ namespace CIDL_StockBroker_Impl
 
   ::Components::EnterpriseComponent_ptr
   StockBrokerHome_exec_i::create ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

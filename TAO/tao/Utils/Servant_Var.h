@@ -22,7 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
+#include "tao/Environment.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,7 +60,8 @@ namespace TAO
 
       /// Destructor.  Removes a reference from the underlying object,
       /// possibly destroying it.
-      ~Servant_Var();
+      ~Servant_Var()
+        ACE_THROW_SPEC (());
 
       /// Assignment operator.  Assumes ownership of @c p.
       Servant_Var<T> & operator=(T * p);
@@ -135,7 +137,8 @@ namespace TAO
       /**
        * Often used to implement strong exception safety.
        */
-      void swap(Servant_Var<T> & rhs) throw ();
+      void swap(Servant_Var<T> & rhs)
+        ACE_THROW_SPEC(());
 
     private:
       T * ptr_;

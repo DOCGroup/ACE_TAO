@@ -49,17 +49,20 @@ public:
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void);
+      for_consumers (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void);
+      for_suppliers (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
   void get_state (FtRtecEventChannelAdmin::EventChannelState & s);
 
   void set_state (const FTRT::State & stat);
 
-  void set_update (const FTRT::State & s);
+  void set_update (const FTRT::State & s)
+      ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate));
 
   /// EventChannelFacade Interface
 

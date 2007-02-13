@@ -46,21 +46,44 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event);
+  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNotifyFilter::UnsupportedFilterableData
+                     ));
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event* event);
+  CORBA::Boolean match (const TAO_Notify_Event* event)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNotifyFilter::UnsupportedFilterableData
+                     ));
 
-  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
+  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter);
+  virtual void remove_filter (CosNotifyFilter::FilterID filter)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNotifyFilter::FilterNotFound
+                     ));
 
-  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
+  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosNotifyFilter::FilterNotFound
+                     ));
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (void);
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual void remove_all_filters (void);
+  virtual void remove_all_filters (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
 
   // TAO_Notify::Topology_Object

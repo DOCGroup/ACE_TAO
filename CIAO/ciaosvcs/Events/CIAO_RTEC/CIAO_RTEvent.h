@@ -61,52 +61,78 @@ namespace CIAO
     virtual ~RTEventService (void);
 
     virtual Supplier_Config_ptr
-    create_supplier_config (void);
+    create_supplier_config (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Consumer_Config_ptr
-    create_consumer_config (void);
+    create_consumer_config (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void connect_event_supplier (
-        CIAO::Supplier_Config_ptr supplier_config);
+        CIAO::Supplier_Config_ptr supplier_config)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
     virtual void connect_event_consumer (
-        CIAO::Consumer_Config_ptr consumer_config);
+        CIAO::Consumer_Config_ptr consumer_config)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
     virtual void
     disconnect_event_supplier (
-        const char * consumer_id);
+        const char * consumer_id)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidConnection));
 
     virtual void disconnect_event_consumer (
-        const char * connection_id);
+        const char * connection_id)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidConnection));
 
     virtual void push_event (
-        Components::EventBase * ev);
+        Components::EventBase * ev)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
     virtual void ciao_push_event (
         Components::EventBase * evt,
         const char * source_id,
-        CORBA::TypeCode_ptr tc);
+        CORBA::TypeCode_ptr tc)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
 
     virtual ::CORBA::Boolean create_addr_serv (
         const char * name,
         ::CORBA::UShort port,
-        const char * address);
+        const char * address)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
 
     virtual ::CORBA::Boolean create_sender (
-        const char * addr_serv_id);
+        const char * addr_serv_id)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
 
     virtual ::CORBA::Boolean create_receiver (
         const char * addr_serv_id,
         ::CORBA::Boolean is_multicast,
-        ::CORBA::UShort listen_port);
+        ::CORBA::UShort listen_port)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException));
 
     virtual ::RtecEventChannelAdmin::EventChannel_ptr tao_rt_event_channel (
-      );
+      )
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
   private:
     // @@ (GD) This is the place where use could provide a parameter
     //         which specifies the event channel service configuration file.
-    void create_rt_event_channel (const char * ec_name);
+    void create_rt_event_channel (const char * ec_name)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
   private:
 
@@ -172,7 +198,9 @@ namespace CIAO
     RTEventServiceSupplier_impl (
       PortableServer::POA_ptr poa);
 
-    virtual void disconnect_push_supplier ();
+    virtual void disconnect_push_supplier ()
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
   private:
 
@@ -194,9 +222,13 @@ namespace CIAO
       Components::EventConsumerBase_ptr consumer);
 
     virtual void push (
-      const RtecEventComm::EventSet& events);
+      const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException));
 
-    virtual void disconnect_push_consumer ();
+    virtual void disconnect_push_consumer ()
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
 
   private:
 
@@ -223,30 +255,47 @@ namespace CIAO
 
     virtual ~RTEvent_Consumer_Config_impl (void);
 
-    virtual void start_conjunction_group (CORBA::Long size);
+    virtual void start_conjunction_group (CORBA::Long size)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void start_disjunction_group (CORBA::Long size);
+    virtual void start_disjunction_group (CORBA::Long size)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void insert_source (const char * source_id);
+    virtual void insert_source (const char * source_id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void insert_type (::CORBA::Long event_type);
+    virtual void insert_type (::CORBA::Long event_type)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
-    virtual void consumer_id (const char * consumer_id);
+    virtual void consumer_id (const char * consumer_id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CONNECTION_ID consumer_id ();
+    virtual CONNECTION_ID consumer_id ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void consumer (Components::EventConsumerBase_ptr consumer);
+    //virtual void supplier_id (const char * supplier_id)
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual Components::EventConsumerBase_ptr consumer ();
+    //virtual CONNECTION_ID supplier_id ()
+    //  ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual EventServiceType service_type ();
+    virtual void consumer (Components::EventConsumerBase_ptr consumer)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual Components::EventConsumerBase_ptr consumer ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual EventServiceType service_type ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@@ (GD) There should be a place where the deployment tool could
   //        set up the rt_event_qos properties for Consumer Config.
 
-    virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos ();
+    virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy ();
+    virtual void destroy ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
 
@@ -277,18 +326,23 @@ namespace CIAO
 
     virtual ~RTEvent_Supplier_Config_impl (void);
 
-    void supplier_id (const char * supplier_id);
+    void supplier_id (const char * supplier_id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CONNECTION_ID supplier_id ();
+    CONNECTION_ID supplier_id ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    EventServiceType service_type ();
+    EventServiceType service_type ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     //@@ (GD) There should be a place where the deployment tool could
     //        set up the rt_event_qos properties for Supplier Config.
 
-    RtecEventChannelAdmin::SupplierQOS * rt_event_qos ();
+    RtecEventChannelAdmin::SupplierQOS * rt_event_qos ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy ();
+    virtual void destroy ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     ACE_CString supplier_id_;

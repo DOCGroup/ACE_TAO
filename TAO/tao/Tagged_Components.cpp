@@ -46,8 +46,10 @@ TAO_Tagged_Components::set_code_sets (
 void
 TAO_Tagged_Components::set_code_sets (CONV_FRAME::CodeSetComponentInfo &ci)
 {
-  this->set_code_sets_i (this->code_sets_.ForCharData, ci.ForCharData);
-  this->set_code_sets_i (this->code_sets_.ForWcharData, ci.ForWcharData);
+  this->set_code_sets_i (this->code_sets_.ForCharData,
+                         ci.ForCharData);
+  this->set_code_sets_i (this->code_sets_.ForWcharData,
+                         ci.ForWcharData);
   this->code_sets_set_ = 1;
 
   TAO_OutputCDR cdr;
@@ -168,8 +170,10 @@ TAO_Tagged_Components::set_known_component_i (
           return;
         }
 
-      this->set_code_sets_i (this->code_sets_.ForCharData, ci.ForCharData);
-      this->set_code_sets_i (this->code_sets_.ForWcharData, ci.ForWcharData);
+      this->set_code_sets_i (this->code_sets_.ForCharData,
+                             ci.ForCharData);
+      this->set_code_sets_i (this->code_sets_.ForWcharData,
+                             ci.ForWcharData);
       this->code_sets_set_ = 1;
     }
 }
@@ -247,7 +251,8 @@ TAO_Tagged_Components::remove_component (IOP::ComponentId id)
 }
 
 int
-TAO_Tagged_Components::remove_known_component_i (IOP::ComponentId tag)
+TAO_Tagged_Components::remove_known_component_i (
+    IOP::ComponentId tag)
 {
   if (tag == IOP::TAG_ORB_TYPE)
     {
@@ -320,11 +325,12 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
       return 0;
     }
 
-  CORBA::ULong const l = this->components_.length ();
+  CORBA::ULong l = this->components_.length ();
 
   for (CORBA::ULong i = 0; i != l; ++i)
     {
-      const IOP::TaggedComponent &component = this->components_[i];
+      const IOP::TaggedComponent &component =
+        this->components_[i];
 
       if (this->known_tag (component.tag))
         {

@@ -69,6 +69,7 @@ CEC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 
 void
 CEC_Counting_Consumer::push (const CORBA::Any&)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->event_count ++;
 #if 0
@@ -84,6 +85,7 @@ CEC_Counting_Consumer::push (const CORBA::Any&)
 
 void
 CEC_Counting_Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
   this->supplier_proxy_ =
@@ -185,6 +187,7 @@ CEC_Pull_Counting_Consumer::dump_results (int expected_count, int tolerance)
 
 void
 CEC_Pull_Counting_Consumer::disconnect_pull_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
   this->supplier_proxy_ =

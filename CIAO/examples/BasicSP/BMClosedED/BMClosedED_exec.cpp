@@ -23,12 +23,14 @@ MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 
 BasicSP::CCM_ReadData_ptr
 MyImpl::BMClosedED_exec_i::get_dataout ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return BasicSP::CCM_ReadData::_duplicate (this);
 }
 
 void
 MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   if (CIAO::debug_level () > 0)
@@ -78,6 +80,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 
 char *
 MyImpl::BMClosedED_exec_i::get_data ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->str_.inout ());
 }
@@ -87,6 +90,8 @@ void
 MyImpl::BMClosedED_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -106,11 +111,15 @@ MyImpl::BMClosedED_exec_i::set_session_context (
 
 void
 MyImpl::BMClosedED_exec_i::ciao_preactivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
 }
 
 void
 MyImpl::BMClosedED_exec_i::ccm_activate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -122,11 +131,15 @@ MyImpl::BMClosedED_exec_i::ccm_activate ()
 
 void
 MyImpl::BMClosedED_exec_i::ciao_postactivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
 }
 
 void
 MyImpl::BMClosedED_exec_i::ccm_passivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   //  if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -135,6 +148,8 @@ MyImpl::BMClosedED_exec_i::ccm_passivate ()
 
 void
 MyImpl::BMClosedED_exec_i::ccm_remove ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   //  if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -157,6 +172,8 @@ MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::BMClosedEDHome_exec_i::create ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   Components::EnterpriseComponent_ptr tmp =
     Components::EnterpriseComponent::_nil ();

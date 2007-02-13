@@ -54,7 +54,8 @@ public:
 
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
-                                   ACE_TCHAR *argv[]);
+                                   ACE_TCHAR *argv[])
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This function call initializes the Trading Service given a reference to the
   // ORB and the command line parameters.
 

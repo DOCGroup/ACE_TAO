@@ -13,9 +13,9 @@ project(*Ntf Struct Supp): notifytest {
 
   after += *idl
   Source_Files {
-    goC.cpp
-    goS.cpp
     Structured_Supplier.cpp
+    goS.cpp
+    goC.cpp
   }
   IDL_Files {
   }

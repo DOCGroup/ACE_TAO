@@ -34,10 +34,12 @@ namespace CIDL_Receiver_Impl
     ~ReceiverSwap_exec_i ();
 
     virtual ::Components::EnterpriseComponent_ptr
-    incarnate ();
+    incarnate ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::EnterpriseComponent_ptr
-    etherealize ();
+    etherealize ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
   class RECEIVER_EXEC_Export Receiver_exec_i :
@@ -54,21 +56,34 @@ namespace CIDL_Receiver_Impl
 
     // Operation which will be called upon receiving the timeout event.
     virtual void
-    push_click_in (Hello::TimeOut *ev);
+    push_click_in (Hello::TimeOut *ev)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    virtual void set_session_context (Components::SessionContext_ptr ctx);
+    virtual void set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ciao_preactivate ();
+    virtual void ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_activate ();
+    virtual void ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ciao_postactivate ();
+    virtual void ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
 
-    virtual void ccm_passivate ();
+    virtual void ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
-    virtual void ccm_remove ();
+    virtual void ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
   protected:
     /// Copmponent specific context
@@ -96,7 +111,9 @@ namespace CIDL_Receiver_Impl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr

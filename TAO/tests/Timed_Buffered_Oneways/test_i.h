@@ -32,11 +32,14 @@ public:
   void method (CORBA::ULong request_number,
                CORBA::Long start_time,
                const test::data &,
-               CORBA::ULong work);
+               CORBA::ULong work)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void flush (void);
+  void flush (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Long start_time);
+  void shutdown (CORBA::Long start_time)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

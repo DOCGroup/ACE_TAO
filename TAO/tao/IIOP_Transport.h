@@ -93,7 +93,9 @@ protected:
 #endif  /* TAO_HAS_SENDFILE==1 */
 
 
-  virtual ssize_t recv (char *buf, size_t len, const ACE_Time_Value *s = 0);
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
 
   virtual int send_message_shared (TAO_Stub *stub,
                                    int message_semantics,
@@ -126,7 +128,8 @@ public:
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
 
-  virtual int messaging_init (CORBA::Octet major, CORBA::Octet minor);
+  virtual int messaging_init (CORBA::Octet major,
+                              CORBA::Octet minor);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 

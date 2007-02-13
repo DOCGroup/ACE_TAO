@@ -24,12 +24,14 @@ TAO::Security::EstablishTrustPolicy::~EstablishTrustPolicy (void)
 
 CORBA::PolicyType
 TAO::Security::EstablishTrustPolicy::policy_type ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Security::SecEstablishTrustPolicy;
 }
 
 CORBA::Policy_ptr
 TAO::Security::EstablishTrustPolicy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Security::EstablishTrustPolicy *policy = 0;
   ACE_NEW_THROW_EX (policy,
@@ -45,11 +47,13 @@ TAO::Security::EstablishTrustPolicy::copy (void)
 
 void
 TAO::Security::EstablishTrustPolicy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 ::Security::EstablishTrust
 TAO::Security::EstablishTrustPolicy::trust (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->trust_;
 }

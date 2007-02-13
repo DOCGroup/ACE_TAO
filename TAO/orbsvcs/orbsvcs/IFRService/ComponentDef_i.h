@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ComponentDef_i.h
- *
- *  $Id$
- *
- *  ComponentDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    ComponentDef_i.h
+//
+// = DESCRIPTION
+//    ComponentDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_COMPONENTDEF_I_H
 #define TAO_COMPONENTDEF_I_H
@@ -45,81 +48,98 @@ class TAO_IFRService_Export TAO_ComponentDef_i
   //    Represents a component definition.
   //
 public:
-  /// Constructor
   TAO_ComponentDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_ComponentDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
 
-  /// Remove the repository entry.
   virtual void destroy (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Remove the repository entry.
 
-  /// Remove the repository entry.
   void destroy_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Remove the repository entry.
 
-  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 
-  /// From Contained_i's pure virtual function.
   CORBA::Contained::Description *describe_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 
-  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
-  /// From IDLType_i's pure virtual function.
   CORBA::TypeCode_ptr type_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
   virtual CORBA::InterfaceDefSeq *supported_interfaces (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDefSeq *supported_interfaces_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void supported_interfaces_i (
       const CORBA::InterfaceDefSeq &supported_interfaces
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::ComponentDef_ptr base_component (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::ComponentDef_ptr base_component_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_component (
       CORBA::ComponentIR::ComponentDef_ptr base_component
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_component_i (
       CORBA::ComponentIR::ComponentDef_ptr base_component
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::ProvidesDef_ptr create_provides (
       const char *id,
       const char *name,
       const char *version,
       CORBA::InterfaceDef_ptr interface_type
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::ProvidesDef_ptr create_provides_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::InterfaceDef_ptr interface_type
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::UsesDef_ptr create_uses (
       const char *id,
@@ -127,7 +147,8 @@ public:
       const char *version,
       CORBA::InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::UsesDef_ptr create_uses_i (
       const char *id,
@@ -135,53 +156,60 @@ public:
       const char *version,
       CORBA::InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::EmitsDef_ptr create_emits (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::EmitsDef_ptr create_emits_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::PublishesDef_ptr create_publishes (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::PublishesDef_ptr create_publishes_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::ConsumesDef_ptr create_consumes (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::ConsumesDef_ptr create_consumes_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Called from TAO_IFR_Service_Utils::name_exists() when we
-  /// are a base component.
   static int name_clash (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exists() when we
+  // are a base component.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

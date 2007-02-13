@@ -15,14 +15,12 @@
 /////////////////////////////////////////////////////////////////
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_WCSTOK
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
 // if you ACE to use it.
 //#define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
-#define ACE_HAS_ALT_CUSERID
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
@@ -33,6 +31,7 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#define ACE_HAS_INLINED_OSCALLS
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
@@ -89,7 +88,6 @@
 #define ACE_LACKS_SOCKET_BUFSIZ
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_STRPTIME
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYS_MSG_H
@@ -118,6 +116,7 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
+#define ACE_LACKS_CUSERID
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
 // supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )

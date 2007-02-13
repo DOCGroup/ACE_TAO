@@ -9,6 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::TCKind
 TAO_Sequence_Extracter_Base::
 sequence_type (CORBA::TypeCode* type_code)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Seth, why do you use a comma to separate the two statements?
   CORBA::TCKind return_value = CORBA::tk_void,

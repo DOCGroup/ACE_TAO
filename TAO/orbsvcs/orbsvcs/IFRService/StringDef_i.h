@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    StringDef_i.h
- *
- *  $Id$
- *
- *  StringDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    StringDef_i.h
+//
+// = DESCRIPTION
+//    StringDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_STRINGDEF_I_H
 #define TAO_STRINGDEF_I_H
@@ -32,55 +35,63 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class TAO_StringDef_i
- *
- * @brief TAO_StringDef_i
- *
- * Represents a bounded string (unbounded strings
- * are included in PrimitiveDef).
- */
 class TAO_IFRService_Export TAO_StringDef_i : public virtual TAO_IDLType_i
 {
+  // = TITLE
+  //    TAO_StringDef_i
+  //
+  // = DESCRIPTION
+  //    Represents a bounded string (unbounded strings
+  //    are included in PrimitiveDef).
+  //
 public:
-  /// Constructor.
   TAO_StringDef_i (TAO_Repository_i *repoy);
+  // Constructor.
 
-  /// Destructor.
   virtual ~TAO_StringDef_i (void);
+  // Destructor.
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
-;
 
-  /// Remove the repository entry.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
+
   virtual void destroy ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Remove the repository entry.
 
   virtual void destroy_i ()
-;
 
-  /// From IDLType_i's pure virtual function.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::TypeCode_ptr type ()
-;
 
-  /// From IDLType_i's pure virtual function.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
   virtual CORBA::TypeCode_ptr type_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
   virtual CORBA::ULong bound ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong bound_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void bound (
       CORBA::ULong bound)
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void bound_i (
       CORBA::ULong bound)
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

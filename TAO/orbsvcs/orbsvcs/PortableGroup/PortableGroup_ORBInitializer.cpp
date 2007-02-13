@@ -21,6 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
@@ -58,6 +59,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
 void
 TAO_PortableGroup_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

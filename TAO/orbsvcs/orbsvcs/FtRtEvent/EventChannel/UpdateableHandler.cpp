@@ -62,6 +62,9 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
 
 void UpdateableHandler::set_update (
                                     )
+                                    ACE_THROW_SPEC ((
+                                    CORBA::SystemException
+                                    ))
 {
   ACE_DEBUG((LM_DEBUG,"Received reply from "));
   dispatch(&Update_Manager::handle_reply);
@@ -69,6 +72,9 @@ void UpdateableHandler::set_update (
 void UpdateableHandler::set_update_excep (
   ::Messaging::ExceptionHolder * excep_holder
   )
+  ACE_THROW_SPEC ((
+  CORBA::SystemException
+  ))
 {
   ACE_DEBUG((LM_DEBUG, "Received Exception from"));
   try{

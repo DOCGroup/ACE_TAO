@@ -29,6 +29,7 @@ TAO_IORInfo::~TAO_IORInfo (void)
 CORBA::Policy_ptr
 TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
                                    )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -44,12 +45,15 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
   // ........
 
   // No policy matching the given PolicyType was found.
-  throw ::CORBA::INV_POLICY (CORBA::OMGVMCID | 3, CORBA::COMPLETED_NO);
+  ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
+                                       CORBA::COMPLETED_NO),
+                    CORBA::Policy::_nil ());
 }
 
 void
 TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
                                 )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -66,6 +70,7 @@ TAO_IORInfo::add_ior_component_to_profile (
     const IOP::TaggedComponent &component,
     IOP::ProfileId profile_id
     )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -79,6 +84,7 @@ TAO_IORInfo::add_ior_component_to_profile (
 
 char *
 TAO_IORInfo::manager_id (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -88,6 +94,7 @@ TAO_IORInfo::manager_id (void)
 
 PortableInterceptor::AdapterState
 TAO_IORInfo::state (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -96,6 +103,7 @@ TAO_IORInfo::state (void)
 
 PortableInterceptor::ObjectReferenceTemplate *
 TAO_IORInfo::adapter_template (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -109,7 +117,9 @@ TAO_IORInfo::adapter_template (void)
 
   if (adapter_template == 0)
     {
-      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                              CORBA::COMPLETED_NO),
+                        0);
     }
 
   return adapter_template;
@@ -117,6 +127,7 @@ TAO_IORInfo::adapter_template (void)
 
 PortableInterceptor::ObjectReferenceFactory *
 TAO_IORInfo::current_factory (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -130,7 +141,9 @@ TAO_IORInfo::current_factory (void)
 
   if (adapter_factory == 0)
     {
-      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
+                                              CORBA::COMPLETED_NO),
+                        0);
     }
 
   return adapter_factory;
@@ -140,6 +153,7 @@ void
 TAO_IORInfo::current_factory (
     PortableInterceptor::ObjectReferenceFactory * current_factory
     )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 

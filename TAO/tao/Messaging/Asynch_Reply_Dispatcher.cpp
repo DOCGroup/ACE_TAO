@@ -8,6 +8,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 
+#include "ace/CORBA_macros.h"
+
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -33,7 +35,9 @@ TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 
 // Dispatch the reply.
 int
-TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
+TAO_Asynch_Reply_Dispatcher::dispatch_reply (
+    TAO_Pluggable_Reply_Params &params
+  )
 {
   if (params.input_cdr_ == 0)
     return -1;
@@ -54,7 +58,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block *db =
+    this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == 0)
     {
@@ -121,9 +126,10 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
           // Call the Reply Handler's skeleton.
           reply_handler_skel_ (this->reply_cdr_,
                                this->reply_handler_.in (),
-                               reply_error);
+                               reply_error
+                               );
         }
-      catch (const ::CORBA::Exception& ex)
+      catch ( ::CORBA::Exception& ex)
         {
           if (TAO_debug_level >= 4)
             ex._tao_print_exception ("Exception during reply handler");
@@ -159,6 +165,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 
       comm_failure._tao_encode (out_cdr);
 
+
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
@@ -166,10 +173,11 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
         {
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
-                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION);
+                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION
+                                     );
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -223,10 +231,11 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
         {
           this->reply_handler_skel_ (cdr,
                                      this->reply_handler_.in (),
-                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION);
+                                     TAO_AMI_REPLY_SYSTEM_EXCEPTION
+                                     );
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -240,7 +249,8 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
 long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time)
+                                             const ACE_Time_Value &max_wait_time
+                                             )
 {
   if (this->timeout_handler_ == 0)
     {

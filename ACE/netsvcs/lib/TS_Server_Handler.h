@@ -22,9 +22,8 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Time_Request_Reply.h"
 #include "ace/svc_export.h"
-
-#include "Time_Request_Reply.h"
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;

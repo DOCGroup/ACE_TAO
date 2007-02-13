@@ -20,6 +20,8 @@ void
 TAO_Notify_Constraint_Interpreter::build_tree (
     const char *constraints
   )
+  ACE_THROW_SPEC ((CosNotifyFilter::InvalidConstraint,
+                   CORBA::NO_MEMORY))
 {
   if (TAO_ETCL_Interpreter::is_empty_string (constraints))
     {

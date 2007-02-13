@@ -25,18 +25,22 @@ Vault_Server_Request_Interceptor::~Vault_Server_Request_Interceptor ()
 
 char *
 Vault_Server_Request_Interceptor::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Vault_Server_Request_Interceptor::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do nothing
 }
@@ -44,6 +48,8 @@ Vault_Server_Request_Interceptor::receive_request_service_contexts (
 void
 Vault_Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -78,6 +84,7 @@ Vault_Server_Request_Interceptor::receive_request (
 void
 Vault_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -94,6 +101,8 @@ Vault_Server_Request_Interceptor::send_reply (
 void
 Vault_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
@@ -101,6 +110,8 @@ Vault_Server_Request_Interceptor::send_exception (
 void
 Vault_Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
@@ -119,18 +130,22 @@ Vault_Server_Request_Context_Interceptor::~Vault_Server_Request_Context_Intercep
 
 char *
 Vault_Server_Request_Context_Interceptor::name ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Vault_Server_Request_Context_Interceptor::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Server_Request_Context_Interceptor::receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do nothing
 }
@@ -138,6 +153,8 @@ Vault_Server_Request_Context_Interceptor::receive_request_service_contexts(
 void
 Vault_Server_Request_Context_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   IOP::ServiceId id = request_ctx_id;
@@ -153,6 +170,7 @@ Vault_Server_Request_Context_Interceptor::receive_request (
 void
 Vault_Server_Request_Context_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -160,12 +178,16 @@ Vault_Server_Request_Context_Interceptor::send_reply (
 void
 Vault_Server_Request_Context_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Vault_Server_Request_Context_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
@@ -183,18 +205,22 @@ Vault_Server_Request_Dynamic_Interceptor::~Vault_Server_Request_Dynamic_Intercep
 
 char *
 Vault_Server_Request_Dynamic_Interceptor::name ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Vault_Server_Request_Dynamic_Interceptor::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Server_Request_Dynamic_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -227,6 +253,8 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request (
 void
 Vault_Server_Request_Dynamic_Interceptor::receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do nothing
 }
@@ -234,6 +262,7 @@ Vault_Server_Request_Dynamic_Interceptor::receive_request_service_contexts(
 void
 Vault_Server_Request_Dynamic_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -258,12 +287,16 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (
 void
 Vault_Server_Request_Dynamic_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Vault_Server_Request_Dynamic_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
@@ -281,24 +314,30 @@ Vault_Server_Request_NOOP_Interceptor::~Vault_Server_Request_NOOP_Interceptor ()
 
 char *
 Vault_Server_Request_NOOP_Interceptor::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Vault_Server_Request_NOOP_Interceptor::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Vault_Server_Request_NOOP_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Vault_Server_Request_NOOP_Interceptor::receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do nothing
 }
@@ -306,6 +345,7 @@ Vault_Server_Request_NOOP_Interceptor::receive_request_service_contexts(
 void
 Vault_Server_Request_NOOP_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -313,12 +353,16 @@ Vault_Server_Request_NOOP_Interceptor::send_reply (
 void
 Vault_Server_Request_NOOP_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Vault_Server_Request_NOOP_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }

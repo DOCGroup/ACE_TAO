@@ -98,6 +98,7 @@ TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
 void
 TAO_CEC_ProxyPushSupplier::activate (
     CosEventChannelAdmin::ProxyPushSupplier_ptr &activated_proxy)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPushSupplier_var result;
   try
@@ -113,6 +114,7 @@ TAO_CEC_ProxyPushSupplier::activate (
 
 void
 TAO_CEC_ProxyPushSupplier::deactivate (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -328,6 +330,9 @@ TAO_CEC_ProxyPushSupplier::_decr_refcnt (void)
 void
 TAO_CEC_ProxyPushSupplier::connect_push_consumer (
       CosEventComm::PushConsumer_ptr push_consumer)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventChannelAdmin::AlreadyConnected,
+                     CosEventChannelAdmin::TypeError))
 {
   // Nil PushConsumers are illegal
   if (CORBA::is_nil (push_consumer))
@@ -507,6 +512,7 @@ TAO_CEC_ProxyPushSupplier::apply_policy
 
 void
 TAO_CEC_ProxyPushSupplier::disconnect_push_supplier ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PushConsumer_var consumer;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)

@@ -38,18 +38,22 @@ Account_i::orb (CORBA::ORB_ptr o)
 
 CORBA::Float
 Account_i::balance (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return balance_;
 }
 
 void
 Account_i::deposit (CORBA::Float deposit)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   balance_ += deposit;
 }
 
 void
 Account_i::withdraw (CORBA::Float withdrawl)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Bank::Account::Overdraft))
 {
   if (balance_ >= withdrawl)
     balance_ -= withdrawl;
@@ -59,12 +63,14 @@ Account_i::withdraw (CORBA::Float withdrawl)
 
 char *
 Account_i::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
 Account_i::name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->name_ = CORBA::string_dup (name);
 }

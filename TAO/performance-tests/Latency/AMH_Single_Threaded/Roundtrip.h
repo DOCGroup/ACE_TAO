@@ -23,9 +23,11 @@ class Roundtrip
 
     // = The skeleton methods
     void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                      Test::Timestamp send_time);
+                      Test::Timestamp send_time)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+    void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
     /// Use an ORB reference to conver strings to objects and shutdown

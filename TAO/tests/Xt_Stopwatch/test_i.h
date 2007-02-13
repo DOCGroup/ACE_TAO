@@ -33,11 +33,14 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void start (void);
+  void start (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void stop (void);
+  void stop (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

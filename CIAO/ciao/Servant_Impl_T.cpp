@@ -62,10 +62,11 @@ namespace CIAO
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::same_component (
       CORBA::Object_ptr object_ref
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (::CORBA::is_nil (object_ref))
       {
-        throw ::CORBA::BAD_PARAM ();
+        ACE_THROW_RETURN (::CORBA::BAD_PARAM (), 0);
       }
 
     ::CORBA::Object_var the_other =
@@ -84,6 +85,7 @@ namespace CIAO
   ::Components::CCMHome_ptr
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->context_->get_CCM_home ();
   }
@@ -94,6 +96,7 @@ namespace CIAO
   Components::SessionComponent_ptr
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
@@ -108,6 +111,7 @@ namespace CIAO
   CORBA::Object_ptr
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionContext_var sc =
       ::Components::SessionContext::_narrow (
@@ -129,7 +133,8 @@ namespace CIAO
         return ec->get_CCM_object ();
       }
 
-    throw CORBA::INTERNAL ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      ::CORBA::Object::_nil ());
   }
 
   // CIAO-specific operations.
@@ -140,6 +145,7 @@ namespace CIAO
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->is_activated () == 0)
       {
@@ -157,6 +163,7 @@ namespace CIAO
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_preactivate (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
@@ -178,6 +185,7 @@ namespace CIAO
             typename CONTEXT>
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_activate ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
@@ -200,6 +208,7 @@ namespace CIAO
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_postactivate (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ::Components::SessionComponent_var temp =
       ::Components::SessionComponent::_narrow (
@@ -222,6 +231,7 @@ namespace CIAO
   CORBA::Boolean
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::is_activated (
     )
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->pre_activated_;
   }
@@ -232,6 +242,7 @@ namespace CIAO
   void
   Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_passivate (
     )
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // @@ Jai, could you please see why this is required?
     ::Components::SessionComponent_var temp =

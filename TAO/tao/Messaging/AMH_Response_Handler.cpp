@@ -133,6 +133,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 void
 TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 {
+
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
@@ -175,7 +176,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex)
+TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
+                                                  )
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -248,6 +250,7 @@ namespace TAO
   void
   ARH_Refcount_Functor::operator () (
       TAO_AMH_Response_Handler *arh)
+    ACE_THROW_SPEC (())
   {
     (void) arh->_remove_ref ();
   }

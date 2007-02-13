@@ -74,7 +74,13 @@ public:
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id);
+        factory_creation_id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::CannotMeetCriteria));
 
   /**
    * Delete the object corresponding to the provided
@@ -84,7 +90,9 @@ public:
    */
   virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id);
+        factory_creation_id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectNotFound));
 
   //@}
 
@@ -134,7 +142,14 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::FactoryInfo & factory_info,
       const char * type_id,
-      const CORBA::Boolean propagate_member_already_present);
+      const CORBA::Boolean propagate_member_already_present)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::CannotMeetCriteria,
+		     PortableGroup::MemberAlreadyPresent));
 
 private:
 

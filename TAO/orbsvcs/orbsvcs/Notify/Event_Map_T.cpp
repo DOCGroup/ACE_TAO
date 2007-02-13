@@ -86,7 +86,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
     ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
     if (map_.bind (event_type, entry) == -1)
-      throw CORBA::NO_MEMORY ();
+      ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
 
     if (this->event_types_.insert (event_type) == -1)
       return -1;

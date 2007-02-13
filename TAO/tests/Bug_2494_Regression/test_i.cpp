@@ -12,6 +12,7 @@ ACE_RCSID(Bug_2494_Regression, test_i, "$Id$")
 
 char *
 Simple_Server_i::test_method (const char *x)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
@@ -22,6 +23,7 @@ Simple_Server_i::test_method (const char *x)
 
 void
 Simple_Server_i::shutdown ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

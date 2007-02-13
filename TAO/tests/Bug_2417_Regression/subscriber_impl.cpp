@@ -17,6 +17,9 @@ void
 Subscriber_impl::onData (
       ::CORBA::Double
     )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ))
 {
 	++count;
 	if (count > 100)
@@ -26,6 +29,9 @@ Subscriber_impl::onData (
 ::CORBA::Boolean
 Subscriber_impl::isAlive (
     )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ))
 {
 	return true;
 }

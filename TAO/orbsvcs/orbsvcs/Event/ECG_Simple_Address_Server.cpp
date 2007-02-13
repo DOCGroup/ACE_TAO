@@ -26,6 +26,7 @@ void
 TAO_ECG_Simple_Address_Server::get_addr (
     const RtecEventComm::EventHeader& /*header*/,
     RtecUDPAdmin::UDP_Addr_out addr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // unsigned long
   addr.ipaddr = this->addr_.get_ip_address ();

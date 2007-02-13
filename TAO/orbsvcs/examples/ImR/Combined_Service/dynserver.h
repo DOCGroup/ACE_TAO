@@ -18,7 +18,7 @@ class DynServer_Export DynServer
 public:
   DynServer(void);
   virtual ~DynServer();
-  virtual CORBA::Long get();
+  virtual CORBA::Long get() ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 class DynServer_ORB_Runner;
@@ -39,7 +39,8 @@ public:
   // Not supported
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[]);
+                                           ACE_TCHAR *argv[])
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

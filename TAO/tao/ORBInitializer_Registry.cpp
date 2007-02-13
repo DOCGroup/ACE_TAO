@@ -24,7 +24,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableInterceptor
 {
   void
-  register_orb_initializer (ORBInitializer_ptr init)
+  register_orb_initializer (
+    ORBInitializer_ptr init
+    )
   {
     {
       // Using ACE_Static_Object_Lock::instance() precludes
@@ -67,7 +69,9 @@ namespace PortableInterceptor
 
     if (orbinitializer_registry_ != 0)
       {
-        orbinitializer_registry_->register_orb_initializer (init);
+        orbinitializer_registry_->register_orb_initializer (
+          init
+         );
       }
     else
       {

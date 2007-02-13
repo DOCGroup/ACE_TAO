@@ -33,21 +33,55 @@ public:
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose = 1);
 
-  void perform_queries (void);
+  void perform_queries (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTrading::IllegalServiceType,
+                     CosTrading::UnknownServiceType,
+                     CosTrading::IllegalConstraint,
+                     CosTrading::Lookup::IllegalPreference,
+                     CosTrading::Lookup::IllegalPolicyName,
+                     CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue,
+                     CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName,
+                     CosTrading::DuplicatePolicyName));
   // Barrage the bootstrapped-to trader with queries.
 
-  void perform_directed_queries (void);
+  void perform_directed_queries (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTrading::IllegalServiceType,
+                     CosTrading::UnknownServiceType,
+                     CosTrading::IllegalConstraint,
+                     CosTrading::Lookup::IllegalPreference,
+                     CosTrading::Lookup::IllegalPolicyName,
+                     CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue,
+                     CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName,
+                     CosTrading::DuplicatePolicyName));
   // Direct a query to a trader two graph edges distant from the
   // bootstrapped-to trader.
 
 private:
 
-  void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager);
+  void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTrading::IllegalServiceType,
+                     CosTrading::UnknownServiceType,
+                     CosTrading::IllegalConstraint,
+                     CosTrading::Lookup::IllegalPreference,
+                     CosTrading::Lookup::IllegalPolicyName,
+                     CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue,
+                     CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName,
+                     CosTrading::DuplicatePolicyName));
   // Perform a query on the bootstrapped-to trader given the policies
   // pass in <policy_manager>.
 
   void display_results (const CosTrading::OfferSeq& offer_seq,
-                        CosTrading::OfferIterator_ptr offer_iterator) const;
+                        CosTrading::OfferIterator_ptr offer_iterator) const
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Display the results of the query to the screen.
 
   CORBA::Boolean verbose_;

@@ -50,10 +50,12 @@ public:
     virtual ~Bug1495_i (void);
 
     virtual
-    void get_thread_id (CORBA::Long_out thread_id);
+    void get_thread_id (CORBA::Long_out thread_id)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual
-    void shutdown (void);
+    void shutdown (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 private:
     CORBA::ORB_ptr orb_;
 

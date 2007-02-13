@@ -29,11 +29,15 @@ public:
   void dump_results (ACE_UINT32 gsf);
 
   // = The skeleton methods
-  virtual void test_method (Test::Timestamp send_time);
-  virtual void test_method_excep (::Messaging::ExceptionHolder *holder);
+  virtual void test_method (Test::Timestamp send_time)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void test_method_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
-  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// The number of callbacks not received yet

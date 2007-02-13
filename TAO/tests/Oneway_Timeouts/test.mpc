@@ -5,8 +5,8 @@ project (*client) : taoexe, messaging, portableserver, strategies {
   exename = client
   after = *server
   source_files {
-    TestC.cpp
     client.cpp
+    TestC.cpp
   }
   header_files {
     TestC.h
@@ -17,9 +17,9 @@ project (*client) : taoexe, messaging, portableserver, strategies {
 
 project (*server) : taoserver, messaging, strategies {
   source_files {
-    TestC.cpp
-    TestS.cpp
     server.cpp
+    TestS.cpp
+    TestC.cpp
   }
   header_files {
     TestS.h

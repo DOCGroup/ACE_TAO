@@ -12,6 +12,7 @@ Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
 
 void
 Echo_Caller::start_task(Test::Echo_ptr client)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   Server_Task task (client,
                     32768);
@@ -31,6 +32,7 @@ Echo_Caller::start_task(Test::Echo_ptr client)
 
 void
 Echo_Caller::shutdown(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
   orb_->shutdown(0);

@@ -31,6 +31,7 @@ TAO_FTEC_ProxyPushSupplier::id() const
 void
 TAO_FTEC_ProxyPushSupplier::activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &result)
+   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   result =
@@ -50,6 +51,9 @@ TAO_FTEC_ProxyPushSupplier::activate (
 void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected,
+                       RtecEventChannelAdmin::TypeError))
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -77,6 +81,7 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
 
 
 void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -95,6 +100,7 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier (void)
 
 
 void TAO_FTEC_ProxyPushSupplier::suspend_connection (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -120,6 +126,7 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection (void)
 }
 
 void TAO_FTEC_ProxyPushSupplier::resume_connection (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (Request_Context_Repository().is_executed_request())
     return;

@@ -22,7 +22,8 @@ TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
 {
   TAO::BufferingConstraint *buffering_constraint = 0;
   if ((val >>= buffering_constraint) == 0)
-    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                      CORBA::Policy::_nil ());
 
   TAO_Buffering_Constraint_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -38,25 +39,31 @@ CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
 {
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
   if (type == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE)
-    return TAO_RelativeRoundtripTimeoutPolicy::create (value);
+    return TAO_RelativeRoundtripTimeoutPolicy::create (value
+                                                      );
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
   if (type == TAO::CONNECTION_TIMEOUT_POLICY_TYPE)
-    return TAO_ConnectionTimeoutPolicy::create (value);
+    return TAO_ConnectionTimeoutPolicy::create (value
+                                               );
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
   if (type == Messaging::SYNC_SCOPE_POLICY_TYPE)
-    return TAO_Sync_Scope_Policy::create (value);
+    return TAO_Sync_Scope_Policy::create (value
+                                         );
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   if (type == TAO::BUFFERING_CONSTRAINT_POLICY_TYPE)
-    return this->create_buffering_constraint_policy (value);
+    return this->create_buffering_constraint_policy (value
+                                                    );
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   if (
@@ -89,11 +96,13 @@ TAO_Messaging_PolicyFactory::create_policy (
       type == Messaging::MAX_HOPS_POLICY_TYPE ||
 #endif  /* TAO_HAS_MAX_HOPS_POLICY == 1 */
       type == Messaging::QUEUE_ORDER_POLICY_TYPE)
-    throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
+                      CORBA::Policy::_nil ());
 
   ACE_UNUSED_ARG (value);
 
-  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                    CORBA::Policy::_nil ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

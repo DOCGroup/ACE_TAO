@@ -17,6 +17,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 
 void
 Visual_i::normal (CORBA::Long arg)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
 
@@ -57,6 +58,7 @@ Visual_i::normal (CORBA::Long arg)
 
 void
 Visual_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

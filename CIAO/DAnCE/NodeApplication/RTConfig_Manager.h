@@ -56,24 +56,30 @@ namespace CIAO
     void init (RTCORBA::RTORB_ptr rtorb);
 
     /// Initializing the RTResource_Config_Manager
-    void init_resources (const CIAO::DAnCE::ServerResource &info);
+    void init_resources (const CIAO::DAnCE::ServerResource &info)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Finalizing the RTResource_Config_Manager and the resources it
     /// manages.
-    void fini ();
+    void fini ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Query a policy set by name
-    CORBA::PolicyList *find_policies_by_name (const char *name);
+    CORBA::PolicyList *find_policies_by_name (const char *name)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
-    void print_resources (const CIAO::DAnCE::ServerResource &info);
+    void print_resources (const CIAO::DAnCE::ServerResource &info)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Query a thread pool by name.
-    RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name);
+    RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     /// Query a priority bands info by name.
-    RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name);
+    RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     /// Cached an ORB reference.
@@ -103,7 +109,8 @@ namespace CIAO
 
     /// create a single policy
     CORBA::Policy_ptr create_single_policy
-    (const CIAO::DAnCE::PolicyDef &policy_def);
+    (const CIAO::DAnCE::PolicyDef &policy_def)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Hash_Map stuff.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

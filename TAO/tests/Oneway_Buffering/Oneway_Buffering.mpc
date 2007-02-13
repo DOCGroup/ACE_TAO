@@ -13,7 +13,7 @@ project(*Server): messaging, taoexe, portableserver {
   Source_Files {
     Oneway_Buffering.cpp
     server.cpp
-  }
+  }  
   Source_Files {
     TestC.cpp
     TestS.cpp
@@ -25,10 +25,11 @@ project(*Server): messaging, taoexe, portableserver {
 project(*Client): messaging, taoexe, portableserver {
   requires += corba_messaging
   after += *idl
+  after += *Server
 
   Source_Files {
     client.cpp
-  }
+  }  
   Source_Files {
     TestC.cpp
   }
@@ -38,10 +39,11 @@ project(*Client): messaging, taoexe, portableserver {
 
 project(*Admin): messaging, taoexe, portableserver {
   after += *idl
+  after += *Client
   Source_Files {
     Oneway_Buffering_Admin.cpp
     admin.cpp
-  }
+  }  
   Source_Files {
     TestC.cpp
     TestS.cpp

@@ -60,7 +60,8 @@ public:
                      CORBA::ORB_ptr orb);
 
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                  const char *name);
+                                  const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::PolicyList first_poa_policies_;
   CORBA::PolicyList second_poa_policies_;
@@ -81,6 +82,7 @@ Adapter_Activator::Adapter_Activator (PortableServer::POAManager_ptr poa_manager
 CORBA::Boolean
 Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                     const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (name, "firstPOA") == 0)
     {

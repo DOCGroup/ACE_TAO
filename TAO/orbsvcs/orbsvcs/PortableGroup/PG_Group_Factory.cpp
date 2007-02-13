@@ -72,6 +72,12 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     TAO::PG_Property_Set * typeid_properties)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::NoFactory,
+                   PortableGroup::ObjectNotCreated,
+                   PortableGroup::InvalidCriteria,
+                   PortableGroup::InvalidProperty,
+                   PortableGroup::CannotMeetCriteria))
 {
   ///////////////////////////////////
   // Create an empty group reference
@@ -89,7 +95,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   PortableGroup::TagGroupTaggedComponent tagged_component;
   if (! TAO::PG_Utils::get_tagged_component (empty_group, tagged_component))
   {
-    throw PortableGroup::ObjectNotCreated();
+    ACE_THROW_RETURN (PortableGroup::ObjectNotCreated(), 0);
   }
 
   TAO::PG_Object_Group * objectGroup = 0;
@@ -111,12 +117,14 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   if (this->group_map_.bind (group_id, objectGroup) != 0)
   {
     delete objectGroup;
-    throw PortableGroup::ObjectNotCreated();
+    ACE_THROW_RETURN (PortableGroup::ObjectNotCreated(), 0);
   }
   return objectGroup;
 }
 
 void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_group)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::ObjectNotFound))
 {
   if (! destroy_group (object_group))
   {
@@ -126,6 +134,8 @@ void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_
 
 
 void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroupId group_id)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::ObjectNotFound))
 {
   if (! destroy_group (group_id))
   {
@@ -183,6 +193,7 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
     const PortableGroup::Location & the_location)
+  ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   size_t upper_limit = this->group_map_.current_size ();
   PortableGroup::ObjectGroups * result = 0;

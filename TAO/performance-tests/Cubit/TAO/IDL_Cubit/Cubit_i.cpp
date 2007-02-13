@@ -129,6 +129,7 @@ Cubit_Factory_i::~Cubit_Factory_i (void)
 
 Cubit_ptr
 Cubit_Factory_i::make_cubit (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return my_cubit_._this ();
 }
@@ -166,12 +167,14 @@ Cubit_i::set_default_poa (PortableServer::POA_ptr poa)
 
 void
 Cubit_i::cube_oneway (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ONEWAY_START);
 }
 
 void
 Cubit_i::cube_void (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_VOID_START);
 }
@@ -180,6 +183,7 @@ Cubit_i::cube_void (void)
 
 CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_START);
 
@@ -190,6 +194,7 @@ Cubit_i::cube_octet (CORBA::Octet o)
 
 CORBA::Short
 Cubit_i::cube_short (CORBA::Short s)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_SHORT_START);
 
@@ -200,6 +205,7 @@ Cubit_i::cube_short (CORBA::Short s)
 
 CORBA::Long
 Cubit_i::cube_long (CORBA::Long l)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_START);
 
@@ -210,6 +216,7 @@ Cubit_i::cube_long (CORBA::Long l)
 
 Cubit::Many
 Cubit_i::cube_struct (const Cubit::Many &values)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_STRUCT_START);
 
@@ -226,6 +233,7 @@ Cubit_i::cube_struct (const Cubit::Many &values)
 
 Cubit::oneof
 Cubit_i::cube_union (const Cubit::oneof &values)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_UNION_START);
 
@@ -258,6 +266,7 @@ Cubit_i::cube_union (const Cubit::oneof &values)
 void
 Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
                              Cubit::long_seq_out output)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
@@ -283,6 +292,7 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
 void
 Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
                               Cubit::octet_seq_out output)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_SEQUENCE_START);
 
@@ -322,6 +332,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 void
 Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
                              Cubit::many_seq_out output)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_MANY_SEQUENCE_START);
 
@@ -354,6 +365,7 @@ Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
 void
 Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
                         Cubit::RtiPacket_out output)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
@@ -384,6 +396,7 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
 
 CORBA::Any *
 Cubit_i::cube_any (const CORBA::Any & any)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_START);
 
@@ -399,6 +412,7 @@ Cubit_i::cube_any (const CORBA::Any & any)
 
 CORBA::Any *
 Cubit_i::cube_any_struct (const CORBA::Any & any)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_STRUCT_START);
   Cubit::Many * arg_struct;
@@ -417,6 +431,7 @@ Cubit_i::cube_any_struct (const CORBA::Any & any)
 // Shutdown.
 
 void Cubit_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
@@ -428,6 +443,7 @@ void Cubit_i::shutdown (void)
 
 void
 Cubit_i::ping (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // do nothing
 }

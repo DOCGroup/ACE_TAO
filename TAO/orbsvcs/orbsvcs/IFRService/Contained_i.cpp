@@ -29,6 +29,7 @@ TAO_Contained_i::~TAO_Contained_i (void)
 
 void
 TAO_Contained_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -39,6 +40,7 @@ TAO_Contained_i::destroy (void)
 
 void
 TAO_Contained_i::destroy_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -94,6 +96,7 @@ TAO_Contained_i::destroy_i (void)
 
 char *
 TAO_Contained_i::id (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -104,6 +107,7 @@ TAO_Contained_i::id (void)
 
 char *
 TAO_Contained_i::id_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -115,6 +119,7 @@ TAO_Contained_i::id_i (void)
 
 void
 TAO_Contained_i::id (const char *id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -125,6 +130,7 @@ TAO_Contained_i::id (const char *id)
 
 void
 TAO_Contained_i::id_i (const char *id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString tmp;
   if (this->repo_->config ()->get_string_value (
@@ -168,6 +174,7 @@ TAO_Contained_i::id_i (const char *id)
 
 char *
 TAO_Contained_i::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -178,6 +185,7 @@ TAO_Contained_i::name (void)
 
 char *
 TAO_Contained_i::name_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -189,6 +197,7 @@ TAO_Contained_i::name_i (void)
 
 char *
 TAO_Contained_i::version (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -199,6 +208,7 @@ TAO_Contained_i::version (void)
 
 char *
 TAO_Contained_i::version_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -210,6 +220,7 @@ TAO_Contained_i::version_i (void)
 
 void
 TAO_Contained_i::name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -220,6 +231,7 @@ TAO_Contained_i::name (const char *name)
 
 void
 TAO_Contained_i::name_i (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check if name already exists in this container.
   CORBA::Boolean exists = this->name_exists (name);
@@ -253,6 +265,7 @@ TAO_Contained_i::name_i (const char *name)
 
 void
 TAO_Contained_i::version (const char *version)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -263,6 +276,7 @@ TAO_Contained_i::version (const char *version)
 
 void
 TAO_Contained_i::version_i (const char *version)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "version",
@@ -271,6 +285,7 @@ TAO_Contained_i::version_i (const char *version)
 
 CORBA::Container_ptr
 TAO_Contained_i::defined_in (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::Container::_nil ());
 
@@ -281,6 +296,7 @@ TAO_Contained_i::defined_in (void)
 
 CORBA::Container_ptr
 TAO_Contained_i::defined_in_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -309,6 +325,7 @@ TAO_Contained_i::defined_in_i (void)
 
 char *
 TAO_Contained_i::absolute_name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -319,6 +336,7 @@ TAO_Contained_i::absolute_name (void)
 
 char *
 TAO_Contained_i::absolute_name_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString absolute_name;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -330,6 +348,7 @@ TAO_Contained_i::absolute_name_i (void)
 
 CORBA::Repository_ptr
 TAO_Contained_i::containing_repository (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->repo_->repo_objref ();
 }
@@ -337,6 +356,7 @@ TAO_Contained_i::containing_repository (void)
 CORBA::Contained::Description *
 TAO_Contained_i::describe (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // This will always be overridden by derived classes.
   return 0;
@@ -345,6 +365,7 @@ TAO_Contained_i::describe (
 CORBA::Contained::Description *
 TAO_Contained_i::describe_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // This will always be overridden by derived classes.
   return 0;
@@ -354,6 +375,7 @@ void
 TAO_Contained_i::move (CORBA::Container_ptr new_container,
                        const char *new_name,
                        const char *new_version)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -367,6 +389,7 @@ TAO_Contained_i::move (CORBA::Container_ptr new_container,
 
 CORBA::Boolean
 TAO_Contained_i::name_exists (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -483,6 +506,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                          const char *new_name,
                          const char *new_version,
                          CORBA::Boolean cleanup)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Repository_var my_repo = this->repo_->repo_objref ();
 
@@ -930,6 +954,7 @@ void
 TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
                                    const char *contained_path,
                                    const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *container_path =
     TAO_IFR_Service_Utils::reference_to_path (container);
@@ -983,6 +1008,7 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
 
 void
 TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString name;
   ACE_TString version;

@@ -32,8 +32,10 @@ public:
 
   // = The Simple_Server methods.
   CORBA::Long echo (CORBA::Long x,
-                    CORBA::Long msecs);
-  void shutdown (void);
+                    CORBA::Long msecs)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

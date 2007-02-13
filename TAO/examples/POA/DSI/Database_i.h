@@ -75,15 +75,25 @@ public:
 
     virtual Database::Entry_ptr create_entry (const char *key,
                                               const char *entry_type,
-                                              const Database::NVPairSequence &initial_attributes);
+                                              const Database::NVPairSequence &initial_attributes)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Database::Unknown_Type,
+                       Database::Duplicate_Key));
 
     virtual Database::Entry_ptr find_entry (const char *key,
-                                            const char *entry_type);
+                                            const char *entry_type)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Database::Unknown_Type,
+                       Database::Not_Found));
 
     virtual void destroy_entry (const char *key,
-                                const char *entry_type);
+                                const char *entry_type)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Database::Unknown_Type,
+                       Database::Unknown_Key));
 
-    virtual void shutdown (void);
+    virtual void shutdown (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA for this servant.
@@ -108,11 +118,15 @@ public:
 
     ~Employee (void);
 
-    const char *name (void) const;
-    void name (const char* name);
+    const char *name (void) const
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    void name (const char* name)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long id (void) const;
-    void id (CORBA::Long id);
+    CORBA::Long id (void) const
+      ACE_THROW_SPEC ((CORBA::SystemException));
+    void id (CORBA::Long id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void *operator new (size_t);
     void operator delete (void *pointer);

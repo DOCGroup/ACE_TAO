@@ -29,7 +29,8 @@ TAO_Object_Ref_Table::register_initial_reference (
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_Object_Ref_Table::resolve_initial_reference (const char * id)
+TAO_Object_Ref_Table::resolve_initial_reference (
+  const char * id)
 {
   return this->find (id);  // Returns a duplicate.
 }

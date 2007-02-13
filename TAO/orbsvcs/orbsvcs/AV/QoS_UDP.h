@@ -1,15 +1,18 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file   QoS_UDP.h
- *
- *  $Id$
- *
- *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//   ORBSVCS AVStreams
+//
+// = FILENAME
+//   UDP.h
+//
+// = AUTHOR
+//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_AV_QOS_UDP_H
 #define TAO_AV_QOS_UDP_H
@@ -36,7 +39,7 @@ public:
   TAO_AV_UDP_QoS_Factory (void);
   virtual ~TAO_AV_UDP_QoS_Factory (void);
   virtual int init (int argc, char *argv[]);
-  /// Initialization hook.
+  // Initialization hook.
   virtual int match_protocol (const char *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor (void);
   virtual TAO_AV_Connector *make_connector (void);
@@ -112,10 +115,8 @@ class TAO_AV_UDP_QoS_Flow_Handler
 {
 public:
   /// Constructor.
-  /**
-   * Destructor
-   */
   TAO_AV_UDP_QoS_Flow_Handler (void);
+  /// Destructor.
   ~TAO_AV_UDP_QoS_Flow_Handler (void);
   int open (ACE_Addr &address);
   virtual TAO_AV_Transport *transport (void);
@@ -256,7 +257,7 @@ public:
   TAO_AV_UDP_QoS_Flow_Factory (void);
   virtual ~TAO_AV_UDP_QoS_Flow_Factory (void);
   virtual int init (int argc, char *argv[]);
-  /// Initialization hook.
+  // Initialization hook.
   virtual int match_protocol (const char *flow_string);
   TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,

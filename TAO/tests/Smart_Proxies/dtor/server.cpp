@@ -9,9 +9,11 @@ class Test_i: public virtual POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  void hello (CORBA::Long howmany);
+  void hello (CORBA::Long howmany)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown  (void);
+  void shutdown  (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -24,12 +26,14 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 void
 Test_i::hello (CORBA::Long howmany)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "hello called with : %i \n", howmany));
 }
 
 void
 Test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

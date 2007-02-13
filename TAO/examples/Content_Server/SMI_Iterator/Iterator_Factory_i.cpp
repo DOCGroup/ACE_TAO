@@ -15,6 +15,7 @@ void
 Iterator_Factory_i::get_iterator (const char *pathname,
                                   Web_Server::Content_Iterator_out contents,
                                   Web_Server::Metadata_Type_out metadata)
+  ACE_THROW_SPEC ((CORBA::SystemException, Web_Server::Error_Result))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Received request for file: <%s>\n"),

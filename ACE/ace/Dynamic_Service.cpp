@@ -33,7 +33,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name,
 {
   ACE_Service_Object * svc_obj =
     static_cast<ACE_Service_Object *>
-    (ACE_Dynamic_Service_Base::instance (name, no_global));
+    (ACE_Dynamic_Service_Base::instance (name,no_global));
   return dynamic_cast<TYPE *> (svc_obj);
 }
 
@@ -43,7 +43,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
 {
   ACE_Service_Object * svc_obj =
     static_cast<ACE_Service_Object *>
-    (ACE_Dynamic_Service_Base::instance (conf, name, false));
+    (ACE_Dynamic_Service_Base::instance (conf, name,false));
   return dynamic_cast<TYPE *> (svc_obj);
 }
 
@@ -54,7 +54,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
 {
   ACE_Service_Object * svc_obj =
     static_cast<ACE_Service_Object *>
-    (ACE_Dynamic_Service_Base::instance (conf, name, no_global));
+    (ACE_Dynamic_Service_Base::instance (conf, name,no_global));
   return dynamic_cast<TYPE *> (svc_obj);
 }
 

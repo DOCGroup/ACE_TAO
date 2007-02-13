@@ -35,9 +35,10 @@ TAO_EndpointPolicy_Initializer::init (void)
 
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
+                                                    );
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {

@@ -16,6 +16,7 @@ ACE_RCSID(Collocation_Oneway_Tests, Hello, "$Id$")
 
 void
 Hello::onewayTest (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) onewayTest() Upcall in process ..\n"));
@@ -25,6 +26,7 @@ Hello::onewayTest (void)
 
 char *
 Hello::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -67,6 +69,7 @@ Hello::get_string (void)
 
 void
 Hello::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

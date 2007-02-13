@@ -404,5 +404,7 @@
 #  define ACE_HAS_3_PARAM_READDIR_R
 #endif
 
+#define ACE_LACKS_SIGVAL_T
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

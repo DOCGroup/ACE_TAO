@@ -9,7 +9,6 @@
 #include "tao/Transport.h"
 #include "tao/Transport.h"
 #include "tao/Pluggable_Messaging.h"
-#include "tao/SystemException.h"
 #include "tao/DynamicInterface/Request.h"
 
 #include "ace/os_include/os_errno.h"
@@ -46,10 +45,6 @@ namespace TAO
   {
   }
 
-  DII_Invocation_Adapter::~DII_Invocation_Adapter (void)
-  {
-  }
-
   Invocation_Status
   DII_Invocation_Adapter::invoke_twoway (
         TAO_Operation_Details &op,
@@ -62,11 +57,12 @@ namespace TAO
     if (this->mode_ != TAO_DII_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
       {
-        throw ::CORBA::INTERNAL (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+            CORBA::SystemException::_tao_minor_code (
+                TAO::VMCID,
+                EINVAL),
+            CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
       }
 
     r.transport ()->messaging_object ()->out_stream ().reset_byte_order (request_->_tao_byte_order ());
@@ -78,11 +74,16 @@ namespace TAO
                                this->request_);
 
 
-    Invocation_Status status = synch.remote_invocation (max_wait_time);
+    Invocation_Status status =
+      synch.remote_invocation (max_wait_time
+                              );
 
-    if (status == TAO_INVOKE_RESTART && synch.is_forwarded ())
+
+    if (status == TAO_INVOKE_RESTART &&
+        synch.is_forwarded ())
       {
-        effective_target = synch.steal_forwarded_reference ();
+        effective_target =
+          synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
         const CORBA::Boolean permanent_forward =
@@ -92,7 +93,8 @@ namespace TAO
 #endif
         this->object_forwarded (effective_target,
                                 r.stub (),
-                                permanent_forward);
+                                permanent_forward
+                               );
       }
     return status;
   }
@@ -126,7 +128,8 @@ namespace TAO
   void
   DII_Deferred_Invocation_Adapter::invoke (
       TAO::Exception_Data *ex,
-      unsigned long ex_count)
+      unsigned long ex_count
+      )
   {
     // New reply dispatcher on the heap, because we will go out of
     // scope and hand over the  reply dispatcher to the ORB.
@@ -137,7 +140,9 @@ namespace TAO
                                            this->orb_core_),
                       CORBA::NO_MEMORY ());
 
-    Invocation_Adapter::invoke (ex, ex_count);
+    Invocation_Adapter::invoke (ex,
+                                ex_count
+                               );
   }
 
   Invocation_Status
@@ -145,17 +150,19 @@ namespace TAO
       TAO_Operation_Details &op,
       CORBA::Object_var &effective_target,
       Profile_Transport_Resolver &r,
-      ACE_Time_Value *&max_wait_time)
+      ACE_Time_Value *&max_wait_time
+      )
   {
     // Simple sanity check
     if (this->mode_ != TAO_DII_DEFERRED_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
       {
-        throw ::CORBA::INTERNAL (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+            CORBA::SystemException::_tao_minor_code (
+                TAO::VMCID,
+                EINVAL),
+            CORBA::COMPLETED_NO),
+                   TAO_INVOKE_FAILURE);
       }
 
     r.transport ()->messaging_object ()->out_stream ().reset_byte_order (request_->_tao_byte_order ());
@@ -168,11 +175,14 @@ namespace TAO
 
     r.transport ()->messaging_object ()->out_stream ().reset_byte_order (request_->_tao_byte_order ());
 
-    Invocation_Status status = synch.remote_invocation (max_wait_time);
+    Invocation_Status status =
+      synch.remote_invocation (max_wait_time
+                              );
 
     if (status == TAO_INVOKE_RESTART)
       {
-        effective_target = synch.steal_forwarded_reference ();
+        effective_target =
+          synch.steal_forwarded_reference ();
       }
 
     return status;

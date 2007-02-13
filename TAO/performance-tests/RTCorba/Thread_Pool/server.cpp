@@ -21,9 +21,11 @@ public:
           PortableServer::POA_ptr poa);
 
   void method (CORBA::ULong work,
-               CORBA::ULong prime_number);
+               CORBA::ULong prime_number)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -42,6 +44,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 void
 test_i::method (CORBA::ULong work,
                 CORBA::ULong prime_number)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -62,6 +65,7 @@ test_i::_default_POA (void)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

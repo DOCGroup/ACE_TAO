@@ -66,11 +66,15 @@ public:
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
-  int remove_offer (const CosTrading::OfferId offer_id);
+  int remove_offer (const CosTrading::OfferId offer_id)
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
+                    CosTrading::UnknownOfferId));
 
   /// Lookup an offer whose offer_id is <offer_id>, and return
   /// it. Otherwise, throw the appropriate exception.
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id);
+  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id)
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
+                    CosTrading::UnknownOfferId));
 
   /**
    * Lookup an offer whose OfferId is <offer_id> and return in
@@ -78,7 +82,9 @@ public:
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name);
+                                   char*& type_name)
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId,
+                    CosTrading::UnknownOfferId));
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
@@ -129,7 +135,8 @@ private:
   /// and id that were used to generate the offer id.
   static void parse_offer_id (const CosTrading::OfferId offer_id,
                               char* &service_type,
-                              CORBA::ULong& id);
+                              CORBA::ULong& id)
+    ACE_THROW_SPEC ((CosTrading::IllegalOfferId));
 
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))

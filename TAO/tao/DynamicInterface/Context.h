@@ -36,6 +36,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
+#include "ace/CORBA_macros.h"
 #include "ace/Synch_Traits.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -94,19 +95,24 @@ namespace CORBA
     CORBA::Context_ptr parent (void) const;
 
     void create_child (const char *child_ctx_name,
-                       CORBA::Context_out child_ctx);
+                       CORBA::Context_out child_ctx
+                       );
 
     void set_one_value (const char *propname,
-                        const CORBA::Any &propvalue);
+                        const CORBA::Any &propvalue
+                        );
 
-    void set_values (CORBA::NVList_ptr values);
+    void set_values (CORBA::NVList_ptr values
+                     );
 
-    void delete_values (const char *propname);
+    void delete_values (const char *propname
+                        );
 
     void get_values (const char *start_scope,
                      CORBA::Flags op_flags,
                      const char *pattern,
-                     CORBA::NVList_ptr &values);
+                     CORBA::NVList_ptr &values
+                     );
 
     // Useful for template programming.
     typedef CORBA::Context_ptr _ptr_type;
@@ -133,7 +139,8 @@ namespace CORBA
 
     /// Constructor - initialize given a length and an array of
     /// strings.
-    ContextList (CORBA::ULong len, char **ctx_list);
+    ContextList (CORBA::ULong len,
+                       char **ctx_list);
 
     /// Destructor.
     ~ContextList (void);
@@ -160,10 +167,12 @@ namespace CORBA
     void add_consume (char *ctx);
 
     /// Return the typecode at slot i. Raises the "Bounds" exception.
-    char *item (CORBA::ULong slot);
+    char *item (CORBA::ULong slot
+                );
 
     /// Remove the typecode at slot i. Raises the "Bounds" exception.
-    void remove (CORBA::ULong slot);
+    void remove (CORBA::ULong slot
+                 );
 
     /// Increment and decrement ref counts.
     void _incr_refcnt (void);

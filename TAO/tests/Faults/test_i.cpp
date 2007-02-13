@@ -12,6 +12,7 @@ ACE_RCSID(Failure, test_i, "$Id$")
 
 void
 Callback_i::shutdown (CORBA::Boolean is_clean)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (is_clean == 0)
     {
@@ -38,6 +39,7 @@ CORBA::Long
 Simple_Server_i::test_method (CORBA::Boolean do_callback,
                               CORBA::Boolean is_clean,
                               Callback_ptr callback)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (do_callback)
     {
@@ -52,6 +54,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback,
 
 void
 Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (is_clean == 0)
     {
@@ -70,6 +73,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
 
 void
 Simple_Server_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -80,6 +84,7 @@ CORBA::Long
 Middle_i::test_method (CORBA::Boolean do_callback,
                        CORBA::Boolean is_clean,
                        Callback_ptr callback)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int i = 0;
   for (; i != 10; ++i)
@@ -105,12 +110,14 @@ Middle_i::test_method (CORBA::Boolean do_callback,
 
 void
 Middle_i::shutdown_now (CORBA::Boolean is_clean)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->server_->shutdown_now (is_clean);
 }
 
 void
 Middle_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

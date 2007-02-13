@@ -15,12 +15,13 @@
 #define TAO_REMOTE_INVOCATION_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/Invocation_Base.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Invocation_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,19 +66,23 @@ namespace TAO
   protected:
 
     /// Initialize the @a spec.
-    void init_target_spec (TAO_Target_Specification &spec);
+    void init_target_spec (TAO_Target_Specification &spec
+                          );
 
     /// Write the GIOP header into the stream.
     void write_header (TAO_Target_Specification &spec,
-                       TAO_OutputCDR &out_stream);
+                       TAO_OutputCDR &out_stream
+                      );
 
     /// Marshal the arguments into the stream.
-    void marshal_data (TAO_OutputCDR &cdr);
+    void marshal_data (TAO_OutputCDR &cdr
+                      );
 
     /// Write the message onto the socket
     Invocation_Status send_message (TAO_OutputCDR &cdr,
                                     short message_semantics,
-                                    ACE_Time_Value *max_wait_time);
+                                    ACE_Time_Value *max_wait_time
+                                   );
 
   protected:
     /// Our resolver

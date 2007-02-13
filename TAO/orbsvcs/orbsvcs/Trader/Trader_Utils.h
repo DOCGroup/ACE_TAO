@@ -70,7 +70,8 @@ public:
 	* CosTradingDynamic::DPEvalFailure exception on failure. If the
 	* property index is undefined, the method returns a null pointer.
 	*/
-  CORBA::Any* property_value(int index);
+  CORBA::Any* property_value(int index)
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 
   /**
@@ -128,7 +129,9 @@ public:
 
   TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
  ,
-                                  CORBA::Boolean supports_dp = 1);
+                                  CORBA::Boolean supports_dp = 1)
+    ACE_THROW_SPEC ((CosTrading::DuplicatePropertyName,
+                     CosTrading::IllegalPropertyName));
 
   /**
    * Construct an instance of TAO_Property_Evaluator that operates on
@@ -150,7 +153,8 @@ public:
 	* TAO_Property_Evaluator, except property_value first discovers the
 	* index through a string matching lookup.
 	*/
-  CORBA::Any* property_value(const char* property_name);
+  CORBA::Any* property_value(const char* property_name)
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
   /**
    * This method is identical to its counterpart in
@@ -191,7 +195,8 @@ public:
   virtual CORBA::Any* evalDP(const char* name,
                              CORBA::TypeCode_ptr returned_type,
                              const CORBA::Any& extra_info)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTradingDynamic::DPEvalFailure)) = 0;
 
   /// Method to construct a dynamic property structure suitable for
   /// exporting in a CosTrading::PropertyStruct to the Trading Service.
@@ -249,7 +254,9 @@ public:
   static const char * POLICY_NAMES[];
 
   TAO_Policies (TAO_Trader_Base& trader,
-                const CosTrading::PolicySeq& policies);
+                const CosTrading::PolicySeq& policies)
+    ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
+                     CosTrading::DuplicatePolicyName));
 
   // BEGIN SPEC
   // The "policies" parameter allows the importer to specify how the
@@ -275,7 +282,8 @@ public:
 
   ~TAO_Policies (void);
 
-  CORBA::ULong search_card (void) const;
+  CORBA::ULong search_card (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "search_card" policy indicates to the trader the maximum
@@ -286,7 +294,8 @@ public:
   // trader's def_search_card attribute is used.
   // END SPEC
 
-  CORBA::ULong match_card (void) const;
+  CORBA::ULong match_card (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "match_card" policy indicates to the trader the maximum
@@ -297,7 +306,8 @@ public:
   // attribute is used.
   // END SPEC
 
-  CORBA::ULong return_card (void) const;
+  CORBA::ULong return_card (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "return_card" policy indicates to the trader the maximum
@@ -310,7 +320,8 @@ public:
 
   // = Offer consideration policies
 
-  CORBA::Boolean use_modifiable_properties (void) const;
+  CORBA::Boolean use_modifiable_properties (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "use_modifiable_properties" policy indicates whether the
@@ -322,7 +333,8 @@ public:
   // included.
   // END SPEC
 
-  CORBA::Boolean use_dynamic_properties (void) const;
+  CORBA::Boolean use_dynamic_properties (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "use_dynamic_properties" policy indicates whether the trader
@@ -334,7 +346,8 @@ public:
   // included.
   // END SPEC
 
-  CORBA::Boolean use_proxy_offers (void) const;
+  CORBA::Boolean use_proxy_offers (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "use_proxy_offers" policy indicates whether the trader should
@@ -345,7 +358,8 @@ public:
   // specified, such offers will be included.
   // END SPEC
 
-  CORBA::Boolean exact_type_match (void) const;
+  CORBA::Boolean exact_type_match (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "exact_type_match" policy indicates to the trader whether the
@@ -373,10 +387,13 @@ public:
    * "starting_trader" policy with the first component removed.
    * END SPEC
    */
-  CosTrading::TraderName* starting_trader (void) const;
+  CosTrading::TraderName* starting_trader (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue));
 
   /// Determine the link follow policy for this query overall.
-  CosTrading::FollowOption link_follow_rule (void) const;
+  CosTrading::FollowOption link_follow_rule (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   //The "link_follow_rule" policy indicates how the client wishes
@@ -395,9 +412,14 @@ public:
    * else min(trader.max_follow_policy, link.limiting_follow_rule,
    *          trader.def_follow_policy)
    */
-  CosTrading::FollowOption link_follow_rule (const CosTrading::Link::LinkInfo& link_info) const;
+  CosTrading::FollowOption link_follow_rule (const CosTrading::Link::LinkInfo& link_info) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue,
+                     CosTrading::Link::IllegalLinkName,
+                     CosTrading::Link::UnknownLinkName));
 
-  CORBA::ULong hop_count (void) const;
+  CORBA::ULong hop_count (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "hop_count" policy indicates to the trader the maximum number
@@ -413,7 +435,8 @@ public:
 
   /// Return the request_id passed to the query method across a link to
   /// another trader.
-  CosTrading::Admin::OctetSeq* request_id (void) const;
+  CosTrading::Admin::OctetSeq* request_id (void) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   /// Policies to forward to the next trader in a federated query.
   void copy_to_pass (CosTrading::PolicySeq& policy_seq,
@@ -434,15 +457,19 @@ public:
    *                  trader.max_follow_policy)
    */
   void copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
-                              const CosTrading::Link::LinkInfo& link_info) const;
+                              const CosTrading::Link::LinkInfo& link_info) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+                     CosTrading::Lookup::InvalidPolicyValue));
 
 private:
 
   /// Reconclile a ULong property with its default.
-  CORBA::ULong ulong_prop (POLICY_TYPE pol) const;
+  CORBA::ULong ulong_prop (POLICY_TYPE pol) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   /// Reconcile a Boolean property with its debault.
-  CORBA::Boolean boolean_prop (POLICY_TYPE pol) const;
+  CORBA::Boolean boolean_prop (POLICY_TYPE pol) const
+    ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   TAO_Policies (const TAO_Policies&);
   TAO_Policies& operator= (const TAO_Policies&);
@@ -557,7 +584,11 @@ public:
 
   /// Delete the properties whose names were given to the
   /// constructor. Ensure we don't delete mandatory properties.
-  void delete_properties (const CosTrading::PropertyNameSeq& deletes);
+  void delete_properties (const CosTrading::PropertyNameSeq& deletes)
+    ACE_THROW_SPEC ((CosTrading::Register::UnknownPropertyName,
+                     CosTrading::Register::MandatoryProperty,
+                     CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName));
 
   /**
    * Copy to the destination the union of the source and destination
@@ -565,7 +596,12 @@ public:
    * destination with the source's value. This class claims the memory
    * in the modifies sequence.
    */
-  void merge_properties (const CosTrading::PropertySeq& modifies);
+  void merge_properties (const CosTrading::PropertySeq& modifies)
+    ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName,
+                     CosTrading::PropertyTypeMismatch,
+                     CosTrading::ReadonlyDynamicProperty,
+                     CosTrading::Register::ReadonlyProperty));
 
   /// Return a reference to the Offer with the changes affected.
   void affect_change (const CosTrading::PropertySeq& modifies);
@@ -704,7 +740,9 @@ public:
   TAO_Property_Filter (void) : policy_ (CosTrading::Lookup::all) {}
 
   /// Verify that the specified properties are correct.
-  TAO_Property_Filter (const SPECIFIED_PROPS& desired_props);
+  TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
+    ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
+                     CosTrading::DuplicatePropertyName));
 
   TAO_Property_Filter (const TAO_Property_Filter& prop_filter);
   TAO_Property_Filter& operator= (const TAO_Property_Filter& prop_filter);

@@ -68,15 +68,20 @@ public:
    */
   RTCORBA::PriorityModel get_priority_model (void);
 
-  RTCORBA::PriorityModel priority_model (void);
+  RTCORBA::PriorityModel priority_model (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RTCORBA::Priority server_priority (void);
+  RTCORBA::Priority server_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (void);
+  void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the object state.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -92,7 +97,8 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val
+                                  );
 
 protected:
 
@@ -132,13 +138,17 @@ public:
   /// Copy constructor.
   TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy &rhs);
 
-  RTCORBA::ThreadpoolId threadpool (void);
+  RTCORBA::ThreadpoolId threadpool (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (void);
+  void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type (void) const;
@@ -148,7 +158,8 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val
+                                  );
 
 protected:
 
@@ -184,11 +195,14 @@ public:
   /// Copy constructor.
   TAO_PrivateConnectionPolicy (const TAO_PrivateConnectionPolicy &rhs);
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (void);
+  void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type (void) const;
@@ -198,7 +212,8 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val
+                                  );
 
 protected:
 
@@ -239,13 +254,17 @@ public:
    */
   RTCORBA::PriorityBands &priority_bands_rep (void);
 
-  RTCORBA::PriorityBands *priority_bands (void);
+  RTCORBA::PriorityBands *priority_bands (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (void);
+  void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of the current object.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -261,7 +280,8 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val
+                                  );
 
 protected:
 
@@ -309,13 +329,17 @@ public:
   RTCORBA::ProtocolList & protocols_rep (void);
 
   RTCORBA::ProtocolList *protocols
-  (void);
+  (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (void);
+  void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type (void) const;
@@ -325,7 +349,8 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val
+                                  );
 
 protected:
 
@@ -368,13 +393,17 @@ public:
   RTCORBA::ProtocolList & protocols_rep (void);
 
   RTCORBA::ProtocolList *protocols
-  (void);
+  (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (void);
+  void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = CDR Encoder/Decoder.
 
@@ -392,7 +421,8 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any &val);
+  static CORBA::Policy_ptr create (const CORBA::Any &val
+                                  );
 
 protected:
 
@@ -433,29 +463,47 @@ public:
                                CORBA::Boolean no_delay,
                                CORBA::Boolean enable_network_priority);
 
-  CORBA::Long send_buffer_size (void);
+  CORBA::Long send_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (void);
+  CORBA::Long recv_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean keep_alive (void);
+  CORBA::Boolean keep_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive);
+  void keep_alive (CORBA::Boolean keep_alive
+                   )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean dont_route (void);
+  CORBA::Boolean dont_route (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route);
+  void dont_route (CORBA::Boolean dont_route
+                   )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean no_delay (void);
+  CORBA::Boolean no_delay (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void no_delay (CORBA::Boolean no_delay);
+  void no_delay (CORBA::Boolean no_delay
+                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean enable_network_priority (void);
+  CORBA::Boolean enable_network_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable);
+  void enable_network_priority (CORBA::Boolean enable
+                                )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of TCPProtocolProperties.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -500,13 +548,19 @@ public:
   TAO_UnixDomain_Protocol_Properties (CORBA::Long send_buffer_size,
                                       CORBA::Long recv_buffer_size);
 
-  CORBA::Long send_buffer_size (void);
+  CORBA::Long send_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (void);
+  CORBA::Long recv_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -567,40 +621,64 @@ public:
 
   // = IDL interface methods.
 
-  CORBA::Long send_buffer_size (void);
+  CORBA::Long send_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (void);
+  CORBA::Long recv_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean keep_alive (void);
+  CORBA::Boolean keep_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive);
+  void keep_alive (CORBA::Boolean keep_alive
+                   )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean dont_route (void);
+  CORBA::Boolean dont_route (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route);
+  void dont_route (CORBA::Boolean dont_route
+                   )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean no_delay (void);
+  CORBA::Boolean no_delay (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void no_delay (CORBA::Boolean no_delay
-                 );
+                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean enable_network_priority (void);
+  CORBA::Boolean enable_network_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long preallocate_buffer_size (void);
+  CORBA::Long preallocate_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size);
+  void preallocate_buffer_size (CORBA::Long preallocate_buffer_size
+                                )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char *mmap_filename (void);
+  char *mmap_filename (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_filename (const char *mmap_filename);
+  void mmap_filename (const char *mmap_filename
+                      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  char *mmap_lockname (void);
+  char *mmap_lockname (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void mmap_lockname (const char *mmap_lockname);
+  void mmap_lockname (const char *mmap_lockname
+                      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -656,9 +734,12 @@ public:
   /// Constructor.
   TAO_UserDatagram_Protocol_Properties (CORBA::Boolean enable_network_priority);
 
-  CORBA::Boolean enable_network_priority (void);
+  CORBA::Boolean enable_network_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable);
+  void enable_network_priority (CORBA::Boolean enable
+                                )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of UserDatagramProtocolProperties.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -700,29 +781,47 @@ public:
                                          CORBA::Boolean no_delay,
                                          CORBA::Boolean enable_network_priority);
 
-  CORBA::Long send_buffer_size (void);
+  CORBA::Long send_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_buffer_size (CORBA::Long send_buffer_size);
+  void send_buffer_size (CORBA::Long send_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long recv_buffer_size (void);
+  CORBA::Long recv_buffer_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void recv_buffer_size (CORBA::Long recv_buffer_size);
+  void recv_buffer_size (CORBA::Long recv_buffer_size
+                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean keep_alive (void);
+  CORBA::Boolean keep_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void keep_alive (CORBA::Boolean keep_alive);
+  void keep_alive (CORBA::Boolean keep_alive
+                   )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean dont_route (void);
+  CORBA::Boolean dont_route (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void dont_route (CORBA::Boolean dont_route);
+  void dont_route (CORBA::Boolean dont_route
+                   )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean no_delay (void);
+  CORBA::Boolean no_delay (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void no_delay (CORBA::Boolean no_delay);
+  void no_delay (CORBA::Boolean no_delay
+                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean enable_network_priority (void);
+  CORBA::Boolean enable_network_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void enable_network_priority (CORBA::Boolean enable);
+  void enable_network_priority (CORBA::Boolean enable
+                                )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method writes a CDR representation of StreamControlProtocolProperties.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);

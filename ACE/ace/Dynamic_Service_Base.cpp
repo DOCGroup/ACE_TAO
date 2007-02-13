@@ -32,7 +32,7 @@ void *
 ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name, bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
-  return instance (ACE_Service_Config::instance (), name, no_global);
+  return instance (ACE_Service_Config::current (), name, no_global);
 }
 
 
@@ -40,7 +40,7 @@ void *
 ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
-  return instance (ACE_Service_Config::instance (), name, false);
+  return instance (ACE_Service_Config::current (), name, false);
 }
 
 
@@ -49,14 +49,14 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
 const ACE_Service_Type *
 ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
                                   const ACE_TCHAR *name,
-                                  bool local_only)
+                                  bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::find_i");
   const ACE_Service_Type *svc_rec = 0;
 
   ACE_Service_Gestalt* global = ACE_Service_Config::global ();
 
-  for ( ; (repo->find (name, &svc_rec) == -1) && !local_only; repo = global)
+  for ( ; (repo->find (name, &svc_rec) == -1) && !no_global; repo = global)
     {
       // Check the static repo, too if different
       if (repo == global)
@@ -68,6 +68,7 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 
 
 // Get the instance using <name> for specific configuration repository.
+
 void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                                     const ACE_TCHAR *name,
@@ -97,8 +98,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                   repo->repo_, name, type, obj));
 
       if (repo->repo_ != repo_found->repo_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT (" [in repo=%@]\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
                     repo_found->repo_));
       else
         ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
@@ -114,7 +114,7 @@ void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                                     const ACE_TCHAR *name)
 {
-  return instance (repo, name, false);
+  return instance(repo,name,false);
 }
 
 

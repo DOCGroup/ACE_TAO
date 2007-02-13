@@ -12,12 +12,14 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
 
 CORBA::ULong
 test_i::method (CORBA::ULong work)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server: Working for %d milli seconds @ %T\n",

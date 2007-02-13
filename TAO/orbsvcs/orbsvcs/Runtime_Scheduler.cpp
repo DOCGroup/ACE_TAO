@@ -30,6 +30,8 @@ ACE_Runtime_Scheduler (int config_count,
 
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::create (const char *entry_point)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::DUPLICATE_NAME))
 {
   // Just make sure it's there and return its handle.
   for (int i = 0; i < entry_count_; ++i)
@@ -46,6 +48,7 @@ ACE_Runtime_Scheduler::create (const char *entry_point)
 
 RtecScheduler::handle_t
 ACE_Runtime_Scheduler::lookup (const char * entry_point)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return create (entry_point);
 }
@@ -55,9 +58,12 @@ ACE_Runtime_Scheduler::lookup (const char * entry_point)
 
 RtecScheduler::RT_Info *
 ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle)
+     ACE_THROW_SPEC((CORBA::SystemException,
+                     RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
-    throw RtecScheduler::UNKNOWN_TASK ();
+    ACE_THROW_RETURN (RtecScheduler::UNKNOWN_TASK (),
+                      0);
   // Note: there is no memory leak here, according to the CORBA spec,
   // we are supposed to allocate an structure and return it, the
   // caller owns it from then on.
@@ -101,6 +107,8 @@ ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
                             ::RtecScheduler::Quantum_t quantum,
                             ::RtecScheduler::Threads_t threads,
                             ::RtecScheduler::Info_Type_t info_type)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
 {
   // We compare the values with the ones stored and print a message on
   // any differences.
@@ -138,6 +146,8 @@ ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
                               RtecScheduler::Quantum_t quantum,
                               RtecScheduler::Threads_t threads,
                               RtecScheduler::Info_Type_t info_type)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
 {
   // Just go ahead and call the set method
   this->set (handle, criticality, time, typical_time, cached_time,
@@ -147,6 +157,10 @@ ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
 
 void
 ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
   for (u_int i = 0; i < infos.length (); ++i)
     {
@@ -184,6 +198,10 @@ ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
 
 void
 ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
   for (u_int i = 0; i < infos.length (); ++i)
     {
@@ -222,6 +240,10 @@ ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos)
 
 void
 ACE_Runtime_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set& infos)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
   // Just call the set sequence method
   this->set_seq (infos);
@@ -236,6 +258,9 @@ ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
                                  RtecScheduler::OS_Priority& o_priority,
                                  RtecScheduler::Preemption_Subpriority_t& subpriority,
                                  RtecScheduler::Preemption_Priority_t& p_priority)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::NOT_SCHEDULED))
 {
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
@@ -255,6 +280,9 @@ ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                                              RtecScheduler::OS_Priority& priority,
                                              RtecScheduler::Preemption_Subpriority_t& subpriority,
                                              RtecScheduler::Preemption_Priority_t& p_priority)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::NOT_SCHEDULED))
 {
   RtecScheduler::handle_t handle = lookup (entry_point);
 
@@ -276,6 +304,8 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
                                        RtecScheduler::handle_t /* dependency */,
                                        CORBA::Long /* number_of_calls */,
                                        RtecScheduler::Dependency_Type_t /* dependency_type */)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
@@ -307,6 +337,8 @@ ACE_Runtime_Scheduler::remove_dependency (RtecScheduler::handle_t handle,
                                           RtecScheduler::handle_t /* dependency */,
                                           CORBA::Long /* number_of_calls */,
                                           RtecScheduler::Dependency_Type_t /* dependency_type */)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
@@ -322,6 +354,8 @@ ACE_Runtime_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t hand
                                                     CORBA::Long /* number_of_calls */,
                                                     RtecScheduler::Dependency_Type_t /* dependency_type */,
                                                     RtecScheduler::Dependency_Enabled_Type_t /* enabled */)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
@@ -334,6 +368,8 @@ ACE_Runtime_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t hand
 void
 ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
                                                  RtecScheduler::RT_Info_Enabled_Type_t /* enabled */)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
 {
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
@@ -341,6 +377,9 @@ ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
 
 
 void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RtecScheduler::SYNCHRONIZATION_FAILURE,
+                   RtecScheduler::UNKNOWN_TASK))
   // This method sets the enable state of a sequence of dependencies.
 {
   ACE_UNUSED_ARG (dependencies);
@@ -350,6 +389,9 @@ void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler
 
 void ACE_Runtime_Scheduler::set_rt_info_enable_state_seq (
                  const RtecScheduler::RT_Info_Enable_State_Pair_Set &)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RtecScheduler::SYNCHRONIZATION_FAILURE,
+                   RtecScheduler::UNKNOWN_TASK))
 // This method enables or disables a sequence of RT_Infos.
 {
 }
@@ -365,6 +407,10 @@ ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
                                            RtecScheduler::Dependency_Set_out /*dependencies */,
                                            RtecScheduler::Config_Info_Set_out /* configs */,
                                            RtecScheduler::Scheduling_Anomaly_Set_out /* anomalies */)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
+                      RtecScheduler::TASK_COUNT_MISMATCH))
 {
   // TODO: Right now just do nothing, later we could validate the
   // priorities (without recomputing).
@@ -379,6 +425,13 @@ ACE_Runtime_Scheduler::recompute_scheduling (CORBA::Long minimum_priority,
                                              CORBA::Long maximum_priority,
                                              RtecScheduler::Scheduling_Anomaly_Set_out anomalies)
 
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
+                     RtecScheduler::TASK_COUNT_MISMATCH,
+                     RtecScheduler::INTERNAL,
+                     RtecScheduler::DUPLICATE_NAME))
 {
   // TODO: Right now just do nothing.
   ACE_UNUSED_ARG(minimum_priority);
@@ -395,6 +448,9 @@ ACE_Runtime_Scheduler::recompute_scheduling (CORBA::Long minimum_priority,
 void
 ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
 
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INTERNAL))
 {
   // TODO: Right now just do nothing.
   ACE_UNUSED_ARG(infos);
@@ -408,6 +464,9 @@ ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
 void
 ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
 
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INTERNAL))
 {
   // TODO: Right now just do nothing.
   ACE_UNUSED_ARG(dependencies);
@@ -420,6 +479,9 @@ ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out dep
 
 void
 ACE_Runtime_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INTERNAL))
 {
   // TODO: Right now just do nothing.
   ACE_UNUSED_ARG(configs);
@@ -434,6 +496,9 @@ void
 ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                RtecScheduler::OS_Priority& priority,
                                                RtecScheduler::Dispatching_Type_t & d_type)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::NOT_SCHEDULED,
+                      RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
 {
   // Throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0
@@ -464,10 +529,13 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
 
 RtecScheduler::Preemption_Priority_t
 ACE_Runtime_Scheduler::last_scheduled_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                    RtecScheduler::NOT_SCHEDULED))
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)
-    throw RtecScheduler::NOT_SCHEDULED();
+    ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(),
+              (RtecScheduler::Preemption_Priority_t) -1);
   else
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
 }
@@ -475,6 +543,8 @@ ACE_Runtime_Scheduler::last_scheduled_priority (void)
 
 void
 ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*configs */)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                  RtecScheduler::NOT_SCHEDULED))
 {
   // throw an exception if a valid schedule has not been loaded
   if (this->config_count_ <= 0)

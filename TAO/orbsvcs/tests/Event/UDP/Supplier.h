@@ -50,7 +50,8 @@ public:
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
 private:

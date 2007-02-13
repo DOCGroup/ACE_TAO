@@ -121,7 +121,9 @@ INCLUDE_PATH          = TAO . ACEXML TAO/tao/IORTable
 PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
                         ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER
+                        ACE_CACHE_MAP_MANAGER \
+                        ACE_THROW_SPEC \
+                        CIAO_NAMESPACE
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references

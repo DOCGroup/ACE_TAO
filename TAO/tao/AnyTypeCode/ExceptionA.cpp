@@ -3,6 +3,7 @@
 #include "tao/AnyTypeCode/ExceptionA.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_String.h"
 #include "tao/CDR.h"
@@ -44,7 +45,7 @@ namespace TAO
 
         return true;
       }
-    catch (const ::CORBA::Exception&)
+    catch ( ::CORBA::Exception&)
       {
       }
 
@@ -62,7 +63,7 @@ namespace TAO
 
         return true;
       }
-    catch (const ::CORBA::Exception&)
+    catch ( ::CORBA::Exception&)
       {
       }
 

@@ -43,7 +43,7 @@ namespace CIAO
                                    ::Deployment::ComponentPropertyDescriptions,
                                    ::Deployment::ComponentPropertyDescription,
                                    Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
-
+     
 
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
@@ -120,10 +120,10 @@ namespace CIAO
         retval.specificType (src.specificType.in ());
 
         for (CORBA::ULong i = 0; i < src.supportedType.length (); ++i)
-          retval.add_supportedType (src.supportedType[i].in ());
+          retval.add_supportedType (src.supportedType[i]);
 
         for (CORBA::ULong i = 0; i < src.idlFile.length (); ++i)
-          retval.add_idlFile (src.idlFile[i].in ());
+          retval.add_idlFile (src.idlFile[i]);
 
         for (CORBA::ULong i = 0; i < src.configProperty.length (); ++i)
           retval.add_configProperty (

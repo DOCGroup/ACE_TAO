@@ -21,18 +21,22 @@ ClientRequestInterceptor::ClientRequestInterceptor (
 
 char *
 ClientRequestInterceptor::name ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ClientRequestInterceptor");
 }
 
 void
 ClientRequestInterceptor::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientRequestInterceptor::send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var op = ri->operation ();
 
@@ -107,23 +111,29 @@ ClientRequestInterceptor::send_request (
 void
 ClientRequestInterceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientRequestInterceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ClientRequestInterceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 ClientRequestInterceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }

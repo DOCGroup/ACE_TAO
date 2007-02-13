@@ -107,6 +107,7 @@ Test_Consumer::accumulate (ACE_Throughput_Stats& stats) const
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -162,5 +163,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Test_Consumer::disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

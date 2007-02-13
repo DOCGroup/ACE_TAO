@@ -44,7 +44,9 @@ namespace TAO
     }
 
     void
-    ThreadStrategySingleFactoryImpl::destroy (ThreadStrategy *strategy)
+    ThreadStrategySingleFactoryImpl::destroy (
+      ThreadStrategy *strategy
+      )
     {
       strategy->strategy_cleanup ();
 

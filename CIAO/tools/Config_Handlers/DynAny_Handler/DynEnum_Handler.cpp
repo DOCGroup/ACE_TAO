@@ -33,7 +33,7 @@ namespace CIAO
            i != type.enum_ ().end_member ();
            ++i)
         {
-          members[index++] = CORBA::string_dup (i->c_str ());
+          members[index++] = i->c_str ();
         }
 
       // Grab pointer to the DynAny_Handler to use the orb and any factory.

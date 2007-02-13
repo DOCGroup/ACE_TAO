@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ExceptionDef_i.h
- *
- *  $Id$
- *
- *  ExceptionDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    ExceptionDef_i.h
+//
+// = DESCRIPTION
+//    ExceptionDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_EXCEPTIONDEF_I_H
 #define TAO_EXCEPTIONDEF_I_H
@@ -43,51 +46,62 @@ class TAO_IFRService_Export TAO_ExceptionDef_i : public virtual TAO_Contained_i,
   //    Represents an exception definition.
   //
 public:
-  /// Constructor
   TAO_ExceptionDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_ExceptionDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
-;
 
-  /// Remove the repository entry.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
+
   virtual void destroy ()
-;
 
-  /// Remove the repository entry.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Remove the repository entry.
+
   virtual void destroy_i ()
-;
 
-  /// From Contained_i's pure virtual function.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Remove the repository entry.
+
   virtual CORBA::Contained::Description *describe ()
-;
 
-  /// From Contained_i's pure virtual function.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
+
   virtual CORBA::Contained::Description *describe_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr type_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::StructMemberSeq *members ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::StructMemberSeq *members_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
       const CORBA::StructMemberSeq & members)
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
       const CORBA::StructMemberSeq & members)
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

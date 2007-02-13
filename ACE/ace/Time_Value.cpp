@@ -23,8 +23,15 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Its primary use is in time computations such as those used by the
 // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 // Note: this object requires static construction.
+// Note: On Win64, time_t is 64 bits, yet the timeval members used
+// internally to ACE_Time_Value are still long. This makes time values
+// outside the LONG_MAX, LONG_MIN range very broken.
 const ACE_Time_Value ACE_Time_Value::max_time (
+#if !defined (ACE_WIN64)
   ACE_Numeric_Limits<time_t>::max (),
+#else
+  LONG_MAX,
+#endif
   ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
@@ -219,7 +226,7 @@ ACE_Time_Value::operator *= (double d)
      + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
   static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
   static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
 #else

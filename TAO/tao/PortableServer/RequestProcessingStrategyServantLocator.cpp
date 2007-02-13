@@ -26,7 +26,8 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategyServantLocator::strategy_cleanup(void)
+    RequestProcessingStrategyServantLocator::strategy_cleanup(
+      void)
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -39,14 +40,20 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantLocator::get_servant_manager (void)
+    RequestProcessingStrategyServantLocator::get_servant_manager (
+      void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
     }
 
     void
     RequestProcessingStrategyServantLocator::set_servant_manager (
-      PortableServer::ServantManager_ptr imgr)
+      PortableServer::ServantManager_ptr imgr
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been
@@ -59,7 +66,8 @@ namespace TAO
                                            CORBA::COMPLETED_NO);
         }
 
-      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr);
+      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr
+                                                                       );
 
       this->validate_servant_manager (this->servant_locator_.in ());
     }
@@ -67,11 +75,14 @@ namespace TAO
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyServantLocator::locate_servant (
       const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant)
+      PortableServer::Servant &servant
+      )
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 
-      location = this->poa_->servant_present (system_id, servant);
+      location = this->poa_->servant_present (system_id,
+                                              servant
+                                             );
 
       if (location == TAO_SERVANT_NOT_FOUND)
         {
@@ -90,11 +101,15 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      bool &/*wait_occurred_restart_call*/)
+      bool &/*wait_occurred_restart_call*/
+      )
     {
-      PortableServer::Servant servant = this->poa_->find_servant (system_id,
-                                                                  servant_upcall,
-                                                                  poa_current_impl);
+      PortableServer::Servant servant = 0;
+
+      servant = this->poa_->find_servant (system_id,
+                                          servant_upcall,
+                                          poa_current_impl
+                                         );
 
       if (servant != 0)
         {
@@ -147,11 +162,14 @@ namespace TAO
         this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                            this->poa_,
                                            operation,
-                                           cookie);
+                                           cookie
+                                          );
 
       if (servant == 0)
         {
-          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
+                                                CORBA::COMPLETED_NO),
+                                                0);
         }
 
       // Remember the cookie
@@ -167,7 +185,8 @@ namespace TAO
     void
     RequestProcessingStrategyServantLocator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id)
+      const PortableServer::ObjectId &user_id
+      )
     {
       if (servant)
         {
@@ -181,7 +200,9 @@ namespace TAO
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      if (this->poa_->unbind_using_user_id (user_id) != 0)
+      int result = this->poa_->unbind_using_user_id (user_id);
+
+      if (result != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -211,9 +232,10 @@ namespace TAO
                                             this->poa_,
                                             servant_upcall.operation (),
                                             servant_upcall.locator_cookie (),
-                                            servant_upcall.servant ());
+                                            servant_upcall.servant ()
+                                           );
             }
-          catch (const ::CORBA::Exception&)
+          catch ( ::CORBA::Exception&)
             {
               // Ignore errors from servant locator ....
             }

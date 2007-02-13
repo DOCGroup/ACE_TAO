@@ -34,6 +34,8 @@ Object_Group_Factory_i::remove_group (const ACE_CString &id,
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Load_Balancer::duplicate_group))
 {
   return make_group (0,
                      id);
@@ -41,6 +43,8 @@ Object_Group_Factory_i::make_round_robin (const char * id)
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_random (const char * id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Load_Balancer::duplicate_group))
 {
   return make_group (1,
                      id);
@@ -49,6 +53,8 @@ Object_Group_Factory_i::make_random (const char * id)
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_group (int random,
                                     const char * id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Load_Balancer::duplicate_group))
 {
   ACE_CString group_id (id);
 
@@ -56,7 +62,8 @@ Object_Group_Factory_i::make_group (int random,
   // <id>.
   if (rr_groups_.find (group_id) == 0
       || random_groups_.find (group_id) == 0)
-    throw Load_Balancer::duplicate_group ();
+    ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
+                      Load_Balancer::Object_Group::_nil ());
   else
     {
       // Store our result here for return.
@@ -86,7 +93,8 @@ Object_Group_Factory_i::make_group (int random,
       if (random)
         {
           if (random_groups_.bind (group_id, group) == -1)
-            throw CORBA::INTERNAL ();
+            ACE_THROW_RETURN (CORBA::INTERNAL (),
+                              Load_Balancer::Object_Group::_nil ());
 
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Random Group"
@@ -95,7 +103,8 @@ Object_Group_Factory_i::make_group (int random,
       else
         {
           if (rr_groups_.bind (group_id, group) == -1)
-            throw CORBA::INTERNAL ();
+            ACE_THROW_RETURN (CORBA::INTERNAL (),
+                              Load_Balancer::Object_Group::_nil ());
           ACE_DEBUG ((LM_DEBUG,
                       "Load_Balancer: Created new Round Robin Group"
                       " with id <%s>\n", id));
@@ -107,13 +116,16 @@ Object_Group_Factory_i::make_group (int random,
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (const char * id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Load_Balancer::no_such_group))
 {
   ACE_CString group_id (id);
   Load_Balancer::Object_Group_var group;
 
   if (rr_groups_.find (group_id, group) == -1
       && random_groups_.find (group_id, group) == -1)
-    throw Load_Balancer::no_such_group ();
+    ACE_THROW_RETURN (Load_Balancer::no_such_group (),
+                      Load_Balancer::Object_Group::_nil ());
   else
     return group._retn ();
 }
@@ -160,12 +172,14 @@ Object_Group_Factory_i::list_groups (int random)
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::round_robin_groups (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (0);
 }
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::random_groups (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return list_groups (1);
 }
@@ -191,12 +205,15 @@ Object_Group_i::~Object_Group_i (void)
 
 char *
 Object_Group_i::id (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (id_.c_str ());
 }
 
 void
 Object_Group_i::bind (const Load_Balancer::Member & member)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Load_Balancer::duplicate_member))
 {
   ACE_CString member_id (member.id);
   CORBA::Object_var obj = CORBA::Object::_duplicate (member.obj.in ());
@@ -228,6 +245,8 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
 
 void
 Object_Group_i::unbind (const char * id)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Load_Balancer::no_such_member))
 {
   ACE_CString member_id (id);
 
@@ -255,18 +274,22 @@ Object_Group_i::unbind (const char * id)
 
 CORBA::Object_ptr
 Object_Group_i::resolve_with_id (const char * id)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Load_Balancer::no_such_member))
 {
   CORBA::Object_var obj;
   ACE_CString member_id (id);
 
   if (members_.find (member_id, obj) == -1)
-    throw Load_Balancer::no_such_member ();
+    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
+                      obj._retn ());
 
   return obj._retn ();
 }
 
 Load_Balancer::Member_ID_List *
 Object_Group_i::members (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Load_Balancer::Member_ID_List * list;
 
@@ -294,6 +317,7 @@ Object_Group_i::members (void)
 
 void
 Object_Group_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
@@ -323,6 +347,7 @@ Random_Object_Group::~Random_Object_Group (void)
 
 void
 Random_Object_Group::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
@@ -333,12 +358,15 @@ Random_Object_Group::destroy (void)
 
 CORBA::Object_ptr
 Random_Object_Group::resolve (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Load_Balancer::no_such_member))
 {
   CORBA::Object_var obj;
 
   size_t group_size = members_.current_size ();
   if (group_size == 0)
-    throw Load_Balancer::no_such_member ();
+    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
+                      obj._retn ());
 
   // Generate random number in the range [0, group_size - 1]
   size_t member = ACE_OS::rand() % group_size;
@@ -369,6 +397,7 @@ RR_Object_Group::~RR_Object_Group (void)
 
 void
 RR_Object_Group::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
@@ -379,12 +408,15 @@ RR_Object_Group::destroy (void)
 
 CORBA::Object_ptr
 RR_Object_Group::resolve (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Load_Balancer::no_such_member))
 {
   CORBA::Object_var obj;
 
   size_t group_size = members_.current_size ();
   if (group_size == 0)
-    throw Load_Balancer::no_such_member ();
+    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
+                      obj._retn ());
 
   // Get the id of the member to return to the client.
   ACE_CString *id = 0;
@@ -399,13 +431,16 @@ RR_Object_Group::resolve (void)
 
   // Return the object reference corresponding to the found id to the client.
   if (members_.find (*id, obj) == -1)
-    throw CORBA::INTERNAL ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      CORBA::Object::_nil ());
 
    return obj._retn ();
 }
 
 void
 RR_Object_Group::unbind (const char *id)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Load_Balancer::no_such_member))
 {
   ACE_CString member_id (id);
 

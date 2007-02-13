@@ -28,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     else if (argv[1][0] == 's') receiver = false;
     else throw Args ();
 
-    if (!receiver) ACE_OS::srand ((u_int) ACE_OS::time ());
+    if (!receiver) ACE_OS::srand (ACE_OS::time ());
 
     ACE_INET_Addr address (argv[3]);
 

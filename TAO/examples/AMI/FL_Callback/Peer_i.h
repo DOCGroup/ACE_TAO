@@ -27,13 +27,17 @@ public:
   Peer_Handler_i (Peer_i *peer);
   // The peer
 
-  virtual void request (CORBA::Long retval);
+  virtual void request (CORBA::Long retval)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_excep (::Messaging::ExceptionHolder * excep_holder);
+  virtual void request_excep (::Messaging::ExceptionHolder * excep_holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void start (void);
+  virtual void start (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   Peer_i *peer_;
@@ -51,19 +55,24 @@ public:
 
   void init (CORBA::ORB_ptr orb,
              Progress_ptr progress,
-             const ACE_Time_Value &delay);
+             const ACE_Time_Value &delay)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void reply (CORBA::Long result);
+  void reply (CORBA::Long result)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Used by the Reply_Handler to indicate that a reply has been
   // received.
 
    // = See test.idl for an explanation of these methods.
-  CORBA::Long request (CORBA::Long id);
+  CORBA::Long request (CORBA::Long id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void start (const PeerSet& the_peers,
-              CORBA::Long iterations);
+              CORBA::Long iterations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   Peer_Handler_i reply_handler_;

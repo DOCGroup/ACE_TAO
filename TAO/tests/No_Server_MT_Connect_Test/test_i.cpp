@@ -11,11 +11,13 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 
 void
 Simple_Server_i::test_method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Simple_Server_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

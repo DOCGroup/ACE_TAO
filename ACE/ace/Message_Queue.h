@@ -611,7 +611,7 @@ private:
    * but since this class is only supported on NT, it's okay to use
    * ACE_Thread_Mutex here.
    */
-  ACE_SYNCH_MUTEX lock_;
+  ACE_Thread_Mutex lock_;
 
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;

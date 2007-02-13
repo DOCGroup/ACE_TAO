@@ -31,7 +31,8 @@ class Server_i : public virtual POA_Simple_Server::Server
 
   ~Server_i ();
 
-  virtual char *get_status (void);
+  virtual char *get_status (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #include /**/ "ace/post.h"

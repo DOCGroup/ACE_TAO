@@ -25,6 +25,7 @@ project(*Server): taoserver, messaging, ami {
 
 project(*Client): messaging, taoexe, portableserver, ami {
   after += *idl
+  after += *Server
   Source_Files {
     Controller.cpp
     blocking_client.cpp
@@ -40,6 +41,7 @@ project(*Client): messaging, taoexe, portableserver, ami {
 project(*AMI_Server): taoserver, messaging, ami {
   exename = ami_server
   after += *idl
+  after += *Client
   Source_Files {
     AMI_Manager.cpp
     ami_server.cpp
@@ -54,6 +56,7 @@ project(*AMI_Server): taoserver, messaging, ami {
 
 project(*AMI_Client): messaging, taoexe, portableserver, ami {
   after += *idl
+  after += *AMI_Server
   Source_Files {
     Controller.cpp
     Manager_Handler.cpp

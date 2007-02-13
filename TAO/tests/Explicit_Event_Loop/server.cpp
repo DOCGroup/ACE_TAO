@@ -60,6 +60,7 @@ parse_args (int argc, char *argv[])
 TimeOfDay
 Time_impl::
 get_gmt ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   time_t time_now = time (0);
   struct tm *time_p = gmtime (&time_now);

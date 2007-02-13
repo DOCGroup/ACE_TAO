@@ -54,7 +54,7 @@ namespace CIAO
 	  Capability retval (src.name.in ());
 
 	  for (CORBA::ULong i = 0; i < src.resourceType.length (); ++i)
-      retval.add_resourceType (src.resourceType[i].in ());
+	    retval.add_resourceType (src.resourceType[i]);
 
 	  for (CORBA::ULong i = 0; i < src.property.length (); ++i)
 	    retval.add_property (SatisfierProperty_Handler::get_sat_property (src.property[i]));
@@ -167,12 +167,12 @@ namespace CIAO
 	  return retval;
 	}
       };
-
+      
       typedef Sequence_Handler < ImplementationRequirement,
 				 ::Deployment::ImplementationRequirements,
 				 ::Deployment::ImplementationRequirement,
 				 IR_Handler::handle_ir > IR_Functor;
-
+      
       struct MID_Handler
       {
 	static void handle_mid (const MonolithicImplementationDescription &desc,

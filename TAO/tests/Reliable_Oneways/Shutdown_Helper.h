@@ -17,7 +17,8 @@ public:
   Shutdown_Helper (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

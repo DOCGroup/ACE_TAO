@@ -17,11 +17,14 @@ public:
   Crashed_Callback (void);
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (void);
+  virtual CORBA::Boolean are_you_there (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void crash_now_please (void);
+  virtual void crash_now_please (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_oneway (void);
+  virtual void test_oneway (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #include /**/ "ace/post.h"

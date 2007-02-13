@@ -138,8 +138,8 @@ TAO_SHMIOP_Transport::recv (char *buf,
 }
 
 int
-TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
-                                    ACE_Time_Value *max_wait_time,
+TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh, 
+                                    ACE_Time_Value *max_wait_time, 
                                     int)
 {
   if (TAO_debug_level > 3)
@@ -180,7 +180,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   const size_t missing_header_data = this->messaging_object ()->header_length ();
 
-  if (missing_header_data == 0)
+  if (missing_header_data == 0) 
     {
       return -1;
     }
@@ -226,7 +226,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                                        mesg_length) == -1)
       return -1;
 
-    if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED)
+    if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED) 
       {
         // parse/marshal error happened
         return -1;
@@ -237,7 +237,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
         // we read too much data
         return -1;
       }
-
+    
     if (message_block.space () < qd.missing_data_)
       {
         const size_t message_size = message_block.length ()
@@ -295,7 +295,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     {
       return -1;
     }
-
+  
   return 0;
 }
 
@@ -362,7 +362,8 @@ int
 TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
 {
-  this->messaging_object_->init (major, minor);
+  this->messaging_object_->init (major,
+                                 minor);
   return 1;
 }
 

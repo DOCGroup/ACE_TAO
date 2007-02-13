@@ -3,6 +3,7 @@
 // $Id$
 
 project(CosNaming_Serv) : orbsvcslib, install, naming_skel, messaging_optional, svc_utils, iortable {
+  avoids      += ace_for_tao  // Requires MMAP_Memory_Pool
   sharedname   = TAO_CosNaming_Serv
   dynamicflags = TAO_NAMING_SERV_BUILD_DLL
   tagchecks   += Naming

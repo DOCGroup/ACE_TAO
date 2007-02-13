@@ -21,13 +21,16 @@ TAO_LogActivator::~TAO_LogActivator ()
 PortableServer::Servant
 TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
 			     PortableServer::POA_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   PortableServer::ForwardRequest
+		   ))
 {
   CORBA::String_var poa_id = PortableServer::ObjectId_to_string (oid);
 
   DsLogAdmin::LogId id = ACE_OS::strtoul(poa_id.in (), 0, 0);
 
   if (!logmgr_i_.exists(id))
-    throw CORBA::OBJECT_NOT_EXIST ();
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
 
   return logmgr_i_.create_log_servant (id);
 }
@@ -39,6 +42,7 @@ TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
 			       PortableServer::Servant servant,
 			       CORBA::Boolean,
 			       CORBA::Boolean remaining_activations)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!remaining_activations)
    {

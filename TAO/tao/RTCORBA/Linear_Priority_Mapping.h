@@ -1,20 +1,23 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file   Linear_Priority_Mapping.h
- *
- *  $Id$
- *
- * Declares the Linear_Priority_Mapping interface, as defined in the
- * RT-CORBA spec.
- *
- *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Linear_Priority_Mapping.h
+//
+// = DESCRIPTION
+//   Declares the Linear_Priority_Mapping interface, as defined in the
+//   RT-CORBA spec.
+//
+// = AUTHOR
+//   Carlos O'Ryan (coryan@cs.wustl.edu)
+//
+// ============================================================================
 
 #ifndef TAO_LINEAR_PRIORITY_MAPPING_H
 #define TAO_LINEAR_PRIORITY_MAPPING_H

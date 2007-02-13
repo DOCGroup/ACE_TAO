@@ -594,23 +594,8 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
 #     else /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
-  // Go to the correct position; if this is a Windows variant without
-  // overlapped I/O, it probably doesn't have SetFilePointerEx either,
-  // so manage this with SetFilePointer, changing calls based on the use
-  // of 64 bit offsets.
-  DWORD newpos;
-#       if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
-  newpos = ::SetFilePointer (handle,
-                             loffset.LowPart,
-                             &loffset.HighPart,
-                             FILE_BEGIN);
-#       else
-  newpos = ::SetFilePointer (handle,
-                             loffset.LowPart,
-                             0,
-                             FILE_BEGIN);
-#       endif /* 64-bit file offsets */
-  if (newpos == 0xFFFFFFFF && ::GetLastError () != NO_ERROR)
+  // Go to the correct position
+  if (! ::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
     {
       ACE_OS::set_errno_to_last_error ();
       return -1;

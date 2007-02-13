@@ -27,7 +27,8 @@ namespace TAO
     }
 
     void
-    ImR_Client_Adapter_Impl::imr_notify_startup (TAO_Root_POA* poa )
+    ImR_Client_Adapter_Impl::imr_notify_startup (
+      TAO_Root_POA* poa )
     {
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
 
@@ -84,12 +85,15 @@ namespace TAO
       PortableServer::ObjectId_var id =
         root_poa->activate_object_i (this->server_object_,
                                      poa->server_priority (),
-                                     wait_occurred_restart_call_ignored);
+                                     wait_occurred_restart_call_ignored
+                                    );
 
-      CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  (), false);
+      CORBA::Object_var obj = root_poa->id_to_reference_i (id.in  (), false
+                                                          );
 
       ImplementationRepository::ServerObject_var svr
-        = ImplementationRepository::ServerObject::_narrow (obj.in ());
+        = ImplementationRepository::ServerObject::_narrow (obj.in ()
+                                                          );
 
       if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
         {
@@ -124,13 +128,14 @@ namespace TAO
 
           imr_locator->server_is_running (poa->name().c_str (),
                                           partial_ior.c_str(),
-                                          svr.in());
+                                          svr.in()
+                                         );
         }
-      catch (const ::CORBA::SystemException&)
+      catch ( ::CORBA::SystemException&)
         {
           throw;
         }
-      catch (const ::CORBA::Exception&)
+      catch ( ::CORBA::Exception&)
         {
           throw ::CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
@@ -142,7 +147,8 @@ namespace TAO
     }
 
     void
-    ImR_Client_Adapter_Impl::imr_notify_shutdown (TAO_Root_POA* poa )
+    ImR_Client_Adapter_Impl::imr_notify_shutdown (
+      TAO_Root_POA* poa )
     {
       // Notify the Implementation Repository about shutting down.
       CORBA::Object_var imr = poa->orb_core ().implrepo_service ();
@@ -167,9 +173,10 @@ namespace TAO
           ImplementationRepository::Administration_var imr_locator =
             ImplementationRepository::Administration::_narrow (imr.in ());
 
-          imr_locator->server_is_shutting_down (poa->name().c_str ());
+          imr_locator->server_is_shutting_down (poa->name().c_str ()
+                                               );
         }
-      catch (const ::CORBA::COMM_FAILURE&)
+      catch ( ::CORBA::COMM_FAILURE&)
         {
           // At the moment we call this during ORB shutdown and the ORB is
           // configured to drop replies during shutdown (it does by default in
@@ -177,13 +184,13 @@ namespace TAO
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG, "Ignoring COMM_FAILURE while unregistering from ImR.\n"));
         }
-      catch (const ::CORBA::TRANSIENT&)
+      catch ( ::CORBA::TRANSIENT&)
         {
           // Similarly, there are cases where we could get a TRANSIENT.
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG, "Ignoring TRANSIENT while unregistering from ImR.\n"));
         }
-      catch (const ::CORBA::Exception& ex)
+      catch ( ::CORBA::Exception& ex)
         {
           ex._tao_print_exception (
             "ImR_Client_Adapter_Impl::imr_notify_shutdown()");
@@ -192,7 +199,8 @@ namespace TAO
 
       if (this->server_object_)
         {
-          PortableServer::POA_var poa = this->server_object_->_default_POA ();
+          PortableServer::POA_var poa =
+            this->server_object_->_default_POA ();
 
           TAO_Root_POA *root_poa = dynamic_cast <TAO_Root_POA*> (poa.in ());
 
@@ -202,7 +210,8 @@ namespace TAO
             }
 
           PortableServer::ObjectId_var id =
-            root_poa->servant_to_id_i (this->server_object_);
+            root_poa->servant_to_id_i (this->server_object_
+                                      );
 
           root_poa->deactivate_object_i (id.in());
 

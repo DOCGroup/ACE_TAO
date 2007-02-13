@@ -25,6 +25,7 @@ Controller::dump_results ()
 
 void
 Controller::worker_started (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->start_count_++;
@@ -34,6 +35,7 @@ Controller::worker_started (void)
 
 void
 Controller::worker_finished (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->finish_count_++;

@@ -31,7 +31,7 @@ TAO::CSD::TP_Remote_Request::dispatch_i()
     {
       this->do_dispatch();
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or

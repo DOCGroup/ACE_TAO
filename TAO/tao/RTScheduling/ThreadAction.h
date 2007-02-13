@@ -20,7 +20,7 @@ public RTScheduling::ThreadAction,
 
   virtual void do (CORBA::VoidData data
        )
-      = 0;
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

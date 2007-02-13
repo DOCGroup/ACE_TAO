@@ -13,6 +13,7 @@ Test_i::Test_i (void)
 
 void
 Test_i::invoke_me ( /* */)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,
               "(%P|%t) Test method invoked.\n"));
@@ -20,6 +21,7 @@ Test_i::invoke_me ( /* */)
 
 void
 Test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_INFO,
               "Server is shutting down.\n"));

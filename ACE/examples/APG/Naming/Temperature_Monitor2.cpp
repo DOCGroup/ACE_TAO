@@ -89,7 +89,7 @@ void Temperature_Monitor2::record_failure (void)
   Name_Binding_Ptr lastReset (this->naming_context_.fetch ("lastReset"));
   Name_Binding_Ptr resetCount (this->naming_context_.fetch ("resetCount"));
 
-  int now = (int) ACE_OS::time ();
+  int now = ACE_OS::time ();
 
   int lastFailureTime;
   int lastResetTime = 0;

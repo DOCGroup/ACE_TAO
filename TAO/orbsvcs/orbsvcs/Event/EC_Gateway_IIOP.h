@@ -91,8 +91,10 @@ public:
 
   // The following methods are documented in the base class.
   virtual void close (void);
-  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
-  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub);
+  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Let the gateway reconnect itself to the consumer ec given exisiting QoS
   void reconnect_consumer_ec(void);

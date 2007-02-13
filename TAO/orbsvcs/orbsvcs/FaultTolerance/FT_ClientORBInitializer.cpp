@@ -16,12 +16,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_FT_ClientORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_FT_ClientORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 
@@ -35,6 +37,7 @@ TAO_FT_ClientORBInitializer::post_init (
 void
 TAO_FT_ClientORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Register the FTCORBA policy factories.
 
@@ -77,6 +80,7 @@ TAO_FT_ClientORBInitializer::register_policy_factories (
 void
 TAO_FT_ClientORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ClientRequestInterceptor_ptr cri =
     PortableInterceptor::ClientRequestInterceptor::_nil ();

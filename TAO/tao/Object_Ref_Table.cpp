@@ -23,7 +23,8 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Object_Ref_Table::bind (const char *id, CORBA::Object_ptr obj)
+TAO_Object_Ref_Table::bind (const char *id,
+                            CORBA::Object_ptr obj)
 {
   // Make sure that the supplied Object reference is valid,
   // i.e. not nil.

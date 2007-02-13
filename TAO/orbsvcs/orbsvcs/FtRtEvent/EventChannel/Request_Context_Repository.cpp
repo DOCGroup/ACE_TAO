@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
-#include "tao/AnyTypeCode/IOP_IORA.h"
+#include "tao/IOP_IORC.h"
 #include "ace/TSS_T.h"
 
 ACE_RCSID (EventChannel,
@@ -73,7 +73,7 @@ get_object_id(CORBA::Any_var a)
   FtRtecEventChannelAdmin::ObjectId_var result;
 
   if ((a.in() >>= object_id) ==0)
-    throw CORBA::NO_MEMORY();
+    ACE_THROW_RETURN(CORBA::NO_MEMORY(), result);
 
   ACE_NEW_THROW_EX(r,
                    FtRtecEventChannelAdmin::ObjectId(*object_id),

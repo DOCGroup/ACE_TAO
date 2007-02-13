@@ -19,6 +19,7 @@ void
 MyImpl::BMDisplay_exec_impl::push_data_ready (
     BasicSP::DataAvailable *ev
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ev);
 
@@ -52,6 +53,8 @@ void
 MyImpl::BMDisplay_exec_impl::set_session_context (
     Components::SessionContext_ptr ctx
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -70,11 +73,15 @@ MyImpl::BMDisplay_exec_impl::set_session_context (
 void
 MyImpl::BMDisplay_exec_impl::ciao_preactivate (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
 }
 
 void
 MyImpl::BMDisplay_exec_impl::ccm_activate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -87,12 +94,16 @@ MyImpl::BMDisplay_exec_impl::ccm_activate ()
 void
 MyImpl::BMDisplay_exec_impl::ciao_postactivate (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
 }
 
 void
 MyImpl::BMDisplay_exec_impl::ccm_passivate (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -103,6 +114,8 @@ MyImpl::BMDisplay_exec_impl::ccm_passivate (
 
 void
 MyImpl::BMDisplay_exec_impl::ccm_remove ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -127,6 +140,8 @@ MyImpl::BMDisplayHome_exec_impl::~BMDisplayHome_exec_impl ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::BMDisplayHome_exec_impl::create ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
 {
   return new MyImpl::BMDisplay_exec_impl;
 }

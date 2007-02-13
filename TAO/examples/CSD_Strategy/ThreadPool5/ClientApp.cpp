@@ -44,7 +44,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to convert IOR string to obj ref.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   Foo_var foo = Foo::_narrow(obj.in());
@@ -53,7 +53,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to Foo interface.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   // Create the callback object using the child poa with the custom
@@ -64,7 +64,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to resolve initial ref for 'RootPOA'.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   PortableServer::POA_var root_poa
@@ -74,7 +74,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to POA interface.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   PortableServer::POAManager_var poa_manager
@@ -93,7 +93,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the child POA.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   // Create the thread pool servant dispatching strategy object, and
@@ -108,7 +108,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   // Create the servant object.
@@ -129,7 +129,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to activate servant (Callback_i).\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   Callback_var callback = Callback::_narrow (obj.in ());
@@ -138,7 +138,7 @@ ClientApp::run(int argc, char* argv[])
 
   if (client_task.open () != 0)
     {
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
     // Activate the POA Manager

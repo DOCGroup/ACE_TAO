@@ -34,17 +34,24 @@ public:
   CORBA::Long test_method (CORBA::Long x,
                            const Structure& the_in_structure,
                            Structure_out the_out_structure,
-                           char *&name);
+                           char *&name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-   CORBA::Long test_val (void);
+   CORBA::Long test_val (void)
+     ACE_THROW_SPEC (( CORBA::SystemException));
 
-   void test_val (CORBA::Long test_val);
+   void test_val (CORBA::Long test_val)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void raise_user_exception (void);
+  void raise_user_exception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     test_exception));
 
-  void raise_system_exception (void);
+  void raise_system_exception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   // The ORB

@@ -22,6 +22,9 @@ public:
 
   virtual void moo (
     )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
   {
   }
 };
@@ -38,7 +41,7 @@ main (int argc, char * argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");

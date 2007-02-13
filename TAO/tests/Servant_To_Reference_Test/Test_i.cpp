@@ -12,6 +12,7 @@ One_Impl::One_Impl (CORBA::ORB_ptr orb)
 
 char *
 One_Impl::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("One_Impl there!");
 }
@@ -23,6 +24,7 @@ Two_Impl::Two_Impl (CORBA::ORB_ptr orb)
 
 char *
 Two_Impl::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("One_Impl there!");
 }
@@ -35,6 +37,7 @@ Three_Impl::Three_Impl (CORBA::ORB_ptr orb)
 
 char *
 Three_Impl::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Three_Impl there!");
 }

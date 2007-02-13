@@ -33,6 +33,8 @@ CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
                  const char* in_str)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   A::DidTheRightThing))
 {
   out_l = 931233;
 
@@ -46,7 +48,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: A::DidTheRightThing\n"));
-      throw A::DidTheRightThing();
+      ACE_THROW_RETURN (A::DidTheRightThing(), 0);
     }
 
   return 931234;
@@ -56,6 +58,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
 void
 AMI_Test_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -63,6 +66,7 @@ AMI_Test_i::shutdown (void)
 
 CORBA::Long
 AMI_Test_i::yadda (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
@@ -72,6 +76,7 @@ AMI_Test_i::yadda (void)
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):AMI_Test_i::(set_)yadda\n"));

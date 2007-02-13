@@ -29,14 +29,17 @@ namespace TAO
     void
     RequestProcessingStrategy::strategy_init(
       TAO_Root_POA *poa,
-      ::PortableServer::ServantRetentionPolicyValue sr_value)
+      ::PortableServer::ServantRetentionPolicyValue sr_value
+      )
     {
       poa_ = poa;
       sr_value_ = sr_value;
     }
 
     void
-    RequestProcessingStrategy::strategy_init(TAO_Root_POA *poa)
+    RequestProcessingStrategy::strategy_init(
+      TAO_Root_POA *poa
+      )
     {
       poa_ = poa;
     }

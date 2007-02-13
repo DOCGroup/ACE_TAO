@@ -24,6 +24,7 @@ Callback::sample_history (void)
 
 void
 Callback::sample (Test::Timestamp the_timestamp)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t elapsed = ACE_OS::gethrtime () - the_timestamp;
 
@@ -35,6 +36,7 @@ Callback::sample (Test::Timestamp the_timestamp)
 
 PortableServer::POA_ptr
 Callback::_default_POA (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

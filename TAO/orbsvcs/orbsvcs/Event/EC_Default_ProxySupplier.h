@@ -44,15 +44,22 @@ public:
   virtual ~TAO_EC_Default_ProxyPushSupplier (void);
 
   void activate (
-     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
+     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// IDL methods.
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier (void);
-  virtual void suspend_connection (void);
-  virtual void resume_connection (void);
+                const RtecEventChannelAdmin::ConsumerQOS &qos)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected,
+                       RtecEventChannelAdmin::TypeError));
+  virtual void disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void suspend_connection (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void resume_connection (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (void);
@@ -62,7 +69,8 @@ public:
 private:
 
   virtual PortableServer::ObjectId
-            object_id (void);
+            object_id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

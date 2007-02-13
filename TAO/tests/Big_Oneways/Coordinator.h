@@ -31,7 +31,8 @@ public:
   void shutdown_all_peers (void);
 
   // = The skeleton methods
-  virtual void add_peer (Test::Peer_ptr peer);
+  virtual void add_peer (Test::Peer_ptr peer)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   /// Protected Destructor, call _remove_ref() instead

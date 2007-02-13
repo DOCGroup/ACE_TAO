@@ -37,7 +37,9 @@ TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
+TAO_MCAST_Parser::parse_string (const char *ior,
+                                CORBA::ORB_ptr orb)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *mcast_name =
     ior + sizeof (::mcast_prefix) + 1;

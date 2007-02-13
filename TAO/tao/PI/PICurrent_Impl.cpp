@@ -12,14 +12,17 @@ ACE_RCSID (tao,
 #endif /* __ACE_INLINE__ */
 
 #include "tao/TAO_Server_Request.h"
+#include "tao/SystemException.h"
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Any *
-TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
+TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
+                               )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::InvalidSlot))
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
@@ -66,7 +69,10 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
-                               const CORBA::Any & data)
+                               const CORBA::Any & data
+                               )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::InvalidSlot))
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.

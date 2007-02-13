@@ -43,11 +43,13 @@ public:
   }
 
   virtual void test (CORBA::Long id)
+    ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     testShared (id);
   }
 
   virtual CORBA::Long test2 (CORBA::Long id)
+    ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     if (id == -2)
       {
@@ -225,9 +227,9 @@ namespace {
             abort_after = ACE_OS::atoi (args.get_current ());
             args.consume_arg ();
           }
-        else
+        else 
           {
-            cerr << "Error: Unknown argument \""
+            cerr << "Error: Unknown argument \"" 
                  << args.get_current () << "\"" << endl;
             print_usage ();
             return false;
@@ -252,7 +254,7 @@ namespace {
     pols[0] = root->create_id_assignment_policy (PortableServer::USER_ID);
     pols[1] = root->create_lifespan_policy (PortableServer::PERSISTENT);
     POAManager_var man = root->the_POAManager ();
-    POA_var poa = root->create_POA ("X", man.in (), pols);
+    POA_var poa = root->create_POA ("X", man.in (), pols); 
     return poa._retn ();
   }
 
@@ -307,7 +309,7 @@ int main (int ac, char *av[])
 
       return 0;
 
-    }
+    } 
   catch (CORBA::Exception &ex)
     {
       ex._tao_print_exception ("server:");

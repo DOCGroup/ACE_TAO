@@ -35,7 +35,22 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
   //           global_scale_factor
   ACE_hrtime_t tmp = tv.sec ();
   tmp *= ((ACE_UINT32) ACE_HR_SCALE_CONVERSION * global_scale_factor ());
+#if defined (ACE_WIN32)
+  // Win32's scale factor is in ticks/msec, so multiply up to usec.
+  ACE_hrtime_t subsec = hrt - tmp;         // Remainder of ticks < 1sec
+  ACE_UINT32 msec = (ACE_UINT32) (subsec / global_scale_factor ());  // #msec
+  ACE_hrtime_t usec64 = subsec - (msec * global_scale_factor ());
+#  if defined (ACE_LACKS_LONGLONG_T)
+  ACE_UINT32 usec = usec64.lo();
+#  else
+  ACE_UINT32 usec = (ACE_UINT32) usec64;
+#  endif // ACE_LACKS_LONGLONG_T
+  //     (tick * usec/msec) / tick/msec     = usec
+  usec = (usec * 1000)      / (ACE_UINT32) global_scale_factor ();
+  tv.usec ((msec * 1000) + usec);
+#else
   tv.usec ((long) ((hrt - tmp) / global_scale_factor ()));
+#endif
 }
 
 
@@ -142,7 +157,15 @@ ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
   ACE_hrtime_t elapsed = ACE_High_Res_Timer::elapsed_hrtime (this->end_,
                                                              this->start_);
+#if defined (ACE_WIN32)
+  // Win32 scale factor is in msec
+  // This could give overflow when measuring a long time with a
+  // big global_scale_factor() (> 48 days with a 4Ghz tick freq.)
+  // To be looked after in the future.
+  usecs = (ACE_hrtime_t) ((elapsed * 1000) / global_scale_factor ());
+#else
   usecs = (ACE_hrtime_t) (elapsed / global_scale_factor ());
+#endif
 }
 
 ACE_INLINE void

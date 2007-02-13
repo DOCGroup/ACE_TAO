@@ -76,7 +76,8 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
   if (CORBA::is_nil (obj.in ()))
     {
-      throw ::CORBA::INTF_REPOS ();
+      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
+                        CORBA::InterfaceDef::_nil ());
     }
 
   CORBA::Repository_var repo =
@@ -85,7 +86,8 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
   if (CORBA::is_nil (repo.in ()))
     {
-      throw ::CORBA::INTF_REPOS ();
+      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
+                        CORBA::InterfaceDef::_nil ());
     }
 
   CORBA::Contained_var result = repo->lookup_id (repo_id
@@ -128,11 +130,11 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     {
       _tao_call.invoke (0, 0);
     }
-  catch (const ::CORBA::OBJECT_NOT_EXIST&)
+  catch ( ::CORBA::OBJECT_NOT_EXIST&)
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       throw;
     }

@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    FactoryDef_i.h
- *
- *  $Id$
- *
- *  FactoryDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    FactoryDef_i.h
+//
+// = DESCRIPTION
+//    FactoryDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_FACTORYDEF_I_H
 #define TAO_FACTORYDEF_I_H
@@ -32,25 +35,25 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class TAO_FactoryDef_i
- *
- * @brief TAO_FactoryDef_i
- *
- * Represents the definition of a factory operation in a home.
- */
 class TAO_IFRService_Export TAO_FactoryDef_i : public virtual TAO_OperationDef_i
 {
+  // = TITLE
+  //    TAO_FactoryDef_i
+  //
+  // = DESCRIPTION
+  //    Represents the definition of a factory operation in a home.
+  //
 public:
-  /// Constructor
   TAO_FactoryDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_FactoryDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

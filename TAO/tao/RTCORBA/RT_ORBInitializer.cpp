@@ -63,6 +63,7 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
 
 void
 TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
   // Register all of the RT related services.
@@ -120,7 +121,9 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   TAO_Priority_Mapping_Manager_var safe_manager = manager;
 
-  info->register_initial_reference ("PriorityMappingManager", manager);
+  info->register_initial_reference ("PriorityMappingManager",
+                                    manager
+                                   );
 
   // Create the initial priority mapping instance.
   TAO_Network_Priority_Mapping *npm = 0;
@@ -153,7 +156,8 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     network_manager;
 
   info->register_initial_reference ("NetworkPriorityMappingManager",
-                                    network_manager);
+                                    network_manager
+                                   );
 
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
@@ -196,7 +200,9 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
                       CORBA::COMPLETED_NO));
   CORBA::Object_var safe_rt_current = current;
 
-  info->register_initial_reference (TAO_OBJID_RTCURRENT, current);
+  info->register_initial_reference (TAO_OBJID_RTCURRENT,
+                                    current
+                                   );
 
   tao_info->orb_core ()->orb_params ()->scope_policy (this->scope_policy_);
   tao_info->orb_core ()->orb_params ()->sched_policy (this->sched_policy_);
@@ -205,6 +211,7 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
 void
 TAO_RT_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 }
@@ -252,7 +259,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -265,7 +272,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
             }
           throw;
         }
-      catch (const ::CORBA::Exception&)
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
           throw;

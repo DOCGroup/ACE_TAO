@@ -23,32 +23,40 @@ namespace TAO
   namespace Portable_Server
   {
     RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator (void) :
-      etherealize_objects_ (true)
+      etherealize_objects_ (1)
     {
     }
 
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup (void)
+    RequestProcessingStrategyServantActivator::strategy_cleanup (
+      void)
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
-        this->servant_activator_ = PortableServer::ServantActivator::_nil ();
+        this->servant_activator_ =
+          PortableServer::ServantActivator::_nil ();
       }
 
       RequestProcessingStrategy::strategy_cleanup ();
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantActivator::get_servant_manager (void)
+    RequestProcessingStrategyServantActivator::get_servant_manager (
+      void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
     }
 
     void
     RequestProcessingStrategyServantActivator::set_servant_manager (
-      PortableServer::ServantManager_ptr imgr)
+      PortableServer::ServantManager_ptr imgr
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been
@@ -61,19 +69,24 @@ namespace TAO
         }
 
       this->servant_activator_ =
-        PortableServer::ServantActivator::_narrow (imgr);
+        PortableServer::ServantActivator::_narrow (imgr
+                                                  );
 
-      this->validate_servant_manager (this->servant_activator_.in ());
+      this->validate_servant_manager (this->servant_activator_.in ()
+                                     );
     }
 
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyServantActivator::locate_servant (
       const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant)
+      PortableServer::Servant &servant
+      )
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 
-      location = this->poa_->servant_present (system_id, servant);
+      location = this->poa_->servant_present (system_id,
+                                              servant
+                                             );
 
       if (location == TAO_SERVANT_NOT_FOUND)
         {
@@ -99,7 +112,8 @@ namespace TAO
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
-                                          poa_current_impl);
+                                          poa_current_impl
+                                         );
 
       if (servant != 0)
         {
@@ -125,9 +139,12 @@ namespace TAO
       // reference.
       //
 
-      this->validate_servant_manager (this->servant_activator_.in ());
+      this->validate_servant_manager (this->servant_activator_.in ()
+                                     );
 
-      servant = this->incarnate_servant (poa_current_impl.object_id ());
+      servant =
+        this->incarnate_servant (poa_current_impl.object_id ()
+                                );
 
       // If the incarnate operation returns a servant that is
       // already active for a different Object Id and if the POA
@@ -144,7 +161,8 @@ namespace TAO
           // If we are not allowed to activate the servant, throw an exception
           // etherealize is not called because the servant is never added to
           // the active object map
-          throw ::CORBA::OBJ_ADAPTER ();
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
 
       // The POA enters the returned Servant value into the Active
@@ -154,7 +172,7 @@ namespace TAO
       // are no errors or if a restart is not required.
       if (!wait_occurred_restart_call)
         {
-          int const result =
+          int result =
             this->poa_->
               rebind_using_user_id_and_system_id (servant,
                                                   poa_current_impl.object_id (),
@@ -164,7 +182,8 @@ namespace TAO
             {
               // Throw an exception, etherealize is not called because servant
               // is not added to the active object map
-              throw ::CORBA::OBJ_ADAPTER ();
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                0);
             }
 
           // Increment the reference count on the servant upcall.
@@ -175,7 +194,8 @@ namespace TAO
           CORBA::Boolean cleanup_in_progress = 0;
           this->etherealize_servant (poa_current_impl.object_id (),
                                      servant,
-                                     cleanup_in_progress);
+                                     cleanup_in_progress
+                                    );
 
           // We ended up waiting on a condition variable, the
           // POA state may have changed while we are waiting.
@@ -208,12 +228,14 @@ namespace TAO
                                              this->poa_,
                                              servant,
                                              cleanup_in_progress,
-                                             remaining_activations);
+                                             remaining_activations
+                                            );
     }
 
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::incarnate_servant (
-      const PortableServer::ObjectId& object_id)
+      const PortableServer::ObjectId& object_id
+      )
     {
       PortableServer::Servant servant = 0;
 
@@ -225,11 +247,15 @@ namespace TAO
       // Invocations of incarnate on the servant manager are serialized.
       // Invocations of etherealize on the servant manager are serialized.
       // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-      servant = this->servant_activator_->incarnate (object_id, this->poa_);
+      servant = this->servant_activator_->incarnate (object_id,
+                                                     this->poa_
+                                                    );
 
       if (servant == 0)
         {
-          throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7,
+                                                CORBA::COMPLETED_NO),
+                                                0);
         }
       else
         {
@@ -275,7 +301,8 @@ namespace TAO
             {
               this->etherealize_servant (user_id,
                                          servant,
-                                         this->poa_->cleanup_in_progress ());
+                                         this->poa_->cleanup_in_progress ()
+                                        );
             }
           else
             {
@@ -290,7 +317,9 @@ namespace TAO
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      if (this->poa_->unbind_using_user_id (user_id) != 0)
+      int result = this->poa_->unbind_using_user_id (user_id);
+
+      if (result != 0)
         throw ::CORBA::OBJ_ADAPTER ();
     }
 

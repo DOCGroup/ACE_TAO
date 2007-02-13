@@ -40,15 +40,30 @@ public:
   virtual ~Bottom_Impl (void);
 
   // IDL Interface Methods
-  virtual char * top_quote (void);
+  virtual char * top_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual char * left_quote (void);
+  virtual char * left_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual char * right_quote (void);
+  virtual char * right_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual char * bottom_quote (void);
+  virtual char * bottom_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 private:
   CORBA::ORB_var orb_;
 
@@ -74,12 +89,27 @@ public:
   virtual ~Delegated_Bottom_Impl (void);
 
   // IDL Interface Methods.
-  virtual char * top_quote (void);
-  virtual char * left_quote (void);
-  virtual char * right_quote (void);
-  virtual char * bottom_quote (void);
+  virtual char * top_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+  virtual char * left_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+  virtual char * right_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+  virtual char * bottom_quote (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
 private:
   Multiple::Bottom_var delegate_;

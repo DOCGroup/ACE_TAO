@@ -48,14 +48,18 @@ namespace TAO
        * Can raise the @c NoContext exception if this function is
        * not invoked in the context of an upcall.
        */
-      PortableServer::POA_ptr get_POA (void);
+      PortableServer::POA_ptr get_POA (void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::Current::NoContext));
 
       /**
        * Returns the object id of the current request being invoked.  Can
        * raise the @c NoContext exception if this function is not
        * invoked in the context of an upcall.
        */
-      PortableServer::ObjectId *get_object_id (void);
+      PortableServer::ObjectId *get_object_id (void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::Current::NoContext));
 
       /**
        * This operation returns a locally manufactured reference to the object
@@ -66,14 +70,18 @@ namespace TAO
        * Object::is_equivalent operation to compare the two references may not
        * necessarily return true.
        */
-      CORBA::Object_ptr get_reference (void);
+      CORBA::Object_ptr get_reference (void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::Current::NoContext));
 
       /**
        * Returns a reference to the servant that hosts the object in whose
        * context it is called. If called outside the context of the POA
        * dispatched operation, a NoContext exception is raised
        */
-      PortableServer::Servant get_servant (void);
+      PortableServer::Servant get_servant (void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::Current::NoContext));
 
       /// Returns the class that implements this interface.
       POA_Current_Impl *implementation (void);

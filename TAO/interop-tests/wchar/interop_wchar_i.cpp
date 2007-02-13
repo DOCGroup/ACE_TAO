@@ -39,6 +39,7 @@ interop_WChar_Passer_i::~interop_WChar_Passer_i (void)
 
 char *
 interop_WChar_Passer_i::orb_name (void)
+    ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::string_dup ("TAO");
 }
@@ -46,12 +47,14 @@ interop_WChar_Passer_i::orb_name (void)
 CORBA::Boolean
 interop_WChar_Passer_i::wchar_to_server (CORBA::WChar test,
                                          CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.match_wchar (key,test);
 }
 
 CORBA::WChar
 interop_WChar_Passer_i::wchar_from_server (CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.get_wchar (key);
 }
@@ -59,12 +62,14 @@ interop_WChar_Passer_i::wchar_from_server (CORBA::Short key)
 CORBA::Boolean
 interop_WChar_Passer_i::wstring_to_server (const CORBA::WChar * test,
                                            CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.match_wstring(key,test);
 }
 
 CORBA::WChar *
 interop_WChar_Passer_i::wstring_from_server (CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::wstring_dup (ref_.get_wstring(key));
 }
@@ -72,12 +77,14 @@ interop_WChar_Passer_i::wstring_from_server (CORBA::Short key)
 CORBA::Boolean
 interop_WChar_Passer_i::warray_to_server (const interop::warray test,
                                           CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return ref_.match_warray(key,test);
 }
 
 interop::warray_slice *
 interop_WChar_Passer_i::warray_from_server (CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return interop::warray_dup (ref_.get_warray(key));
 }
@@ -85,6 +92,7 @@ interop_WChar_Passer_i::warray_from_server (CORBA::Short key)
 CORBA::Boolean
 interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
                                            CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return
     ref_.match_wchar (key,test.st_char) &&
@@ -95,6 +103,7 @@ interop_WChar_Passer_i::wstruct_to_server (const interop::wstruct & test,
 
 interop::wstruct *
 interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wstruct_var ws = new interop::wstruct ();
   ws->st_char = this->wchar_from_server(key);
@@ -107,6 +116,7 @@ interop_WChar_Passer_i::wstruct_from_server (CORBA::Short key)
 CORBA::Boolean
 interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
                                               CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::Boolean result = 1;
   for (CORBA::ULong i = 0; result && i < test.length(); i++)
@@ -118,6 +128,7 @@ interop_WChar_Passer_i::wstructseq_to_server (const interop::wstructseq & test,
 
 interop::wstructseq *
 interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key)
+    ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wstructseq_var wsListI = new interop::wstructseq();
   wsListI->length(5);
@@ -140,6 +151,7 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key)
 CORBA::Boolean
 interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
                                           CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   switch (test._d()) {
   case interop::is_wchar :
@@ -157,6 +169,7 @@ interop_WChar_Passer_i::wunion_to_server (const interop::wunion & test,
 interop::wunion *
 interop_WChar_Passer_i::wunion_from_server (CORBA::Short key,
                                             interop::wchar_types type)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   interop::wunion *wu = new interop::wunion ();
   switch (type) {
@@ -177,6 +190,7 @@ interop_WChar_Passer_i::wunion_from_server (CORBA::Short key,
 CORBA::Boolean
 interop_WChar_Passer_i::any_to_server (const CORBA::Any &test,
                                        CORBA::Short key)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::WChar wc;
   const CORBA::WChar *ws;
@@ -201,6 +215,7 @@ interop_WChar_Passer_i::any_to_server (const CORBA::Any &test,
 CORBA::Any*
 interop_WChar_Passer_i::any_from_server (CORBA::Short key,
                                          interop::wchar_types type)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   CORBA::Any *any = new CORBA::Any;
   switch (type) {
@@ -222,12 +237,15 @@ interop_WChar_Passer_i::any_from_server (CORBA::Short key,
 
 CORBA::Any *
 interop_WChar_Passer_i::any_echo (const CORBA::Any &test)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return new CORBA::Any (test);
 }
 
 void
 interop_WChar_Passer_i::exception_test ( CORBA::Short key)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   interop::WChar_Passer::WStringException))
 {
   throw interop::WChar_Passer::WStringException(ref_.get_except(key),
                                                 this->wchar_from_server(key));
@@ -235,6 +253,7 @@ interop_WChar_Passer_i::exception_test ( CORBA::Short key)
 
 void
 interop_WChar_Passer_i::shutdown (void)
+  ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   this->orb_->shutdown(0);
 }

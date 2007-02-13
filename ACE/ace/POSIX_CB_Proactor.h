@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && !defined (__FreeBSD__)
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
@@ -27,6 +27,9 @@
 
 #include "ace/POSIX_Proactor.h"
 
+#if defined (ACE_LACKS_SIGVAL_T)
+typedef union sigval sigval_t;
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +54,7 @@ public:
 
   // This only public so the "extern C" completion function can see it
   // when needed.
-  static void aio_completion_func (sigval cb_data);
+  static void aio_completion_func (sigval_t cb_data);
 
 protected:
 
@@ -93,5 +96,5 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__  */
 #endif /* ACE_POSIX_CB_PROACTOR_H*/

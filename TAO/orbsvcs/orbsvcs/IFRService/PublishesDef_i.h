@@ -1,18 +1,21 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    PublishesDef_i.h
- *
- *  $Id$
- *
- *  PublishesDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    PublishesDef_i.h
+//
+// = DESCRIPTION
+//    PublishesDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_PUBLISHESDEF_I_H
 #define TAO_PUBLISHESDEF_I_H
@@ -42,15 +45,16 @@ class TAO_IFRService_Export TAO_PublishesDef_i
   //    by a component.
   //
 public:
-  /// Constructor
     TAO_PublishesDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_PublishesDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

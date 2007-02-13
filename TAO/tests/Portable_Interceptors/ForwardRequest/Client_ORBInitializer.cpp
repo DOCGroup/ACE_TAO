@@ -17,12 +17,14 @@ ACE_RCSID (ForwardRequest,
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var orb_id = info->orb_id ();
 

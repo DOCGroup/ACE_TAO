@@ -25,6 +25,7 @@ project(*Server): taoserver {
 
 project(*Client): taoexe, portableserver {
   after += *idl
+  after += *Server
   Source_Files {
     Client_Task.cpp
     Server_Task.cpp

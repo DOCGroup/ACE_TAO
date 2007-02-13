@@ -19,9 +19,11 @@ public:
   Payload_Receiver ();
 
   // = The skeleton methods
-  virtual void more_data (const Test::Payload &payload);
+  virtual void more_data (const Test::Payload &payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void sync_none_more_data (const Test::Payload &payload);
+  virtual void sync_none_more_data (const Test::Payload &payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   int count(bool sync_none = false) const;
 

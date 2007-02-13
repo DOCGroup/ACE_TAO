@@ -25,6 +25,7 @@ project(*Server): rtscheduling_server {
 
 project(*Client) : rtscheduling_client {
   after += *idl
+  after += *Server
   Source_Files {
     ../Scheduler.cpp
     test_client.cpp
@@ -35,5 +36,5 @@ project(*Client) : rtscheduling_client {
   IDL_Files {
   }
 
-  exename = Scheduler_Interceptor_Client
+  exename = Scheduler_Interceptor_Client 
 }

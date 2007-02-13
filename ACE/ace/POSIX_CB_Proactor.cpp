@@ -2,7 +2,7 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && !defined (__FreeBSD__)
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -38,7 +38,7 @@ ACE_POSIX_CB_Proactor::get_impl_type (void)
   return PROACTOR_CB;
 }
 
-void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
+void ACE_POSIX_CB_Proactor::aio_completion_func (sigval_t cb_data)
 {
   ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
   if ( impl != 0 )
@@ -47,7 +47,7 @@ void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
-ACE_POSIX_CB_Proactor_aio_completion (sigval cb_data)
+ACE_POSIX_CB_Proactor_aio_completion (sigval_t cb_data)
 {
   ACE_POSIX_CB_Proactor::aio_completion_func (cb_data);
 }
@@ -181,4 +181,4 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_AIO_CALLS && !ACE_HAS_BROKEN_SIGEVENT_STRUCT */
+#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__ */

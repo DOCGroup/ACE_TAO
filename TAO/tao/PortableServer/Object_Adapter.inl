@@ -3,7 +3,6 @@
 // $Id$
 
 #include "tao/SystemException.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,29 +50,37 @@ TAO_Object_Adapter::transient_poa_name_size ()
 }
 
 ACE_INLINE int
-TAO_Object_Adapter::locate_servant (const TAO::ObjectKey &key)
+TAO_Object_Adapter::locate_servant (const TAO::ObjectKey &key
+                                    )
 {
   // Lock access for the duration of this transaction.
   TAO_OBJECT_ADAPTER_GUARD_RETURN (-1);
 
-  return this->locate_servant_i (key);
+  return this->locate_servant_i (key
+                                );
 }
 
 ACE_INLINE TAO_SERVANT_LOCATION
 TAO_Object_Adapter::find_servant (const TAO::ObjectKey &key,
-                                  PortableServer::Servant &servant)
+                                  PortableServer::Servant &servant
+                                  )
 {
   // Lock access for the duration of this transaction.
   TAO_OBJECT_ADAPTER_GUARD_RETURN (TAO_SERVANT_NOT_FOUND);
 
-  return this->find_servant_i (key, servant);
+  return this->find_servant_i (key,
+                               servant
+                              );
 }
 
 ACE_INLINE int
 TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
-                                         TAO_Root_POA *&poa)
+                                         TAO_Root_POA *&poa
+                                         )
 {
-  return this->hint_strategy_->find_persistent_poa (system_name, poa);
+  return this->hint_strategy_->find_persistent_poa (system_name,
+                                                    poa
+                                                   );
 }
 
 ACE_INLINE int
@@ -86,7 +93,9 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
 {
   if (activate_it)
     {
-      return this->find_persistent_poa (system_name, poa);
+      return this->find_persistent_poa (system_name,
+                                        poa
+                                       );
     }
   else
     {

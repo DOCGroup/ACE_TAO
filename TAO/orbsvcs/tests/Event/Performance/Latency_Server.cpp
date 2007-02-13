@@ -49,7 +49,7 @@ main (int argc, char *argv [])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       CORBA::Object_var manager_object =

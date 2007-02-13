@@ -30,19 +30,21 @@ TAO_LF_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
 {
   if (timeout != 0)
     {
-      options.set (ACE_Synch_Options::USE_REACTOR, *timeout);
+      options.set (ACE_Synch_Options::USE_REACTOR,
+                   *timeout);
     }
   else
     {
       // Making it sure it is blocking.
-      options.set (ACE_Synch_Options::USE_REACTOR, ACE_Time_Value::zero);
+      options.set (ACE_Synch_Options::USE_REACTOR,
+                   ACE_Time_Value::zero);
     }
 }
 
 int
 TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
                                  TAO_Transport *transport,
-                                 ACE_Time_Value *max_wait_time)
+                               ACE_Time_Value *max_wait_time)
 {
   if (transport == 0)
     return -1;
@@ -51,7 +53,9 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
     this->orb_core_->leader_follower ();
 
   int result =
-    leader_follower.wait_for_event (ev, transport, max_wait_time);
+    leader_follower.wait_for_event (ev,
+                                    transport,
+                                    max_wait_time);
 
   if (ev->error_detected () && result != -1)
     result = -1;

@@ -45,52 +45,96 @@ public:
 
   ///= POA_Notify_Internal methods
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_structured (const CosNotification::StructuredEvent & event);
+  virtual void forward_structured (const CosNotification::StructuredEvent & event)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_structured_no_filtering (const CosNotification::StructuredEvent & event);
+  virtual void forward_structured_no_filtering (const CosNotification::StructuredEvent & event)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_any (const CORBA::Any & event);
+  virtual void forward_any (const CORBA::Any & event)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_any_no_filtering (const CORBA::Any & event);
+  virtual void forward_any_no_filtering (const CORBA::Any & event)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 protected:
   //= Data Members
   CORBA::Boolean is_suspended_;
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void suspend_connection (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyChannelAdmin::ConnectionAlreadyInactive,
+    CosNotifyChannelAdmin::NotConnected
+  ));
 
   virtual void resume_connection (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyChannelAdmin::ConnectionAlreadyActive,
+    CosNotifyChannelAdmin::NotConnected
+  ));
 
   virtual CosNotifyFilter::MappingFilter_ptr priority_filter (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void priority_filter (
     CosNotifyFilter::MappingFilter_ptr priority_filter
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual CosNotifyFilter::MappingFilter_ptr lifetime_filter (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void lifetime_filter (
     CosNotifyFilter::MappingFilter_ptr lifetime_filter
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual CosNotification::EventTypeSeq * obtain_offered_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void subscription_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyComm::InvalidEventType
+  ));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

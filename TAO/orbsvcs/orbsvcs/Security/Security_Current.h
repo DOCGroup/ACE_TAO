@@ -63,7 +63,8 @@ public:
   /// Return the security attributes corresponding to the types in the
   /// given attribute type list associated with the current request.
   virtual Security::AttributeList * get_attributes (
-      const Security::AttributeTypeList & attributes);
+      const Security::AttributeTypeList & attributes)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
   /**
@@ -75,7 +76,8 @@ public:
   //@{
   /// Return the Credentials received from the client associate with
   /// the current request.
-  virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ();
+  virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
   /// Return the TSS slot ID assigned to the "SecurityCurrent" object.

@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Codeset_IBM1047.cpp
- *
- *  $Id$
- *
- *  Defines the arrays required to convert between ISO8859 (aka
- *  Latin/1) and IBM1047 (aka EBCDIC).
- *
- *
- *  @author Jim Rogers (jrogers@viasoft.com)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+//
+// = FILENAME
+//    Codeset_IBM1047.cpp
+//
+// = DESCRIPTION
+//    Defines the arrays required to convert between ISO8859 (aka
+//    Latin/1) and IBM1047 (aka EBCDIC).
+//
+// = AUTHOR
+//    Jim Rogers (jrogers@viasoft.com)
+//
+// ============================================================================
 
 #include "ace/Codeset_IBM1047.h"
 

@@ -338,7 +338,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
   if (context_impl->init (context_size) == -1)
-    throw CORBA::NO_MEMORY ();
+    ACE_THROW_RETURN (CORBA::NO_MEMORY (), result._retn ());
 
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (1);
@@ -347,7 +347,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   if (ind->bind (context_impl->poa_id_.c_str (),
                  context_impl->counter_,
                  context_impl->persistent_context_->map ()) == -1)
-    throw CORBA::INTERNAL ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (), result._retn ());
 
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (2);
@@ -391,7 +391,8 @@ TAO_Persistent_Naming_Context::new_context (void)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                      CosNaming::NamingContext::_nil ());
 
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];

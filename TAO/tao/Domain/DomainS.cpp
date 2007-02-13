@@ -303,6 +303,7 @@ POA_CORBA::_TAO_DomainManager_Strategized_Proxy_Broker::get_strategy (
     CORBA::Object_ptr obj
 
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Collocation_Strategy strategy =
     TAO_ORB_Core::collocation_strategy (obj);
@@ -321,6 +322,7 @@ POA_CORBA::_TAO_DomainManager_Strategized_Proxy_Broker::dispatch (
     TAO::Collocation_Strategy strategy
 
   )
+  ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
   collocation_upcall_wrapper.upcall (
@@ -380,7 +382,11 @@ POA_CORBA::_TAO_DomainManager_Direct_Proxy_Impl::get_domain_policy (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args,
     int
+
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   ((TAO::Arg_Traits< CORBA::Policy>::ret_val *) args[0])->arg () =
     dynamic_cast<POA_CORBA::DomainManager_ptr>
@@ -1049,6 +1055,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Strategized_Proxy_Broker::get_strategy (
     CORBA::Object_ptr obj
 
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Collocation_Strategy strategy =
     TAO_ORB_Core::collocation_strategy (obj);
@@ -1067,6 +1074,7 @@ POA_CORBA::_TAO_ConstructionPolicy_Strategized_Proxy_Broker::dispatch (
     TAO::Collocation_Strategy strategy
 
   )
+  ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
   collocation_upcall_wrapper.upcall (
@@ -1126,7 +1134,11 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::make_domain_manager (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args,
     int
+
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   dynamic_cast<POA_CORBA::ConstructionPolicy_ptr>
     (servant)

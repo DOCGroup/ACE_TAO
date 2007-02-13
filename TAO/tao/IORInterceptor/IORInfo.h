@@ -62,35 +62,43 @@ public:
   /// effect for the object whose IOR is being created.
   virtual CORBA::Policy_ptr get_effective_policy (
       CORBA::PolicyType type
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles.
   virtual void add_ior_component (
       const IOP::TaggedComponent & component
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
       IOP::ProfileId profile_id
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * manager_id (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::AdapterState state (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::ObjectReferenceTemplate * adapter_template (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::ObjectReferenceFactory * current_factory (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void current_factory (
       PortableInterceptor::ObjectReferenceFactory * current_factory
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
 

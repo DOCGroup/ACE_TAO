@@ -86,7 +86,8 @@ class TAO_Sequence_Extracter_Base
 {
 public:
 
-  static CORBA::TCKind sequence_type (CORBA::TypeCode* code);
+  static CORBA::TCKind sequence_type (CORBA::TypeCode* code)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the sequence element type for the sequence whose typecode
   // is <code>.
 };

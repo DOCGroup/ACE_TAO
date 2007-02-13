@@ -14,6 +14,7 @@ ACE_RCSID(BiDirectional_NestedUpcall, test_i, "$Id$")
 
 void
 Callback_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
   this->orb_->shutdown (0);
@@ -21,6 +22,7 @@ Callback_i::shutdown (void)
 
 void
 Callback_i::callback_method ( /**/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Callback method called \n"));
@@ -31,6 +33,7 @@ Callback_i::callback_method ( /**/)
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Boolean do_callback)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (do_callback)
     {
@@ -60,6 +63,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
 void
 Simple_Server_i::callback_object (Callback_ptr callback
  )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
@@ -68,6 +72,7 @@ Simple_Server_i::callback_object (Callback_ptr callback
 
 void
 Simple_Server_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

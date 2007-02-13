@@ -21,8 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,7 +42,10 @@ class TAO_Export TAO_Valuetype_Adapter_Factory
 public:
   virtual ~TAO_Valuetype_Adapter_Factory (void);
 
-  virtual TAO_Valuetype_Adapter * create (void) = 0;
+  virtual TAO_Valuetype_Adapter * create (
+
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

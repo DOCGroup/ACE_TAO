@@ -42,6 +42,9 @@ DsLogAdmin::BasicLog_ptr
 TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                                CORBA::ULongLong max_size,
                                DsLogAdmin::LogId_out id_out)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidLogFullAction
+                   ))
 {
   this->create_i (full_action,
 		  max_size,
@@ -68,6 +71,11 @@ DsLogAdmin::BasicLog_ptr
 TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                                        DsLogAdmin::LogFullActionType full_action,
                                        CORBA::ULongLong max_size)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   DsLogAdmin::LogIdAlreadyExists,
+                   DsLogAdmin::InvalidLogFullAction
+                   ))
 {
   this->create_with_id_i (id,
 			  full_action,

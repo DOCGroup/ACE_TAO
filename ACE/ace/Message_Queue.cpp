@@ -409,7 +409,7 @@ int
 ACE_Message_Queue_NT::close (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::close");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   this->deactivate ();
   return (::CloseHandle (this->completion_port_) ? 0 : -1 );
 }
@@ -425,7 +425,7 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
                                ACE_Time_Value *)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::enqueue");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   if (this->state_ != ACE_Message_Queue_Base::DEACTIVATED)
     {
       size_t const msize = new_item->total_size ();
@@ -459,7 +459,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
   ACE_TRACE ("ACE_Message_Queue_NT::dequeue_head");
 
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
     // Make sure the MQ is not deactivated before proceeding.
     if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
@@ -480,7 +480,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
                                           reinterpret_cast<LPOVERLAPPED *> (&first_item),
                                           (timeout == 0 ? INFINITE : timeout->msec ()));
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
     --this->cur_thrs_;          // Decrease waiting thread count.
     if (retv)
       {
@@ -502,7 +502,7 @@ int
 ACE_Message_Queue_NT::deactivate (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::deactivate");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   int const previous_state = this->state_;
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
@@ -526,7 +526,7 @@ int
 ACE_Message_Queue_NT::activate (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::activate");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
   int const previous_status = this->state_;
   this->state_ = ACE_Message_Queue_Base::ACTIVATED;
   return previous_status;
@@ -536,7 +536,7 @@ int
 ACE_Message_Queue_NT::pulse (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::pulse");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   int const previous_state = this->state_;
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)

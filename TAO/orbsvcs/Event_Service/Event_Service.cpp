@@ -387,18 +387,21 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 Event_Service::for_consumers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ec_impl_->for_consumers ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 Event_Service::for_suppliers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ec_impl_->for_suppliers ();
 }
 
 void
 Event_Service::destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->ec_impl_->destroy ();
   this->orb_->shutdown ();
@@ -406,12 +409,20 @@ Event_Service::destroy (void)
 
 RtecEventChannelAdmin::Observer_Handle
 Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer)
+      ACE_THROW_SPEC ((
+          CORBA::SystemException,
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   return this->ec_impl_->append_observer (observer);
 }
 
 void
 Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle)
+      ACE_THROW_SPEC ((
+          CORBA::SystemException,
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   this->ec_impl_->remove_observer (handle);
 }

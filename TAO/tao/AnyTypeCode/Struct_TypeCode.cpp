@@ -236,7 +236,8 @@ TAO::TypeCode::Struct<StringType,
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return
@@ -309,7 +310,7 @@ TAO::TypeCode::Struct<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
   return Traits<StringType>::get_string (this->fields_[index].name);
 }
@@ -327,7 +328,8 @@ TAO::TypeCode::Struct<StringType,
   ) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      CORBA::TypeCode::_nil ());
 
   return
     CORBA::TypeCode::_duplicate (

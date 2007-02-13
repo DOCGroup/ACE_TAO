@@ -42,7 +42,7 @@ TAO_Regular_POA::remove_from_parent_i (void)
   // Remove POA from the parent
   if (this->parent_ != 0)
     {
-      int const result = this->parent_->delete_child (this->name_);
+      int result = this->parent_->delete_child (this->name_);
       if (result != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();

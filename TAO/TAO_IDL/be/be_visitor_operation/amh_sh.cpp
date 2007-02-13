@@ -84,7 +84,29 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     }
 
   *os << be_uidt_nl
-      << ") = 0;" << be_uidt_nl;
+      << ")" << be_uidt_nl;
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw (";
+    }
+  else
+    {
+      *os << "ACE_THROW_SPEC ((";
+    }
+
+  *os << " ::CORBA::SystemException";
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << ")";
+    }
+  else
+    {
+      *os << "))";
+    }
+
+  *os << " = 0;";
 
   return 0;
 }
@@ -96,7 +118,8 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
   this->generate_shared_prologue (node, os, "_get_");
 
   *os << be_uidt_nl
-      << ") = 0;" << be_uidt_nl;
+      << ")" << be_uidt_nl
+      << "ACE_THROW_SPEC (( ::CORBA::SystemException)) = 0;" << be_nl;
 
   if (node->readonly ())
     {
@@ -122,7 +145,8 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
       return -1;
     }
 
-  *os << be_uidt_nl << ") = 0;" << be_uidt_nl;
+  *os << be_uidt_nl << ")" << be_uidt_nl
+      << "ACE_THROW_SPEC (( ::CORBA::SystemException)) = 0;" << be_nl;
 
   return 0;
 }

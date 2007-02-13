@@ -53,15 +53,24 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (void);
+    list_logs (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (void);
+    list_logs_by_id (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr
-    find_log (DsLogAdmin::LogId id);
+    find_log (DsLogAdmin::LogId id)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   /// Returns true if log exists, otherwise false
   virtual bool exists (DsLogAdmin::LogId id);

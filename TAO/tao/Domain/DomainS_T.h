@@ -92,7 +92,10 @@ namespace POA_CORBA
     ::CORBA::Policy_ptr get_domain_policy (
         ::CORBA::PolicyType policy_type
 
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   private:
     T *ptr_;
@@ -149,21 +152,30 @@ namespace POA_CORBA
 
     CORBA::PolicyType policy_type (
         void
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Policy_ptr copy (
         void
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
         void
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -172,7 +184,10 @@ namespace POA_CORBA
         ::CORBA::InterfaceDef_ptr object_type,
         ::CORBA::Boolean constr_policy
 
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   private:
     T *ptr_;

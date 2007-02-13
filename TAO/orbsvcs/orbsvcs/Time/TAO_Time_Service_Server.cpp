@@ -28,6 +28,8 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::universal_time (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable))
 {
   TAO_UTO *uto = 0;
 
@@ -55,8 +57,11 @@ TAO_Time_Service_Server::universal_time (void)
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosTime::TimeUnavailable))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CosTime::UTO::_nil ());
 }
 
 // This creates a new UTO based on the given parameters.
@@ -65,6 +70,7 @@ CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                                              TimeBase::InaccuracyT inaccuracy,
                                              TimeBase::TdfT tdf)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -81,6 +87,7 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_UTO *uto = 0;
 
@@ -98,6 +105,7 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc)
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                                        TimeBase::TimeT upper)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 

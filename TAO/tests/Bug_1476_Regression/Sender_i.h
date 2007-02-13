@@ -32,9 +32,11 @@ public:
   virtual ~Sender_i (void);
 
   // = The skeleton methods
-  virtual void active_objects (CORBA::ULong ao);
+  virtual void active_objects (CORBA::ULong ao)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_ready_message (void);
+  virtual void send_ready_message (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong get_number_received (void) const;
 

@@ -22,6 +22,7 @@ TAO_FT_Service_Activate::~TAO_FT_Service_Activate (void)
 
 TAO_Service_Callbacks *
 TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_FT_Service_Callbacks *ft_service_callback = 0;
 

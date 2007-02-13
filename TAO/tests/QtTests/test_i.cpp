@@ -14,6 +14,7 @@ LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 
 void
 LCD_Display_imp::shutdown (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "The ORB has been shutdown, Close the windows to exit \n"));
@@ -23,6 +24,7 @@ LCD_Display_imp::shutdown (void)
 
 void
 LCD_Display_imp::send_val (CORBA::Long val)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "The value from server is <%d> \n", val));

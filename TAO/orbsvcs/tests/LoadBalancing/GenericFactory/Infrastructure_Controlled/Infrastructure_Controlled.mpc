@@ -9,14 +9,14 @@ project(*idl): taoidldefaults {
 project(*Server): loadbalancing {
   after += *idl
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     server.cpp
     LB_server.cpp
     Simple.cpp
     Factory.cpp
     Factory_Map.cpp
     Factory_Struct.cpp
+    TestS.cpp
+    TestC.cpp
   }
   IDL_Files {
   }

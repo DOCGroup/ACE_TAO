@@ -14,15 +14,16 @@
 #define TAO_THREAD_LANE_RESOURCES_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Mutex.h"
+
 #include /**/ "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 #include "tao/params.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

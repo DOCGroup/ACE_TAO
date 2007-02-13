@@ -1,5 +1,4 @@
 #include "tao/PI/ClientRequestDetails.h"
-#include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -16,7 +15,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   void
-  ClientRequestDetails::apply_policies (const CORBA::PolicyList &policies)
+  ClientRequestDetails::apply_policies (
+      const CORBA::PolicyList &policies
+      )
   {
     // Flag to check for duplicate ProcessingModePolicy objects in the list.
     bool processing_mode_applied = false;
@@ -52,10 +53,12 @@ namespace TAO
             // Narrow the Policy to the ProcessingModePolicy interface.
             PortableInterceptor::ProcessingModePolicy_var pm_policy =
                     PortableInterceptor::ProcessingModePolicy::_narrow (
-                                                 policy.in ());
+                                                 policy.in ()
+                                                );
 
             // Save the value of the ProcessingModePolicy in our data member.
-            this->processing_mode_ = pm_policy->processing_mode ();
+            this->processing_mode_ =
+              pm_policy->processing_mode ();
           }
         else
           {

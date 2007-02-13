@@ -18,18 +18,22 @@ FOO_ClientRequestInterceptor::FOO_ClientRequestInterceptor (
 
 char *
 FOO_ClientRequestInterceptor::name ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_ClientRequestInterceptor");
 }
 
 void
 FOO_ClientRequestInterceptor::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Verify that the tagged component that was supposed to be embedded
   // into the IOR by the FOO_IORInterceptor is actually in the IOR
@@ -84,23 +88,29 @@ FOO_ClientRequestInterceptor::send_request (
 void
 FOO_ClientRequestInterceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 FOO_ClientRequestInterceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }

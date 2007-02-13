@@ -31,7 +31,8 @@ class sum_server_i : public virtual POA_ORT::sum_server
 
   /// add variables method
   CORBA::Long add_variables (CORBA::Long a,
-                             CORBA::Long b);
+                             CORBA::Long b)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
 

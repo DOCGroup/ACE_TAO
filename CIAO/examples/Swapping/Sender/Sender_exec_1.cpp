@@ -8,6 +8,7 @@ namespace CIDL_Sender_Impl
 {
   char*
   Message_Impl_1::get_message ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender 1 sending out message. \n"));
     return CORBA::string_dup (component_.message_.in ());
@@ -19,18 +20,21 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::local_message (const char * local_message)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     message_ = CORBA::string_dup (local_message);
   }
 
   char *
   Sender_exec_1_i::local_message ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup(message_.in ());
   }
 
   Hello::CCM_ReadMessage_ptr
   Sender_exec_1_i::get_push_message ()
+        ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Sender_exec_1_i::get_push_message called\n"));
@@ -39,6 +43,7 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::start ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
     ACE_DEBUG ((LM_DEBUG, "Sender 1 initiates the process.\n"));
@@ -47,6 +52,8 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::set_session_context (Components::SessionContext_ptr ctx)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_1_i::set_session_context\n"));
 
@@ -61,6 +68,8 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::ciao_preactivate ()
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Sender_exec_1_i::ciao_preactivate\n"));
@@ -68,6 +77,8 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::ccm_activate ()
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Sender_exec_1_i::ccm_activate\n"));
@@ -78,6 +89,8 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::ciao_postactivate ()
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Sender_exec_1_i::ciao_postactivate\n"));
@@ -85,6 +98,8 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::ccm_passivate ()
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_1_i::ccm_passivate\n"));
 
@@ -123,6 +138,8 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_1_i::ccm_remove ()
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::CCMException))
   {
     ACE_DEBUG ((LM_DEBUG, "Sender_exec_1_i::ccm_remove\n"));
   }

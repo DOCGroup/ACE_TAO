@@ -19,12 +19,15 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 CORBA::Long
 test_i::doit (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_++;
 }
 
 void
 test_i::forward (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   test::Cannot_Forward))
 {
   this->activator_.forward_requests ();
 
@@ -37,6 +40,7 @@ test_i::forward (void)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

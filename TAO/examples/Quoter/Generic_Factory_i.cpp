@@ -37,6 +37,7 @@ Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
 
 CORBA::Boolean
 Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
@@ -78,7 +79,8 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
     }
   catch (const CORBA::Exception&)
     {
-      throw CosLifeCycle::NoFactory (factory_key);
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key),
+                        CosNaming::NamingContext::_nil ());
     }
   return quoterNamingContext_var._retn ();
 }
@@ -88,6 +90,10 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
 CORBA::Object_ptr
 Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
                                          const CosLifeCycle::Criteria &)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
   Stock::Quoter_var quoter_var;
   try
@@ -146,7 +152,8 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
     }
   catch (const CORBA::Exception&)
     {
-      throw CosLifeCycle::NoFactory (factory_key);
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key),
+                        CORBA::Object::_nil ());
     }
   return quoter_var._retn ();
 }

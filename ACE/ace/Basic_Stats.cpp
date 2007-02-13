@@ -46,7 +46,8 @@ ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
 }
 
 void
-ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg, ACE_UINT32 sf) const
+ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
+                               ACE_UINT32 sf) const
 {
 #ifndef ACE_NLOGGING
   if (this->samples_count () == 0u)

@@ -35,8 +35,10 @@ public:
   /// Constructor
   RND_Consumer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event);
-  void disconnect_push_consumer (void);
+  void push (const RtecEventComm::EventSet &event)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
@@ -66,7 +68,8 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const RtecEventComm::EventSet &event);
+  void push (const RtecEventComm::EventSet &event)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 inline
@@ -98,7 +101,8 @@ public:
   void push_new_event (void);
   void push (RtecEventComm::EventSet &event);
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Active method
   virtual int svc (void);

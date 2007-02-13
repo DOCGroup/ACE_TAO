@@ -201,7 +201,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
+  ACE_OS::srand (ACE_OS::time (0L));
 
 #  if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
   //Test timed waits.

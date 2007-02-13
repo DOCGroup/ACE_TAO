@@ -11,11 +11,13 @@ Reply_Handler::Reply_Handler (void)
 
 void
 Reply_Handler::receive_data (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -29,11 +31,13 @@ Reply_Handler::receive_data_excep (::Messaging::ExceptionHolder *holder)
 
 void
 Reply_Handler::sync (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -47,11 +51,13 @@ Reply_Handler::sync_excep (::Messaging::ExceptionHolder *holder)
 
 void
 Reply_Handler::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Reply_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

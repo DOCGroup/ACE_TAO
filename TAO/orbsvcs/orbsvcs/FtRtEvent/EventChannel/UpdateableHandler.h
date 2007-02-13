@@ -37,10 +37,16 @@ public:
     void dispatch(Handler handler) ;
 
     virtual void set_update (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        ));
     virtual void set_update_excep (
         ::Messaging::ExceptionHolder * excep_holder
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
 private:
   AMI_Primary_Replication_Strategy* strategy_;

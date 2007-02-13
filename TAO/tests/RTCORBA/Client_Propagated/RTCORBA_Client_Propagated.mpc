@@ -11,16 +11,16 @@ project(*idl): taoidldefaults {
 project(*Server): rt_server {
   after += *idl
   Source_Files {
-    testC.cpp
-    testS.cpp
     server.cpp
+    testS.cpp
+    testC.cpp
   }
   IDL_Files {
   }
 }
 
 project(*Client): rt_client, interceptors {
-  after += *idl
+  after += *Server
   Source_Files {
     testC.cpp
     interceptors.cpp

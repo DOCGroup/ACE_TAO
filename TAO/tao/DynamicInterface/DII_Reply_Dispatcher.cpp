@@ -2,10 +2,11 @@
 
 #include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
 #include "tao/DynamicInterface/Request.h"
+#include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/SystemException.h"
+
 
 ACE_RCSID(DynamicInterface,
           DII_Reply_Dispatcher,
@@ -31,7 +32,8 @@ TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
 // Dispatch the reply.
 int
 TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
-    TAO_Pluggable_Reply_Params &params)
+    TAO_Pluggable_Reply_Params &params
+  )
 {
   if (params.input_cdr_ == 0)
     return -1;
@@ -39,7 +41,9 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block *db =
+    this->reply_cdr_.clone_from (*params.input_cdr_);
+
 
   if (db == 0)
     {
@@ -78,9 +82,11 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   try
     {
       // Call the Request back and send the reply data.
-      this->req_->handle_response (this->reply_cdr_, this->reply_status_);
+      this->req_->handle_response (this->reply_cdr_,
+                                   this->reply_status_
+                                  );
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -101,18 +107,22 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
   try
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+      CORBA::COMM_FAILURE comm_failure (0,
+                                        CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
-      comm_failure._tao_encode (out_cdr);
+      comm_failure._tao_encode (out_cdr
+                               );
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
-      this->req_->handle_response (cdr, TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION);
+      this->req_->handle_response (cdr,
+                                   TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION
+                                  );
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level >= 4)
         {

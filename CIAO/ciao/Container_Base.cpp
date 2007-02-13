@@ -89,6 +89,7 @@ namespace CIAO
   int
   Session_Container::init (const char *name,
                            const CORBA::PolicyList *more_policies)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::init");
 
@@ -216,6 +217,7 @@ namespace CIAO
   CORBA::Object_ptr
   Session_Container::install_servant (PortableServer::Servant p,
                                       Container::OA_Type t)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::install_servant");
 
@@ -242,6 +244,7 @@ namespace CIAO
   CORBA::Object_ptr
   Session_Container::install_component (PortableServer::Servant p,
                                         PortableServer::ObjectId_out oid)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::install_component");
     PortableServer::ObjectId_var id =
@@ -267,6 +270,10 @@ namespace CIAO
                                         const char *sv_dll_name,
                                         const char *sv_entrypt,
                                         const char *ins_name)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Deployment::UnknownImplId,
+                     Deployment::ImplEntryPointNotFound,
+                     Deployment::InstallationFailure))
   {
     CIAO_TRACE ("Session_Container::ciao_install_home");
 
@@ -390,7 +397,8 @@ namespace CIAO
             || static_entrypts_maps_->home_creator_funcptr_map_ == 0
             || static_entrypts_maps_->home_servant_creator_funcptr_map_ == 0)
           {
-            throw Deployment::ImplEntryPointNotFound ();
+            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+                              Components::CCMHome::_nil ());
           }
 
         ACE_CString exe_entrypt_str (exe_entrypt);
@@ -467,6 +475,7 @@ namespace CIAO
 
   void
   Session_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::ciao_uninstall_home");
 
@@ -477,6 +486,7 @@ namespace CIAO
   void
   Session_Container::uninstall (CORBA::Object_ptr objref,
                                 Container::OA_Type t)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::uninstall");
 
@@ -500,6 +510,7 @@ namespace CIAO
   void
   Session_Container::uninstall (PortableServer::Servant svt,
                                 Container::OA_Type t)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::uninstall");
     PortableServer::POA_ptr tmp = 0;
@@ -522,6 +533,7 @@ namespace CIAO
   void
   Session_Container::uninstall_component (Components::CCMObject_ptr objref,
                                           PortableServer::ObjectId_out oid)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::uninstall_component");
 
@@ -544,6 +556,7 @@ namespace CIAO
 
   void
   Session_Container::deactivate_facet (const PortableServer::ObjectId &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::deactivate_facet");
   }
@@ -558,9 +571,10 @@ namespace CIAO
 
   CORBA::Object_ptr
   Session_Container::get_home_objref (PortableServer::Servant)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CIAO_TRACE ("Session_Container::get_home_objref");
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   }
 
   CORBA::Object_ptr

@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    concrete_classes.h
- *
- *  $Id$
- *
- *  All the concrete class header files needed by the servant locator.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    concrete_classes.h
+//
+// = DESCRIPTION
+//    All the concrete class header files needed by the servant locator.
+//
+// = AUTHORS
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef CONCRETE_CLASSES_H
 #define CONCRETE_CLASSES_H

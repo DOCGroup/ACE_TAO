@@ -99,7 +99,7 @@ twoway_server (void *arg)
         }
       else
         {
-          len = ACE_NTOHL (len);
+          len = ntohl (len);
           ACE_NEW_RETURN (request,
                           char [len],
                           0);
@@ -215,7 +215,7 @@ oneway_server (void *arg)
         }
       else
         {
-          len = ACE_NTOHL (len);
+          len = ntohl (len);
           ACE_NEW_RETURN (request,
                           char [len],
                           0);

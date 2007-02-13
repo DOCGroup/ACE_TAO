@@ -33,14 +33,21 @@ public:
   test_i (CORBA::ORB_ptr orb);
 
   /// The client-side test operation.
-  virtual void client_test (Test::TestScenario scenario);
+  virtual void client_test (Test::TestScenario scenario)
+    ACE_THROW_SPEC ((Test::X,
+                     Test::UnknownScenario,
+                     CORBA::SystemException));
 
   /// The server-side test operation.
   virtual void server_test (Test::TestScenario scenario,
-                            CORBA::ULongSeq_out myseq);
+                            CORBA::ULongSeq_out myseq)
+    ACE_THROW_SPEC ((Test::X,
+                     Test::UnknownScenario,
+                     CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

@@ -24,6 +24,7 @@ project(*Server): taoserver, messaging, avoids_minimum_corba, avoids_corba_e_com
 
 project(*Client): taoclient, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }
@@ -36,6 +37,7 @@ project(*Client): taoclient, messaging, avoids_minimum_corba, avoids_corba_e_com
 
 project(*Gateway): taoexe, portableserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
   after += *idl
+  after += *Client
   Source_Files {
     test_dsi.cpp
     gateway.cpp

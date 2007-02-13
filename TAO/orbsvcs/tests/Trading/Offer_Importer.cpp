@@ -13,6 +13,17 @@ TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
 
 void
 TAO_Offer_Importer::perform_queries (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTrading::IllegalConstraint,
+                   CosTrading::Lookup::IllegalPreference,
+                   CosTrading::Lookup::IllegalPolicyName,
+                   CosTrading::Lookup::PolicyTypeMismatch,
+                   CosTrading::Lookup::InvalidPolicyValue,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTrading::DuplicatePolicyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
 
@@ -28,6 +39,17 @@ TAO_Offer_Importer::perform_queries (void)
 
 void
 TAO_Offer_Importer::perform_directed_queries (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTrading::IllegalConstraint,
+                   CosTrading::Lookup::IllegalPreference,
+                   CosTrading::Lookup::IllegalPolicyName,
+                   CosTrading::Lookup::PolicyTypeMismatch,
+                   CosTrading::Lookup::InvalidPolicyValue,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTrading::DuplicatePolicyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Directed Query.\n"));
 
@@ -110,6 +132,17 @@ void
 TAO_Offer_Importer::perform_queries_with_policies (
     const TAO_Policy_Creator& policies
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTrading::IllegalConstraint,
+                   CosTrading::Lookup::IllegalPreference,
+                   CosTrading::Lookup::IllegalPolicyName,
+                   CosTrading::Lookup::PolicyTypeMismatch,
+                   CosTrading::Lookup::InvalidPolicyValue,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTrading::DuplicatePolicyName))
 {
   try
     {
@@ -183,6 +216,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
 void
 TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
                                      CosTrading::OfferIterator_ptr offer_iterator) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

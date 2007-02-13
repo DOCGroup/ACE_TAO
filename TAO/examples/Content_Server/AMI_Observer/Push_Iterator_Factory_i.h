@@ -53,7 +53,9 @@ class Push_Iterator_Factory_i :
 public:
   Web_Server::Metadata_Type *register_callback
     (const char *pathname,
-     Web_Server::Callback_ptr client_callback);
+     Web_Server::Callback_ptr client_callback)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Web_Server::Error_Result));
   // This registration method passes a <Callback> that the Web server
   // uses to ``push'' data associated with <pathname> one ``chunk'' at
   // a time.  The <metadata> reports information about the <pathname>.

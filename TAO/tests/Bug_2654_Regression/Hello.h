@@ -17,9 +17,11 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void method (CORBA::Short count);
+  virtual void method (CORBA::Short count)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_callback (Test::CallBack_ptr cb);
+  virtual void set_callback (Test::CallBack_ptr cb)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
 private:

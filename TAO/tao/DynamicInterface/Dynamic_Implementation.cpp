@@ -19,9 +19,11 @@ ACE_RCSID (DynamicInterface,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_DynamicImplementation::_is_a (const char *logical_type_id)
+TAO_DynamicImplementation::_is_a (const char *logical_type_id
+                                  )
 {
-  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var id =
+    this->get_id_from_primary_interface ();
 
   return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
 }
@@ -56,7 +58,8 @@ TAO_DynamicImplementation::_get_interface (void)
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTF_REPOS ();
+      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
+                        0);
     }
 
   CORBA::RepositoryId_var id =
@@ -99,7 +102,8 @@ TAO_DynamicImplementation::_create_stub (void)
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   PortableServer::POA_var poa =
@@ -111,17 +115,21 @@ TAO_DynamicImplementation::_create_stub (void)
       );
 
   CORBA::RepositoryId_var pinterface =
-    this->_primary_interface (poa_current_impl->object_id (), poa.in ());
+    this->_primary_interface (poa_current_impl->object_id (),
+                              poa.in ()
+                             );
 
   return
     poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
                                            pinterface.in (),
-                                           poa_current_impl->priority ());
+                                           poa_current_impl->priority ()
+                                          );
 }
 
 void
 TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
-                                      void * /* context */)
+                                      void * /* context */
+                                      )
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
@@ -152,7 +160,8 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   try
     {
       // Delegate to user.
-      this->invoke (dsi_request);
+      this->invoke (dsi_request
+                   );
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -160,7 +169,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
           dsi_request->dsi_marshal ();
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -173,7 +182,9 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
 }
 
 CORBA::RepositoryId
-TAO_DynamicImplementation::get_id_from_primary_interface (void)
+TAO_DynamicImplementation::get_id_from_primary_interface (
+
+  )
 {
   // If this method is called outside of the
   // context of a request invocation on a target object being served
@@ -186,12 +197,16 @@ TAO_DynamicImplementation::get_id_from_primary_interface (void)
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
-  PortableServer::POA_var poa = poa_current_impl->get_POA ();
+  PortableServer::POA_var poa =
+    poa_current_impl->get_POA ();
 
-  return this->_primary_interface (poa_current_impl->object_id (), poa.in ());
+  return this->_primary_interface (poa_current_impl->object_id (),
+                                   poa.in ()
+                                  );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,16 +9,20 @@ public:
 
   void loop (client_ptr remote_partner,
              CORBA::ULong event_loop_depth,
-             CORBA::ULong event_loop_iterations);
+             CORBA::ULong event_loop_iterations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void run_no_ops (client_ptr remote_partner,
-                   CORBA::ULong iterations);
+                   CORBA::ULong iterations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void no_op (client_ptr remote_partner,
               const act &act_for_iterations,
-              const act &act_for_flag);
+              const act &act_for_flag)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -30,12 +34,15 @@ public:
   client_i (server_ptr remote_partner);
 
   void loop (CORBA::ULong event_loop_depth,
-             CORBA::ULong event_loop_iterations);
+             CORBA::ULong event_loop_iterations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void oneway_no_op (const act &act_for_iterations,
-                     const act &act_for_flag);
+                     const act &act_for_flag)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_no_op (void);
+  void twoway_no_op (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   server_var remote_partner_;

@@ -18,7 +18,8 @@ public:
    ~Test_i (void);
 
    /// A method
-   void test_method(void);
+   void test_method(void)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
 

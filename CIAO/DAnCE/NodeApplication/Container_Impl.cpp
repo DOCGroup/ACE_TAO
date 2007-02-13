@@ -27,6 +27,7 @@ CIAO::Container_Impl::_default_POA (void)
 
 CORBA::Long
 CIAO::Container_Impl::init (const CORBA::PolicyList *policies)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::init");
   // @@ Initialize container and create the internal container
@@ -62,6 +63,11 @@ Deployment::ComponentInfos *
 CIAO::Container_Impl::install (
     const ::Deployment::ContainerImplementationInfo & container_impl_info
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                  ::Deployment::UnknownImplId,
+                  ::Deployment::ImplEntryPointNotFound,
+                  ::Deployment::InstallationFailure,
+                  ::Components::InvalidConfiguration))
 {
   CIAO_TRACE ("CIAO::Container_Impl::install");
   Deployment::ComponentInfos_var retv;
@@ -231,6 +237,7 @@ CIAO::Container_Impl::install (
 
 ::Deployment::Properties *
 CIAO::Container_Impl::properties ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::properties");
   ::Deployment::Properties *retval = 0;
@@ -246,6 +253,7 @@ CIAO::Container_Impl::properties ()
 
 ::Deployment::NodeApplication_ptr
 CIAO::Container_Impl::get_node_application ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_TRACE ("CIAO::Container_Impl::get_node_application");
   return ::Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
@@ -254,6 +262,11 @@ CIAO::Container_Impl::get_node_application ()
 ::Components::CCMHome_ptr
 CIAO::Container_Impl::install_home (
     const ::Deployment::ComponentImplementationInfo & impl_info)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::UnknownImplId,
+                   Deployment::ImplEntryPointNotFound,
+                   Deployment::InstallationFailure,
+                   Components::InvalidConfiguration))
 {
   CIAO_TRACE ("CIAO::Container_Impl::install_home");
   if (CIAO::debug_level () > 9)
@@ -295,7 +308,8 @@ CIAO::Container_Impl::install_home (
                   "error in binding home for component "
                   "instance [%s] \n",
                   impl_info.component_instance_name.in ()));
-      throw Deployment::InstallationFailure ();
+      ACE_THROW_RETURN (Deployment::InstallationFailure (),
+                        Components::CCMHome::_nil ());
     }
 
   //Note: If the return value will be discarded, it must be kept in a var or
@@ -306,6 +320,8 @@ CIAO::Container_Impl::install_home (
 
 void
 CIAO::Container_Impl::remove_home (const char * comp_ins_name)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::RemoveFailure))
 {
   CIAO_TRACE ("CIAO::Container_Impl::remove_home");
 
@@ -331,6 +347,8 @@ CIAO::Container_Impl::remove_home (const char * comp_ins_name)
 // Remove all homes and components
 void
 CIAO::Container_Impl::remove ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::RemoveFailure))
 {
   CIAO_TRACE ("CIAO::Container_Impl::remove");
 
@@ -361,6 +379,8 @@ CIAO::Container_Impl::remove ()
 
 void
 CIAO::Container_Impl::remove_components ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::RemoveFailure))
 {
   CIAO_TRACE ("CIAO::Container_Impl::remove_components");
 
@@ -393,6 +413,8 @@ CIAO::Container_Impl::remove_components ()
 // Below method is not used actually.
 void
 CIAO::Container_Impl::remove_component (const char * comp_ins_name)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::RemoveFailure))
 {
   CIAO_TRACE ("CIAO::Container_Impl::remove_component");
 

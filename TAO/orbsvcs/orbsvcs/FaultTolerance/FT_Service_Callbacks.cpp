@@ -13,7 +13,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 
 ACE_RCSID (FaultTolerance,
            FT_Service_Callbacks,
@@ -22,7 +21,8 @@ ACE_RCSID (FaultTolerance,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core)
+TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (
+    TAO_ORB_Core *orb_core)
 
   : orb_core_ (orb_core),
     profile_lock_ (0)
@@ -41,7 +41,8 @@ CORBA::Boolean
 TAO_FT_Service_Callbacks::select_profile (const TAO_MProfile &mprofile,
     TAO_Profile *&pfile)
 {
-  CORBA::ULong const sz = mprofile.size ();
+  CORBA::ULong sz =
+    mprofile.size ();
 
   // Iterate through the list in a circular fashion. Stop one before
   // the list instead of trying the same thing again.
@@ -74,11 +75,12 @@ CORBA::Boolean
 TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
 {
   // Get the count
-  CORBA::ULong count = obj->_stubobj ()->base_profiles ().profile_count ();
+  CORBA::ULong count =
+    obj->_stubobj ()->base_profiles ().profile_count ();
 
   // If the profile count is zero then return true
   if (count == 0)
-    return true;
+    return 1;
   else
     {
       // else if each of the profile is nil
@@ -90,12 +92,12 @@ TAO_FT_Service_Callbacks::object_is_nil (CORBA::Object_ptr obj)
             obj->_stubobj ()->base_profiles ().get_profile (cnt);
 
           if (pfile != 0)
-            return false;
+            return 0;
         }
     }
 
   // If it reaches here then it should be nill
-  return true;
+  return 1;
 
 }
 
@@ -167,7 +169,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
 }
 
 CORBA::ULong
-TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p, CORBA::ULong max)
+TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
+                                   CORBA::ULong max)
 {
   // At this point we assume that all the checks for other things
   // within the profiles have been satisfied
@@ -275,11 +278,12 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 
   // As the right tags are not found close the connection and throw an
   // exception
-  throw CORBA::COMM_FAILURE (
-    CORBA::SystemException::_tao_minor_code (
-      TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-      errno),
-    CORBA::COMPLETED_MAYBE);
+  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+      CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+      CORBA::COMPLETED_MAYBE),
+      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
 }
 
 TAO::Invocation_Status

@@ -332,7 +332,8 @@ TAO_SCIOP_Transport::get_listen_point (
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
 
-  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr)
+      == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Could not resolve local ")
@@ -357,12 +358,15 @@ TAO_SCIOP_Transport::get_listen_point (
                         -1);
     }
 
-  for (size_t index = 0; index != count; index++)
+  for (size_t index = 0;
+       index != count;
+       index++)
     {
-      if (local_addr.get_ip_address() == endpoint_addr[index].get_ip_address())
+      if (local_addr.get_ip_address()
+          == endpoint_addr[index].get_ip_address())
         {
           // Get the count of the number of elements
-          CORBA::ULong const len = listen_point_list.length ();
+          CORBA::ULong len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);

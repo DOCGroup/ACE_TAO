@@ -35,7 +35,7 @@ TAO_Concurrency_Loader::init (int argc, char *argv[])
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, 0);
 
       // This function call initializes the Concurrency Service
       CORBA::Object_var object =
@@ -61,6 +61,7 @@ CORBA::Object_ptr
 TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
                                        int /* argc */,
                                        char * /* argv */ [])
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var object =
     orb->resolve_initial_references ("RootPOA");

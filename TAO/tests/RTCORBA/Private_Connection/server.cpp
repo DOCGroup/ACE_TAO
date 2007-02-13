@@ -16,9 +16,11 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (void);
+  void test_method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -32,6 +34,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 void
 Test_i::test_method (/* */)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Server: test_method invoked.\n"));
@@ -39,6 +42,7 @@ Test_i::test_method (/* */)
 
 void
 Test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -135,7 +139,7 @@ main (int argc, char *argv[])
     {
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)

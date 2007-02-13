@@ -17,6 +17,7 @@ CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 
 CORBA::Long
 CIAO::NodeApplication_Impl::init ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// @todo initialize this NodeApplication properties
   return 0;
@@ -26,6 +27,7 @@ CORBA::Long
 CIAO::NodeApplication_Impl::create_all_containers (
     const ::Deployment::ContainerImplementationInfos & container_infos
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create all the containers here based on the input node_impl_info.
   CORBA::ULong const len = container_infos.length ();
@@ -59,6 +61,9 @@ CIAO::NodeApplication_Impl::finishLaunch (
     const Deployment::Connections & providedReference,
     CORBA::Boolean start,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError,
+                   Deployment::InvalidConnection))
 {
   ACE_UNUSED_ARG (start);
 
@@ -72,6 +77,9 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
     const Deployment::Connections & connections,
     CORBA::Boolean start,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError,
+                   Deployment::InvalidConnection))
 {
   ACE_UNUSED_ARG (start);
 
@@ -169,6 +177,8 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
 void
 CIAO::NodeApplication_Impl::ciao_preactivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
 {
   Component_Iterator end = this->component_state_map_.end ();
   for (Component_Iterator iter (this->component_state_map_.begin ());
@@ -186,6 +196,8 @@ CIAO::NodeApplication_Impl::ciao_preactivate ()
 
 void
 CIAO::NodeApplication_Impl::start ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
 {
   Component_Iterator end = this->component_state_map_.end ();
   for (Component_Iterator iter (this->component_state_map_.begin ());
@@ -203,6 +215,8 @@ CIAO::NodeApplication_Impl::start ()
 
 void
 CIAO::NodeApplication_Impl::ciao_postactivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError))
 {
   Component_Iterator end = this->component_state_map_.end ();
   for (Component_Iterator iter (this->component_state_map_.begin ());
@@ -220,6 +234,8 @@ CIAO::NodeApplication_Impl::ciao_postactivate ()
 
 void
 CIAO::NodeApplication_Impl::ciao_passivate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError))
 {
   Component_Iterator end = this->component_state_map_.end ();
   for (Component_Iterator iter (this->component_state_map_.begin ());
@@ -236,6 +252,11 @@ CIAO::NodeApplication_Impl::ciao_passivate ()
 Deployment::ComponentInfos *
 CIAO::NodeApplication_Impl::install (
     const ::Deployment::NodeImplementationInfo & node_impl_info)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::UnknownImplId,
+                   Deployment::ImplEntryPointNotFound,
+                   Deployment::InstallationFailure,
+                   Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos_var retv;
   try
@@ -337,6 +358,8 @@ CIAO::NodeApplication_Impl::install (
 
 void
 CIAO::NodeApplication_Impl::remove_component (const char * inst_name)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
 {
   ACE_DEBUG ((LM_DEBUG, "NA_I: removing component %s\n",
         inst_name));
@@ -362,6 +385,8 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name)
 
 void
 CIAO::NodeApplication_Impl::passivate_component (const char * name)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
 {
   Component_State_Info comp_state;
 
@@ -386,6 +411,8 @@ CIAO::NodeApplication_Impl::passivate_component (const char * name)
 
 void
 CIAO::NodeApplication_Impl::activate_component (const char * name)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::StartError))
 {
   Component_State_Info comp_state;
 
@@ -417,6 +444,7 @@ CIAO::NodeApplication_Impl::activate_component (const char * name)
 
 void
 CIAO::NodeApplication_Impl::remove ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If we still have components installed, then do nothing
 
@@ -462,6 +490,9 @@ CIAO::NodeApplication_Impl::remove ()
 ::Deployment::Container_ptr
 CIAO::NodeApplication_Impl::create_container (
     const ::Deployment::Properties &properties)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                  ::Components::CreateFailure,
+                  ::Components::InvalidConfiguration))
 {
   //if (CIAO::debug_level () > 1)
   //  ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
@@ -514,6 +545,8 @@ CIAO::NodeApplication_Impl::create_container (
 // Remove a container interface.
 void
 CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                  ::Components::RemoveFailure))
 {
   ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::remove_container()\n"));
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -543,6 +576,7 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref)
 // Get containers
 ::Deployment::Containers *
 CIAO::NodeApplication_Impl::get_containers ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
@@ -550,6 +584,8 @@ CIAO::NodeApplication_Impl::get_containers ()
 CIAO::CIAO_Event_Service *
 CIAO::NodeApplication_Impl::
 install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
+ACE_THROW_SPEC ((::CORBA::SystemException,
+                 ::Deployment::InstallationFailure))
 {
   try
     {
@@ -580,7 +616,7 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
 			        if (retv == false)
 			        {
 				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
-				        throw ::Deployment::InstallationFailure ();
+				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
 			        }
 		        }
 
@@ -593,7 +629,7 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
 			        if (retv == false)
 			        {
 				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
-				        throw ::Deployment::InstallationFailure ();
+				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
 			        }
 		        }
 
@@ -608,7 +644,7 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
 			        if (retv == false)
 			        {
 				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
-				        throw ::Deployment::InstallationFailure ();
+				        ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
 			        }
 		        }
         }
@@ -617,7 +653,7 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("NodeApplication_Impl::finishLaunch\t\n");
-      throw ::Deployment::InstallationFailure ();
+      ACE_THROW_RETURN (::Deployment::InstallationFailure (), 0);
     }
 
 }
@@ -648,6 +684,8 @@ handle_facet_receptable_connection (
     Components::CCMObject_ptr comp,
     const Deployment::Connection & connection,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidConnection))
 {
   if (CIAO::debug_level () > 11)
     {
@@ -722,6 +760,8 @@ handle_emitter_consumer_connection (
     Components::CCMObject_ptr comp,
     const Deployment::Connection & connection,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidConnection))
 {
   Components::EventConsumerBase_var consumer =
       Components::EventConsumerBase::_narrow (connection.endpoint.in ());
@@ -794,6 +834,8 @@ handle_publisher_consumer_connection (
     Components::CCMObject_ptr comp,
     const Deployment::Connection & connection,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidConnection))
 {
   Components::EventConsumerBase_var consumer =
       Components::EventConsumerBase::_narrow (connection.endpoint.in ());
@@ -880,6 +922,8 @@ handle_publisher_es_connection (
     Components::CCMObject_ptr comp,
     const Deployment::Connection & connection,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidConnection))
 {
   if (! this->_is_publisher_es_conn (connection))
     {
@@ -973,6 +1017,8 @@ CIAO::NodeApplication_Impl::
 handle_es_consumer_connection (
     const Deployment::Connection & connection,
     CORBA::Boolean add_connection)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidConnection))
 {
   if (! this->_is_es_consumer_conn (connection))
     {
@@ -1085,6 +1131,8 @@ void
 CIAO::NodeApplication_Impl::build_event_connection (
     const Deployment::Connection & connection,
     bool add_or_remove)
+  ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                   CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection ()!!!\n"));
 

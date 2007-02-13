@@ -65,70 +65,126 @@ public:
 
   virtual DynamicAny::DynAny_ptr get_discriminator (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_discriminator (
       DynamicAny::DynAny_ptr d
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
   virtual void set_to_default_member (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
   virtual void set_to_no_active_member (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
   virtual CORBA::Boolean has_no_active_member (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::TCKind discriminator_kind (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual DynamicAny::DynAny_ptr member (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual char * member_name (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::TCKind member_kind (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
       const CORBA::Any & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Any * to_any (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void destroy (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual DynamicAny::DynAny_ptr current_component (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
 private:
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
   void set_from_any (const CORBA::Any &any
-                     );
+                     )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode
+      ));
 
   /// Called by both versions of init().
   void init_common (void);
@@ -136,7 +192,10 @@ private:
   /// Iterative check for label value match.
   CORBA::Boolean label_match (const CORBA::Any &my_any,
                               const CORBA::Any &other_any
-                              );
+                              )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   /// Use copy() or assign() instead of these.
   TAO_DynUnion_i (const TAO_DynUnion_i &src);

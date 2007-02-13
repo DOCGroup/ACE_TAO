@@ -65,10 +65,12 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-      CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy);
+      CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected (void) const;
@@ -96,10 +98,15 @@ public:
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   virtual void connect_pull_consumer (
-                CosEventComm::PullConsumer_ptr pull_consumer);
-  virtual CORBA::Any * pull (void);
-  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event);
-  virtual void disconnect_pull_supplier (void);
+                CosEventComm::PullConsumer_ptr pull_consumer)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosEventChannelAdmin::AlreadyConnected));
+  virtual CORBA::Any * pull (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
+  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event)
+      ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
+  virtual void disconnect_pull_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);

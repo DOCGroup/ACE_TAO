@@ -1,16 +1,19 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    TypeCodeFactory_Loader.cpp
- *
- *  $Id$
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// =================================================================
+//
+// = LIBRARY
+//    TAO/tao/TypeCodeFactory
+//
+// = FILENAME
+//    TypeCodeFactory_Loader.cpp
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// =================================================================
 
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
@@ -27,7 +30,10 @@ TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader (void)
 }
 
 CORBA::Object_ptr
-TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR * [])
+TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr,
+                                           int,
+                                           ACE_TCHAR * [])
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj;
   ACE_NEW_RETURN (obj,

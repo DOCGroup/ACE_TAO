@@ -40,10 +40,14 @@ namespace CIAO
     virtual ~EventServiceBase (void);
 
     /// A factory method for Supplier_Config objects
-    virtual Supplier_Config_ptr create_supplier_config (void) = 0;
+    virtual Supplier_Config_ptr
+    create_supplier_config (void)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     /// A factory method for Consumer_Config objects
-    virtual Consumer_Config_ptr create_consumer_config (void) = 0;
+    virtual Consumer_Config_ptr
+    create_consumer_config (void)
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     /**
      * @fn void connect_event_supplier (Supplier_Config_ptr supplier_config)
@@ -51,7 +55,10 @@ namespace CIAO
      * Connects an event supplier using the options specified by
      * @c supplier_config.
      */
-    virtual void connect_event_supplier (Supplier_Config_ptr supplier_config) = 0;
+    virtual void connect_event_supplier (
+        Supplier_Config_ptr supplier_config)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException)) = 0;
 
     /**
      * @fn void connect_event_consumer (Consumer_Config_ptr consumer_config)
@@ -59,28 +66,42 @@ namespace CIAO
      * Connects an event consumer using the options specified by
      * @c consumer_config.
      */
-    virtual void connect_event_consumer (Consumer_Config_ptr consumer_config) = 0;
+    virtual void connect_event_consumer (
+        Consumer_Config_ptr consumer_config)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException)) = 0;
 
     /**
      * @fn void disconnect_event_supplier ()
      *
      * Disconnects the event supplier associated with this object.
      */
-    virtual void disconnect_event_supplier (const char * consumer_id) = 0;
+    virtual void disconnect_event_supplier (
+        const char * consumer_id)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidConnection)) = 0;
 
     /**
      * @fn void disconnect_event_consumer (CONNECTION_ID consumer_id)
      *
      * Disconnects the event consumer with UUID @c consumer_id.
      */
-    virtual void disconnect_event_consumer (const char * consumer_id) = 0;
+    virtual void disconnect_event_consumer (
+        const char * consumer_id)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        Components::InvalidConnection)) = 0;
 
     /**
      * @fn void push_event (Components::EventBase * ev)
      *
      * Pushes event @c ev to all consumers.
      */
-    virtual void push_event (Components::EventBase * ev) = 0;
+    virtual void push_event (
+        Components::EventBase * ev)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException)) = 0;
 
     /**
      * Pushes event @c ev to all consumers. The source id of the
@@ -89,20 +110,31 @@ namespace CIAO
     virtual void ciao_push_event (
         ::Components::EventBase * evt,
         const char * source_id,
-        ::CORBA::TypeCode_ptr tc);
+        ::CORBA::TypeCode_ptr tc)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
   };
 
   class Event_Consumer_Config_Base :
     public virtual POA_CIAO::Consumer_Config
   {
   public:
-    virtual void start_conjunction_group (::CORBA::Long size) = 0;
+    virtual void start_conjunction_group (
+        ::CORBA::Long size)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
 
-    virtual void start_disjunction_group (::CORBA::Long size) = 0;
+    virtual void start_disjunction_group (
+        ::CORBA::Long size)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
 
-    virtual void insert_source (const char * source_id) = 0;
+    virtual void insert_source (
+        const char * source_id)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
 
-    virtual void insert_type (::CORBA::Long event_type) = 0;
+    virtual void insert_type (
+        ::CORBA::Long  event_type)
+      ACE_THROW_SPEC ((::CORBA::SystemException)) = 0;
   };
 }
 

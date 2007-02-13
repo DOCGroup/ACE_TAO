@@ -33,7 +33,8 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const
   this->find (id, container);
 
   if (this->result_ == 0)
-    throw EXCEPTION ();
+    ACE_THROW_RETURN (EXCEPTION ()
+                      , INTERFACE::_nil ());
 
   CORBA::Object_var object = this->result_->ref ();
 

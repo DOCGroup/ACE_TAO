@@ -50,12 +50,14 @@ namespace TAO
     // functionality
     CORBA::Object_ptr create_group(
         const char * role,
-        int write_iors);
+        int write_iors)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_infrastructure_managed_group(
-        const char * type_id);
+        const char * type_id)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     int unregister_role(const char * role);
 

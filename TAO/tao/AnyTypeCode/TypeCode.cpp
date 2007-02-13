@@ -11,10 +11,10 @@ ACE_RCSID (AnyTypeCode,
 # include "tao/AnyTypeCode/TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include "tao/SystemException.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
-#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -31,7 +31,8 @@ CORBA::TypeCode::tao_marshal_kind (TAO_OutputCDR & cdr) const
 }
 
 CORBA::Boolean
-CORBA::TypeCode::equal (TypeCode_ptr tc) const
+CORBA::TypeCode::equal (TypeCode_ptr tc
+                        ) const
 {
   if (this == tc)
     {
@@ -39,7 +40,9 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
     }
   else if (CORBA::is_nil (tc))
     {
-      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 13, CORBA::COMPLETED_NO);
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
+                                          CORBA::COMPLETED_NO),
+                        false);
     }
 
   CORBA::TCKind const tc_kind = tc->kind ();
@@ -63,7 +66,7 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
       if (ACE_OS::strcmp (this_name, tc_name) != 0)
         return 0;
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
+  catch ( ::CORBA::TypeCode::BadKind&)
     {
       // Some TypeCodes do not support the id() and name()
       // operations.  Ignore the failure, and continue equality
@@ -71,11 +74,13 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
       // below.
     }
 
-  return this->equal_i (tc);
+  return this->equal_i (tc
+                       );
 }
 
 CORBA::Boolean
-CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
+CORBA::TypeCode::equivalent (TypeCode_ptr tc
+                             ) const
 {
   if (this == tc)
     {
@@ -83,7 +88,9 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
     }
   else if (CORBA::is_nil (tc))
     {
-      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 13, CORBA::COMPLETED_NO);
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
+                                          CORBA::COMPLETED_NO),
+                        false);
     }
 
   CORBA::TypeCode_ptr const mutable_this =
@@ -126,7 +133,7 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
           return false;
         }
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
+  catch ( ::CORBA::TypeCode::BadKind&)
     {
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
@@ -141,95 +148,101 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
 char const *
 CORBA::TypeCode::id_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 char const *
 CORBA::TypeCode::name_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::ULong
 CORBA::TypeCode::member_count_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 char const *
 CORBA::TypeCode::member_name_i (CORBA::ULong /* index */
                                 ) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::member_type_i (CORBA::ULong /* index */
                                 ) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
+                    CORBA::TypeCode::_nil ());
 }
 
 CORBA::Any *
 CORBA::TypeCode::member_label_i (CORBA::ULong /* index */
                                  ) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::discriminator_type_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
+                    CORBA::TypeCode::_nil ());
 }
 
 CORBA::Long
 CORBA::TypeCode::default_index_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::ULong
 CORBA::TypeCode::length_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::content_type_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
+                    CORBA::TypeCode::_nil ());
 }
 
 CORBA::UShort
 CORBA::TypeCode::fixed_digits_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::UShort
 CORBA::TypeCode::fixed_scale_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
 CORBA::Visibility
 CORBA::TypeCode::member_visibility_i (CORBA::ULong /* index */
                                       ) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
+                    CORBA::PRIVATE_MEMBER);
 }
 
 CORBA::ValueModifier
 CORBA::TypeCode::type_modifier_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
+                    CORBA::VM_NONE);
 }
 
 CORBA::TypeCode_ptr
 CORBA::TypeCode::concrete_base_type_i (void) const
 {
-  throw ::CORBA::TypeCode::BadKind ();
+  ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
+                    CORBA::TypeCode::_nil ());
 }
 
 // ---------------------------------------------------------------
@@ -267,11 +280,12 @@ CORBA::TypeCode::Bounds::_tao_duplicate (void) const
 void
 CORBA::TypeCode::Bounds::_raise (void) const
 {
-  throw *this;
+  TAO_RAISE(*this);
 }
 
 void
-CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr) const
+CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr
+                                      ) const
 {
   if (cdr << this->_rep_id ())
     {
@@ -282,7 +296,8 @@ CORBA::TypeCode::Bounds::_tao_encode (TAO_OutputCDR &cdr) const
 }
 
 void
-CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &)
+CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &
+                                      )
 {
 }
 
@@ -313,11 +328,12 @@ CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 void
 CORBA::TypeCode::BadKind::_raise (void) const
 {
-  throw *this;
+  TAO_RAISE(*this);
 }
 
 void
-CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr) const
+CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr
+                                       ) const
 {
   if (cdr << this->_rep_id ())
     {
@@ -328,7 +344,8 @@ CORBA::TypeCode::BadKind::_tao_encode (TAO_OutputCDR &cdr) const
 }
 
 void
-CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &)
+CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &
+                                       )
 {
 }
 
@@ -378,7 +395,9 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
 {
   if (CORBA::is_nil (tc))
     {
-      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 13, CORBA::COMPLETED_NO);
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
+                                          CORBA::COMPLETED_NO),
+                        tc);
     }
 
   CORBA::TCKind tc_kind = tc->kind ();

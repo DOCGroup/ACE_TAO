@@ -30,18 +30,21 @@ namespace TAO
 
   char *
   ObjectReferenceTemplate::server_id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup (this->server_id_);
   }
 
   char *
   ObjectReferenceTemplate::orb_id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup (this->orb_id_);
   }
 
   PortableInterceptor::AdapterName *
   ObjectReferenceTemplate::adapter_name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableInterceptor::AdapterName *adapter_name = 0;
 
@@ -62,9 +65,10 @@ namespace TAO
       const char *,
       const PortableInterceptor::ObjectId &
       )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (CORBA::is_nil(poa_.in()))
-      throw ::CORBA::BAD_INV_ORDER ();
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
     TAO_Root_POA* tao_poa = dynamic_cast<TAO_Root_POA*>(poa_.in());
 

@@ -83,7 +83,10 @@ protected:
   virtual void disconnect_from_proxy (void);
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (void);
+  virtual void disconnect_structured_push_supplier (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 };
 
 #if defined (__ACE_INLINE__)

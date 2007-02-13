@@ -2898,7 +2898,7 @@ tao_yyreduce:
               else
                 {
                   AST_Decl::NodeType nt = tp->node_type ();
-
+                  
                   if (nt == AST_Decl::NT_valuetype
                       || nt == AST_Decl::NT_eventtype)
                     {
@@ -3962,7 +3962,6 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           FE_Declarator *d = 0;
           AST_Typedef *t = 0;
-          unsigned long index = 0UL;
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclaratorsSeen);
 
           /*
@@ -3999,17 +3998,6 @@ tao_yyreduce:
                                                           d->name (),
                                                           s->is_local (),
                                                           s->is_abstract ());
-
-                  // If the base type is a sequence or array, the typedef
-                  // constructor sets owns_base_type_ to true. But if
-                  // there is a comma-separated list of such typedefs,
-                  // the base type can be destroyed only once. In all
-                  // other cases, the line below has no effect.
-                  if (index++ > 0)
-                    {
-                      t->owns_base_type (false);
-                    }
-
                   (void) s->fe_add_typedef (t);
                 }
 

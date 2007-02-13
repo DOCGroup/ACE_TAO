@@ -1171,7 +1171,7 @@ protected:
    * @brief A helper class that helps grabbing, releasing and waiting
    * on tokens for a thread that needs access to the reactor's token.
    */
-  class ACE_Export Token_Guard
+  class Token_Guard
   {
   public:
 

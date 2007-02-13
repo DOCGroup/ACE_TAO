@@ -15,7 +15,8 @@ ACE_RCSID (AnyTypeCode,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &, CORBA::ULong) const
+TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &,
+                                         CORBA::ULong) const
 {
   // Empty parameter list.  Nothing to marshal.
 
@@ -39,7 +40,8 @@ TAO::TypeCode::Empty_Param::tao_release (void)
 }
 
 CORBA::Boolean
-TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr) const
+TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr
+                                     ) const
 {
   // Equality has already been established in the
   // CORBA::TypeCode base class.
@@ -48,7 +50,8 @@ TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr) const
 }
 
 CORBA::Boolean
-TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc) const
+TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc
+                                          ) const
 {
   // We could refactor this code to the CORBA::TypeCode::equivalent()
   // method but doing so would force us to determine the unaliased
@@ -56,7 +59,9 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc) const
   // of this TypeCode, choose to optimize away the additional kind
   // unaliasing operation rather than save space.
 
-  CORBA::TCKind const tc_kind = TAO::unaliased_kind (tc);
+  CORBA::TCKind const tc_kind =
+    TAO::unaliased_kind (tc
+                        );
 
   if (tc_kind != this->kind_)
     return false;
@@ -65,7 +70,8 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc) const
 }
 
 CORBA::TypeCode_ptr
-TAO::TypeCode::Empty_Param::get_compact_typecode_i (void) const
+TAO::TypeCode::Empty_Param::get_compact_typecode_i (
+  void) const
 {
   // Already compact since parameter list is empty.
 

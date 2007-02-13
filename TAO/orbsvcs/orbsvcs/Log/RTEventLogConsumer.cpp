@@ -43,6 +43,7 @@ TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
 
 void
 TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);
@@ -57,6 +58,7 @@ TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
 
 void
 TAO_Rtec_LogConsumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->supplier_proxy_->disconnect_push_supplier ();
 }

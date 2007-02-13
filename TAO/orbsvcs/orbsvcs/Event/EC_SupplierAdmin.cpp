@@ -25,6 +25,7 @@ TAO_EC_SupplierAdmin::~TAO_EC_SupplierAdmin (void)
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_EC_SupplierAdmin::obtain_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->obtain ();
 }

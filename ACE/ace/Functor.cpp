@@ -1,29 +1,32 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Functor.cpp
- *
- *  $Id$
- *
- *  Non-inlinable method definitions for non-templatized classes
- *  and template specializations implementing the GOF Command Pattern,
- *  and STL-style functors.
- *
- *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>
- *
- * Based on Command Pattern implementations originally done by
- *
- * Carlos O'Ryan        <coryan@cs.wustl.edu>
- * Douglas C. Schmidt   <schmidt@cs.wustl.edu>
- * Sergio Flores-Gaitan <sergio@cs.wustl.edu>
- *
- * and on STL-style functor implementations originally done by
- *
- * Irfan Pyarali  <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+//
+// = FILENAME
+//    Functor.cpp
+//
+// = DESCRIPTION
+//    Non-inlinable method definitions for non-templatized classes
+//    and template specializations implementing the GOF Command Pattern,
+//    and STL-style functors.
+//
+// = AUTHOR
+//    Chris Gill           <cdgill@cs.wustl.edu>
+//
+//    Based on Command Pattern implementations originally done by
+//
+//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+//    and on STL-style functor implementations originally done by
+//
+//    Irfan Pyarali  <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/Functor_T.h"
 #include "ace/Functor.h"

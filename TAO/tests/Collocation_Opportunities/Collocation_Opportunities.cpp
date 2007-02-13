@@ -18,7 +18,8 @@ public:
 
   void set_other (test_ptr test);
 
-  void method (void);
+  void method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -53,6 +54,7 @@ test_i::set_other (test_ptr test)
 
 void
 test_i::method (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->other_.in () != test::_nil ())
     {

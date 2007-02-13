@@ -1,13 +1,17 @@
-//=============================================================================
-/**
- *  @file   Storable.cpp
- *
- *  $Id$
- *
- *  @author Bruce Trask <trask_b@ociweb.com> Chanaka Liyanaarachchi <chanaka@ociweb.com>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//   Storable.cpp
+//
+// = AUTHOR
+//    Bruce Trask <trask_b@ociweb.com>
+//    Chanaka Liyanaarachchi <chanaka@ociweb.com>
+//
+// ============================================================================
 
 #include "orbsvcs/Naming/Storable.h"
 

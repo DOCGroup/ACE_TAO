@@ -12,6 +12,7 @@ ACE_RCSID(Latency, test_i, "$Id$")
 
 void
 Test_i::test_method (CORBA::Long id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -21,6 +22,7 @@ Test_i::test_method (CORBA::Long id)
 
 void
 Test_i::shutdown (const char *orb_id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int argc = 0;
   CORBA::ORB_var orb = CORBA::ORB_init (argc,

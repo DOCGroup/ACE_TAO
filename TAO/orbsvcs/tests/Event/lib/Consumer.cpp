@@ -101,6 +101,7 @@ EC_Consumer::accumulate (ACE_Throughput_Stats& throughput) const
 
 void
 EC_Consumer::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->consumer_push (this->cookie_, events);
 
@@ -144,6 +145,7 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 EC_Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->consumer_disconnect (this->cookie_);
   this->supplier_proxy_ =

@@ -4,14 +4,12 @@
 #include "tao/HTTP_Client.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
-#include "tao/SystemException.h"
 
 #include "ace/Read_Buffer.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            HTTP_Parser,
@@ -38,6 +36,7 @@ CORBA::Object_ptr
 TAO_HTTP_Parser::parse_string (const char *ior,
                                CORBA::ORB_ptr orb
                                )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
@@ -124,7 +123,7 @@ TAO_HTTP_Parser::parse_string (const char *ior,
     {
       object = orb->string_to_object (string.c_str());
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       throw;
     }

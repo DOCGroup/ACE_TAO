@@ -35,13 +35,17 @@ public:
   void set (Test::Index i,
             const Test::OctetSeq& seq,
             CORBA::Double verification_token,
-            CORBA::Double_out returned_token);
+            CORBA::Double_out returned_token)
+    ACE_THROW_SPEC ((Test::OutOfRange));
 
-  Test::OctetSeq* get (Test::Index i);
+  Test::OctetSeq* get (Test::Index i)
+    ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange));
 
-  CORBA::ULong get_crc (Test::Index i);
+  CORBA::ULong get_crc (Test::Index i)
+    ACE_THROW_SPEC ((CORBA::SystemException,Test::OutOfRange));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

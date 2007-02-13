@@ -13,6 +13,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 #if 0
 char *
 Hello::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Hello there!");
 }
@@ -22,6 +23,9 @@ Hello::get_string (void)
 Hello::get_stringList (
 	//
 	)
+	ACE_THROW_SPEC ((
+	::CORBA::SystemException
+	))
 {
 	Test::StringList * seq;
     ACE_NEW_RETURN (seq,
@@ -43,6 +47,9 @@ Hello::get_stringList2 (
         ::CORBA::Boolean initialize,
         ::Test::StringList_out osl
       )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      ))
 {
     // CORBA::String_var the_string = osl->length();
     // ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Entering get_stringList2(%.4d)\n", osl));
@@ -65,6 +72,9 @@ void
 Hello::mod_stringList (
         ::Test::StringList & iosl
       )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      ))
 {
     // osl->length(10);
     for (CORBA::ULong i = 0; i<iosl.length(); i++)
@@ -79,6 +89,7 @@ Hello::mod_stringList (
 
 void
 Hello::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

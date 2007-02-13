@@ -28,6 +28,7 @@ Echo_i::orb (CORBA::ORB_ptr o)
 
 Echo::List *
 Echo_i::echo_list (const char *)
+ ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Echo::List_var list;
 
@@ -60,6 +61,7 @@ Echo_i::echo_list (const char *)
 
 char *
 Echo_i::echo_string (const char *mesg)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The pointer mesg was NULL, return.
   if (mesg == 0)
@@ -71,7 +73,7 @@ Echo_i::echo_string (const char *mesg)
   // raised.
 
   if (str.in () == 0)
-    throw CORBA::NO_MEMORY ();
+    ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.
@@ -85,6 +87,7 @@ Echo_i::echo_string (const char *mesg)
 
 void
 Echo_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n%s\n",

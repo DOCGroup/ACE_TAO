@@ -39,7 +39,10 @@ public:
   virtual ~simple_i (void);
 
 virtual void test (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
 };
 

@@ -43,7 +43,7 @@ Supplier::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       this->orb_ =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
 
 
@@ -52,7 +52,7 @@ Supplier::run (int argc, char* argv[])
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        throw CORBA::UNKNOWN ();
+        ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -299,6 +299,10 @@ void
 Filter_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType
+                   ))
 {
   //No-Op.
 }
@@ -315,6 +319,9 @@ Filter_StructuredPushSupplier::send_event
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
    (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   // No-Op.
 }

@@ -21,9 +21,12 @@ public:
 
   void callme(Test::Peer_ptr callback,
               CORBA::ULong max_depth,
-              Test::Payload const & extra_data);
-  void crash(void);
-  void noop(void);
+              Test::Payload const & extra_data)
+    ACE_THROW_SPEC((CORBA::SystemException));
+  void crash(void)
+    ACE_THROW_SPEC((CORBA::SystemException));
+  void noop(void)
+    ACE_THROW_SPEC((CORBA::SystemException));
 
 private:
   ACE_RANDR_TYPE seed_;

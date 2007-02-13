@@ -7,7 +7,7 @@
 
 const char *host = "localhost";
 static int port = 10008;
-const int iter = 55;
+const int iter = 80;
 int purged_handles = 0;
 
 int

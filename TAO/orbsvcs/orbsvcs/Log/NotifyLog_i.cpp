@@ -44,6 +44,9 @@ TAO_NotifyLog_i::~TAO_NotifyLog_i ()
 
 DsLogAdmin::Log_ptr
 TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
@@ -63,6 +66,9 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
 
 DsLogAdmin::Log_ptr
 TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
@@ -83,6 +89,7 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
 
 void
 TAO_NotifyLog_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_);
 
@@ -149,13 +156,19 @@ TAO_NotifyLog_i::activate (void)
 //IDL to C++
 CosNotifyFilter::Filter_ptr
 TAO_NotifyLog_i::get_filter (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   //TODO: need to add impl
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
 TAO_NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr /* filter */)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   throw CORBA::NO_IMPLEMENT ();
 
@@ -164,25 +177,37 @@ TAO_NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr /* filter */)
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_NotifyLog_i::MyFactory (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   //TODO: need to add impl
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_NotifyLog_i::default_consumer_admin (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->default_consumer_admin ();
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_NotifyLog_i::default_supplier_admin (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->default_supplier_admin ();
 }
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_NotifyLog_i::default_filter_factory (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->default_filter_factory ();
 }
@@ -190,6 +215,9 @@ TAO_NotifyLog_i::default_filter_factory (void)
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_NotifyLog_i::new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
     CosNotifyChannelAdmin::AdminID& id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->new_for_consumers (op,id);
 }
@@ -197,55 +225,86 @@ TAO_NotifyLog_i::new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOpera
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_NotifyLog_i::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
     CosNotifyChannelAdmin::AdminID& id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->new_for_suppliers (op,id);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_NotifyLog_i::get_consumeradmin (CosNotifyChannelAdmin::AdminID id)
+    ACE_THROW_SPEC ((
+      CosNotifyChannelAdmin::AdminNotFound,
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->get_consumeradmin (id);
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
 TAO_NotifyLog_i::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
+    ACE_THROW_SPEC ((
+      CosNotifyChannelAdmin::AdminNotFound,
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->get_supplieradmin (id);
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
 TAO_NotifyLog_i::get_all_consumeradmins (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->get_all_consumeradmins ();
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
 TAO_NotifyLog_i::get_all_supplieradmins (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->get_all_supplieradmins ();
 }
 
 CosNotification::AdminProperties*
 TAO_NotifyLog_i::get_admin (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->get_admin ();
 }
 
 void
 TAO_NotifyLog_i::set_admin (const CosNotification::AdminProperties& admin)
+    ACE_THROW_SPEC ((
+      CosNotification::UnsupportedAdmin,
+      CORBA::SystemException
+    ))
 {
   this->event_channel_->set_admin (admin);
 }
 
 CosNotification::QoSProperties*
 TAO_NotifyLog_i::get_qos (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   //need to add merging of QoS from Log_i and EventChannel_i
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
 TAO_NotifyLog_i::set_qos (const CosNotification::QoSProperties& /* qos */)
+    ACE_THROW_SPEC ((
+      CosNotification::UnsupportedQoS,
+      CORBA::SystemException
+    ))
 {
   throw CORBA::NO_IMPLEMENT ();
   //TODO: need to add later
@@ -255,6 +314,8 @@ void
 TAO_NotifyLog_i::validate_qos (
     const CosNotification::QoSProperties& /* required_qos */,
     CosNotification::NamedPropertyRangeSeq_out /* available_qos */)
+  ACE_THROW_SPEC ((CosNotification::UnsupportedQoS,
+                   CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 
@@ -263,6 +324,9 @@ TAO_NotifyLog_i::validate_qos (
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_NotifyLog_i::for_consumers (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->for_consumers();
 }
@@ -270,6 +334,9 @@ TAO_NotifyLog_i::for_consumers (void)
 CosEventChannelAdmin::SupplierAdmin_ptr
 TAO_NotifyLog_i::for_suppliers (
     )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->for_suppliers();
 }

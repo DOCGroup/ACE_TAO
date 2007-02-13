@@ -18,13 +18,17 @@ public:
                  Test::AMI_Buffering_Admin_ptr admin);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &the_payload);
+  virtual void receive_data (const Test::Payload &the_payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void flush (void);
+  virtual void flush (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void sync (void);
+  virtual void sync (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// internal implementation of shutdown. This
   void try_shutdown (void);

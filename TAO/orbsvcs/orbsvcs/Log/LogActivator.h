@@ -49,13 +49,20 @@ public:
   virtual ~TAO_LogActivator();
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId& oid,
-					     PortableServer::POA_ptr poa);
+					     PortableServer::POA_ptr poa)
+    ACE_THROW_SPEC ((
+		     CORBA::SystemException,
+		     PortableServer::ForwardRequest
+		     ));
 
   virtual void etherealize (const PortableServer::ObjectId& oid,
 			    PortableServer::POA_ptr poa,
 			    PortableServer::Servant servant,
 			    CORBA::Boolean cleanup_in_progress,
-			    CORBA::Boolean remaining_activations);
+			    CORBA::Boolean remaining_activations)
+    ACE_THROW_SPEC ((
+		     CORBA::SystemException
+		     ));
 
 private:
   TAO_LogMgr_i&			logmgr_i_;

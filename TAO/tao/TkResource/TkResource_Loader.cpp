@@ -12,6 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+
   TkResource_Loader::TkResource_Loader (void)
   {
     TkResource_Factory *tmp = 0;

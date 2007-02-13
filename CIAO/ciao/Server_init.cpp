@@ -114,7 +114,7 @@ namespace CIAO
     //---------------------------------------------------------------------------------------------
     void NameUtility::BindObjectPath (const CosNaming::NamingContextExt_ptr nc,
                                       const CosNaming::Name& name,
-                                      const CORBA::Object_ptr obj)
+                                      const CORBA::Object_var obj)
     {
       CosNaming::Name tmpName;
       CORBA::String_var newSCName = nc->to_string(name);

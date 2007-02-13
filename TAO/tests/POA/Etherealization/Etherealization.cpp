@@ -25,6 +25,7 @@ class test_i : public POA_test
 {
 public:
   void method ( /**/)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
@@ -39,6 +40,7 @@ class test_i_with_reference_counting :
 {
 public:
   void method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
@@ -52,18 +54,23 @@ class Servant_Activator : public PortableServer::ServantActivator
 {
 public:
   PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                     PortableServer::POA_ptr poa);
+                                     PortableServer::POA_ptr poa)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::ForwardRequest));
 
   void etherealize (const PortableServer::ObjectId &oid,
                     PortableServer::POA_ptr adapter,
                     PortableServer::Servant servant,
                     CORBA::Boolean cleanup_in_progress,
-                    CORBA::Boolean remaining_activations);
+                    CORBA::Boolean remaining_activations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 PortableServer::Servant
 Servant_Activator::incarnate (const PortableServer::ObjectId &id,
                               PortableServer::POA_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::ForwardRequest))
 {
   CORBA::String_var object_name =
     PortableServer::ObjectId_to_string (id);
@@ -86,6 +93,7 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
                                 CORBA::Boolean)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_name =
     PortableServer::ObjectId_to_string (id);

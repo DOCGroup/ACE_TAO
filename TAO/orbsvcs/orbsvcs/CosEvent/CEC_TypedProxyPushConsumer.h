@@ -51,10 +51,12 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-      CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy);
+      CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr &activated_proxy)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -72,17 +74,23 @@ public:
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods (abstract overloads)...
   virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier);
+                CosEventComm::PushSupplier_ptr push_supplier)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosEventChannelAdmin::AlreadyConnected));
 
-  virtual void push (const CORBA::Any& event);
+  virtual void push (const CORBA::Any& event)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The CosTypedEventComm::TypedPushConsumer methods (abstract overloads)...
   virtual CORBA::Object_ptr get_typed_consumer (
-    );
+    )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (void);

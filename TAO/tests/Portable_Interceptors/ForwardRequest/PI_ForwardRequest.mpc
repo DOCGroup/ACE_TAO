@@ -27,7 +27,8 @@ project(*Server): taoserver, valuetype, pi, pi_server, interceptors {
 
 project(*Client): taoclient, valuetype, pi, pi_server, interceptors {
   after += *idl
-
+  after += *Server
+  
   Source_Files {
     Client_ORBInitializer.cpp
     Client_Request_Interceptor.cpp

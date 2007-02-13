@@ -26,13 +26,23 @@ TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Null_ObserverStrategy::append_observer (
        RtecEventChannelAdmin::Observer_ptr)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
-  throw RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER();
+  ACE_THROW_RETURN (
+      RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(),
+      0);
 }
 
 void
 TAO_EC_Null_ObserverStrategy::remove_observer (
        RtecEventChannelAdmin::Observer_Handle)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   throw RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER();
 }
@@ -68,6 +78,10 @@ TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy (void)
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Basic_ObserverStrategy::append_observer (
        RtecEventChannelAdmin::Observer_ptr obs)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -79,7 +93,9 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
                           RtecEventChannelAdmin::Observer::_duplicate (obs));
 
     if (this->observers_.bind (entry.handle, entry) == -1)
-      throw RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER();
+      ACE_THROW_RETURN (
+          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER(),
+          0);
   }
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
@@ -97,6 +113,10 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
 void
 TAO_EC_Basic_ObserverStrategy::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
       RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());

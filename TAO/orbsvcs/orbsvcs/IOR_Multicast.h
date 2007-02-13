@@ -1,20 +1,23 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    IOR_Multicast.h
- *
- *  $Id$
- *
- *  Defines a class that listens to a multicast address for client requests
- *  for ior of a bootstrappable service.
- *
- *
- *  @author   Sergio Flores-Gaitan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs
+//
+// = FILENAME
+//    IOR_Multicast.h
+//
+// = DESCRIPTION
+//    Defines a class that listens to a multicast address for client requests
+//    for ior of a bootstrappable service.
+//
+// = AUTHORS
+//      Sergio Flores-Gaitan
+//
+// ============================================================================
 
 #ifndef TAO_IOR_MULTICAST_H
 #define TAO_IOR_MULTICAST_H
@@ -34,75 +37,73 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class TAO_IOR_Multicast
- *
- * @brief Event Handler that services multicast requests for IOR of a
- * bootstrappable service.
- *
- * This class uses the ACE_SOCK_Dgram_Mcast class and should be
- * registered with a reactor and should be initialized with the
- * ior of the  service to be multicasted.
- */
 class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
+  // = TITLE
+  //     Event Handler that services multicast requests for IOR of a
+  //     bootstrappable service.
+  //
+  // = DESCRIPTION
+  //     This class uses the ACE_SOCK_Dgram_Mcast class and should be
+  //     registered with a reactor and should be initialized with the
+  //     ior of the  service to be multicasted.
 public:
-  /// Constructor.
   TAO_IOR_Multicast (void);
+  // Constructor.
 
-  /// Constructor taking the ior of the service.
   TAO_IOR_Multicast (const char *ior,
                      u_short port,
                      const char *mcast_addr,
                      TAO_Service_ID service_id);
+  // Constructor taking the ior of the service.
 
-  /// Initialization method.
   int init (const char *ior,
             u_short port,
             const char *mcast_addr,
             TAO_Service_ID service_id);
+  // Initialization method.
 
-  /// Initialization method. Takes in "address:port" string as a
-  /// parameter.
   int init (const char *ior,
             const char *mcast_addr,
             TAO_Service_ID service_id);
+  // Initialization method. Takes in "address:port" string as a
+  // parameter.
 
-  /// Destructor.
   virtual ~TAO_IOR_Multicast (void);
+  // Destructor.
 
-  /// Callback when input is received on the handle.
   virtual int handle_input (ACE_HANDLE n);
+  // Callback when input is received on the handle.
 
-  /// Callback when a timeout has occurred.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
+  // Callback when a timeout has occurred.
 
-  /// Returns the internal handle used to receive multicast.
   virtual ACE_HANDLE get_handle (void) const;
+  // Returns the internal handle used to receive multicast.
 
 private:
-  /// Factor common functionality from the two init functions.
   int common_init (const char *ior,
                    TAO_Service_ID service_id);
+  // Factor common functionality from the two init functions.
 
-  /// Service id that we're waiting for.
   TAO_Service_ID service_id_;
+  // Service id that we're waiting for.
 
-  /// multicast endpoint of communication
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
+  // multicast endpoint of communication
 
-  /// multicast address
   ACE_INET_Addr mcast_addr_;
+  // multicast address
 
-  /// object reference to send in response to the multicast
   ACE_CString ior_;
+  // object reference to send in response to the multicast
 
-  /// address of response.
   ACE_INET_Addr response_addr_;
+  // address of response.
 
-  /// socket for response to the multicast
   ACE_SOCK_Dgram response_;
+  // socket for response to the multicast
 
   ACE_CString mcast_nic_;
 };

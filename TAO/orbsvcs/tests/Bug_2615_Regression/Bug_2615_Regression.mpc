@@ -13,8 +13,8 @@ project(*Client): taoserver, ftclientorb {
 
   exename = client
   Source_Files {
-    TestC.cpp
     client.cpp
+    TestC.cpp
   }
   IDL_Files {
   }
@@ -25,12 +25,12 @@ project (*Server) : taoserver, ftclientorb, pi_server {
 
   exename = server
   Source_Files {
-    TestS.cpp
-    TestC.cpp
     server.cpp
     Hello.cpp
     ServerORBInitializer2.cpp
     ServerRequest_Interceptor2.cpp
+    TestS.cpp
+    TestC.cpp
   }
   IDL_Files {
   }

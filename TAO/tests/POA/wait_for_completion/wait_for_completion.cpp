@@ -21,7 +21,8 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (void);
+  void destroy_poa (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void test_poa (PortableServer::POA_ptr poa);
 
@@ -36,6 +37,7 @@ test_i::test_poa (PortableServer::POA_ptr poa)
 
 void
 test_i::destroy_poa (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean etherealize_objects = 1;
   CORBA::Boolean wait_for_completion = 1;

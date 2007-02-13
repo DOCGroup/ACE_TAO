@@ -25,7 +25,8 @@ TAO_CSD_Object_Adapter::~TAO_CSD_Object_Adapter ()
 void
 TAO_CSD_Object_Adapter::do_dispatch (
   TAO_ServerRequest& req,
-  TAO::Portable_Server::Servant_Upcall& upcall)
+  TAO::Portable_Server::Servant_Upcall& upcall
+  )
 {
   TAO_Root_POA& poa = upcall.poa ();
   TAO_CSD_POA* csd_poa = dynamic_cast<TAO_CSD_POA*> (&poa);

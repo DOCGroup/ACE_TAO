@@ -26,7 +26,8 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Supplier_Proxy_Disconnect_Functor
   typedef  RtecEventComm::PushSupplier_ptr argument;
 
   /// Disconnect from @c supplier
-  void operator() (RtecEventComm::PushSupplier_ptr supplier);
+  void operator() (RtecEventComm::PushSupplier_ptr supplier)
+    ACE_THROW_SPEC (());
 };
 
 /**
@@ -53,7 +54,8 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Consumer_Proxy_Disconnect_Functor
   typedef  RtecEventComm::PushConsumer_ptr argument;
 
   /// Disconnect from @c consumer
-  void operator() (RtecEventComm::PushConsumer_ptr consumer);
+  void operator() (RtecEventComm::PushConsumer_ptr consumer)
+    ACE_THROW_SPEC (());
 };
 
 /**

@@ -68,24 +68,42 @@ public:
   virtual void from_any (
       const CORBA::Any & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Any * to_any (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void destroy (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual DynamicAny::DynAny_ptr current_component (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
 private:
   /// Check if the typecode is acceptable.

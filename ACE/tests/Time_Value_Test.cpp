@@ -252,7 +252,7 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= -10.0;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
   const time_t max_time_t = std::numeric_limits<time_t>::max ();
   const time_t min_time_t = std::numeric_limits<time_t>::min ();
 #else

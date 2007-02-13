@@ -17,11 +17,14 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_callback (Test::Hello_ptr call_me);
+  virtual void request_callback (Test::Hello_ptr call_me)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

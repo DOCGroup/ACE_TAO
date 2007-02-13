@@ -23,6 +23,7 @@ TAO_FinderDef_i::~TAO_FinderDef_i (void)
 
 CORBA::DefinitionKind
 TAO_FinderDef_i::def_kind (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Finder;
 }

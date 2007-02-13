@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    InterfaceDef_i.h
- *
- *  $Id$
- *
- *  InterfaceDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    InterfaceDef_i.h
+//
+// = DESCRIPTION
+//    InterfaceDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_INTERFACEDEF_I_H
 #define TAO_INTERFACEDEF_I_H
@@ -46,65 +49,80 @@ class TAO_IFRService_Export TAO_InterfaceDef_i
   //    Represents an interface definition.
   //
 public:
-  /// Constructor
   TAO_InterfaceDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_InterfaceDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
 
   virtual void destroy (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 
-  /// From Contained_i's pure virtual function.
   virtual CORBA::Contained::Description *describe_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
 
-  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
-  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
   virtual CORBA::InterfaceDefSeq *base_interfaces (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDefSeq *base_interfaces_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_interfaces (
       const CORBA::InterfaceDefSeq &base_interfaces
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_interfaces_i (
       const CORBA::InterfaceDefSeq &base_interfaces
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::AttributeDef_ptr create_attribute (
       const char *id,
@@ -112,7 +130,8 @@ public:
       const char *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::AttributeDef_ptr create_attribute_i (
       const char *id,
@@ -120,7 +139,8 @@ public:
       const char *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::OperationDef_ptr create_operation (
       const char *id,
@@ -131,7 +151,8 @@ public:
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions,
       const CORBA::ContextIdSeq &contexts
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::OperationDef_ptr create_operation_i (
       const char *id,
@@ -142,44 +163,47 @@ public:
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions,
       const CORBA::ContextIdSeq &contexts
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Gathers the attributes and operations of all the ancestors.
   void interface_contents (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Gathers the attributes and operations of all the ancestors.
 
-  /// Called from TAO_IFR_Service_Utils::name_exists() when we
-  /// are in a list of supported interfaces.
   static int name_clash (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exists() when we
+  // are in a list of supported interfaces.
 
-  /// Depth-first traversal of the inheritance tree to get all the
-  /// attributes.
   void inherited_attributes (
       ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
     );
+  // Depth-first traversal of the inheritance tree to get all the
+  // attributes.
 
-  /// Depth-first traversal of the inheritance tree to get all the
-  /// operations.
   void inherited_operations (
       ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
     );
+  // Depth-first traversal of the inheritance tree to get all the
+  // operations.
 
 private:
-  /// Depth-first traversal of the inheritance tree to get all
-  /// the base interfaces.
   void base_interfaces_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue
     );
+  // Depth-first traversal of the inheritance tree to get all
+  // the base interfaces.
 
-  /// When creating a new attribute, check for a clash with an inherited
-  /// attribute name.
   void check_inherited (const char *name,
-                        CORBA::DefinitionKind kind);
+                        CORBA::DefinitionKind kind)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // When creating a new attribute, check for a clash with an inherited
+  // attribute name.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

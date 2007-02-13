@@ -29,7 +29,7 @@ Consumer::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.
@@ -92,6 +92,7 @@ Consumer::run (int argc, char* argv[])
 
 void
 Consumer::push (const CORBA::Any &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->event_count_ ++;
   if (this->event_count_ % 100 == 0)
@@ -104,6 +105,7 @@ Consumer::push (const CORBA::Any &)
 
 void
 Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have

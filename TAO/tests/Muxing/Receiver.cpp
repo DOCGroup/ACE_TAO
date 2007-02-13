@@ -25,6 +25,7 @@ Receiver::dump_results ()
 
 void
 Receiver::receive_data (const Test::Payload &payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->message_count_++;
@@ -33,6 +34,7 @@ Receiver::receive_data (const Test::Payload &payload)
 
 CORBA::Long
 Receiver::get_event_count (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->message_count_;
@@ -40,6 +42,7 @@ Receiver::get_event_count (void)
 
 void
 Receiver::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

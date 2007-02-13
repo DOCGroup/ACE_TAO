@@ -66,45 +66,81 @@ public:
 
   // = Functions specific to DynArray.
 
-  virtual DynamicAny::AnySeq * get_elements (void);
+  virtual DynamicAny::AnySeq * get_elements (
+      void)
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_elements (
       const DynamicAny::AnySeq & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_elements_as_dyn_any (
       const DynamicAny::DynAnySeq & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
       const CORBA::Any & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+    ));
 
   virtual CORBA::Any * to_any (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void destroy (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual DynamicAny::DynAny_ptr current_component (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
 private:
   /// Returns the type of elements contained in the array.

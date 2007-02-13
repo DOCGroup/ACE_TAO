@@ -31,13 +31,17 @@ public:
   // ctor
 
   // = The Test methods.
-  void oneway_payload_test (const Test::data &d);
+  void oneway_payload_test (const Test::data &d)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void oneway_work_test (CORBA::ULong work);
+  void oneway_work_test (CORBA::ULong work)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_work_test (CORBA::ULong work);
+  void twoway_work_test (CORBA::ULong work)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

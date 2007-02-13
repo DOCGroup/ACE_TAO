@@ -37,12 +37,15 @@ public:
 
   virtual void put_event (
         Event * e
-  );
+  )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Event_List * get_critical_events (
-  );
+  )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);

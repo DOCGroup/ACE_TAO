@@ -60,15 +60,29 @@ protected:
   ///= Protected Methods
 
   //= interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   virtual void connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier
-                                               );
+                                               )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosEventChannelAdmin::AlreadyConnected
+                     ));
 
   virtual void push_structured_events (const CosNotification::EventBatch & notifications
-                                      );
+                                      )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException,
+                     CosEventComm::Disconnected
+                     ));
 
-  virtual void disconnect_sequence_push_consumer (void);
+  virtual void disconnect_sequence_push_consumer (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
 private:
   /// TAO_Notify_Destroy_Callback methods

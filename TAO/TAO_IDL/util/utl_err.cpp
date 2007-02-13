@@ -924,6 +924,21 @@ UTL_Error::supports_error (UTL_ScopedName *n,
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+// Report an attempt to have a derived component or home support something.
+void
+UTL_Error::derived_supports_error (UTL_ScopedName *n)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR,
+              "derived component or home "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " may not directly support interfaces\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
 // Report illegal inheritance from non-abstract valuetype or interface.
 void
 UTL_Error::abstract_inheritance_error (UTL_ScopedName *v,

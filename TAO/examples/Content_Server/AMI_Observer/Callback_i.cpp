@@ -52,6 +52,7 @@ Callback_i::~Callback_i (void)
 void
 Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
                         CORBA::Boolean last_chunk)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!last_chunk)
     {

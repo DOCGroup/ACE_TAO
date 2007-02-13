@@ -15,6 +15,7 @@ ACE_RCSID(MT_Server, test_i, "$Id$")
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long exec_duration)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -121,6 +122,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
 
 void
 Simple_Server_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
   this->orb_->shutdown (0);

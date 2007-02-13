@@ -21,7 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "tao/Environment.h"
+#include "tao/default_environment.h"
+
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +35,10 @@ namespace PortableInterceptor
 
   /// Register an ORBInitializer with the global ORBInitializer
   /// table.
-  TAO_Export void register_orb_initializer (ORBInitializer_ptr init);
+  TAO_Export void register_orb_initializer (
+      ORBInitializer_ptr init
+
+    );
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

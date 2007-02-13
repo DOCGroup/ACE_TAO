@@ -64,7 +64,7 @@ class NContextExt_Client_i
   char * get_name (void);
   // Generates a random name
 
-  int argc_;
+    int argc_;
   // # of arguments on the command line.
 
   char **argv_;

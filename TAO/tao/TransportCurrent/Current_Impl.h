@@ -49,17 +49,23 @@ namespace TAO
          * PortableInterceptor::Current interface.
          */
         //@{
-        virtual CORBA::Long id (void);
+        virtual CORBA::Long id (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT bytes_sent (void);
+        virtual CounterT bytes_sent (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT bytes_received (void);
+        virtual CounterT bytes_received (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT messages_sent (void);
+        virtual CounterT messages_sent (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual CounterT messages_received (void);
+        virtual CounterT messages_received (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
 
-        virtual ::TimeBase::TimeT open_since (void);
+        virtual ::TimeBase::TimeT open_since (void)
+          ACE_THROW_SPEC ((::CORBA::SystemException, NoContext));
         //@}
 
       protected:
@@ -69,12 +75,14 @@ namespace TAO
          */
         //@{
         /// A (strategy) method used to obtain the transport ptr
-        const TAO_Transport* transport (void) const;
+        const TAO_Transport* transport (void) const
+          ACE_THROW_SPEC ((NoContext));
 
         /// A Stats instance. If protocol is unavailable (0) or the
         /// TAO_HAS_TRANSPORT_CURRENT macro is defined as anything but
         /// 1, a single static instance will be used.
-        const TAO::Transport::Stats* transport_stats (void) const;
+        const TAO::Transport::Stats* transport_stats (void) const
+          ACE_THROW_SPEC ((NoContext));
         //@}
 
         /// Destructor is protected to enforce the fact this class is

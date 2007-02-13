@@ -16,8 +16,10 @@ public:
   // = The skeleton methods
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
-                              Test::Controller_ptr controller);
-  virtual void shutdown (void);
+                              Test::Controller_ptr controller)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -58,10 +60,14 @@ public:
                       int *pending_replies);
   // Constructor
 
-  virtual void worker_started (void);
-  virtual void worker_started_excep (::Messaging::ExceptionHolder*);
-  virtual void worker_finished (void);
-  virtual void worker_finished_excep (::Messaging::ExceptionHolder*);
+  virtual void worker_started (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void worker_started_excep (::Messaging::ExceptionHolder*)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void worker_finished (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void worker_finished_excep (::Messaging::ExceptionHolder*)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   TAO_SYNCH_MUTEX *mutex_;

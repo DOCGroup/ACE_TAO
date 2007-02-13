@@ -334,6 +334,7 @@ void StubFaultNotifier::shutdown_i (void)
 void StubFaultNotifier::push_structured_fault (
     const CosNotification::StructuredEvent & event
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ERROR ((LM_ERROR,
     "FaultNotifier: Received Fault notification:\n"
@@ -362,6 +363,9 @@ void StubFaultNotifier::push_structured_fault (
 void StubFaultNotifier::push_sequence_fault (
     const CosNotification::EventBatch & events
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   ACE_UNUSED_ARG (events);
   throw CORBA::NO_IMPLEMENT();
@@ -370,9 +374,13 @@ void StubFaultNotifier::push_sequence_fault (
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
     const char * constraint_grammar
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , CosNotifyFilter::InvalidGrammar
+  ))
 {
   ACE_UNUSED_ARG (constraint_grammar);
-  throw CORBA::NO_IMPLEMENT();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
   return 0;
 }
 
@@ -381,11 +389,14 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  throw CORBA::NO_IMPLEMENT();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
   return 0;
 }
 
@@ -394,17 +405,24 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
-  throw CORBA::NO_IMPLEMENT();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT(), 0);
   return 0;
 }
 
 void StubFaultNotifier::disconnect_consumer (
     FT::FaultNotifier::ConsumerId connection
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , CosEventComm::Disconnected
+  ))
 {
   ACE_UNUSED_ARG(connection);
 
@@ -412,6 +430,7 @@ void StubFaultNotifier::disconnect_consumer (
 }
 
 CORBA::Boolean StubFaultNotifier::is_alive (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
 }

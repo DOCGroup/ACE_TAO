@@ -30,10 +30,12 @@ public:
                                  Notify_Test_Client& client,
                                  int sent);
 
-  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
+  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  void push_structured_events (const CosNotification::EventBatch&);
+  void push_structured_events (const CosNotification::EventBatch&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_CString name_;
   CORBA::Short discard_policy_;

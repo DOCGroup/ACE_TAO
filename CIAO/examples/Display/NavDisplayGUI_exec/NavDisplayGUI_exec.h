@@ -42,27 +42,40 @@ namespace MyImpl
     // Operations from HUDisplay::NavDisplay
 
     virtual void
-    push_Refresh (HUDisplay::tick *ev);
+    push_Refresh (HUDisplay::tick *ev)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (Components::SessionContext_ptr ctx);
+    set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_activate ();
+    ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_remove ();
+    ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
@@ -93,7 +106,9 @@ namespace MyImpl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   };
 
 }

@@ -75,7 +75,7 @@ namespace TAO
                 {
                   this->poa_.complete_destruction_i ();
                 }
-              catch (const::CORBA::Exception&ex)
+              catch (::CORBA::Exception&ex)
                 {
                   // Ignore exceptions
                   ex._tao_print_exception ("TAO_POA::complete_destruction_i");

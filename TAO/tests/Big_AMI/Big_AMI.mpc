@@ -23,6 +23,7 @@ project(*Server): taoserver, messaging, ami {
 project(*Client): taoserver, messaging, ami {
   exename = client
   after += *idl
+  after += *Server
   Source_Files {
     ami_testC.cpp
     ami_testS.cpp

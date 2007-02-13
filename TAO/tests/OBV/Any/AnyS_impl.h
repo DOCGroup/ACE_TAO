@@ -32,11 +32,14 @@ public:
   // ctor
 
   virtual CORBA::Any * get_something (
-      CORBA::Boolean need_vb);
+      CORBA::Boolean need_vb)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual OBV_AnyTest::VB * get_vb (void);
+  virtual OBV_AnyTest::VB * get_vb (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

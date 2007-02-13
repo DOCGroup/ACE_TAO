@@ -100,16 +100,9 @@
 #      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 #      endif
-#      if defined (RWSTD_NO_NAMESPACE)
-         namespace std {} using namespace std;
-#      else
-#        define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#      endif /* RWSTD_NO_NAMESPACE */
+#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
-       // There's no support in ACE's use of numeric_limits for those that
-       // aren't in std::
-#      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
 
 // Compiler implements templates that support typedefs inside of classes

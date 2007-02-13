@@ -22,7 +22,6 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
-#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.inl"
@@ -171,7 +170,8 @@ CORBA::Object::can_convert_to_ior (void) const
 }
 
 char*
-CORBA::Object::convert_to_ior (bool, const char*) const
+CORBA::Object::convert_to_ior (bool,
+                               const char*) const
 {
   return 0;
 }
@@ -213,14 +213,15 @@ CORBA::Object::_is_a (const char *type_id)
   // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
 
   if (this->protocol_proxy_ == 0)
-    throw ::CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (type_id,
                          this->_stubobj ()->type_id.in ()) == 0)
     return true;
 
-  return this->proxy_broker ()->_is_a (this, type_id);
+  return this->proxy_broker ()->_is_a (this,
+                                       type_id);
 }
 
 const char*
@@ -290,6 +291,7 @@ CORBA::Object::_hash (CORBA::ULong maximum)
 
 CORBA::Boolean
 CORBA::Object::_is_equivalent (CORBA::Object_ptr other_obj)
+  ACE_THROW_SPEC (())
 {
   if (other_obj == this)
     {
@@ -321,11 +323,12 @@ CORBA::Object::_key (void)
                   ACE_TEXT ("profile in use\n")));
     }
 
-  throw ::CORBA::INTERNAL (
-    CORBA::SystemException::_tao_minor_code (
-      0,
-      EINVAL),
-    CORBA::COMPLETED_NO);
+  ACE_THROW_RETURN (CORBA::INTERNAL (
+                      CORBA::SystemException::_tao_minor_code (
+                        0,
+                        EINVAL),
+                      CORBA::COMPLETED_NO),
+                    0);
 }
 
 void
@@ -452,7 +455,8 @@ CORBA::Object::_request (const char *operation)
     }
   else
     {
-      throw ::CORBA::NO_IMPLEMENT ();
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                        0);
     }
 }
 
@@ -471,11 +475,11 @@ CORBA::Object::_non_existent (void)
     {
       retval = this->proxy_broker ()->_non_existent (this);
     }
-  catch (const ::CORBA::OBJECT_NOT_EXIST&)
+  catch ( ::CORBA::OBJECT_NOT_EXIST&)
     {
       retval = true;
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       throw;
     }
@@ -530,7 +534,7 @@ CORBA::Object::_get_policy (
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy (type);
   else
-    throw ::CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Policy_ptr
@@ -542,7 +546,7 @@ CORBA::Object::_get_cached_policy (
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_cached_policy (type);
   else
-    throw ::CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 }
 
 CORBA::Object_ptr
@@ -553,7 +557,7 @@ CORBA::Object::_set_policy_overrides (
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (!this->protocol_proxy_)
-    throw ::CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::Policy::_nil ());
 
   TAO_Stub* stub =
     this->protocol_proxy_->set_policy_overrides (policies,
@@ -591,7 +595,7 @@ CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy_overrides (types);
   else
-    throw ::CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::Boolean
@@ -615,12 +619,13 @@ CORBA::Object::_validate_connection (
     {
       tao_call.invoke ();
     }
-  catch (const ::CORBA::INV_POLICY&)
+  catch ( ::CORBA::INV_POLICY&)
     {
-      inconsistent_policies = tao_call.get_inconsistent_policies ();
+      inconsistent_policies =
+        tao_call.get_inconsistent_policies ();
       retval = false;
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       throw;
     }
@@ -647,7 +652,7 @@ CORBA::Object::_get_orb (void)
       if (this->protocol_proxy_)
         return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
       else
-        throw ::CORBA::INTERNAL ();
+        ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::ORB::_nil());
     }
 }
 
@@ -736,7 +741,8 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
       for (CORBA::ULong i = 0; i != profile_count; ++i)
         {
-          IOP::TaggedProfile &tpfile = obj->ior_->profiles[i];
+          IOP::TaggedProfile &tpfile =
+            obj->ior_->profiles[i];
 
           // NOTE: This is a place for optimizations. Here we have an
           // 2 allocations and 2 copies. Future optimizations should
@@ -751,7 +757,8 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
                             orb_core->input_cdr_msgblock_allocator (),
                             orb_core);
 
-          TAO_Profile *pfile = connector_registry->create_profile (cdr);
+          TAO_Profile *pfile =
+            connector_registry->create_profile (cdr);
 
           if (pfile != 0)
             mp.give_profile (pfile);
@@ -770,9 +777,11 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
         }
 
 
-      objdata = orb_core->create_stub (obj->ior_->type_id.in (), mp);
+      objdata =
+        orb_core->create_stub (obj->ior_->type_id.in (),
+                               mp);
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception (
@@ -786,7 +795,8 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
   // This call will set the stub proxy broker if necessary
-  if (orb_core->initialize_object (safe_objdata.get (), obj) == -1)
+  if (orb_core->initialize_object (safe_objdata.get (),
+                                   obj) == -1)
     return;
 
   obj->protocol_proxy_ = objdata;
@@ -870,7 +880,8 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
           for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
             {
-              TAO_Profile *pfile = connector_registry->create_profile (cdr);
+              TAO_Profile *pfile =
+                connector_registry->create_profile (cdr);
               if (pfile != 0)
                 mp.give_profile (pfile);
             }
@@ -888,9 +899,11 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
                                 0);
             }
 
-          objdata = orb_core->create_stub (type_hint.in (), mp);
+
+          objdata = orb_core->create_stub (type_hint.in (),
+                                           mp);
         }
-      catch (const ::CORBA::Exception& ex)
+      catch ( ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
             ex._tao_print_exception (
@@ -921,7 +934,8 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       cdr >> *ior;
       ACE_NEW_RETURN (x,
-                      CORBA::Object (ior, orb_core),
+                      CORBA::Object (ior,
+                                     orb_core),
                       0);
     }
 

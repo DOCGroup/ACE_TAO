@@ -36,38 +36,54 @@ namespace MyImpl
     // Operations from HUDisplay::GPS
 
     virtual HUDisplay::CCM_position_ptr
-    get_MyLocation ();
+    get_MyLocation ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    push_Refresh (HUDisplay::tick *ev);
+    push_Refresh (HUDisplay::tick *ev)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from HUDisplay::position
 
     virtual CORBA::Long
-    posx ();
+    posx ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Long
-    posy ();
+    posy ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (Components::SessionContext_ptr ctx);
+    set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_activate ();
+    ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_remove ();
+    ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   protected:
     /// Current GPS reading.
     CORBA::Long positionx_;
@@ -102,7 +118,9 @@ namespace MyImpl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   };
 
 }

@@ -27,6 +27,7 @@ namespace Test {
 
   char *
   IIOP_Server_Request_Interceptor::name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup ("II SRI");
   }
@@ -34,6 +35,7 @@ namespace Test {
   ///
   TAO::Transport::IIOP::Current_ptr
   IIOP_Server_Request_Interceptor::resolve_iiop_transport_current (const char* orbid)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
 
@@ -52,6 +54,7 @@ namespace Test {
   /// as index in an array, where we store the endpoint
   void
   IIOP_Server_Request_Interceptor::push_request_info (size_t requestID)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
 
@@ -166,6 +169,7 @@ namespace Test {
 
   void
   IIOP_Server_Request_Interceptor::inbound_process_context  (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var name (this->name ());
     CORBA::String_var op (ri->operation());
@@ -204,6 +208,7 @@ namespace Test {
 
   void
   IIOP_Server_Request_Interceptor::outbound_process_context (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     IOP::ServiceId id = Test::Transport::CurrentTest::ContextTag;
 
@@ -223,6 +228,8 @@ namespace Test {
 
   void
   IIOP_Server_Request_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest))
   {
     try
       {
@@ -244,6 +251,7 @@ namespace Test {
 
   void
   IIOP_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     try
       {
@@ -265,6 +273,8 @@ namespace Test {
 
   void
   IIOP_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest))
   {
     try
       {
@@ -287,6 +297,8 @@ namespace Test {
 
   void
   IIOP_Server_Request_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest))
   {
     try
       {

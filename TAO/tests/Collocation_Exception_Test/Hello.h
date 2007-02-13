@@ -25,15 +25,20 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void system_exception_test (void);
+  virtual void system_exception_test (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void user_exception_expected (void);
+  virtual void user_exception_expected (void)
+      ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A));
 
-  virtual void user_exception_not_expected (void);
+  virtual void user_exception_not_expected (void)
+      ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   void throw_internal_b (void);

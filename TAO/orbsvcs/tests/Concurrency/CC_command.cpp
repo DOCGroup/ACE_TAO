@@ -66,7 +66,7 @@ CC_Command::GetLockSet (const char *lock_set_name)
           // No lock set name was given. Use the global lock set.
           if(cc_lockset_.in()==0)
             {
-              throw CORBA::UNKNOWN ();
+              ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
             }
           else
             ccls_ret = cc_lockset_.in ();

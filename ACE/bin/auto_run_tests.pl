@@ -75,14 +75,10 @@ push (@file_list, "$opt_l");
 }
 
 if (scalar(@file_list) == 0) {
-    push (@file_list, "/bin/ace_tests.lst");
-    if (-d $TAO_ROOT || -d "$ACE_ROOT/TAO") {
-        push (@file_list, "/bin/tao_orb_tests.lst");
-        push (@file_list, "/bin/tao_other_tests.lst");
-    }
-    if (-d $CIAO_ROOT || -d "$ACE_ROOT/TAO/CIAO") {
-        push (@file_list, "/bin/ciao_tests.lst");
-    }
+push (@file_list, "/bin/ace_tests.lst");
+push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
+push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
+push (@file_list, "/bin/ciao_tests.lst") if -d "$ACE_ROOT/TAO/CIAO";
 }
 
 $startdir = getcwd();

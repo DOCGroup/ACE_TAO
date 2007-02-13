@@ -73,9 +73,12 @@ public:
   // ctor
 
   // = The Progress methods.
-  void sent_request (CORBA::Long id);
-  void recv_reply (CORBA::Long id);
-  CORBA::Long bind (Peer_ptr a_peer);
+  void sent_request (CORBA::Long id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void recv_reply (CORBA::Long id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long bind (Peer_ptr a_peer)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   Progress_Window* window_;

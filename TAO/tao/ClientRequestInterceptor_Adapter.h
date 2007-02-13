@@ -26,8 +26,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CORBA_macros.h"
+#include "tao/SystemException.h"
 #include "tao/Invocation_Utils.h"
-#include "tao/Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,28 +77,34 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    virtual void send_request (Invocation_Base &invocation) = 0;
+    virtual void send_request (Invocation_Base &invocation
+                               ) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_reply (Invocation_Base &invocation) = 0;
+    virtual void receive_reply (Invocation_Base &invocation
+                                ) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_exception (Invocation_Base &invocation) = 0;
+    virtual void receive_exception (Invocation_Base &invocation
+                                    ) = 0;
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_other (Invocation_Base &invocation) = 0;
+    virtual void receive_other (Invocation_Base &invocation
+                                ) = 0;
 
     /// Register an interceptor.
     virtual void add_interceptor (
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor) = 0;
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+      ) = 0;
 
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) = 0;
+      const CORBA::PolicyList& policies
+      ) = 0;
 
     virtual void destroy_interceptors (void) = 0;
 

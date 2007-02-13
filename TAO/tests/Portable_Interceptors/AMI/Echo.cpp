@@ -16,12 +16,14 @@ Echo::Echo(CORBA::ORB_ptr orb)
 
 char *
 Echo::echo_operation(char const * the_input)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   return CORBA::string_dup(the_input);
 }
 
 void
 Echo::shutdown(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->orb_->shutdown(0);
 }

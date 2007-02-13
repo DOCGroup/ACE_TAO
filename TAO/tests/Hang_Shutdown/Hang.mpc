@@ -11,9 +11,9 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver {
   after += *idl
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     server.cpp
+    TestS.cpp
+    TestC.cpp
   }
   IDL_Files {
   }

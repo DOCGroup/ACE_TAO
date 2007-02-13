@@ -11,9 +11,11 @@ project(POA_IDL*): taoidldefaults {
 project(POA_server*): taoserver, avoids_corba_e_micro {
   after += POA_IDL*
   Source_Files {
+    server.cpp
+  }
+  Source_Files {
     testC.cpp
     testS.cpp
-    server.cpp
   }
   IDL_Files {
   }
@@ -24,8 +26,10 @@ project(POA_client*): taoserver {
   after += POA_IDL*
   after += POA_server*
   Source_Files {
-    testC.cpp
     client.cpp
+  }
+  Source_Files {
+    testC.cpp
   }
   IDL_Files {
   }

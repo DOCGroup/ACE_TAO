@@ -70,39 +70,54 @@ namespace CIAO
                       PortableServer::POA_ptr p,
                       const char * nodeapp_loc,
                       const char* nodeapp_options,
-                      int spawn_delay);
+                      int spawn_delay)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Initializes the NodeManager.
-    virtual void init ();
+    virtual void init ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// POA operation..
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// CIAO::Daemon defined attributes/operations.
-    virtual char * name ();
+    virtual char * name ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void shutdown ();
+    virtual void shutdown ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void joinDomain (const Deployment::Domain & domain,
                              Deployment::TargetManager_ptr manager,
                              Deployment::Logger_ptr log
-                             );
+                             )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void leaveDomain ();
+    virtual void leaveDomain ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Deployment::NodeApplicationManager_ptr
-    preparePlan (const Deployment::DeploymentPlan &plan);
+    preparePlan (const Deployment::DeploymentPlan &plan)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StartError,
+                       Deployment::PlanError));
 
     virtual void
-    destroyManager (Deployment::NodeApplicationManager_ptr appManager);
+    destroyManager (Deployment::NodeApplicationManager_ptr appManager)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StopError,
+                       Deployment::InvalidReference));
 
     /// CIAO specific extension, which is particularly useful for dealing with
     /// shared components issue
-    virtual void destroyPlan (const Deployment::DeploymentPlan & plan);
+    virtual void destroyPlan (const Deployment::DeploymentPlan & plan)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Deployment::StopError));
 
     /// CIAO specific extension, return a set of shared components
     virtual ::Deployment::ComponentPlans *
-    get_shared_components ();
+    get_shared_components ()
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /// RACE specific extension. Modify the priority of a node application
     /// process.
@@ -111,7 +126,8 @@ namespace CIAO
     set_priority (
         const char * plan_id,
         const char * cid,
-        const ::Deployment::Sched_Params & nm_params);
+        const ::Deployment::Sched_Params & nm_params)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
     // ********* CIAO Specific Helper functions ************
 
@@ -160,7 +176,7 @@ namespace CIAO
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
     create_node_app_manager (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa)
-      =0;
+      ACE_THROW_SPEC ((CORBA::SystemException))=0;
 
     /// Actual implementation of the @c get_shared_components IDL operation
     virtual ::Deployment::ComponentPlans *
@@ -267,7 +283,8 @@ namespace CIAO
 
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
     create_node_app_manager (CORBA::ORB_ptr orb,
-                             PortableServer::POA_ptr poa);
+                             PortableServer::POA_ptr poa)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
   class NodeApplicationManager_Impl;
@@ -293,7 +310,10 @@ namespace CIAO
                             );
 
     void destroyManager
-    (Deployment::NodeApplicationManager_ptr manager);
+    (Deployment::NodeApplicationManager_ptr manager)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StopError,
+                       Deployment::InvalidReference));
 
   protected:
     /// Since this class is reference counted, making this
@@ -305,7 +325,8 @@ namespace CIAO
 
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
     create_node_app_manager (CORBA::ORB_ptr orb,
-                             PortableServer::POA_ptr poa);
+                             PortableServer::POA_ptr poa)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;
   };

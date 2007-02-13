@@ -18,15 +18,19 @@ namespace CIAO
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_component_def (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                      CORBA::IRObject::_nil ());
   }
 
   CORBA::IRObject_ptr
   Home_Servant_Impl_Base::get_home_def (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                      CORBA::IRObject::_nil ());
   }
 
 }

@@ -16,6 +16,7 @@ Reply_Handler::Reply_Handler (
 
 void
 Reply_Handler::short_sleep (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   check_counter();
 
@@ -28,6 +29,7 @@ Reply_Handler::short_sleep (void)
 void
 Reply_Handler::short_sleep_excep (
     ::Messaging::ExceptionHolder *ex)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   check_counter();
 

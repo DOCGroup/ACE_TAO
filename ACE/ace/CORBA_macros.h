@@ -47,8 +47,6 @@
 #  define ACE_del_bad_alloc
 #endif
 
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-
 // If you wish to you use these macros for emulating exceptions on
 // platforms which lack native exception support, you need to do the
 // following:
@@ -167,8 +165,17 @@
       throw EXCEPTION
 
 // Throwing an exception when the function requires a return value.
-# define ACE_THROW_RETURN(EXCEPTION,RETV) \
+# if defined (__HP_aCC)
+#   define ACE_THROW_RETURN(EXCEPTION, RETV) \
+       do \
+         { \
+           throw EXCEPTION; \
+           return RETV; \
+         } while (0)
+# else
+#   define ACE_THROW_RETURN(EXCEPTION,RETV) \
       throw EXCEPTION
+# endif
 
 // For compilers with native exceptions, we can simply use try to try. ;-)
 // do {} while (0) is required to avoid compilation warnings.
@@ -408,38 +415,34 @@
 
 #endif /* ! ACE_USES_NATIVE_EXCEPTIONS */
 
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-
 // ACE_HAS_EXCEPTIONS is not the same as ACE_NEW_THROWS_EXCEPTIONS.
 #if defined(ACE_NEW_THROWS_EXCEPTIONS)
 
 #   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { try { POINTER = new CONSTRUCTOR; } \
-       catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; throw EXCEPTION; } \
+       catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
 
 #else /* ! ACE_NEW_THROWS_EXCEPTIONS */
 
 #   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { POINTER = new CONSTRUCTOR; \
-       if (POINTER == 0) { errno = ENOMEM; throw EXCEPTION; } \
+       if (POINTER == 0) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 # define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw EXCEPTION;
+    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 # define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw EXCEPTION;
+    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 # define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw EXCEPTION;
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+    if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
 //@{
 /**
@@ -556,8 +559,6 @@
 # if !defined ACE_PRINT_EXCEPTION
 #   define ACE_PRINT_EXCEPTION(EX,INFO) ACE_PRINT_TAO_EXCEPTION(EX,INFO)
 # endif /* ACE_PRINT_EXCEPTION */
-
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 #include /**/ "ace/post.h"
 

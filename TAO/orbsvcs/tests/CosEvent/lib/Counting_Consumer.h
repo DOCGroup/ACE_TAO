@@ -49,8 +49,10 @@ public:
 
   // = The CosEventComm::PushConsumer methods
 
-  virtual void push (const CORBA::Any& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void push (const CORBA::Any& events)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
   CORBA::ULong event_count;
@@ -93,7 +95,8 @@ public:
   CORBA::Any *try_pull (CORBA::Boolean_out has_event);
 
   // = The CosEventComm::PullConsumer methods
-  virtual void disconnect_pull_consumer (void);
+  virtual void disconnect_pull_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
   CORBA::ULong event_count;

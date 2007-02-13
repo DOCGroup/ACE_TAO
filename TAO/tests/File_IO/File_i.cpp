@@ -44,6 +44,8 @@ FileImpl::System::_default_POA (void)
 File::Descriptor_ptr
 FileImpl::System::open (const char *file_name,
                         CORBA::Long flags)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   // Do an ACE_OS::open
   ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
@@ -52,7 +54,7 @@ FileImpl::System::open (const char *file_name,
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
-      throw File::IOError ();
+      ACE_THROW_RETURN (File::IOError (), 0);
     }
 
   char file_descriptor_buffer[BUFSIZ];
@@ -149,6 +151,8 @@ FileImpl::Descriptor::fd (void)
 
 CORBA::Long
 FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   ACE_HANDLE file_descriptor = this->fd ();
 
@@ -160,11 +164,13 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
   if (len > 0)
     return len;
 
-  throw File::IOError ();
+  ACE_THROW_RETURN (File::IOError (), 0);
 }
 
 File::Descriptor::DataBuffer *
 FileImpl::Descriptor::read (CORBA::Long num_bytes)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   ACE_HANDLE file_descriptor = this->fd ();
 
@@ -178,12 +184,14 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes)
                                              1);
 
   File::Descriptor::DataBuffer::freebuf (buffer);
-  throw File::IOError ();
+  ACE_THROW_RETURN (File::IOError (), 0);
 }
 
 CORBA::ULong
 FileImpl::Descriptor::lseek (CORBA::ULong offset,
                              CORBA::Long whence)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   ACE_HANDLE file_descriptor = this->fd ();
 
@@ -191,13 +199,14 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                                                     offset,
                                                     whence);
   if (result == -1)
-    throw File::IOError ();
+    ACE_THROW_RETURN (File::IOError (), 0);
 
   return (CORBA::ULong) result;
 }
 
 void
 FileImpl::Descriptor::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ACE_HANDLE for this object reference
   ACE_HANDLE file_descriptor = this->fd ();

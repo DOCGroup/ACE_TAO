@@ -40,37 +40,50 @@ public:
 
 public:
   virtual char *
-  name (void);
+  name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void
-  destroy (void);
+  destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   virtual void
   tao_ft_interception_point (
     PortableInterceptor::ServerRequestInfo_ptr ri,
-    CORBA::OctetSeq_out ocs);
+    CORBA::OctetSeq_out ocs)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
   virtual void
   receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void
   receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void
   send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void
   send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void
   send_other (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
 private:
   static ACE_THR_FUNC_RETURN

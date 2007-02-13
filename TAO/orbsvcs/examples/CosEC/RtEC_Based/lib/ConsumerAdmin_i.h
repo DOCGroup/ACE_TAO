@@ -47,11 +47,13 @@ public:
             RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
 
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier(void);
+    obtain_push_supplier(void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a new ProxyPushSupplier_ptr.
 
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier(void);
+    obtain_pull_supplier(void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns a new ProxyPullSupplier_ptr.
 
 private:

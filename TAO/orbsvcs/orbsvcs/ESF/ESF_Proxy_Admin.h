@@ -32,32 +32,32 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * The EVENT_CHANNEL interface must implement:
  *
  * @verbatim
- * /// create a new proxy
  * void create_proxy (PROXY*&);
+ * // create a new proxy
  *
- * /// destroy a proxy
  * void destroy_proxy (PROXY*);
+ * // destroy a proxy
  *
- * /// create a proxy collection
  * void create_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
+ * // create a proxy collection
  *
- * /// destroy a proxy collection
  * void destroy_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
+ * // destroy a proxy collection
  * @endverbatim
  *
  * In addition to the requirements imposed by
  * TAO_ESF_Proxy_Collection<>, the PROXY interface must define:
  *
  * @verbatim
- * /// The T_ptr for the IDL interface implemented by the PROXY.
  * typename .... _ptr_type;
+ * // The T_ptr for the IDL interface implemented by the PROXY.
  *
- * /// The T_var for the IDL interface implemented by the PROXY.
  * typename .... _var_type;
+ * // The T_var for the IDL interface implemented by the PROXY.
  *
- * /// activate the proxy and return the object reference
  * PROXY::_ptr_type
  * PROXY::activate (void) throw ();
+ * // activate the proxy and return the object reference
  * @endverbatim
  *
  */
@@ -72,7 +72,8 @@ public:
   virtual ~TAO_ESF_Proxy_Admin (void);
 
   /// Iterate over its internal collection.
-  void for_each (TAO_ESF_Worker<PROXY> *worker);
+  void for_each (TAO_ESF_Worker<PROXY> *worker)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
   // the MSVC compiler (v6.0) gets confused when we do so.  So we have
@@ -81,21 +82,24 @@ public:
   // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
-      obtain (void);
+      obtain (void)
+          ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * The Event Channel that owns this Admin object is going
    * down. Invoke <shutdown> on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <proxy> has connected, this is invoked when the proxy's client
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void connected (PROXY *proxy);
+  virtual void connected (PROXY *proxy)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <proxy> has reconnected, i.e. its client has invoked the
@@ -103,14 +107,16 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void reconnected (PROXY *proxy);
+  virtual void reconnected (PROXY *proxy)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <proxy> has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void disconnected (PROXY *proxy);
+  virtual void disconnected (PROXY *proxy)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   /// The Event Channel we belong to

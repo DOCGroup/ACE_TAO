@@ -12,6 +12,7 @@ LatencyTest_Impl::LatencyTest_Impl (CORBA::ORB_ptr orb)
 
 CORBA::Long
 LatencyTest_Impl::makeCall (CORBA::Long send_time)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "Sending Time back \n"));
@@ -21,6 +22,7 @@ LatencyTest_Impl::makeCall (CORBA::Long send_time)
 
 void
 LatencyTest_Impl::shutdown ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

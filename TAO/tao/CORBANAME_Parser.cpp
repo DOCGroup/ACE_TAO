@@ -37,6 +37,7 @@ CORBA::Object_ptr
 TAO_CORBANAME_Parser::
 parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                      ACE_CString &key_string)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Arg_Traits<CORBA::Object>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_id (key_string.c_str ());
@@ -63,6 +64,7 @@ CORBA::Object_ptr
 TAO_CORBANAME_Parser::parse_string (const char *ior,
                                     CORBA::ORB_ptr orb
                                     )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   // Skip the prefix, we know it is there because this method in only
@@ -135,7 +137,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
           obj = name_context._retn ();
         }
     }
-  catch (const ::CORBA::SystemException& ex)
+  catch ( ::CORBA::SystemException& ex)
     {
       if (TAO_debug_level >= 4)
         {

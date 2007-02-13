@@ -48,6 +48,7 @@ TAO_Notify_Tests_StructuredPushSupplier::disconnect_from_proxy (void)
 
 void
 TAO_Notify_Tests_StructuredPushSupplier::disconnect_structured_push_supplier (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   bool this_method_used_only_by_notify_service = false;
   ACE_ASSERT(this_method_used_only_by_notify_service);

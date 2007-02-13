@@ -35,7 +35,9 @@ public:
   // Contructor.
 
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
-                             const CosNotification::EventTypeSeq & removed);
+                             const CosNotification::EventTypeSeq & removed)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType));
   // Offer change is conveyed here.
 
 protected:
@@ -56,7 +58,9 @@ public:
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNotifyComm::InvalidEventType));
   // Subscription change is conveyed here.
 
 protected:

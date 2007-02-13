@@ -1,14 +1,22 @@
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file    Scheduler.h
- *
- *  $Id$
- *
- *  @author David Levine
- */
-//=============================================================================
-
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    sched
+//
+// = FILENAME
+//    Scheduler.h
+//
+// = CREATION DATE
+//    23 January 1997
+//
+// = AUTHOR
+//    David Levine
+//
+// ============================================================================
 
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -29,15 +37,13 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Sched/sched_export.h"
 
-/**
- * @class ACE_Scheduler
- *
- * @brief Thread scheduler interface.
- *
- * This virtual base class is the interface to either an off-line
- * scheduler, or to the necessary on-line component of the Scheduler.
- */
 class TAO_RTSched_Export ACE_Scheduler
+  // = TITLE
+  //    Thread scheduler interface.
+  //
+  // = DESCRIPTION
+  //    This virtual base class is the interface to either an off-line
+  //    scheduler, or to the necessary on-line component of the Scheduler.
 {
 public:
   typedef u_int mode_t;
@@ -55,8 +61,8 @@ public:
 
   // Map some types to simplify re-use.
 
-  /// Objects are named by unique strings.
   typedef const char *Object_Name;
+  // Objects are named by unique strings.
 
   static const mode_t CURRENT_MODE;
 
@@ -98,106 +104,98 @@ public:
   static void output (FILE *, const status_t);
 
   // = Initialize the scheduler.
-  /**
-   * The minimum and maximum priority are the OS-specific priorities that
-   * are used when creating the schedule (assigning priorities).  The
-   * minimum_priority is the priority value of the lowest priority.
-   * It may be numerically higher than the maximum_priority, on OS's such
-   * as VxWorks that use lower values to indicate higher priorities.
-   *
-   * When Scheduler::schedule is called, the schedule is output to the
-   * file named by "runtime_filename" if it is non-zero.
-   * This file is compilable; it is linked into the runtime executable
-   * to provide priorities to the runtime scheduling component.
-   * If the "rt_info_filename" is non-zero, the RT_Info for
-   * every task is exported to it.  It is not used at runtime.
-   * If the "timeline_filename" is non-zero, the timeline output
-   * file is created.  It is not used at runtime.
-   *
-   * The runtime scheduling component ignores these filenames.  It just
-   * uses the priorities that were linked in to the executable, after
-   * converting them to platform-specific values.
-   */
   virtual void init (const int minimum_priority,
                      const int maximum_priority,
                      const char *runtime_filename = 0,
                      const char *rt_info_filename = 0,
                      const char *timeline_filename = 0) = 0;
+  // The minimum and maximum priority are the OS-specific priorities that
+  // are used when creating the schedule (assigning priorities).  The
+  // minimum_priority is the priority value of the lowest priority.
+  // It may be numerically higher than the maximum_priority, on OS's such
+  // as VxWorks that use lower values to indicate higher priorities.
+  //
+  // When Scheduler::schedule is called, the schedule is output to the
+  // file named by "runtime_filename" if it is non-zero.
+  // This file is compilable; it is linked into the runtime executable
+  // to provide priorities to the runtime scheduling component.
+  // If the "rt_info_filename" is non-zero, the RT_Info for
+  // every task is exported to it.  It is not used at runtime.
+  // If the "timeline_filename" is non-zero, the timeline output
+  // file is created.  It is not used at runtime.
+  //
+  // The runtime scheduling component ignores these filenames.  It just
+  // uses the priorities that were linked in to the executable, after
+  // converting them to platform-specific values.
 
   // = Registers a task.
-  /**
-   * If the Task registration succeeds, this function returns SUCCEEDED
-   * and sets "handle" to a unique identifier for the task.
-   * Otherwise, it returns either VIRTUAL_MEMORY_EXHAUSTED or
-   * TASK_ALREADY_REGISTERED sets the handle to 0.  (A task may
-   * only be registered once.)
-   * The RT_Info * array is indexed by mode; there must be one element for
-   * each mode, as specified by number_of_modes.  If a task does not
-   * run in a mode, then its entry in the array for that mode must
-   * be 0.
-   */
   virtual status_t register_task (RT_Info *[],
                                   const u_int number_of_modes,
                                   handle_t &handle) = 0;
+  // If the Task registration succeeds, this function returns SUCCEEDED
+  // and sets "handle" to a unique identifier for the task.
+  // Otherwise, it returns either VIRTUAL_MEMORY_EXHAUSTED or
+  // TASK_ALREADY_REGISTERED sets the handle to 0.  (A task may
+  // only be registered once.)
+  // The RT_Info * array is indexed by mode; there must be one element for
+  // each mode, as specified by number_of_modes.  If a task does not
+  // run in a mode, then its entry in the array for that mode must
+  // be 0.
 
-  /**
-   * Tries to find the RT_Info corresponding to <name> in the RT_Info
-   * database.  Returns SUCCEEDED if <name> was found and <rtinfo> was
-   * set.  Returns UNKNOWN_TASK if <name> was not found, but <rtinfo>
-   * was set to a newly allocated RT_Info.  In this UNKNOWN_TASK case,
-   * the task must call RT_Info::set to fill in execution properties.
-   * In the SUCCEEDED and UNKNOWN_TASK cases, this->register_task
-   * (rtinfo, 0, handle) is called.  Returns FAILED if an error
-   * occurs.
-   *
-   * One motivation for allocating RT_Info's from within the Scheduler
-   * is to allow RT_Infos to persist after the tasks that use them.
-   * For instance, we may want to call this->schedule right before the
-   * application exits a configuration run.  If the tasks have been
-   * deleted (deleting their RT_Infos with them), this->schedule will
-   * fail.
-   */
   virtual status_t get_rt_info (Object_Name name,
                                 RT_Info* &rtinfo);
+  // Tries to find the RT_Info corresponding to <name> in the RT_Info
+  // database.  Returns SUCCEEDED if <name> was found and <rtinfo> was
+  // set.  Returns UNKNOWN_TASK if <name> was not found, but <rtinfo>
+  // was set to a newly allocated RT_Info.  In this UNKNOWN_TASK case,
+  // the task must call RT_Info::set to fill in execution properties.
+  // In the SUCCEEDED and UNKNOWN_TASK cases, this->register_task
+  // (rtinfo, 0, handle) is called.  Returns FAILED if an error
+  // occurs.
+  //
+  // One motivation for allocating RT_Info's from within the Scheduler
+  // is to allow RT_Infos to persist after the tasks that use them.
+  // For instance, we may want to call this->schedule right before the
+  // application exits a configuration run.  If the tasks have been
+  // deleted (deleting their RT_Infos with them), this->schedule will
+  // fail.
 
-  /// Obtains an RT_Info based on its "handle".
   virtual status_t lookup_rt_info (handle_t handle,
                                    RT_Info* &rtinfo) = 0;
+  // Obtains an RT_Info based on its "handle".
 
-  /// Obtains a Config_Info based on its priority.
   virtual status_t lookup_config_info (Preemption_Priority priority,
                                        Config_Info* &config_info) = 0;
+  // Obtains a Config_Info based on its priority.
 
 
 
   // = Computes the schedule.
-  /// This actually generates the files.
   virtual status_t
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set) = 0;
+  // This actually generates the files.
 
   // = Access a thread priority.
-  /**
-   * Defines "priority" as the priority that was assigned to the Task that
-   * was assigned "handle", for the specified mode.  Defines "subpriority"
-   * as the relative ordering (due to dependencies) within the priority.
-   * Returns 0 on success, or -1 if an invalid mode or handle are supplied.
-   * Queue numbers are platform-independent priority values, ranging from
-   * a highest priority value of 0 to the lowest priority value, which is
-   * returned by "minimum_priority_queue ()". The current and deadline times
-   * are part of the scheduling service implementation interface, but may be
-   * ignored by some implementations and used by others.
-   */
   virtual int priority (const handle_t handle,
                         OS_Thread_Priority &priority,
                         Sub_Priority &subpriority,
                         Preemption_Priority &preemption_prio,
                         const mode_t = CURRENT_MODE) const = 0;
+  // Defines "priority" as the priority that was assigned to the Task that
+  // was assigned "handle", for the specified mode.  Defines "subpriority"
+  // as the relative ordering (due to dependencies) within the priority.
+  // Returns 0 on success, or -1 if an invalid mode or handle are supplied.
+  // Queue numbers are platform-independent priority values, ranging from
+  // a highest priority value of 0 to the lowest priority value, which is
+  // returned by "minimum_priority_queue ()". The current and deadline times
+  // are part of the scheduling service implementation interface, but may be
+  // ignored by some implementations and used by others.
 
   // = Access the platform-independent priority value of the lowest-priority
   //   thread.
-  /// This is intended for use by the Event Channel, so it can determine the
-  /// number of priority dispatch queues to create.
   u_int minimum_priority_queue () const { return minimum_priority_queue_; }
+  // This is intended for use by the Event Channel, so it can determine the
+  // number of priority dispatch queues to create.
 
   // = Access the number of modes.
   u_int modes () const { return modes_; }
@@ -218,14 +216,14 @@ public:
   status_t status () const { return status_; }
 
   // = Access the current output (debugging) level.
-  /// Default is 0; set to 1 to print out schedule, by task.  Set
-  /// to higher than one for debugging info.
   u_int output_level () const { return output_level_; }
+  // Default is 0; set to 1 to print out schedule, by task.  Set
+  // to higher than one for debugging info.
 
   // = Set the scheduler output (debugging) level.
-  /// the only supported levels are 0 (quiet), 1 (verbose) and 2
-  /// (debug)
   void output_level (const u_int level) { output_level_ = level; }
+  // the only supported levels are 0 (quiet), 1 (verbose) and 2
+  // (debug)
 
   static int add_dependency(RT_Info* rt_info,
                             const Dependency_Info& d);
@@ -236,10 +234,10 @@ public:
   static void export_to_file (RT_Info*, FILE* file);
   static void export_to_file (RT_Info&, FILE* file);
 
-  /// provide the thread priority and queue type for the given priority level
   virtual int dispatch_configuration (const Preemption_Priority &p_priority,
                                       OS_Thread_Priority& priority,
                                       Dispatching_Type & d_type);
+  // provide the thread priority and queue type for the given priority level
 
 
 protected:
@@ -269,18 +267,16 @@ private:
   typedef ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection_Iterator;
   typedef ACE_Map_Entry<EXT, INT> Info_Collection_Entry;
 
-  /// A binding of name to rt_info.  This is the mapping for every
-  /// rt_info in the process.
   Info_Collection info_collection_;
+  // A binding of name to rt_info.  This is the mapping for every
+  // rt_info in the process.
 
   static ACE_Scheduler *instance_;
 
-  /**
-   * The platform-independent priority value of the Event Channel's
-   * minimum priority dispatch queue.  The value of the maximum priority
-   * dispatch queue is always 0.
-   */
   u_int minimum_priority_queue_;
+  // The platform-independent priority value of the Event Channel's
+  // minimum priority dispatch queue.  The value of the maximum priority
+  // dispatch queue is always 0.
 
   u_int modes_;
   u_int tasks_;

@@ -21,9 +21,11 @@ public:
   Object_Factory_i (CORBA::ORB_ptr orb,
                     CORBA::ULong len);
 
-  Two_Objects_Test::First_ptr create_first (void);
+  Two_Objects_Test::First_ptr create_first (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  Two_Objects_Test::Second_ptr create_second (void);
+  Two_Objects_Test::Second_ptr create_second (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

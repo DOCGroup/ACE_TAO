@@ -70,7 +70,7 @@ if ($sv != 0) {
 unlink $iorfile;
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation no");
+$SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill (60);
 
 if ($sv != 0) {

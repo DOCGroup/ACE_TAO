@@ -12,9 +12,11 @@ public:
    : orb_ (CORBA::ORB::_duplicate (orb)) {
   }
 
-  void shutdown ();
+  void shutdown ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy ();
+  void destroy ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -22,12 +24,14 @@ private:
 
 void
 foo_i::shutdown ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
 
 void
 foo_i::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   bool expected_exception_raised = false;
 

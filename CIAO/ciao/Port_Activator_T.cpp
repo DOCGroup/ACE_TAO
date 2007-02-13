@@ -75,7 +75,8 @@ namespace CIAO
         return s;
       }
 
-    throw CORBA::OBJECT_NOT_EXIST ();
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                      0);
   }
 }
 

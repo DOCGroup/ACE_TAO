@@ -37,7 +37,7 @@ ECMS_Driver::run (int argc, char* argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -206,7 +206,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       // The typecode name standard, the encode method is not (in
       // general the CDR interface is not specified).
       if (!(cdr << info))
-        throw CORBA::MARSHAL ();
+        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
       // Here we marshall a non-IDL type.
       cdr << other;
@@ -474,6 +474,7 @@ Test_Supplier::svc ()
 
 void
 Test_Supplier::disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();

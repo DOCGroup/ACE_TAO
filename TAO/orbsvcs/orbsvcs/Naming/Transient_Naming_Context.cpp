@@ -1,13 +1,17 @@
-//=============================================================================
-/**
- *  @file   Transient_Naming_Context.cpp
- *
- *  $Id$
- *
- *  @author Marina Spivak <marina@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//   Transient_Naming_Context.cpp
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+// ============================================================================
 #include "ace/Auto_Ptr.h"
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
@@ -18,7 +22,8 @@ ACE_RCSID(Naming, Transient_Naming_Context, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Transient_Bindings_Map::unbind (const char *id, const char *kind)
+TAO_Transient_Bindings_Map::unbind (const char *id,
+                                    const char *kind)
 {
   TAO_ExtId name (id, kind);
   return this->map_.unbind (name);
@@ -193,7 +198,8 @@ TAO_Transient_Naming_Context::new_context (void)
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                      CosNaming::NamingContext::_nil ());
 
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];

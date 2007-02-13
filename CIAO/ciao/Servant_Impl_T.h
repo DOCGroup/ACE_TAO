@@ -55,37 +55,47 @@ namespace CIAO
     // Operations for CCMObject interface.
 
     virtual CORBA::Boolean
-    same_component (CORBA::Object_ptr object_ref);
+    same_component (CORBA::Object_ptr object_ref)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::CCMHome_ptr
-    get_ccm_home ();
+    get_ccm_home ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr
-    _get_component ();
+    _get_component ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Components::SessionComponent_ptr
-    get_executor ();
+    get_executor ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
    // CIAO-specific operations.
 
     void
-    ciao_preactivate ();
+    ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    ciao_activate ();
+    ciao_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    ciao_postactivate ();
+    ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// @@NOTE: The busted operation.
     void
-    ciao_passivate ();
+    ciao_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     CORBA::Boolean
-    is_activated ();
+    is_activated ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    activate_component ();
+    activate_component ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
 

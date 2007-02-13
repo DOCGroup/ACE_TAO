@@ -32,6 +32,7 @@ Tie_i::~Tie_i (void)
 // Return this->value
 CORBA::Long
 Tie_i::doit (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -47,6 +48,7 @@ A_i::A_i (CORBA::Long value,
 // Return this->value
 CORBA::Long
 A_i::doit (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -69,6 +71,7 @@ Outer_i::B_i::B_i (CORBA::Long value,
 // Return this->value
 CORBA::Long
 Outer_i::B_i::doit (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
@@ -91,6 +94,7 @@ Outer_i::Inner_i::C_i::C_i (CORBA::Long value,
 // Return this->value
 CORBA::Long
 Outer_i::Inner_i::C_i::doit (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }

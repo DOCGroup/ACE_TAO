@@ -57,7 +57,7 @@ int main (int argc, char* argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       Fl_Window window (300, 100);
 

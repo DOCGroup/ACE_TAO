@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/Environment.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

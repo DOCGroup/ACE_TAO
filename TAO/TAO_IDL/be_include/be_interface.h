@@ -368,6 +368,11 @@ private:
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
 
+  static void gen_throw_spec (UTL_ExceptList *list,
+                              TAO_OutStream *os);
+  // Helper for the helpers that generate collocated static
+  // base class methods.
+
 protected:
   int var_out_seq_decls_gen_;
   // Have these been done already?

@@ -23,7 +23,7 @@ class ACE_Based_Pointer_Repository_Rep
 public:
   // Useful typedefs.
   typedef ACE_Map_Manager <void *, size_t, ACE_Null_Mutex> MAP_MANAGER;
-  typedef ACE_Map_Iterator <void *, size_t, ACE_Null_Mutex> MAP_ITERATOR;
+  typedef ACE_Map_Iterator < void *, size_t, ACE_Null_Mutex> MAP_ITERATOR;
   typedef ACE_Map_Entry <void *, size_t> MAP_ENTRY;
 
   /// Keeps track of the mapping between addresses and their associated
@@ -50,7 +50,8 @@ ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository (void)
 // Search for appropriate base address in repository
 
 int
-ACE_Based_Pointer_Repository::find (void *addr, void *&base_addr)
+ACE_Based_Pointer_Repository::find (void *addr,
+                                    void *&base_addr)
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::find");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
@@ -61,7 +62,7 @@ ACE_Based_Pointer_Repository::find (void *addr, void *&base_addr)
        iter.advance ())
     // Check to see if <addr> is within any of the regions.
     if (addr >= ce->ext_id_
-        && addr < ((char *)ce->ext_id_ + ce->int_id_))
+        && addr < ((char *) ce->ext_id_ + ce->int_id_))
       {
         // Assign the base address.
         base_addr = ce->ext_id_;
@@ -77,7 +78,8 @@ ACE_Based_Pointer_Repository::find (void *addr, void *&base_addr)
 // existing entry.
 
 int
-ACE_Based_Pointer_Repository::bind (void *addr, size_t size)
+ACE_Based_Pointer_Repository::bind (void *addr,
+                                    size_t size)
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::bind");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
@@ -103,7 +105,7 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
       // Check to see if <addr> is within any of the regions and if
       // so, unbind the key from the map.
       if (addr >= ce->ext_id_
-          && addr < ((char *)ce->ext_id_ + ce->int_id_))
+          && addr < ((char *) ce->ext_id_ + ce->int_id_))
         // Unbind base address.
         return this->rep_->addr_map_.unbind (ce->ext_id_);
     }

@@ -36,6 +36,20 @@
 
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
+// An explicit check for Tornado 2.1, which had very limited release.
+// See include/makeinclude/platform_vxworks5.x_g++.GNU for details
+// on version conventions used by ACE for VxWorks.
+# if ACE_VXWORKS == 0x542
+    // Older versions of Tornado accidentally omitted math routines from
+    // the link library to support long long arithmetic. These could be
+    // found and used from another library in the distro.
+    // Recent versions of Tornado include these symbols, so we no longer
+    // have a problem.
+#   define ACE_LACKS_LONGLONG_T
+#   define ACE_LACKS_CLEARERR
+#   define ACE_LACKS_AUTO_PTR
+# endif /* ACE_VXWORKS == 0x542 */
+
 # if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
 	// GNU 3.3+ toolchain supports long long types but fails to define this so STL
 	// skips some definitions
@@ -232,6 +246,7 @@
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_WCTYPE_H
+#define ACE_LACKS_SIGVAL_T
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H

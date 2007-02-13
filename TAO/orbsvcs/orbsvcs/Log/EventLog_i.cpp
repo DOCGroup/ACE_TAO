@@ -40,6 +40,7 @@ TAO_EventLog_i::~TAO_EventLog_i ()
 
 DsLogAdmin::Log_ptr
 TAO_EventLog_i::copy (DsLogAdmin::LogId &id)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the log.
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
@@ -56,6 +57,7 @@ TAO_EventLog_i::copy (DsLogAdmin::LogId &id)
 
 DsLogAdmin::Log_ptr
 TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the log supplying the log id.
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
@@ -73,6 +75,7 @@ TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
 
 void
 TAO_EventLog_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Send event to indicate the log has been deleted.
   notifier_->object_deletion (logid_);
@@ -101,12 +104,14 @@ TAO_EventLog_i::activate (void)
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_EventLog_i::for_consumers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->event_channel_->for_consumers ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
 TAO_EventLog_i::for_suppliers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->event_channel_->for_suppliers ();
 }

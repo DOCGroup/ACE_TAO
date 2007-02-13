@@ -74,7 +74,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -137,7 +137,7 @@ Client::svc (void)
           CORBA::String_var argv0 = CORBA::string_dup ("dummy_argv");
           char* argv[1] = { argv0.inout () };
           CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, argv);
+            CORBA::ORB_init (argc, argv, "");
 
           CORBA::Object_var object =
             orb->string_to_object (this->ior_);

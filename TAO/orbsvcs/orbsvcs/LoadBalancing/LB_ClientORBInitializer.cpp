@@ -12,12 +12,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_LB_ClientORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ClientRequestInterceptor_ptr tmp;
   ACE_NEW_THROW_EX (tmp,

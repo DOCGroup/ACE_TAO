@@ -10,7 +10,7 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 # include "tao/ClientRequestInterceptor_Adapter_Factory.h"
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
+#endif /* TAO_HAS_INTERCEPTORS == 1*/
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Base.inl"
@@ -24,13 +24,6 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace
-{
-  // Exception used to represent non-CORBA exceptions.  A global
-  // instance is used since it will never be modified.
-  CORBA::UNKNOWN /* const */ unknown_exception;
-}
-
 namespace TAO
 {
   Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
@@ -38,7 +31,7 @@ namespace TAO
                                     TAO_Stub *stub,
                                     TAO_Operation_Details &details,
                                     bool response_expected,
-                                    bool TAO_INTERCEPTOR (request_is_remote))
+                                    bool request_is_remote)
     : details_ (details)
     , forwarded_to_ (0)
     , response_expected_ (response_expected)
@@ -52,15 +45,18 @@ namespace TAO
     , invoke_status_ (TAO_INVOKE_START)
     , caught_exception_ (0)
     , is_remote_request_ (request_is_remote)
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
+#if TAO_HAS_INTERCEPTORS == 0
+    ACE_UNUSED_ARG (request_is_remote);
+#endif /*TAO_HAS_INTERCEPTORS == 0*/
   }
 
   Invocation_Base::~Invocation_Base (void)
   {
 #if TAO_HAS_INTERCEPTORS == 1
     adapter_ = 0;
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
   }
 
   void
@@ -85,22 +81,21 @@ namespace TAO
 
   Invocation_Status
   Invocation_Base::send_request_interception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (adapter_ != 0)
       {
         try
           {
-            // This is a begin interception point
-            this->adapter_->send_request (*this);
+            this->adapter_->send_request (*this
+                                         );
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
-            throw;
-          }
-        catch (...)
-          {
-            (void) this->handle_all_exception ();
+            (void) this->handle_any_exception (&ex
+                                              );
+
+            // This is a begin interception point
             throw;
           }
 
@@ -114,6 +109,7 @@ namespace TAO
 
   Invocation_Status
   Invocation_Base::receive_reply_interception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (adapter_ != 0)
       {
@@ -123,12 +119,8 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
-            throw;
-          }
-        catch (...)
-          {
-            (void) this->handle_all_exception ();
+            (void) this->handle_any_exception (&ex );
+
             throw;
           }
 
@@ -146,6 +138,7 @@ namespace TAO
 
   Invocation_Status
   Invocation_Base::receive_other_interception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (adapter_ != 0)
       {
@@ -156,11 +149,7 @@ namespace TAO
         catch ( ::CORBA::Exception& ex)
           {
             (void) this->handle_any_exception (&ex);
-            throw;
-          }
-        catch (...)
-          {
-            (void) this->handle_all_exception ();
+
             throw;
           }
 
@@ -172,7 +161,8 @@ namespace TAO
   }
 
   PortableInterceptor::ReplyStatus
-  Invocation_Base::handle_any_exception (CORBA::Exception *ex)
+  Invocation_Base::handle_any_exception (CORBA::Exception *ex
+                                         )
   {
     this->exception (ex);
 
@@ -181,7 +171,8 @@ namespace TAO
 
     if (adapter_ != 0)
       {
-        this->adapter_->receive_exception (*this);
+        this->adapter_->receive_exception (*this
+                                          );
 
         if (this->forwarded_to_.in ())
           {
@@ -199,16 +190,19 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::handle_all_exception (void)
   {
-    this->exception (&unknown_exception);
+    CORBA::UNKNOWN ex;
+    this->exception (&ex);
 
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
 
     if (adapter_ != 0)
       {
-        this->adapter_->receive_exception (*this);
+        this->adapter_->receive_exception (*this
+                                          );
 
-        status = this->adapter_->reply_status (*this);
+        status =
+          this->adapter_->reply_status (*this);
       }
 
     return status;
@@ -238,7 +232,7 @@ namespace TAO
         return -1;
       }
   }
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

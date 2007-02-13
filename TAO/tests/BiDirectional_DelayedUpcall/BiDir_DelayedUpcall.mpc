@@ -11,10 +11,10 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
   Source_Files {
-    testC.cpp
-    testS.cpp
     test_i.cpp
     server.cpp
+    testC.cpp
+    testS.cpp
   }
   IDL_Files {
   }
@@ -23,10 +23,10 @@ project(*Server): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_mi
 project(*Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
   Source_Files {
-    testC.cpp
-    testS.cpp
     test_i.cpp
     client.cpp
+    testC.cpp
+    testS.cpp
   }
   IDL_Files {
   }

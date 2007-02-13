@@ -18,9 +18,11 @@ public:
   /// PushConsumer methods.
   //@{
   /// Logs each event.  Initiates shutdown after receiving 100 events.
-  virtual void push (const RtecEventComm::EventSet &events);
+  virtual void push (const RtecEventComm::EventSet &events)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   /// No-op.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 private:
@@ -47,6 +49,7 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 
 void
 EC_Consumer::push (const RtecEventComm::EventSet &events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -60,6 +63,7 @@ EC_Consumer::push (const RtecEventComm::EventSet &events)
 
 void
 EC_Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -103,7 +107,7 @@ main (int argc, char *argv[])
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) == -1)
         return 1;

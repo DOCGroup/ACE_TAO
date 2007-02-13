@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    AbstractInterfaceDef_i.h
- *
- *  $Id$
- *
- *  AbstractInterfaceDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    AbstractInterfaceDef_i.h
+//
+// = DESCRIPTION
+//    AbstractInterfaceDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_ABSTRACTINTERFACEDEF_I_H
 #define TAO_ABSTRACTINTERFACEDEF_I_H
@@ -42,23 +45,26 @@ class TAO_IFRService_Export TAO_AbstractInterfaceDef_i
   //    Represents an abstract interface definition.
   //
 public:
-  /// Constructor
   TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_AbstractInterfaceDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

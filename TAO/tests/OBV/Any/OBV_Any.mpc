@@ -11,10 +11,12 @@ project(*idl): taoidldefaults, valuetype {
 project(*Server): taoexe, portableserver, valuetype {
   after += *idl
   Source_Files {
-    AnyC.cpp
-    AnyS.cpp
     AnyS_impl.cpp
     server.cpp
+  }
+  Source_Files {
+    AnyC.cpp
+    AnyS.cpp
   }
   IDL_Files {
   }
@@ -22,9 +24,12 @@ project(*Server): taoexe, portableserver, valuetype {
 
 project(*Client): taoexe, valuetype {
   after += *idl
+  after += *Server
+  Source_Files {
+    client.cpp
+  }
   Source_Files {
     AnyC.cpp
-    client.cpp
   }
   IDL_Files {
   }

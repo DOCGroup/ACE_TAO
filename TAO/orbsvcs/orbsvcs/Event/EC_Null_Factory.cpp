@@ -121,7 +121,7 @@ TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
   int argc = 0;
   char **argv = 0;
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv);
+    CORBA::ORB_init (argc, argv, "");
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
   return new TAO_EC_Reactive_Timeout_Generator (reactor);
 }

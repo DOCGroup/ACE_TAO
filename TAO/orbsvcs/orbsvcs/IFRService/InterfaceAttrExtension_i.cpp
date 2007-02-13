@@ -34,6 +34,7 @@ TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i (void)
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -45,6 +46,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface (
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *fifd = 0;
   ACE_NEW_RETURN (fifd,
@@ -242,6 +244,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute (
     const CORBA::ExceptionDefSeq &get_exceptions,
     const CORBA::ExceptionDefSeq &set_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtAttributeDef::_nil ());
 
@@ -266,6 +269,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
     const CORBA::ExceptionDefSeq &get_exceptions,
     const CORBA::ExceptionDefSeq &set_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder (name);
   ACE_Configuration_Section_Key new_key;

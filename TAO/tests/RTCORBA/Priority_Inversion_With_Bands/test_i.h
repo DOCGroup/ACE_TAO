@@ -22,11 +22,13 @@ public:
           RTCORBA::Priority high_priority);
 
   /// Initialize the server.
-  void initialize (CORBA::ULong total_iterations);
+  void initialize (CORBA::ULong total_iterations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Test method.
   void method (CORBA::ULong work,
-               const char *iteration);
+               const char *iteration)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Our POA.
   PortableServer::POA_ptr _default_POA (void);

@@ -53,12 +53,15 @@ namespace TAO
                     bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
-    virtual Dynamic::ParameterList *arguments (void);
+    virtual Dynamic::ParameterList *arguments (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
+    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time)
+      ACE_THROW_SPEC ((CORBA::Exception));
 
-    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
+    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr)
+      ACE_THROW_SPEC ((CORBA::Exception));
   private:
 
     CORBA::ExceptionList *excp_list_;
@@ -82,10 +85,12 @@ namespace TAO
                              bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
-    virtual Dynamic::ParameterList *arguments (void);
+    virtual Dynamic::ParameterList *arguments (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
+    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time)
+      ACE_THROW_SPEC ((CORBA::Exception));
 
   private:
 

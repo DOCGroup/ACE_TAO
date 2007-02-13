@@ -42,13 +42,16 @@ TAO::TypeCode::Fixed<RefCountPolicy>::tao_release (void)
 
 template <class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
+TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
+                                               ) const
 {
   // The following call won't throw since CORBA::TypeCode::equal() has
   // already established the kind of tc is the same as our kind.
-  CORBA::UShort const tc_digits = tc->fixed_digits ();
+  CORBA::UShort const tc_digits =
+    tc->fixed_digits ();
 
-  CORBA::UShort const tc_scale = tc->fixed_scale ();
+  CORBA::UShort const tc_scale =
+    tc->fixed_scale ();
 
   return (this->digits_ == tc_digits
           && this->scale_ == tc_scale);
@@ -56,17 +59,20 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 
 template <class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) const
+TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
+                                                    ) const
 {
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
   // tk_fixed TypeCodes.
-  return this->equal_i (tc);
+  return this->equal_i (tc
+                       );
 }
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (
+  void) const
 {
   // Already compact since tk_fixed TypeCodes have no name or member
   // names, meaning that we can simply call _duplicate() on this
@@ -86,14 +92,16 @@ TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (void) const
 
 template <class RefCountPolicy>
 CORBA::UShort
-TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i (
+  void) const
 {
   return this->digits_;
 }
 
 template <class RefCountPolicy>
 CORBA::UShort
-TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i (
+  void) const
 {
   return this->scale_;
 }

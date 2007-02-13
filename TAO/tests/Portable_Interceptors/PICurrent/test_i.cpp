@@ -21,6 +21,7 @@ test_i::~test_i (void)
 
 void
 test_i::invoke_me (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Test method invoked.\n"));
@@ -128,6 +129,7 @@ test_i::invoke_me (void)
 
 void
 test_i::invoke_you (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Nothing to be tested here.  This method is here just so that we
   // have a different method
@@ -135,6 +137,7 @@ test_i::invoke_you (void)
 
 void
 test_i::invoke_we (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Insert some data into the TSC PICurrent object.
   const char str[] = "We drink milk!";
@@ -167,6 +170,7 @@ test_i::invoke_we (void)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Server is shutting down.\n"));

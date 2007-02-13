@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/Profile_Transport_Resolver.h"
-#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Optimized_Connection_Endpoint_Selector,
@@ -145,14 +144,19 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
       if (r->blocked_connect () ||
          (!r->blocked_connect () && r->profile ()->supports_non_blocking_oneways ()))
         {
-          const size_t endpoint_count = r->profile ()->endpoint_count ();
+          const size_t endpoint_count =
+            r->profile ()->endpoint_count ();
 
-          TAO_Endpoint *ep = r->profile ()->endpoint ();
+          TAO_Endpoint *ep =
+            r->profile ()->endpoint ();
 
           for (size_t i = 0; i < endpoint_count; ++i)
             {
               TAO_Base_Transport_Property desc (ep);
-              const bool retval = r->try_connect (&desc, max_wait_time);
+              const bool retval =
+                r->try_connect (&desc,
+                                max_wait_time
+                               );
 
               // Check if the connect has completed.
               if (retval)

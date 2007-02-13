@@ -4,6 +4,7 @@
 CORBA::Boolean
 Messenger_i::send_message (const char *user_name, const char *subject,
                            char *& message)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message from: %s\nSubject: %s\nMessage: %s"
                                   "\n"), user_name, subject, message));

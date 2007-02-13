@@ -684,7 +684,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      ++option_count;
+      option_count++;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.

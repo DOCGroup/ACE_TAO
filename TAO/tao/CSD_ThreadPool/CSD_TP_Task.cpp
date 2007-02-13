@@ -299,7 +299,8 @@ TAO::CSD::TP_Task::close(u_long flag)
 
 
 void
-TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant)
+TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant
+                                   )
 {
   GuardType guard(this->lock_);
 

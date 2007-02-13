@@ -61,7 +61,9 @@ public:
       const PortableServer::ObjectId & oid,
       PortableServer::POA_ptr adapter,
       const char * operation,
-      PortableServer::ServantLocator::Cookie & the_cookie);
+      PortableServer::ServantLocator::Cookie & the_cookie)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::ForwardRequest));
 
   /// This method is no-op in this ServantLocator implementation.
   virtual void postinvoke (
@@ -69,7 +71,8 @@ public:
       PortableServer::POA_ptr adapter,
       const char * operation,
       PortableServer::ServantLocator::Cookie the_cookie,
-      PortableServer::Servant the_servant);
+      PortableServer::Servant the_servant)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
 

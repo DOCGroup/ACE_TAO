@@ -96,20 +96,26 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::AcquisitionMethodList * supported_methods ();
+      virtual SecurityLevel3::AcquisitionMethodList * supported_methods ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::CredentialsAcquirer_ptr acquire_credentials (
           const char * acquisition_method,
-          const CORBA::Any & acquisition_arguments);
+          const CORBA::Any & acquisition_arguments)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::OwnCredentialsList * default_creds_list ();
+      virtual SecurityLevel3::OwnCredentialsList * default_creds_list ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual SecurityLevel3::CredentialsIdList * default_creds_ids ();
+      virtual SecurityLevel3::CredentialsIdList * default_creds_ids ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       virtual SecurityLevel3::OwnCredentials_ptr get_own_credentials (
-          const char * credentials_id);
+          const char * credentials_id)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      virtual void release_own_credentials (const char * credentials_id);
+      virtual void release_own_credentials (const char * credentials_id)
+        ACE_THROW_SPEC ((CORBA::SystemException));
       //@}
 
       /// Register CredentialsAcquirer factory.

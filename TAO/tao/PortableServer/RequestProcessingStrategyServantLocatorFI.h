@@ -40,7 +40,9 @@ namespace TAO
         ::PortableServer::RequestProcessingPolicyValue value,
         ::PortableServer::ServantRetentionPolicyValue srvalue);
 
-      virtual void destroy (RequestProcessingStrategy *strategy);
+      virtual void destroy (
+        RequestProcessingStrategy *strategy
+       );
     };
   }
 }

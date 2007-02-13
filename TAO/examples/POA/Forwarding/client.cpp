@@ -99,7 +99,7 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Initialize options based on command-line arguments.
       int parse_args_result =

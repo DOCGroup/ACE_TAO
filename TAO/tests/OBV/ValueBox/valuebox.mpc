@@ -33,6 +33,7 @@ project(*Server): taoserver, valuetype {
 
 project(*Client): taoclient, valuetype {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }

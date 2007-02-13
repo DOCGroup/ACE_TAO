@@ -132,30 +132,39 @@ namespace TAO
         const char * role,
         const char * type_id,
         const PortableGroup::FactoryInfo & factory_info
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::MemberAlreadyPresent
+        , PortableGroup::TypeConflict));
 
     virtual void unregister_factory (
         const char * role,
         const PortableGroup::Location & location
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound));
 
     virtual void unregister_factory_by_role (
         const char * role
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual void unregister_factory_by_location (
       const PortableGroup::Location & location
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
         const char * role,
         CORBA::String_out type_id
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
       const PortableGroup::Location & location
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     /////////////////////////
     // Implementation methods

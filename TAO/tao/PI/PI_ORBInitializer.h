@@ -50,10 +50,12 @@ public:
   //@{
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                 );
+                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                  );
+                  )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
 

@@ -69,8 +69,8 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
   FACTORY_MAP_MANAGER::ENTRY *prev_entry = 0;
-  int ret = this->map_.find (repo_id, prev_entry);
-
+  int ret = this->map_.find (repo_id,
+                             prev_entry);
   if (ret == 0)    // there was a matching factory
     {
       // set factory to the previous factory,
@@ -94,7 +94,8 @@ TAO_ValueFactory_Map::find (const char *repo_id,
 {
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, guard, this->mutex_, -1);
 
-  int const ret = this->map_.find (repo_id, factory);
+  int const ret = this->map_.find (repo_id,
+                                   factory);
   if (ret > -1)
     {
       factory->_add_ref ();    // The caller gets one reference as gift.

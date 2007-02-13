@@ -41,10 +41,12 @@ public:
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id);
+  void id (CORBA::Short id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets id.
 
-  CORBA::Short id (void);
+  CORBA::Short id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Gets id.
 
 private:
@@ -62,12 +64,14 @@ My_Test_Object::~My_Test_Object (void)
 
 CORBA::Short
 My_Test_Object::id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return id_;
 }
 
 void
 My_Test_Object::id (CORBA::Short id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   id_ = id;
 }

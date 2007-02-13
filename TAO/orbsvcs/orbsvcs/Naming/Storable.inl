@@ -1,16 +1,19 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file   Storable.inl
- *
- *  $Id$
- *
- *  @author Bruce Trask <trask_b@ociweb.com>
- *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//   Storable.i
+//
+// = AUTHOR
+//    Bruce Trask <trask_b@ociweb.com>
+//    Chanaka Liyanaarachchi <chanaka@ociweb.com>
+//
+// ============================================================================
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

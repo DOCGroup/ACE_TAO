@@ -58,13 +58,17 @@ public:
   virtual TAO_FT_Heart_Beat_Enabled_Policy *clone (void) const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual CORBA::Boolean heartbeat_enabled_policy_value ();
+  virtual CORBA::Boolean heartbeat_enabled_policy_value ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type ();
+  virtual CORBA::PolicyType policy_type ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy ();
+  virtual CORBA::Policy_ptr copy ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy ();
+  virtual void destroy ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

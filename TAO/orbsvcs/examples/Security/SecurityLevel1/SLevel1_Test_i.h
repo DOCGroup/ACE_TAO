@@ -25,9 +25,11 @@ class SLevel1_Server_i : public POA_SLevel1_Server
   SLevel1_Server_i ();
 
   ///
-  CORBA::Boolean authorize_level1 (void);
+  CORBA::Boolean authorize_level1 (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Boolean authorize_level2 (void);
+  CORBA::Boolean authorize_level2 (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int authorized_1;
   static int authorized_2;

@@ -33,7 +33,8 @@ public:
   ~INS_i (void);
   // Destructor.
 
-  char * test_ins (void);
+  char * test_ins (void)
+  ACE_THROW_SPEC (( CORBA::SystemException ));
   // test the INS.
 
   void orb (CORBA::ORB_ptr o);

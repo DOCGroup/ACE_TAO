@@ -30,7 +30,9 @@ CORBA::string_dup (const char *str)
   if (copy != 0)
     {
       // The memcpy() assumes that the destination is a valid buffer.
-      ACE_OS::memcpy (copy, str, len + 1);
+      ACE_OS::memcpy (copy,
+                      str,
+                      len + 1);
     }
 
   return copy;
@@ -76,7 +78,8 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  return ACE_OS::wscpy (retval, str);
+  return ACE_OS::wscpy (retval,
+                        str);
 }
 
 CORBA::WChar*

@@ -41,7 +41,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
       hello->get_stringList2(true, seq2.out());
 
       for (CORBA::ULong i = 0; i<seq2->length(); i++) {
-        CORBA::String_var the_string = seq2.in()[i].in();
+        CORBA::String_var the_string = seq2.in()[i];
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
       }
@@ -119,7 +119,7 @@ void get_stringList2(Test::Hello_var hello)
       hello->get_stringList2(false, seq2.out());
 
       for (CORBA::ULong i = 0; i<seq2->length(); i++) {
-        CORBA::String_var the_string = seq2.in()[i].in ();
+        CORBA::String_var the_string = seq2.in()[i];
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
 	  }

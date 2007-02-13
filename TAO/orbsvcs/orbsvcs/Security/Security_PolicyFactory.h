@@ -53,7 +53,9 @@ namespace TAO
     public:
 
       virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                               const CORBA::Any & value);
+                                               const CORBA::Any & value)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         CORBA::PolicyError));
     };
 
   } // End Security namespace

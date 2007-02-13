@@ -23,8 +23,7 @@ public:
   }
   virtual ~test_i () {
   }
-  virtual CORBA::Long get (void)
-  {
+  virtual CORBA::Long get (void) ACE_THROW_SPEC ((CORBA::SystemException)) {
     ++n_;
     CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");
     PortableServer::Current_var cur = PortableServer::Current::_narrow(obj.in());
@@ -96,7 +95,7 @@ Server_i::init (int argc, char** argv)
 {
   try
   {
-    this->orb_ = CORBA::ORB_init (argc, argv);
+    this->orb_ = CORBA::ORB_init (argc, argv, 0);
 
     int retval = this->parse_args (argc, argv);
     if (retval != 0)

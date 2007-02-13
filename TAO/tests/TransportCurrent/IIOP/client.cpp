@@ -20,7 +20,8 @@ ACE_RCSID (IIOP,
 // Prototype
 
 int
-test_transport_current (CORBA::ORB_ptr);
+test_transport_current (CORBA::ORB_ptr)  ACE_THROW_SPEC ((CORBA::SystemException,
+                                                            CORBA::UserException));
 
 using namespace TAO;
 

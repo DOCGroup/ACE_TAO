@@ -23,12 +23,14 @@ TAO::Security::QOPPolicy::~QOPPolicy (void)
 
 CORBA::PolicyType
 TAO::Security::QOPPolicy::policy_type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return ::Security::SecQOPPolicy;
 }
 
 CORBA::Policy_ptr
 TAO::Security::QOPPolicy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Security::QOPPolicy * policy = 0;
   ACE_NEW_THROW_EX (policy,
@@ -44,11 +46,13 @@ TAO::Security::QOPPolicy::copy (void)
 
 void
 TAO::Security::QOPPolicy::destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::QOP
 TAO::Security::QOPPolicy::qop (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->qop_;
 }

@@ -13,12 +13,12 @@ project(*server): taoserver, utils, valuetype, avoids_minimum_corba, avoids_corb
   exename = server
   after += *IDL
   Source_Files {
-    Event_TypesS.cpp
-    Event_TypesC.cpp
     Server_i.cpp
     Event_Types_impl.cpp
     ../Simple_util.cpp
     server.cpp
+    Event_TypesS.cpp
+    Event_TypesC.cpp
   }
   IDL_Files {
   }
@@ -28,12 +28,12 @@ project(*client): taoserver, utils, valuetype, avoids_minimum_corba, avoids_corb
   exename = client
   after += *IDL
   Source_Files {
-    Event_TypesS.cpp
-    Event_TypesC.cpp
     Client_i.cpp
     Event_Types_impl.cpp
     ../Simple_util.cpp
     client.cpp
+    Event_TypesS.cpp
+    Event_TypesC.cpp
   }
   IDL_Files {
   }

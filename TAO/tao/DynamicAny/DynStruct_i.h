@@ -68,53 +68,97 @@ public:
 
   virtual DynamicAny::FieldName current_member_name (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::TCKind current_member_kind (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::NameValuePairSeq *get_members (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_members (
       const DynamicAny::NameValuePairSeq& value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_members_as_dyn_any (
       const DynamicAny::NameDynAnyPairSeq & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
       const CORBA::Any & value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Any * to_any (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::Boolean equal (
       DynamicAny::DynAny_ptr dyn_any
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void destroy (
       void)
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual DynamicAny::DynAny_ptr current_component (
       void)
-;
+
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ));
 
 private:
   /// Check if the typecode is acceptable.

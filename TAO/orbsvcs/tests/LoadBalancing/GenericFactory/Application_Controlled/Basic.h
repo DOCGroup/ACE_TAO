@@ -27,11 +27,14 @@ public:
          CORBA::ORB_ptr orb,
          const char *loc);
 
-  virtual char * get_string (void);
+  virtual char * get_string (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void remove_member (void);
+  virtual void remove_member (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

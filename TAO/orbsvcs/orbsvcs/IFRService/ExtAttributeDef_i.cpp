@@ -29,6 +29,7 @@ TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i (void)
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -40,6 +41,7 @@ TAO_ExtAttributeDef_i::get_exceptions (
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExcDescriptionSeq *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -57,6 +59,7 @@ void
 TAO_ExtAttributeDef_i::get_exceptions (
     const CORBA::ExcDescriptionSeq &get_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -69,6 +72,7 @@ void
 TAO_ExtAttributeDef_i::get_exceptions_i (
     const CORBA::ExcDescriptionSeq &get_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->exceptions ("get_excepts",
                     get_exceptions);
@@ -77,6 +81,7 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -88,6 +93,7 @@ TAO_ExtAttributeDef_i::set_exceptions (
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExcDescriptionSeq *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -105,6 +111,7 @@ void
 TAO_ExtAttributeDef_i::set_exceptions (
     const CORBA::ExcDescriptionSeq &set_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -117,6 +124,7 @@ void
 TAO_ExtAttributeDef_i::set_exceptions_i (
     const CORBA::ExcDescriptionSeq &set_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->exceptions ("put_excepts",
                     set_exceptions);
@@ -125,6 +133,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
 CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -136,6 +145,7 @@ TAO_ExtAttributeDef_i::describe_attribute (
 CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExtAttributeDescription *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -152,6 +162,7 @@ void
 TAO_ExtAttributeDef_i::fill_description (
     CORBA::ExtAttributeDescription &desc
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   desc.name = this->name_i ();
 

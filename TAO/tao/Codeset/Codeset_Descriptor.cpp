@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Codeset_Descriptor.cpp
- *
- *  $Id$
- *
- *  The base for all the translator factories. Translator factories are
- *  responsible for supplying the proper translator on demand.
- *
- *
- *  @author   Phil Mesnier <mesnier_p@ociweb.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tao/Codeset
+//
+// = FILENAME
+//    Codeset_Translator_Factory.cpp
+//
+// = DESCRIPTION
+//    The base for all the translator factories. Translator factories are
+//    responsible for supplying the proper translator on demand.
+//
+// = AUTHORS
+//      Phil Mesnier <mesnier_p@ociweb.com>
+//
+// ============================================================================
 
 #include "tao/Codeset/Codeset_Descriptor.h"
 #include "tao/Codeset/Codeset_Translator_Factory.h"

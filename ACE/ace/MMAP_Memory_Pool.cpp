@@ -470,10 +470,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 {
   if (signum != SIGSEGV)
     return -1;
-#if 0
   else
-    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) received %S\n"), signum));
-#endif
+    ; // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) received %S\n"), signum));
+
   // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)

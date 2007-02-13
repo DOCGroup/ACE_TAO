@@ -66,6 +66,7 @@ Coordinator::shutdown_all_peers (void)
 
 void
 Coordinator::add_peer (Test::Peer_ptr peer)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->peer_count_ >= this->peer_max_)
     return;

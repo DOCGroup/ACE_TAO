@@ -39,12 +39,19 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::_remove_ref (void)
 
 template <class SERVANT_TYPE> void
 TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoSProperties & /*required_qos*/, CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotification::UnsupportedQoS
+                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 template <class SERVANT_TYPE> CosNotification::QoSProperties*
 TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -54,6 +61,10 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos (void)
 
 template <class SERVANT_TYPE> void
 TAO_Notify_Proxy_T<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & qos)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotification::UnsupportedQoS
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -66,12 +77,19 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_qos (
                                             const CosNotification::QoSProperties & /*required_qos*/,
                                             CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
     )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotification::UnsupportedQoS
+                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::FilterID
 TAO_Notify_Proxy_T<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_filter)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -86,6 +104,10 @@ template <class SERVANT_TYPE> void
 TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_filter (
     CosNotifyFilter::FilterID filter
   )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -95,6 +117,10 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_filter (
 
 template <class SERVANT_TYPE> CosNotifyFilter::Filter_ptr
 TAO_Notify_Proxy_T<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -104,6 +130,9 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter)
 
 template <class SERVANT_TYPE> CosNotifyFilter::FilterIDSeq*
 TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -113,6 +142,9 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_all_filters (void)
 
 template <class SERVANT_TYPE> void
 TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());

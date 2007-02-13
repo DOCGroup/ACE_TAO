@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Hash_Map_Manager_T.cpp
- *
- *  $Id$
- *
- *  @author Douglas C. Schmidt <schmidt@cse.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+//
+// = FILENAME
+//    Hash_Map_Manager_T.cpp
+//
+// = AUTHOR
+//    Douglas C. Schmidt <schmidt@cse.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_T_CPP
 #define ACE_HASH_MAP_MANAGER_T_CPP

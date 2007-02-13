@@ -19,6 +19,7 @@ Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb, CORBA::ULong len)
 //factory method to create first object
 Two_Objects_Test::First_ptr
 Object_Factory_i::create_first (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   First_i *first_impl;
 
@@ -36,6 +37,7 @@ Object_Factory_i::create_first (void)
 //factory method to create second object
 Two_Objects_Test::Second_ptr
 Object_Factory_i::create_second (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Second_i *second_impl;
 

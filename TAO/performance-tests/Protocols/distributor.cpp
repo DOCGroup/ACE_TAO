@@ -61,23 +61,30 @@ public:
                    const char *protocol,
                    CORBA::ULong invocation_rate,
                    CORBA::ULong message_size,
-                   CORBA::ULong iterations);
+                   CORBA::ULong iterations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void end_test (void);
+  void end_test (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void oneway_sync (void);
+  void oneway_sync (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_sync (void);
+  void twoway_sync (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void oneway_method (CORBA::Long session_id,
                       CORBA::ULong iteration,
-                      const ::test::octets &payload);
+                      const ::test::octets &payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void twoway_method (CORBA::Long &session_id,
                       CORBA::ULong &iteration,
-                      ::test::octets &payload);
+                      ::test::octets &payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -134,6 +141,7 @@ test_i::start_test (CORBA::Long session_id,
                     CORBA::ULong invocation_rate,
                     CORBA::ULong message_size,
                     CORBA::ULong iterations)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::ProtocolList protocols;
   protocols.length (1);
@@ -248,6 +256,7 @@ test_i::start_test (CORBA::Long session_id,
 
 void
 test_i::end_test (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Use IIOP to indicate end of test to server.
   this->policy_manager_->set_policy_overrides (this->base_protocol_policy_,
@@ -258,12 +267,14 @@ test_i::end_test (void)
 
 void
 test_i::oneway_sync (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->oneway_sync ();
 }
 
 void
 test_i::twoway_sync (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->twoway_sync ();
 }
@@ -272,6 +283,7 @@ void
 test_i::oneway_method (CORBA::Long session_id,
                        CORBA::ULong iteration,
                        const ::test::octets &payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->oneway_method (session_id,
                                   iteration,
@@ -282,6 +294,7 @@ void
 test_i::twoway_method (CORBA::Long &session_id,
                        CORBA::ULong &iteration,
                        ::test::octets &payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->twoway_method (session_id,
                                   iteration,
@@ -296,6 +309,7 @@ test_i::_default_POA (void)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->receiver_->shutdown ();
 

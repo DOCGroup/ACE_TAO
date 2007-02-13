@@ -12,17 +12,23 @@ class Foo_i : public virtual POA_Foo
     Foo_i(unsigned num_clients);
     virtual ~Foo_i();
 
-    virtual void op1(void);
+    virtual void op1(void)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op2(CORBA::Long value);
+    virtual void op2(CORBA::Long value)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual CORBA::Long op3(void);
+    virtual CORBA::Long op3(void)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op4(CORBA::Long value);
+    virtual void op4(CORBA::Long value)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op5(void);
+    virtual void op5(void)
+      ACE_THROW_SPEC((CORBA::SystemException, FooException));
 
-    virtual void done(void);
+    virtual void done(void)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
   private:
 

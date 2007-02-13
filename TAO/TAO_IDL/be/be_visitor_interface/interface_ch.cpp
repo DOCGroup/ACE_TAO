@@ -219,8 +219,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
-          << "virtual void ciao_preactivate (void);" << be_nl
-          << "virtual void ciao_postactivate (void);" << be_nl;
+          << "virtual void ciao_preactivate (void)" << be_nl
+          << "ACE_THROW_SPEC ((" << be_idt_nl
+          << "::CORBA::SystemException," << be_nl
+          << "::Components::CCMException" << be_uidt_nl
+          << "));" << be_uidt_nl << be_nl
+          << "virtual void ciao_postactivate (void)" << be_nl
+          << "ACE_THROW_SPEC ((" << be_idt_nl
+          << "::CORBA::SystemException," << be_nl
+          << "::Components::CCMException" << be_uidt_nl
+          << "));" << be_uidt_nl << be_nl;
     }
 
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
@@ -296,8 +304,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           *os << "// Concrete non-local interface only." << be_nl
               << node->local_name () << " (" << be_idt << be_idt_nl
               << "IOP::IOR *ior," << be_nl
-              << "TAO_ORB_Core *orb_core = 0);" << be_uidt
-              << be_uidt_nl << be_nl;
+              << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
+              << ");" << be_uidt_nl << be_nl;
         }
 
       *os << "// Non-local interface only." << be_nl
@@ -305,8 +313,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated = false," << be_nl
           << "TAO_Abstract_ServantBase *servant = 0," <<  be_nl
-          << "TAO_ORB_Core *orb_core = 0);" << be_uidt
-          << be_uidt_nl << be_nl;
+          << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
     }
 
   // Protected destructor.

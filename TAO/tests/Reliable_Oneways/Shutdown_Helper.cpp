@@ -12,6 +12,7 @@ Shutdown_Helper::Shutdown_Helper (CORBA::ORB_ptr orb)
 
 void
 Shutdown_Helper::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

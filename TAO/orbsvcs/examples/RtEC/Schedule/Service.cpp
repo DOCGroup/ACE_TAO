@@ -33,7 +33,7 @@ main (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) == -1)
         {

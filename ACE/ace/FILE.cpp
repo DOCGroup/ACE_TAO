@@ -57,7 +57,8 @@ ACE_FILE::get_info (ACE_FILE_Info *finfo)
   ACE_TRACE ("ACE_FILE::get_info");
   ACE_stat filestatus;
 
-  int const result = ACE_OS::fstat (this->get_handle (), &filestatus);
+  int const result = ACE_OS::fstat (this->get_handle (),
+                                    &filestatus);
 
   if (result == 0)
     {
@@ -81,13 +82,15 @@ int
 ACE_FILE::truncate (ACE_OFF_T length)
 {
   ACE_TRACE ("ACE_FILE::truncate");
-  return ACE_OS::ftruncate (this->get_handle (), length);
+  return ACE_OS::ftruncate (this->get_handle(), length);
 }
 
 ACE_OFF_T
 ACE_FILE::seek (ACE_OFF_T offset, int startpos)
 {
-  return ACE_OS::lseek (this->get_handle (), offset, startpos);
+  return ACE_OS::lseek (this->get_handle (),
+                        offset,
+                        startpos);
 }
 
 ACE_OFF_T

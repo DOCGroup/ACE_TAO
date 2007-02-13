@@ -895,29 +895,6 @@ cpu_info_test (void)
 }
 
 int
-pagesize_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing getpagesize method\n")));
-
-  long const pagesize = ACE_OS::getpagesize ();
-  if (pagesize <= 0)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, pagesize should return a value bigger ")
-                            ACE_TEXT ("then zero, it returned %d\n"), pagesize));
-      return 1;
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Pagesize returned %d\n"),
-                  pagesize));
-    }
-  return 0;
-}
-
-
-int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
@@ -946,9 +923,6 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = cpu_info_test ()) != 0)
-      status = result;
-
-  if ((result = pagesize_test ()) != 0)
       status = result;
 
   ACE_END_TEST;

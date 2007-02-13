@@ -42,6 +42,7 @@
 
 #include "tao/PortableServer/portableserver_export.h"
 #include "tao/ORB.h"
+#include "tao/Environment.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/OctetSeqC.h"

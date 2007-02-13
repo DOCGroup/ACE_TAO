@@ -28,7 +28,7 @@ TAO::Utils::Servant_Var<T>::_duplicate (T * p)
 
 template <class T>
 ACE_INLINE void
-TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) throw ()
+TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) ACE_THROW_SPEC(())
 {
   ACE_Swap<T*>::swap (this->ptr_, rhs.ptr_);
 }
@@ -75,6 +75,7 @@ TAO::Utils::Servant_Var<T>::operator= (T * p)
 
 template <class T> ACE_INLINE
 TAO::Utils::Servant_Var<T>::~Servant_Var (void)
+  ACE_THROW_SPEC (())
 {
   // Unfortunately, there is no throw spec on _remove_ref, so we
   // can't assume that it will not throw.  If it does, then we are in

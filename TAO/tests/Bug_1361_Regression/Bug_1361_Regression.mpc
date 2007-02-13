@@ -11,12 +11,12 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver, messaging {
   after += *idl
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     Server_Thread_Pool.cpp
     Echo_Caller.cpp
     ORB_Task.cpp
     server.cpp
+    TestC.cpp
+    TestS.cpp
   }
   IDL_Files {
   }
@@ -24,12 +24,13 @@ project(*Server): taoserver, messaging {
 
 project(*Client): taoclient, messaging {
   after += *idl
+  after += *Server
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     Echo.cpp
     ORB_Task.cpp
     client.cpp
+    TestC.cpp
+    TestS.cpp
   }
   IDL_Files {
   }
@@ -37,10 +38,11 @@ project(*Client): taoclient, messaging {
 
 project(*Shutdown): taoexe, messaging {
   after += *idl
+  after += *Client
   Source_Files {
+    shutdown.cpp
     TestC.cpp
     TestS.cpp
-    shutdown.cpp
   }
   IDL_Files {
   }

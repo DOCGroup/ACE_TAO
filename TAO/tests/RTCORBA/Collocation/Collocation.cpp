@@ -35,9 +35,11 @@ public:
           PortableServer::POA_ptr poa,
           Tests &tests);
 
-  void start (void);
+  void start (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void method (void);
+  void method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -206,6 +208,7 @@ test_i::invocation_priority (RTCORBA::Priority invocation_priority)
 
 void
 test_i::start (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
@@ -285,6 +288,7 @@ test_i::thread_info (const char *method_name)
 
 void
 test_i::method (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->thread_info ("test_i::method");
 }

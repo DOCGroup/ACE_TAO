@@ -14,12 +14,14 @@ ACE_RCSID (Request_Interceptor_Flow,
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   // Create and register the test request interceptors.

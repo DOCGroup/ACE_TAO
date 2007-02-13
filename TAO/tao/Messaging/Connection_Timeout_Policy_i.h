@@ -63,19 +63,24 @@ public:
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (const CORBA::Any& val
+                                   );
 
   /// Returns a copy of <this>.
   virtual TAO_ConnectionTimeoutPolicy *clone (void) const;
 
   // = The TAO::ConnectionTinoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (void);
+  virtual TimeBase::TimeT relative_expiry (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);

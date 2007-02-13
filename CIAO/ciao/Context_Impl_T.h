@@ -66,13 +66,14 @@ namespace CIAO
    */
   template <typename BASE_CTX,
             typename SVNT,
-            typename COMP>
+            typename COMP,
+            typename COMP_VAR>
   class Context_Impl : public virtual BASE_CTX,
                        public virtual Context_Impl_Base,
                        public virtual TAO_Local_RefCounted_Object
   {
   public:
-    Context_Impl (Components::CCMHome_ptr the_home,
+    Context_Impl (Components::CCMHome_ptr home,
                   Session_Container *c,
                   SVNT *sv);
 
@@ -81,11 +82,13 @@ namespace CIAO
     // Operations from ::Components::SessionContext.
 
     virtual CORBA::Object_ptr
-    get_CCM_object ();
+    get_CCM_object ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::IllegalState));
 
   protected:
     SVNT *servant_;
-    typename COMP::_var_type component_;
+    COMP_VAR component_;
   };
 }
 

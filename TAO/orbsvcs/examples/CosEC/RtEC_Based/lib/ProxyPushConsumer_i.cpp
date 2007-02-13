@@ -31,7 +31,8 @@ public:
   ~TAO_CosEC_PushSupplierWrapper (void);
   // Destructor.
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the push supplier.
 
 private:
@@ -63,6 +64,7 @@ TAO_CosEC_PushSupplierWrapper::~TAO_CosEC_PushSupplierWrapper (void)
 
 void
 TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->supplier_->disconnect_push_supplier ();
 
@@ -95,6 +97,7 @@ TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i (void)
 
 void
 TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::Event buffer[1];
   // Create an event set that does not own the buffer....
@@ -131,6 +134,7 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
 
 void
 TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->proxypushconsumer_->disconnect_push_consumer ();
 
@@ -146,6 +150,8 @@ TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (void)
 
 void
 TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosEventChannelAdmin::AlreadyConnected))
 {
   if (this->connected ())
     throw CosEventChannelAdmin::AlreadyConnected ();

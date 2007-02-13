@@ -95,21 +95,23 @@ namespace
 #define KEVORKIAN_RETURN(value, method, result)                    \
   if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
     suicide (#value " in method " #method);                        \
-    throw FAULT_CODE (                                             \
-        CORBA::SystemException::_tao_minor_code (                  \
-              TAO::VMCID,                                          \
-              EFAULT),                                             \
-              CORBA::COMPLETED_NO);                                \
+    ACE_THROW_RETURN (FAULT_CODE (                                 \
+      CORBA::SystemException::_tao_minor_code (                    \
+            TAO::VMCID,                                            \
+            EFAULT),                                               \
+            CORBA::COMPLETED_NO),                                  \
+      result);                                                     \
     } else ;
 
 #define KEVORKIAN_DURING_RETURN(method, result)                    \
   if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
     suicide ("read-only method " #method);                         \
-    throw FAULT_CODE (                                             \
-        CORBA::SystemException::_tao_minor_code (                  \
-             TAO::VMCID,                                           \
-             EFAULT),                                              \
-     CORBA::COMPLETED_NO);                                         \
+    ACE_THROW_RETURN (FAULT_CODE (                                 \
+      CORBA::SystemException::_tao_minor_code (                    \
+            TAO::VMCID,                                            \
+            EFAULT),                                               \
+            CORBA::COMPLETED_NO),                                  \
+            result);                                               \
     } else ;
 
 
@@ -250,6 +252,7 @@ int FT_TestReplica_i::fini (void)
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
 CORBA::Boolean FT_TestReplica_i::is_alive (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_RETURN(DURING_IS_ALIVE, is_alive, 0)
   ACE_ERROR ((LM_ERROR,
@@ -266,6 +269,7 @@ CORBA::Boolean FT_TestReplica_i::is_alive (void)
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Updateable interface
 FT::State * FT_TestReplica_i::get_update (void)
+  ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable))
 {
   KEVORKIAN_RETURN(DURING_GET_UPDATE, get_update, 0)
   long counter = load();
@@ -276,6 +280,7 @@ FT::State * FT_TestReplica_i::get_update (void)
 }
 
 void FT_TestReplica_i::set_update (const FT::State & s)
+  ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidUpdate))
 {
 #if defined(FT_TEST_LACKS_UPDATE)
   throw FT::InvalidUpdate ();
@@ -290,6 +295,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  Checkpointable interface
 ::FT::State * FT_TestReplica_i::get_state (void)
+  ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable))
 {
 #if defined(FT_TEST_LACKS_STATE)
   throw FT::NoStateAvailable ();
@@ -304,6 +310,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 }
 
 void FT_TestReplica_i::set_state (const FT::State & s)
+  ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidState))
 {
 #if defined(FT_TEST_LACKS_STATE)
   throw FT::InvalidState ();
@@ -320,6 +327,7 @@ void FT_TestReplica_i::tao_update_object_group (
     PortableGroup::ObjectGroupRefVersion version,
     CORBA::Boolean is_primary
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (iogr);
   ACE_UNUSED_ARG (version);
@@ -332,6 +340,7 @@ void FT_TestReplica_i::tao_update_object_group (
 // implement FT_TEST::Replica
 
 void FT_TestReplica_i::set (CORBA::Long value)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, set)
   long counter = value;
@@ -340,6 +349,7 @@ void FT_TestReplica_i::set (CORBA::Long value)
 }
 
 CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_RETURN(BEFORE_STATE_CHANGE, increment, 0)
   long counter = load ();
@@ -350,6 +360,7 @@ CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta)
 }
 
 CORBA::Long FT_TestReplica_i::get (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_DURING_RETURN(get, 0)
   long counter = load ();
@@ -357,6 +368,7 @@ CORBA::Long FT_TestReplica_i::get (void)
 }
 
 CORBA::Long FT_TestReplica_i::counter (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN_DURING_RETURN([get]counter, 0)
   long counter = load ();
@@ -364,6 +376,7 @@ CORBA::Long FT_TestReplica_i::counter (void)
 }
 
 void FT_TestReplica_i::counter (CORBA::Long counter)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, [set]counter)
   store (counter);
@@ -371,6 +384,7 @@ void FT_TestReplica_i::counter (CORBA::Long counter)
 }
 
 void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Received death threat: %d\n",
                    name_.c_str(), this->factory_->location(), this->factory_id_, when);
@@ -380,6 +394,7 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when)
 }
 
 void FT_TestReplica_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Shut down requested\n",
                    name_.c_str(), this->factory_->location(), this->factory_id_);

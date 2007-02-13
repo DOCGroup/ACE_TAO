@@ -43,6 +43,7 @@
 #include "tao/PI_Server/pi_server_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
@@ -154,7 +155,10 @@ namespace PortableInterceptor
         ::CORBA::OctetSeq_out os
 
       )
-      {}
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
+      )) {}
 
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS */
 
@@ -163,8 +167,12 @@ namespace PortableInterceptor
 
     virtual void receive_request_service_contexts (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
+
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -173,7 +181,10 @@ namespace PortableInterceptor
         ::PortableInterceptor::ServerRequestInfo_ptr ri
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -182,7 +193,9 @@ namespace PortableInterceptor
         ::PortableInterceptor::ServerRequestInfo_ptr ri
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -191,7 +204,10 @@ namespace PortableInterceptor
         ::PortableInterceptor::ServerRequestInfo_ptr ri
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -200,7 +216,10 @@ namespace PortableInterceptor
         ::PortableInterceptor::ServerRequestInfo_ptr ri
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::PortableInterceptor::ForwardRequest
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210

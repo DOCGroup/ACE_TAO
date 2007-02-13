@@ -54,37 +54,69 @@ public:
   virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
 
  virtual CosNotification::QoSProperties * get_qos (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void set_qos (
     const CosNotification::QoSProperties & qos
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
 
   virtual void validate_qos (
     const CosNotification::QoSProperties & required_qos,
     CosNotification::NamedPropertyRangeSeq_out available_qos
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ));
 
   virtual CosNotifyFilter::FilterID add_filter (
     CosNotifyFilter::Filter_ptr new_filter
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void remove_filter (
     CosNotifyFilter::FilterID filter
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::FilterNotFound
+  ));
 
   virtual CosNotifyFilter::Filter_ptr get_filter (
     CosNotifyFilter::FilterID filter
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyFilter::FilterNotFound
+  ));
 
   virtual CosNotifyFilter::FilterIDSeq * get_all_filters (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
   virtual void remove_all_filters (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

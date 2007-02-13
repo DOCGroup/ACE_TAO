@@ -259,6 +259,9 @@ TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (void)
 
 void
 TAO_Notify_Tests_Activation_Manager::start (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 

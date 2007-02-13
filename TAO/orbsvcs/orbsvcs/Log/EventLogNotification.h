@@ -56,7 +56,8 @@ public:
   ~TAO_EventLogNotification (void);
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   // = Helper methods
@@ -66,7 +67,8 @@ protected:
   void obtain_proxy_consumer ();
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any);
+  virtual void send_notification (const CORBA::Any& any)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
 private:

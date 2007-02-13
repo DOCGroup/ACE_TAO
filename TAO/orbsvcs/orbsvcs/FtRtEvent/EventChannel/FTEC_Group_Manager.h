@@ -35,7 +35,8 @@ public:
 
   virtual CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out cur);
+        FTRT::Location_out cur)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   void create_group (
     const FTRT::ManagerInfoList & info_list,

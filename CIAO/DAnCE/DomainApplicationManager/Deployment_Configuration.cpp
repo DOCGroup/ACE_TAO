@@ -45,7 +45,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
   char* string = 0;
 
   // Read from the file line by line
-  while ((string = reader.read ('\n')) != 0)
+  while ((string = reader.read ('\n', '\0')) != 0)
     {
       // Search from the right to the first space
       const char* ior_start = ACE_OS::strrchr (string, ' ');
@@ -54,10 +54,8 @@ CIAO::Deployment_Configuration::init (const char *filename)
       // The destination is first followed by some spaces
       ACE_CString destination (string, dest_end - string);
       // And then the IOR
-      ACE_CString ior (ior_start + 1,  ACE_OS::strlen (ior_start + 1));
-      int const result =
-        this->deployment_info_.bind (destination.c_str (), ior.c_str ());
-      if (result == -1)
+      ACE_CString ior (ior_start + 1, ACE_OS::strlen (ior_start + 1) - 1);
+      if (this->deployment_info_.bind (destination.c_str (), ior.c_str ()) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DAnCE (%P|%t) Deployment_Configuration, "
@@ -65,24 +63,12 @@ CIAO::Deployment_Configuration::init (const char *filename)
                              destination.c_str ()),
                              -1);
         }
-      else if (result == 1)
+
+      if (CIAO::debug_level () > 5)
         {
-          if (CIAO::debug_level () > 5)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "DAnCE (%P|%t) Deployment_Configuration.cpp, "
-                          "reuse existing node in the cached map: <%s>\n" ,
-                          destination.c_str ()));
-            }
-        }
-      else
-       {
-         if (CIAO::debug_level () > 5)
-           {
-             ACE_DEBUG ((LM_DEBUG,
-                         "DAnCE (%P|%t) Deployment_Configuration, "
-                         "bind <%s> <%s>\n", destination.c_str (), ior.c_str ()));
-           }
+          ACE_DEBUG ((LM_DEBUG,
+                      "DAnCE (%P|%t) Deployment_Configuration, "
+                      "read <%s> <%s>\n", destination.c_str (), ior.c_str ()));
         }
 
       if (first)

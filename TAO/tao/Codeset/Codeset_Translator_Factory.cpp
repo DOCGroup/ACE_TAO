@@ -1,20 +1,21 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    Codeset_Translator_Factory.cpp
- *
- *  $Id$
-
- *
- *  The base for all the translator factories. Translator factories are
- *  responsible for supplying the proper translator on demand.
- *
- *
- *  @author   Phil Mesnier <mesnier_p@ociweb.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tao/Codeset
+//
+// = FILENAME
+//    Codeset_Translator_Factory.cpp
+//
+// = DESCRIPTION
+//    The base for all the translator factories. Translator factories are
+//    responsible for supplying the proper translator on demand.
+//
+// = AUTHORS
+//      Phil Mesnier <mesnier_p@ociweb.com>
+//
+// ============================================================================
 
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 #include "tao/CDR.h"
@@ -44,7 +45,8 @@ TAO_Codeset_Translator_Factory::init (int , ACE_TCHAR **)
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_InputCDR *cdr,
-    ACE_Char_Codeset_Translator *trans) const
+    ACE_Char_Codeset_Translator *trans
+  ) const
 {
   cdr->char_translator(trans);
 }
@@ -52,7 +54,8 @@ TAO_Codeset_Translator_Factory::assign_i (
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_OutputCDR *cdr,
-    ACE_Char_Codeset_Translator *trans) const
+    ACE_Char_Codeset_Translator *trans
+  ) const
 {
   cdr->char_translator(trans);
 }
@@ -60,7 +63,8 @@ TAO_Codeset_Translator_Factory::assign_i (
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_InputCDR *cdr,
-    ACE_WChar_Codeset_Translator *trans) const
+    ACE_WChar_Codeset_Translator *trans
+  ) const
 {
   cdr->wchar_translator(trans);
 }
@@ -68,7 +72,8 @@ TAO_Codeset_Translator_Factory::assign_i (
 void
 TAO_Codeset_Translator_Factory::assign_i (
     TAO_OutputCDR *cdr,
-    ACE_WChar_Codeset_Translator *trans) const
+    ACE_WChar_Codeset_Translator *trans
+  ) const
 {
   cdr->wchar_translator(trans);
 }

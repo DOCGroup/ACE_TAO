@@ -20,8 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/TAO_Export.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -66,7 +65,9 @@ public:
   /// Write the reply header in to @a output
   virtual bool write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params_Base &reply) = 0;
+      TAO_Pluggable_Reply_Params_Base &reply
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Writes the locate _reply message in to the @a output
   virtual bool write_locate_reply_mesg (
@@ -85,7 +86,8 @@ public:
 
   /// Parse the Loacte Request Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
-  virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &) = 0;
+  virtual int parse_locate_header (
+      TAO_GIOP_Locate_Request_Header &) = 0;
 
   /// Parse the reply message
   virtual int parse_reply (TAO_InputCDR &input,

@@ -8,6 +8,7 @@
 
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Enum_T.inl"

@@ -43,6 +43,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 void
 test_i::method (CORBA::ULong work,
                 const char * iteration)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -101,6 +102,7 @@ test_i::_default_POA (void)
 
 void
 test_i::initialize (CORBA::ULong total_iterations)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->total_iterations_ = total_iterations;
 }

@@ -101,6 +101,7 @@ int
 TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              TAO_ServerRequest &,
                              CORBA::Object_out forward_to)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IOR_Table_Impl_var rootref;
   {
@@ -170,7 +171,7 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
     {
       found = this->find_object (key, forward_to.out ());
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
     }
 
@@ -189,6 +190,7 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
 CORBA::Long
 TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
                                 CORBA::Object_out forward_to)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_key;
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
@@ -197,7 +199,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
       CORBA::String_var ior = root_->find (object_key.in ());
       forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
-  catch (const ::IORTable::NotFound&)
+  catch ( ::IORTable::NotFound&)
     {
       return 0;
     }

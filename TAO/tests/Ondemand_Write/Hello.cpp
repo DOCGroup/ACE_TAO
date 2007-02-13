@@ -16,12 +16,14 @@ Hello::get_string (
         const char * inputa,
         ::CORBA::Long ,
         const char * )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (inputa);
 }
 
 void
 Hello::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

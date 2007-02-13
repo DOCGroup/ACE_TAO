@@ -195,19 +195,28 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   /// Set single record attributes.
   virtual void
     set_record_attribute (DsLogAdmin::RecordId id,
-			  const DsLogAdmin::NVList & attr_list);
+			  const DsLogAdmin::NVList & attr_list)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidRecordId,
+                     DsLogAdmin::InvalidAttribute));
 
   /// Set the attributes of all records that matches the
   /// constraints with same attr_list.
   virtual CORBA::ULong
     set_records_attribute (const char * grammar,
 			   const char * c,
-			   const DsLogAdmin::NVList & attr_list);
+			   const DsLogAdmin::NVList & attr_list)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint,
+                     DsLogAdmin::InvalidAttribute));
 
   /// Get the attributes of the record with id <id>. Raises
   /// DsLogAdmin::InvalidRecordId
   virtual DsLogAdmin::NVList*
-    get_record_attribute (DsLogAdmin::RecordId id);
+    get_record_attribute (DsLogAdmin::RecordId id)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     DsLogAdmin::InvalidRecordId));
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
@@ -219,28 +228,39 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual DsLogAdmin::RecordList*
     query (const char * grammar,
            const char * c,
-           DsLogAdmin::Iterator_out i);
+           DsLogAdmin::Iterator_out i)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint));
 
   /// Retrieve <how_many> records from time <from_time> using iterator
   /// <i>.
   virtual DsLogAdmin::RecordList*
     retrieve (DsLogAdmin::TimeT from_time,
               CORBA::Long how_many,
-              DsLogAdmin::Iterator_out i);
+              DsLogAdmin::Iterator_out i)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the number of records matching constraint <c>.
   virtual CORBA::ULong
     match (const char * grammar,
-           const char * c);
+           const char * c)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint));
 
   /// Delete records matching constraint <c>.
   virtual CORBA::ULong
     delete_records (const char * grammar,
-                    const char * c);
+                    const char * c)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint));
 
   /// Delete records matching ids in <ids>
   virtual CORBA::ULong
-    delete_records_by_id (const DsLogAdmin::RecordIdList & ids);
+    delete_records_by_id (const DsLogAdmin::RecordIdList & ids)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ULong
     remove_old_records (void);
@@ -276,10 +296,14 @@ protected:
 
   DsLogAdmin::RecordList* query_i (const char *constraint,
                                    DsLogAdmin::Iterator_out &iter_out,
-                                   CORBA::ULong how_many);
+                                   CORBA::ULong how_many)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidConstraint));
 
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
-  void check_grammar (const char* grammar);
+  void check_grammar (const char* grammar)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar));
 
 
   /// The size of a LogRecord

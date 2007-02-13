@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ExtValueDef_i.h
- *
- *  $Id$
- *
- *  ExtValueDef_i servant class.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    ExtValueDef_i.h
+//
+// = DESCRIPTION
+//    ExtValueDef_i servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 #ifndef TAO_EXTVALUEDEF_I_H
 #define TAO_EXTVALUEDEF_I_H
@@ -32,42 +35,47 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class TAO_ExtValueDef_i
- *
- * @brief TAO_ExtValueDef_i
- *
- * Adds member and methods to TAO_ValueDef_i to get IDL3
- * attribute exceptions.
- */
 class TAO_IFRService_Export TAO_ExtValueDef_i : public virtual TAO_ValueDef_i
 {
+  // = TITLE
+  //    TAO_ExtValueDef_i
+  //
+  // = DESCRIPTION
+  //    Adds member and methods to TAO_ValueDef_i to get IDL3
+  //    attribute exceptions.
+  //
 public:
-  /// Constructor
   TAO_ExtValueDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_ExtValueDef_i (void);
+  // Destructor
 
   virtual CORBA::ExtInitializerSeq *ext_initializers (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtInitializerSeq *ext_initializers_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void ext_initializers (
       const CORBA::ExtInitializerSeq &ext_initializers
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void ext_initializers_i (
       const CORBA::ExtInitializerSeq &ext_initializers
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,
@@ -77,7 +85,8 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
       const char *id,
@@ -87,13 +96,14 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  //// Public because it's also called from
-  //// TAO_Container_i::create_ext_value_i.
   void exceptions (ACE_Configuration_Section_Key &key,
                    const char *sub_section,
                    const CORBA::ExcDescriptionSeq &exceptions);
+  /// Public because it's also called from
+  /// TAO_Container_i::create_ext_value_i.
 
 private:
   /// Common code for the set/get operations with attributes and initializers.

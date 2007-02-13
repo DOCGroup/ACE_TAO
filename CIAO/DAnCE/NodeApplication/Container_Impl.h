@@ -62,22 +62,32 @@ namespace CIAO
     /*--------------------  IDL operations (idl) ------------------*/
 
     /// Initialize the container.
-    virtual CORBA::Long init (const CORBA::PolicyList *policies);
+    virtual CORBA::Long init (const CORBA::PolicyList *policies)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Install all homes and components
     Deployment::ComponentInfos *
-      install (const ::Deployment::ContainerImplementationInfo & container_impl_info);
+      install (const ::Deployment::ContainerImplementationInfo & container_impl_info)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::UnknownImplId,
+                         Deployment::ImplEntryPointNotFound,
+                         Deployment::InstallationFailure,
+                         Components::InvalidConfiguration));
 
     /// Remove all homes and components
     virtual void
-      remove ();
+      remove ()
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Components::RemoveFailure));
 
     /// Deployment::Container interface defined attributes/operations.
     virtual ::Deployment::Properties *
-      properties ();
+      properties ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Deployment::NodeApplication_ptr
-      get_node_application ();
+      get_node_application ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*-------------------------------------------------------------*/
     /*-------------------  C++ help methods (c++) -----------------*/
@@ -89,7 +99,12 @@ namespace CIAO
 
     // Install the home of this particular component
     virtual ::Components::CCMHome_ptr
-      install_home (const ::Deployment::ComponentImplementationInfo & impl_info);
+      install_home (const ::Deployment::ComponentImplementationInfo & impl_info)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::UnknownImplId,
+                         Deployment::ImplEntryPointNotFound,
+                         Deployment::InstallationFailure,
+                         Components::InvalidConfiguration));
 
     /**
      * @@Note: I don't know how to remove a home right now.
@@ -104,7 +119,9 @@ namespace CIAO
      */
     // Remove the home of this particular component
     virtual void
-      remove_home (const char * comp_ins_name);
+      remove_home (const char * comp_ins_name)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Components::RemoveFailure));
 
     bool
     register_with_ns (const char * obj_name,
@@ -120,9 +137,13 @@ namespace CIAO
     // These below two are helper methods to clean up components
     // should only be called when we are sure that there is no
     // active connection on this component.
-    virtual void remove_components ();
+    virtual void remove_components ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::RemoveFailure));
 
-    virtual void remove_component (const char * comp_ins_name);
+    virtual void remove_component (const char * comp_ins_name)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::RemoveFailure));
 
     /// Set the cached object reference.
     void set_objref (Deployment::Container_ptr o);

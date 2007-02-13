@@ -49,6 +49,7 @@ TAO_RTEventLog_i::~TAO_RTEventLog_i ()
 
 DsLogAdmin::Log_ptr
 TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
@@ -64,6 +65,7 @@ TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
 
 DsLogAdmin::Log_ptr
 TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
+    ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
@@ -79,6 +81,7 @@ TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
 
 void
 TAO_RTEventLog_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_);
 
@@ -104,6 +107,7 @@ TAO_RTEventLog_i::activate (void)
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_RTEventLog_i::for_consumers (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->event_channel_->for_consumers();
 }
@@ -111,6 +115,9 @@ TAO_RTEventLog_i::for_consumers (void)
 RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_RTEventLog_i::for_suppliers (
     )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   return this->event_channel_->for_suppliers();
 }
@@ -118,6 +125,10 @@ TAO_RTEventLog_i::for_suppliers (
 RtecEventChannelAdmin::Observer_Handle
 TAO_RTEventLog_i::append_observer (
        RtecEventChannelAdmin::Observer_ptr observer)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   return this->observer_strategy_->append_observer (observer);
 }
@@ -125,6 +136,10 @@ TAO_RTEventLog_i::append_observer (
 void
 TAO_RTEventLog_i::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   this->observer_strategy_->remove_observer (handle);
 }

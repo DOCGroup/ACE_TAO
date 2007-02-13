@@ -39,6 +39,9 @@ CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
                                    const AVStreams::flowSpec &/* the_flows */
                                    )
+                            ACE_THROW_SPEC((CORBA::SystemException,
+                                            AVStreams::noSuchFlow,
+                                            AVStreams::QoSRequestFailed ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sender_StreamEndPoint::modify_QoS\n"));

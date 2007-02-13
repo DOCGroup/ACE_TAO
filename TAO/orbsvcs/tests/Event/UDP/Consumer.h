@@ -45,8 +45,10 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
   CORBA::ULong event_count (void) const;

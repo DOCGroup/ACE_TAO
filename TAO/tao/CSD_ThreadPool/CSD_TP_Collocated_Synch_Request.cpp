@@ -26,7 +26,7 @@ TAO::CSD::TP_Collocated_Synch_Request::dispatch_i()
     {
       this->do_dispatch();
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       // We need to save off a copy of the exception.
       this->exception_ = ex._tao_duplicate();

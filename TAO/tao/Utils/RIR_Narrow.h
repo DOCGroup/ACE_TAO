@@ -45,15 +45,19 @@ namespace TAO
 
       /// Use resolve_initial_references to find an object and then
       /// narrow it.
-      static _ptr_type narrow (CORBA::ORB_ptr orb, char const * id);
+      static _ptr_type narrow (CORBA::ORB_ptr orb,
+                               char const * id
+                               );
 
       /// Use resolve_initial_references to find an object and then
       /// narrow it.
       static _ptr_type narrow (PortableInterceptor::ORBInitInfo_ptr orb,
-                               char const * id);
+                               char const * id
+                               );
 
     private:
-      static _ptr_type narrow_object (CORBA::Object_ptr object);
+      static _ptr_type narrow_object (CORBA::Object_ptr object
+                                      );
     };
 
   } // namespace Utils

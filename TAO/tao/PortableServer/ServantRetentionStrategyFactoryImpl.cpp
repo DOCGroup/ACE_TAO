@@ -49,7 +49,8 @@ namespace TAO
 
     void
     ServantRetentionStrategyFactoryImpl::destroy (
-      ServantRetentionStrategy *strategy)
+      ServantRetentionStrategy *strategy
+      )
     {
       const char *strategy_factory_name = 0;
 

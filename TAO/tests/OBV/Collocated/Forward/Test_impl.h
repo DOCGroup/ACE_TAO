@@ -34,9 +34,11 @@ public:
   // ctor
 
   virtual TreeController * reflect (
-      TreeController * tc);
+      TreeController * tc)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

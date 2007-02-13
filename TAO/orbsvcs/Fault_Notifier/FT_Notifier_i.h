@@ -94,33 +94,40 @@ namespace TAO
 
     virtual void push_structured_fault (
         const CosNotification::StructuredEvent & event
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void push_sequence_fault (
       const CosNotification::EventBatch & events
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
       const char * constraint_grammar
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar));
 
     virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
       CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
       CosNotifyFilter::Filter_ptr filter
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
       CosNotifyComm::SequencePushConsumer_ptr push_consumer,
       CosNotifyFilter::Filter_ptr filter
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void disconnect_consumer (
       FT::FaultNotifier::ConsumerId connection
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
-    virtual CORBA::Boolean is_alive (void);
+    virtual CORBA::Boolean is_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     /////////////////////////////////////////

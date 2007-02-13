@@ -526,18 +526,21 @@ TAO_CEC_TypedEventChannel::create_list (CORBA::Long count,
 // The CosTypedEventChannelAdmin::TypedEventChannel methods...
 CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
 TAO_CEC_TypedEventChannel::for_consumers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->typed_consumer_admin_->_this ();
 }
 
 CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
 TAO_CEC_TypedEventChannel::for_suppliers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->typed_supplier_admin_->_this ();
 }
 
 void
 TAO_CEC_TypedEventChannel::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!destroyed_)
     {

@@ -63,7 +63,7 @@ CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
     exception_ (0),
     refcount_ (1),
     orb_server_request_ (orb_server_request),
-    sent_gateway_exception_ (false)
+    sent_gateway_exception_ (0)
 {
   this->orb_server_request_.is_dsi ();
 }
@@ -82,7 +82,8 @@ CORBA::ServerRequest::~ServerRequest (void)
 // Unmarshal in/inout params, and set up to marshal the appropriate
 // inout/out/return values later on.
 void
-CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
+CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
+                                 )
 {
   // arguments() must be called before either of these.
   if (this->params_ != 0 || this->exception_ != 0)
@@ -95,11 +96,13 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
 
   this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
                                     CORBA::ARG_IN | CORBA::ARG_INOUT,
-                                    this->lazy_evaluation_);
+                                    this->lazy_evaluation_
+                                   );
 
   // Pass this alignment back to the TAO_ServerRequest.
   this->orb_server_request_.dsi_nvlist_align (
-                                this->params_->_tao_target_alignment ());
+                                this->params_->_tao_target_alignment ()
+                              );
 }
 
 // Store the result value.  There's either an exception, or a result,
@@ -130,7 +133,8 @@ CORBA::ServerRequest::set_result (const CORBA::Any &value
 
 // Store the exception value.
 void
-CORBA::ServerRequest::set_exception (const CORBA::Any &value)
+CORBA::ServerRequest::set_exception (const CORBA::Any &value
+                                     )
 {
   CORBA::TypeCode_var tc = value.type ();
 
@@ -175,7 +179,8 @@ CORBA::ServerRequest::dsi_marshal (void)
       if (this->retval_ != 0)
         {
           this->retval_->impl ()->marshal_value (
-                                      *this->orb_server_request_.outgoing ());
+                                      *this->orb_server_request_.outgoing ()
+                                    );
         }
 
       // Send the "inout" and "out" parameters.
@@ -183,7 +188,9 @@ CORBA::ServerRequest::dsi_marshal (void)
         {
           this->params_->_tao_encode (
                              *this->orb_server_request_.outgoing (),
-                             CORBA::ARG_INOUT | CORBA::ARG_OUT);
+                             CORBA::ARG_INOUT | CORBA::ARG_OUT
+
+                           );
         }
     }
   else
@@ -222,7 +229,7 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
     );
 
   // This will prevent the marshaling of any parameters into this reply.
-  this->sent_gateway_exception_ = true;
+  this->sent_gateway_exception_ = 1;
 
   this->orb_server_request_.tao_send_reply ();
 }

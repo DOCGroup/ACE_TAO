@@ -22,7 +22,7 @@ main (int argc, char *argv[])
       // Initialize the ORB
       //
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       //
       // Get the Root POA.

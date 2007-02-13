@@ -15,8 +15,7 @@
 #define TAO_OBJECT_REF_TABLE_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +24,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/Object.h"
 #include /**/ "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
 #include "ace/Array_Map.h"
 

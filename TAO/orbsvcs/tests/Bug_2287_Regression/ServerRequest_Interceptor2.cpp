@@ -34,24 +34,30 @@ TAO249_ServerRequest_Interceptor2::~TAO249_ServerRequest_Interceptor2 (void)
 
 char *
 TAO249_ServerRequest_Interceptor2::name (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_TAO249_ServerRequest_Interceptor2");
 }
 
 void
 TAO249_ServerRequest_Interceptor2::destroy (void)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
+ACE_THROW_SPEC ((CORBA::SystemException,
+                 PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
+ACE_THROW_SPEC ((CORBA::SystemException,
+                 PortableInterceptor::ForwardRequest))
 {
   CORBA::String_var op = ri->operation ();
 
@@ -137,18 +143,23 @@ TAO249_ServerRequest_Interceptor2::get_now (void)
 void
 TAO249_ServerRequest_Interceptor2::send_reply (
   PortableInterceptor::ServerRequestInfo_ptr)
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::send_exception (
   PortableInterceptor::ServerRequestInfo_ptr)
+ACE_THROW_SPEC ((CORBA::SystemException,
+                 PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO249_ServerRequest_Interceptor2::send_other (
   PortableInterceptor::ServerRequestInfo_ptr)
+ACE_THROW_SPEC ((CORBA::SystemException,
+                 PortableInterceptor::ForwardRequest))
 {
 }
 

@@ -21,21 +21,19 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Truncate.h"
 
 ACE_RCSID(tests, High_Res_Timer_Test, "High_Res_Timer_Test.cpp,v 4.6 2000/04/23 04:43:58 brunsch Exp")
 
 static
 u_int
-check (const time_t interval, const time_t measured)
+check (const u_int interval, const u_int measured)
 {
   const u_int threshold = 25 /* percent */;
 
-  const time_t difference =
+  const u_int difference =
     interval > measured  ?  interval - measured  :  measured - interval;
 
-  const u_int percentage_difference
-    = ACE_Utils::Truncate<u_int> (difference * 100 / interval);
+  const u_int percentage_difference = difference * 100 / interval;
 
   if (percentage_difference < threshold)
     return 0;
@@ -43,8 +41,8 @@ check (const time_t interval, const time_t measured)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("The measured time of %u differs from ")
                        ACE_TEXT ("the interval of %u by %u percent.\n"),
-                       ACE_Utils::Truncate<u_int> (measured),
-                       ACE_Utils::Truncate<u_int> (interval),
+                       measured,
+                       interval,
                        percentage_difference),
                       1);
 }
@@ -60,11 +58,11 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
   ACE_hrtime_t hr_difference = (microinterval > nanointerval  ?
                                 microinterval - nanointerval  :
                                 nanointerval - microinterval    );
-  const u_int difference = ACE_Utils::Truncate<u_int> (hr_difference);
+  const u_int difference = ACE_HRTIME_CONVERSION (hr_difference);
   if (nanointerval == 0)
     nanointerval = 1;      // Prevent divide-by-zero
   const u_int promille_difference = difference * 1000 /
-                                    ACE_Utils::Truncate<u_int>(nanointerval);
+                                          ACE_HRTIME_CONVERSION(nanointerval);
 
   if ((promille_difference < threshold) || (difference < 1500))
     return 0;
@@ -72,8 +70,8 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("The microseconds * 1000 of %u differs from ")
                        ACE_TEXT ("the nanoseconds of %u by %u promille\n"),
-                       ACE_Utils::Truncate<u_int> (microinterval),
-                       ACE_Utils::Truncate<u_int> (nanointerval),
+                       ACE_HRTIME_CONVERSION (microinterval),
+                       ACE_HRTIME_CONVERSION (nanointerval),
                        promille_difference),
                       1);
 }
@@ -139,14 +137,10 @@ run_main (int argc, ACE_TCHAR *argv[])
           const ACE_Time_Value measured = time_interval (interval,
                                                          nanoseconds,
                                                          microseconds);
-          u_int interval_usec =
-            ACE_Utils::Truncate<u_int> (interval.sec () * 1000000 + interval.usec ());
-          u_int measured_usec =
-            ACE_Utils::Truncate<u_int> (measured.sec () * 1000000 + measured.usec ());
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("interval: %u usec, measured: %u usec%s\n"),
-                      interval_usec,
-                      measured_usec,
+                      interval.sec () * 1000000 + interval.usec (),
+                      measured.sec () * 1000000 + measured.usec (),
                       intervals[i] <= TIMER_RESOLUTION  ?
                       ACE_TEXT (" (interval and measured may differ)")  :
                       ACE_TEXT ("")));
@@ -161,16 +155,16 @@ run_main (int argc, ACE_TCHAR *argv[])
           // the ACE_High_Res_Timer-calculated nanoseconds.
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ACE_Time_Value usec: %u, ACE_HR nsec: %u\n"),
-                      measured_usec,
-                      ACE_Utils::Truncate<u_int> (nanoseconds)));
+                      measured.sec () * 1000000 + measured.usec (),
+                      ACE_HRTIME_CONVERSION (nanoseconds)));
           // This gives problems -> should be fixed
-          errors += check_micro_nano (measured.sec () * 1000000
-                                      + measured.usec (),
+          errors += check_micro_nano (measured.sec () * 1000000 +
+                                      measured.usec (),
                                       nanoseconds);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ACE_High_Res_Timer usec: %u, nsec: %u\n"),
-                      ACE_Utils::Truncate<u_int> (microseconds),
-                      ACE_Utils::Truncate<u_int> (nanoseconds)));
+                      ACE_HRTIME_CONVERSION (microseconds),
+                      ACE_HRTIME_CONVERSION (nanoseconds)));
           // Now check the ACE_High_Res_Timer-calculated values against
           // each other.
           errors += check_micro_nano (microseconds, nanoseconds);

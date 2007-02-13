@@ -1,16 +1,20 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    ETCL_Constraint.h
- *
- *  $Id$
- *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
- *  @author Jeff Parsons (parsons@cs.wustl.edu)
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs/ETCL
+//
+// = FILENAME
+//    ECTL_Constraint
+//
+// = AUTHOR
+//    Carlos O'Ryan (coryan@cs.wustl.edu)
+//    Jeff Parsons (parsons@cs.wustl.edu)
+//
+// ============================================================================
 
 #ifndef TAO_ETCL_CONSTRAINT_H
 #define TAO_ETCL_CONSTRAINT_H
@@ -24,7 +28,6 @@
 #include "ace/SString.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/AnyTypeCode/Any_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,9 +45,9 @@ namespace CORBA
 class TAO_ETCL_Export TAO_ETCL_Constraint
 {
 public:
-  /// Constructor and destructor
   TAO_ETCL_Constraint (void);
   virtual ~TAO_ETCL_Constraint (void);
+  // Constructor and destructor
 
   virtual int accept (TAO_ETCL_Constraint_Visitor *visitor) = 0;
 };
@@ -66,19 +69,19 @@ public:
   explicit TAO_ETCL_Literal_Constraint (CORBA::Double doub);
   explicit TAO_ETCL_Literal_Constraint (const char* str);
 
-  /// Copy constructor
   TAO_ETCL_Literal_Constraint (const TAO_ETCL_Literal_Constraint& lit);
+  // Copy constructor
 
-  /// Destructor.
   ~TAO_ETCL_Literal_Constraint(void);
+  // Destructor.
 
-  /// Visitor accept method.
   int accept (TAO_ETCL_Constraint_Visitor* visitor);
+  // Visitor accept method.
 
   TAO_Literal_Type expr_type (void) const;
 
-  /// Assignment operator.
   void operator= (const TAO_ETCL_Literal_Constraint& co);
+  // Assignment operator.
 
   // Conversion routines.
   operator CORBA::Boolean (void) const;
@@ -86,7 +89,7 @@ public:
   operator CORBA::Long (void) const;
   operator CORBA::Double (void) const;
   operator const char* (void) const;
-  operator TAO::Any_Impl* (void) const;
+  operator const CORBA::Any* (void) const;
 
   // Return the type represented by this MysteryOperand.
 
@@ -128,31 +131,31 @@ public:
   TAO_ETCL_Literal_Constraint
   operator- (void);
 
-  /// Ensure both operands are of the same simple numeric type.
   TAO_Literal_Type
   widest_type (const TAO_ETCL_Literal_Constraint& rhs);
+  // Ensure both operands are of the same simple numeric type.
 
-  /// Determine the comparable Expression Type from the CORBA type
   static TAO_Literal_Type
   comparable_type (CORBA::TypeCode_ptr type);
+  // Determine the comparable Expression Type from the CORBA type
 
 private:
-  /// Private copy method.
   void copy (const TAO_ETCL_Literal_Constraint& co);
+  // Private copy method.
 
-  /// Union of the possible literal types.
   union
   {
     char* str_;
-    TAO::Any_Impl* any_;
+    CORBA::Any_ptr any_;
     CORBA::ULong uinteger_;
     CORBA::Long integer_;
     CORBA::Boolean bool_;
     CORBA::Double double_;
   } op_;
+  // Union of the possible literal types.
 
-  /// The actual types of the TAO_ETCL_Literal_Constraint.
   unsigned short type_;
+  // The actual types of the TAO_ETCL_Literal_Constraint.
 };
 
 // ****************************************************************
@@ -162,15 +165,15 @@ class TAO_ETCL_Export TAO_ETCL_Identifier : public TAO_ETCL_Constraint
 public:
   TAO_ETCL_Identifier (const char *value);
 
-  /// Get the value
   const char *value (void) const;
+  // Get the value
 
   // = The Constraint methods.
   int accept (TAO_ETCL_Constraint_Visitor *visitor);
 
 private:
-  /// The value
   ACE_CString string_;
+  // The value
 };
 
 // ****************************************************************

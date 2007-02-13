@@ -17,14 +17,20 @@ public:
   Reply_Handler (void);
 
   // = The skeleton methods
-  virtual void receive_data (void);
-  virtual void receive_data_excep (::Messaging::ExceptionHolder *holder);
+  virtual void receive_data (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void sync (void);
-  virtual void sync_excep (::Messaging::ExceptionHolder *holder);
+  virtual void sync (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void sync_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
-  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #include /**/ "ace/post.h"

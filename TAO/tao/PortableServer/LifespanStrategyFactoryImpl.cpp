@@ -50,7 +50,9 @@ namespace TAO
     }
 
     void
-    LifespanStrategyFactoryImpl::destroy (LifespanStrategy *strategy)
+    LifespanStrategyFactoryImpl::destroy (
+      LifespanStrategy *strategy
+      )
     {
       switch (strategy->type ())
       {

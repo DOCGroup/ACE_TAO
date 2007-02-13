@@ -47,10 +47,12 @@ public:
   /// Destructor.
   ~CC_LockSetFactory (void);
 
-  virtual CosConcurrencyControl::LockSet_ptr create ();
+  virtual CosConcurrencyControl::LockSet_ptr create ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosConcurrencyControl::LockSet_ptr create_related (
-      CosConcurrencyControl::LockSet_ptr which);
+      CosConcurrencyControl::LockSet_ptr which)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Lock to serialize the access to the factory.

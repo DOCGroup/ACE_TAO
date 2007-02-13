@@ -81,7 +81,8 @@ private:
     // = DESCRIPTION
     // Private class that implements a termination servant.
   {
-    void shutdown (void);
+    void shutdown (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   };
 
   static ACE_THR_FUNC_RETURN run_orb (void *);

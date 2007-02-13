@@ -38,9 +38,15 @@ class activity_Export Job_i : public POA_Job
   const ACE_CString& poa (void);
 
   /// = inteface Job method implementation.
-  virtual void work (CORBA::ULong work);
+  virtual void work (CORBA::ULong work)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
  protected:
   /// The name of this Job
   ACE_CString job_name_;

@@ -4,7 +4,6 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/RTCORBA/RT_ORB.h"
-#include "tao/SystemException.h"
 #include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(RTCORBA,
@@ -19,6 +18,7 @@ TAO_RT_Mutex::~TAO_RT_Mutex (void)
 
 void
 TAO_RT_Mutex::lock (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->mu_.acquire () != 0)
     throw ::CORBA::INTERNAL ();
@@ -26,13 +26,16 @@ TAO_RT_Mutex::lock (void)
 
 void
 TAO_RT_Mutex::unlock (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->mu_.release () != 0)
     throw ::CORBA::INTERNAL ();
 }
 
 CORBA::Boolean
-TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
+TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time
+                        )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int result;
 
@@ -64,7 +67,7 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
     return 0;
   else
     // Some really bad error.
-    throw ::CORBA::INTERNAL ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
 const char *

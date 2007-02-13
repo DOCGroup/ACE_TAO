@@ -270,7 +270,7 @@ int Worker::svc (void)
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (const CORBA::Exception& ex)
     {
     }
   return 0;

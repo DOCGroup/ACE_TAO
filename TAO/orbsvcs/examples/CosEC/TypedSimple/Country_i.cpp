@@ -17,6 +17,7 @@ Country_i::~Country_i (void)
 
 void Country_i::update_population (const char * country,
                                    CORBA::Long population)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
   //Add your implementation here
@@ -26,6 +27,7 @@ void Country_i::update_population (const char * country,
 
 CORBA::Object_ptr
 Country_i::get_typed_consumer (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
   //Add your implementation here
@@ -41,6 +43,8 @@ Country_i::get_typed_consumer (void)
 void
 Country_i::push (const CORBA::Any & /* data */
                  )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 
 {
   //Add your implementation here
@@ -48,6 +52,7 @@ Country_i::push (const CORBA::Any & /* data */
 
 void
 Country_i::disconnect_push_consumer (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
   //Add your implementation here

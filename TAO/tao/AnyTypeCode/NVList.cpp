@@ -9,14 +9,13 @@
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 
+#include "tao/SystemException.h"
 #include "tao/CORBA_String.h"
 #include "tao/CDR.h"
 #include "tao/debug.h"
-#include "tao/SystemException.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/NVList.inl"
@@ -96,18 +95,23 @@ CORBA::NVList::~NVList (void)
 
 // add an element and just initialize its flags
 CORBA::NamedValue_ptr
-CORBA::NVList::add (CORBA::Flags flags)
+CORBA::NVList::add (CORBA::Flags flags
+                    )
 {
   // call the helper to allocate a NamedValue element (if necessary)
-  return this->add_element (flags);
+  return this->add_element (flags
+                           );
 }
 
 // add an element and just initialize its flags and name
 CORBA::NamedValue_ptr
-CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
+CORBA::NVList::add_item (const char *name,
+                         CORBA::Flags flags
+                         )
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags);
+  CORBA::NamedValue_ptr nv = this->add_element (flags
+                                               );
 
   if (nv)
     {
@@ -125,10 +129,12 @@ CORBA::NVList::add_item (const char *name, CORBA::Flags flags)
 CORBA::NamedValue_ptr
 CORBA::NVList::add_value (const char *name,
                           const CORBA::Any &value,
-                          CORBA::Flags flags)
+                          CORBA::Flags flags
+                          )
 {
   // Call the helper to allocate a NamedValue element.
-  CORBA::NamedValue_ptr nv = this->add_element (flags);
+  CORBA::NamedValue_ptr nv = this->add_element (flags
+                                               );
 
   if (nv)
     {
@@ -151,7 +157,9 @@ CORBA::NVList::add_value (const char *name,
 
 // add an element and just initialize its flags and name
 CORBA::NamedValue_ptr
-CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
+CORBA::NVList::add_item_consume (char *name,
+                                 CORBA::Flags flags
+                                 )
 {
 
   // call the helper to allocate a NamedValue element
@@ -220,7 +228,8 @@ CORBA::NVList::add_element (CORBA::Flags flags
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
-      throw ::CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        CORBA::NamedValue::_nil ());
     }
 
   CORBA::NamedValue_ptr nv;
@@ -252,7 +261,8 @@ CORBA::NVList::item (CORBA::ULong n
 
   if (n >= this->max_)
     {
-      throw ::CORBA::Bounds ();
+      ACE_THROW_RETURN (CORBA::Bounds (),
+                        CORBA::NamedValue::_nil ());
     }
 
   CORBA::NamedValue_ptr *nv = 0;

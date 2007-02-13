@@ -82,15 +82,26 @@ protected:
   virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ));
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventComm::Disconnected
+       ));
 
   virtual void disconnect_structured_push_consumer (
-        );
+        )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 };
 
 #include /**/ "ace/post.h"

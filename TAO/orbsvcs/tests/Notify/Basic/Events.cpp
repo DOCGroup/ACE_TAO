@@ -18,6 +18,8 @@ void
 Event_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 {
   int event_num;
   notification.filterable_data[0].value >>= event_num;

@@ -1,20 +1,23 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Options.h
- *
- *  $Id$
- *
- *  This class implements the Options container for the Interface
- *  Repository.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    Options.h
+//
+// = DESCRIPTION
+//    This class implements the Options container for the Interface
+//    Repository.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef OPTIONS_H
 #define OPTIONS_H
@@ -26,63 +29,61 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class Options
- *
- * @brief Maintains the global options.
- *
- * This class is converted into a Singleton by the
- * <ACE_Singleton> template.
- */
 class TAO_IFRService_Export Options
 {
+  // = TITLE
+  //   Maintains the global options.
+  //
+  // = DESCRIPTION
+  //   This class is converted into a Singleton by the
+  //   <ACE_Singleton> template.
 public:
-  /// Default Constructor
   Options ();
+  // Default Constructor
 
-  /// dtor
   ~Options();
+  // dtor
 
-  /// Parse the command-line arguments and initialize the options.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
+  // Parse the command-line arguments and initialize the options.
 
-  /// Return the file where the IOR of the server object is stored.
   const char *ior_output_file (void) const;
+  // Return the file where the IOR of the server object is stored.
 
-  /// Is the Interface Repository persistent?
   int persistent (void) const;
+  // Is the Interface Repository persistent?
 
-  /// Return the default filename for persistent IFR.
   const char *persistent_file (void) const;
+  // Return the default filename for persistent IFR.
 
-  /// Are we using a WIN32 registry as the backing store?
   int using_registry (void) const;
+  // Are we using a WIN32 registry as the backing store?
 
-  /// Should the repository have a real mutex or a null mutex?
   int enable_locking (void) const;
+  // Should the repository have a real mutex or a null mutex?
 
-  /// should the service support discovery via multicast?
   int support_multicast_discovery (void) const;
+  // should the service support discovery via multicast?
 
 private:
-  /// File where the IOR of the server object is stored.
   char *ior_output_file_;
+  // File where the IOR of the server object is stored.
 
-  /// Is the Interface Repository persistent?
   int persistent_;
+  // Is the Interface Repository persistent?
 
-  /// Default filename for persistent IFR.
   char *persistent_file_;
+  // Default filename for persistent IFR.
 
-  /// Are we using a WIN32 registry as the backing store?
   int using_registry_;
+  // Are we using a WIN32 registry as the backing store?
 
-  /// Should the repository have a real mutex or a null mutex?
   int enable_locking_;
+  // Should the repository have a real mutex or a null mutex?
 
-  /// If not zero multicast is enabled.
   int support_multicast_;
+  // If not zero multicast is enabled.
 };
 
 // Typedef an Options Singleton.

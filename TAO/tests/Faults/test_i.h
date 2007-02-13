@@ -32,7 +32,8 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (CORBA::Boolean is_clean);
+  void shutdown (CORBA::Boolean is_clean)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback method
 
 private:
@@ -55,11 +56,14 @@ public:
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
-                           Callback_ptr callback);
+                           Callback_ptr callback)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown_now (CORBA::Boolean is_clean);
+  void shutdown_now (CORBA::Boolean is_clean)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -82,11 +86,14 @@ public:
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
-                           Callback_ptr callback);
+                           Callback_ptr callback)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown_now (CORBA::Boolean is_clean);
+  void shutdown_now (CORBA::Boolean is_clean)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_ptr orb_;

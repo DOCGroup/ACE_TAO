@@ -31,6 +31,7 @@ void
 Client_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
                     Test::Payload const &)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
   if (max_depth > 0)
@@ -46,6 +47,7 @@ Client_Peer::callme(Test::Peer_ptr callback,
 
 void
 Client_Peer::crash(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   Crasher * crasher = new Crasher;
 
@@ -56,6 +58,7 @@ Client_Peer::crash(void)
 
 void
 Client_Peer::noop(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
 }
 

@@ -7,9 +7,11 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/Environment.h"
 #include "tao/SystemException.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
+#include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 
@@ -115,7 +117,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
     }
 

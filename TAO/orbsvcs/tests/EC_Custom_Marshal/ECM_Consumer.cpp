@@ -49,7 +49,7 @@ Driver::run (int argc, char* argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -402,6 +402,7 @@ Test_Consumer::disconnect (void)
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->driver_->push_consumer (this->cookie_, arrival, events);
@@ -409,6 +410,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Test_Consumer::disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

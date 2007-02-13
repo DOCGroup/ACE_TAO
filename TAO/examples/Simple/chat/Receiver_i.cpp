@@ -29,6 +29,9 @@ Receiver_i::~Receiver_i (void)
 
 void
 Receiver_i::message (const char *msg)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   ACE_DEBUG ((LM_DEBUG,
               ": %s\n",
@@ -37,6 +40,9 @@ Receiver_i::message (const char *msg)
 
 void
 Receiver_i::shutdown (void)
+ ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

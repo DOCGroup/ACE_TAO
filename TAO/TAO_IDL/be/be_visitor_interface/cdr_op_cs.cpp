@@ -69,8 +69,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->full_name () << "_ptr _tao_objref)" << be_uidt
-      << be_uidt_nl
+      << "const " << node->full_name () << "_ptr _tao_objref" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (node->is_abstract ())
@@ -95,8 +95,8 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->full_name () << "_ptr &_tao_objref)" << be_uidt
-      << be_uidt_nl
+      << node->full_name () << "_ptr &_tao_objref" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (node->is_abstract ())

@@ -58,10 +58,12 @@ public:
 
   /// Activate in the POA
   virtual void  activate (
-      CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy);
+      CosEventChannelAdmin::ProxyPullConsumer_ptr &activated_proxy)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return 0 if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
@@ -90,8 +92,11 @@ public:
 
   // = The CosEventChannelAdmin::ProxyPullConsumer methods...
   virtual void connect_pull_supplier (
-                CosEventComm::PullSupplier_ptr pull_supplier);
-  virtual void disconnect_pull_consumer (void);
+                CosEventComm::PullSupplier_ptr pull_supplier)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosEventChannelAdmin::AlreadyConnected));
+  virtual void disconnect_pull_consumer (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
   virtual PortableServer::POA_ptr _default_POA (void);

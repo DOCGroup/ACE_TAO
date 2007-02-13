@@ -25,6 +25,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// This is used in the implementation of the _raise methods
+#define TAO_RAISE(EXCEPTION) throw EXCEPTION
+
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
@@ -130,23 +133,27 @@ namespace CORBA
     /**
      * @note This method is TAO-specific.
      */
-    void _tao_print_exception (const char *info, FILE *f = stdout) const;
+    void _tao_print_exception (const char *info,
+                               FILE *f = stdout) const;
 
 #if defined (ACE_USES_WCHAR)
     /// ACE_WCHAR_T version of _tao_print_exception.
     /**
      * @note This method is TAO-specific.
      */
-    void _tao_print_exception (const ACE_WCHAR_T *info, FILE *f = stdout) const;
+    void _tao_print_exception (const ACE_WCHAR_T *info,
+                               FILE *f = stdout) const;
 #endif  // ACE_USES_WCHAR
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const = 0;
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr) const = 0;
+    virtual void _tao_encode (TAO_OutputCDR &cdr
+                              ) const = 0;
 
-    virtual void _tao_decode (TAO_InputCDR &cdr) = 0;
+    virtual void _tao_decode (TAO_InputCDR &cdr
+                              ) = 0;
 
     /// Used in the non-copying Any insertion operator.
     static void _tao_any_destructor (void *);
@@ -185,7 +192,8 @@ namespace CORBA
     Exception & operator = (const Exception & src);
 
     /// Construct from a respository id.
-    Exception (const char *repository_id, const char *local_name);
+    Exception (const char *repository_id,
+               const char *local_name);
 
   private:
 

@@ -46,10 +46,17 @@ public:
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
-  virtual void push (const CORBA::Any &data);
+  virtual void push (const CORBA::Any &data)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventComm::Disconnected
+      ));
   // push the event to the consumer.
 
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer (void)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
   // disconnect the consumer from the EC.
 
 private:

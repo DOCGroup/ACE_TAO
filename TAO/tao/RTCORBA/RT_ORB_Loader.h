@@ -42,7 +42,8 @@ public:
   virtual ~TAO_RT_ORB_Loader (void);
 
   /// Initialize the RT ORB loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  virtual int init (int argc,
+                    ACE_TCHAR* []);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

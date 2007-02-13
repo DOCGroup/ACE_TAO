@@ -45,7 +45,8 @@ public:
   void disconnect (void);
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // The methods in the skeleton.
 
   RtecEventComm::EventSourceID supplier_id (void) const;

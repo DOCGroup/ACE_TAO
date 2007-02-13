@@ -35,7 +35,8 @@ public:
   virtual ~Initiator_i (void);
   // Destructor.
 
-  virtual void foo_object_B (void);
+  virtual void foo_object_B (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   Object_A_var object_A_var_;

@@ -114,6 +114,9 @@ Session::validate_connections (void)
 
 void
 Session::start (const Test::Session_List &other_sessions)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Test::Already_Running,
+                   Test::No_Peers))
 {
   if (other_sessions.length () == 0)
     throw Test::No_Peers ();
@@ -167,12 +170,13 @@ Session::start (const Test::Session_List &other_sessions)
 }
 
 void
-Session::ping (void)
+Session::ping (void) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Session::receive_payload (const Test::Payload &the_payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (the_payload.length () != this->payload_size_)
     {
@@ -184,7 +188,7 @@ Session::receive_payload (const Test::Payload &the_payload)
 
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
-    --this->expected_messages_;
+    this->expected_messages_--;
 
 #if 0
     int verbose = 0;
@@ -214,6 +218,7 @@ Session::receive_payload (const Test::Payload &the_payload)
 
 void
 Session::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Make sure local resources are released
 
@@ -237,6 +242,7 @@ Session::more_work (void) const
 
 void
 Session::terminate (CORBA::Boolean success)
+  ACE_THROW_SPEC (())
 {
   // Make sure that global resources are released
   try

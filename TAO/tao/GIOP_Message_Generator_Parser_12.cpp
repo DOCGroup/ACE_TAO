@@ -119,6 +119,7 @@ bool
 TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_OutputCDR & output,
     TAO_Pluggable_Reply_Params_Base &reply)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the request ID
   output.write_ulong (reply.request_id_);

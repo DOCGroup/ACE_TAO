@@ -8,7 +8,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Policy_Manager.h"
-#include "tao/SystemException.h"
+
 
 ACE_RCSID (RTCORBA,
            RT_Stub,
@@ -173,7 +173,7 @@ TAO_RT_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
           if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE ||
               type == RTCORBA::THREADPOOL_POLICY_TYPE ||
               type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-            throw ::CORBA::NO_PERMISSION ();
+            ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
         }
     }
 
@@ -224,7 +224,7 @@ TAO_RT_Stub::effective_priority_banded_connection (void)
 
   // Both override and exposed have been set and neither has empty
   // priority bands.  This is illegal (ptc/99-05-03, sec. 4.12.1).
-  throw ::CORBA::INV_POLICY ();
+  ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
 }
 
 CORBA::Policy *
@@ -270,7 +270,7 @@ TAO_RT_Stub::effective_client_protocol (void)
 
   // Both override and exposed have been set and neither has empty
   // protocols.  This is illegal (ptc/99-05-03, sec. 4.15.4).
-  throw ::CORBA::INV_POLICY ();
+  ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -92,7 +92,8 @@ namespace TAO
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions,
-        CORBA::OctetSeq_out oc);
+        CORBA::OctetSeq_out oc
+       );
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
     /// This method implements the "intermediate" server side
@@ -108,7 +109,8 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions
+       );
 
     /// This method an "intermediate" server side interception point.
     void receive_request (
@@ -117,7 +119,8 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions
+       );
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -127,7 +130,8 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions
+       );
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -137,7 +141,8 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions
+       );
 
     /// This method implements one of the "ending" server side
     /// interception points.
@@ -147,7 +152,8 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        CORBA::ULong nexceptions);
+        CORBA::ULong nexceptions
+       );
     //@}
 
     /// Register an interceptor.
@@ -157,17 +163,20 @@ namespace TAO
 
     virtual void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies);
+      const CORBA::PolicyList& policies
+     );
 
     virtual void destroy_interceptors (void);
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void);
 
-    virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent);
+    virtual void deallocate_pi_current (
+        TAO::PICurrent_Impl *picurrent);
 
     virtual void execute_command (
         TAO_ServerRequest &server_request,
-        TAO::Upcall_Command &command);
+        TAO::Upcall_Command &command
+       );
 
   private:
 

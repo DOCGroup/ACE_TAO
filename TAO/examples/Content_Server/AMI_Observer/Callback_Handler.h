@@ -77,12 +77,16 @@ public:
   // Constructor that creates a content iterator corresponding to the
   // name of the file being retrieved from the web server.
 
-  virtual void next_chunk (void);
+  virtual void next_chunk (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // The callback for this reply handler.
 
-  virtual void next_chunk_excep (::Messaging::ExceptionHolder *);
+  virtual void next_chunk_excep (::Messaging::ExceptionHolder *)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void run (void);
+  void run (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Web_Server::Error_Result));
   // Activate and run this Reply Handler.  The contents (not the
   // pointer itself) of the <request_count> parameter will be
   // incremented when file retrieval begins, and decremented when file
@@ -93,10 +97,13 @@ private:
   // Destructor (private to ensure that Callback_Handler is allocated
   // on the heap).
 
-  void open_file (void);
+  void open_file (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                   Web_Server::Error_Result));
   // Open the file to be uploaded to the client callback.
 
-  void deactivate (void);
+  void deactivate (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate this reply handler.
 
 private:

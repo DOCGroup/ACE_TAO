@@ -43,13 +43,16 @@ public:
   /// Disconnect from the event channel
   void disconnect (void);
 
-  void push (const RtecEventComm::EventSet &events);
+  void push (const RtecEventComm::EventSet &events)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@{
   /** @name The RtecEventComm::PushSupplier methods
    */
-  virtual void disconnect_push_supplier (void);
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableServer::POA_ptr _default_POA (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 private:

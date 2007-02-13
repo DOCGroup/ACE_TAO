@@ -48,7 +48,8 @@ public:
   virtual bool match_prefix (const char *ior_string) const;
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb
-                                          );
+                                          )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

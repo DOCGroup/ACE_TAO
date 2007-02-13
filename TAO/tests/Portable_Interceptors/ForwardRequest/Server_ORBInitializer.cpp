@@ -20,12 +20,14 @@ Server_ORBInitializer::Server_ORBInitializer (void)
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
   // Install the server request interceptor.

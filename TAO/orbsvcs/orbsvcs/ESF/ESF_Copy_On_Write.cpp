@@ -9,6 +9,8 @@
 #include "orbsvcs/ESF/ESF_Copy_On_Write.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/Environment.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> CORBA::ULong
@@ -23,7 +25,7 @@ TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::_decr_refcnt (void)
 {
   // LOCKING: no locking is required, the caller grabs the mutex.
   {
-    --this->refcount_;
+    this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
   }

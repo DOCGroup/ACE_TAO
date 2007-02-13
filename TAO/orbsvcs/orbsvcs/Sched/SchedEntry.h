@@ -1,15 +1,22 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    SchedEntry.h
- *
- *  $Id$
- *
- *  @author Chris Gill <cdgill@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    sched
+//
+// = FILENAME
+//    SchedEntry.h
+//
+// = CREATION DATE
+//    7 February 1998
+//
+// = AUTHOR
+//    Chris Gill <cdgill@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef SCHEDENTRY_H
 #define SCHEDENTRY_H
@@ -35,14 +42,13 @@ class Dispatch_Entry_Link;
 class Dispatch_Proxy_Iterator;
 
 
-/**
- * @class Dispatch_Entry_Link
- *
- * @brief Dispatch Entry Link
- *
- * Light-weight sortable "smart pointer" to a dispatch entry.
- */
 class TAO_RTSched_Export Dispatch_Entry_Link
+// = TITLE
+//        Dispatch Entry Link
+//
+// = DESCRIPTION
+//    Light-weight sortable "smart pointer" to a dispatch entry.
+//
 {
 public:
 
@@ -57,37 +63,36 @@ public:
   typedef RtecScheduler::Info_Type_t Info_Type;
   typedef RtecScheduler::Dependency_Type_t Dependency_Type;
 
-    /// Constructor.
   Dispatch_Entry_Link (Dispatch_Entry &d);
+    // Constructor.
 
-    /// Copy constructor.
   Dispatch_Entry_Link (const Dispatch_Entry_Link &d);
+    // Copy constructor.
 
-    /// Destructor.
   ~Dispatch_Entry_Link ();
+    // Destructor.
 
-    /// Less than comparison operator.
   bool operator < (const Dispatch_Entry_Link &d) const;
+    // Less than comparison operator.
 
-    /// Accessor for reference to the dispatch entry.
   Dispatch_Entry &dispatch_entry () const;
+    // Accessor for reference to the dispatch entry.
 
 private:
 
-    /// Dispatch entry to which the smart pointer refers.
   Dispatch_Entry &dispatch_entry_;
+    // Dispatch entry to which the smart pointer refers.
 };
 
 
 
-/**
- * @class Task_Entry
- *
- * @brief Task Entry.
- *
- * Wrapper for the RT_Info, which aggregates all its dispatches.
- */
 class TAO_RTSched_Export Task_Entry
+// = TITLE
+//    Task Entry.
+//
+// = DESCRIPTION
+//    Wrapper for the RT_Info, which aggregates all its dispatches.
+//
 {
 public:
 
@@ -336,15 +341,14 @@ private:
 };
 
 
-/**
- * @class Dispatch_Entry
- *
- * @brief Dispatch Entry
- *
- * Descriptor object for a single dispatch of an operation.
- */
 class TAO_RTSched_Export Dispatch_Entry
 {
+// = TITLE
+//        Dispatch Entry
+//
+// = DESCRIPTION
+//     Descriptor object for a single dispatch of an operation.
+//
 public:
 
   typedef RtecScheduler::handle_t handle_t;
@@ -445,19 +449,16 @@ private:
 
 };
 
-/**
- * @class Dispatch_Proxy_Iterator
- *
- * @brief This class implements an iterator abstraction over a virtual
- * frame size and number of calls, using an actual ordered
- * multiset of dispatch entries over an actual frame size.
- * It also serves as a proxy for the virtual dispatch to which
- * it refers.  Rhetorical question: is it possible to separate
- * the iterator and proxy abstractions here without defeating the
- * purpose of the design, which is to avoid constructing
- * superfluous dispatch entries (per the conjunctive merge use case) ?
- */
 class TAO_RTSched_Export Dispatch_Proxy_Iterator
+// = TITLE
+//   This class implements an iterator abstraction over a virtual
+//   frame size and number of calls, using an actual ordered
+//   multiset of dispatch entries over an actual frame size.
+//   It also serves as a proxy for the virtual dispatch to which
+//   it refers.  Rhetorical question: is it possible to separate
+//   the iterator and proxy abstractions here without defeating the
+//   purpose of the design, which is to avoid constructing
+//   superfluous dispatch entries (per the conjunctive merge use case) ?
 {
 public:
 
@@ -472,82 +473,74 @@ public:
   typedef RtecScheduler::Info_Type_t Info_Type;
   typedef RtecScheduler::Dependency_Type_t Dependency_Type;
 
-    /// ctor
   Dispatch_Proxy_Iterator (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                            u_long actual_frame_size,
                            u_long virtual_frame_size,
                            u_long number_of_calls_ = 1,
                            u_long starting_sub_frame = 0);
+    // ctor
 
   ////////////////////////
   // iterator interface //
   ////////////////////////
 
-    /// returns 0 if there are more entries to see, 1 if not
   int done () const;
+    // returns 0 if there are more entries to see, 1 if not
 
-    /**
-     * positions the iterator at the first entry of the passed
-     * sub-frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
   int first (u_int sub_frame = 0);
+    // positions the iterator at the first entry of the passed
+    // sub-frame, returns 1 if it could position the iterator
+    // correctly, 0 if not, and -1 if an error occurred.
 
-    /**
-     * positions the iterator at the last entry of the total
-     * frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
   int last ();
+    // positions the iterator at the last entry of the total
+    // frame, returns 1 if it could position the iterator
+    // correctly, 0 if not, and -1 if an error occurred.
 
-    /**
-     * positions the iterator at the next entry of the total
-     * frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
   int advance ();
+    // positions the iterator at the next entry of the total
+    // frame, returns 1 if it could position the iterator
+    // correctly, 0 if not, and -1 if an error occurred.
 
-    /**
-     * positions the iterator at the previous entry of the total
-     * frame, returns 1 if it could position the iterator
-     * correctly, 0 if not, and -1 if an error occurred.
-     */
   int retreat ();
+    // positions the iterator at the previous entry of the total
+    // frame, returns 1 if it could position the iterator
+    // correctly, 0 if not, and -1 if an error occurred.
 
   /////////////////////
   // proxy interface //
   /////////////////////
 
-    /// returns the adjusted arrival time of the virtual entry
   Time arrival () const;
+    // returns the adjusted arrival time of the virtual entry
 
-    /// returns the adjusted deadline time of the virtual entry
   Time deadline () const;
+    // returns the adjusted deadline time of the virtual entry
 
-    /// returns the scheduler priority of the virtual entry
   Preemption_Priority priority () const;
+    // returns the scheduler priority of the virtual entry
 
-    /// returns the OS priority of the virtual entry
   OS_Priority OS_priority () const;
+    // returns the OS priority of the virtual entry
 
 
 private:
 
-    /// the number of calls corresponding to each actual dispatch
   u_long number_of_calls_;
+    // the number of calls corresponding to each actual dispatch
 
-    /// the current call number for this dispatch (zero based)
   u_long current_call_;
+    // the current call number for this dispatch (zero based)
 
-    /// the frame size of the actual dispatches
   u_long actual_frame_size_;
+    // the frame size of the actual dispatches
 
-    /// the virtaul frame size over which to iterate
   u_long virtual_frame_size_;
+    // the virtaul frame size over which to iterate
 
-    /// the current offset into the virtual frame
-    /// (should be a multiple of the actual frame size)
   u_long current_frame_offset_;
+    // the current offset into the virtual frame
+    // (should be a multiple of the actual frame size)
 
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> iter_;
 };
@@ -627,19 +620,19 @@ public:
   typedef RtecScheduler::Info_Type_t Info_Type;
   typedef RtecScheduler::Dependency_Type_t Dependency_Type;
 
-  /// ctor
   TimeLine_Entry_Link  (TimeLine_Entry &t);
+  // ctor
 
-  /// accessor for the underlying entry
   TimeLine_Entry &entry () const;
+  // accessor for the underlying entry
 
-  /// comparison operator
   bool operator < (const TimeLine_Entry_Link&) const;
+  // comparison operator
 
 private:
 
-  /// the underlying entry
   TimeLine_Entry &entry_;
+  // the underlying entry
 
 };
 

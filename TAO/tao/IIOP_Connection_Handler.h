@@ -45,6 +45,9 @@ namespace IIOP
   class ListenPointList;
 }
 
+// Forward Decls
+class TAO_Pluggable_Messaging;
+
 // ****************************************************************
 
 /**
@@ -64,7 +67,8 @@ public:
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
   /// Constructor.
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core, CORBA::Boolean flag);
+  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+                               CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_IIOP_Connection_Handler (void);

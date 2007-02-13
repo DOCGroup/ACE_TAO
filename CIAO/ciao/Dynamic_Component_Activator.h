@@ -65,13 +65,16 @@ namespace CIAO
      */
     PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+      PortableServer::POA_ptr poa)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::ForwardRequest));
 
     void etherealize (const PortableServer::ObjectId &oid,
                       PortableServer::POA_ptr adapter,
                       PortableServer::Servant servant,
                       CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations);
+                      CORBA::Boolean remaining_activations)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void add_servant_map (PortableServer::ObjectId &oid,
                           Dynamic_Component_Servant_Base* servant);

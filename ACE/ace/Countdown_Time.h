@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Keeps track of the amount of elapsed time.
  *
- * This class has a side-effect on the @c max_wait_time -- every
+ * This class has a side-effect on the <max_wait_time> -- every
  * time the <stop> method is called the <max_wait_time> is
  * updated.
  */
@@ -38,26 +38,25 @@ class ACE_Export ACE_Countdown_Time
 {
 public:
   // = Initialization and termination methods.
-  /// Cache the @a max_wait_time and call @c start().
+  /// Cache the <max_wait_time> and call <start>.
   ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
 
-  /// Destructor, makes sure the max_wait_time that got passed as pointer
-  /// to the constructor is updated with the time elapsed.
+  /// Call <stop>.
   ~ACE_Countdown_Time (void);
 
   /// Cache the current time and enter a start state.
-  void start (void);
+  int start (void);
 
   /// Subtract the elapsed time from max_wait_time_ and enter a stopped
   /// state.
-  void stop (void);
+  int stop (void);
 
   /// Calls stop and then start.  max_wait_time_ is modified by the
   /// call to stop.
-  void update (void);
+  int update (void);
 
-  /// Returns true if we've already been stopped, else false.
-  bool stopped (void) const;
+  /// Returns 1 if we've already been stopped, else 0.
+  int stopped (void) const;
 
 private:
   /// Maximum time we were willing to wait.
@@ -67,7 +66,7 @@ private:
   ACE_Time_Value start_time_;
 
   /// Keeps track of whether we've already been stopped.
-  bool stopped_;
+  int stopped_;
 
   // Prevent copying
   ACE_Countdown_Time (const ACE_Countdown_Time &);

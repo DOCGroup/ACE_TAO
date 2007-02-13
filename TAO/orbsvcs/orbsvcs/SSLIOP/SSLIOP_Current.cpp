@@ -25,6 +25,8 @@ TAO::SSLIOP::Current::~Current (void)
 
 ::SSLIOP::ASN_1_Cert *
 TAO::SSLIOP::Current::get_peer_certificate ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   SSLIOP::Current::NoContext))
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
@@ -32,7 +34,7 @@ TAO::SSLIOP::Current::get_peer_certificate ()
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == 0)
-    throw ::SSLIOP::Current::NoContext ();
+    ACE_THROW_RETURN (::SSLIOP::Current::NoContext (), 0);
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -55,6 +57,8 @@ TAO::SSLIOP::Current::get_peer_certificate ()
 
 SSLIOP::SSL_Cert *
 TAO::SSLIOP::Current::get_peer_certificate_chain ()
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   SSLIOP::Current::NoContext))
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
@@ -62,7 +66,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == 0)
-    throw SSLIOP::Current::NoContext ();
+    ACE_THROW_RETURN (SSLIOP::Current::NoContext (), 0);
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
@@ -85,6 +89,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (this->implementation () == 0 ? 1 : 0);
 }

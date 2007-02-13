@@ -48,7 +48,7 @@ void Temperature_Monitor::record_failure (void)
 // Listing 41
 
 // Listing 42 code/ch21
-  int now = (int) ACE_OS::time ();
+  int now = ACE_OS::time ();
   int lastResetTime;
   if (lastReset.get ())
     {

@@ -47,19 +47,29 @@ public:
   virtual ~FTRT_ClientORB_Interceptor ();
 
   /// Canonical name of the interceptor.
-  virtual char * name (void);
+  virtual char * name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                    PortableInterceptor::ForwardRequest));
 private:
   const char *myname_;
   CORBA::Long transaction_depth_;

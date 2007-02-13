@@ -41,14 +41,20 @@ public:
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_property (const PortableGroup::Properties & props);
+  void validate_property (const PortableGroup::Properties & props)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::UnsupportedProperty));
 
   /// Validate the given criteria.
   /**
    * This particular implementation performs no validation
    * whatsoever.
    */
-  void validate_criteria (const PortableGroup::Properties & criteria);
+  void validate_criteria (const PortableGroup::Properties & criteria)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::CannotMeetCriteria));
 
 };
 

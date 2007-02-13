@@ -8,6 +8,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -8,7 +8,6 @@
 #include "tao/PI/ProcessingModePolicyC.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfoC.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,12 +17,14 @@ ACE_RCSID (tao,
 
 void
 TAO_PI_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 
 void
 TAO_PI_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The PI policy factory is stateless and reentrant, so share a
   // single instance between all ORBs.
@@ -64,9 +65,10 @@ TAO_PI_ORBInitializer::register_policy_factories (
     {
       try
         {
-          info->register_policy_factory (*i, this->policy_factory_.in ());
+          info->register_policy_factory (*i,
+                                         this->policy_factory_.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -79,7 +81,7 @@ TAO_PI_ORBInitializer::register_policy_factories (
             }
           throw;
         }
-      catch (const ::CORBA::Exception&)
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
           throw;

@@ -24,6 +24,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
     CORBA::Object_ptr &ior)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   TAO_IOP::Invalid_IOR))
 {
   // We need to apply the property for every profile in the IOR
 
@@ -75,6 +77,9 @@ TAO_FT_IOGR_Property::set_property (
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
     CORBA::Object_ptr ior)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ))
 {
   if (this->get_primary_profile (ior) != 0)
     return 1;
@@ -86,13 +91,18 @@ TAO_FT_IOGR_Property::is_primary_set (
 CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
     CORBA::Object_ptr ior)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        TAO_IOP::NotFound
+      ))
 {
 
   TAO_Profile *pfile =
     this->get_primary_profile (ior);
 
   if (pfile == 0)
-    throw TAO_IOP::NotFound ();
+    ACE_THROW_RETURN (TAO_IOP::NotFound (),
+                      CORBA::Object::_nil ());
 
   // Search for the IOP::TAG_FT_PRIMARY in the tagged component of
   // the profile
@@ -135,7 +145,8 @@ TAO_FT_IOGR_Property::get_primary (
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
     {
-      throw TAO_IOP::NotFound ();
+      ACE_THROW_RETURN (TAO_IOP::NotFound (),  // ** Changed from Invalid_IOR () **
+                        CORBA::Object::_nil ());
     }
 
   // Release ownership of the pointers protected by the auto_ptrs since they
@@ -151,6 +162,11 @@ CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
     CORBA::Object_ptr &ior1,
     CORBA::Object_ptr ior2)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        TAO_IOP::NotFound,
+        TAO_IOP::Duplicate
+      ))
 {
   // Check for primary in <ior2>
   IOP::TaggedComponent tagged_components;
@@ -167,7 +183,8 @@ TAO_FT_IOGR_Property::set_primary (
         mprofile.get_profile (i)->tagged_components ();
 
       if (tag_comp.get_component (tagged_components) == 1)
-        throw TAO_IOP::Duplicate ();
+        ACE_THROW_RETURN (TAO_IOP::Duplicate (),
+                          0);
     }
 
   // Check whether ior1 exists in ior2
@@ -200,7 +217,8 @@ TAO_FT_IOGR_Property::set_primary (
   // At the end of the loop check whether we have seen <ior1> in
   // <ior2>
   if (index == -1)
-    throw TAO_IOP::NotFound ();
+    ACE_THROW_RETURN (TAO_IOP::NotFound (),
+                      0);
 
   CORBA::Boolean val = 1;
 
@@ -324,6 +342,7 @@ CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (
     const CORBA::Object_ptr iogr,
     FT::TagFTGroupTaggedComponent &fgtc) const
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Stub *stub =
     iogr->_stubobj ();
@@ -356,14 +375,16 @@ TAO_FT_IOGR_Property::get_tagged_component (
           CORBA::Boolean byte_order;
 
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            throw CORBA::MARSHAL ();
+            ACE_THROW_RETURN (CORBA::MARSHAL (),
+                              0);
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           if ((cdr >> fgtc) == 1)
             return 1;
           else
-            throw CORBA::MARSHAL ();
+            ACE_THROW_RETURN (CORBA::MARSHAL (),
+                              0);
         }
     }
 
@@ -373,6 +394,7 @@ TAO_FT_IOGR_Property::get_tagged_component (
 CORBA::Boolean
 TAO_FT_IOGR_Property::remove_primary_tag (
     CORBA::Object_ptr &iogr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the MProfile
   TAO_MProfile &mprofile =

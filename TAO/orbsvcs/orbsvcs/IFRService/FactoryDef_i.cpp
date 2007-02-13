@@ -24,6 +24,7 @@ TAO_FactoryDef_i::~TAO_FactoryDef_i (void)
 
 CORBA::DefinitionKind
 TAO_FactoryDef_i::def_kind (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Factory;
 }

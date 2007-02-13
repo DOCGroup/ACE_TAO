@@ -5,6 +5,7 @@ ACE_RCSID (DynamicInterface,
            "$Id$")
 
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/Environment.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
@@ -57,7 +58,8 @@ CORBA::ExceptionList::item (CORBA::ULong slot)
 
   if (this->tc_list_.get (tc, slot) == -1)
     {
-      throw ::CORBA::TypeCode::Bounds ();
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                        CORBA::TypeCode::_nil ());
     }
   else
     {

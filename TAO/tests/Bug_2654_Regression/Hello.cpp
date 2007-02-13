@@ -32,6 +32,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 
 void
 Hello::set_callback (Test::CallBack_ptr cb)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) got callback \n"));
   this->callback_ = Test::CallBack::_duplicate(cb);
@@ -40,6 +41,7 @@ Hello::set_callback (Test::CallBack_ptr cb)
 
 void
 Hello::method (CORBA::Short count)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (++this->count_ > 10)
     {

@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   CC_LockSet.cpp
- *
- *  $Id$
- *
- *  @author Torben Worm <tworm@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//   CC_LockSet.cpp
+//
+// = AUTHOR
+//    Torben Worm <tworm@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "orbsvcs/Concurrency/CC_LockSet.h"
 
@@ -89,6 +92,7 @@ CORBA::Boolean CC_LockSet::compatible (CC_LockModeEnum mr)
 
 void
 CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "CC_LockSet::lock\n"));
 
@@ -108,6 +112,7 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode)
 
 CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CC_LockModeEnum lm = lmconvert (mode);
 
@@ -147,6 +152,8 @@ CC_LockSet::lmconvert (CosConcurrencyControl::lock_mode mode)
 
 void
 CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosConcurrencyControl::LockNotHeld))
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::unlock\n"));
@@ -189,6 +196,8 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode)
 void
 CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
                          CosConcurrencyControl::lock_mode new_mode)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosConcurrencyControl::LockNotHeld))
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::change_mode\n"));

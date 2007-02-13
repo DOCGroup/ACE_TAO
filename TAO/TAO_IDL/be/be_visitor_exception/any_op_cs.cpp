@@ -73,7 +73,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "{" << be_idt_nl
           << "this->value_->_tao_decode (cdr);" << be_uidt_nl
           << "}" << be_uidt_nl
-          << "catch (const ::CORBA::Exception &)"
+          << "catch ( ::CORBA::Exception &)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl

@@ -155,7 +155,7 @@ void
 EC_Driver::initialize_orb_and_poa (int &argc, char* argv[])
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv);
+    CORBA::ORB_init (argc, argv, "");
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");

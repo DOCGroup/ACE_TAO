@@ -3,14 +3,15 @@
 #include "tao/AnyTypeCode/Union_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Union_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
+#include "tao/SystemException.h"
+
 #include "ace/Value_Ptr.h"
-#include "ace/CORBA_macros.h"
+
 
 ACE_RCSID (AnyTypeCode,
            Union_TypeCode_Static,
@@ -249,7 +250,7 @@ TAO::TypeCode::Union<char const *,
 //       Traits<char const *>::get_typecode (this->default_case_.type)
 //      );
 
-  throw ::CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
 }
 
 char const *
@@ -301,7 +302,7 @@ TAO::TypeCode::Union<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->ncases_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
   return this->cases_[index]->name ();
 }
@@ -315,7 +316,8 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      CORBA::TypeCode::_nil ());
 
   return CORBA::TypeCode::_duplicate (this->cases_[index]->type ());
 }
@@ -329,7 +331,8 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      0);
 
   // Default case.
   if (this->default_index_ > -1

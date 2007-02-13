@@ -29,9 +29,11 @@ public:
 
   // = The test interface methods.
   void method (CORBA::ULong request_number,
-               const test::data &);
+               const test::data &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// The ORB.

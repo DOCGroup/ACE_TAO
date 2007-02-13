@@ -129,6 +129,9 @@ template <class T> ACE_INLINE
     ::CORBA::PolicyType policy_type
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return this->ptr_->get_domain_policy (
     policy_type
@@ -236,6 +239,9 @@ template <class T> ACE_INLINE
 CORBA::PolicyType POA_CORBA::ConstructionPolicy_tie<T>::policy_type  (
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return this->ptr_->policy_type (
 
@@ -249,6 +255,9 @@ template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::ConstructionPolicy_tie<T>::copy  (
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return this->ptr_->copy (
 
@@ -260,7 +269,11 @@ template <class T> ACE_INLINE
 
 template <class T> ACE_INLINE
 void POA_CORBA::ConstructionPolicy_tie<T>::destroy  (
+
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   this->ptr_->destroy (
 
@@ -276,6 +289,9 @@ void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
     ::CORBA::Boolean constr_policy
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   this->ptr_->make_domain_manager (
     object_type,

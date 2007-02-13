@@ -13,6 +13,7 @@ CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
                        int,
                        char * [])
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

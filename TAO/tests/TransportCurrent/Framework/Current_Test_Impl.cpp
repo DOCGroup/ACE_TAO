@@ -23,12 +23,14 @@ Current_Test_Impl::~Current_Test_Impl (void)
 
 ::CORBA::Long
 Current_Test_Impl::self_test (void)
+        ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return 0;
 }
 
 void
 Current_Test_Impl::test_transport_current (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
     ACE_DEBUG ((LM_DEBUG,
@@ -70,6 +72,7 @@ Current_Test_Impl::test_transport_current (void)
 
 void
 Current_Test_Impl::invoked_by_client (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -89,6 +92,7 @@ Current_Test_Impl::invoked_by_client (void)
 
 void
 Current_Test_Impl::invoked_by_client_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException, TAO::Transport::NoContext))
 {
   if (TAO_debug_level > 2) {
     ACE_DEBUG ((LM_DEBUG,
@@ -124,6 +128,7 @@ Current_Test_Impl::invoked_by_client_i (void)
 
 void
 Current_Test_Impl::invoked_during_upcall (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
     ACE_DEBUG ((LM_DEBUG,
@@ -135,6 +140,7 @@ Current_Test_Impl::invoked_during_upcall (void)
 
 void
 Current_Test_Impl::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 2) {
     ACE_DEBUG ((LM_DEBUG,

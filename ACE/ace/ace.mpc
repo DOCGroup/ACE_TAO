@@ -247,6 +247,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Thread_Manager.cpp
     Thread_Mutex.cpp
     Thread_Semaphore.cpp
+    Time_Request_Reply.cpp
     Time_Value.cpp
     Timeprobe.cpp
     Timer_Hash.cpp

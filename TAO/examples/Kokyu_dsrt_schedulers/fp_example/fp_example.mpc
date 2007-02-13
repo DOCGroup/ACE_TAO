@@ -12,10 +12,10 @@ project(fp_server): kokyu_dsrt_scheduler_server {
   exename = fp_server
   after += *IDL
   Source_Files {
-    testC.cpp
-    testS.cpp
     test_i.cpp
     server.cpp
+    testS.cpp
+    testC.cpp
   }
   IDL_Files {
   }

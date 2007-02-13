@@ -44,11 +44,23 @@ public:
 
   ~TAO_DynValueCommon_i (void);
 
-  virtual CORBA::Boolean is_null (void);
+  virtual CORBA::Boolean is_null (
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
-  virtual void set_to_null (void);
+  virtual void set_to_null (
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
-  virtual void set_to_value (void);
+  virtual void set_to_value (
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

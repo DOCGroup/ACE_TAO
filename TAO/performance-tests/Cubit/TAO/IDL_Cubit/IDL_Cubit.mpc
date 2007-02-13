@@ -13,13 +13,13 @@ project(*IDL): taoidldefaults, strategies {
 project(*Server): taoexe, utils, portableserver, strategies, avoids_corba_e_micro, avoids_ace_for_tao {
   after += *IDL
   Source_Files {
-    cubitC.cpp
-    cubitS.cpp
     RTI_IO.cpp
     Cubit_i.cpp
     Cubit_Client.cpp
     Cubit_Server.cpp
     server.cpp
+    cubitS.cpp
+    cubitC.cpp
   }
 
   IDL_Files {
@@ -30,10 +30,10 @@ project(*client): taoexe, portableserver, strategies {
   after += *IDL
   avoids += ace_for_tao
   Source_Files {
-    cubitC.cpp
     RTI_IO.cpp
     Cubit_Client.cpp
     client.cpp
+    cubitC.cpp
   }
 
   IDL_Files {
@@ -48,13 +48,13 @@ project(*collocation): taoserver, utils, strategies, avoids_corba_e_micro, avoid
   exename   = collocation_test
 
   Source_Files {
-    cubitC.cpp
-    cubitS.cpp
     RTI_IO.cpp
     collocation_test.cpp
     Cubit_i.cpp
     Cubit_Client.cpp
     Cubit_Server.cpp
+    cubitS.cpp
+    cubitC.cpp
   }
 
   IDL_Files {

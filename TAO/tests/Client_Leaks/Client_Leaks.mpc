@@ -11,12 +11,14 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver {
   after += *idl
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     Process_Factory.cpp
     Startup_Callback.cpp
     Server_Task.cpp
     server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
   }
   IDL_Files {
   }
@@ -24,10 +26,13 @@ project(*Server): taoserver {
 
 project(*Client): taoclient, anytypecode {
   after += *idl
+  after += *Server
   Source_Files {
-    TestC.cpp
     Client_Task.cpp
     client.cpp
+  }
+  Source_Files {
+    TestC.cpp
   }
   IDL_Files {
   }
@@ -38,10 +43,12 @@ project(*Child): taoserver {
   after += *idl
   after += *Client
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     Process.cpp
     child.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
   }
   IDL_Files {
   }

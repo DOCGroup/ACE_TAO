@@ -49,18 +49,21 @@ namespace TAO
 
   char *
   FT_ClientRequest_Interceptor::name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup (this->name_);
   }
 
   void
   FT_ClientRequest_Interceptor::destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ClientRequest_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Do Nothing
   }
@@ -68,6 +71,8 @@ namespace TAO
   void
   FT_ClientRequest_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
   {
     if (TAO_debug_level > 3)
       {
@@ -100,12 +105,15 @@ namespace TAO
   void
   FT_ClientRequest_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ClientRequest_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest))
   {
     TAO_ClientRequestInfo* tao_ri = dynamic_cast<TAO_ClientRequestInfo*> (ri);
 
@@ -162,6 +170,8 @@ namespace TAO
   void
   FT_ClientRequest_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
   {
 #if 0
     // @@ Will be used later.
@@ -225,6 +235,7 @@ namespace TAO
     FT_ClientRequest_Interceptor::group_version_context (
     PortableInterceptor::ClientRequestInfo_ptr ri,
     IOP::TaggedComponent* tp)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     try
     {
@@ -287,6 +298,7 @@ namespace TAO
   void
     FT_ClientRequest_Interceptor::request_service_context (
     PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     try
     {
@@ -363,6 +375,7 @@ namespace TAO
   TimeBase::TimeT
   FT_ClientRequest_Interceptor::request_expiration_time (
     CORBA::Policy *policy)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     FT::RequestDurationPolicy_var p;
 

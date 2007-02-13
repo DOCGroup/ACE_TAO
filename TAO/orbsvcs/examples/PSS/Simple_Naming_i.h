@@ -36,9 +36,11 @@ class Naming_Context_i : public virtual POA_Simple_Naming::Naming_Context
   ~Naming_Context_i (void);
 
   virtual int bind (const char *n,
-                    const char *obj);
+                    const char *obj)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char *find (const char *n);
+  virtual char *find (const char *n)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

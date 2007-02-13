@@ -15,6 +15,7 @@ CORBA::Boolean
 inventory_i::getCDinfo (const char * artist,
                         char *& title,
                         CORBA::Float_out price)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean in_stock = 0;
   price = 0.0f;

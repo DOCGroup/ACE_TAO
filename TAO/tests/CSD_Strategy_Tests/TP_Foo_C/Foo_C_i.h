@@ -14,17 +14,24 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
     Foo_C_i();
     virtual ~Foo_C_i();
 
-    virtual void op1(void);
+    virtual void op1(void)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op2(CORBA::Long value);
+    virtual void op2(CORBA::Long value)
+                                  ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual CORBA::Long op3(CORBA::Long value);
+    virtual CORBA::Long op3(CORBA::Long value)
+                                  ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op4(CORBA::Long value);
+    virtual void op4(CORBA::Long value)
+                                  ACE_THROW_SPEC((CORBA::SystemException));
 
-    virtual void op5(void);
+    virtual void op5(void)
+                                  ACE_THROW_SPEC((CORBA::SystemException,
+                                                  FooException));
 
-    virtual void done(void);
+    virtual void done(void)
+      ACE_THROW_SPEC((CORBA::SystemException));
 
     void cust_op1(void);
     void cust_op2(long value);

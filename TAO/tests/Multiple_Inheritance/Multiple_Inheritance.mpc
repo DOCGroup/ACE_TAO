@@ -23,6 +23,7 @@ project(*Server): taoserver, utils, avoids_corba_e_micro {
 
 project(*Client): taoclient, anytypecode {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }

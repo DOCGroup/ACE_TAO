@@ -15,12 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
 #include "tao/varbase.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -56,7 +57,9 @@ public:
   ~TAO_Objref_Var_T (void);
 
   TAO_Objref_Var_T<T> & operator= (T *);
-  TAO_Objref_Var_T<T> & operator= (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T<T> & operator= (
+      const TAO_Objref_Var_T<T> &
+    );
   T * operator-> (void) const;
 
   // Cast operators.

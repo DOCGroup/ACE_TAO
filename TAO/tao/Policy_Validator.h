@@ -18,14 +18,14 @@
 #define TAO_POLICY_VALIDATOR_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,12 +64,14 @@ public:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate (TAO_Policy_Set &policies);
+  void validate (TAO_Policy_Set &policies
+                );
 
   /**
    * Add/merge policies.
    **/
-  void merge_policies (TAO_Policy_Set &policies);
+  void merge_policies (TAO_Policy_Set &policies
+                      );
 
   /**
    * Return whether the specified policy type is legal for the
@@ -95,9 +97,11 @@ public:
  TAO_ORB_Core & orb_core() const;
 
 protected:
-  virtual void validate_impl (TAO_Policy_Set &policies) = 0;
+  virtual void validate_impl (TAO_Policy_Set &policies
+                              ) = 0;
 
-  virtual void merge_policies_impl (TAO_Policy_Set &policies) = 0;
+  virtual void merge_policies_impl (TAO_Policy_Set &policies
+                                    ) = 0;
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) = 0;
 

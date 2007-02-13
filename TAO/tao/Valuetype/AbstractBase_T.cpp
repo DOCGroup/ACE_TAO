@@ -59,7 +59,7 @@ namespace TAO
              );
 
       }
-    catch (const ::CORBA::Exception&)
+    catch ( ::CORBA::Exception&)
       {
         // Consume and return proxy
         return proxy;

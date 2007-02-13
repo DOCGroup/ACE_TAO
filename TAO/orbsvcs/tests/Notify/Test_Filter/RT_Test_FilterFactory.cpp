@@ -28,6 +28,10 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create (PortableServer::POA_var& filter_
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_grammar)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::InvalidGrammar
+                   ))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)In TAO_Notify_Tests_RT_Test_FilterFactory::create_filter\n"));
@@ -36,7 +40,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::create_filter (const char *constraint_gr
   if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
       ACE_OS::strcmp (constraint_grammar, "ETCL") != 0 &&
       ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
-    throw CosNotifyFilter::InvalidGrammar ();
+    ACE_THROW_RETURN (CosNotifyFilter::InvalidGrammar (), 0);
 
 
   // Create the RefCounted servant.
@@ -61,8 +65,12 @@ CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_Tests_RT_Test_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
                                                   const CORBA::Any & /*default_value*/
                                                   )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::InvalidGrammar
+                   ))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
 }
 
 ACE_FACTORY_DEFINE (TAO_RT_Test_Filter, TAO_Notify_Tests_RT_Test_FilterFactory)

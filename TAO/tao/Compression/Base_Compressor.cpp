@@ -18,12 +18,18 @@ BaseCompressor::BaseCompressor (
 
 ::Compression::CompressorFactory_ptr
 BaseCompressor::compressor_factory (void)
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        ))
 {
   return ::Compression::CompressorFactory::_duplicate (compressor_factory_.in ());
 }
 
 ::Compression::CompressionLevel
 BaseCompressor::compression_level (void)
+        ACE_THROW_SPEC ((
+          ::CORBA::SystemException
+        ))
 {
   return compression_level_;
 }

@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    IRObject_i.h
- *
- *  $Id$
- *
- *  IRObject servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    IRObject_i.h
+//
+// = DESCRIPTION
+//    IRObject servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_IROBJECT_I_H
 #define TAO_IROBJECT_I_H
@@ -39,48 +42,49 @@ class TAO_IDLType_i;
 class TAO_Contained_i;
 class TAO_Container_i;
 
-/**
- * @class TAO_IRObject_i
- *
- * @brief TAO_IRObject_i
- *
- * Abstract base class for all IR object types.
- */
 class TAO_IFRService_Export TAO_IRObject_i : public POA_CORBA::IRObject
 {
+  // = TITLE
+  //    TAO_IRObject_i
+  //
+  // = DESCRIPTION
+  //    Abstract base class for all IR object types.
+  //
 public:
-  /// Constructor.
   TAO_IRObject_i (TAO_Repository_i *repo);
+  // Constructor.
 
-  /// Destructor.
   virtual ~TAO_IRObject_i (void);
+  // Destructor.
 
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Pure virtual.
   virtual void destroy (
     )
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Pure virtual.
 
-  /// Pure virtual - the unlocked version called by the destroy() wrapper.
   virtual void destroy_i (
     )
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Pure virtual - the unlocked version called by the destroy() wrapper.
 
-  /// Plug in the section key.
   void section_key (ACE_Configuration_Section_Key &key);
+  // Plug in the section key.
 
 protected:
-  /// Set our key from the object ID via POACurrent.
-  void update_key (void);
+  void update_key (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Set our key from the object ID via POACurrent.
 
 protected:
-  /// Pointer to the repository we were constructed from.
   TAO_Repository_i *repo_;
+  // Pointer to the repository we were constructed from.
 
-  /// Our ACE_Configuration section key.
   ACE_Configuration_Section_Key section_key_;
+  // Our ACE_Configuration section key.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

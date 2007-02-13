@@ -19,6 +19,7 @@ Simple_Server_i::Simple_Server_i (void)
 
 char*
 Simple_Server_i::remote_call (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing remote_call()\n", _key.in()));
 
@@ -32,6 +33,7 @@ Simple_Server_i::remote_call (void)
 
 char*
 Simple_Server_i::shutdown (const char* key)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing shutdown()\n", _key.in()));
 
@@ -51,6 +53,7 @@ Simple_Server_i::shutdown (const char* key)
 
 char*
 Simple_Server_i::abort (const char* key)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing abort()\n", _key.in()));
   int still_alive = 1;

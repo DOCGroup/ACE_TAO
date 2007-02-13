@@ -31,12 +31,14 @@ TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy (void)
 
 SecurityLevel3::CredsDirective
 TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->creds_directive_;
 }
 
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::ContextEstablishmentPolicy::creds_list (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentialsList * creds = 0;
 
@@ -49,36 +51,42 @@ TAO::SL3::ContextEstablishmentPolicy::creds_list (void)
 
 SecurityLevel3::FeatureDirective
 TAO::SL3::ContextEstablishmentPolicy::use_client_auth ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_client_auth_;
 }
 
 SecurityLevel3::FeatureDirective
 TAO::SL3::ContextEstablishmentPolicy::use_target_auth ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_target_auth_;
 }
 
 SecurityLevel3::FeatureDirective
 TAO::SL3::ContextEstablishmentPolicy::use_confidentiality ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_confidentiality_;
 }
 
 SecurityLevel3::FeatureDirective
 TAO::SL3::ContextEstablishmentPolicy::use_integrity ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->use_integrity_;
 }
 
 CORBA::PolicyType
 TAO::SL3::ContextEstablishmentPolicy::policy_type ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::ContextEstablishmentPolicyType;
 }
 
 CORBA::Policy_ptr
 TAO::SL3::ContextEstablishmentPolicy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Policy_ptr p = CORBA::Policy::_nil ();
   ACE_NEW_THROW_EX (p,
@@ -96,6 +104,7 @@ TAO::SL3::ContextEstablishmentPolicy::copy (void)
 
 void
 TAO::SL3::ContextEstablishmentPolicy::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->creds_directive_     = SecurityLevel3::CD_Default;
   this->creds_list_.length (0);

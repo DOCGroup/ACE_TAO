@@ -30,24 +30,29 @@ FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor (void)
 
 char *
 FTRT_ClientORB_Interceptor::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 FTRT_ClientORB_Interceptor::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FTRT_ClientORB_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FTRT_ClientORB_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::send_request");
   try
@@ -93,6 +98,7 @@ FTRT_ClientORB_Interceptor::send_request (
 void
 FTRT_ClientORB_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::receive_reply");
 
@@ -127,12 +133,16 @@ FTRT_ClientORB_Interceptor::receive_reply (
 void
 FTRT_ClientORB_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 FTRT_ClientORB_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr /* ri */)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 

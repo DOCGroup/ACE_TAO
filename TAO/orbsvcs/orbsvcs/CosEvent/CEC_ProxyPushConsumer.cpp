@@ -45,6 +45,7 @@ TAO_CEC_ProxyPushConsumer::~TAO_CEC_ProxyPushConsumer (void)
 void
 TAO_CEC_ProxyPushConsumer::activate (
     CosEventChannelAdmin::ProxyPushConsumer_ptr &activated_proxy)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPushConsumer_var result;
   try
@@ -60,6 +61,7 @@ TAO_CEC_ProxyPushConsumer::activate (
 
 void
 TAO_CEC_ProxyPushConsumer::deactivate (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -172,6 +174,8 @@ TAO_CEC_ProxyPushConsumer::_decr_refcnt (void)
 void
 TAO_CEC_ProxyPushConsumer::connect_push_supplier (
       CosEventComm::PushSupplier_ptr push_supplier)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventChannelAdmin::AlreadyConnected))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -243,6 +247,7 @@ TAO_CEC_ProxyPushConsumer::apply_policy (CosEventComm::PushSupplier_ptr pre)
 
 void
 TAO_CEC_ProxyPushConsumer::push (const CORBA::Any& event)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_CEC_ProxyPushConsumer_Guard ace_mon (this->lock_,
                                            this->refcount_,
@@ -256,6 +261,7 @@ TAO_CEC_ProxyPushConsumer::push (const CORBA::Any& event)
 
 void
 TAO_CEC_ProxyPushConsumer::disconnect_push_consumer ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PushSupplier_var supplier;
 

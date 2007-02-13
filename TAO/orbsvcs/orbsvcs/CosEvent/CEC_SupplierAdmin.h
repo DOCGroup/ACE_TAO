@@ -81,9 +81,11 @@ public:
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (void);
+      obtain_push_consumer (void)
+          ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-      obtain_pull_consumer (void);
+      obtain_pull_consumer (void)
+          ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
   virtual PortableServer::POA_ptr _default_POA (void);

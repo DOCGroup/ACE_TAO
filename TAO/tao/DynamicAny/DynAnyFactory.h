@@ -49,28 +49,49 @@ public:
   // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (
       const CORBA::Any & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode
+      ));
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
       CORBA::TypeCode_ptr type
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode
+      ));
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
       const CORBA::Any & value
 
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode,
+        DynamicAny::MustTruncate
+      ));
 
   virtual DynamicAny::DynAnySeq * create_multiple_dyn_anys (
       const DynamicAny::AnySeq & values,
       ::CORBA::Boolean allow_truncate
 
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAnyFactory::InconsistentTypeCode,
+        DynamicAny::MustTruncate
+      ));
 
   virtual DynamicAny::AnySeq * create_multiple_anys (
       const DynamicAny::DynAnySeq & values
 
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   /// TAO-specific methods.
 

@@ -40,13 +40,21 @@ namespace TAO
 
       virtual void strategy_cleanup(void);
 
-      PortableServer::ServantManager_ptr get_servant_manager (void);
+      PortableServer::ServantManager_ptr get_servant_manager (
+        void)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongPolicy));
 
-      void set_servant_manager (PortableServer::ServantManager_ptr imgr);
+      void set_servant_manager (
+        PortableServer::ServantManager_ptr imgr
+        )
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::WrongPolicy));
 
       virtual TAO_SERVANT_LOCATION locate_servant (
         const PortableServer::ObjectId &system_id,
-        PortableServer::Servant &servant);
+        PortableServer::Servant &servant
+       );
 
       virtual void post_invoke_servant_cleanup(
         const PortableServer::ObjectId &system_id,
@@ -57,11 +65,13 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-        bool &wait_occurred_restart_call);
+        bool &wait_occurred_restart_call
+       );
 
       virtual void cleanup_servant (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id);
+        const PortableServer::ObjectId &user_id
+       );
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
 

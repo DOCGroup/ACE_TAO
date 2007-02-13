@@ -33,13 +33,16 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyNonRetain::strategy_init (TAO_Root_POA *poa)
+    ServantRetentionStrategyNonRetain::strategy_init (
+      TAO_Root_POA *poa
+      )
     {
       poa_ = poa;
     }
 
     void
-    ServantRetentionStrategyNonRetain::strategy_cleanup (void)
+    ServantRetentionStrategyNonRetain::strategy_cleanup (
+      void)
     {
       poa_ = 0;
     }
@@ -57,12 +60,17 @@ namespace TAO
     ServantRetentionStrategyNonRetain::find_servant (
       const PortableServer::ObjectId &/*system_id*/)
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::system_id_to_object_id (
-      const PortableServer::ObjectId &system_id)
+      const PortableServer::ObjectId &system_id
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongAdapter,
+                         PortableServer::POA::WrongPolicy))
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
@@ -77,16 +85,24 @@ namespace TAO
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::user_id_to_servant (
       const PortableServer::ObjectId &/*id*/)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ObjectNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::id_to_reference (
       const PortableServer::ObjectId &/*id*/,
       bool /*indirect*/)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ObjectNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        CORBA::Object::_nil ());
     }
 
     TAO_SERVANT_LOCATION
@@ -138,21 +154,31 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetain::deactivate_all_objects (void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
     }
 
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::servant_to_user_id (
       PortableServer::Servant /*servant*/)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::servant_to_reference (
       PortableServer::Servant /*servant*/)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        CORBA::Object::_nil ());
     }
 
     PortableServer::ObjectId *
@@ -160,8 +186,12 @@ namespace TAO
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
       bool &/*wait_occurred_restart_call*/)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::WrongPolicy))
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
 #if !defined (CORBA_E_MICRO)
@@ -171,6 +201,10 @@ namespace TAO
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
       bool &/*wait_occurred_restart_call*/)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::ObjectAlreadyActive,
+                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -180,6 +214,8 @@ namespace TAO
     ServantRetentionStrategyNonRetain::create_reference (
       const char *intf,
       CORBA::Short priority)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation creates an object reference that encapsulates a
       // POA-generated Object Id value and the specified interface
@@ -213,7 +249,9 @@ namespace TAO
                                              priority,
                                              true);
 
-      return this->poa_->invoke_key_to_object_helper_i (intf, user_id);
+      return this->poa_->invoke_key_to_object_helper_i (intf,
+                                                        user_id
+                                                       );
     }
 
     CORBA::Object_ptr
@@ -221,6 +259,7 @@ namespace TAO
       const PortableServer::ObjectId &oid,
       const char *intf,
       CORBA::Short priority)
+        ACE_THROW_SPEC ((CORBA::SystemException))
     {
       // This operation creates an object reference that encapsulates the
       // specified Object Id and interface repository Id values. This
@@ -235,7 +274,7 @@ namespace TAO
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      PortableServer::ObjectId *sys_id = 0;
+      PortableServer::ObjectId *sys_id;
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (oid),
                         CORBA::NO_MEMORY ());
@@ -250,7 +289,9 @@ namespace TAO
                                              priority,
                                              true);
 
-      return this->poa_->invoke_key_to_object_helper_i (intf, oid);
+      return this->poa_->invoke_key_to_object_helper_i (intf,
+                                                        oid
+                                                       );
     }
 
     int

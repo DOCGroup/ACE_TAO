@@ -60,18 +60,24 @@ public:
 
   // = The EndpointPolicy::Policy methods
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
   virtual EndpointPolicy::EndpointList * value (
     void
-  );
+  )
+  ACE_THROW_SPEC ((
+    ::CORBA::SystemException
+  ));
 
 private:
   /// The attribute

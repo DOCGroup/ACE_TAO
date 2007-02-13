@@ -36,27 +36,43 @@ namespace MyImpl
     ~GPS_exec_i ();
 
     // Operations from HUDisplay::GPS
-    HUDisplay::CCM_position_ptr get_MyLocation ();
+    HUDisplay::CCM_position_ptr get_MyLocation ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void push_Refresh (HUDisplay::tick *);
+    void push_Refresh (HUDisplay::tick *)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from HUDisplay::position
-    CORBA::Long posx ();
+    CORBA::Long posx ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long posy ();
+    CORBA::Long posy ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-    void set_session_context (Components::SessionContext_ptr ctx);
+    void set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
 
-    void ciao_preactivate ();
+    void ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
 
-    void ccm_activate ();
+    void ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
 
-    void ciao_postactivate ();
+    void ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
 
-    void ccm_passivate ();
+    void ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
 
-    void ccm_remove ();
+    void ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
 
    protected:
     // Component specific context
@@ -73,7 +89,7 @@ namespace MyImpl
    * GPS home executor implementation class.
    */
     class GPS_EXEC_Export GPSHome_exec_i :
-      public virtual HUDisplay::CCM_GPSHome,
+    public virtual HUDisplay::CCM_GPSHome,
       public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -83,8 +99,16 @@ namespace MyImpl
     /// Default dtor.
     ~GPSHome_exec_i ();
 
+    // Explicit home operations
+/*     virtual ::Components::EnterpriseComponent_ptr */
+/*       new_GPS () */
+/*       ACE_THROW_SPEC ((CORBA::SystemException)); */
+
     // Implicit home operations
-    virtual ::Components::EnterpriseComponent_ptr create ();
+    virtual ::Components::EnterpriseComponent_ptr
+      create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
   };
 
 
@@ -98,9 +122,11 @@ namespace MyImpl
     }
 
     // Operations from HUDisplay::position
-    CORBA::Long posx ();
+    CORBA::Long posx ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::Long posy ();
+    CORBA::Long posy ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     GPS_exec_i& component_;

@@ -14,8 +14,6 @@ workspace {
   utils
   orbsvcs
   exclude {
-    $(ACE_ROOT)/protocols/tests
-    $(ACE_ROOT)/protocols/examples
     orbsvcs/tests
     orbsvcs/performance-tests
     orbsvcs/examples

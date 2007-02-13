@@ -23,6 +23,7 @@ project(*Server): taoserver {
 
 project(*Client): taoclient, anytypecode {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }

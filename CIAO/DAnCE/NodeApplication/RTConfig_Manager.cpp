@@ -17,6 +17,7 @@ CIAO::RTResource_Config_Manager::init (RTCORBA::RTORB_ptr rtorb)
 void
 CIAO::RTResource_Config_Manager::print_resources
 (const CIAO::DAnCE::ServerResource &server_resource)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CIAO::DAnCE::ORBResource &orb_resource
     = server_resource.orb_config.orb_resources[0];
@@ -102,6 +103,7 @@ CIAO::RTResource_Config_Manager::print_resources
 void
 CIAO::RTResource_Config_Manager::init_resources
 (const CIAO::DAnCE::ServerResource &server_resource)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "RTResource_Config_Manager::init_resource.\n"));
@@ -278,6 +280,7 @@ CIAO::RTResource_Config_Manager::init_resources
 
 void
 CIAO::RTResource_Config_Manager::fini ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TP_MAP::ITERATOR iter = this->threadpool_map_.begin ();
   TP_MAP::ITERATOR end = this->threadpool_map_.end ();
@@ -291,12 +294,13 @@ CIAO::RTResource_Config_Manager::fini ()
 
 RTCORBA::ThreadpoolId
 CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_threadpool_by_name\"\n"));
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
 
@@ -307,7 +311,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a threadpool named %s\n",
                   name));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   return ret_id;
@@ -315,12 +319,13 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
 
 RTCORBA::PriorityBands *
 CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_priority_bands_by_name\"\n"));
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
   PB_MAP::ENTRY *entry = 0;
@@ -330,7 +335,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a connection bands named %s\n",
                   name));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   RTCORBA::PriorityBands_var retv = new RTCORBA::PriorityBands;
@@ -340,12 +345,13 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
 
 CORBA::PolicyList *
 CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_policies_by_name\"\n"));
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
 
@@ -359,7 +365,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a PolicyList named %s\n",
                   name));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   // duplicate the sequence PolicyList.
@@ -374,6 +380,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
 CORBA::Policy_ptr
 CIAO::RTResource_Config_Manager::create_single_policy
 (const CIAO::DAnCE::PolicyDef &policy_def)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //  if (CIAO::debug_level () > 9)
     ACE_DEBUG ((LM_DEBUG,
@@ -433,7 +440,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
     default:
       ACE_ERROR ((LM_ERROR,
                   "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   return retv._retn ();

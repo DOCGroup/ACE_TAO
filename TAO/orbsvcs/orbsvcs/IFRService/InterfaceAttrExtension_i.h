@@ -1,18 +1,21 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    InterfaceAttrExtension_i.h
- *
- *  $Id$
- *
- *  InterfaceAttrExtension_i servant class.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    InterfaceAttrExtension_i.h
+//
+// = DESCRIPTION
+//    InterfaceAttrExtension_i servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 #ifndef TAO_INTERFACEATTREXTENSION_I_H
 #define TAO_INTERFACEATTREXTENSION_I_H
@@ -41,20 +44,22 @@ class TAO_IFRService_Export TAO_InterfaceAttrExtension_i
   //    IDL3 attribute extension mixin class.
   //
 public:
-  /// Constructor
   TAO_InterfaceAttrExtension_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_InterfaceAttrExtension_i (void);
+  // Destructor
 
   virtual
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
   describe_ext_interface_i (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,
@@ -64,7 +69,8 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
       const char *id,
@@ -74,7 +80,8 @@ public:
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
       const CORBA::ExceptionDefSeq &set_exceptions
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -236,7 +236,9 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
 int
 Thread_Handler::svc (void)
 {
-  ACE_Time_Value sleep_timeout (Thread_Handler::interval_.sec () / 2);
+  ACE_Time_Value sleep_timeout (0,
+                                // Transform this into microseconds and divide by 2.
+                                (Thread_Handler::interval_.sec () * ACE_ONE_SECOND_IN_USECS) / 2);
 
   for (int i = this->iterations_;
        i > 0;

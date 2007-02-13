@@ -34,7 +34,8 @@ public:
   test_i (CORBA::ORB_ptr orb);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

@@ -36,23 +36,28 @@ public:
   virtual ~Logger_i (void);
   // destructor
 
-  virtual void log (const Logger::Log_Record &log_rec);
+  virtual void log (const Logger::Log_Record &log_rec)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
 
   virtual void logv (const Logger::Log_Record &log_rec,
-                     Logger::Verbosity_Level verbosity);
+                     Logger::Verbosity_Level verbosity)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
-  virtual void log_twoway (const Logger::Log_Record &log_rec);
+  virtual void log_twoway (const Logger::Log_Record &log_rec)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output.
 
   virtual void logv_twoway (const Logger::Log_Record &log_rec,
-                            Logger::Verbosity_Level verbosity);
+                            Logger::Verbosity_Level verbosity)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Writes the <log_rec> to the standard output with the given
   // verbosity level
 
-   void verbosity (Logger::Verbosity_Level level);
+   void verbosity (Logger::Verbosity_Level level)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets the verbosity level. Valid values are {VERBOSE, VERBOSE_LITE
   //  and SILENT}. Defaults to VERBOSE
 
@@ -85,7 +90,8 @@ public:
   ~Logger_Factory_i (void);
   // Destructor.
 
-  virtual Logger_ptr make_logger (const char *name);
+  virtual Logger_ptr make_logger (const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This function returns a logger with name <name>. If <name> is
   // unique, a new logger is created; else, a previously created
   // logger of name <name> is returned

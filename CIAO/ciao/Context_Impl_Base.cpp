@@ -25,13 +25,16 @@ namespace CIAO
   Components::Principal_ptr
   Context_Impl_Base::get_caller_principal (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                      Components::Principal::_nil ());
   }
 
   Components::CCMHome_ptr
   Context_Impl_Base::get_CCM_home (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return Components::CCMHome::_duplicate (this->home_.in ());
   }
@@ -39,28 +42,36 @@ namespace CIAO
   CORBA::Boolean
   Context_Impl_Base::get_rollback_only (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
   }
 
   Components::Transaction::UserTransaction_ptr
   Context_Impl_Base::get_user_transaction (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                      Components::Transaction::UserTransaction::_nil ());
   }
 
   CORBA::Boolean
   Context_Impl_Base::is_caller_in_role (
       const char * /* role */
     )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
   }
 
   void
   Context_Impl_Base::set_rollback_only (
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState))
   {
     throw CORBA::NO_IMPLEMENT ();
   }

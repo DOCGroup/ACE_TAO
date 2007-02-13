@@ -1,16 +1,19 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file   Storable_Naming_Context_Activator.h
- *
- *  $Id$
- *
- *  @author Byron Harris <harris_b@ociweb.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//   Storable_Naming_Context_Activator.h
+//
+// = AUTHOR
+//    Byron Harris <harris_b@ociweb.com>
+//
+// ============================================================================
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
 #define TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
@@ -56,7 +59,9 @@ public:
    * and the servant implementing this reference does not yet exist.
    */
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa);
+                                             PortableServer::POA_ptr poa)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::ForwardRequest));
 
   /**
    * Used by the POA to delete the servant created from a call to incarnate.
@@ -65,7 +70,8 @@ public:
                             PortableServer::POA_ptr adapter,
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
-                            CORBA::Boolean remaining_activations);
+                            CORBA::Boolean remaining_activations)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

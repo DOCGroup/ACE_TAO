@@ -5,8 +5,6 @@ ACE_RCSID (PortableServer,
            ImplicitActivationPolicy,
            "$Id$")
 
-#include "ace/CORBA_macros.h"
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,6 +21,7 @@ namespace TAO
 
     CORBA::Policy_ptr
     ImplicitActivationPolicy::copy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ImplicitActivationPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -34,17 +33,20 @@ namespace TAO
 
     void
     ImplicitActivationPolicy::destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::ImplicitActivationPolicyValue
     ImplicitActivationPolicy::value (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
     ImplicitActivationPolicy::policy_type (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::IMPLICIT_ACTIVATION_POLICY_ID;
     }

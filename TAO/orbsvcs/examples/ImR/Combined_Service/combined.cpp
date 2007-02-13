@@ -23,13 +23,14 @@ public:
   {
   }
   virtual CORBA::Long process_directive(const char* s)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_ASSERT(s != 0);
     ACE_ASSERT(ACE_OS::strlen(s) > 0);
     return asc_.process_directive(s);
   }
 
-  virtual void reconfigure()
+  virtual void reconfigure() ACE_THROW_SPEC ((CORBA::SystemException))
   {
     asc_.reconfigure();
   }

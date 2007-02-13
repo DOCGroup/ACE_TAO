@@ -60,10 +60,12 @@ public:
   /// Gets a list of LogRecords.
   virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
 				       CORBA::ULong how_many)
-    = 0;
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidParam))			= 0;
 
   /// This destroys the iterator.
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   /// POA

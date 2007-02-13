@@ -11,13 +11,16 @@ class Time_impl :
 {
 public:
   virtual TimeModule::TimeOfDay
-    get_gmt (void);
+    get_gmt (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void Shutdown (void);
+  void Shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 
 TimeModule::TimeOfDay Time_impl::get_gmt (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   time_t time_now   = time(0);
@@ -34,6 +37,7 @@ TimeModule::TimeOfDay Time_impl::get_gmt (void)
 
 void
 Time_impl::Shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   exit(0);
 }

@@ -15,6 +15,7 @@ Manager_Handler::Manager_Handler (Test::Manager_ptr manager,
 
 void
 Manager_Handler::start_workers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -30,6 +31,7 @@ Manager_Handler::start_workers (void)
 
 void
 Manager_Handler::start_workers_excep (::Messaging::ExceptionHolder * holder)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {

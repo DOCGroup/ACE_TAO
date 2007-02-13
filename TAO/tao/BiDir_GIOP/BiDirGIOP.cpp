@@ -4,7 +4,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "ace/CORBA_macros.h"
 
 ACE_RCSID (BiDir_GIOP,
            BiDirGIOP,
@@ -24,7 +23,8 @@ TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
 }
 
 int
-TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
+TAO_BiDirGIOP_Loader::init (int,
+                            ACE_TCHAR* [])
 {
   if (TAO_BiDirGIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
     {
@@ -46,11 +46,12 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
           bidir_orb_initializer = tmp_orb_initializer;
 
           PortableInterceptor::register_orb_initializer (
-            bidir_orb_initializer.in ());
+            bidir_orb_initializer.in ()
+           );
 
           TAO_BiDirGIOP_Loader::is_activated_ = true;
         }
-      catch (const ::CORBA::Exception& ex)
+      catch ( ::CORBA::Exception& ex)
         {
           if (TAO_debug_level > 0)
             {
@@ -66,6 +67,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 void
 TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
                                               )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Is this true? Does the GIOP protocol version matter here?
   if (TAO_DEF_GIOP_MINOR < 2)

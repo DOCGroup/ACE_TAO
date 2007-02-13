@@ -44,6 +44,7 @@ Control::~Control (void)
 
 void
 Control::join (Federated_Test::Peer_ptr peer)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -163,6 +164,7 @@ Control::join (Federated_Test::Peer_ptr peer)
 
 PortableServer::POA_ptr
 Control::_default_POA (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

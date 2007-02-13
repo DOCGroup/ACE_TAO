@@ -53,6 +53,7 @@ Job_i::init (ACE_Arg_Shifter& arg_shifter)
 void
 Job_i::work (CORBA::ULong work,
        CORBA::Short importance)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static CORBA::ULong prime_number = 9619;
 
@@ -124,6 +125,7 @@ Job_i::guid (void)
 
 void
 Job_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   dt_creator_->job_ended ();
 }

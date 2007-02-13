@@ -10,6 +10,7 @@
  *   This class creates the default stub, that is used in
  *   plain CORBA.
  *
+ *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================
@@ -42,13 +43,16 @@ class TAO_Export TAO_Default_Stub_Factory
   : public TAO_Stub_Factory
 {
 public:
+
   /// Destructor.
   virtual ~TAO_Default_Stub_Factory (void);
 
   /// Creates a Stub Object.
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
-                                 TAO_ORB_Core *orb_core);
+                                 TAO_ORB_Core *orb_core
+                                );
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

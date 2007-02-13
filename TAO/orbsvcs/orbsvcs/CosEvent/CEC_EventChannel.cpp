@@ -181,18 +181,21 @@ TAO_CEC_EventChannel::disconnected (TAO_CEC_ProxyPullSupplier* supplier)
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_CEC_EventChannel::for_consumers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->consumer_admin_->_this ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
 TAO_CEC_EventChannel::for_suppliers (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->supplier_admin_->_this ();
 }
 
 void
 TAO_CEC_EventChannel::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown ();
 }

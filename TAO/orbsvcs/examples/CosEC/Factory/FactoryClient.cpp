@@ -125,7 +125,8 @@ FactoryClient::resolve_factory (void)
 CosEventChannelFactory::ChannelFactory_ptr
 FactoryClient::create_factory (void)
 {
-  throw CORBA::UNKNOWN ();
+  ACE_THROW_RETURN (CORBA::UNKNOWN (),
+                    CosEventChannelFactory::ChannelFactory::_nil ());
 }
 
 CosEventChannelAdmin::EventChannel_ptr

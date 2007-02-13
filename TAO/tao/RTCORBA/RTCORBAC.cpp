@@ -2358,7 +2358,7 @@ RTCORBA::RTORB::MutexNotFound::_tao_duplicate (void) const
 
 void RTCORBA::RTORB::MutexNotFound::_raise (void) const
 {
-  throw *this;
+  TAO_RAISE (*this);
 }
 
 void RTCORBA::RTORB::MutexNotFound::_tao_encode (
@@ -2453,7 +2453,7 @@ RTCORBA::RTORB::InvalidThreadpool::_tao_duplicate (void) const
 
 void RTCORBA::RTORB::InvalidThreadpool::_raise (void) const
 {
-  throw *this;
+  TAO_RAISE (*this);
 }
 
 void RTCORBA::RTORB::InvalidThreadpool::_tao_encode (

@@ -16,10 +16,10 @@ $iterations = '1';
 foreach $i (@ARGV) {
     if ($i eq '-mux') {
         $client_conf = PerlACE::LocalFile ("muxed$PerlACE::svcconf_ext");
-    }
+    } 
     elsif ($i eq '-debug') {
         $debug_level = '1';
-    }
+    } 
     elsif ($i eq '-exclusive') {
         $client_conf = PerlACE::LocalFile ("exclusive$PerlACE::svcconf_ext");
     }
@@ -42,7 +42,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-}
+} 
 
 $CL = new PerlACE::Process ("simple_client",
                             "-ORBsvcconf $client_conf "
@@ -62,16 +62,11 @@ $client2 = $CL2->SpawnWaitKill (60);
 
 $server = $SV->WaitKill (10);
 
-$CL3 = new PerlACE::Process ("client",
-                            "-c -ORBdebuglevel $debug_level");
-
-$client3 = $CL3->SpawnWaitKill (60);
-
 unlink $iorfile;
 
-if ($server != 0 || $client != 0 || $client2 != 0 || $client3 != 0) {
+if ($server != 0 || $client != 0 || $client2 != 0) {
     exit 1;
 }
-
+ 
 exit 0;
-
+ 

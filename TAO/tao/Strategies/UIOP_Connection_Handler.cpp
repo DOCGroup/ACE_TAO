@@ -92,6 +92,7 @@ TAO_UIOP_Connection_Handler::open (void*)
 
   bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
 
+
   try
     {
       if (client)
@@ -103,7 +104,7 @@ TAO_UIOP_Connection_Handler::open (void*)
           tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       return -1;
     }

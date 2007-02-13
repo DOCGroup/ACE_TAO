@@ -10,6 +10,7 @@ CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
                                                     const char * nodeapp_loc,
                                                     const char * nodeapp_options,
                                                     int spawn_delay)
+  ACE_THROW_SPEC ((CORBA::SystemException))
     : orb_ (CORBA::ORB::_duplicate (orb)),
       poa_ (PortableServer::POA::_duplicate (poa)),
       name_ (CORBA::string_dup (name)),
@@ -26,6 +27,7 @@ CIAO::NodeManager_Impl_Base::~NodeManager_Impl_Base ()
 
 void
 CIAO::NodeManager_Impl_Base::init ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -54,12 +56,14 @@ CIAO::NodeManager_Impl_Base::_default_POA (void)
 
 char *
 CIAO::NodeManager_Impl_Base::name ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
 CIAO::NodeManager_Impl_Base::shutdown ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   this->orb_->shutdown (0);
@@ -69,6 +73,7 @@ void
 CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
                                          Deployment::TargetManager_ptr target,
                                          Deployment::Logger_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //  ACE_THROW (CORBA::NO_IMPLEMENT ());
   // Here start the Monitor
@@ -99,6 +104,7 @@ CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
 
 void
 CIAO::NodeManager_Impl_Base::leaveDomain ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Delete the monitor , this will also terminate the thread
   monitor_controller_.reset ();
@@ -110,6 +116,7 @@ CIAO::NodeManager_Impl_Base::set_priority (
                                            const char * cid,
                                            const ::Deployment::Sched_Params & nm_params
                                            )
+  ACE_THROW_SPEC ((::CORBA::SystemException))
 
 {
   ACE_CString key (plan_id);
@@ -217,6 +224,9 @@ set_all_consumers (ACE_CString &name,
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeManager_Impl_Base::
 preparePlan (const Deployment::DeploymentPlan &plan)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError,
+                   Deployment::PlanError))
 {
   CIAO_TRACE("CIAO::NodeManager_Impl::preparePlan");
 
@@ -228,7 +238,8 @@ preparePlan (const Deployment::DeploymentPlan &plan)
                   "same component server must have the "
                   "same \"resourceName\" defined.\n"));
 
-      throw Deployment::PlanError ();
+      ACE_THROW_RETURN (Deployment::PlanError (),
+                        Deployment::NodeApplicationManager::_nil ());
     }
 
   // Update the reference count map based on the deployment plan input
@@ -337,7 +348,8 @@ preparePlan (const Deployment::DeploymentPlan &plan)
     }
   catch (const PortableServer::POA::ObjectNotActive&)
     {
-      throw Deployment::StartError ();
+      ACE_THROW_RETURN (Deployment::StartError (),
+                        Deployment::NodeApplicationManager::_nil ());
     }
   catch (const CORBA::Exception& ex)
     {
@@ -351,6 +363,9 @@ preparePlan (const Deployment::DeploymentPlan &plan)
 void
 CIAO::NodeManager_Impl_Base::destroyManager
 (Deployment::NodeApplicationManager_ptr manager)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError,
+                   Deployment::InvalidReference))
 {
   CIAO_TRACE("CIAO::NodeManager_Impl::destroyManager");
   try
@@ -393,6 +408,8 @@ CIAO::NodeManager_Impl_Base::destroyManager
 void
 CIAO::NodeManager_Impl_Base::
 destroyPlan (const Deployment::DeploymentPlan & plan)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::StopError))
 {
   // Update the reference counting map (subtract by 1 for each instance)
   // If the ref count becomes 0, then remove this component, otherwise,
@@ -459,6 +476,7 @@ destroyPlan (const Deployment::DeploymentPlan & plan)
 Deployment::ComponentPlans *
 CIAO::NodeManager_Impl_Base::
 get_shared_components ()
+  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return this->get_shared_components_i ();
 }
@@ -610,6 +628,7 @@ NodeManager_Impl (const char *name,
 CIAO::NodeManager_Impl::
 create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
   ACE_NEW_THROW_EX (app_mgr,
@@ -639,6 +658,7 @@ Static_NodeManager_Impl (const char *name,
 CIAO::Static_NodeManager_Impl::
 create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CIAO::debug_level () > 10)
     {
@@ -657,6 +677,9 @@ create_node_app_manager (CORBA::ORB_ptr orb,
 void
 CIAO::Static_NodeManager_Impl::destroyManager
 (Deployment::NodeApplicationManager_ptr manager)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError,
+                   Deployment::InvalidReference))
 {
   CIAO_TRACE("CIAO::Static_NodeManager_Impl::destroyManager");
   try

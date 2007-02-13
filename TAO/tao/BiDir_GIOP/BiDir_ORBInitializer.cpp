@@ -6,8 +6,6 @@
 
 #include "tao/ORB_Constants.h"
 
-#include "ace/CORBA_macros.h"
-
 ACE_RCSID (BiDir_GIOP,
            BiDir_ORBInitializer,
            "$Id$")
@@ -16,12 +14,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
 }
 
 void
 TAO_BiDir_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 }

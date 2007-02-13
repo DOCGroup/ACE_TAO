@@ -227,7 +227,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
 
       CORBA::Object_var poa_object =

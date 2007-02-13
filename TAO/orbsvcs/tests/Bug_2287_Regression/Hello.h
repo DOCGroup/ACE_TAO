@@ -22,11 +22,14 @@ public:
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
   // = The skeleton methods
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void ping (void);
+  virtual void ping (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void throw_location_forward (void);
+  virtual void throw_location_forward (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

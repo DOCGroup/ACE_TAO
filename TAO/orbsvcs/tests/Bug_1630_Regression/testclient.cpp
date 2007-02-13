@@ -17,13 +17,12 @@ int main (int argc, char* argv[])
       ACE_DEBUG((LM_DEBUG, "Start of Client\n"));
       // Initialise ORB.
       //
-      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "");
 
       // Find the Interface Repository.
       //
       ACE_DEBUG((LM_DEBUG, ". Find IFR\n"));
-      CORBA::Object_var ifr_obj =
-        orb->resolve_initial_references( "InterfaceRepository");
+      CORBA::Object_var ifr_obj = orb->resolve_initial_references( "InterfaceRepository");
 
       ACE_DEBUG((LM_DEBUG, ". Narrow IFR\n"));
       CORBA::Repository_var ifr = CORBA::Repository::_narrow( ifr_obj.in());

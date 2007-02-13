@@ -53,6 +53,7 @@ class Reply_Handler : public POA_AMI_testHandler
 {
 public:
   void method (CORBA::ULong reply_number)
+    ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: AMI Reply %d @ %T\n",
@@ -64,6 +65,7 @@ public:
     }
 
   void method_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     try
       {
@@ -76,10 +78,12 @@ public:
   }
 
   void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void shutdown_excep (::Messaging::ExceptionHolder *holder)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     try
       {

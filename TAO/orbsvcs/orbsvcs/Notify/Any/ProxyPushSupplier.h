@@ -60,14 +60,25 @@ public:
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
   // = Interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
+  virtual CosNotifyChannelAdmin::ProxyType MyType (void)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
 
   virtual void connect_any_push_consumer (
     CosEventComm::PushConsumer_ptr push_consumer
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosEventChannelAdmin::AlreadyConnected,
+    CosEventChannelAdmin::TypeError
+  ));
 
   virtual void disconnect_push_supplier (
-  );
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ));
 
 private:
   /// TAO_Notify_Destroy_Callback methods

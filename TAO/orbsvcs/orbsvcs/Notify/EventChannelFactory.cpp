@@ -61,6 +61,9 @@ TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory ()
 
 void
 TAO_Notify_EventChannelFactory::destroy (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   int result = this->shutdown ();
   if ( result == 1)
@@ -165,6 +168,11 @@ TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
     const CosNotification::AdminProperties & initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id
   )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , CosNotification::UnsupportedQoS
+                   , CosNotification::UnsupportedAdmin
+                   ))
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     TAO_Notify_PROPERTIES::instance()->builder()->build_event_channel (this
@@ -177,6 +185,9 @@ TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
 
 CosNotifyChannelAdmin::ChannelIDSeq*
 TAO_Notify_EventChannelFactory::get_all_channels (void)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   TAO_Notify_EventChannel_Seq_Worker seq_worker;
 
@@ -185,6 +196,10 @@ TAO_Notify_EventChannelFactory::get_all_channels (void)
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::ChannelID id)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , CosNotifyChannelAdmin::ChannelNotFound
+                   ))
 {
   TAO_Notify_EventChannel_Find_Worker find_worker;
 
@@ -385,6 +400,7 @@ TAO_Notify_EventChannelFactory::reconnect (void)
 NotifyExt::ReconnectionRegistry::ReconnectionID
 TAO_Notify_EventChannelFactory::register_callback (
     NotifyExt::ReconnectionCallback_ptr reconnection)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->reconnect_registry_.register_callback (
     reconnection);
@@ -393,6 +409,7 @@ TAO_Notify_EventChannelFactory::register_callback (
 void
 TAO_Notify_EventChannelFactory::unregister_callback (
     NotifyExt::ReconnectionRegistry::ReconnectionID id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->reconnect_registry_.unregister_callback (
     id);
@@ -400,12 +417,14 @@ TAO_Notify_EventChannelFactory::unregister_callback (
 
 CORBA::Boolean
 TAO_Notify_EventChannelFactory::is_alive (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Boolean (1);
 }
 
 void
 TAO_Notify_EventChannelFactory::save_topology (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->self_change ();
 }

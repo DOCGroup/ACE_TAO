@@ -7,8 +7,7 @@ ACE_RCSID(Filter, Filter, "$Id$")
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 #define CA_FILTER "threshold < 20"
-#define SA_FILTER1 "threshold > 10"
-#define SA_FILTER2 "'pc1' in targetlist"
+#define SA_FILTER "threshold > 10"
 #define TCL_GRAMMAR "TCL"
 #define EVENTS_TO_SEND 30
 #define EVENTS_EXPECTED_TO_RECEIVE 9*4  // 2 consumers get the same events from 2 suppliers
@@ -153,12 +152,10 @@ FilterClient::create_supplieradmin (void)
   ACE_ASSERT (!CORBA::is_nil (sa_filter.in ()));
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
-  constraint_list.length (2);
+  constraint_list.length (1);
 
   constraint_list[0].event_types.length (0);
-  constraint_list[0].constraint_expr = CORBA::string_dup (SA_FILTER1);
-  constraint_list[1].event_types.length (0);
-  constraint_list[1].constraint_expr = CORBA::string_dup (SA_FILTER2);
+  constraint_list[0].constraint_expr = CORBA::string_dup (SA_FILTER);
 
   sa_filter->add_constraints (constraint_list);
 
@@ -261,9 +258,8 @@ FilterClient::send_events (void)
   // FilterableEventBody
   // PropertySeq
   // sequence<Property>: string name, any value
-  event.filterable_data.length (4);
+  event.filterable_data.length (3);
   event.filterable_data[0].name = CORBA::string_dup("threshold");
-  event.filterable_data[0].value <<= (CORBA::Long)4;
 
   event.filterable_data[1].name = CORBA::string_dup("temperature");
   event.filterable_data[1].value <<= (CORBA::Long)70;
@@ -271,10 +267,7 @@ FilterClient::send_events (void)
   event.filterable_data[2].name = CORBA::string_dup("pressure");
   event.filterable_data[2].value <<= (CORBA::Long)80;
 
-  event.filterable_data[3].name = CORBA::string_dup("targetlist");
-  const char* ids[] = { "pc1", "pc2", "pc3" };
-  CORBA::StringSeq idseq(3, 3, const_cast<char**> (ids), 0);
-  event.filterable_data[3].value <<= idseq;
+  event.filterable_data[0].value <<= (CORBA::Long)4;
 
   // any
   event.remainder_of_body <<= (CORBA::Long)4;
@@ -337,6 +330,10 @@ Filter_StructuredPushConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
     )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ))
 {
   // No-Op.
 }
@@ -344,6 +341,10 @@ Filter_StructuredPushConsumer::offer_change
 void
 Filter_StructuredPushConsumer::push_structured_event
    (const CosNotification::StructuredEvent & notification)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosEventComm::Disconnected
+                   ))
 {
     CORBA::Long val;
 
@@ -366,6 +367,9 @@ Filter_StructuredPushConsumer::push_structured_event
 void
 Filter_StructuredPushConsumer::disconnect_structured_push_consumer
    (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   // No-Op.
 }
@@ -415,6 +419,10 @@ Filter_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
     )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType
+                   ))
 {
   //No-Op.
 }
@@ -434,6 +442,9 @@ Filter_StructuredPushSupplier::send_event
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
    (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   // No-Op.
 }

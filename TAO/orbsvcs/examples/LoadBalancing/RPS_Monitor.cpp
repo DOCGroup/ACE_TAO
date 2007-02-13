@@ -32,6 +32,7 @@ RPS_Monitor::~RPS_Monitor (void)
 
 CosLoadBalancing::Location *
 RPS_Monitor::the_location (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -47,6 +48,7 @@ RPS_Monitor::the_location (void)
 
 CosLoadBalancing::LoadList *
 RPS_Monitor::loads (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const ACE_Time_Value current_time = ACE_OS::gettimeofday ();
 

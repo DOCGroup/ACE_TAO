@@ -590,6 +590,14 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , PortableGroup::NoFactory
+    , PortableGroup::ObjectNotCreated
+    , PortableGroup::InvalidCriteria
+    , PortableGroup::InvalidProperty
+    , PortableGroup::CannotMeetCriteria
+  ))
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::create_object);
   ACE_UNUSED_ARG (type_id);
@@ -626,7 +634,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
-    throw PortableGroup::InvalidCriteria();
+    ACE_THROW_RETURN ( PortableGroup::InvalidCriteria(), 0);
   }
 
   FT_TestReplica_i * replica = create_replica(role);
@@ -635,7 +643,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     ACE_ERROR ((LM_ERROR,
       "New Replica_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    throw PortableGroup::ObjectNotCreated();
+    ACE_THROW_RETURN ( PortableGroup::ObjectNotCreated(), 0);
   }
 
   ACE_NEW_THROW_EX ( factory_creation_id,
@@ -677,6 +685,10 @@ FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
 void FT_ReplicaFactory_i::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+    , PortableGroup::ObjectNotFound
+  ))
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::delete_object);
 
@@ -703,12 +715,16 @@ void FT_ReplicaFactory_i::delete_object (
 }
 
 CORBA::Boolean FT_ReplicaFactory_i::is_alive (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_RETURN(FT_ReplicaFactory_i::is_alive)
     1;
 }
 
 void FT_ReplicaFactory_i::shutdown (void)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::shutdown);
   InternalGuard guard (this->internals_);

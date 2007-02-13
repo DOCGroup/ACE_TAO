@@ -39,9 +39,13 @@ public:
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+                const RtecEventChannelAdmin::ConsumerQOS &qos)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       RtecEventChannelAdmin::AlreadyConnected,
+                       RtecEventChannelAdmin::TypeError));
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   typedef TAO_EC_Default_ProxyPushSupplier BASECLASS;

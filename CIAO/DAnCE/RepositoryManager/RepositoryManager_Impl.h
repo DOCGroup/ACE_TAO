@@ -63,14 +63,22 @@ public:
   virtual
   void shutdown (
 
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
 
   virtual
   void installPackage (
       const char * installationName,
       const char * location,
       ::CORBA::Boolean replace
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      ::Deployment::NameExists,
+      ::Deployment::PackageError
+    ));
 
   virtual
   void createPackage (
@@ -78,37 +86,63 @@ public:
       const ::Deployment::PackageConfiguration & package,
       const char * baseLocation,
       ::CORBA::Boolean replace
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      ::Deployment::NameExists,
+      ::Deployment::PackageError
+    ));
 
   virtual
   ::Deployment::PackageConfiguration * findPackageByName (
       const char * name
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      ::Deployment::NoSuchName
+    ));
 
   virtual
   ::Deployment::PackageConfiguration * findPackageByUUID (
       const char * UUID
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      ::Deployment::NoSuchName
+    ));
 
   virtual
   ::CORBA::StringSeq * findNamesByType (
       const char * type
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
 
   virtual
   ::CORBA::StringSeq * getAllNames (
 
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
 
   virtual
   ::CORBA::StringSeq * getAllTypes (
 
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
 
   virtual
   void deletePackage (
       const char * installationName
-    );
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      ::Deployment::NoSuchName
+    ));
 
 protected:
 

@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    LocalInterfaceDef_i.h
- *
- *  $Id$
- *
- *  LocalInterfaceDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    LocalInterfaceDef_i.h
+//
+// = DESCRIPTION
+//    LocalInterfaceDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_LOCALINTERFACEDEF_I_H
 #define TAO_LOCALINTERFACEDEF_I_H
@@ -32,33 +35,35 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class TAO_LocalInterfaceDef_i
- *
- * @brief TAO_LocalInterfaceDef_i
- *
- * Represents an local interface definition.
- */
 class TAO_IFRService_Export TAO_LocalInterfaceDef_i : public virtual TAO_InterfaceDef_i
 {
+  // = TITLE
+  //    TAO_LocalInterfaceDef_i
+  //
+  // = DESCRIPTION
+  //    Represents an local interface definition.
+  //
 public:
-  /// Constructor
   TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_LocalInterfaceDef_i (void);
+  // Destructor
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind (
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
 
   virtual CORBA::Boolean is_a (
       const char *interface_id
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
       const char *interface_id
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

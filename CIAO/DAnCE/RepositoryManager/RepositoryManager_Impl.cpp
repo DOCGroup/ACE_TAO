@@ -156,6 +156,9 @@ CIAO_RepositoryManagerDaemon_i::~CIAO_RepositoryManagerDaemon_i (void)
 
 void CIAO_RepositoryManagerDaemon_i::shutdown ()
 
+                ACE_THROW_SPEC ((
+                                CORBA::SystemException
+                                ))
 {
   // Save the names, UUIDs, & types info to the configuration files.
   ACE_Configuration_Heap cfg;
@@ -206,6 +209,11 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
                                                      const char * location,
                                                      ::CORBA::Boolean replace
                                                      )
+                     ACE_THROW_SPEC ((
+                                      CORBA::SystemException,
+                                      ::Deployment::NameExists,
+                                      ::Deployment::PackageError
+                                     ))
 {
 
   PCEntry *entry = 0;
@@ -404,6 +412,11 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                                                     const char * baseLocation,
                                                     ::CORBA::Boolean replace
                                                     )
+                   ACE_THROW_SPEC ((
+                                    CORBA::SystemException,
+                                    ::Deployment::NameExists,
+                                    ::Deployment::PackageError
+                                   ))
 {
   ::Deployment::PackageConfiguration pc = package;
 
@@ -554,6 +567,10 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
 ::Deployment::PackageConfiguration*
 CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
 
+                               ACE_THROW_SPEC ((
+                                                CORBA::SystemException,
+                                                ::Deployment::NoSuchName
+                                               ))
 {
   // Find out if the PackageConfiguration was installed in the repository,
   // return it if found or throw and exception otherwise
@@ -574,7 +591,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
 
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
-    throw CORBA::INTERNAL ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
   ACE_DEBUG ((LM_INFO, "Successfully looked up \'%s\'.\n", name));
 
@@ -590,6 +607,10 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
 ::Deployment::PackageConfiguration*
 CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 
+                              ACE_THROW_SPEC ((
+                                              CORBA::SystemException,
+                                              ::Deployment::NoSuchName
+                                              ))
 {
   // Find out if the PackageConfiguration was installed in the repository,
   // return it if found or throw and exception otherwise
@@ -610,7 +631,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 
 
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
-    throw CORBA::INTERNAL ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
   ACE_DEBUG ((LM_INFO, "Successfully looked up %s.\n", UUID));
 
@@ -625,6 +646,9 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::findNamesByType (
                                                                       const char * type
                                                                       )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   CIEntry *entry = 0;
 
@@ -673,6 +697,9 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 ::CORBA::StringSeq*
 CIAO_RepositoryManagerDaemon_i::getAllNames ()
 
+                   ACE_THROW_SPEC ((
+                                   CORBA::SystemException
+                                   ))
 {
   //Map.current_size () gives you the current number with the duplicates
   //Map.total_size () gives you the allocated space + the empty slots
@@ -715,6 +742,9 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::getAllTypes (
 
   )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   //Map.current_size () gives you the current number with the duplicates
   //Map.total_size () gives you the allocated space + the empty slots
@@ -760,6 +790,10 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
 void CIAO_RepositoryManagerDaemon_i::deletePackage (
                                                     const char * installationName
                                                     )
+                     ACE_THROW_SPEC ((
+                                      CORBA::SystemException,
+                                      ::Deployment::NoSuchName
+                                     ))
 {
   bool internal_err = false;
 

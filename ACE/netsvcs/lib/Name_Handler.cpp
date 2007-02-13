@@ -292,7 +292,7 @@ ACE_Name_Handler::recv_request (void)
     case sizeof (ACE_UINT32):
       {
         // Transform the length into host byte order.
-        ssize_t length = ACE_NTOHL (this->name_request_.length ());
+        ssize_t length = ntohl (this->name_request_.length ());
 
         // Do a sanity check on the length of the message.
         if (length > (ssize_t) sizeof this->name_request_)

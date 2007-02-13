@@ -97,6 +97,9 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_get_policy_type (
     int num_args
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
       servant,
@@ -117,6 +120,9 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy (
     int num_args
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
       servant,
@@ -137,6 +143,9 @@ POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::destroy (
     int num_args
 
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
       servant,

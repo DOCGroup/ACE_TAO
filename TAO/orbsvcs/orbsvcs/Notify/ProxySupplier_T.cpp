@@ -36,6 +36,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::admin_types_changed (const CosNotifica
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotification::StructuredEvent& notification)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   TAO_Notify_StructuredEvent_No_Copy event (notification);
 
@@ -46,6 +49,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotificat
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured_no_filtering (const CosNotification::StructuredEvent& notification)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   TAO_Notify_StructuredEvent_No_Copy event(notification);
 
@@ -56,6 +62,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured_no_filtering (const
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any (const CORBA::Any & any)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   TAO_Notify_AnyEvent_No_Copy event (any);
 
@@ -66,6 +75,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any (const CORBA::Any & any)
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any_no_filtering (const CORBA::Any& any)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ))
 {
   TAO_Notify_AnyEvent_No_Copy event(any);
 
@@ -76,6 +88,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any_no_filtering (const CORBA:
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannelAdmin::ObtainInfoMode mode)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   return this->obtain_types (mode, this->event_manager().offered_types ());
 }
@@ -83,6 +98,8 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannel
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotification::EventTypeSeq & added,
                                                            const CosNotification::EventTypeSeq & removed)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType))
 {
   TAO_Notify_EventTypeSeq seq_added (added);
   TAO_Notify_EventTypeSeq seq_removed (removed);
@@ -99,6 +116,11 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotifica
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyChannelAdmin::ConnectionAlreadyInactive,
+                   CosNotifyChannelAdmin::NotConnected
+                   ))
 {
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
@@ -116,6 +138,11 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (void)
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyChannelAdmin::ConnectionAlreadyActive,
+                   CosNotifyChannelAdmin::NotConnected
+                   ))
 {
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
@@ -132,6 +159,9 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (void)
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::ConsumerAdmin_ptr
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var ret;
 
@@ -146,24 +176,42 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (void)
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CosNotifyFilter::MappingFilter::_nil ());
+
+  return CosNotifyFilter::MappingFilter::_nil ();
 }
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (CosNotifyFilter::MappingFilter_ptr /*priority_filter*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CosNotifyFilter::MappingFilter::_nil ());
+
+  return CosNotifyFilter::MappingFilter::_nil ();
 }
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (CosNotifyFilter::MappingFilter_ptr /*lifetime_filter*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

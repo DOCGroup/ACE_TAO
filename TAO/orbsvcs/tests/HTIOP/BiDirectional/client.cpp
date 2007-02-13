@@ -48,7 +48,7 @@ main (int argc, char *argv[])
 
   try
     {
-      orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");

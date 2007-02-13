@@ -40,6 +40,8 @@ add_offer (CosTrading::OfferId id,
 template <class MAP_LOCK_TYPE> CORBA::ULong
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 max_left (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                  CosTrading::UnknownMaxLeft))
 {
   return static_cast<CORBA::ULong> (this->offer_ids_.size ());
 }
@@ -48,6 +50,7 @@ template <class MAP_LOCK_TYPE> CORBA::Boolean
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
         CosTrading::OfferSeq_out offers)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong ret_offers = 0;
 

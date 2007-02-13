@@ -61,65 +61,93 @@ namespace CIAO
     /// Operations for CCMObject interface.
 
     virtual ::Components::PrimaryKeyBase *
-    get_primary_key ();
+    get_primary_key ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::NoKeyAvailable));
 
     virtual CORBA::IRObject_ptr
-    get_component_def ();
+    get_component_def ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual Components::SessionComponent_ptr
     get_executor ()
-      = 0;
+      ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
     virtual void
-    configuration_complete ();
+    configuration_complete ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidConfiguration));
 
     virtual void
-    remove ();
+    remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::RemoveFailure));
 
     virtual ::Components::ConnectionDescriptions *
-    get_connections (const char *name);
+    get_connections (const char *name)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::ComponentPortDescription *
-    get_all_ports ();
+    get_all_ports ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr
-    provide_facet (const char *name);
+    provide_facet (const char *name)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::FacetDescriptions *
-    get_named_facets (const ::Components::NameList & names);
+    get_named_facets (const ::Components::NameList & names)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::FacetDescriptions *
-    get_all_facets ();
+    get_all_facets ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual ::Components::ConsumerDescriptions *
-    get_all_consumers ();
+    get_all_consumers ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
     virtual ::Components::EventConsumerBase_ptr
-    get_consumer (const char *sink_name);
+    get_consumer (const char *sink_name)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::ConsumerDescriptions *
-    get_named_consumers (const ::Components::NameList & names);
+    get_named_consumers (const ::Components::NameList & names)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::EmitterDescriptions *
-    get_named_emitters (const ::Components::NameList & names);
+    get_named_emitters (const ::Components::NameList & names)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_named_receptacles (const ::Components::NameList & names);
+    get_named_receptacles (const ::Components::NameList & names)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles ();
+    get_all_receptacles ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::Components::PublisherDescriptions *
-    get_named_publishers (const ::Components::NameList & names);
+    get_named_publishers (const ::Components::NameList & names)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::InvalidName));
 
     /// Operation to set attributes on the component.
     virtual void set_attributes (const Components::ConfigValues &descr) = 0;
 
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
-    get_standard_configurator ();
+    get_standard_configurator ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered
@@ -129,7 +157,8 @@ namespace CIAO
 
   protected:
     void add_facet (const char *port_name,
-                    ::CORBA::Object_ptr port_ref);
+                    ::CORBA::Object_ptr port_ref)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     CORBA::Object_ptr lookup_facet (const char *port_name);
 
@@ -142,7 +171,8 @@ namespace CIAO
                          ::Components::Cookie * cookie);
 
     void add_consumer (const char *port_name,
-                       ::Components::EventConsumerBase_ptr port_ref);
+                       ::Components::EventConsumerBase_ptr port_ref)
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     ::Components::EventConsumerBase_ptr lookup_consumer (
         const char *port_name

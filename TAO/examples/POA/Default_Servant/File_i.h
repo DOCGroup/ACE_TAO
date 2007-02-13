@@ -37,16 +37,24 @@ public:
     PortableServer::POA_ptr _default_POA (void);
     // Returns the default POA of this object
 
-    virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer);
+    virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
     // write buffer to File corresponding to this Descriptor
 
-    virtual File::Descriptor::DataBuffer *read (CORBA::Long num_bytes);
+    virtual File::Descriptor::DataBuffer *read (CORBA::Long num_bytes)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+    // Reads num_bytes from the file and returns it
+                       File::IOError));
 
     virtual CORBA::ULong lseek (CORBA::ULong offset,
-                                CORBA::Long whence);
+                                CORBA::Long whence)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
     // seek to the offset in file from whence
 
-    virtual void destroy (void);
+    virtual void destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
     // closes the file corresponding to the requested ObjectID
 
   private:
@@ -73,7 +81,9 @@ public:
     //Returns the default POA of this object
 
     File::Descriptor_ptr open (const char *file_name,
-                               CORBA::Long flags);
+                               CORBA::Long flags)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       File::IOError));
     // Opens a file ,creates a Descriptor reference with the
     // ACE_HANDLE and returns that reference
 

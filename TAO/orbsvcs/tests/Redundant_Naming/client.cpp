@@ -44,10 +44,12 @@ public:
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id);
+  void id (CORBA::Short id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets id.
 
-  CORBA::Short id (void);
+  CORBA::Short id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Gets id.
 
 private:
@@ -65,12 +67,14 @@ My_Test_Object::~My_Test_Object (void)
 
 CORBA::Short
 My_Test_Object::id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return id_;
 }
 
 void
 My_Test_Object::id (CORBA::Short id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   id_ = id;
 }
@@ -148,7 +152,7 @@ main (int argc, ACE_TCHAR **argv)
   try
   {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, 0);
 
     // ior's are specified for the name servers through a commandline
     // option or a file.
@@ -164,6 +168,7 @@ main (int argc, ACE_TCHAR **argv)
                                ns1ref),
                               -1);
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ());
+
 
     // Resolve the second name server
 

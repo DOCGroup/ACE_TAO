@@ -569,11 +569,11 @@ Foo::bar ()
     <li>Mutators and accessors should be of this form:<p>
 
         <pre>
-        /// Sets @c object_addr_ cache from @c host and @c port.
         void object_addr (const ACE_INET_Addr &);
+        // Sets &lt;object_addr_&gt; cache from &lt;host&gt; and &lt;port&gt;.
 
-        /// Returns the ACE_INET_Addr for this profile.
         const ACE_INET_Addr &object_addr const (void);
+        // Returns the &lt;ACE_INET_Addr&gt; for this profile.
         </pre><p>
 
         instead of the "set_" and "get_" form.<p>

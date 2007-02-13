@@ -41,6 +41,8 @@ Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i (void)
 
 CosLifeCycle::Factories *
 Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory))
 {
   const char *exception_message = "Null Message";
 
@@ -75,7 +77,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
 
     // Check if it is a valid Quoter Factory reference
     if (CORBA::is_nil (quoterFactoryObject_var.in()))
-      throw CosLifeCycle::NoFactory (factory_key);
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
 
     // create a sequence of factories object
     factories_ptr = new CosLifeCycle::Factories (1);
@@ -85,7 +87,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
 
     // Check if it is a valid Quoter Factory reference.
     if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
-      throw CosLifeCycle::NoFactory (factory_key);
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
 
     // insert the object reference
     (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in());
@@ -97,7 +99,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
   catch (const CORBA::Exception&)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %s\n", exception_message));
-      throw CosLifeCycle::NoFactory (factory_key);
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
     }
 
   return factories_ptr;

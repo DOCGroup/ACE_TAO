@@ -38,6 +38,7 @@ CORBA::Object_ptr
 TAO_FILE_Parser::parse_string (const char *ior,
                                CORBA::ORB_ptr orb
                                )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
@@ -64,7 +65,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
 
       reader.alloc ()->free (string);
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       reader.alloc ()->free (string);
       throw;

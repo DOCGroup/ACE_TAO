@@ -36,21 +36,30 @@ public:
         ::OBV_TruncatableTest::BaseValue * iv,
         ::OBV_TruncatableTest::BaseValue_out ov,
         char *& desc
-      );
+      )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      ));
 
   virtual void op2 (
         ::OBV_TruncatableTest::TValue1 * iv,
         const char * id,
         ::OBV_TruncatableTest::TValue1_out ov,
         char *& desc
-      );
+      )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      ));
 
   virtual void op3 (
         const char * id,
         ::OBV_TruncatableTest::TValue4 * iv,
         ::OBV_TruncatableTest::TValue4_out ov,
         char *& desc
-      );
+      )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      ));
 
   virtual ::OBV_TruncatableTest::BaseValue * op4 (
       const char * id,
@@ -60,15 +69,22 @@ public:
       ::OBV_TruncatableTest::TValue4 * iv3,
       ::OBV_TruncatableTest::TValue1 * iv4,
       char *& desc
-    );
+    )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ));
 
   virtual void op5 (const CORBA::Any& val,
                     const char * id,
                     ::OBV_TruncatableTest::TValue1_out ov,
                     char *& desc
- );
+ )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

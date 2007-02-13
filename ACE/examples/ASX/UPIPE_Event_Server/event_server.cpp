@@ -69,7 +69,7 @@ consumer (void *)
 
   int verb = options.verbose ();
   int msiz = options.message_size ();
-  time_t secs, par1, par2;
+  int secs, par1, par2;
   time_t currsec;
 
   if (verb)
@@ -88,7 +88,7 @@ consumer (void *)
   int cnt = 0;
   ACE_OS::time (&currsec);
 
-  par1 = currsec;
+  par1= (time_t) currsec;
 
   while (done == 0
          && (c_stream.recv (mb_p) != -1))
@@ -109,7 +109,7 @@ consumer (void *)
       }
 
     ACE_OS::time (&currsec);
-    par2 = currsec;
+    par2 = (time_t) currsec;
 
     secs = par2 - par1;
 

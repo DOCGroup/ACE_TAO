@@ -67,7 +67,8 @@ public:
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (void);
+      obtain_push_consumer (void)
+          ACE_THROW_SPEC ((CORBA::SystemException));
 
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
 };

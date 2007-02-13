@@ -18,9 +18,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-  TAO_ORB_Core::set_timeout_hook (TAO_RelativeRoundtripTimeoutPolicy::hook);
+  TAO_ORB_Core::set_timeout_hook
+    (TAO_RelativeRoundtripTimeoutPolicy::hook);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
@@ -28,7 +30,8 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
-  TAO_ORB_Core::connection_timeout_hook (TAO_ConnectionTimeoutPolicy::hook);
+  TAO_ORB_Core::connection_timeout_hook
+    (TAO_ConnectionTimeoutPolicy::hook);
 #endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
 }
@@ -36,6 +39,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 void
 TAO_Messaging_ORBInitializer::post_init (
   PortableInterceptor::ORBInitInfo_ptr info)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info);
 
@@ -146,7 +150,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, policy_factory.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch ( ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {
@@ -158,7 +162,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
             }
           throw;
         }
-      catch (const ::CORBA::Exception&)
+      catch ( ::CORBA::Exception&)
         {
           // Rethrow any other exceptions...
           throw;

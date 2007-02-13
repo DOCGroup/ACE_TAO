@@ -15,7 +15,7 @@ ACE_RCSID (tao,
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
-#include "ace/CORBA_macros.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,7 +31,10 @@ TAO::PICurrent::~PICurrent (void)
 }
 
 CORBA::Any *
-TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
+TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier
+                         )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::InvalidSlot))
 {
   this->check_validity (identifier);
 
@@ -40,7 +43,10 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
-                         const CORBA::Any &data)
+                         const CORBA::Any &data
+                         )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::InvalidSlot))
 {
   this->check_validity (identifier);
 

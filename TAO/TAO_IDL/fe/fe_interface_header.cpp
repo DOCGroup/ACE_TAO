@@ -388,7 +388,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           // If the lookup now succeeds, without the full_def_only
           // constraint, it's an error.
           d = s->lookup_by_name (item, true, true);
-
+          
           if (0 != d)
             {
               idl_global->err ()->inheritance_fwd_error (
@@ -772,7 +772,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
         {
           return 0;
         }
-
+        
       if (d == concrete)
         {
           return 0;
@@ -823,8 +823,15 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                         false),
     pd_base_component (0)
 {
-  this->compile_inheritance (base_component);
-  this->compile_supports (supports);
+  if (base_component != 0 && supports != 0)
+    {
+      idl_global->err ()->derived_supports_error (n);
+    }
+  else
+    {
+      this->compile_inheritance (base_component);
+      this->compile_supports (supports);
+    }
 }
 
 FE_ComponentHeader::~FE_ComponentHeader (void)
@@ -1048,11 +1055,18 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
     pd_base_home (0),
     pd_primary_key (0)
 {
-  // No need to call compile_supports(), it got done in
-  // the call to the base class FE_ComponentHeader.
-  this->compile_inheritance (base_home);
-  this->compile_managed_component (managed_component);
-  this->compile_primary_key (primary_key);
+  if (base_home != 0 && supports != 0)
+    {
+      idl_global->err ()->derived_supports_error (n);
+    }
+  else
+    {
+      // No need to call compile_supports(), it got done in
+      // the call to the base class FE_ComponentHeader.
+      this->compile_inheritance (base_home);
+      this->compile_managed_component (managed_component);
+      this->compile_primary_key (primary_key);
+    }
 }
 
 FE_HomeHeader::~FE_HomeHeader (void)

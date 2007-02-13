@@ -11,9 +11,9 @@ project(*latency_idl): taoidldefaults, strategies, avoids_minimum_corba, avoids_
 project(*latency server): taoserver, strategies, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *latency_idl
   Source_Files {
-    TestC.cpp
-    TestS.cpp
     Roundtrip.cpp
+    TestS.cpp
+    TestC.cpp
     server.cpp
   }
   IDL_Files {

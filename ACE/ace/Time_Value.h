@@ -322,23 +322,7 @@ private:
   void normalize (void);
 
   /// Store the values as a timeval.
-#if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
-  // Windows' timeval is non-conformant, so swap in a struct that conforms
-  // to the proper data types to represent the entire time range that this
-  // class's API can accept.
-  // Also, since this class can supply a pointer to a timeval that things
-  // like select() expect, we need the OS-defined one as well. To make this
-  // available, use a real timeval called ext_tv_ and set it up when needed.
-  // Since this is most often for relative times that don't approach 32 bits
-  // in size, reducing a time_t to fit should be no problem.
-  struct {
-    time_t tv_sec;
-    suseconds_t tv_usec;
-  } tv_;
-  timeval ext_tv_;
-#else
   timeval tv_;
-#endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

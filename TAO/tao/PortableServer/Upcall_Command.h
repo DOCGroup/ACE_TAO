@@ -22,6 +22,7 @@
 #endif /* !ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Versioned_Namespace.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,11 +43,13 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Command
   {
   public:
+
     /// Destructor.
     virtual ~Upcall_Command (void);
 
     /// Execute the upcall.
     virtual void execute (void) = 0;
+
   };
 
 }  // End namespace TAO

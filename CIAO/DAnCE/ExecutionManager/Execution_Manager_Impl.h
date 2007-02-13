@@ -34,8 +34,9 @@ namespace CIAO
      *
      * @class Execution_Manager_Impl
      *
-     * @brief This class implements the ExecutionManger. ExecutionManager
-     * starts the execution process after the planning stage.
+     * @brief This class implements the
+     * ExecutionManger. ExecutionManager starts the execution process
+     * after the planning stage.
      *
      */
     class Execution_Manager_Impl
@@ -51,31 +52,53 @@ namespace CIAO
       /// $CIAO_ROOT/ciao/Deployment.idl for documentation
       virtual Deployment::DomainApplicationManager_ptr
       preparePlan (const Deployment::DeploymentPlan & plan,
-                   CORBA::Boolean commitResources);
+                   CORBA::Boolean commitResources)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::ResourceNotAvailable,
+                         Deployment::PlanError,
+                         Deployment::StartError));
 
-      virtual Deployment::DomainApplicationManagers *getManagers ();
+      virtual Deployment::DomainApplicationManagers *
+      getManagers ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Below method is CIAO specific extension
       virtual Deployment::DomainApplicationManager_ptr
-      getManager (const char * plan_uuid);
+      getManager (const char * plan_uuid)
+        ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist));
 
       virtual void
-      destroyManager (Deployment::DomainApplicationManager_ptr manager);
+      destroyManager (Deployment::DomainApplicationManager_ptr manager)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::StopError));
 
       // Below method is CIAO specific extension, please see the IDL
       // definition for more details.
       virtual void
-      destroyManagerByPlan (const char * plan_uuid);
+      destroyManagerByPlan (const char * plan_uuid)
+        ACE_THROW_SPEC ((::CORBA::SystemException,
+                         ::Deployment::StopError));
 
-      virtual void shutdown ();
+      virtual void shutdown ()
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       // The input parameter is a *new_plan* which has the
       // same UUID of the existing running plan.
       virtual void
       perform_redeployment (
-          const Deployment::DeploymentPlan & plan);
+          const Deployment::DeploymentPlan & plan)
+        ACE_THROW_SPEC ((::CORBA::SystemException,
+                         ::Deployment::PlanError,
+                         ::Deployment::InstallationFailure,
+                         ::Deployment::UnknownImplId,
+                         ::Deployment::ImplEntryPointNotFound,
+                         ::Deployment::InvalidConnection,
+                         ::Deployment::InvalidProperty,
+                         ::Components::RemoveFailure));
 
-      virtual Deployment::DeploymentPlan * getPlan (const char * plan_uuid);
+      virtual Deployment::DeploymentPlan * getPlan (
+          const char * plan_uuid)
+        ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /// ****************** C++ Methods *************************
 
@@ -87,13 +110,20 @@ namespace CIAO
     /// a list of bindings and do the batch job.
     virtual void finalize_global_binding (
         const Component_Binding_Info & binding,
-        CORBA::Boolean add_connection);
+        CORBA::Boolean add_connection)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Deployment::InvalidConnection));
 
     virtual void passivate_shared_components (
-        const Component_Binding_Info & binding);
+        const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
 
     virtual void activate_shared_components (
-        const Component_Binding_Info & binding);
+        const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                      Deployment::StartError));
 
       /// Add shared component information.
       /// This call will be made by DomainApplicationManager.
@@ -114,7 +144,10 @@ namespace CIAO
     protected:
       /// Return the NodeApplication hosting the given biding
       virtual Deployment::NodeApplication_ptr
-        find_node_application (const Component_Binding_Info & binding);
+        find_node_application (const Component_Binding_Info & binding)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Deployment::InvalidConnection));
 
     protected:
       /// Destructor.

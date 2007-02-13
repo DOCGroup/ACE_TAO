@@ -41,35 +41,50 @@ namespace MyImpl
     // Operations from HUDisplay::BMClosedED
 
     virtual BasicSP::CCM_ReadData_ptr
-    get_dataout ();
+    get_dataout ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
-    push_in_avail (BasicSP::DataAvailable *ev);
+    push_in_avail (BasicSP::DataAvailable *ev)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from HUDisplay::position
     virtual char *
-    get_data ();
+    get_data ()
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (Components::SessionContext_ptr ctx);
+    set_session_context (Components::SessionContext_ptr ctx)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_activate ();
+    ccm_activate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
 
     virtual void
-    ccm_remove ();
+    ccm_remove ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   protected:
     CORBA::String_var str_;
 
@@ -98,7 +113,9 @@ namespace MyImpl
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CCMException));
   };
 
 }

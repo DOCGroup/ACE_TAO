@@ -21,12 +21,14 @@ TAO_FixedDef_i::~TAO_FixedDef_i (void)
 
 CORBA::DefinitionKind
 TAO_FixedDef_i::def_kind (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Fixed;
 }
 
 void
 TAO_FixedDef_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -37,12 +39,14 @@ TAO_FixedDef_i::destroy (void)
 
 void
 TAO_FixedDef_i::destroy_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA::TypeCode_ptr
 TAO_FixedDef_i::type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -53,6 +57,7 @@ TAO_FixedDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_FixedDef_i::type_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
   return CORBA::TypeCode::_nil ();
@@ -60,6 +65,7 @@ TAO_FixedDef_i::type_i (void)
 
 CORBA::UShort
 TAO_FixedDef_i::digits (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -70,6 +76,7 @@ TAO_FixedDef_i::digits (void)
 
 CORBA::UShort
 TAO_FixedDef_i::digits_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
   return 0;
@@ -77,6 +84,7 @@ TAO_FixedDef_i::digits_i (void)
 
 void
 TAO_FixedDef_i::digits (CORBA::UShort digits)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -88,12 +96,14 @@ TAO_FixedDef_i::digits (CORBA::UShort digits)
 void
 TAO_FixedDef_i::digits_i (CORBA::UShort /* digits */
                           )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA::Short
 TAO_FixedDef_i::scale (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -104,6 +114,7 @@ TAO_FixedDef_i::scale (void)
 
 CORBA::Short
 TAO_FixedDef_i::scale_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
   return 0;
@@ -111,6 +122,7 @@ TAO_FixedDef_i::scale_i (void)
 
 void
 TAO_FixedDef_i::scale (CORBA::Short scale)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -122,6 +134,7 @@ TAO_FixedDef_i::scale (CORBA::Short scale)
 void
 TAO_FixedDef_i::scale_i (CORBA::Short /* scale */
                          )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }

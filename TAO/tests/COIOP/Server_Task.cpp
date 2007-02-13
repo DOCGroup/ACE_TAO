@@ -42,7 +42,7 @@ Server_Task::svc (void)
      PortableServer::POAManager_var poa_manager =
        root_poa->the_POAManager ();
 
-     Hello *hello_impl = 0;
+     Hello *hello_impl;
      ACE_NEW_RETURN (hello_impl,
                      Hello (this->sorb_.in (),
                             ACE_Thread::self ()),

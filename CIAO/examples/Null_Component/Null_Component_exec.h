@@ -45,7 +45,8 @@ namespace CIDL_Null_Component_Impl
     // Operations from ::Null_Interface
 
     virtual void
-    null_operation ();
+    null_operation ()
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
   };
 
   class NULL_COMPONENT_EXEC_Export Null_Component_exec_i
@@ -63,28 +64,47 @@ namespace CIDL_Null_Component_Impl
     // Port operations.
 
     virtual ::CCM_Null_Interface_ptr
-    get_null_facet ();
+    get_null_facet ()
+    ACE_THROW_SPEC (( ::CORBA::SystemException));
 
     // Operations from Components::SessionComponent
 
     virtual void
     set_session_context (
-      ::Components::SessionContext_ptr ctx);
+      ::Components::SessionContext_ptr ctx)
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate ()
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate ()
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
 
     virtual void
-    ccm_activate ();
+    ccm_activate ()
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate ()
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
 
     virtual void
-    ccm_remove ();
+    ccm_remove ()
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
 
     protected:
     Null_Component_Context *context_;
@@ -109,7 +129,10 @@ namespace CIDL_Null_Component_Impl
     // Implicit operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+    ACE_THROW_SPEC ((
+                      ::CORBA::SystemException,
+                      ::Components::CCMException));
   };
 
   extern "C" NULL_COMPONENT_EXEC_Export ::Components::HomeExecutorBase_ptr

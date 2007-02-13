@@ -38,7 +38,9 @@ public:
   // = PushSupplier methods
   virtual void push (
       const CORBA::Any & data
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 
 protected:
   Simple_Test * test_client_;

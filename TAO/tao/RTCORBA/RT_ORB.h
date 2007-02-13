@@ -60,14 +60,23 @@ public:
   /// Destructor.
   ~TAO_Named_RT_Mutex_Manager (void);
 
-  RTCORBA::Mutex_ptr create_mutex (void);
+  RTCORBA::Mutex_ptr create_mutex (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
+  void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
+                      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                         CORBA::Boolean_out created_flag);
+                                         CORBA::Boolean_out created_flag
+                                         )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  RTCORBA::Mutex_ptr open_named_mutex (const char * name);
+  RTCORBA::Mutex_ptr open_named_mutex (const char * name
+                                       )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RTCORBA::RTORB::MutexNotFound
+                     ));
 
 private:
 
@@ -108,14 +117,17 @@ public:
    * consistant priority inheritance/piority ceiling semantics
    * can be guaranteed.
    */
-  virtual RTCORBA::Mutex_ptr create_mutex (void);
+  virtual RTCORBA::Mutex_ptr create_mutex (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Destroy a mutex.  Currently this is a no-op since RTCORBA::Mutex
    * instances are destroyed as soon as their reference counts go to
    * 0.
    */
-  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex);
+  virtual void destroy_mutex (RTCORBA::Mutex_ptr the_mutex
+                              )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Create a mutex and assign a name to it.  If the
@@ -123,10 +135,16 @@ public:
    * is set to 0.
    */
   virtual RTCORBA::Mutex_ptr create_named_mutex (const char *name,
-                                                 CORBA::Boolean_out created_flag);
+                                                 CORBA::Boolean_out created_flag
+                                                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Retrieve a previously created mutex.
-  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name);
+  virtual RTCORBA::Mutex_ptr open_named_mutex (const char * name
+                                                 )
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RTCORBA::RTORB::MutexNotFound
+                      ));
 
   /**
    * Create and return a TCPProtocolProperties instance with the specified
@@ -139,12 +157,16 @@ public:
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
                                   CORBA::Boolean no_delay,
-                                  CORBA::Boolean enable_network_priority);
+                                  CORBA::Boolean enable_network_priority
+                                  )
+    ACE_THROW_SPEC ((CORBA::SystemException ));
 
   RTCORBA::UnixDomainProtocolProperties_ptr
   create_unix_domain_protocol_properties (
                                           CORBA::Long send_buffer_size,
-                                          CORBA::Long recv_buffer_size                                          );
+                                          CORBA::Long recv_buffer_size
+                                          )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::SharedMemoryProtocolProperties_ptr
   create_shared_memory_protocol_properties (
@@ -156,12 +178,14 @@ public:
                                             CORBA::Long preallocate_buffer_size,
                                             const char *mmap_filename,
                                             const char *mmap_lockname
-                                            );
+                                            )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::UserDatagramProtocolProperties_ptr
   create_user_datagram_protocol_properties (
                                             CORBA::Boolean enable_network_priority
-                                            );
+                                            )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   RTCORBA::StreamControlProtocolProperties_ptr
   create_stream_control_protocol_properties (
@@ -171,7 +195,8 @@ public:
                                              CORBA::Boolean dont_route,
                                              CORBA::Boolean no_delay,
                                              CORBA::Boolean enable_network_priority
-                                             );
+                                             )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   virtual RTCORBA::ThreadpoolId
@@ -182,7 +207,8 @@ public:
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
                      CORBA::ULong max_request_buffer_size
-                     );
+                     )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Create a threadpool and separate it into subsets based on
@@ -195,22 +221,28 @@ public:
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size
-                                );
+                                )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Free the resources associated with the specified threadpool.
   virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                   );
+                                   )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RTCORBA::RTORB::InvalidThreadpool));
 
   /// Create a priority model policy for use when configuring a POA.
   virtual RTCORBA::PriorityModelPolicy_ptr
   create_priority_model_policy (
                                 RTCORBA::PriorityModel priority_model,
                                 RTCORBA::Priority server_priority
-                                );
+                                )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a ThreadpoolPolicy instance for POA creation
   virtual RTCORBA::ThreadpoolPolicy_ptr
-  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool);
+  create_threadpool_policy (RTCORBA::ThreadpoolId threadpool
+                            )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Create a PriorityBandedConnectionPolicy instance
@@ -218,7 +250,9 @@ public:
    */
   virtual RTCORBA::PriorityBandedConnectionPolicy_ptr
   create_priority_banded_connection_policy (const RTCORBA::PriorityBands &
-                                            priority_bands);
+                                            priority_bands
+                                            )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Create a PrivateConnectionPolicy instance to use on client
@@ -226,21 +260,26 @@ public:
    * to the server.
    */
   virtual RTCORBA::PrivateConnectionPolicy_ptr
-  create_private_connection_policy (void);
+  create_private_connection_policy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Create a ServerProtocolPolicy instance to select and configure
    * communication protocols on the server side.
    */
   virtual RTCORBA::ServerProtocolPolicy_ptr
-  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols);
+  create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
+                                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Create a ClientProtocolPolicy instance to select and configure
    * communication protocols on the client side.
    */
   virtual RTCORBA::ClientProtocolPolicy_ptr
-  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols);
+  create_client_protocol_policy (const RTCORBA::ProtocolList & protocols
+                                 )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Reference to our creating ORB Core.
   TAO_ORB_Core *orb_core (void) const;

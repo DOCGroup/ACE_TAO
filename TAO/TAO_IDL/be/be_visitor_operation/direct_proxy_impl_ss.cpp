@@ -71,6 +71,11 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       << "int" << be_uidt_nl
       << ")";
 
+  if (this->gen_throw_spec (node) != 0)
+    {
+      return -1;
+    }
+
   *os << be_uidt_nl
       << "{" << be_idt_nl;
 

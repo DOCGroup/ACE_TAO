@@ -26,6 +26,9 @@ FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy (
 FP_Scheduling::SegmentSchedulingParameter
 FP_Segment_Sched_Param_Policy::value (
       )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ))
 {
   return value_;
 }
@@ -34,12 +37,16 @@ void
 FP_Segment_Sched_Param_Policy::value (
         const FP_Scheduling::SegmentSchedulingParameter & value
       )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ))
 {
   this->value_ = value;
 }
 
 CORBA::Policy_ptr
 FP_Segment_Sched_Param_Policy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FP_Segment_Sched_Param_Policy* tmp;
   ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
@@ -51,6 +58,7 @@ FP_Segment_Sched_Param_Policy::copy (void)
 
 void
 FP_Segment_Sched_Param_Policy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -119,6 +127,9 @@ FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 Fixed_Priority_Scheduler::create_segment_scheduling_parameter (
         const FP_Scheduling::SegmentSchedulingParameter & value
       )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ))
 {
   FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     segment_sched_param_policy;
@@ -141,6 +152,8 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
                                              const char *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -175,6 +188,8 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
                                                            const char *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   this->begin_new_scheduling_segment (guid,
                                       name,
@@ -187,6 +202,8 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
                                           const char* name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   ACE_UNUSED_ARG ((name));
   ACE_UNUSED_ARG ((implicit_sched_param));
@@ -216,6 +233,7 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 void
 Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                        const char *)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #ifdef KOKYU_DSRT_LOGGING
   int int_guid;
@@ -232,6 +250,7 @@ void
 Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
                                                          const char *,
                                                          CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -239,6 +258,8 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
 
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
@@ -329,6 +350,8 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                                 CORBA::String_out /*name*/,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
 
@@ -411,11 +434,14 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
 void
 Fixed_Priority_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::Priority desired_priority = 0;
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
@@ -480,18 +506,23 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
 void
 Fixed_Priority_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   send_reply (ri);
 }
 
 void
 Fixed_Priority_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   send_reply (ri);
 }
 
 void
 Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::Current::IdType guid;
   RTCORBA::Priority desired_priority=0;
@@ -549,57 +580,68 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
 
 void
 Fixed_Priority_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri);
 }
 
 void
 Fixed_Priority_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   receive_reply (ri);
 }
 
 void
 Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::scheduling_policies (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
 Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::poa_policies (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 char *
 Fixed_Priority_Scheduler::scheduling_discipline_name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 RTScheduling::ResourceManager_ptr
 Fixed_Priority_Scheduler::create_resource_manager (const char *,
                                         CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
 Fixed_Priority_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                          const char *,
                                          CORBA::Policy_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

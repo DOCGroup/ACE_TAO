@@ -21,8 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,8 +59,9 @@ public:
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
-  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb)
-    = 0;
+  virtual CORBA::Object_ptr parse_string (const char *ior,
+                                          CORBA::ORB_ptr orb)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

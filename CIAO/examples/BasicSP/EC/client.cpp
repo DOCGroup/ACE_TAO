@@ -21,7 +21,7 @@ main (int argc, char *argv[])
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
       // Resolve HomeFinder interface
 

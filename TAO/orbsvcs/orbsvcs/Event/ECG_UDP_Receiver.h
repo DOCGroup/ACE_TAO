@@ -171,7 +171,8 @@ public:
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// TAO_ECG_Dgram_Handler method.
   /**

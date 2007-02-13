@@ -49,7 +49,8 @@ public:
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
 
   /// Invoke the typed event on all the consumers
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (const TAO_CEC_TypedEvent& typed_event)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
@@ -63,16 +64,22 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_typed_push_supplier (const char * uses_interface);
+    obtain_typed_push_supplier (const char * uses_interface)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosTypedEventChannelAdmin::NoSuchImplementation));
   virtual CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
-    obtain_typed_pull_supplier (const char * supported_interface);
+    obtain_typed_pull_supplier (const char * supported_interface)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosTypedEventChannelAdmin::InterfaceNotSupported));
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier (void);
+    obtain_push_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier (void);
+    obtain_pull_supplier (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
   virtual PortableServer::POA_ptr _default_POA (void);

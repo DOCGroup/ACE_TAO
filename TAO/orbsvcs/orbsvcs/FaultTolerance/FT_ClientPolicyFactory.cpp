@@ -15,6 +15,8 @@ CORBA::Policy_ptr
 TAO_FT_ClientPolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &val)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
 {
 
   if (type ==  FT::REQUEST_DURATION_POLICY)
@@ -22,7 +24,8 @@ TAO_FT_ClientPolicyFactory::create_policy (
   else if (type == FT::HEARTBEAT_POLICY)
     return TAO_FT_Heart_Beat_Policy::create (val);
 
-  throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                    CORBA::Policy::_nil ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

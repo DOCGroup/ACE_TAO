@@ -57,7 +57,8 @@ namespace Test
     /// Destructor.
     virtual ~Server_Request_Interceptor (void);
 
-    virtual void test_transport_current (const char* amethod);
+    virtual void test_transport_current (const char* amethod)
+      throw (CORBA::SystemException);
 
     /// Coherency test
     virtual bool self_test (void);
@@ -72,19 +73,24 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name (void) throw (CORBA::SystemException);
 
-    virtual void destroy (void);
+    virtual void destroy (void) throw (CORBA::SystemException);
 
-    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri);
+    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+    virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException);
 
-    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
 
-    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
+      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
     //@}
 
   protected:

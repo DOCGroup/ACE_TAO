@@ -54,29 +54,35 @@ public:
   ~TAO_UTO (void);
 
   /// For the readonly attribute <time>.
-  virtual TimeBase::TimeT time ();
+  virtual TimeBase::TimeT time ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <inaccuracy>.
-  virtual TimeBase::InaccuracyT  inaccuracy (void);
+  virtual TimeBase::InaccuracyT  inaccuracy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  virtual TimeBase::TdfT tdf (void);
+  virtual TimeBase::TdfT tdf (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// For the readonly attribute <utc_time>.
-  virtual TimeBase::UtcT utc_time (void);
+  virtual TimeBase::UtcT utc_time (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Absolute time = Relative time + Base time.
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time (void);
+  CosTime::UTO_ptr absolute_time (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
   CosTime::TimeComparison compare_time (CosTime::ComparisonType comparison_type,
-                                        CosTime::UTO_ptr uto);
+                                        CosTime::UTO_ptr uto)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Returns a TIO representing the time interval between the time in
@@ -85,11 +91,13 @@ public:
    * two UTOs. Inaccuracies are ignored.  Note the result of this
    * operation is meaningless if the base times of UTOs are different.
    */
-  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr);
+  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval (void);
+  CosTime::TIO_ptr interval (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /**

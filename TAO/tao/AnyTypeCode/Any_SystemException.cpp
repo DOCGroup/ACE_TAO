@@ -8,9 +8,12 @@
 
 #include "tao/CDR.h"
 #include "tao/Exception.h"
+#include "tao/Environment.h"
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
+#include "ace/Auto_Ptr.h"
+#include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (AnyTypeCode,
@@ -142,7 +145,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           return true;
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
     }
 
@@ -158,7 +161,6 @@ TAO::Any_SystemException::free_value (void)
       this->value_destructor_ = 0;
     }
 
-  ::CORBA::release (this->type_);
   this->value_ = 0;
 }
 
@@ -176,7 +178,7 @@ TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
       this->value_->_tao_encode (cdr);
       return true;
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
     }
   return false;
@@ -190,7 +192,7 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
       this->value_->_tao_decode (cdr);
       return true;
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
     }
   return false;

@@ -20,7 +20,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/Truncate.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
@@ -286,7 +285,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
         ACE_OS::gettimeofday () - actual_start;
 
       // Store the sample.
-      delta_hrtime.sample (ACE_Utils::Truncate<ACE_INT32> (stop - start));
+      delta_hrtime.sample (ACE_HRTIME_CONVERSION (stop - start));
       actual_sleeps.sample (actual_delta.msec () * 100u);
     }
 
@@ -406,8 +405,13 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // designed and tested to avoid overflow on machines that don't have
   // native 64-bit ints. In particular, division can be a problem.
   // For more background on this, please see bugzilla #1024.
+#if defined (ACE_WIN32)
+  nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
+            * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
+#else
   nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
+#endif /* ACE_WIN32 */
   // Caution - Borland has a problem with >>=, so resist the temptation.
   nanoseconds = nanoseconds >> 10;
   // Right shift is implemented for non native 64-bit ints
@@ -418,8 +422,13 @@ void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
   // Same as above.
+#if defined (ACE_WIN32)
+  nanoseconds = this->total_
+            * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
+#else
   nanoseconds = this->total_
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
+#endif
   // Caution - Borland has a problem with >>=, so resist the temptation.
   nanoseconds = nanoseconds >> 10;
 }

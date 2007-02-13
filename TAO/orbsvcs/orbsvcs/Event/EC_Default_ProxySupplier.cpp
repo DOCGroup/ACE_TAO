@@ -29,6 +29,9 @@ void
 TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
       const RtecEventChannelAdmin::ConsumerQOS& qos)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannelAdmin::AlreadyConnected,
+                     RtecEventChannelAdmin::TypeError))
 {
   // Nil PushConsumers are illegal
   if (CORBA::is_nil (push_consumer))
@@ -111,6 +114,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
 
 void
 TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::PushConsumer_var consumer;
   int connected = 0;
@@ -153,12 +157,14 @@ TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
 
 void
 TAO_EC_Default_ProxyPushSupplier::suspend_connection (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->suspend_connection_locked ();
 }
 
 void
 TAO_EC_Default_ProxyPushSupplier::resume_connection (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->resume_connection_locked ();
 }
@@ -184,12 +190,14 @@ TAO_EC_Default_ProxyPushSupplier::_remove_ref (void)
 void
 TAO_EC_Default_ProxyPushSupplier::activate (
    RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   proxy = this->_this ();
 }
 
 PortableServer::ObjectId
 TAO_EC_Default_ProxyPushSupplier::object_id (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var result =
     this->default_POA_->servant_to_id (this);

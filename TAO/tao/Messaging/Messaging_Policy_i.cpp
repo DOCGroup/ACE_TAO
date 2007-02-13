@@ -43,6 +43,7 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (
     void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->relative_expiry_;
 }
@@ -50,6 +51,7 @@ TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (
 CORBA::PolicyType
 TAO_RelativeRoundtripTimeoutPolicy::policy_type (
     void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE;
 }
@@ -68,13 +70,14 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         {
           policy =
             orb_core->get_cached_policy_including_current (
-              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT
+             );
         }
       else
         {
           policy =
-            stub->get_cached_policy (
-              TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
+            stub->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT
+                                    );
         }
 
       if (CORBA::is_nil (policy.in ()))
@@ -84,7 +87,9 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
         }
 
       Messaging::RelativeRoundtripTimeoutPolicy_var p =
-        Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ());
+        Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
+          policy.in ()
+         );
 
       TimeBase::TimeT t = p->relative_expiry ();
       TimeBase::TimeT seconds = t / 10000000u;
@@ -102,7 +107,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       time_value.msec ()));
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       // Ignore all exceptions...
     }
@@ -113,9 +118,11 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
+
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                      CORBA::Policy::_nil ());
 
   TAO_RelativeRoundtripTimeoutPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -138,6 +145,7 @@ TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_RelativeRoundtripTimeoutPolicy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -152,6 +160,7 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (void)
 
 void
 TAO_RelativeRoundtripTimeoutPolicy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -167,7 +176,8 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
   TimeBase::TimeT t = this->relative_expiry_;
   TimeBase::TimeT seconds = t / 10000000u;
   TimeBase::TimeT microseconds = (t % 10000000u) / 10;
-  time_value.set (ACE_U64_TO_U32 (seconds), ACE_U64_TO_U32 (microseconds));
+  time_value.set (ACE_U64_TO_U32 (seconds),
+                  ACE_U64_TO_U32 (microseconds));
 
   if (TAO_debug_level > 0)
     {
@@ -205,6 +215,7 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
 
 CORBA::PolicyType
 TAO_Sync_Scope_Policy::policy_type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Messaging::SYNC_SCOPE_POLICY_TYPE;
 }
@@ -223,12 +234,14 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
         {
           policy =
             orb_core->get_cached_policy_including_current (
-              TAO_CACHED_POLICY_SYNC_SCOPE);
+              TAO_CACHED_POLICY_SYNC_SCOPE
+             );
         }
       else
         {
           policy =
-            stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
+            stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE
+                                    );
         }
 
       if (CORBA::is_nil (policy.in ()))
@@ -249,18 +262,20 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
       has_synchronization = true;
       scope = p->synchronization ();
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
       // Ignore all exceptions...
     }
 }
 
 CORBA::Policy_ptr
-TAO_Sync_Scope_Policy::create (const CORBA::Any& val)
+TAO_Sync_Scope_Policy::create (const CORBA::Any& val
+                               )
 {
   Messaging::SyncScope synchronization;
   if ((val >>= synchronization) == 0)
-    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                      CORBA::Policy::_nil ());
 
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -282,12 +297,14 @@ TAO_Sync_Scope_Policy::clone (void) const
 
 Messaging::SyncScope
 TAO_Sync_Scope_Policy::synchronization (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->synchronization_;
 }
 
 CORBA::Policy_ptr
 TAO_Sync_Scope_Policy::copy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -299,6 +316,7 @@ TAO_Sync_Scope_Policy::copy (void)
 
 void
 TAO_Sync_Scope_Policy::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 TAO_Cached_Policy_Type

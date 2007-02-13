@@ -5,7 +5,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
 #include "tao/TypeCodeFactory_Adapter.h"
-#include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -154,7 +153,8 @@ TAO::TypeCode::Enum<char const *,
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return
@@ -206,7 +206,7 @@ TAO::TypeCode::Enum<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nenumerators_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
   return Traits<char const *>::get_string (this->enumerators_[index]);
 }

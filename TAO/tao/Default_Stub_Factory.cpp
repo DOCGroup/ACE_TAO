@@ -4,8 +4,9 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
-#include "ace/CORBA_macros.h"
+
 #include "ace/Log_Msg.h"
+
 
 ACE_RCSID (tao,
            TAO_Default_Stub_Factory,
@@ -20,7 +21,8 @@ TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory (void)
 TAO_Stub *
 TAO_Default_Stub_Factory::create_stub (const char *repository_id,
                                        const TAO_MProfile &profiles,
-                                       TAO_ORB_Core *orb_core)
+                                       TAO_ORB_Core *orb_core
+                                       )
 {
   TAO_Stub *retval = 0;
 

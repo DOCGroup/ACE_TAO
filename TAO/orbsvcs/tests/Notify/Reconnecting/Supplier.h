@@ -27,27 +27,45 @@ class StructuredPushSupplier_i : public virtual POA_CosNotifyComm::StructuredPus
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+      const CosNotification::EventTypeSeq & removed
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosNotifyComm::InvalidEventType));
 
-  virtual void disconnect_structured_push_supplier (void);
+  virtual void disconnect_structured_push_supplier (
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 class SequencePushSupplier_i : public virtual POA_CosNotifyComm::SequencePushSupplier
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+      const CosNotification::EventTypeSeq & removed
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosNotifyComm::InvalidEventType));
 
-  virtual void disconnect_sequence_push_supplier (void);
+  virtual void disconnect_sequence_push_supplier (
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 class AnyPushSupplier_i : public virtual POA_CosNotifyComm::PushSupplier
 {
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+      const CosNotification::EventTypeSeq & removed
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosNotifyComm::InvalidEventType));
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 class ReconnectionCallback_i : public virtual POA_NotifyExt::ReconnectionCallback
@@ -65,9 +83,12 @@ public:
 
   size_t reconnect_count () const;
 
-  virtual void reconnect (CORBA::Object_ptr reconnection);
+  virtual void reconnect (
+     CORBA::Object_ptr reconnection
+    ) ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   Supplier_Main & supplier_main_;
@@ -92,7 +113,8 @@ class Supplier_Main
   void usage (FILE * log) const;
 
   void reconnect (
-      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
+      CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
   /// Find naming service.

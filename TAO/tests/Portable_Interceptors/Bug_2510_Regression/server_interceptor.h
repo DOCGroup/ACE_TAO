@@ -31,21 +31,32 @@ public:
   ~Echo_Server_Request_Interceptor ();
   // dotr.
 
-  virtual char * name (void);
+  virtual char * name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+        PortableInterceptor::ServerRequestInfo_ptr)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;

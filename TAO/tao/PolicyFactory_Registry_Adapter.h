@@ -23,6 +23,9 @@
 
 #include "tao/Basic_Types.h"
 
+#include "ace/CORBA_macros.h"
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //-- Forward Declarations--
@@ -62,16 +65,19 @@ namespace TAO
     /// initialization.
     virtual void register_policy_factory (
       CORBA::PolicyType type,
-      PortableInterceptor::PolicyFactory_ptr policy_factory) = 0;
+      PortableInterceptor::PolicyFactory_ptr policy_factory
+      ) = 0;
 
     /// Construct a policy of the given type with the information
     /// contained in the CORBA::Any @a value.
     virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                             const CORBA::Any &value) = 0;
+                                             const CORBA::Any &value
+                                             ) = 0;
 
     /// Create an empty policy, usually to be filled in later by
     /// demarshaling.
-    virtual CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) = 0;
+    virtual CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
+                                              ) = 0;
 
     /// Check if a @c PolicyFactory corresponding to the given type,
     /// exists.

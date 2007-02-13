@@ -37,7 +37,7 @@ AppHelper::create_poa(const char*                    name,
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to create child POA: %s.\n", name));
-      throw TestAppException();
+      ACE_THROW_RETURN (TestAppException(), PortableServer::POA::_nil ());
     }
 
   return child_poa._retn();
@@ -59,7 +59,7 @@ AppHelper::activate_servant(PortableServer::POA_ptr poa,
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to convert servant_to_ref.\n"));
-      throw TestAppException();
+      ACE_THROW_RETURN (TestAppException(), CORBA::Object::_nil ());
     }
 
   return obj._retn();

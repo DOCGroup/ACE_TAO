@@ -32,7 +32,7 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str, "CORBA::ORB_init");
 
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =

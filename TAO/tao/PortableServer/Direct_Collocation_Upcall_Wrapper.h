@@ -27,6 +27,7 @@
 #include "tao/Exception.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +61,8 @@ namespace TAO
       int num_args,
       const char * op,
       size_t op_len,
-      TAO::Collocation_Strategy strategy);
+      TAO::Collocation_Strategy strategy)
+    ACE_THROW_SPEC ((CORBA::Exception));
   };
 
 }  // End namespace TAO

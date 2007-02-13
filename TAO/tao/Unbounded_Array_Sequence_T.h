@@ -12,6 +12,7 @@
 #include "tao/Unbounded_Array_Allocation_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 #include "tao/Array_Traits_T.h"
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -129,6 +130,8 @@ namespace TAO
 
   template <typename stream, typename T_array, typename T_slice, typename T_tag>
   bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
     typedef TAO::Array_Traits<forany> array_traits;

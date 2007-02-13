@@ -22,19 +22,26 @@ public:
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void throw_exception (void);
+  virtual void throw_exception (void)
+    ACE_THROW_SPEC ((CORBA::SystemException, Test::MyException));
 
-  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me);
+  virtual CORBA::Boolean call_me_back (Test::Hello_ptr me)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean call_back (void);
+  virtual CORBA::Boolean call_back (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Boolean check_request_id (void);
+  virtual CORBA::Boolean check_request_id (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong drop_down_dead (void);
+  virtual CORBA::ULong drop_down_dead (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   static CORBA::Boolean ids_differ_;
 

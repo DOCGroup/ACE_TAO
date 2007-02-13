@@ -39,6 +39,7 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_i::bar ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Your code here.
   }
@@ -52,6 +53,9 @@ namespace CIDL_Sender_Impl
   void
   Sender_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     this->context_ =
     Sender_Context::_narrow (
@@ -65,30 +69,45 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_i::ciao_preactivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Sender_exec_i::ciao_postactivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Sender_exec_i::ccm_activate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Sender_exec_i::ccm_passivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Sender_exec_i::ccm_remove ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Your code here.
   }
@@ -117,6 +136,9 @@ namespace CIDL_Sender_Impl
 
   ::Components::EnterpriseComponent_ptr
   SenderHome_exec_i::create ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

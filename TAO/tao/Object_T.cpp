@@ -6,7 +6,6 @@
 #include "tao/Object_T.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -23,12 +22,16 @@ namespace TAO
         return T::_nil ();
       }
 
-    if (obj->_is_a (repo_id) == false)
+    CORBA::Boolean const is_it = obj->_is_a (repo_id);
+
+    if (is_it == false)
       {
         return T::_nil ();
       }
 
-    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id, pbf);
+    return TAO::Narrow_Utils<T>::unchecked_narrow (obj,
+                                                   repo_id,
+                                                   pbf);
   }
 
   template<typename T> T *
@@ -38,9 +41,12 @@ namespace TAO
     T *proxy = 0;
     try
       {
-        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0, pbf);
+        proxy =
+          TAO::Narrow_Utils<T>::unchecked_narrow (obj,
+                                                  0,
+                                                  pbf);
       }
-    catch (const ::CORBA::Exception&)
+    catch ( ::CORBA::Exception&)
       {
         // Swallow the exception
         return T::_nil ();
@@ -76,7 +82,7 @@ namespace TAO
     if (stub == 0)
       {
         // If we're here, we have been passed a bogus objref.
-        throw ::CORBA::BAD_PARAM ();
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (), T::_nil ());
       }
 
     stub->_incr_refcnt ();

@@ -455,6 +455,8 @@ RedGreen_Test_StructuredPushConsumer::offer_change (
     const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType))
 {
   // No-Op.
 }
@@ -463,6 +465,8 @@ void
 RedGreen_Test_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              ace_mon,
@@ -507,6 +511,7 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
 void
 RedGreen_Test_StructuredPushConsumer::disconnect_structured_push_consumer (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No-Op.
 }
@@ -528,6 +533,8 @@ void
 SlowConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 {
   // Slow it down ...
   ACE_OS::sleep (1);
@@ -608,6 +615,8 @@ RedGreen_Test_StructuredPushSupplier::subscription_change (
     const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType))
 {
   //No-Op.
 }
@@ -639,6 +648,7 @@ RedGreen_Test_StructuredPushSupplier::send_event (
 void
 RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No-Op.
 }

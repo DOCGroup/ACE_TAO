@@ -194,8 +194,8 @@ be_visitor_component_sh::visit_component (be_component *node)
   *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *servant," << be_nl
-      << "void *servant_upcall);" << be_uidt
-      << be_uidt_nl << be_nl;
+      << "void *servant_upcall" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl

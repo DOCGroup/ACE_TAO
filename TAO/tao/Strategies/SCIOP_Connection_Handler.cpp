@@ -123,7 +123,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           tph->server_protocol_properties_at_orb_level (protocol_properties);
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       return -1;
     }

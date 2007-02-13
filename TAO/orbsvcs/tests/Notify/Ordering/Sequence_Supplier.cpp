@@ -31,11 +31,13 @@ public:
   }
 
   void go (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = true;
   }
 
   void done (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     started_ = false;
   }

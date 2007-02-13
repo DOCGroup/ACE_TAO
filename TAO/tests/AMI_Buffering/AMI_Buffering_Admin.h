@@ -17,15 +17,20 @@ public:
   AMI_Buffering_Admin (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong request_count (void);
+  virtual CORBA::ULong request_count (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::ULong bytes_received_count (void);
+  virtual CORBA::ULong bytes_received_count (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_received (CORBA::ULong payload_length);
+  virtual void request_received (CORBA::ULong payload_length)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void flush (void);
+  virtual void flush (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to shutdown the application.

@@ -16,13 +16,13 @@ namespace CIAO
     }
 
     size_t
-    DAM_Map::size (void) const
+    DAM_Map::size (void)
     {
       return this->map_.current_size ();
     }
 
     bool
-    DAM_Map::is_plan_available (const ACE_CString &str) const
+    DAM_Map::is_plan_available (const ACE_CString &str)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::is_plan_available");
       if (this->map_.find (str) == 0)
@@ -41,7 +41,8 @@ namespace CIAO
       ::Deployment::DomainApplicationManager_var tmp;
 
       /// There should be duplicate when assigning a _var to an _var.
-      int const retval =  this->map_.find (str, tmp);
+      int const retval =  this->map_.find (str,
+                                           tmp);
 
       if (CIAO::debug_level () > 9)
         {
@@ -61,7 +62,9 @@ namespace CIAO
       ::Deployment::DomainApplicationManager_ptr dam)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::bind_dam_reference");
-      int const retval = this->map_.rebind (str, dam);
+      int const retval =
+        this->map_.rebind (str,
+                         dam);
 
       if (retval != 0)
         return false;
@@ -74,7 +77,8 @@ namespace CIAO
     DAM_Map::get_dams ()
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::get_dams");
-      CORBA::ULong const sz = this->map_.current_size ();
+      CORBA::ULong const sz =
+        this->map_.current_size ();
 
       // Initialize the list of DomainApplication Managers
       Deployment::DomainApplicationManagers_var list;
@@ -85,11 +89,13 @@ namespace CIAO
       // Add the manager to the list
       list->length (sz);
 
-      Iterator end = this->map_.end ();
+      Iterator end =
+        this->map_.end ();
 
       CORBA::ULong i = 0;
 
-      for (Iterator b = this->map_.begin (); b != end; ++b)
+      for (Iterator b =
+             this->map_.begin (); b != end; ++b)
         {
           list [i] =
             Deployment::DomainApplicationManager::_duplicate ((*b).int_id_.in ());
@@ -104,7 +110,8 @@ namespace CIAO
     DAM_Map::unbind_dam (const ACE_CString &str)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::unbind_dam");
-      int const retval = this->map_.unbind (str);
+      int const retval =
+        this->map_.unbind (str);
 
       if (retval != 0)
         return false;

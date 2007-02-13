@@ -6,9 +6,8 @@
 #include "tao/AnyTypeCode/TypeCode_Case_T.h"
 
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "ace/CORBA_macros.h"
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_T.inl"
@@ -117,7 +116,8 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                                                   CORBA::TypeCode_ptr tc
                                                   ) const
 {
-  CORBA::Any_var const any = tc->member_label (index);
+  CORBA::Any_var const any = tc->member_label (index
+                                              );
 
   // The equality operator == below is guaranteed to be defined for
   // the discriminator type since an IDL union discriminator type must

@@ -36,8 +36,7 @@ public:
  * etc.
  *
  */
-class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
-  public TAO_Default_Resource_Factory
+class TAO_Strategies_Export TAO_Advanced_Resource_Factory : public TAO_Default_Resource_Factory
 {
 public:
   // = Initialization and termination methods.

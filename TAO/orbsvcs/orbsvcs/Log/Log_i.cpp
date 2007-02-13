@@ -98,18 +98,21 @@ TAO_Log_i::~TAO_Log_i (void)
 
 DsLogAdmin::LogMgr_ptr
 TAO_Log_i::my_factory (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return DsLogAdmin::LogMgr::_duplicate (this->factory_.in ());
 }
 
 DsLogAdmin::LogId
 TAO_Log_i::id (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return logid_;
 }
 
 DsLogAdmin::QoSList*
 TAO_Log_i::get_log_qos (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -129,6 +132,8 @@ TAO_Log_i::get_log_qos (void)
 
 void
 TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::UnsupportedQoS))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -176,6 +181,7 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos)
 
 CORBA::ULong
 TAO_Log_i::get_max_record_life (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -188,6 +194,7 @@ TAO_Log_i::get_max_record_life (void)
 
 void
 TAO_Log_i::set_max_record_life (CORBA::ULong life)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -226,6 +233,7 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life)
 
 CORBA::ULongLong
 TAO_Log_i::get_max_size (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -237,6 +245,8 @@ TAO_Log_i::get_max_size (void)
 
 void
 TAO_Log_i::set_max_size (CORBA::ULongLong size)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidParam))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -297,6 +307,7 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size)
 
 CORBA::ULongLong
 TAO_Log_i::get_current_size (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -308,6 +319,7 @@ TAO_Log_i::get_current_size (void)
 
 CORBA::ULongLong
 TAO_Log_i::get_n_records (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -319,6 +331,7 @@ TAO_Log_i::get_n_records (void)
 
 DsLogAdmin::LogFullActionType
 TAO_Log_i::get_log_full_action (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -330,6 +343,8 @@ TAO_Log_i::get_log_full_action (void)
 
 void
 TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   DsLogAdmin::InvalidLogFullAction))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -383,6 +398,7 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action)
 
 DsLogAdmin::AdministrativeState
 TAO_Log_i::get_administrative_state (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -394,6 +410,7 @@ TAO_Log_i::get_administrative_state (void)
 
 void
 TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -426,6 +443,7 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state)
 
 DsLogAdmin::ForwardingState
 TAO_Log_i::get_forwarding_state (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -438,6 +456,7 @@ TAO_Log_i::get_forwarding_state (void)
 
 void
 TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -470,6 +489,7 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state)
 
 DsLogAdmin::OperationalState
 TAO_Log_i::get_operational_state (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No locks are necessary, since op_state_ is set in ::init() and
   // never changed.
@@ -478,6 +498,7 @@ TAO_Log_i::get_operational_state (void)
 
 DsLogAdmin::TimeInterval
 TAO_Log_i::get_interval (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -489,6 +510,9 @@ TAO_Log_i::get_interval (void)
 
 void
 TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidTime,
+                   DsLogAdmin::InvalidTimeInterval))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -540,6 +564,7 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval)
 
 DsLogAdmin::AvailabilityStatus
 TAO_Log_i::get_availability_status (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -551,6 +576,7 @@ TAO_Log_i::get_availability_status (void)
 
 DsLogAdmin::AvailabilityStatus
 TAO_Log_i::get_availability_status_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The log is considered "on duty" if all the following are true:
   //   * operational state is enabled
@@ -579,6 +605,7 @@ TAO_Log_i::get_availability_status_i (void)
 
 DsLogAdmin::CapacityAlarmThresholdList*
 TAO_Log_i::get_capacity_alarm_thresholds (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -592,6 +619,8 @@ void
 TAO_Log_i::set_capacity_alarm_thresholds (const
                                           DsLogAdmin::CapacityAlarmThresholdList
                                           &threshs)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidThreshold))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -649,6 +678,7 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
 
 DsLogAdmin::WeekMask*
 TAO_Log_i::get_week_mask (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -660,6 +690,10 @@ TAO_Log_i::get_week_mask (void)
 
 void
 TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidTime,
+                   DsLogAdmin::InvalidTimeInterval,
+                   DsLogAdmin::InvalidMask))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -699,6 +733,9 @@ DsLogAdmin::RecordList*
 TAO_Log_i::query (const char *grammar,
                   const char *constraint,
                   DsLogAdmin::Iterator_out iter_out)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidGrammar,
+                   DsLogAdmin::InvalidConstraint))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -714,6 +751,7 @@ DsLogAdmin::RecordList*
 TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
                      CORBA::Long how_many,
                      DsLogAdmin::Iterator_out iter_out)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -728,6 +766,9 @@ TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
 CORBA::ULong
 TAO_Log_i::match (const char* grammar,
                   const char *constraint)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidGrammar,
+                   DsLogAdmin::InvalidConstraint))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -744,6 +785,9 @@ TAO_Log_i::match (const char* grammar,
 CORBA::ULong
 TAO_Log_i::delete_records (const char *grammar,
                            const char *constraint)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -778,6 +822,7 @@ TAO_Log_i::delete_records (const char *grammar,
 
 CORBA::ULong
 TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -811,6 +856,11 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
 
 void
 TAO_Log_i::write_records (const DsLogAdmin::Anys &records)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::LogFull,
+                   DsLogAdmin::LogOffDuty,
+                   DsLogAdmin::LogLocked,
+                   DsLogAdmin::LogDisabled))
 {
   // create a record list..
   DsLogAdmin::RecordList reclist (records.length ());
@@ -826,6 +876,11 @@ TAO_Log_i::write_records (const DsLogAdmin::Anys &records)
 
 void
 TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::LogFull,
+                   DsLogAdmin::LogOffDuty,
+                   DsLogAdmin::LogLocked,
+                   DsLogAdmin::LogDisabled))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -907,6 +962,9 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist)
 void
 TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
                                  const DsLogAdmin::NVList &attr_list)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidRecordId,
+                   DsLogAdmin::InvalidAttribute))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -921,6 +979,10 @@ TAO_Log_i::set_records_attribute (const char *grammar,
                                   const char *constraint,
                                   const DsLogAdmin::NVList
                                   &attr_list)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint,
+                     DsLogAdmin::InvalidAttribute))
 {
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
 			    guard,
@@ -934,6 +996,8 @@ TAO_Log_i::set_records_attribute (const char *grammar,
 
 DsLogAdmin::NVList*
 TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidRecordId))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -946,6 +1010,8 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id)
 
 void
 TAO_Log_i::flush (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::UnsupportedQoS))
 {
   /// XXX locks?
   this->recordstore_->flush ();
@@ -953,6 +1019,7 @@ TAO_Log_i::flush (void)
 
 CORBA::Boolean
 TAO_Log_i::scheduled (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::TimeInterval interval =
     this->recordstore_->get_interval ();
@@ -1004,6 +1071,7 @@ TAO_Log_i::scheduled (void)
 
 void
 TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const DsLogAdmin::LogFullActionType log_full_action =
     this->get_log_full_action ();
@@ -1053,6 +1121,7 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log)
 
 void
 TAO_Log_i::remove_old_records (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CORBA::ULong count =
     this->recordstore_->remove_old_records ();
@@ -1079,6 +1148,7 @@ TAO_Log_i::remove_old_records (void)
 
 void
 TAO_Log_i::check_capacity_alarm_threshold (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CORBA::ULongLong max_size =
     this->recordstore_->get_max_size ();
@@ -1140,6 +1210,7 @@ TAO_Log_i::check_capacity_alarm_threshold (void)
 
 void
 TAO_Log_i::reset_capacity_alarm_threshold (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CORBA::ULongLong max_size =
     this->recordstore_->get_max_size ();
@@ -1170,6 +1241,7 @@ TAO_Log_i::reset_capacity_alarm_threshold (void)
 CORBA::Boolean
 TAO_Log_i::validate_capacity_alarm_thresholds (
     const DsLogAdmin::CapacityAlarmThresholdList & threshs)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < threshs.length (); i++)
     if (threshs[i] > 100)
@@ -1218,6 +1290,7 @@ TAO_Log_i::reset_log_qos (const DsLogAdmin::QoSList& qos)
 
 void
 TAO_Log_i::validate_log_qos (const DsLogAdmin::QoSList& qos)
+  ACE_THROW_SPEC ((DsLogAdmin::UnsupportedQoS))
 {
   DsLogAdmin::QoSList denied;
 
@@ -1285,6 +1358,9 @@ TAO_Log_i::reset_week_mask (const DsLogAdmin::WeekMask& masks)
 
 void
 TAO_Log_i::validate_week_mask (const DsLogAdmin::WeekMask& masks)
+  ACE_THROW_SPEC ((DsLogAdmin::InvalidTime,
+		   DsLogAdmin::InvalidTimeInterval,
+		   DsLogAdmin::InvalidMask))
 {
   for (CORBA::ULong i = 0; i < masks.length (); ++i)
     {

@@ -38,14 +38,17 @@ main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp =
+        orb->string_to_object(ior);
 
-      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var hello =
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -55,7 +58,8 @@ main (int argc, char *argv[])
                             1);
         }
 
-      CORBA::String_var the_string = hello->get_string ();
+      CORBA::String_var the_string =
+        hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));

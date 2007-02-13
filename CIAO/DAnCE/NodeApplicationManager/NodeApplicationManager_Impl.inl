@@ -23,6 +23,8 @@ ACE_INLINE
 void
 CIAO::NodeApplicationManager_Impl_Base::
 parse_config_value (ACE_CString & str)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::InvalidProperty))
 {
   // The unused arg is for future improvemnts.
   ACE_UNUSED_ARG (str);
@@ -40,6 +42,7 @@ CIAO::NodeApplicationManager_Impl_Base::get_nodeapp_manager (void)
 ACE_INLINE void
 CIAO::NodeApplicationManager_Impl_Base::
 reset_plan (const ::Deployment::DeploymentPlan & plan)
+  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   this->plan_ = plan;
 }

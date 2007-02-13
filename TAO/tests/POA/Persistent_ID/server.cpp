@@ -31,13 +31,17 @@ public:
   test_i (CORBA::ORB_ptr orb_ptr,
           PortableServer::POA_ptr poa);
 
-  void method (void);
+  void method (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  test_ptr create_POA (void);
+  test_ptr create_POA (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy_POA (void);
+  void destroy_POA (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -57,6 +61,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 void
 test_i::method (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("POACurrent");
@@ -77,6 +82,7 @@ test_i::method (void)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -89,6 +95,7 @@ test_i::_default_POA (void)
 
 test_ptr
 test_i::create_POA (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::PolicyList policies (2);
   policies.length (2);
@@ -141,6 +148,7 @@ test_i::create_POA (void)
 
 void
 test_i::destroy_POA (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->child_poa_->destroy (1, 0);
 }

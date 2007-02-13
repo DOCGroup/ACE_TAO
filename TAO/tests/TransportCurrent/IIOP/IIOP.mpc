@@ -13,11 +13,11 @@ project(*Server): taoserver, tc_iiop, pi_server {
   }
 
   Source_Files {
-    IIOP_Tester.cpp
     server.cpp
     Current_Test_Impl.cpp
     IIOP_Server_Request_Interceptor.cpp
     IIOP_Server_Main.cpp
+    IIOP_Tester.cpp
   }
 
   IDL_Files {
@@ -36,8 +36,8 @@ project(*Client): taoclient, tc_iiop, dynamicinterface {
   }
 
   Source_Files {
-    IIOP_Tester.cpp
     client.cpp
+    IIOP_Tester.cpp
   }
 
   IDL_Files {

@@ -31,7 +31,7 @@ Consumer::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the run() method.
@@ -114,6 +114,7 @@ Consumer::run (int argc, char* argv[])
 
 void
 Consumer::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -133,6 +134,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have

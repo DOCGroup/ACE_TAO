@@ -31,24 +31,36 @@ public:
   virtual ~Echo_Client_Request_Interceptor ();
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr);
+      PortableInterceptor::ClientRequestInfo_ptr)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_other (
         PortableInterceptor::ClientRequestInfo_ptr
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        PortableInterceptor::ForwardRequest
+        ));
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+      PortableInterceptor::ClientRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   // Some identifiers that are used for error checking
   static CORBA::ULong client_interceptor_check_;

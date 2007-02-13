@@ -22,9 +22,11 @@ public:
   Memory_Growth (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void send_objref (const Test::PayLoad &p);
+  virtual void send_objref (const Test::PayLoad &p)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

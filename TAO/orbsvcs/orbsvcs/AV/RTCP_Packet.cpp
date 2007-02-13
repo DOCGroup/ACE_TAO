@@ -25,7 +25,7 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.pad_ = (buffer[0] & 0x20) >> 5;
   this->chd_.count_ = buffer[0] & 0x1F;
   this->chd_.pt_ = buffer[1];
-  this->chd_.length_ = ACE_NTOHS(*(ACE_UINT16*)&buffer[2]);
+  this->chd_.length_ = ntohs(*(ACE_UINT16*)&buffer[2]);
   this->packet_data_ = 0;
 }
 
@@ -130,7 +130,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   // Store the source ids of the sources leaving the session
   for (j=0; j<this->chd_.count_; j++)
     {
-      this->ssrc_list_[j] = ACE_NTOHL(*(ACE_UINT32*)&buffer[index]);
+      this->ssrc_list_[j] = ntohl(*(ACE_UINT32*)&buffer[index]);
       index+=4;
     }
 
@@ -223,12 +223,12 @@ RTCP_BYE_Packet::build_packet(void)
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(this->chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = htons(this->chd_.length_);
   index+=2;
 
   for (i=0; i<this->chd_.count_; i++)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_list_[i]);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ssrc_list_[i]);
       index+=4;
     }
 
@@ -302,7 +302,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
 
   // The common part of the header is initialized in the parent.
   i=4;
-  this->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
   for (unsigned int j=0; j<this->chd_.count_; j++)
     {
@@ -320,19 +320,19 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
         }
 
       local_block_ptr->next_ = 0;
-      local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      ACE_UINT32 temp = ntohl(*(ACE_UINT32*)&buffer[i]);
       local_block_ptr->fraction_ = (temp&0xff000000) >> 24;
       local_block_ptr->lost_ = temp & 0x00ffffff;
       i+=4;
-      local_block_ptr->last_seq_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->last_seq_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->jitter_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->jitter_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->lsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->lsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->dlsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->dlsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
     }
 
@@ -391,27 +391,27 @@ RTCP_RR_Packet::build_packet(void)
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = htons(chd_.length_);
   index+=2;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ssrc_);
   index+=4;
 
   local_block_ptr = this->rr_;
   while (local_block_ptr)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->ssrc_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->ssrc_);
       index+=4;
-      ACE_UINT32 temp = ACE_HTONL((local_block_ptr->fraction_&0xff) << 24) &
+      ACE_UINT32 temp = htonl((local_block_ptr->fraction_&0xff) << 24) &
                               local_block_ptr->lost_;
       *((ACE_UINT32*)&this->packet_data_[index]) = temp;
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->last_seq_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->last_seq_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->jitter_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->jitter_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->lsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->lsr_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->dlsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->dlsr_);
       index+=4;
       local_block_ptr = local_block_ptr->next_;
     }
@@ -492,7 +492,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
         }
       cp->next_ = 0;
       cp->item_ = 0;
-      cp->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      cp->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
 
       while (buffer[i]!=RTCP_SDES_END)
@@ -835,13 +835,13 @@ RTCP_SDES_Packet::build_packet(void)
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = htons(chd_.length_);
   index+=2;
 
   cp = this->chunk_;
   while (cp)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(cp->ssrc_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(cp->ssrc_);
       index+=4;
 
       ip = cp->item_;
@@ -1035,17 +1035,17 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
 
   // The common part of the header is initialized in the parent.
   i=4;
-  this->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->ntp_ts_msw_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->ntp_ts_msw_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->ntp_ts_lsw_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->ntp_ts_lsw_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->rtp_ts_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->rtp_ts_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->psent_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->psent_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
-  this->osent_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+  this->osent_ = ntohl(*(ACE_UINT32*)&buffer[i]);
   i+=4;
   for (unsigned int j=0; j<this->chd_.count_; j++)
     {
@@ -1063,19 +1063,19 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
         }
 
       local_block_ptr->next_ = 0;
-      local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->ssrc_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      ACE_UINT32 temp = ntohl(*(ACE_UINT32*)&buffer[i]);
       local_block_ptr->fraction_ = (temp&0xff000000) >> 24;
       local_block_ptr->lost_ = temp & 0x00ffffff;
       i+=4;
-      local_block_ptr->last_seq_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->last_seq_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->jitter_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->jitter_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->lsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->lsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
-      local_block_ptr->dlsr_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
+      local_block_ptr->dlsr_ = ntohl(*(ACE_UINT32*)&buffer[i]);
       i+=4;
     }
 
@@ -1133,37 +1133,37 @@ void RTCP_SR_Packet::build_packet(void)
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
-  *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(this->chd_.length_);
+  *((ACE_UINT16*)&this->packet_data_[index]) = htons(this->chd_.length_);
   index+=2;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ssrc_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ntp_ts_msw_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ntp_ts_msw_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ntp_ts_lsw_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->ntp_ts_lsw_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->rtp_ts_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->rtp_ts_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->psent_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->psent_);
   index+=4;
-  *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->osent_);
+  *((ACE_UINT32*)&this->packet_data_[index]) = htonl(this->osent_);
   index+=4;
 
   local_block_ptr = this->rr_;
   while (local_block_ptr)
     {
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->ssrc_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->ssrc_);
       index+=4;
-      ACE_UINT32 temp = ACE_HTONL((local_block_ptr->fraction_&0xff) << 24) &
+      ACE_UINT32 temp = htonl((local_block_ptr->fraction_&0xff) << 24) &
                               local_block_ptr->lost_;
       *((ACE_UINT32*)&this->packet_data_[index]) = temp;
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->last_seq_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->last_seq_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->jitter_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->jitter_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->lsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->lsr_);
       index+=4;
-      *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->dlsr_);
+      *((ACE_UINT32*)&this->packet_data_[index]) = htonl(local_block_ptr->dlsr_);
       index+=4;
       local_block_ptr = local_block_ptr->next_;
     }

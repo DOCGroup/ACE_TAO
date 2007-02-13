@@ -485,7 +485,7 @@ u_char * asn1::parse_length( u_char *data,
     }
     // fixed
     ACE_OS::memcpy((char *)length, (char *)data + 1, (int)lengthbyte);
-    *length = ACE_NTOHL(*length);
+    *length = ntohl(*length);
     *length >>= (8 * ((sizeof *length) - lengthbyte));
     return data + lengthbyte + 1;
   } else { /* short asnlength */

@@ -24,7 +24,8 @@ public:
   int process_has_started (Test::Process_out the_process);
 
   // = The skeleton methods
-  virtual void started (Test::Process_ptr the_process);
+  virtual void started (Test::Process_ptr the_process)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Synchronize changes to the internal data

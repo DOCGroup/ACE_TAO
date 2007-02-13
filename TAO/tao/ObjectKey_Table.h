@@ -109,14 +109,16 @@ namespace TAO
      * new it is bounded to the table. Returns a 0 on success and a -1
      * on failure.
      */
-    int bind (const ObjectKey &key, Refcounted_ObjectKey *&key_new);
+    int bind (const ObjectKey &key,
+              Refcounted_ObjectKey *&key_new);
 
     /// Unbind an ObjectKey from the table.
     int unbind (TAO::Refcounted_ObjectKey *&key);
 
   protected:
     /// Implementation for bind ().
-    int bind_i (const ObjectKey &key, Refcounted_ObjectKey *&key_new);
+    int bind_i (const ObjectKey &key,
+                Refcounted_ObjectKey *&key_new);
 
     /// Implementation for unbind ().
     int unbind_i (Refcounted_ObjectKey *&key);

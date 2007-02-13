@@ -25,6 +25,7 @@ static TAO_RTScheduler_Current_var current_cleanup;
 void
  TAO_RTScheduler_ORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
   // Register all of the RT related services.
@@ -126,6 +127,7 @@ void
 
 void
 TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   // @@ This is busted.  TAO_ORBInitInfo should do proper reference

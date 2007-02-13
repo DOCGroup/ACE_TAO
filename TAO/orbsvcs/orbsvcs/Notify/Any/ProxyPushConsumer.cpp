@@ -29,12 +29,19 @@ TAO_Notify_ProxyPushConsumer::release (void)
 
 CosNotifyChannelAdmin::ProxyType
 TAO_Notify_ProxyPushConsumer::MyType (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   return CosNotifyChannelAdmin::PUSH_ANY;
 }
 
 void
 TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , CosEventComm::Disconnected
+                   ))
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
@@ -52,6 +59,10 @@ TAO_Notify_ProxyPushConsumer::push (const CORBA::Any& any)
 
 void
 TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , CosEventChannelAdmin::AlreadyConnected
+                   ))
 {
   // Convert Supplier to Base Type
   TAO_Notify_PushSupplier *supplier;
@@ -66,6 +77,9 @@ TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSuppl
 }
 
 void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   TAO_Notify_ProxyPushConsumer::Ptr guard( this );
   this->destroy ();

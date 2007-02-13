@@ -26,6 +26,9 @@ namespace CIAO
       ::Components::EventBase * evt,
       const char * source_id,
       ::CORBA::TypeCode_ptr tc)
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::BadEventType))
    {
       ACE_UNUSED_ARG (evt);
       ACE_UNUSED_ARG (source_id);

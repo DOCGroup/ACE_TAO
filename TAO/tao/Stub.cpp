@@ -24,7 +24,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
-#include "ace/CORBA_macros.h"
 
 
 ACE_RCSID (tao,
@@ -156,7 +155,9 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
 }
 
 int
-TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
+TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
+                           CORBA::ULong &index
+                           )
 {
   // We are creating the IOR info. Let us not be disturbed. So grab a
   // lock.
@@ -171,7 +172,9 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
     {
       if (this->forwarded_ior_info_ == 0)
         {
-          this->get_profile_ior_info (*this->forward_profiles_, tmp_info);
+          this->get_profile_ior_info (*this->forward_profiles_,
+                                      tmp_info
+                                      );
 
           this->forwarded_ior_info_ = tmp_info;
         }
@@ -195,7 +198,9 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
   // Else we look at the base profiles
   if (this->ior_info_ == 0)
     {
-      this->get_profile_ior_info (this->base_profiles_, tmp_info);
+      this->get_profile_ior_info (this->base_profiles_,
+                                  tmp_info
+                                  );
 
       this->ior_info_ = tmp_info;
     }
@@ -205,7 +210,8 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
        ind < this->base_profiles_.profile_count ();
        ++ind)
     {
-      if (this->base_profiles_.get_profile (ind) == this->profile_in_use_)
+      if (this->base_profiles_.get_profile (ind) ==
+          this->profile_in_use_)
         {
           index = ind;
           ior_info = this->ior_info_;
@@ -238,11 +244,16 @@ TAO_Stub::object_key (void) const
 }
 
 int
-TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
+TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
+                                IOP::IOR *&ior_info
+                                )
 {
+
+
   ACE_NEW_THROW_EX (ior_info,
                     IOP::IOR (),
                     CORBA::NO_MEMORY ());
+
 
   // Get the number of elements
   CORBA::ULong const count = profiles.profile_count ();
@@ -256,10 +267,12 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
     {
       TAO_Profile *prof = profiles.get_profile (index);
 
-      IOP::TaggedProfile *tp = prof->create_tagged_profile ();
+      IOP::TaggedProfile *tp =
+        prof->create_tagged_profile ();
 
       if (tp == 0)
-        throw ::CORBA::NO_MEMORY ();
+        ACE_THROW_RETURN (CORBA::NO_MEMORY (),
+                          -1);
       ior_info->profiles[index] = *tp;
     }
 
@@ -279,7 +292,8 @@ TAO_Stub::is_collocated (CORBA::Boolean collocated)
         }
       else
         {
-          this->object_proxy_broker_ = the_tao_remote_object_proxy_broker ();
+          this->object_proxy_broker_ =
+            the_tao_remote_object_proxy_broker ();
         }
       this->is_collocated_ = collocated;
     }
@@ -291,7 +305,8 @@ TAO_Stub::is_collocated (CORBA::Boolean collocated)
 // NOTE that this must NOT go across the network!
 
 CORBA::ULong
-TAO_Stub::hash (CORBA::ULong max)
+TAO_Stub::hash (CORBA::ULong max
+                )
 {
   // we rely on the profile objects that its address info
   return this->base_profiles_.hash (max);
@@ -410,7 +425,8 @@ TAO_Stub::forward_back_one (void)
 // specific reconciliation, etc.
 
 CORBA::Policy_ptr
-TAO_Stub::get_policy (CORBA::PolicyType type)
+TAO_Stub::get_policy (CORBA::PolicyType type
+                      )
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -418,19 +434,24 @@ TAO_Stub::get_policy (CORBA::PolicyType type)
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
-      result = this->policies_->get_policy (type);
+      result =
+        this->policies_->get_policy (type
+                                    );
     }
 
   if (CORBA::is_nil (result.in ()))
     {
-      result = this->orb_core_->get_policy_including_current (type);
+      result =
+        this->orb_core_->get_policy_including_current (type
+                                                      );
     }
 
   return result._retn ();
 }
 
 CORBA::Policy_ptr
-TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
+TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
+                             )
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -438,13 +459,18 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
-      result = this->policies_->get_cached_policy (type);
+      result =
+        this->policies_->get_cached_policy (type
+                                           );
+
+
     }
 
   if (CORBA::is_nil (result.in ()))
     {
       result =
-        this->orb_core_->get_cached_policy_including_current (type);
+        this->orb_core_->get_cached_policy_including_current (type
+                                                             );
     }
 
   return result._retn ();
@@ -452,7 +478,8 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 
 TAO_Stub *
 TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
-                                CORBA::SetOverrideType set_add)
+                                CORBA::SetOverrideType set_add
+                                )
 {
   // Notice the use of an explicit constructor....
   auto_ptr<TAO_Policy_Set> policy_manager (
@@ -460,21 +487,29 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
-      policy_manager->set_policy_overrides (policies, set_add);
+      policy_manager->set_policy_overrides (policies,
+                                            set_add
+                                           );
     }
   else if (this->policies_ == 0)
     {
-      policy_manager->set_policy_overrides (policies, CORBA::SET_OVERRIDE);
+      policy_manager->set_policy_overrides (policies,
+                                            CORBA::SET_OVERRIDE
+                                           );
     }
   else
     {
-      policy_manager->copy_from (this->policies_);
+      policy_manager->copy_from (this->policies_
+                                 );
 
-      policy_manager->set_policy_overrides (policies, set_add);
+      policy_manager->set_policy_overrides (policies,
+                                            set_add
+                                           );
     }
 
   TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
-                                                 this->base_profiles_);
+                                                 this->base_profiles_
+                                                );
 
   stub->policies_ = policy_manager.release ();
 
@@ -485,7 +520,8 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 CORBA::PolicyList *
-TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
+TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
+                                )
 {
   if (this->policies_ == 0)
     {
@@ -498,7 +534,8 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
     }
   else
     {
-      return this->policies_->get_policy_overrides (types);
+      return this->policies_->get_policy_overrides (types
+                                                   );
     }
 }
 
@@ -512,10 +549,13 @@ TAO_Stub::transport_queueing_strategy (void)
   bool has_synchronization;
   Messaging::SyncScope scope;
 
-  this->orb_core_->call_sync_scope_hook (this, has_synchronization, scope);
+  this->orb_core_->call_sync_scope_hook (this,
+                                         has_synchronization,
+                                         scope);
 
   if (has_synchronization == true)
-    return this->orb_core_->get_transport_queueing_strategy  (this, scope);
+    return this->orb_core_->get_transport_queueing_strategy  (this,
+                                                              scope);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -550,7 +590,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     }
   else
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+        ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                                 guard,
                                 *this->profile_lock_ptr_,
                                 0));

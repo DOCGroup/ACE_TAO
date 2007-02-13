@@ -91,6 +91,7 @@ TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer (void)
 
 char *
 TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -99,6 +100,7 @@ TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::current_status (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -107,6 +109,7 @@ TAO::SSLIOP::CredentialsAcquirer::current_status (void)
 
 CORBA::ULong
 TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
@@ -117,38 +120,45 @@ TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
 
 CORBA::Any *
 TAO::SSLIOP::CredentialsAcquirer::get_continuation_data ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
-  throw CORBA::BAD_INV_ORDER ();
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 }
 
 SecurityLevel3::AcquisitionStatus
 TAO::SSLIOP::CredentialsAcquirer::continue_acquisition (
     const CORBA::Any & /* acquisition_arguments */)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSL/TLS credentials acquisition does generate continuation data.
-  throw CORBA::BAD_INV_ORDER ();
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
+                    SecurityLevel3::AQST_Failed);
 }
 
 SecurityLevel3::OwnCredentials_ptr
 TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 
   ::SSLIOP::AuthData *data;
 
   if (!(this->acquisition_arguments_ >>= data))
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                      SecurityLevel3::OwnCredentials::_nil ());
 
   TAO::SSLIOP::X509_var x509 = this->make_X509 (data->certificate);
 
   if (x509.in () == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                      SecurityLevel3::OwnCredentials::_nil ());
 
   TAO::SSLIOP::EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
   if (evp.in () == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                      SecurityLevel3::OwnCredentials::_nil ());
 
   // Verify that the private key is consistent with the certificate.
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
@@ -158,7 +168,8 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
                     ACE_TEXT ("(%P|%t) ERROR: Private key is not ")
                     ACE_TEXT ("consistent with X.509 certificate")));
 
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        SecurityLevel3::OwnCredentials::_nil ());
     }
 
   TAO::SSLIOP::OwnCredentials * creds;
@@ -180,6 +191,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 
 void
 TAO::SSLIOP::CredentialsAcquirer::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity ();
 

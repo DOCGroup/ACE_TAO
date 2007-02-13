@@ -35,13 +35,17 @@ public:
 
   // = Counter Interface Methods Overloading.
 
-  virtual void increment (void);
+  virtual void increment (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long get_count (void);
+  virtual CORBA::Long get_count (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void reset (void);
+  virtual void reset (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   CORBA::Long count_;

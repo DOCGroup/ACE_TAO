@@ -13,7 +13,7 @@ ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record (void)
 {
   if (this->msg_data_)
-    delete [] this->msg_data_;
+    delete[] this->msg_data_;
 }
 
 ACE_INLINE void
@@ -25,9 +25,7 @@ ACE_Log_Record::encode (void)
   this->type_ = htonl (this->type_);
   // Make sure we don't enclose the sec() and usec() fields until
   // they've been normalized.
-  // secs_ is commented out because it can be 64 bits. This method is
-  // deprecated; use the CDR operations instead.
-  //  this->secs_ = htonl (this->secs_);
+  this->secs_ = htonl (this->secs_);
   this->usecs_ = htonl (this->usecs_);
   this->pid_ = htonl (this->pid_);
 #endif /* ACE_LACKS_HTONL */
@@ -38,7 +36,7 @@ ACE_Log_Record::decode (void)
 {
   ACE_TRACE ("ACE_Log_Record::decode");
 #if !defined (ACE_LACKS_NTOHL)
-  ACE_Time_Value tv (this->secs_,
+  ACE_Time_Value tv (ntohl (this->secs_),
                      ntohl (this->usecs_));
 
   this->secs_ = tv.sec ();
@@ -81,14 +79,14 @@ ACE_INLINE ACE_Time_Value
 ACE_Log_Record::time_stamp (void) const
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
-  return ACE_Time_Value (this->secs_, (long) this->usecs_);
+  return ACE_Time_Value ((long) this->secs_, (long) this->usecs_);
 }
 
 ACE_INLINE void
 ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
-  this->secs_ = ts.sec ();
+  this->secs_ = (ACE_UINT32) ts.sec ();
   this->usecs_ = (ACE_UINT32) ts.usec ();
 }
 

@@ -12,9 +12,9 @@ project(*idl): taoidldefaults {
 project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after  += *idl
   Source_Files {
+    param_test_i.cpp
     param_testS.cpp
     param_testC.cpp
-    param_test_i.cpp
     server.cpp
   }
   IDL_Files {

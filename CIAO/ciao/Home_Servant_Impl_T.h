@@ -57,17 +57,23 @@ namespace CIAO
     // Operations for CCMHome interface.
 
     virtual void
-    remove_component (Components::CCMObject_ptr comp);
+    remove_component (Components::CCMObject_ptr comp)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::RemoveFailure));
 
     // Operations for keyless home interface.
 
     virtual ::Components::CCMObject_ptr
-    create_component ();
+    create_component ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CreateFailure));
 
     // Operations for implicit home interface.
 
     virtual typename COMP_SVNT::_stub_ptr_type
-    create ();
+    create ()
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Components::CreateFailure));
 
     virtual void
     update_component_map (PortableServer::ObjectId &oid);
@@ -76,10 +82,12 @@ namespace CIAO
     // CIAO-specific operations.
 
     typename COMP_SVNT::_stub_ptr_type
-    _ciao_activate_component (typename COMP_SVNT::_exec_type::_ptr_type exe);
+    _ciao_activate_component (typename COMP_SVNT::_exec_type::_ptr_type exe)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    _ciao_passivate_component (typename COMP_SVNT::_stub_ptr_type comp);
+    _ciao_passivate_component (typename COMP_SVNT::_stub_ptr_type comp)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
     const char *ins_name_;

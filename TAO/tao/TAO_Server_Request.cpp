@@ -383,7 +383,7 @@ TAO_ServerRequest::tao_send_reply (void)
 }
 
 void
-TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
+TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 {
   if (this->response_expected_ && !this->collocated ())
     {

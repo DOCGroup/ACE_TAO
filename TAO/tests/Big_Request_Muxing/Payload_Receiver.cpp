@@ -13,6 +13,7 @@ Payload_Receiver::Payload_Receiver ()
 
 void
 Payload_Receiver::more_data (const Test::Payload& payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (payload.length() > 0)
   {
@@ -22,6 +23,7 @@ Payload_Receiver::more_data (const Test::Payload& payload)
 
 void
 Payload_Receiver::sync_none_more_data (const Test::Payload& payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (payload.length() > 0)
   {

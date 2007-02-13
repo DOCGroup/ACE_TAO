@@ -24,10 +24,9 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Time_Request_Reply.h"
 #include "ace/svc_export.h"
 #include "ace/os_include/os_dirent.h"
-
-#include "Time_Request_Reply.h"
 
 /**
  * @class ACE_Time_Info
@@ -38,7 +37,7 @@ class ACE_Time_Info
 {
 
 public:
-  time_t delta_time_;
+  long delta_time_;
 
   ACE_UINT32 sequence_num_;
 };
@@ -158,7 +157,7 @@ private:
   ACE_TS_Clerk_Processor *processor_;
 
   /// Time at which request was sent (used to compute round trip delay)
-  time_t start_time_;
+  ACE_UINT32 start_time_;
 
   /// Next sequence number of time request (waiting for this update from
   /// the server).
@@ -231,8 +230,8 @@ private:
 
   struct System_Time
     {
-      time_t *delta_time_;       // Diff between system time and local time
-      time_t *last_local_time_;  // Last local time
+      long *delta_time_;       // Difference between system time and local time
+      long *last_local_time_;  // Last local time
     };
 
   /// Clerk system time containing pointers to entries in shared memory

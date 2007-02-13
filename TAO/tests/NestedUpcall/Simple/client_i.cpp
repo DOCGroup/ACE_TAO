@@ -11,6 +11,7 @@ client_i::client_i (int quiet,
 
 void
 client_i::ping (CORBA::UShort time_to_live)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!this->quiet_)
     ACE_DEBUG ((LM_DEBUG,

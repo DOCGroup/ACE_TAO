@@ -41,13 +41,16 @@ class TAO_IMR_Client_Export ServerObject_i
 {
 public:
   /// Constructor.
-  ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
+  ServerObject_i (CORBA::ORB_ptr orb,
+                  PortableServer::POA_ptr poa);
 
   /// Ping method.
-  void ping (void);
+  void ping (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the server.
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA (void);

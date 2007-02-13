@@ -45,7 +45,7 @@ RND_Driver::run (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       // ****************************************************************
 
@@ -345,12 +345,14 @@ RND_Consumer::disconnect (void)
 
 void
 RND_Consumer::push (const CORBA::Any &event)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->event (event);
 }
 
 void
 RND_Consumer::disconnect_push_consumer (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -422,6 +424,7 @@ RND_Supplier::push (CORBA::Any &event)
 
 void
 RND_Supplier::disconnect_push_supplier (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

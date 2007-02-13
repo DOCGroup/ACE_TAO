@@ -5,8 +5,6 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/operation_details.h"
-#include "tao/PortableInterceptor.h"
-#include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -37,13 +35,15 @@ namespace TAO
 
   Invocation_Status
   Collocated_Invocation::invoke (Collocation_Proxy_Broker *cpb,
-                                 Collocation_Strategy strat)
+                                 Collocation_Strategy strat
+                                 )
   {
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
     /// Start the interception point
 #if TAO_HAS_INTERCEPTORS == 1
-    s = this->send_request_interception ();
+    s =
+      this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
       return s;
@@ -74,7 +74,8 @@ namespace TAO
 
             dispatcher->dispatch (orb_core,
                                   request,
-                                  this->forwarded_to_.out ());
+                                  this->forwarded_to_.out ()
+                                 );
           }
         else
           {
@@ -84,7 +85,8 @@ namespace TAO
                            this->details_.args_num (),
                            this->details_.opname (),
                            this->details_.opname_len (),
-                           strat);
+                           strat
+                          );
           }
 
         // Invocation completed succesfully
@@ -97,51 +99,24 @@ namespace TAO
             if (this->forwarded_to_.in ())
               this->reply_received (TAO_INVOKE_RESTART);
 
-            s = this->receive_other_interception ();
+            s =
+              this->receive_other_interception ();
           }
         // NOTE: Any other condition that needs handling?
         else if (this->response_expected ())
           {
             this->reply_received (TAO_INVOKE_SUCCESS);
 
-            s = this->receive_reply_interception ();
+            s =
+              this->receive_reply_interception ();
           }
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
-    catch ( ::CORBA::UserException& ex)
+    catch ( ::CORBA::Exception& ex)
       {
-        // Ignore CORBA exceptions for oneways
-        if (this->response_expected_ == false)
-          return TAO_INVOKE_SUCCESS;
-
-#if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
-
-        if (status == PortableInterceptor::LOCATION_FORWARD ||
-          status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
-        else
-#endif /* TAO_HAS_INTERCEPTORS */
-          {
-            // Check whether the user exception thrown matches the signature
-            // list, if not, then throw an Unknown exception
-            if (!this->details_.has_exception (ex))
-              {
-                throw ::CORBA::UNKNOWN (CORBA::OMGVMCID | 1,
-                                        CORBA::COMPLETED_MAYBE);
-              }
-            else
-             {
-               throw;
-             }
-          }
-      }
-    catch ( ::CORBA::SystemException& TAO_INTERCEPTOR (ex))
-      {
-        // Ignore CORBA exceptions for oneways
+        // Ignore exceptions for oneways
         if (this->response_expected_ == false)
           return TAO_INVOKE_SUCCESS;
 
@@ -153,24 +128,11 @@ namespace TAO
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else
-#endif /* TAO_HAS_INTERCEPTORS */
+#else
+        ACE_UNUSED_ARG (ex);
+#endif /*TAO_HAS_INTERCEPTORS*/
           throw;
       }
-#if TAO_HAS_INTERCEPTORS == 1
-    catch (...)
-      {
-        // Notify interceptors of non-CORBA exception, and propagate
-        // that exception to the caller.
-        PortableInterceptor::ReplyStatus const st =
-          this->handle_all_exception ();
-
-        if (st == PortableInterceptor::LOCATION_FORWARD ||
-            st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
-        else
-          throw;
-      }
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
     if (this->forwarded_to_.in () != 0)
       s =  TAO_INVOKE_RESTART;

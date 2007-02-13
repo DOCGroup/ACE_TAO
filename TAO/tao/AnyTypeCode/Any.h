@@ -28,6 +28,7 @@
 #include "tao/Object.h"
 
 #include "ace/CDR_Stream.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

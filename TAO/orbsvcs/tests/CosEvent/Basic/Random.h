@@ -44,8 +44,10 @@ public:
   RND_Consumer (RND_Driver *driver);
   // Constructor
 
-  void push (const CORBA::Any &event);
-  void disconnect_push_consumer (void);
+  void push (const CORBA::Any &event)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin);
   void disconnect (void);
@@ -74,7 +76,8 @@ class RND_Timer : public RND_Consumer
 public:
   RND_Timer (RND_Driver *driver);
 
-  void push (const CORBA::Any &event);
+  void push (const CORBA::Any &event)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 inline
@@ -105,7 +108,8 @@ public:
   void push (CORBA::Any &event);
   // Push a single event...
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int svc (void);
   // Active method

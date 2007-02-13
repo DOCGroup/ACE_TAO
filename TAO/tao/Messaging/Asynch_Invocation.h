@@ -36,6 +36,11 @@ class TAO_Operation_Details;
 class TAO_InputCDR;
 class TAO_Asynch_Reply_Dispatcher_Base;
 
+namespace CORBA
+{
+  class SystemException;
+}
+
 namespace TAO
 {
   class Profile_Transport_Resolver;
@@ -50,7 +55,9 @@ namespace TAO
                               TAO_Asynch_Reply_Dispatcher_Base *rd,
                               bool response_expected = true);
 
-    Invocation_Status remote_invocation (ACE_Time_Value *value);
+    Invocation_Status remote_invocation (ACE_Time_Value *value
+                                         )
+      ACE_THROW_SPEC ((CORBA::Exception));
 
   protected:
     // To prevent leaking memory from the reply dispatcher that we

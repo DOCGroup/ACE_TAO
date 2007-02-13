@@ -18,12 +18,14 @@ ORBInitializer::ORBInitializer (void)
 void
 ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::ServerRequestInterceptor_ptr reject_interceptor;
   ACE_NEW_THROW_EX (reject_interceptor,

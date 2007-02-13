@@ -36,6 +36,7 @@ Iterator_Handler::~Iterator_Handler (void)
 void
 Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
                               const Web_Server::Chunk_Type &chunk_data)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (pending_data)
     {
@@ -78,6 +79,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
 }
 void
 Iterator_Handler::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate this reply handler.
   this->deactivate ();
@@ -88,6 +90,8 @@ void
 Iterator_Handler::run (int *request_count,
                        const char *pathname,
                        Web_Server::Iterator_Factory_ptr factory)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Web_Server::Error_Result))
 {
   if (request_count != 0)
       this->request_count_ = request_count;
@@ -110,6 +114,8 @@ void
 Iterator_Handler::initialize_content_iterator
   (const char *pathname,
    Web_Server::Iterator_Factory_ptr factory)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Web_Server::Error_Result))
 {
   // Obtain a Content Iterator for the desired file.
   factory->get_iterator (pathname,
@@ -135,6 +141,7 @@ Iterator_Handler::initialize_content_iterator
 
 void
 Iterator_Handler::deactivate (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa =

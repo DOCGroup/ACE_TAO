@@ -12,11 +12,11 @@ project(*server): namingexe, iortable, utils, avoids_corba_e_micro {
   exename = server
   after += *IDL
   Source_Files {
-    GridC.cpp
-    GridS.cpp
     Grid_i.cpp
     server.cpp
     ../Simple_util.cpp
+    GridS.cpp
+    GridC.cpp
   }
   IDL_Files {
   }
@@ -26,10 +26,10 @@ project(*client): namingexe, iortable, utils {
   exename = client
   after += *IDL
   Source_Files {
-    GridC.cpp
     client.cpp
     ../Simple_util.cpp
     Grid_Client_i.cpp
+    GridC.cpp
   }
   IDL_Files {
   }

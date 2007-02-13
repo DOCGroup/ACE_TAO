@@ -97,6 +97,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
   be_visitor_context ctx = *this->ctx_;
   be_visitor_operation operation_visitor (&ctx);
 
+  if (operation_visitor.gen_throw_spec (node) == -1)
+    {
+      return -1;
+    }
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:

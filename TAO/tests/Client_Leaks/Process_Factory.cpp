@@ -21,6 +21,7 @@ Process_Factory::shutdown_received (void)
 
 Test::Process_ptr
 Process_Factory::create_new_process (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
 {
   Startup_Callback *startup_callback_impl;
   ACE_NEW_THROW_EX (startup_callback_impl,
@@ -56,7 +57,7 @@ Process_Factory::create_new_process (void)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " spawn call failed (%d)\n",
                   errno));
-      throw Test::Spawn_Failed ();
+      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
     }
 
   int process_has_started = 0;
@@ -88,7 +89,7 @@ Process_Factory::create_new_process (void)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " timeout while waiting for child\n"));
       (void) child_process.terminate ();
-      throw Test::Spawn_Failed ();
+      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
     }
 
   return the_process._retn ();
@@ -96,11 +97,13 @@ Process_Factory::create_new_process (void)
 
 void
 Process_Factory::noop (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Process_Factory::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown_received_ = 1;
   this->orb_->shutdown (0);

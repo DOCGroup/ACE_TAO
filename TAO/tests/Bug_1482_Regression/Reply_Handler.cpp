@@ -8,6 +8,7 @@ Reply_Handler::Reply_Handler (CORBA::ORB_ptr o)
 
 void
 Reply_Handler::next_prime (CORBA::ULong)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
@@ -15,6 +16,7 @@ Reply_Handler::next_prime (CORBA::ULong)
 void
 Reply_Handler::next_prime_excep (
     ::Messaging::ExceptionHolder *ex)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   try

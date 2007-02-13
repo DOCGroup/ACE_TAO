@@ -210,6 +210,7 @@ TAO_Operation_Details::ft_retention_id (void) const
 }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
+
 ACE_INLINE CORBA::Boolean
 TAO_Operation_Details::is_dii_request (void) const
 {

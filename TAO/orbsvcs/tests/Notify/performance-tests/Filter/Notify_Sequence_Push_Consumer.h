@@ -31,10 +31,12 @@ public:
 
   ~Notify_Sequence_Push_Consumer ();
 
-  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
+  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  void push_structured_events(const CosNotification::EventBatch&);
+  void push_structured_events(const CosNotification::EventBatch&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   ACE_CString name_;
   unsigned int expected_;

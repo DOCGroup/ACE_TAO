@@ -58,6 +58,7 @@ public:
       CORBA::Short servant_priority,
 			TAO_ServerRequest &req,
       TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
+
     ) = 0;
 
   /// Pre_invoke collocated request.
@@ -80,7 +81,8 @@ public:
       ACE_Lock &lock,
       TAO_SYNCH_MUTEX &thread_lock,
       TAO_ORB_Core &orb_core,
-      TAO_Object_Adapter *object_adapter) = 0;
+      TAO_Object_Adapter *object_adapter
+      ) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,13 +31,17 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void sendCharSeq (const Char_Seq & charSeq);
+  void sendCharSeq (const Char_Seq & charSeq)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void sendOctetSeq (const Octet_Seq & octetSeq);
+  void sendOctetSeq (const Octet_Seq & octetSeq)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long get_number (CORBA::Long num);
+  CORBA::Long get_number (CORBA::Long num)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

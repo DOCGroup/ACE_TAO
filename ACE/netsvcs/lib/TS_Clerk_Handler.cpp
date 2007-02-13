@@ -187,14 +187,14 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
   else
     {
       // Get current local time
-      time_t local_time = ACE_OS::time (0);
+      ACE_UINT32 local_time = ACE_OS::time (0);
 
       // Compure delta time (difference between current local time and
       // system time obtained from the server)
-      time_t t = reply.time () - local_time;
+      long t = reply.time () - local_time;
 
       // Compute round trip delay and adjust time accordingly
-      time_t one_way_time = (local_time - this->start_time_)/2;
+      ACE_UINT32 one_way_time = (local_time - this->start_time_)/2;
       t += one_way_time;
 
       // Now update time info (to be retrieved by Clerk_Processor)
@@ -338,15 +338,15 @@ ACE_TS_Clerk_Processor::alloc (void)
   if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR) ==  -1)
     {
       // Allocate the space out of shared memory for the system time entry
-      time_t *temp = (time_t *)(this->shmem_->malloc (2 * sizeof (time_t)));
+      void *temp = this->shmem_->malloc (sizeof (this->system_time_));
 
       // Give it a name binding
       this->shmem_->bind (ACE_DEFAULT_TIME_SERVER_STR, temp);
 
       // Set up pointers. Note that we add one to get to the second
       // field in the structure
-      this->system_time_.delta_time_ = temp;
-      this->system_time_.last_local_time_ = temp + 1;
+      this->system_time_.delta_time_ = (long *) temp;
+      this->system_time_.last_local_time_ = ((long *) temp) + 1;
 
       // Initialize
       *(this->system_time_.delta_time_) = 0;
@@ -373,7 +373,7 @@ ACE_TS_Clerk_Processor::update_time ()
   this->cur_sequence_num_++;
 
   int count = 0;
-  time_t total_delta = 0;
+  long total_delta = 0;
   ACE_Time_Info time_info;
 
   //  Call send_request() on all handlers
@@ -421,7 +421,7 @@ ACE_TS_Clerk_Processor::update_time ()
   *(this->system_time_.last_local_time_) = ACE_OS::time (0);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Average delta time: %d\n"),
-              (int)(*(this->system_time_.delta_time_))));
+              *(this->system_time_.delta_time_)));
   return 0;
 }
 

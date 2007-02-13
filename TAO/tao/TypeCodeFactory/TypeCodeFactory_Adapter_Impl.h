@@ -45,92 +45,112 @@ public:
   virtual CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members);
+      const CORBA::StructMemberSeq &members)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_union_tc (
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members);
+      const CORBA::UnionMemberSeq &members)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_enum_tc (
       const char *id,
       const char *name,
-      const CORBA::EnumMemberSeq &members);
+      const CORBA::EnumMemberSeq &members)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_alias_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr original_type);
+      CORBA::TypeCode_ptr original_type)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_exception_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members);
+      const CORBA::StructMemberSeq &members)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_interface_tc (
       const char *id,
-      const char *name);
+      const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_string_tc (
-      CORBA::ULong bound);
+      CORBA::ULong bound)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_wstring_tc (
-      CORBA::ULong bound);
+      CORBA::ULong bound)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
-      CORBA::UShort scale);
+      CORBA::UShort scale)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
-      CORBA::TypeCode_ptr element_type);
+      CORBA::TypeCode_ptr element_type)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
-      CORBA::TypeCode_ptr element_type);
+      CORBA::TypeCode_ptr element_type)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_value_tc (
       const char *id,
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members);
+      const CORBA::ValueMemberSeq &members)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_value_box_tc (
       const char *id,
       const char *name,
-      CORBA::TypeCode_ptr boxed_type);
+      CORBA::TypeCode_ptr boxed_type)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_native_tc (
       const char *id,
-      const char *name);
+      const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id);
+      const char *id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
-      const char *name);
+      const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_local_interface_tc (
       const char *id,
-      const char *name);
+      const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_component_tc (
       const char *id,
-      const char *name);
+      const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_home_tc (
       const char *id,
-      const char *name);
+      const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr create_event_tc (
       const char *id,
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members);
+      const CORBA::ValueMemberSeq &members)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * @name TAO-specific TypeCode factory methods.

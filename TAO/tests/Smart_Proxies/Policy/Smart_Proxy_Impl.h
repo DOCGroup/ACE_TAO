@@ -17,7 +17,9 @@ class Smart_Test_Proxy : public virtual TAO_Test_Smart_Proxy_Base
 public:
   Smart_Test_Proxy (Test_ptr proxy);
 
-  virtual CORBA::Short method (CORBA::Short boo);
+  virtual CORBA::Short method (CORBA::Short boo)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Test::Oops));
   // "Smartify" the method call!
 
   // Don't need to add any extra functionality into <shutdown>, hence

@@ -23,7 +23,8 @@ public:
   CORBA::Long get_event_count (void);
 
   // = The skeleton methods
-  virtual void receive_payload (const Receiver::Payload &payload);
+  virtual void receive_payload (const Receiver::Payload &payload)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   TAO_SYNCH_MUTEX mutex_;

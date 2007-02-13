@@ -428,7 +428,7 @@ ACE_Configuration::operator!= (const ACE_Configuration& rhs) const
 
 //////////////////////////////////////////////////////////////////////////////
 
-#if defined (WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (WIN32)
 
 static const int ACE_DEFAULT_BUFSIZE = 256;
 
@@ -1062,7 +1062,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   return result;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* WIN_32 */
 
 ///////////////////////////////////////////////////////////////
 

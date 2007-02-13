@@ -45,13 +45,17 @@ namespace TAO
     public:
       RequestProcessingPolicy (::PortableServer::RequestProcessingPolicyValue value);
 
-      CORBA::Policy_ptr copy (void);
+      CORBA::Policy_ptr copy (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      void destroy (void);
+      void destroy (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      ::PortableServer::RequestProcessingPolicyValue value (void);
+      ::PortableServer::RequestProcessingPolicyValue value (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-      CORBA::PolicyType policy_type (void);
+      CORBA::PolicyType policy_type (void)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
       /// Return the cached policy type for this policy.
       virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;

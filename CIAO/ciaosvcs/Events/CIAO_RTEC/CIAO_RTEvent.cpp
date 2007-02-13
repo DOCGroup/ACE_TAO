@@ -41,6 +41,7 @@ namespace CIAO
 
   Supplier_Config_ptr
   RTEventService::create_supplier_config (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     RTEvent_Supplier_Config_impl * supplier_config = 0;
     ACE_NEW_RETURN (supplier_config,
@@ -54,6 +55,7 @@ namespace CIAO
 
   Consumer_Config_ptr
   RTEventService::create_consumer_config (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     RTEvent_Consumer_Config_impl * consumer_config = 0;
     ACE_NEW_RETURN (consumer_config,
@@ -70,6 +72,8 @@ namespace CIAO
   void
   RTEventService::connect_event_supplier (
       Supplier_Config_ptr supplier_config)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     if (CIAO::debug_level () > 9)
       {
@@ -121,6 +125,8 @@ namespace CIAO
   void
   RTEventService::connect_event_consumer (
       Consumer_Config_ptr consumer_config)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     if (CIAO::debug_level () > 9)
       {
@@ -187,6 +193,9 @@ namespace CIAO
   void
   RTEventService::disconnect_event_supplier (
       const char * connection_id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Components::InvalidConnection))
   {
     ACE_UNUSED_ARG (connection_id);
 
@@ -200,6 +209,9 @@ namespace CIAO
   void
   RTEventService::disconnect_event_consumer (
       const char * connection_id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Components::InvalidConnection))
   {
     RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier;
 
@@ -211,6 +223,8 @@ namespace CIAO
   void
   RTEventService::push_event (
       Components::EventBase * ev)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     ACE_UNUSED_ARG (ev);
     if (CIAO::debug_level () > 10)
@@ -224,6 +238,9 @@ namespace CIAO
       Components::EventBase * ev,
       const char * source_id,
       CORBA::TypeCode_ptr tc)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Components::BadEventType))
   {
     if (CIAO::debug_level () > 10)
       {
@@ -271,6 +288,8 @@ namespace CIAO
 
   void
   RTEventService::create_rt_event_channel (const char * ec_name)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     if (CIAO::debug_level () > 10)
       {
@@ -304,6 +323,8 @@ namespace CIAO
         const char * name,
         ::CORBA::UShort port,
         const char * address)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException))
   {
     ACE_DEBUG ((LM_ERROR, "Create an address server using port [%d]\n", port));
 
@@ -349,6 +370,8 @@ namespace CIAO
   ::CORBA::Boolean
   RTEventService::create_sender (
         const char * addr_serv_id)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "Create a Sender object with addr_serv_id: %s\n",addr_serv_id ));
 
@@ -387,6 +410,8 @@ namespace CIAO
         const char * addr_serv_id,
         ::CORBA::Boolean is_multicast,
         ::CORBA::UShort listen_port)
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG, "Create a receiver object with addr_serv_id: %s\n",addr_serv_id ));
 
@@ -465,6 +490,7 @@ namespace CIAO
 
   ::RtecEventChannelAdmin::EventChannel_ptr
   RTEventService::tao_rt_event_channel ()
+    ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     return this->rt_event_channel_.in ();
   }
@@ -481,6 +507,8 @@ namespace CIAO
 
   void
   RTEventServiceSupplier_impl::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((
+         CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);
@@ -501,6 +529,7 @@ namespace CIAO
 
   void
   RTEventServiceConsumer_impl::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (CIAO::debug_level () > 10)
       {
@@ -546,6 +575,7 @@ namespace CIAO
 
   void
   RTEventServiceConsumer_impl::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (CIAO::debug_level () > 10)
       {
@@ -580,6 +610,8 @@ namespace CIAO
   void
   RTEvent_Supplier_Config_impl::supplier_id (
       const char * supplier_id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
   if (CIAO::debug_level () > 10)
     {
@@ -610,18 +642,24 @@ namespace CIAO
 
   CONNECTION_ID
   RTEvent_Supplier_Config_impl::supplier_id ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     return CORBA::string_dup (this->supplier_id_.c_str ());
   }
 
   EventServiceType
   RTEvent_Supplier_Config_impl::service_type ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     return this->service_type_;
   }
 
   RtecEventChannelAdmin::SupplierQOS *
   RTEvent_Supplier_Config_impl::rt_event_qos ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     RtecEventChannelAdmin::SupplierQOS * supplier_qos = 0;
     ACE_NEW_RETURN (supplier_qos,
@@ -632,6 +670,8 @@ namespace CIAO
 
   void
   RTEvent_Supplier_Config_impl::destroy ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
     this->poa_->deactivate_object (oid);
@@ -657,6 +697,8 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::start_conjunction_group (
       CORBA::Long size)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     ACE_DEBUG
       ((LM_DEBUG, "RTEvent_Consumer_Config_impl::start_conjunction_group\n"));
@@ -667,6 +709,8 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::start_disjunction_group (
       CORBA::Long size)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     // Note, since we only support basic builder here...
     if (size == 0L)
@@ -678,6 +722,8 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::insert_source (
       const char * source_id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     ACE_Hash<ACE_CString> hasher;
     RtecEventComm::EventSourceID int_source_id = hasher (source_id);
@@ -691,6 +737,7 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::insert_type (
         ::CORBA::Long event_type)
+      ACE_THROW_SPEC ((::CORBA::SystemException))
   {
     if (event_type == 0L)
       this->qos_.insert_type (ACE_ES_EVENT_ANY, 0);
@@ -702,6 +749,8 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::consumer_id (
       const char * consumer_id)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     if (CIAO::debug_level () > 10)
       {
@@ -717,12 +766,16 @@ namespace CIAO
   void
   RTEvent_Consumer_Config_impl::consumer (
       Components::EventConsumerBase_ptr consumer)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     this->consumer_ = Components::EventConsumerBase::_duplicate (consumer);
   }
 
   CONNECTION_ID
   RTEvent_Consumer_Config_impl::consumer_id ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     return CORBA::string_dup (this->consumer_id_.c_str ());
   }
@@ -730,12 +783,16 @@ namespace CIAO
 
   EventServiceType
   RTEvent_Consumer_Config_impl::service_type ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     return this->service_type_;
   }
 
   Components::EventConsumerBase_ptr
   RTEvent_Consumer_Config_impl::consumer ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     if (CIAO::debug_level () > 10)
       {
@@ -747,6 +804,8 @@ namespace CIAO
 
   RtecEventChannelAdmin::ConsumerQOS *
   RTEvent_Consumer_Config_impl::rt_event_qos ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     RtecEventChannelAdmin::ConsumerQOS * consumer_qos = 0;
     ACE_NEW_RETURN (consumer_qos,
@@ -758,6 +817,8 @@ namespace CIAO
 
   void
   RTEvent_Consumer_Config_impl::destroy ()
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
     if (CIAO::debug_level () > 10)
       {

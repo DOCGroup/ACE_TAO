@@ -22,18 +22,21 @@ Basic::Basic (CORBA::Object_ptr object_group,
 
 CORBA::Short
 Basic::number (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->number_;
 }
 
 char *
 Basic::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->location_);
 }
 
 void
 Basic::remove_member (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -66,6 +69,7 @@ Basic::remove_member (void)
 
 void
 Basic::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

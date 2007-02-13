@@ -128,7 +128,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::UShort digits (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_digits_skel (
         TAO_ServerRequest & server_request,
@@ -142,7 +144,9 @@ namespace POA_CORBA
     virtual void digits (
         ::CORBA::UShort digits
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_digits_skel (
         TAO_ServerRequest & server_request,
@@ -155,7 +159,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::Short scale (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_scale_skel (
         TAO_ServerRequest & server_request,
@@ -169,7 +175,9 @@ namespace POA_CORBA
     virtual void scale (
         ::CORBA::Short scale
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_scale_skel (
         TAO_ServerRequest & server_request,
@@ -273,7 +281,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::TypeCode_ptr type (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_type_skel (
         TAO_ServerRequest & server_request,
@@ -286,7 +296,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::IDLType_ptr type_def (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_type_def_skel (
         TAO_ServerRequest & server_request,
@@ -300,7 +312,9 @@ namespace POA_CORBA
     virtual void type_def (
         ::CORBA::IDLType_ptr type_def
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_type_def_skel (
         TAO_ServerRequest & server_request,
@@ -313,7 +327,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::Visibility access (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_access_skel (
         TAO_ServerRequest & server_request,
@@ -327,7 +343,9 @@ namespace POA_CORBA
     virtual void access (
         ::CORBA::Visibility access
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_access_skel (
         TAO_ServerRequest & server_request,
@@ -509,7 +527,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::InterfaceDefSeq * supported_interfaces (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_supported_interfaces_skel (
         TAO_ServerRequest & server_request,
@@ -523,7 +543,9 @@ namespace POA_CORBA
     virtual void supported_interfaces (
         const ::CORBA::InterfaceDefSeq & supported_interfaces
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_supported_interfaces_skel (
         TAO_ServerRequest & server_request,
@@ -536,7 +558,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::InitializerSeq * initializers (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_initializers_skel (
         TAO_ServerRequest & server_request,
@@ -550,7 +574,9 @@ namespace POA_CORBA
     virtual void initializers (
         const ::CORBA::InitializerSeq & initializers
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_initializers_skel (
         TAO_ServerRequest & server_request,
@@ -563,7 +589,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::ValueDef_ptr base_value (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_base_value_skel (
         TAO_ServerRequest & server_request,
@@ -577,7 +605,9 @@ namespace POA_CORBA
     virtual void base_value (
         ::CORBA::ValueDef_ptr base_value
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_base_value_skel (
         TAO_ServerRequest & server_request,
@@ -590,7 +620,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::ValueDefSeq * abstract_base_values (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_abstract_base_values_skel (
         TAO_ServerRequest & server_request,
@@ -604,7 +636,9 @@ namespace POA_CORBA
     virtual void abstract_base_values (
         const ::CORBA::ValueDefSeq & abstract_base_values
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_abstract_base_values_skel (
         TAO_ServerRequest & server_request,
@@ -617,7 +651,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean is_abstract (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_is_abstract_skel (
         TAO_ServerRequest & server_request,
@@ -631,7 +667,9 @@ namespace POA_CORBA
     virtual void is_abstract (
         ::CORBA::Boolean is_abstract
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_is_abstract_skel (
         TAO_ServerRequest & server_request,
@@ -644,7 +682,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean is_custom (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_is_custom_skel (
         TAO_ServerRequest & server_request,
@@ -658,7 +698,9 @@ namespace POA_CORBA
     virtual void is_custom (
         ::CORBA::Boolean is_custom
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_is_custom_skel (
         TAO_ServerRequest & server_request,
@@ -671,7 +713,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::Boolean is_truncatable (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_is_truncatable_skel (
         TAO_ServerRequest & server_request,
@@ -685,7 +729,9 @@ namespace POA_CORBA
     virtual void is_truncatable (
         ::CORBA::Boolean is_truncatable
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_is_truncatable_skel (
         TAO_ServerRequest & server_request,
@@ -699,7 +745,9 @@ namespace POA_CORBA
     virtual ::CORBA::Boolean is_a (
         const char * id
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void is_a_skel (
         TAO_ServerRequest & server_request,
@@ -712,7 +760,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::ValueDef::FullValueDescription * describe_value (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void describe_value_skel (
         TAO_ServerRequest & server_request,
@@ -730,7 +780,9 @@ namespace POA_CORBA
         ::CORBA::IDLType_ptr type,
         ::CORBA::Visibility access
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void create_value_member_skel (
         TAO_ServerRequest & server_request,
@@ -748,7 +800,9 @@ namespace POA_CORBA
         ::CORBA::IDLType_ptr type,
         ::CORBA::AttributeMode mode
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void create_attribute_skel (
         TAO_ServerRequest & server_request,
@@ -769,7 +823,9 @@ namespace POA_CORBA
         const ::CORBA::ExceptionDefSeq & exceptions,
         const ::CORBA::ContextIdSeq & contexts
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void create_operation_skel (
         TAO_ServerRequest & server_request,
@@ -1136,7 +1192,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::ExtInitializerSeq * ext_initializers (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_ext_initializers_skel (
         TAO_ServerRequest & server_request,
@@ -1150,7 +1208,9 @@ namespace POA_CORBA
     virtual void ext_initializers (
         const ::CORBA::ExtInitializerSeq & ext_initializers
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_ext_initializers_skel (
         TAO_ServerRequest & server_request,
@@ -1163,7 +1223,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::ExtValueDef::ExtFullValueDescription * describe_ext_value (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void describe_ext_value_skel (
         TAO_ServerRequest & server_request,
@@ -1183,7 +1245,9 @@ namespace POA_CORBA
         const ::CORBA::ExceptionDefSeq & get_exceptions,
         const ::CORBA::ExceptionDefSeq & set_exceptions
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void create_ext_attribute_skel (
         TAO_ServerRequest & server_request,
@@ -1698,7 +1762,9 @@ namespace POA_CORBA
 
     virtual ::CORBA::IDLType_ptr original_type_def (
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _get_original_type_def_skel (
         TAO_ServerRequest & server_request,
@@ -1712,7 +1778,9 @@ namespace POA_CORBA
     virtual void original_type_def (
         ::CORBA::IDLType_ptr original_type_def
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
 
     static void _set_original_type_def_skel (
         TAO_ServerRequest & server_request,

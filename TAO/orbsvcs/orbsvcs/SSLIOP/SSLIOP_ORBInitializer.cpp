@@ -39,6 +39,7 @@ TAO::SSLIOP::ORBInitializer::ORBInitializer (
 void
 TAO::SSLIOP::ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info);
@@ -75,6 +76,7 @@ TAO::SSLIOP::ORBInitializer::pre_init (
 void
 TAO::SSLIOP::ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Note we do not store the SSLIOP::Current as a class member since
   // we need to avoid potential problems where the same
@@ -205,7 +207,7 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
                   "Unable to obtain TSS slot ID from "
                   "\"SecurityCurrent\" object.\n"));
 
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   return security_current->tss_slot ();

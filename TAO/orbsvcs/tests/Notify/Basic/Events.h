@@ -37,7 +37,9 @@ public:
   // = StructuredPushSupplier methods.
   virtual void push_structured_event (
       const CosNotification::StructuredEvent & notification
-    );
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 
 protected:
   Events * test_client_;

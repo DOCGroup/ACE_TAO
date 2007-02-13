@@ -55,7 +55,8 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::tao_release (void)
 template <typename StringType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr /* tc */) const
+  CORBA::TypeCode_ptr /* tc */
+  ) const
 {
   // Equality has already been established in the
   // CORBA::TypeCode base class.
@@ -66,7 +67,8 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equal_i (
 template <typename StringType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
-  CORBA::TypeCode_ptr) const
+  CORBA::TypeCode_ptr
+  ) const
 {
   // Equivalence already verified in the base class
   // CORBA::TypeCode::equivalent() method.
@@ -77,7 +79,8 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
 template <typename StringType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Objref<StringType,
-                      RefCountPolicy>::get_compact_typecode_i (void) const
+                      RefCountPolicy>::get_compact_typecode_i (
+  void) const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -86,45 +89,53 @@ TAO::TypeCode::Objref<StringType,
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   if (this->kind_ == CORBA::tk_abstract_interface)
     {
       return adapter->create_abstract_interface_tc (this->attributes_.id (),
-                                                    ""  /* empty name */);
+                                                    ""  /* empty name */
+                                                   );
     }
   else if (this->kind_ == CORBA::tk_component)
     {
       return adapter->create_component_tc (this->attributes_.id (),
-                                           ""  /* empty name */);
+                                           ""  /* empty name */
+                                          );
     }
   else if (this->kind_ == CORBA::tk_home)
     {
       return adapter->create_home_tc (this->attributes_.id (),
-                                      ""  /* empty name */);
+                                      ""  /* empty name */
+                                     );
     }
   else if (this->kind_ == CORBA::tk_local_interface)
     {
       return adapter->create_local_interface_tc (this->attributes_.id (),
-                                                 ""  /* empty name */);
+                                                 ""  /* empty name */
+                                                );
 
     }
   else if (this->kind_ == CORBA::tk_native)
     {
       return adapter->create_native_tc (this->attributes_.id (),
-                                        ""  /* empty name */);
+                                        ""  /* empty name */
+                                       );
     }
   else // CORBA::tk_objref
     {
       return adapter->create_interface_tc (this->attributes_.id (),
-                                           ""  /* empty name */);
+                                           ""  /* empty name */
+                                          );
     }
 }
 
 template <typename StringType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::id_i (void) const
+TAO::TypeCode::Objref<StringType, RefCountPolicy>::id_i (
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -133,7 +144,8 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::id_i (void) const
 
 template <typename StringType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::name_i (void) const
+TAO::TypeCode::Objref<StringType, RefCountPolicy>::name_i (
+  void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

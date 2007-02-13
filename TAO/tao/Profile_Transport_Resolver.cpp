@@ -17,7 +17,6 @@
 #include "tao/Client_Strategy_Factory.h"
 
 #include "ace/Countdown_Time.h"
-#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Profile_Transport_Resolver.inl"
@@ -79,6 +78,7 @@ namespace TAO
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
                                        )
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Countdown_Time countdown (max_time_val);
 
@@ -153,11 +153,12 @@ namespace TAO
 
     if (conn_reg == 0)
       {
-        throw ::CORBA::INTERNAL (
-          CORBA::SystemException::_tao_minor_code (
-            0,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+                            CORBA::SystemException::_tao_minor_code (
+                              0,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          false);
       }
 
     ACE_Time_Value connection_timeout;
@@ -199,11 +200,12 @@ namespace TAO
         has_con_timeout == false &&
         errno == ETIME)
       {
-        throw ::CORBA::TIMEOUT (
-          CORBA::SystemException::_tao_minor_code (
-            TAO_TIMEOUT_CONNECT_MINOR_CODE,
-            errno),
-          CORBA::COMPLETED_NO);
+        ACE_THROW_RETURN (CORBA::TIMEOUT (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_TIMEOUT_CONNECT_MINOR_CODE,
+                              errno),
+                            CORBA::COMPLETED_NO),
+                          false);
       }
     else if (this->transport_.get () == 0)
       {
@@ -245,6 +247,7 @@ namespace TAO
   void
   Profile_Transport_Resolver::init_inconsistent_policies (
     void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,
                       CORBA::PolicyList (0),

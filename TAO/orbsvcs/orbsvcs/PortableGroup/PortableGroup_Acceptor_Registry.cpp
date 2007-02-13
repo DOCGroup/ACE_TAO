@@ -9,7 +9,6 @@
 #include "tao/Endpoint.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
-#include "tao/SystemException.h"
 
 ACE_RCSID (PortableGroup,
            PortableGroup_Acceptor_Registry,

@@ -55,7 +55,8 @@ public:
    */
   virtual Federated_Test::Experiment_Results *
       run_experiment (CORBA::Long experiment_id,
-                      CORBA::Long iterations);
+                      CORBA::Long iterations)
+        ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 private:
@@ -185,6 +186,7 @@ int main (int argc, char *argv[])
 Federated_Test::Experiment_Results *
 Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
                                 CORBA::Long iterations)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int thread_count = 1;
 #if 0

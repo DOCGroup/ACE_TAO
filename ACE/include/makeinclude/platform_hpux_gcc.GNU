@@ -1,7 +1,7 @@
 # $Id$
 #
 
-buildbits ?= 64
+buildbits ?= 0
 debug ?= 1
 distrib ?= 0
 exceptions ?= 1
@@ -13,7 +13,6 @@ with_ld ?= hpux
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
-HPMODEL := $(shell uname -m)
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= gcc
@@ -35,10 +34,6 @@ ifeq ($(threads),1)
   endif
 endif
 
-ifeq ($(HPMODEL), ia64)
-  itanium = 1
-endif
-
 # On HP-UX 11, there's a conflict with pthread_atfork in sys/unistd.h and
 # sys/pthread.h - both define the function, but slightly differently.
 # -fstrict-prototype resolves the issue.
@@ -56,25 +51,9 @@ ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -L. -L$(ACE_ROOT)/lib -Wl,+s
 SOFLAGS		+= $(CPPFLAGS) -shared -nostdlib $(PIC) -Wl,-E
+SOEXT		= sl
 SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.$(SOEXT) $<
 PRELIB = @true
-
-ifeq ($(itanium),1)
-  SOEXT           = so
-else
-  SOEXT           = sl
-endif
-
-ifeq ($(itanium),1)
-  ifeq ($(buildbits),64)
-    CCFLAGS     += -mlp64
-    CFLAGS     += -mlp64
-  else
-    CCFLAGS     += -milp32
-    CFLAGS     += -milp32
-  endif
-endif
-
 #
 # Grab the appropriate libraries based on the version of HP-UX we're building
 # on and whether or not thread support is being used.

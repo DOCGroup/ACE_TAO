@@ -49,7 +49,8 @@ public:
   virtual int priority (void) const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to);
+                        CORBA::Object_out foward_to)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);
@@ -63,7 +64,8 @@ private:
   /// Helper method to find an object bound in the table.
   /// @return 1 if found, 0 otherwise.
   CORBA::Long find_object (TAO::ObjectKey &key,
-                           CORBA::Object_out forward_to);
+                           CORBA::Object_out forward_to)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The ORB Core we belong to
   TAO_ORB_Core &orb_core_;

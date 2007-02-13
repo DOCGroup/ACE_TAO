@@ -31,9 +31,11 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Long id);
+  void test_method (CORBA::Long id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (const char *orb_id);
+  void shutdown (const char *orb_id)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #if defined(__ACE_INLINE__)

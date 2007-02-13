@@ -30,6 +30,7 @@ Loopback::Loopback (CORBA::Long experiment_id,
 
 void
 Loopback::disconnect (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Auto_Disconnect<Loopback_Pair> disconnect (&this->loopback_pair_);
 

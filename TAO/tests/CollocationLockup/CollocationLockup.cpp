@@ -42,7 +42,7 @@ class B_i : public virtual POA_C
 {
 public:
   virtual A_ptr
-  makeA ()
+  makeA () ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ServantBase_var servant = new A_i;
     g_pPoa->activate_object (servant.in());
@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager threads;
 
       // Normal corba init
-      g_pOrb = CORBA::ORB_init (argc, argv);
+      g_pOrb = CORBA::ORB_init (argc, argv, "");
 
       CORBA::Object_var pPoaObj =
         g_pOrb->resolve_initial_references ("RootPOA");

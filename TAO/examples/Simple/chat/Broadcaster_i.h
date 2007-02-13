@@ -45,14 +45,25 @@ public:
   // Destructor.
 
   virtual void add (Receiver_ptr receiver,
-                    const char *nickname);
+                    const char *nickname)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Broadcaster::CannotAdd
+    ));
   // Saves receiver references in a list.
 
-  virtual void remove (Receiver_ptr receiver);
+  virtual void remove (Receiver_ptr receiver)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      Broadcaster::CannotRemove
+    ));
   // Removes receiver references from the list.
 
   virtual void say (Receiver_ptr receiver,
-                    const char *text);
+                    const char *text)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
   // Called by Broadcaster clients to send messages.
 
 public:

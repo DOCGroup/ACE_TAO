@@ -10,12 +10,14 @@
 void
 Echo_Collocated_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Echo_Collocated_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var orb_id =
     info->orb_id ();

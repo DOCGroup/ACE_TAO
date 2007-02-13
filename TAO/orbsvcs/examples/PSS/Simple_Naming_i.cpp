@@ -21,6 +21,7 @@ Naming_Context_i::~Naming_Context_i ()
 int
 Naming_Context_i::bind (const char *n,
                         const char *obj)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Save the binding to database.
   int result =
@@ -31,6 +32,7 @@ Naming_Context_i::bind (const char *n,
 
 char *
 Naming_Context_i::find (const char *n)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the Stringified object reference corresponding to
   // 'n'

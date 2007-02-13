@@ -12,7 +12,17 @@ TAO::CSD::TP_Request::TP_Request(PortableServer::Servant servant,
     servant_ (servant),
     servant_state_(servant_state, false)
 {
-  this->servant_->_add_ref ();
+  // This try-catch block is not really necessary for current implementation
+  // since the _add_ref does not throw exception, but we have to add it to
+  // satisfy the non-exception builds. If _add_ref really throws an exception
+  // then this constructor needs deal with the exception.
+  try
+  {
+    this->servant_->_add_ref ();
+  }
+  catch (...)
+  {
+  }
 }
 
 

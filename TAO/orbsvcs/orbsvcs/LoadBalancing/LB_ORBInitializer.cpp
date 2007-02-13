@@ -27,12 +27,14 @@ TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
 void
 TAO_LB_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
     info->resolve_initial_references ("LoadManager");

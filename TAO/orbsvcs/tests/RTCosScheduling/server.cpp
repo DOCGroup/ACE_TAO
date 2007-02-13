@@ -120,16 +120,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
           return 1;
         }
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "testORB");
+      CORBA::ORB_var orb=
+        CORBA::ORB_init (argc,
+                         argv,
+                         "testORB");
 
       /// get the root poa
-      CORBA::Object_var object= orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var object=
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var rootPOA =
+      PortableServer::POA_var rootPOA=
         PortableServer::POA::_narrow (object.in ());
 
       /// Create a manager for the POA
-      PortableServer::POAManager_var poa_manager = rootPOA->the_POAManager ();
+      PortableServer::POAManager_var poa_manager =
+        rootPOA->the_POAManager ();
 
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
@@ -166,8 +171,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       CORBA::Object_var testObject =
         RTPOA->id_to_reference(id.in());
 
+
       CORBA::String_var testObject_IORString =
         orb->object_to_string (testObject.in ());
+
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
@@ -202,14 +209,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
       // recommended by irfan@oomworks.com
       long flags = THR_NEW_LWP | THR_JOINABLE |
 
+#if TAO_MAJOR_VERSION > 1 \
+  || (TAO_MAJOR_VERSION==1 && TAO_MINOR_VERSION > 3 ) \
+  || (TAO_MAJOR_VERSION==1 && TAO_MAJOR_VERSION==3 && TAO_MINOR_VERSION > 1)
+
       orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
+#else /* TAO version is 1.3.1 or lower */
+      orb->orb_core ()->orb_params ()->scope_policy () |
+      orb->orb_core ()->orb_params ()->sched_policy ();
+#endif
       ORB_Thread ot(orb);
       ot.activate(flags);
       ot.wait();
 
+
       ACE_DEBUG((LM_DEBUG,
                  "Server is shutting down\n\n"));
+
 
       delete server_sched;
 

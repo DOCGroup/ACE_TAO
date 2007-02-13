@@ -59,12 +59,16 @@ namespace TAO
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
     CORBA::Any *get_slot (PortableInterceptor::SlotId identifier
-                          );
+                          )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::InvalidSlot));
 
     /// Set information in the slot table at the given SlotId.
     void set_slot (PortableInterceptor::SlotId identifier,
                    const CORBA::Any & data
-                   );
+                   )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::InvalidSlot));
 
     /// Logically/Lazy (shallow) copy the given object's slot table.
     void take_lazy_copy (PICurrent_Impl *p);

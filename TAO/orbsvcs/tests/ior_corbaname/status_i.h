@@ -11,7 +11,8 @@ class corbaname_Status_i : public POA_corbaname::Status {
 public:
   corbaname_Status_i (void);
 
-  CORBA::Boolean print_status (void);
+  CORBA::Boolean print_status (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
 

@@ -37,12 +37,14 @@ TAO_HomeDef_i::~TAO_HomeDef_i (void)
 
 CORBA::DefinitionKind
 TAO_HomeDef_i::def_kind (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Home;
 }
 
 void
 TAO_HomeDef_i::destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -53,6 +55,7 @@ TAO_HomeDef_i::destroy (void)
 
 void
 TAO_HomeDef_i::destroy_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our special subsections first, then call destroy_i
   // on our base class.
@@ -74,6 +77,7 @@ TAO_HomeDef_i::destroy_i (void)
 
 CORBA::Contained::Description *
 TAO_HomeDef_i::describe (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -84,6 +88,7 @@ TAO_HomeDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_HomeDef_i::describe_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::HomeDescription home_desc;
 
@@ -159,6 +164,7 @@ TAO_HomeDef_i::describe_i (void)
 
 CORBA::TypeCode_ptr
 TAO_HomeDef_i::type (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -169,6 +175,7 @@ TAO_HomeDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_HomeDef_i::type_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -186,6 +193,7 @@ TAO_HomeDef_i::type_i (void)
 
 CORBA::ComponentIR::HomeDef_ptr
 TAO_HomeDef_i::base_home (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
@@ -196,6 +204,7 @@ TAO_HomeDef_i::base_home (void)
 
 CORBA::ComponentIR::HomeDef_ptr
 TAO_HomeDef_i::base_home_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
   int status =
@@ -219,6 +228,7 @@ void
 TAO_HomeDef_i::base_home (
     CORBA::ComponentIR::HomeDef_ptr base_home
   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -231,6 +241,7 @@ void
 TAO_HomeDef_i::base_home_i (
     CORBA::ComponentIR::HomeDef_ptr base_home
   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *path = TAO_IFR_Service_Utils::reference_to_path (base_home);
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -241,6 +252,7 @@ TAO_HomeDef_i::base_home_i (
 CORBA::InterfaceDefSeq *
 TAO_HomeDef_i::supported_interfaces (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -252,6 +264,7 @@ TAO_HomeDef_i::supported_interfaces (
 CORBA::InterfaceDefSeq *
 TAO_HomeDef_i::supported_interfaces_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::InterfaceDefSeq *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -299,6 +312,7 @@ void
 TAO_HomeDef_i::supported_interfaces (
     const CORBA::InterfaceDefSeq &supported_interfaces
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -311,6 +325,7 @@ void
 TAO_HomeDef_i::supported_interfaces_i (
     const CORBA::InterfaceDefSeq &supported_interfaces
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "supported",
@@ -345,6 +360,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_HomeDef_i::managed_component (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -355,6 +371,7 @@ TAO_HomeDef_i::managed_component (void)
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_HomeDef_i::managed_component_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -371,6 +388,7 @@ void
 TAO_HomeDef_i::managed_component (
     CORBA::ComponentIR::ComponentDef_ptr managed_component
   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -383,6 +401,7 @@ void
 TAO_HomeDef_i::managed_component_i (
     CORBA::ComponentIR::ComponentDef_ptr managed_component
   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *path = TAO_IFR_Service_Utils::reference_to_path (managed_component);
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -392,6 +411,7 @@ TAO_HomeDef_i::managed_component_i (
 
 CORBA::ValueDef_ptr
 TAO_HomeDef_i::primary_key (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
@@ -402,6 +422,7 @@ TAO_HomeDef_i::primary_key (void)
 
 CORBA::ValueDef_ptr
 TAO_HomeDef_i::primary_key_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString path;
   int status =
@@ -425,6 +446,7 @@ void
 TAO_HomeDef_i::primary_key (
     CORBA::ValueDef_ptr primary_key
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -437,6 +459,7 @@ void
 TAO_HomeDef_i::primary_key_i (
     CORBA::ValueDef_ptr primary_key
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (primary_key))
     {
@@ -457,6 +480,7 @@ TAO_HomeDef_i::create_factory (const char *id,
                                const char *version,
                                const CORBA::ParDescriptionSeq &params,
                                const CORBA::ExceptionDefSeq &exceptions)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::FactoryDef::_nil ());
 
@@ -477,6 +501,7 @@ TAO_HomeDef_i::create_factory_i (
     const CORBA::ParDescriptionSeq &params,
     const CORBA::ExceptionDefSeq &exceptions
   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj = this->create_common (CORBA::dk_Factory,
                                                id,
@@ -495,6 +520,7 @@ TAO_HomeDef_i::create_finder (const char *id,
                               const char *version,
                               const CORBA::ParDescriptionSeq &params,
                               const CORBA::ExceptionDefSeq &exceptions)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::FinderDef::_nil ());
 
@@ -515,6 +541,7 @@ TAO_HomeDef_i::create_finder_i (
     const CORBA::ParDescriptionSeq &params,
     const CORBA::ExceptionDefSeq &exceptions
   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj = this->create_common (CORBA::dk_Finder,
                                                id,

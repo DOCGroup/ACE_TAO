@@ -16,8 +16,7 @@
 #define TAO_NVLIST_H
 
 #include /**/ "ace/pre.h"
-
-#include "ace/Unbounded_Queue.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +25,8 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
+
+#include "tao/Environment.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"

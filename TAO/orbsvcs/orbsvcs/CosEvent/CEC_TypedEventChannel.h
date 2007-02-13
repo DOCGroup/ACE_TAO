@@ -247,12 +247,15 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
   virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-    for_consumers (void);
+    for_consumers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-    for_suppliers (void);
+    for_suppliers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   ServantRetryMap& get_servant_retry_map (void);
 

@@ -63,7 +63,7 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
   try
   {
     // Initialize the ORB.
-    this->orb_ = CORBA::ORB_init (argc, argv);
+    this->orb_ = CORBA::ORB_init (argc, argv, "");
 
     // Parse arguments.
     result = this->parse_args (argc, argv);

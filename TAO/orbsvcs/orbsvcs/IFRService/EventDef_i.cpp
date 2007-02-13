@@ -26,12 +26,14 @@ TAO_EventDef_i::~TAO_EventDef_i (void)
 
 CORBA::DefinitionKind
 TAO_EventDef_i::def_kind (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Event;
 }
 
 void
 TAO_EventDef_i::destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -42,6 +44,7 @@ TAO_EventDef_i::destroy (void)
 
 void
 TAO_EventDef_i::destroy_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // An event type is a restriction of a value type, not an extension.
   this->TAO_ExtValueDef_i::destroy_i ();
@@ -49,6 +52,7 @@ TAO_EventDef_i::destroy_i (void)
 
 CORBA::Contained::Description *
 TAO_EventDef_i::describe (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -59,12 +63,14 @@ TAO_EventDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_EventDef_i::describe_i (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->TAO_ValueDef_i::describe_i ();
 }
 
 CORBA::Boolean
 TAO_EventDef_i::is_a (const char *event_id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -75,6 +81,7 @@ TAO_EventDef_i::is_a (const char *event_id)
 
 CORBA::Boolean
 TAO_EventDef_i::is_a_i (const char *event_id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (event_id, "IDL:omg.org/CORBA/EventBase:1.0") == 0)
     {

@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
@@ -130,7 +130,8 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // loop.
   while (tao_endpoint != 0)
     {
-      TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
+      TAO_SCIOP_Endpoint *sciop_endpoint =
+        this->remote_endpoint (tao_endpoint);
 
       if (sciop_endpoint != 0)
         {
@@ -168,7 +169,8 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (timeout, synch_options);
+  this->active_connect_strategy_->synch_options (timeout,
+                                                 synch_options);
 
   // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
@@ -217,7 +219,8 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  TAO_Transport *transport = svc_handler->transport ();
+  TAO_Transport *transport =
+    svc_handler->transport ();
 
   if (result == -1)
     {
@@ -337,12 +340,12 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 TAO_Profile *
 TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = 0;
+  TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_SCIOP_Profile (this->orb_core ()),
                   0);
 
-  int const r = pfile->decode (cdr);
+  int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();

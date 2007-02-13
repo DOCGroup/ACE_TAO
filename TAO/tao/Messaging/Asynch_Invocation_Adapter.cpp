@@ -47,7 +47,8 @@ namespace TAO
   void
   Asynch_Invocation_Adapter::invoke (
     Messaging::ReplyHandler_ptr reply_handler_ptr,
-    const TAO_Reply_Handler_Skeleton &reply_handler_skel)
+    const TAO_Reply_Handler_Skeleton &reply_handler_skel
+    )
   {
     TAO_Stub * stub =
       this->get_stub ();
@@ -130,7 +131,8 @@ namespace TAO
     return Invocation_Adapter::invoke_collocated_i (stub,
                                                     details,
                                                     effective_target,
-                                                    strat);
+                                                    strat
+                                                   );
   }
 
   Invocation_Status
@@ -138,17 +140,19 @@ namespace TAO
     TAO_Operation_Details &op,
     CORBA::Object_var &effective_target,
     Profile_Transport_Resolver &r,
-    ACE_Time_Value *&max_wait_time)
+    ACE_Time_Value *&max_wait_time
+    )
   {
     // Simple sanity check
     if (this->mode_ != TAO_ASYNCHRONOUS_CALLBACK_INVOCATION
         || this->type_ != TAO_TWOWAY_INVOCATION)
       {
-        throw ::CORBA::INTERNAL (
-          CORBA::SystemException::_tao_minor_code (
-            TAO::VMCID,
-            EINVAL),
-          CORBA::COMPLETED_NO);
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+            CORBA::SystemException::_tao_minor_code (
+                TAO::VMCID,
+                EINVAL),
+            CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
       }
 
     if (this->safe_rd_.get ())
@@ -159,7 +163,8 @@ namespace TAO
         // AMI Timeout Handling Begin
         ACE_Time_Value tmp;
 
-        if (this->get_timeout (r.stub (), tmp))
+        if (this->get_timeout (r.stub (),
+                               tmp))
           {
             this->safe_rd_->schedule_timer (
                 op.request_id (),
@@ -175,7 +180,9 @@ namespace TAO
        op,
        this->safe_rd_.release ());
 
-    Invocation_Status const s = asynch.remote_invocation (max_wait_time);
+    Invocation_Status const s =
+      asynch.remote_invocation (max_wait_time
+                               );
 
     if (s == TAO_INVOKE_RESTART &&
         asynch.is_forwarded ())
@@ -189,7 +196,10 @@ namespace TAO
         CORBA::Boolean const permanent_forward = false;
 #endif
 
-        this->object_forwarded (effective_target, r.stub (), permanent_forward);
+        this->object_forwarded (effective_target,
+                                r.stub (),
+                                permanent_forward
+                               );
       }
 
     return s;

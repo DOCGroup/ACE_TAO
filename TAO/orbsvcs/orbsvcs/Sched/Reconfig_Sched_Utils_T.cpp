@@ -1,12 +1,19 @@
-/**
- *  @file    Reconfig_Sched_Utils_T.cpp
- *
- *  $Id$
- *
- *  @author  Chris Gill <cdgill@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Reconfig_Sched_Utils_T.cpp
+//
+// = AUTHOR
+//     Chris Gill <cdgill@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_CPP
 #define TAO_RECONFIG_SCHED_UTILS_T_CPP

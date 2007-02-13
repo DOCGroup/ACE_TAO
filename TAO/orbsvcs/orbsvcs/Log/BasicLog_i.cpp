@@ -26,6 +26,7 @@ TAO_BasicLog_i::~TAO_BasicLog_i (void)
 
 DsLogAdmin::Log_ptr
 TAO_BasicLog_i::copy (DsLogAdmin::LogId &id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::BasicLogFactory_var basicLogFactory =
     DsLogAdmin::BasicLogFactory::_narrow (factory_.in ());
@@ -43,6 +44,7 @@ TAO_BasicLog_i::copy (DsLogAdmin::LogId &id)
 
 DsLogAdmin::Log_ptr
 TAO_BasicLog_i::copy_with_id (DsLogAdmin::LogId id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::BasicLogFactory_var basicLogFactory =
     DsLogAdmin::BasicLogFactory::_narrow (factory_.in ());
@@ -59,6 +61,7 @@ TAO_BasicLog_i::copy_with_id (DsLogAdmin::LogId id)
 
 void
 TAO_BasicLog_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_);

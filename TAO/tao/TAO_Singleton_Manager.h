@@ -30,6 +30,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+typedef void (*TAO_unexpected_handler)(void);
+
 /**
  * @class TAO_Singleton_Manager
  *
@@ -118,6 +120,15 @@ public:
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
 
+  /// Set a new unexpected exception handler.
+  /**
+   * The old one will be stored for restoration later on.
+   *
+   * @note Calling this method multiple times will cause the stored
+   *       old unexpected exception handler pointer to be lost.
+   */
+  void _set_unexpected (TAO_unexpected_handler u);
+
 protected:
 
   /// Force allocation on the heap.
@@ -158,6 +169,15 @@ private:
   TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
 
+  /// The old unexpected exception handler.
+  /**
+   * A pointer to the old unexpected exception handler is stored so
+   * that it can be restored when TAO is unloaded, for example.
+   * Otherwise, any unexpected exceptions will result in a call to
+   * TAO's unexpected exception handler which may no longer exist if
+   * TAO was unloaded.
+   */
+  TAO_unexpected_handler old_unexpected_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

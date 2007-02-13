@@ -20,7 +20,8 @@ public:
   Simple (void);
   /// Constructor
 
-  virtual char * get_string (void);
+  virtual char * get_string (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
 

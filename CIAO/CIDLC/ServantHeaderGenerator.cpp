@@ -427,7 +427,8 @@ namespace
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context," << endl
          << "      " << t.name () << "_Servant," << endl
-         << "      " << t.scoped_name () << endl
+         << "      " << t.scoped_name () << "," << endl
+         << "      " << t.scoped_name () << "_var" << endl
          << "    >" << endl
          << "{"
          << "public:" << endl;

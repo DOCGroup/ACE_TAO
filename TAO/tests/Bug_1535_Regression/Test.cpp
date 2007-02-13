@@ -12,6 +12,7 @@ Hello::Hello (PortableServer::POA_ptr poa) :
 
 void
 Hello::print_hello_world (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

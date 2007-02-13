@@ -12,9 +12,9 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/ValueBase.inl"
@@ -170,7 +170,9 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
   //  new_object->_tao_unmarshal_post ()
 
   CORBA::Boolean const retval =
-    CORBA::ValueBase::_tao_unmarshal_pre (strm, new_object, 0);
+    CORBA::ValueBase::_tao_unmarshal_pre (strm,
+                                          new_object,
+                                          0);
 
   if (!retval)
     {
@@ -322,7 +324,9 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                       repo_id));
         }
 
-      throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 1, CORBA::COMPLETED_MAYBE);
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
+                                        CORBA::COMPLETED_MAYBE),
+                                        false);
     }
 
   valuetype = factory->create_for_unmarshal ();
@@ -685,7 +689,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
   //that has parents.
   if (the_rd_ptr < this->chunk_octets_end_pos_)
     {
-      ++this->value_nesting_level_;
+      this->value_nesting_level_ ++;
       return true;
     }
 
@@ -719,7 +723,8 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
         }
 
       this->value_nesting_level_ = - tag;
-      --this->value_nesting_level_;
+      this->value_nesting_level_--;
+
 
       this->chunk_octets_end_pos_ = 0;
 
@@ -734,7 +739,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
     {
       // Read the chunk size of another chunk.
       this->chunk_octets_end_pos_ = strm.rd_ptr () + tag;
-      ++this->value_nesting_level_;
+      this->value_nesting_level_ ++;
     }
   else // (tag >= 0x7fffff00)
     {
@@ -1001,7 +1006,8 @@ CORBA::Boolean
 operator>> (TAO_InputCDR &strm,
             CORBA::ValueBase *&_tao_valuetype)
 {
-  return CORBA::ValueBase::_tao_unmarshal (strm, _tao_valuetype);
+  return CORBA::ValueBase::_tao_unmarshal (strm,
+                                           _tao_valuetype);
 }
 
 // =============== Template Specializations =====================

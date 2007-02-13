@@ -53,7 +53,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to resolve initial ref for 'RootPOA'.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   PortableServer::POA_var root_poa
@@ -63,7 +63,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to POA interface.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   PortableServer::POAManager_var poa_manager
@@ -85,7 +85,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the child POA.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   policies[0]->destroy ();
@@ -102,7 +102,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   FooServantList servants(this->ior_filename_.c_str(),
@@ -144,7 +144,7 @@ ServerApp::run(int argc, char* argv[])
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to open the OrbTask.\n"));
-          throw TestException();
+          ACE_THROW_RETURN (TestException(), -1);
         }
 
       // This will use the current (mainline) thread to run the ORB event loop.

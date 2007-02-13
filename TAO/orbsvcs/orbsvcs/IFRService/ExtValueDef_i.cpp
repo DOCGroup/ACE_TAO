@@ -31,6 +31,7 @@ TAO_ExtValueDef_i::~TAO_ExtValueDef_i (void)
 CORBA::ExtInitializerSeq *
 TAO_ExtValueDef_i::ext_initializers (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -42,6 +43,7 @@ TAO_ExtValueDef_i::ext_initializers (
 CORBA::ExtInitializerSeq *
 TAO_ExtValueDef_i::ext_initializers_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExtInitializerSeq *iseq = 0;
   ACE_NEW_RETURN (iseq,
@@ -141,6 +143,7 @@ void
 TAO_ExtValueDef_i::ext_initializers (
     const CORBA::ExtInitializerSeq &ext_initializers
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -153,6 +156,7 @@ void
 TAO_ExtValueDef_i::ext_initializers_i (
     const CORBA::ExtInitializerSeq &ext_initializers
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration *config = this->repo_->config ();
   config->remove_section (this->section_key_,
@@ -196,6 +200,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 CORBA::ExtValueDef::ExtFullValueDescription *
 TAO_ExtValueDef_i::describe_ext_value (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -207,6 +212,7 @@ TAO_ExtValueDef_i::describe_ext_value (
 CORBA::ExtValueDef::ExtFullValueDescription *
 TAO_ExtValueDef_i::describe_ext_value_i (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ExtValueDef::ExtFullValueDescription *fv_desc = 0;
   ACE_NEW_RETURN (fv_desc,
@@ -308,9 +314,9 @@ TAO_ExtValueDef_i::describe_ext_value_i (
           if (fv_desc->operations[i].mode == CORBA::OP_ONEWAY
               && kind != CORBA::tk_void)
             {
-              throw CORBA::BAD_PARAM (
-                CORBA::OMGVMCID | 31,
-                CORBA::COMPLETED_NO);
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 31,
+                                                  CORBA::COMPLETED_NO),
+                                0);
             }
 
           // Operation contexts.
@@ -704,6 +710,7 @@ TAO_ExtValueDef_i::create_ext_attribute (
     const CORBA::ExceptionDefSeq &get_exceptions,
     const CORBA::ExceptionDefSeq &set_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtAttributeDef::_nil ());
 
@@ -728,6 +735,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
     const CORBA::ExceptionDefSeq &get_exceptions,
     const CORBA::ExceptionDefSeq &set_exceptions
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

@@ -13,12 +13,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TARGET> void
 ACE_PushConsumer_Adapter<TARGET>::push (const RtecEventComm::EventSet& events)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   target_->push (events);
 }
 
 template<class TARGET> void
 ACE_PushConsumer_Adapter<TARGET>::disconnect_push_consumer ()
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   target_->disconnect_push_consumer ();
@@ -26,6 +28,7 @@ ACE_PushConsumer_Adapter<TARGET>::disconnect_push_consumer ()
 
 template<class TARGET> void
 ACE_PushSupplier_Adapter<TARGET>::disconnect_push_supplier ()
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   target_->disconnect_push_supplier ();
 }

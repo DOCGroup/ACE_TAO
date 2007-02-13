@@ -27,15 +27,20 @@ public:
   Secure_Vault_i (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual CORBA::Short ready (void);
+  virtual CORBA::Short ready (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void authenticate (const char * user);
+  virtual void authenticate (const char * user)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Test_Interceptors::Invalid));
   // Passwd sent in the service context list
 
   virtual CORBA::Long update_records (CORBA::Long id,
-                                      const Test_Interceptors::Secure_Vault::Record & val);
+                                      const Test_Interceptors::Secure_Vault::Record & val)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
   CORBA::ORB_var orb_;

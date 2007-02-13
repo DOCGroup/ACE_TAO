@@ -42,6 +42,7 @@ namespace TAO
     /// thread.
     const TAO_Transport*
     Current_Impl::transport (void) const
+      ACE_THROW_SPEC ((NoContext))
     {
       Transport_Selection_Guard* topguard =
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
@@ -55,42 +56,51 @@ namespace TAO
     /// Obtains the current transport's stats
     const TAO::Transport::Stats*
     Current_Impl::transport_stats (void) const
+      ACE_THROW_SPEC ((NoContext))
     {
       static const TAO::Transport::Stats dummy;
 
-      const TAO_Transport* t = this->transport ();
+      const TAO_Transport* t =
+        this->transport ();
 
       return (t==0 || t->stats () == 0) ? &dummy : t->stats ();
     }
 
     CORBA::Long Current_Impl::id (void)
+      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
-      const TAO_Transport* t = this->transport ();
+      const TAO_Transport* t =
+        this->transport ();
 
       return (t==0) ? 0 : t->id ();
     }
 
     CounterT Current_Impl::bytes_sent (void)
+      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->bytes_sent ();
     }
 
     CounterT Current_Impl::bytes_received (void)
+      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->bytes_received ();
     }
 
     CounterT Current_Impl::messages_sent (void)
+      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->messages_sent ();
     }
 
     CounterT Current_Impl::messages_received (void)
+      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       return transport_stats ()->messages_received ();
     }
 
     TimeBase::TimeT Current_Impl::open_since (void)
+      ACE_THROW_SPEC ((::CORBA::SystemException, NoContext))
     {
       TimeBase::TimeT msecs = 0;
       transport_stats ()->opened_since ().msec (msecs);

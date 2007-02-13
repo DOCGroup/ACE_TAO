@@ -5,6 +5,7 @@
 // Exception macros
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/PortableServer/POA_Guard.h"
+#include "tao/Environment.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -12,6 +13,8 @@ ACE_INLINE CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_priority (const char * intf,
                                             RTCORBA::Priority priority
                                             )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
@@ -31,6 +34,8 @@ TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectI
                                                    const char * intf,
                                                    RTCORBA::Priority priority
                                                    )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
@@ -50,6 +55,9 @@ ACE_INLINE PortableServer::ObjectId *
 TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
                                            RTCORBA::Priority priority
                                            )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::WrongPolicy))
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
@@ -84,6 +92,10 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
                                                   PortableServer::Servant servant,
                                                   RTCORBA::Priority priority
                                                   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantAlreadyActive,
+                   PortableServer::POA::ObjectAlreadyActive,
+                   PortableServer::POA::WrongPolicy))
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();

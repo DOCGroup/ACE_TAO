@@ -23,6 +23,7 @@ Foo_B_i::~Foo_B_i()
 
 void
 Foo_B_i::op1(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[0] ++;
 }
@@ -30,6 +31,7 @@ Foo_B_i::op1(void)
 
 void
 Foo_B_i::op2(CORBA::Long value)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[1] ++;
   this->in_long_[1].push_back (value);
@@ -38,6 +40,7 @@ Foo_B_i::op2(CORBA::Long value)
 
 CORBA::Long
 Foo_B_i::op3(CORBA::Long value)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[2] ++;
   this->in_long_[2].push_back (value);
@@ -47,6 +50,7 @@ Foo_B_i::op3(CORBA::Long value)
 
 void
 Foo_B_i::op4(CORBA::Long value)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[3] ++;
   this->in_long_[3].push_back (value);
@@ -55,6 +59,7 @@ Foo_B_i::op4(CORBA::Long value)
 
 void
 Foo_B_i::op5(void)
+  ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4] ++;
   throw FooException();
@@ -64,6 +69,7 @@ Foo_B_i::op5(void)
 CORBA::Boolean
 Foo_B_i::op6(const TimeOfDay& t,
              char*& message)
+                        ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[5] ++;
   char buf [20];
@@ -77,6 +83,8 @@ Foo_B_i::op6(const TimeOfDay& t,
 
 void
 Foo_B_i::op7(Callback_ptr cb)
+  ACE_THROW_SPEC((CORBA::SystemException,
+                  FooException))
 {
   this->op_count_[6] ++;
 
@@ -96,6 +104,7 @@ Foo_B_i::op7(Callback_ptr cb)
 
 void
 Foo_B_i::test_unbounded_string_arg(const char* message)
+                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[7] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_unbounded_string_arg ")
@@ -107,6 +116,7 @@ Foo_B_i::test_unbounded_string_arg(const char* message)
 
 void
 Foo_B_i::test_bounded_string_arg(const char* message)
+                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[8] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_bounded_string_arg ")
@@ -118,6 +128,7 @@ Foo_B_i::test_bounded_string_arg(const char* message)
 
 void
 Foo_B_i::test_fixed_array_arg(const Fixed_Array message)
+                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[9] ++;
 
@@ -144,6 +155,7 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message)
 
 void
 Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message)
+                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[10] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_bounded_var_size_arg ")
@@ -155,6 +167,7 @@ Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message)
 
 void
 Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message)
+                          ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[11] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_unbounded_var_size_arg ")
@@ -166,6 +179,7 @@ Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message)
 
 void
 Foo_B_i::test_fixed_size_arg(const TimeOfDay& t)
+                           ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(t);
 
@@ -178,6 +192,7 @@ Foo_B_i::test_fixed_size_arg(const TimeOfDay& t)
 
 void
 Foo_B_i::test_var_array_arg(const Var_Array messages)
+                          ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[13] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_var_array_arg ")
@@ -221,6 +236,7 @@ Foo_B_i::test_var_array_arg(const Var_Array messages)
 void
 Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
                                 CORBA::Long client_id)
+                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[14] ++;
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_special_basic_arg ")
@@ -239,6 +255,7 @@ Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
 
 void
 Foo_B_i::test_objref_arg(Callback_ptr cb)
+                            ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(cb);
   this->op_count_[15] ++;
@@ -249,6 +266,7 @@ Foo_B_i::test_objref_arg(Callback_ptr cb)
 
 void
 Foo_B_i::done(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   TheAppShutdown->client_done();
 }

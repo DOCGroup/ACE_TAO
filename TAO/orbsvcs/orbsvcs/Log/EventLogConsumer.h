@@ -71,11 +71,18 @@ public:
 private:
 
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((
+            CORBA::SystemException
+    ));
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.
-  void push (const CORBA::Any& data);
+  void push (const CORBA::Any& data)
+    ACE_THROW_SPEC ((
+            CORBA::SystemException,
+            CosEventComm::Disconnected
+    ));
 
   /// ProxyPushSupplier used to connect to EventLog.
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

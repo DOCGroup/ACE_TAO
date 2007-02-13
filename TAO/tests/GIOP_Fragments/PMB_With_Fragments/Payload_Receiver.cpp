@@ -13,6 +13,8 @@ Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
 
 void
 Payload_Receiver::more_data (const Test::Payload &payload)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Test::Payload_Receiver::Invalid_Payload))
 {
   ++this->count_;
 
@@ -29,6 +31,7 @@ Payload_Receiver::more_data (const Test::Payload &payload)
 
 void
 Payload_Receiver::shutdown (void)
+   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

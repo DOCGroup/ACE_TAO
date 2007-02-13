@@ -7,6 +7,7 @@ ACE_RCSID(Trading, Service_Type_Exporter, "$Id$")
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                            CORBA::Boolean verbose)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   : verbose_ (verbose),
     lookup_ (lookup_if)
 {
@@ -22,6 +23,10 @@ TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
 
 void
 TAO_Service_Type_Exporter::remove_all_types (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType,
+                   CosTradingRepos::ServiceTypeRepository::HasSubTypes))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::removing all"
               " types from the Repository.\n"));
@@ -51,6 +56,15 @@ TAO_Service_Type_Exporter::remove_all_types (void)
 
 void
 TAO_Service_Type_Exporter::add_all_types (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
+                   CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
+                   CosTrading::UnknownServiceType,
+                   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
@@ -60,6 +74,15 @@ TAO_Service_Type_Exporter::add_all_types (void)
 
 void
 TAO_Service_Type_Exporter::add_all_types_to_all (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
+                   CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
+                   CosTrading::UnknownServiceType,
+                   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
               "add all types to all repositories.\n"));
@@ -106,6 +129,15 @@ TAO_Service_Type_Exporter::add_all_types_to_all (void)
 void
 TAO_Service_Type_Exporter::
 add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
+                   CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch,
+                   CosTrading::IllegalPropertyName,
+                   CosTrading::DuplicatePropertyName,
+                   CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition,
+                   CosTrading::UnknownServiceType,
+                   CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
 {
   for (int i = 0; i < NUM_TYPES; i++)
     {
@@ -155,6 +187,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
 
 void
 TAO_Service_Type_Exporter::list_all_types (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -186,6 +219,9 @@ TAO_Service_Type_Exporter::list_all_types (void)
 
 void
 TAO_Service_Type_Exporter::describe_all_types (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType))
 {
   try
     {
@@ -214,6 +250,9 @@ TAO_Service_Type_Exporter::describe_all_types (void)
 
 void
 TAO_Service_Type_Exporter::fully_describe_all_types (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosTrading::IllegalServiceType,
+                   CosTrading::UnknownServiceType))
 {
   try
     {

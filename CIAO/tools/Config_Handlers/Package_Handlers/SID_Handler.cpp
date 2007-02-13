@@ -100,7 +100,7 @@ namespace CIAO
             ComponentPackageImport ci;
 
             for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
-              ci.add_location (src.importedPackage[0].location[i].in ());
+              ci.add_location (src.importedPackage[0].location[i]);
 
             retval.importedPackage (ci);
           }

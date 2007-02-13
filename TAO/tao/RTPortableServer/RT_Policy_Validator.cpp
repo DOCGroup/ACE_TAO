@@ -34,7 +34,8 @@ TAO_POA_RT_Policy_Validator::~TAO_POA_RT_Policy_Validator (void)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies)
+TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies
+                                            )
 {
   this->validate_thread_pool (policies);
 
@@ -54,13 +55,15 @@ TAO_POA_RT_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
+TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
+                                                       )
 {
   // Make sure we have an endpoint for at least one of the protocols
   // specified in the RTCORBA::ServerProtocolPolicy.  This ensure we
   // will be able to create non-nil object references.
   CORBA::Policy_var protocol =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
+                               );
 
   if (CORBA::is_nil (protocol.in ()))
     {
@@ -561,7 +564,8 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     tp_manager.get_threadpool (thread_pool_id);
 
   if (thread_pool == 0)
-    throw PortableServer::POA::InvalidPolicy ();
+    ACE_THROW_RETURN (PortableServer::POA::InvalidPolicy (),
+                      0);
 
   return thread_pool;
 }

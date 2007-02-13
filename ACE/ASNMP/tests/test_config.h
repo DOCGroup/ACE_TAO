@@ -160,7 +160,7 @@ randomize (int array[], size_t size)
   for (i = 0; i < size; i++)
     array [i] = static_cast<int> (i);
 
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
+  ACE_OS::srand (ACE_OS::time (0L));
 
   // Generate an array of random numbers from 0 .. size - 1.
 

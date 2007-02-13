@@ -21,9 +21,11 @@ public:
     ::CORBA::Long valuea,
     const char * inputa,
     ::CORBA::Long valueb,
-    const char * inputb);
+    const char * inputb)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

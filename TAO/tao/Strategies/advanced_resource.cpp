@@ -98,8 +98,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
   // If this factory has already been disabled then
   // print a warning and exit because any options
   // are useless
-  if (this->factory_disabled_)
-  {
+  if (this->factory_disabled_) {
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
                 ACE_TEXT ("Advanced Resource Factory is disabled\n")));

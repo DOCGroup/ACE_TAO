@@ -30,12 +30,14 @@ namespace Test
 
   char *
   Client_Request_Interceptor::name (void)
+    throw (CORBA::SystemException)
   {
     return CORBA::string_dup ("Client_Request_Interceptor");
   }
 
   void
   Client_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
+    throw (CORBA::SystemException, CORBA::UserException)
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("CRI    (%P|%t) Test accessing Transport Current from %s\n"),
@@ -59,11 +61,13 @@ namespace Test
 
   void
   Client_Request_Interceptor::destroy (void)
+    throw (CORBA::SystemException)
   {
   }
 
   void
   Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
+    throw (CORBA::SystemException, PortableInterceptor::ForwardRequest)
   {
     //Test TC
     test_transport_current ("send_request");
@@ -102,24 +106,28 @@ namespace Test
 
   void
   Client_Request_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException)
   {
     test_transport_current ("send_poll");
   }
 
   void
   Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException)
   {
     test_transport_current ("receive_reply");
   }
 
   void
   Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException, PortableInterceptor::ForwardRequest)
   {
     test_transport_current ("receive_exception");
   }
 
   void
   Client_Request_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
+    throw (CORBA::SystemException, PortableInterceptor::ForwardRequest)
   {
     test_transport_current ("receive_other");
   }

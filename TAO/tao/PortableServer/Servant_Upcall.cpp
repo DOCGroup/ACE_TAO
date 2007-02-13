@@ -52,7 +52,8 @@ namespace TAO
     Servant_Upcall::prepare_for_upcall (
       const TAO::ObjectKey &key,
       const char *operation,
-      CORBA::Object_out forward_to)
+      CORBA::Object_out forward_to
+      )
     {
       while (1)
         {
@@ -62,7 +63,8 @@ namespace TAO
             this->prepare_for_upcall_i (key,
                                         operation,
                                         forward_to,
-                                        wait_occurred_restart_call);
+                                        wait_occurred_restart_call
+                                       );
 
           if (result == TAO_Adapter::DS_FAILED &&
               wait_occurred_restart_call)
@@ -87,13 +89,15 @@ namespace TAO
       const TAO::ObjectKey &key,
       const char *operation,
       CORBA::Object_out forward_to,
-      bool &wait_occurred_restart_call)
+      bool &wait_occurred_restart_call
+      )
     {
       // Acquire the object adapter lock first.
       int result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
         // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                          TAO_Adapter::DS_FAILED);
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -106,13 +110,17 @@ namespace TAO
         );
 
       // Locate the POA.
-      this->object_adapter_->locate_poa (key, this->system_id_, this->poa_);
+      this->object_adapter_->locate_poa (key,
+                                         this->system_id_,
+                                         this->poa_
+                                        );
 
       // Check the state of the POA.
       this->poa_->check_state ();
 
       // Setup current for this request.
-      this->current_context_.setup (this->poa_, key);
+      this->current_context_.setup (this->poa_,
+                                    key);
 
       // Increase <poa->outstanding_requests_> for the duration of finding
       // the POA, finding the servant, and making the upcall.
@@ -121,22 +129,21 @@ namespace TAO
       // We have setup the POA Current.  Record this for later use.
       this->state_ = POA_CURRENT_SETUP;
 
-#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
       try
         {
-#endif /* TAO_HAS_MINIMUM_CORBA */
           // Lookup the servant.
           this->servant_ =
             this->poa_->locate_servant_i (operation,
                                           this->system_id_,
                                           *this,
                                           this->current_context_,
-                                          wait_occurred_restart_call);
+                                          wait_occurred_restart_call
+                                         );
 
           if (wait_occurred_restart_call)
             return TAO_Adapter::DS_FAILED;
-#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
         }
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
       catch (const ::PortableServer::ForwardRequest& forward_request)
         {
           forward_to =
@@ -144,7 +151,11 @@ namespace TAO
           return TAO_Adapter::DS_FORWARD;
         }
 #else
-      ACE_UNUSED_ARG (forward_to);
+      catch (const ::CORBA::Exception&)
+        {
+          ACE_UNUSED_ARG (forward_to);
+          throw;
+        }
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
       // Now that we know the servant.
@@ -176,22 +187,27 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::pre_invoke_remote_request (TAO_ServerRequest &req)
+    Servant_Upcall::pre_invoke_remote_request (
+      TAO_ServerRequest &req
+      )
     {
       this->object_adapter_->servant_dispatcher_->pre_invoke_remote_request (
         this->poa (),
         this->priority (),
         req,
-        this->pre_invoke_state_);
+        this->pre_invoke_state_
+       );
     }
 
     void
-    Servant_Upcall::pre_invoke_collocated_request (void)
+    Servant_Upcall::pre_invoke_collocated_request (
+      void)
     {
       this->object_adapter_->servant_dispatcher_->pre_invoke_collocated_request (
         this->poa (),
         this->priority (),
-        this->pre_invoke_state_);
+        this->pre_invoke_state_
+       );
     }
 
     void
@@ -210,13 +226,15 @@ namespace TAO
     }
 
     ::TAO_Root_POA *
-    Servant_Upcall::lookup_POA (const TAO::ObjectKey &key)
+    Servant_Upcall::lookup_POA (const TAO::ObjectKey &key
+                                )
     {
       // Acquire the object adapter lock first.
-      int const result = this->object_adapter_->lock ().acquire ();
+      int result = this->object_adapter_->lock ().acquire ();
       if (result == -1)
         // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                          0);
 
       // We have acquired the object adapter lock.  Record this for later
       // use.
@@ -225,10 +243,14 @@ namespace TAO
       // Check if a non-servant upcall is in progress.  If a non-servant
       // upcall is in progress, wait for it to complete.  Unless of
       // course, the thread making the non-servant upcall is this thread.
-      this->object_adapter_->wait_for_non_servant_upcalls_to_complete ();
+      this->object_adapter_->wait_for_non_servant_upcalls_to_complete (
+        );
 
       // Locate the POA.
-      this->object_adapter_->locate_poa (key, this->system_id_, this->poa_);
+      this->object_adapter_->locate_poa (key,
+                                         this->system_id_,
+                                         this->poa_
+                                        );
 
       return this->poa_;
     }
@@ -318,11 +340,11 @@ namespace TAO
       // lock.  Otherwise, the thread that wants to release this lock will
       // not be able to do so since it can't acquire the object adapterx
       // lock.
-      int const result = this->poa_->enter();
+        int result = this->poa_->enter();
 
-      if (result == -1)
-        // Locking error.
-        throw ::CORBA::OBJ_ADAPTER ();
+        if (result == -1)
+          // Locking error.
+          throw ::CORBA::OBJ_ADAPTER ();
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
     }
 
@@ -330,8 +352,10 @@ namespace TAO
     Servant_Upcall::single_threaded_poa_cleanup (void)
     {
 #if (TAO_HAS_MINIMUM_POA == 0)
+      int result = 0;
+
       // Since the servant lock was acquired, we must release it.
-      int const result = this->poa_->exit ();
+      result = this->poa_->exit ();
 
       ACE_UNUSED_ARG (result);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -352,7 +376,7 @@ namespace TAO
       if (this->active_object_map_entry_ != 0)
         {
           // Decrement the reference count.
-          CORBA::UShort const new_count =
+          CORBA::UShort new_count =
             --this->active_object_map_entry_->reference_count_;
 
           if (new_count == 0)
@@ -361,7 +385,8 @@ namespace TAO
                 {
                   this->poa_->cleanup_servant (
                     this->active_object_map_entry_->servant_,
-                    this->active_object_map_entry_->user_id_);
+                    this->active_object_map_entry_->user_id_
+                   );
 
                 }
               catch (...)
@@ -406,6 +431,7 @@ namespace TAO
           // non-servant upcalls to be in progress at this point.
           if (this->poa_->waiting_destruction_)
             {
+
               try
                 {
                   this->poa_->complete_destruction_i ();
@@ -413,7 +439,8 @@ namespace TAO
               catch (const ::CORBA::Exception& ex)
                 {
                   // Ignore exceptions
-                  ex._tao_print_exception ("TAO_POA::~complete_destruction_i");
+                  ex._tao_print_exception (
+                    "TAO_POA::~complete_destruction_i");
                 }
 
               this->poa_ = 0;

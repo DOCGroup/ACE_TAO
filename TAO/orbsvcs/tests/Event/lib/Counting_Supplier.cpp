@@ -112,6 +112,7 @@ EC_Counting_Supplier::disconnect (void)
 
 void
 EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -128,11 +129,13 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
 
 void
 EC_Counting_Supplier::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 EC_Counting_Supplier::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
   this->consumer_proxy_ =

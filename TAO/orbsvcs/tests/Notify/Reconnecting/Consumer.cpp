@@ -69,6 +69,9 @@ StructuredPushConsumer_i::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -132,6 +135,8 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
 void
 StructuredPushConsumer_i::push_structured_event (
         const CosNotification::StructuredEvent & notification)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+        CosEventComm::Disconnected))
 {
   this->received_ += 1;
   if (this->received_ == this->expect_ + 1)
@@ -222,6 +227,7 @@ StructuredPushConsumer_i::push_structured_event (
 void
 StructuredPushConsumer_i::disconnect_structured_push_consumer (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) StructuredPushConsumer received disconnect\n")
@@ -282,6 +288,9 @@ SequencePushConsumer_i::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -345,6 +354,8 @@ void
 SequencePushConsumer_i::push_structured_events (
       const CosNotification::EventBatch & notifications
     )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+      CosEventComm::Disconnected))
 {
   size_t batch_size = notifications.length();
   if (this->verbose_)
@@ -435,6 +446,7 @@ SequencePushConsumer_i::push_structured_events (
 void
 SequencePushConsumer_i::disconnect_sequence_push_consumer (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) SequencePushConsumer received disconnect\n")
@@ -495,6 +507,9 @@ AnyPushConsumer_i::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotifyComm::InvalidEventType))
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -558,6 +573,8 @@ void
 AnyPushConsumer_i::push (
         const CORBA::Any & data
       )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+        CosEventComm::Disconnected))
 {
   this->received_ += 1;
   if (this->received_ == this->expect_ + 1)
@@ -639,6 +656,7 @@ AnyPushConsumer_i::push (
 void
 AnyPushConsumer_i::disconnect_push_consumer (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) AnyPushConsumer received disconnect\n")
@@ -662,7 +680,9 @@ ReconnectionCallback_i::reconnect_count () const
 }
 
 void
-ReconnectionCallback_i::reconnect (CORBA::Object_ptr reconnection)
+ReconnectionCallback_i::reconnect (
+    CORBA::Object_ptr reconnection
+  ) ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Consumer received reconnection request\n")
@@ -683,8 +703,9 @@ ReconnectionCallback_i::reconnect (CORBA::Object_ptr reconnection)
 
 CORBA::Boolean
 ReconnectionCallback_i::is_alive (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return true;
+  return CORBA::Boolean (1);
 }
 
 
@@ -1066,6 +1087,7 @@ Consumer_Main::load_ids()
 void
 Consumer_Main::reconnect (
     CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->verbose_)
   {

@@ -71,6 +71,7 @@ CORBA::Object_ptr
 TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
                                        int argc,
                                        ACE_TCHAR *argv[])
+   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initializes the IFR_Service Service. Returns -1
   // on an error.
@@ -79,7 +80,9 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
                                                 orb);
   if (result != 0)
     {
-      throw CORBA::BAD_PARAM (0, CORBA::COMPLETED_NO);
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (0,
+                                          CORBA::COMPLETED_NO),
+                        CORBA::Object::_nil ());
     }
 
   return CORBA::Object::_nil ();

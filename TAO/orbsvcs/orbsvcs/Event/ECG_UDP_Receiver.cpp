@@ -133,6 +133,7 @@ TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub)
 
 void
 TAO_ECG_UDP_Receiver::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Prevent attempts to disconnect.
   this->auto_proxy_disconnect_.disallow_command ();

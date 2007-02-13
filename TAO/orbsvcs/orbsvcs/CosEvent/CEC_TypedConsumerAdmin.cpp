@@ -29,6 +29,7 @@ TAO_CEC_TypedConsumerAdmin::~TAO_CEC_TypedConsumerAdmin (void)
 
 void
 TAO_CEC_TypedConsumerAdmin::invoke (const TAO_CEC_TypedEvent& typed_event)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_CEC_Propagate_Typed_Event typed_event_worker (typed_event, this->typed_event_channel_);
 
@@ -63,14 +64,22 @@ CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
     const char * /*supported_interface*/
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosTypedEventChannelAdmin::InterfaceNotSupported
+  ))
 {
-  throw CosTypedEventChannelAdmin::InterfaceNotSupported ();
+  ACE_THROW_RETURN (CosTypedEventChannelAdmin::InterfaceNotSupported (), 0);
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
     const char * uses_interface
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosTypedEventChannelAdmin::NoSuchImplementation
+  ))
 
 {
   // Register the consumer uses_interface with the EC
@@ -78,7 +87,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 
   if (result == -1)
     {
-      throw CosTypedEventChannelAdmin::NoSuchImplementation ();
+      ACE_THROW_RETURN (CosTypedEventChannelAdmin::NoSuchImplementation (), 0);
     }
 
   return this->typed_push_admin_.obtain ();
@@ -86,14 +95,16 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_pull_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    throw CORBA::NO_IMPLEMENT ();
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 PortableServer::POA_ptr

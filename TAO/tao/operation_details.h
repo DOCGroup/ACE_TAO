@@ -14,14 +14,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Service_Context.h"
+#include "tao/SystemException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Service_Context.h"
 #include "tao/TimeBaseC.h"
 #include "tao/target_specification.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -104,7 +106,8 @@ public:
   TAO_Service_Context &reply_service_context (void);
   const TAO_Service_Context &reply_service_context (void) const;
 
-  /// Reset the contents of the service context lists that we hold.
+  /// Reset the contents of the service context lists that we
+  /// hold.
   void reset_request_service_info (void);
   void reset_reply_service_info (void);
 
@@ -129,10 +132,8 @@ public:
    * is not found in the list of exceptions specified by the operation
    * this call would raise an UNKNOWN exception.
    */
-  CORBA::Exception *corba_exception (const char *ex);
-
-  /// Check whether exception @a ex is in the signature of this operation
-  bool has_exception (::CORBA::Exception& ex) const;
+  CORBA::Exception *corba_exception (const char *ex)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * @name Helper methods used by the Invocation classes.
@@ -221,7 +222,7 @@ private:
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
   /// The dii request flag.
-  CORBA::Boolean is_dii_request_;
+  CORBA::Boolean is_dii_request_;  
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

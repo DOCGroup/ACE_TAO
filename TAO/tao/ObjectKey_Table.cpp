@@ -144,7 +144,10 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
                   TAO::Refcounted_ObjectKey (key),
                   -1);
 
-  int const retval =  this->table_.bind (key, key_new);
+
+
+  int retval =  this->table_.bind (key,
+                                   key_new);
 
   if (retval != -1)
     {
@@ -163,7 +166,8 @@ TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 {
   TAO::Refcounted_ObjectKey *tmp = 0;
 
-  if (this->table_.unbind (key_new->object_key (), tmp) != -1)
+  if (this->table_.unbind (key_new->object_key (),
+                           tmp) != -1)
     {
       // @@ Cant do much if the unbind fails.
       // Remove our refcount on the ObjectKey

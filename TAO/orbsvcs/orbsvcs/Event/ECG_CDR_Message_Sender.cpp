@@ -17,6 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 void
 TAO_ECG_CDR_Message_Sender::init (
       TAO_ECG_Refcounted_Endpoint endpoint_rptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (endpoint_rptr.get () == 0
       || endpoint_rptr->dgram ().get_handle () == ACE_INVALID_HANDLE)
@@ -32,6 +33,7 @@ TAO_ECG_CDR_Message_Sender::init (
 void
 TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
                                            const ACE_INET_Addr &addr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->endpoint_rptr_.get () == 0)
     {
@@ -216,7 +218,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
      if (iovcnt > 1)
        {
          crc = ACE::crc32 (iov, iovcnt);
-         crc = ACE_HTONL (crc);
+         crc = htonl (crc);
        }
      for (int cnt=0; cnt<4; ++cnt)
        {

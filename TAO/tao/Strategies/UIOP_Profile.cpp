@@ -5,7 +5,7 @@
 #include "tao/Strategies/uiop_endpointsC.h"
 
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

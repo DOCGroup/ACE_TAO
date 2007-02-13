@@ -45,24 +45,50 @@ public:
   ~TAO_DynValue_i (void);
 
   virtual char * current_member_name (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::TCKind current_member_kind (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::NameValuePairSeq * get_members (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_members (
       const DynamicAny::NameValuePairSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void set_members_as_dyn_any (
       const DynamicAny::NameDynAnyPairSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

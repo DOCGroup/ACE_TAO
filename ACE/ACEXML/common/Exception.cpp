@@ -28,7 +28,7 @@ ACEXML_Exception::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_Exception::print (void) const
+ACEXML_Exception::print (void)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) EXCEPTION : %s\n"),

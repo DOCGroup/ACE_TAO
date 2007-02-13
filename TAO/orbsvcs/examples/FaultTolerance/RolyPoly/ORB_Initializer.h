@@ -15,10 +15,12 @@ class ORB_Initializer :
 public:
 
   virtual void
-  pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  pre_init (PortableInterceptor::ORBInitInfo_ptr info)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void
-  post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  post_init (PortableInterceptor::ORBInitInfo_ptr info)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #endif /* ORB_INITIALIZER_H */

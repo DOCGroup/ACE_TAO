@@ -37,7 +37,8 @@ public:
   virtual ~TAO_Messaging_Loader (void);
 
   /// Initialize the Messaging loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  virtual int init (int argc,
+                    ACE_TCHAR* []);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

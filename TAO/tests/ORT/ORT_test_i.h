@@ -26,9 +26,11 @@ public:
 
   ORT_test_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Boolean request_server (void);
+  virtual CORBA::Boolean request_server (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

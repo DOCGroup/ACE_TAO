@@ -563,10 +563,8 @@ TAO_Log_Constraint_Visitor::visit_component (
       this->queue_.dequeue_head (id);
       CORBA::Any *any_ptr = 0;
       ACE_NEW_RETURN (any_ptr,
-                      CORBA::Any (),
+                      CORBA::Any (*(const CORBA::Any *) id),
                       -1);
-      any_ptr->replace (id);
-      any_ptr->impl ()->_add_ref ();
       this->current_member_ = any_ptr;
       return nested->accept (this);
     }
@@ -945,9 +943,7 @@ TAO_Log_Constraint_Visitor::visit_in (
 
           if (bag.expr_type () == TAO_ETCL_COMPONENT)
             {
-              CORBA::Any_var component = new CORBA::Any ();
-              component->replace (bag);
-              component->impl ()->_add_ref ();
+              const CORBA::Any *component = (const CORBA::Any *) bag;
               CORBA::TCKind kind = CORBA::tk_null;
 
               try
@@ -965,23 +961,23 @@ TAO_Log_Constraint_Visitor::visit_in (
               switch (kind)
               {
                 case CORBA::tk_sequence:
-                  result = this->sequence_does_contain (&component.in (),
+                  result = this->sequence_does_contain (component,
                                                         left);
                   break;
                 case CORBA::tk_array:
-                  result = this->array_does_contain (&component.in (),
+                  result = this->array_does_contain (component,
                                                      left);
                   break;
                 case CORBA::tk_struct:
-                  result = this->struct_does_contain (&component.in (),
+                  result = this->struct_does_contain (component,
                                                       left);
                   break;
                 case CORBA::tk_union:
-                  result = this->union_does_contain (&component.in (),
+                  result = this->union_does_contain (component,
                                                      left);
                   break;
                 case CORBA::tk_any:
-                  result = this->any_does_contain (&component.in (),
+                  result = this->any_does_contain (component,
                                                    left);
                   break;
                 default:

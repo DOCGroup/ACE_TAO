@@ -78,16 +78,19 @@ public:
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
   virtual CORBA::StringSeq * arguments (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the ORBid for the ORB currently being initialized.
   virtual char * orb_id (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the CodecFactory for the ORB currently being
   /// initialized.
   virtual IOP::CodecFactory_ptr codec_factory (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a mapping between a string and a corresponding object
   /// reference with the ORB being initialized.
@@ -102,65 +105,86 @@ public:
   virtual void register_initial_reference (
       const char * id,
       CORBA::Object_ptr obj
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::InvalidName));
 
   /// Obtain a reference to an object that may not yet be available
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
   virtual CORBA::Object_ptr resolve_initial_references (
       const char * id
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::InvalidName));
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.
   virtual void add_client_request_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName));
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized.
   virtual void add_server_request_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName));
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized.
   virtual void add_ior_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName));
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized, along with a list of policies.
   virtual void add_client_request_interceptor_with_policy (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized, along with a list of policies.
   virtual void add_server_request_interceptor_with_policy (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized, along with a list of policies.
   virtual void add_ior_interceptor_with_policy (
       PortableInterceptor::IORInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
   virtual PortableInterceptor::SlotId allocate_slot_id (
-      void);
+      void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Register a policy factory of the given policy type with the ORB
   /// currently being initialized.
   virtual void register_policy_factory (
       CORBA::PolicyType type,
       PortableInterceptor::PolicyFactory_ptr policy_factory
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ORB_ptr _get_orb (
       void
@@ -186,7 +210,8 @@ public:
    */
   size_t allocate_tss_slot_id (
       ACE_CLEANUP_FUNC cleanup
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return a pointer to the ORB Core associated with the ORB being
   /// initialized.

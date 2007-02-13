@@ -29,26 +29,37 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategyDefaultServant::strategy_cleanup(void)
+    RequestProcessingStrategyDefaultServant::strategy_cleanup(
+      void)
     {
       this->default_servant_ = 0;
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyDefaultServant::get_servant_manager (void)
+    RequestProcessingStrategyDefaultServant::get_servant_manager (
+      void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
-      throw PortableServer::POA::WrongPolicy ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        PortableServer::ServantManager::_nil ());
     }
 
     void
     RequestProcessingStrategyDefaultServant::set_servant_manager (
-      PortableServer::ServantManager_ptr /*imgr*/)
+      PortableServer::ServantManager_ptr /*imgr*/
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyDefaultServant::get_servant (void)
+    RequestProcessingStrategyDefaultServant::get_servant (
+      void)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation returns the default servant associated with the
       // POA.
@@ -59,6 +70,8 @@ namespace TAO
     RequestProcessingStrategyDefaultServant::set_servant (
       PortableServer::Servant servant
       )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::WrongPolicy))
     {
       // This operation registers the specified servant with the POA as
       // the default servant. This servant will be used for all requests
@@ -94,7 +107,9 @@ namespace TAO
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 
-      location = this->poa_->servant_present (system_id, servant);
+      location = this->poa_->servant_present (system_id,
+                                              servant
+                                             );
 
       if (location == TAO_SERVANT_NOT_FOUND)
         {
@@ -120,7 +135,8 @@ namespace TAO
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
-                                          poa_current_impl);
+                                          poa_current_impl
+                                         );
 
       if (servant == 0)
         {
@@ -132,9 +148,9 @@ namespace TAO
           PortableServer::Servant default_servant = this->default_servant_.in ();
           if (default_servant == 0)
             {
-              throw ::CORBA::OBJ_ADAPTER (
-                CORBA::OMGVMCID | 3,
-                CORBA::COMPLETED_NO);
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 3,
+                                                    CORBA::COMPLETED_NO),
+                                                    0);
             }
           else
             {
@@ -148,13 +164,15 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::system_id_to_servant (
-      const PortableServer::ObjectId &system_id)
+      const PortableServer::ObjectId &system_id
+      )
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
       if (servant == 0)
         {
-          servant = this->poa_->find_servant (system_id);
+          servant = this->poa_->find_servant (system_id
+                                             );
         }
 
       return servant;
@@ -162,7 +180,11 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::id_to_servant (
-      const PortableServer::ObjectId & /*id*/)
+      const PortableServer::ObjectId & /*id*/
+      )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ObjectNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
@@ -173,7 +195,8 @@ namespace TAO
            * no default servant is available, we will raise the
            * ObjectNotActive system exception.
            */
-          throw PortableServer::POA::ObjectNotActive ();
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
         }
 
       return servant;
@@ -197,7 +220,9 @@ namespace TAO
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      if (this->poa_->unbind_using_user_id (user_id) != 0)
+      int result = this->poa_->unbind_using_user_id (user_id);
+
+      if (result != 0)
         {
           throw ::CORBA::OBJ_ADAPTER ();
         }
@@ -213,6 +238,9 @@ namespace TAO
     RequestProcessingStrategyDefaultServant::servant_to_id (
       PortableServer::Servant servant
       )
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ServantNotActive,
+                         PortableServer::POA::WrongPolicy))
     {
       PortableServer::Servant default_servant = this->default_servant_.in ();
 

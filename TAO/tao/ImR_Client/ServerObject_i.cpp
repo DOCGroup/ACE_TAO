@@ -15,11 +15,13 @@ ServerObject_i::ServerObject_i (CORBA::ORB_ptr orb,
 
 void
 ServerObject_i::ping (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerObject_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Note : We want our child POAs to be able to unregister themselves from
   // the ImR, so we must destroy them before shutting down the orb.

@@ -77,8 +77,6 @@ TAO/tests/Bug_2595_Regression/run_test.pl:
 TAO/tests/Bug_2654_Regression/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_2669_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_2683_Regression/run_test.pl:
-TAO/tests/Bug_2792_Regression/run_test.pl:
-TAO/tests/Bug_2795_Regression/run_test.pl:
 TAO/tests/Bug_1476_Test/run_test.pl:
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
@@ -113,7 +111,6 @@ TAO/tests/OBV/ValueBox/run_test.pl:
 TAO/tests/OBV/Truncatable/run_test.pl:
 TAO/tests/OBV/Simple/run_test.pl:
 TAO/tests/Hello/run_test.pl:
-TAO/tests/LongDouble/run_test.pl:
 TAO/tests/IPV6/run_test.pl: IPV6
 TAO/tests/AlternateIIOP/run_test.pl:
 TAO/tests/Optimized_Connection/run_test.pl: !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO

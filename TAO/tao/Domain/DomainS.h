@@ -139,7 +139,9 @@ namespace POA_CORBA
     virtual ::CORBA::Policy_ptr get_domain_policy (
         ::CORBA::PolicyType policy_type
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     static void get_domain_policy_skel (
         TAO_ServerRequest & server_request,
@@ -167,7 +169,8 @@ namespace POA_CORBA
     get_strategy (
         CORBA::Object_ptr obj
 
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
     dispatch (
@@ -179,7 +182,8 @@ namespace POA_CORBA
         size_t op_len,
         TAO::Collocation_Strategy strategy
 
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::Exception));
 
     static _TAO_DomainManager_Strategized_Proxy_Broker *
     the_TAO_DomainManager_Strategized_Proxy_Broker (void);
@@ -214,7 +218,10 @@ namespace POA_CORBA
         TAO::Argument ** args,
         int num_args
 
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
   };
 
   //
@@ -299,7 +306,9 @@ namespace POA_CORBA
         ::CORBA::InterfaceDef_ptr object_type,
         ::CORBA::Boolean constr_policy
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     static void make_domain_manager_skel (
         TAO_ServerRequest & server_request,
@@ -358,7 +367,8 @@ namespace POA_CORBA
     get_strategy (
         CORBA::Object_ptr obj
 
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
     dispatch (
@@ -370,7 +380,8 @@ namespace POA_CORBA
         size_t op_len,
         TAO::Collocation_Strategy strategy
 
-      );
+      )
+      ACE_THROW_SPEC ((CORBA::Exception));
 
     static _TAO_ConstructionPolicy_Strategized_Proxy_Broker *
     the_TAO_ConstructionPolicy_Strategized_Proxy_Broker (void);
@@ -407,13 +418,18 @@ namespace POA_CORBA
         int num_args
 
       )
-      ;static void
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));static void
     _get_policy_type (
         TAO_Abstract_ServantBase *servant,
         TAO::Argument ** args,
         int num_args
 
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     // TAO_IDL - Generated from
     // be\be_interface.cpp:2050
@@ -424,7 +440,10 @@ namespace POA_CORBA
         TAO::Argument ** args,
         int num_args
 
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
     // TAO_IDL - Generated from
     // be\be_interface.cpp:2050
@@ -435,7 +454,10 @@ namespace POA_CORBA
         TAO::Argument ** args,
         int num_args
 
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
   };
 
   //

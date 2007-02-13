@@ -13,6 +13,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 void
 test_i::method (CORBA::ULong request_number,
                 const test::data &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("server: Iteration %d @ %T\n"),
@@ -27,6 +28,7 @@ test_i::method (CORBA::ULong request_number,
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shudown... "));

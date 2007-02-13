@@ -16,6 +16,7 @@ Receiver_i::Receiver_i (void)
 
 void
 Receiver_i::receive_payload (const Receiver::Payload &payload)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->message_count_++;

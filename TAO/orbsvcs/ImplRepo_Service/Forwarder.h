@@ -48,14 +48,16 @@ public:
     const PortableServer::ObjectId &oid,
     PortableServer::POA_ptr poa,
     const char * operation,
-    PortableServer::ServantLocator::Cookie &cookie);
+    PortableServer::ServantLocator::Cookie &cookie
+  ) ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest));
 
   virtual void postinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr adapter,
     const char * operation,
     PortableServer::ServantLocator::Cookie the_cookie,
-    PortableServer::Servant the_servant);
+    PortableServer::Servant the_servant
+    ) ACE_THROW_SPEC ((CORBA::SystemException));
 
   void init(CORBA::ORB_ptr orb);
 

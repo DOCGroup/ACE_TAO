@@ -32,7 +32,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (initializer_var1.in ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       CORBA::ORB_var orb2 =
         CORBA::ORB_init (argc, argv, "SecondORB");

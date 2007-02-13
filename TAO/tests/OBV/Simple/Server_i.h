@@ -37,10 +37,14 @@ public:
 
   virtual void put_event (
         Event * e
-  );
+  )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (
-    );
+    )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ));
 
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.

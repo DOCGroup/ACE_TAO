@@ -13,11 +13,14 @@ public:
                  CORBA::ORB_ptr orb);
 
   void CreateExtra (CORBA::ULong length,
-                    ServerSequence_out seq);
+                    ServerSequence_out seq)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void DeleteExtra (const ServerSequence &seq);
+  void DeleteExtra (const ServerSequence &seq)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Our root POA
@@ -39,6 +42,7 @@ ServerServant::ServerServant (PortableServer::POA_ptr poa,
 void
 ServerServant::CreateExtra (CORBA::ULong len,
                             ServerSequence_out seq)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Create extra called with "
@@ -73,6 +77,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
 
 void
 ServerServant::DeleteExtra (const ServerSequence &seq)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Deleting sequences \n"));
@@ -101,6 +106,7 @@ ServerServant::DeleteExtra (const ServerSequence &seq)
 
 void
 ServerServant::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

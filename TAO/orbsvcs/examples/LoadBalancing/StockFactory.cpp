@@ -28,6 +28,7 @@ StockFactory::get_stock (const char *symbol)
 
 void
 StockFactory::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

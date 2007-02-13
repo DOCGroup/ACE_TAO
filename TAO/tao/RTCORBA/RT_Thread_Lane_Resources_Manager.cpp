@@ -50,13 +50,15 @@ TAO_RT_Thread_Lane_Resources_Manager::open_default_resources (void)
 
   TAO_EndpointSet endpoint_set;
 
-  params->get_endpoint_set (TAO_DEFAULT_LANE, endpoint_set);
+  params->get_endpoint_set (TAO_DEFAULT_LANE,
+                            endpoint_set);
 
   bool ignore_address = false;
 
-  int const result =
+  int result =
     this->default_lane_resources_->open_acceptor_registry (endpoint_set,
-                                                           ignore_address);
+                                                           ignore_address
+                                                          );
 
   return result;
 }

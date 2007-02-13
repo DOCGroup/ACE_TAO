@@ -42,265 +42,627 @@ public:
   // = Some functions common to all Dynamic Any types.
 
   virtual CORBA::TypeCode_ptr type (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void assign (
       DynamicAny::DynAny_ptr dyn_any
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
   virtual void insert_boolean (
       CORBA::Boolean value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_octet (
       CORBA::Octet value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_char (
       CORBA::Char value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
   virtual void insert_short (
       CORBA::Short value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
   virtual void insert_ushort (
       CORBA::UShort value
       )
-;
+
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_long (
       CORBA::Long value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_ulong (
       CORBA::ULong value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_float (
       CORBA::Float value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_double (
       CORBA::Double value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_string (
       const char * value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_reference (
       CORBA::Object_ptr value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_typecode (
       CORBA::TypeCode_ptr value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_longlong (
       CORBA::LongLong value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_ulonglong (
       CORBA::ULongLong value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_longdouble (
       CORBA::LongDouble value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_wchar (
       CORBA::WChar value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_wstring (
       const CORBA::WChar * value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_any (
       const CORBA::Any & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_dyn_any (
       DynamicAny::DynAny_ptr value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_val (
       CORBA::ValueBase * value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Boolean get_boolean (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Octet get_octet (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Char get_char (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Short get_short (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::UShort get_ushort (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Long get_long (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::ULong get_ulong (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Float get_float (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Double get_double (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual char * get_string (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Object_ptr get_reference (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::TypeCode_ptr get_typecode (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::LongLong get_longlong (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::ULongLong get_ulonglong (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::LongDouble get_longdouble (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::WChar get_wchar (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::WChar * get_wstring (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Any * get_any (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual DynamicAny::DynAny_ptr get_dyn_any (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::ValueBase * get_val (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::Boolean seek (
       CORBA::Long index
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void rewind (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::Boolean next (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual DynamicAny::DynAny_ptr copy (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual CORBA::ULong component_count (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual void insert_abstract (
       CORBA::AbstractBase_ptr value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::AbstractBase_ptr get_abstract (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_boolean_seq (
       const CORBA::BooleanSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_octet_seq (
       const CORBA::OctetSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_char_seq (
       const CORBA::CharSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_short_seq (
       const CORBA::ShortSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_ushort_seq (
       const CORBA::UShortSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_long_seq (
       const CORBA::LongSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_ulong_seq (
       const CORBA::ULongSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_float_seq (
       const CORBA::FloatSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_double_seq (
       const CORBA::DoubleSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_longlong_seq (
       const CORBA::LongLongSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_ulonglong_seq (
       const CORBA::ULongLongSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_longdouble_seq (
       const CORBA::LongDoubleSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual void insert_wchar_seq (
       const CORBA::WCharSeq & value
-      );
+      )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::BooleanSeq * get_boolean_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::OctetSeq * get_octet_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::CharSeq * get_char_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::ShortSeq * get_short_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::UShortSeq * get_ushort_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::LongSeq * get_long_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::ULongSeq * get_ulong_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::FloatSeq * get_float_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::DoubleSeq * get_double_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::LongLongSeq * get_longlong_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::ULongLongSeq * get_ulonglong_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::LongDoubleSeq * get_longdouble_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   virtual CORBA::WCharSeq * get_wchar_seq (
-      void);
+      void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   /// This sets one of two flags in this base class. CORBA 2.4.2
   /// requires that destroy() do nothing if it is called on
@@ -315,14 +677,26 @@ public:
       DynamicAny::DynAny_ptr component,
       CORBA::Boolean destroying
 
-    );
+    )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   // Utility functions.
 
-  DynamicAny::DynAny_ptr check_component (void);
+  DynamicAny::DynAny_ptr check_component (void)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch,
+        DynamicAny::DynAny::InvalidValue
+      ));
 
   void check_type (CORBA::TypeCode_ptr tc
-                   );
+                   )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 
   static bool is_basic_type_seq (CORBA::TypeCode_ptr tc);
 
@@ -367,7 +741,11 @@ private:
   // Utility functions used by insert_* and get_*.
 
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc
-                                              );
+                                              )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        DynamicAny::DynAny::TypeMismatch
+      ));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

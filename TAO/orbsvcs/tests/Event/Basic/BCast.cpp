@@ -146,6 +146,7 @@ Simple_Address_Server (const ACE_INET_Addr& address)
 void
 Simple_Address_Server::get_addr (const RtecEventComm::EventHeader&,
                                  RtecUDPAdmin::UDP_Addr& address)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   address = this->address_;
 }

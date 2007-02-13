@@ -45,7 +45,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to resolve initial ref for 'RootPOA'.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   PortableServer::POA_var root_poa
@@ -55,7 +55,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to POA interface.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   PortableServer::POAManager_var poa_manager
@@ -74,7 +74,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the child POA.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   // Create the thread pool servant dispatching strategy object, and
@@ -87,7 +87,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa.\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   // Create the servant object.
@@ -108,7 +108,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to activate servant (Foo_i).\n"));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   // Stringify the object reference
@@ -123,7 +123,7 @@ ServerApp::run(int argc, char* argv[])
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Cannot open output file for writing IOR: %s",
                  this->ior_filename_.c_str()));
-      throw TestException();
+      ACE_THROW_RETURN (TestException(), -1);
     }
 
   ACE_OS::fprintf(ior_file, "%s", ior.in ());

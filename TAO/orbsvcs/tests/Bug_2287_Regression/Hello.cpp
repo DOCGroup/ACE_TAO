@@ -12,18 +12,21 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
 
 void
 Hello::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
 
 void
 Hello::ping (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
 
 void
 Hello::throw_location_forward (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }

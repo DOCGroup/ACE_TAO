@@ -27,6 +27,7 @@ project(*Server): taoserver, valuetype {
 
 project(*Client): taoclient, valuetype, typecodefactory {
   after += *idl
+  after += *Server
 
   Source_Files {
     TestC.cpp

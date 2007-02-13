@@ -13,7 +13,6 @@
 #include "tao/String_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 #include "tao/String_Sequence_Element_T.h"
-#include "tao/String_Const_Sequence_Element_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,7 +30,6 @@ public:
   typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
 
   typedef details::string_sequence_element<element_traits> element_type;
-  typedef details::string_const_sequence_element<element_traits> const_element_type;
 
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
@@ -75,8 +73,8 @@ public:
     impl_.length(length);
   }
   /// @copydoc details::generic_sequence::operator[]
-  inline const_element_type operator[](CORBA::ULong i) const {
-    return const_element_type (impl_[i], release());
+  inline const_value_type operator[](CORBA::ULong i) const {
+    return impl_[i];
   }
   /// @copydoc details::generic_sequence::operator[]
   inline element_type operator[](CORBA::ULong i) {

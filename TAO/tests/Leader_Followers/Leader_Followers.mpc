@@ -24,6 +24,7 @@ project(*Server): taoserver, strategies {
 
 project(*Client): taoclient, strategies {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }

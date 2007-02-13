@@ -1,16 +1,19 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file   UIOP_Lite_Factory.h
- *
- *  $Id$
- *
- *  @author Fred Kuhns <fredk@cs.wustl.edu>
- *  @author Ossama Othman <othman@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   UIOP_Factory.h
+//
+// = AUTHOR
+//   Fred Kuhns <fredk@cs.wustl.edu>
+//   Ossama Othman <othman@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_UIOP_LITE_FACTORY_H
 #define TAO_UIOP_LITE_FACTORY_H

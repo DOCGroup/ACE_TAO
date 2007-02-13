@@ -15,6 +15,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 void
 Visual_i::normal (CORBA::Long arg,
                   CORBA::String_out msg)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
   msg = CORBA::string_dup ("DO_NOT_INSULT_MY_INTELLIGENCE");
@@ -23,6 +24,7 @@ Visual_i::normal (CORBA::Long arg,
 CORBA::Long
 Visual_i::calculate (CORBA::Long one,
                      CORBA::Long two)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
   return (one + two);
@@ -30,6 +32,7 @@ Visual_i::calculate (CORBA::Long one,
 
 Test_Interceptors::Visual::VarLenStruct *
 Visual_i::the_structure (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Test_Interceptors::Visual::VarLenStruct * s;
 
@@ -47,6 +50,7 @@ Visual_i::the_structure (void)
 
 void
 Visual_i::user (void)
+  ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing Silly\n"));
   throw Test_Interceptors::Silly ();
@@ -54,6 +58,7 @@ Visual_i::user (void)
 
 void
 Visual_i::system (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
   throw CORBA::INV_OBJREF ();
@@ -61,6 +66,7 @@ Visual_i::system (void)
 
 void
 Visual_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

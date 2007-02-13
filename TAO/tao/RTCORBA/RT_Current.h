@@ -52,9 +52,12 @@ public:
   /// Default constructor.
   TAO_RT_Current (TAO_ORB_Core *orb_core);
 
-  virtual RTCORBA::Priority the_priority (void);
+  virtual RTCORBA::Priority the_priority (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void the_priority (RTCORBA::Priority the_priority);
+  virtual void the_priority (RTCORBA::Priority the_priority
+                             )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
 

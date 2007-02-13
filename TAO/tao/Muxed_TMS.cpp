@@ -126,7 +126,8 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                       *this->lock_,
                       -1);
 
-    result = this->dispatcher_table_.unbind (params.request_id_, rd);
+    result =
+      this->dispatcher_table_.unbind (params.request_id_, rd);
 
     if (TAO_debug_level > 8)
       ACE_DEBUG ((LM_DEBUG,
@@ -156,7 +157,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     // cases we dispatch with the lock held.
     // Dispatch the reply.
     // They return 1 on success, and -1 on failure.
-    result = rd->dispatch_reply (params);
+    result =  rd->dispatch_reply (params);
   }
 
   return result;
@@ -193,6 +194,7 @@ TAO_Muxed_TMS::connection_closed (void)
       retval = this->clear_cache ();
     }
   while (retval != -1);
+
 }
 
 int

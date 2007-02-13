@@ -20,6 +20,9 @@ Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
 Zlib_CompressorFactory::get_compressor (
     ::Compression::CompressionLevel compression_level
   )
+  ACE_THROW_SPEC ((
+    ::CORBA::SystemException
+  ))
 {
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))

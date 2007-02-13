@@ -24,8 +24,10 @@ public:
                                             CORBA::ULong payload_size,
                                             CORBA::ULong thread_count,
                                             CORBA::ULong message_count,
-                                            CORBA::ULong peer_count);
-  virtual void shutdown (void);
+                                            CORBA::ULong peer_count)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Keep a pointer to the ORB to shutdown cleanly

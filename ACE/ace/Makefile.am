@@ -307,6 +307,7 @@ libACE_la_SOURCES = \
   Thread_Manager.cpp \
   Thread_Mutex.cpp \
   Thread_Semaphore.cpp \
+  Time_Request_Reply.cpp \
   Time_Value.cpp \
   Timeprobe.cpp \
   Timer_Hash.cpp \
@@ -1015,6 +1016,7 @@ nobase_include_HEADERS += \
   Thread_Mutex.inl \
   Thread_Semaphore.h \
   Thread_Semaphore.inl \
+  Time_Request_Reply.h \
   Time_Value.h \
   Time_Value.inl \
   Timeprobe.h \

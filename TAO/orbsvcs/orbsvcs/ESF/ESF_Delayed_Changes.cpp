@@ -68,7 +68,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   while (this->busy_count_ >= this->busy_hwm_
          || this->write_delay_count_ >= this->max_write_delay_)
     this->busy_cond_.wait ();
-  ++this->busy_count_;
+  this->busy_count_++;
 
   return 0;
 }
@@ -79,7 +79,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
 
-  --this->busy_count_;
+  this->busy_count_--;
   if (this->busy_count_ == 0)
     {
       this->write_delay_count_ = 0;

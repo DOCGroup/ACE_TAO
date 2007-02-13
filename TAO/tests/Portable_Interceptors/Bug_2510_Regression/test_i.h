@@ -28,8 +28,10 @@ public:
 
   Visual_i (CORBA::ORB_ptr orb);
 
-  void normal (CORBA::Long arg);
-  void shutdown (void);
+  void normal (CORBA::Long arg)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

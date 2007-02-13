@@ -18,9 +18,11 @@ class Echo_Caller : public POA_Test::Echo_Caller
 public:
   Echo_Caller(CORBA::ORB_ptr orb, Thread_Pool *pool_);
 
-  virtual void start_task(Test::Echo_ptr client);
+  virtual void start_task(Test::Echo_ptr client)
+    ACE_THROW_SPEC((CORBA::SystemException));
 
-  virtual void shutdown(void);
+  virtual void shutdown(void)
+    ACE_THROW_SPEC((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

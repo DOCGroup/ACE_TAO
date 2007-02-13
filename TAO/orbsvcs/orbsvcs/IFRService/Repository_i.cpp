@@ -40,18 +40,21 @@ TAO_Repository_i::~TAO_Repository_i (void)
 
 CORBA::DefinitionKind
 TAO_Repository_i::def_kind (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Repository;
 }
 
 void
 TAO_Repository_i::destroy (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
 
 CORBA::Contained_ptr
 TAO_Repository_i::lookup_id (const char *search_id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::Contained::_nil ());
 
@@ -60,6 +63,7 @@ TAO_Repository_i::lookup_id (const char *search_id)
 
 CORBA::Contained_ptr
 TAO_Repository_i::lookup_id_i (const char *search_id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
       || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
@@ -99,6 +103,7 @@ TAO_Repository_i::lookup_id_i (const char *search_id)
 
 CORBA::TypeCode_ptr
 TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -107,6 +112,7 @@ TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc)
 
 CORBA::TypeCode_ptr
 TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TCKind kind = tc->kind ();
 
@@ -116,7 +122,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
     default:
       return CORBA::TypeCode::_duplicate (tc);
     case CORBA::tk_fixed:
-      throw CORBA::NO_IMPLEMENT ();
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
     case CORBA::tk_array:
     {
       CORBA::ULong length = tc->length ();
@@ -196,6 +202,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
 
 CORBA::PrimitiveDef_ptr
 TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString obj_id ("pkinds\\");
 
@@ -211,6 +218,7 @@ TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind)
 
 CORBA::StringDef_ptr
 TAO_Repository_i::create_string (CORBA::ULong bound)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::StringDef::_nil ());
 
@@ -219,6 +227,7 @@ TAO_Repository_i::create_string (CORBA::ULong bound)
 
 CORBA::StringDef_ptr
 TAO_Repository_i::create_string_i (CORBA::ULong bound)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
   this->config_->get_integer_value (this->strings_key_,
@@ -263,6 +272,7 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound)
 
 CORBA::WstringDef_ptr
 TAO_Repository_i::create_wstring (CORBA::ULong bound)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::WstringDef::_nil ());
 
@@ -271,6 +281,7 @@ TAO_Repository_i::create_wstring (CORBA::ULong bound)
 
 CORBA::WstringDef_ptr
 TAO_Repository_i::create_wstring_i (CORBA::ULong bound)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
   this->config_->get_integer_value (this->wstrings_key_,
@@ -316,6 +327,7 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound)
 CORBA::SequenceDef_ptr
 TAO_Repository_i::create_sequence (CORBA::ULong bound,
                                    CORBA::IDLType_ptr element_type)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::SequenceDef::_nil ());
 
@@ -326,6 +338,7 @@ TAO_Repository_i::create_sequence (CORBA::ULong bound,
 CORBA::SequenceDef_ptr
 TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
                                      CORBA::IDLType_ptr element_type)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
   this->config_->get_integer_value (this->sequences_key_,
@@ -382,6 +395,7 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
 CORBA::ArrayDef_ptr
 TAO_Repository_i::create_array (CORBA::ULong length,
                                 CORBA::IDLType_ptr element_type)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ArrayDef::_nil ());
 
@@ -392,6 +406,7 @@ TAO_Repository_i::create_array (CORBA::ULong length,
 CORBA::ArrayDef_ptr
 TAO_Repository_i::create_array_i (CORBA::ULong length,
                                   CORBA::IDLType_ptr element_type)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
   this->config_->get_integer_value (this->arrays_key_,
@@ -448,6 +463,7 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
 CORBA::FixedDef_ptr
 TAO_Repository_i::create_fixed (CORBA::UShort digits,
                                 CORBA::Short scale)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::FixedDef::_nil ());
 
@@ -459,8 +475,9 @@ CORBA::FixedDef_ptr
 TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
                                   CORBA::Short /* scale */
                                   )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::FixedDef::_nil ());
 }
 
 int

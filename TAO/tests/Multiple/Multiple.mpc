@@ -18,7 +18,7 @@ project(*Server): taoserver {
     server.cpp
   }
   Source_Files {
-     MultipleC.cpp
+     MultipleC.cpp    
      MultipleS.cpp
   }
   IDL_Files {
@@ -27,6 +27,7 @@ project(*Server): taoserver {
 
 project(*Client): taoexe, portableserver {
   after += *idl
+  after += *Server
 
   Source_Files {
     Multiple_Impl.cpp
@@ -34,7 +35,7 @@ project(*Client): taoexe, portableserver {
     client.cpp
   }
   Source_Files {
-     MultipleC.cpp
+     MultipleC.cpp    
      MultipleS.cpp
   }
   IDL_Files {

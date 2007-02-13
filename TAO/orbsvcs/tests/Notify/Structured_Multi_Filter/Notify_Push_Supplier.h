@@ -10,7 +10,8 @@ class Notify_Push_Supplier: public TAO_Notify_Tests_StructuredPushSupplier
 public:
   void _connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
-                bool useFilter);
+                bool useFilter)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #endif /* NOTIFY_PUSH_SUPPLIER_H */

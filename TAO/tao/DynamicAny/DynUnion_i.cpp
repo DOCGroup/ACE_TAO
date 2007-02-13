@@ -78,37 +78,18 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
 
   // member_type()/member_label() do not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-  TAO_DynAnyFactory::strip_alias (this->type_.in ());
+  TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                 );
 
   CORBA::Any_var first_label =
-    unaliased_tc->member_label (this->current_position_);
+    unaliased_tc->member_label (this->current_position_
+                               );
 
   // Initialize the discriminator to the label value of the first member.
-  CORBA::TypeCode_var disc_tc = unaliased_tc->discriminator_type ();
-  CORBA::TCKind disc_kind = TAO_DynAnyFactory::unalias (disc_tc.in ());
-  CORBA::TCKind label_kind = TAO_DynAnyFactory::unalias (first_label->_tao_get_typecode ());
-  if (disc_kind == CORBA::tk_enum &&
-      label_kind == CORBA::tk_ulong)
-    {
-      // incase the discriminator is an enum type we have to walk
-      // a slightly more complex path because enum labels are
-      // stored as ulong in the union tc
-      this->discriminator_ =
-        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::TypeCode_ptr> (
-          disc_tc.in (),
-          disc_tc.in ());
-      CORBA::ULong label_val;
-      first_label >>= label_val;
-      TAO_DynEnum_i::_narrow (this->discriminator_.in ())
-                                    ->set_as_ulong (label_val);
-    }
-  else
-    {
-      this->discriminator_ =
-        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
-          first_label.in ()._tao_get_typecode (),
-          first_label.in ());
-    }
+  this->discriminator_ =
+    TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+      first_label.in ()._tao_get_typecode (),
+      first_label.in ());
 
   CORBA::TypeCode_var first_type =
     unaliased_tc->member_type (this->current_position_
@@ -138,6 +119,11 @@ TAO_DynUnion_i::_narrow (CORBA::Object_ptr _tao_objref)
 // an Any argument.
 void
 TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAnyFactory::InconsistentTypeCode
+    ))
 {
   // discriminator_type () does not work with aliased type codes,
   // only on unions, so strip the alias out of the type code
@@ -293,10 +279,14 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::get_discriminator (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        DynamicAny::DynAny::_nil ());
     }
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
@@ -310,6 +300,10 @@ TAO_DynUnion_i::get_discriminator (void)
 
 void
 TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ))
 {
   if (this->destroyed_)
     {
@@ -369,24 +363,8 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
         }
 
       // If we got a match, a named member will be active.
-      CORBA::TCKind disc_kind = TAO_DynAnyFactory::unalias (disc_tc.in ());
-      CORBA::TCKind label_kind = TAO_DynAnyFactory::unalias (label_any->_tao_get_typecode ());
-      if (disc_kind == CORBA::tk_enum &&
-          label_kind == CORBA::tk_ulong)
-        {
-          // incase the discriminator is an enum type we have to walk
-          // a slightly more complex path because enum labels are
-          // stored as ulong in the union tc
-          CORBA::ULong label_val;
-          label_any >>= label_val;
-          TAO_DynEnum_i::_narrow (this->discriminator_.in ())
-                                        ->set_as_ulong (label_val);
-        }
-      else
-        {
-          this->discriminator_->from_any (label_any.in ()
+      this->discriminator_->from_any (label_any.in ()
                                      );
-        }
 
       // member_type() does not work with aliased type codes.
       CORBA::TypeCode_var member_tc =
@@ -406,10 +384,6 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
       this->component_count_ = 2;
 
       this->member_slot_ = i;
-
-      // we're through, disc, value has already been set
-      // no need for the copy operation below.
-      return;
     }
   else
     {
@@ -445,6 +419,10 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
 
 void
 TAO_DynUnion_i::set_to_default_member (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ))
 {
   if (this->destroyed_)
     {
@@ -489,6 +467,10 @@ TAO_DynUnion_i::set_to_default_member (void)
 
 void
 TAO_DynUnion_i::set_to_no_active_member (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ))
 {
   if (this->destroyed_)
     {
@@ -540,10 +522,14 @@ TAO_DynUnion_i::set_to_no_active_member (void)
 
 CORBA::Boolean
 TAO_DynUnion_i::has_no_active_member (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
   // No active member (CORBA 2.3.1).
@@ -553,10 +539,14 @@ TAO_DynUnion_i::has_no_active_member (void)
 
 CORBA::TCKind
 TAO_DynUnion_i::discriminator_kind (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        CORBA::tk_null);
     }
 
   CORBA::TypeCode_var tc =
@@ -570,10 +560,15 @@ TAO_DynUnion_i::discriminator_kind (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::member (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::InvalidValue
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        DynamicAny::DynAny::_nil ());
     }
 
   CORBA::Boolean has_no_active_member =
@@ -581,7 +576,8 @@ TAO_DynUnion_i::member (void)
 
   if (has_no_active_member)
     {
-      throw DynamicAny::DynAny::InvalidValue ();
+      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
+                        DynamicAny::DynAny::_nil ());
     }
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
@@ -595,10 +591,15 @@ TAO_DynUnion_i::member (void)
 
 char *
 TAO_DynUnion_i::member_name (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::InvalidValue
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
   CORBA::Boolean has_no_active_member =
@@ -606,7 +607,8 @@ TAO_DynUnion_i::member_name (void)
 
   if (has_no_active_member)
     {
-      throw DynamicAny::DynAny::InvalidValue ();
+      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
+                        0);
     }
 
   const char *retval = this->type_->member_name (this->member_slot_
@@ -617,10 +619,15 @@ TAO_DynUnion_i::member_name (void)
 
 CORBA::TCKind
 TAO_DynUnion_i::member_kind (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::InvalidValue
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        CORBA::tk_null);
     }
 
   CORBA::Boolean has_no_active_member =
@@ -628,7 +635,8 @@ TAO_DynUnion_i::member_kind (void)
 
   if (has_no_active_member)
     {
-      throw DynamicAny::DynAny::InvalidValue ();
+      ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
+                        CORBA::tk_null);
     }
 
   CORBA::TypeCode_var tc =
@@ -644,6 +652,11 @@ TAO_DynUnion_i::member_kind (void)
 
 void
 TAO_DynUnion_i::from_any (const CORBA::Any& any)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch,
+      DynamicAny::DynAny::InvalidValue
+    ))
 {
   if (this->destroyed_)
     {
@@ -676,10 +689,14 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any)
 
 CORBA::Any_ptr
 TAO_DynUnion_i::to_any (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
   TAO_OutputCDR out_cdr;
@@ -768,10 +785,14 @@ TAO_DynUnion_i::to_any (void)
 
 CORBA::Boolean
 TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
   TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs
@@ -803,6 +824,9 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 
 void
 TAO_DynUnion_i::destroy (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   if (this->destroyed_)
     {
@@ -831,10 +855,15 @@ TAO_DynUnion_i::destroy (void)
 
 DynamicAny::DynAny_ptr
 TAO_DynUnion_i::current_component (void)
+  ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      DynamicAny::DynAny::TypeMismatch
+    ))
 {
   if (this->destroyed_)
     {
-      throw ::CORBA::OBJECT_NOT_EXIST ();
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        DynamicAny::DynAny::_nil ());
     }
 
   if (this->current_position_ == 1)
@@ -861,6 +890,9 @@ CORBA::Boolean
 TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
                              const CORBA::Any &other_any
                              )
+  ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ))
 {
   // Use my_any so we can detect a default case label,
   // if we are iterating through the union type code's
@@ -906,37 +938,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
         CORBA::ULong my_val;
         CORBA::ULong other_val;
         my_any >>= my_val;
-
-        // check whether the discriminator is possibly an enum type
-        // since these get stored as ulong label values as well
-        CORBA::TypeCode_var other_tc = other_any.type ();
-        CORBA::TCKind kind = TAO_DynAnyFactory::unalias (other_tc.in ());
-        if (kind == CORBA::tk_enum)
-          {
-            TAO::Any_Impl *other_impl = other_any.impl ();
-
-            if (other_impl->encoded ())
-              {
-                TAO::Unknown_IDL_Type *other_unk =
-                  dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
-
-                // We don't want unk's rd_ptr to move, in case we are
-                // shared by another Any, so we use this to copy the
-                // state, not the buffer.
-                TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
-                for_reading.read_ulong (other_val);
-              }
-            else
-              {
-                TAO_OutputCDR other_out;
-                other_impl->marshal_value (other_out);
-                TAO_InputCDR other_in (other_out);
-                other_in.read_ulong (other_val);
-              }
-          }
-        else
-          other_any >>= other_val;
-
+        other_any >>= other_val;
         return my_val == other_val;
       }
     case CORBA::tk_boolean:

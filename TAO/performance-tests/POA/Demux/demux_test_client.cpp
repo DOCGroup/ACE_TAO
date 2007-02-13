@@ -57,7 +57,7 @@ Demux_Test_Client::init (int argc, char *argv [])
     {
       // get the underlying ORB
       this->orb_ =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
     }
   catch (const CORBA::Exception& ex)
     {

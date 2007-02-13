@@ -25,6 +25,7 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoid
 project(*Client): taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = client
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }
@@ -38,6 +39,7 @@ project(*Client): taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_c
 project(*Manager): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, iormanip {
   exename = manager
   after += *idl
+  after += *Client
   Source_Files {
     Servant_Locator.cpp
     Manager.cpp

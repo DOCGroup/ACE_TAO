@@ -861,7 +861,7 @@ AST_Decl::full_name (void)
 {
   if (this->full_name_ == 0)
     {
-      this->compute_full_name ();
+      compute_full_name ();
     }
 
   return this->full_name_;
@@ -1274,16 +1274,6 @@ AST_Decl::set_name (UTL_ScopedName *n)
         }
 
       this->original_local_name (n->last_component ());
-
-      // These will be recomputed on demand.
-      delete [] this->flat_name_;
-      this->flat_name_ = 0;
-
-      delete [] this->full_name_;
-      this->full_name_ = 0;
-
-      delete [] this->repoID_;
-      this->repoID_ = 0;
     }
 }
 

@@ -9,6 +9,7 @@ Synch_i::Synch_i (void)
 
 void
 Synch_i::go (CORBA::Long base_time)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "GO\n"));

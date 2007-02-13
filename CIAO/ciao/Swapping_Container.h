@@ -48,23 +48,29 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0);
+                      const CORBA::PolicyList *more_policies = 0)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container::OA_Type t);
+                                               Container::OA_Type t)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref);
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p);
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void add_servant_map (PortableServer::ObjectId &oid,
                                   Dynamic_Component_Servant_Base* servant);
 
     virtual void delete_servant_map (PortableServer::ObjectId &oid);
 
-    virtual void deactivate_facet (const PortableServer::ObjectId &oid);
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     PortableServer::POA_ptr the_home_servant_POA (void) const;
 

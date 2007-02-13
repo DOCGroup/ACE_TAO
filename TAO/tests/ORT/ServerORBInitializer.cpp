@@ -14,12 +14,14 @@ ACE_RCSID (ORT,
 void
 ServerORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ServerORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Object_var obj =

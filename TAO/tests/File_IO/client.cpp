@@ -154,7 +154,7 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB
-      orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv, 0);
 
       // Parse the command-line arguments to get the IOR
       parse_args (argc, argv);

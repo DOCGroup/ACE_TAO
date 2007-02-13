@@ -67,11 +67,14 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   // Deactivates the CosEC and friends with the POA.
 
   // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys this Event Channel object.
 
  protected:

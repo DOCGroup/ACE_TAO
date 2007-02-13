@@ -15,6 +15,7 @@ Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb,
 CORBA::Object_ptr
 Object_Factory_i::create_object (const char *interface_repository_id,
                                  CORBA::Object_ptr gatewayed_object)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var stringified_object =
     this->orb_->object_to_string (gatewayed_object);

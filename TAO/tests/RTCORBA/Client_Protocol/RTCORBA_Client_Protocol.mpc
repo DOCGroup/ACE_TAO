@@ -23,6 +23,7 @@ project(*Server): strategies, rt_server {
 
 project(*Client): strategies, rt_client {
   after += *idl
+  after += *Server
   Source_Files {
     client.cpp
   }

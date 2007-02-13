@@ -22,6 +22,7 @@ TAO_EventLogNotification::~TAO_EventLogNotification (void)
 
 void
 TAO_EventLogNotification::disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_->disconnect_push_consumer ();
 }
@@ -42,6 +43,7 @@ TAO_EventLogNotification::obtain_proxy_consumer()
 
 void
 TAO_EventLogNotification::send_notification (const CORBA::Any& any)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   consumer_->push (any);
 }

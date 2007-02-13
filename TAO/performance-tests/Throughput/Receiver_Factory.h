@@ -22,9 +22,11 @@ public:
   Receiver_Factory (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Receiver_ptr create_receiver (void);
+  virtual Test::Receiver_ptr create_receiver (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Keep a reference to the ORB in order to shutdown the app

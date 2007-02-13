@@ -30,6 +30,7 @@ TAO_IRObject_i::~TAO_IRObject_i (void)
 CORBA::DefinitionKind
 TAO_IRObject_i::def_kind (
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Will always be overridden by concrete classes.
   return CORBA::dk_none;
@@ -43,6 +44,7 @@ TAO_IRObject_i::section_key (ACE_Configuration_Section_Key &key)
 
 void
 TAO_IRObject_i::update_key (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Portable_Server::POA_Current_Impl *pc_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>

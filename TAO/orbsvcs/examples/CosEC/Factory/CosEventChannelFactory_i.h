@@ -66,23 +66,40 @@ class TAO_CosEventChannelFactory_i :
     (
      const char * channel_id,
      CORBA::Boolean store_in_naming_service
-     );
+     )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::DuplicateChannel,
+        CosEventChannelFactory::BindFailed
+      ));
 
   virtual void destroy
     (
      const char * channel_id,
      CORBA::Boolean unbind_from_naming_service
-     );
+     )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::NoSuchChannel
+      ));
 
   virtual CosEventChannelAdmin::EventChannel_ptr find
     (
      const char * channel_id
-     );
+     )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::NoSuchChannel
+      ));
 
   virtual char * find_channel_id
     (
      CosEventChannelAdmin::EventChannel_ptr channel
-     );
+     )
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventChannelFactory::NoSuchChannel
+      ));
  protected:
 
   PortableServer::POA_var poa_;

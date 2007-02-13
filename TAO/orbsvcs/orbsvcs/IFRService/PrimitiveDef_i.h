@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    PrimitiveDef_i.h
- *
- *  $Id$
- *
- *  PrimitiveDef servant class.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    PrimitiveDef_i.h
+//
+// = DESCRIPTION
+//    PrimitiveDef servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_PRIMITIVEDEF_I_H
 #define TAO_PRIMITIVEDEF_I_H
@@ -32,47 +35,53 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @class TAO_PrimitiveDef_i
- *
- * @brief TAO_PrimitiveDef_i
- *
- * Represents any of the OMG IDL primitive types
- */
 class TAO_IFRService_Export TAO_PrimitiveDef_i : public virtual TAO_IDLType_i
 {
+  // = TITLE
+  //    TAO_PrimitiveDef_i
+  //
+  // = DESCRIPTION
+  //    Represents any of the OMG IDL primitive types
+  //
 public:
-  /// Constructor.
   TAO_PrimitiveDef_i (TAO_Repository_i *repo);
+  // Constructor.
 
-  /// Destructor.
   virtual ~TAO_PrimitiveDef_i (void);
+  // Destructor.
 
-  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
-;
 
-  /// May not be called on a primitive kind - raises BAD_INV_ORDER.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Return our definition kind.
+
   virtual void destroy ()
-;
 
-  /// Must implement this here because it's pure virtual in the
-  /// base class.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // May not be called on a primitive kind - raises BAD_INV_ORDER.
+
   virtual void destroy_i ()
-;
 
-  /// From IDLType_i's pure virtual function.
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Must implement this here because it's pure virtual in the
+  // base class.
+
   virtual CORBA::TypeCode_ptr type ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PrimitiveKind kind ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::PrimitiveKind kind_i ()
-;
+
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

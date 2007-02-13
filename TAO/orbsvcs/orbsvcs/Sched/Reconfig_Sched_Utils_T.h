@@ -1,16 +1,19 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Reconfig_Sched_Utils_T.h
- *
- *  $Id$
- *
- *  @author  Chris Gill <cdgill@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Reconfig_Scheduler_Utils_T.h
+//
+// = AUTHOR
+//     Chris Gill <cdgill@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_H
 #define TAO_RECONFIG_SCHED_UTILS_T_H
@@ -43,67 +46,63 @@ class TAO_RSE_Dependency_Visitor :
 {
 public:
 
-  /// Type of map used for O(1) lookup of RT_Info
-  /// dependency sets by caller or called handle.
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
                                   RtecScheduler::Dependency_Set*,
                                   ACE_Hash<RtecScheduler::handle_t>,
                                   ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> DEPENDENCY_SET_MAP;
+  // Type of map used for O(1) lookup of RT_Info
+  // dependency sets by caller or called handle.
 
-  /// Type of map used for O(1) lookup of RT_Infos by their handles.
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
                                   TAO_RT_Info_Ex*,
                                   ACE_Hash<RtecScheduler::handle_t>,
                                   ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> RT_INFO_MAP;
+  // Type of map used for O(1) lookup of RT_Infos by their handles.
 
-  /// Constructor.
   TAO_RSE_Dependency_Visitor
     (DEPENDENCY_SET_MAP & dependency_map,
      RT_INFO_MAP & rt_info_map);
+  // Constructor.
 
-  /// Visit a Reconfig Scheduler Entry.  This method calls
   virtual int visit (TAO_Reconfig_Scheduler_Entry &);
+  // Visit a Reconfig Scheduler Entry.  This method calls
   // protected hook methods that can be overridden by
   // derived classes, according to the Template Method
   // design pattern.
 
 protected:
-  /**
-   * Performs an unconditional action when the entry is first reached.
-   * Returns 0 for success, and -1 if an error occurred.
-   * Tests whether or not any conditional actions should be taken for
-   * the entry.  Returns 0 if the actions should be applied, 1 if the
-   * entry should be left alone, and -1 if an error occurred.
-   */
   /* WSOA merge - commented out
   virtual int unconditional_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Performs an unconditional action when the entry is first reached.
+  // Returns 0 for success, and -1 if an error occurred.
   */
   virtual int precondition (TAO_Reconfig_Scheduler_Entry &rse);
+  // Tests whether or not any conditional actions should be taken for
+  // the entry.  Returns 0 if the actions should be applied, 1 if the
+  // entry should be left alone, and -1 if an error occurred.
 
-  /// Performs an action on the entry prior to visiting any of
-  /// its successors.  Returns 0 on success and -1 on error.
   virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Performs an action on the entry prior to visiting any of
+  // its successors.  Returns 0 on success and -1 on error.
 
-  /**
-   * Performs an action on a successor entry prior to visiting
-   * it.  Returns 0 if the successor should be visited recursively,
-   * 1 if the successor should not be visited, and -1 on error.
-   */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
+  // Performs an action on a successor entry prior to visiting
+  // it.  Returns 0 if the successor should be visited recursively,
+  // 1 if the successor should not be visited, and -1 on error.
 
-  /// Performs an action on the entry after visiting all of
-  /// its successors.  Returns 0 on success and -1 on error.
   virtual int postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Performs an action on the entry after visiting all of
+  // its successors.  Returns 0 on success and -1 on error.
 
-  /// Map of dependencies between RT_Info handles.
   DEPENDENCY_SET_MAP & dependency_map_;
+  // Map of dependencies between RT_Info handles.
 
-  /// Map of handles into RT_Infos.
   RT_INFO_MAP & rt_info_map_;
+  // Map of handles into RT_Infos.
 
 };
 
@@ -122,42 +121,36 @@ class TAO_RSE_DFS_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_RSE_DFS_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+  // Constructor.
 
 protected:
-  /**
-   * Makes sure the entry has not previously been visited in forward DFS.
-   * Returns 0 if the actions should be applied, 1 if the entry
-   * should be left alone, and -1 if an error occurred.
-   */
   virtual int precondition (TAO_Reconfig_Scheduler_Entry &rse);
+  // Makes sure the entry has not previously been visited in forward DFS.
+  // Returns 0 if the actions should be applied, 1 if the entry
+  // should be left alone, and -1 if an error occurred.
 
-  /**
-   * Marks entry as forward visited and sets its forward DFS start
-   * time, prior to visiting any of its successors.  Returns 0 on
-   * success and -1 on error.
-   */
   virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Marks entry as forward visited and sets its forward DFS start
+  // time, prior to visiting any of its successors.  Returns 0 on
+  // success and -1 on error.
 
-  /// Marks whether or not successor is a thread delineator prior to
-  /// visiting it.  Returns 0 on success and -1 on error.
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
+  // Marks whether or not successor is a thread delineator prior to
+  // visiting it.  Returns 0 on success and -1 on error.
 
-  /**
-   * Marks entry as forward finished and sets its forward DFS finish
-   * time, after all of its successors have been visited.  Returns 0
-   * on success and -1 on error.
-   */
   virtual int postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Marks entry as forward finished and sets its forward DFS finish
+  // time, after all of its successors have been visited.  Returns 0
+  // on success and -1 on error.
 
 private:
-  /// Keeps track of DFS start and finish times.
   int DFS_time_;
+  // Keeps track of DFS start and finish times.
 
 };
 
@@ -175,77 +168,67 @@ class TAO_RSE_SCC_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_RSE_SCC_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+  // Constructor.
 
-  /// Accessor for number of cycles detected in traversal.
   int number_of_cycles (void);
+  // Accessor for number of cycles detected in traversal.
 
-  /// Accessor for whether or not the recursion is within a previously
-  /// detected cycle.
   int in_a_cycle (void);
+  // Accessor for whether or not the recursion is within a previously
+  // detected cycle.
 
-  /// Mutator for whether or not the recursion is within a previously
-  /// detected cycle.
   void in_a_cycle (int);
+  // Mutator for whether or not the recursion is within a previously
+  // detected cycle.
 
 protected:
-  /**
-   * If the entry is a thread delineator, sets its effective period and
-   * execution multiplier from the values in its corresponding RT_Info.
-   * Returns 0 for success, and -1 if an error occurred.
-   */
   /* WSOA merge - commented out
   virtual int unconditional_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // If the entry is a thread delineator, sets its effective period and
+  // execution multiplier from the values in its corresponding RT_Info.
+  // Returns 0 for success, and -1 if an error occurred.
   */
 
-  /**
-   * Makes sure the entry has not previously been visited in the
-   * reverse DFS (call graph transpose) direction.  Returns 0 if
-   * the actions should be applied, 1 if the entry should be left
-   * alone, and -1 if an error occurred.
-   */
   virtual int precondition (TAO_Reconfig_Scheduler_Entry &rse);
+  // Makes sure the entry has not previously been visited in the
+  // reverse DFS (call graph transpose) direction.  Returns 0 if
+  // the actions should be applied, 1 if the entry should be left
+  // alone, and -1 if an error occurred.
 
-  /**
-   * Marks reverse status as visited and sets reverse start time for
-   * entry, prior to visiting any of its successors.  Returns 0 on
-   * success and -1 on error.
-   */
   virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Marks reverse status as visited and sets reverse start time for
+  // entry, prior to visiting any of its successors.  Returns 0 on
+  // success and -1 on error.
 
-  /**
-   * Checks reverse status of each successor.  For any that have not
-   * been previously visited, it complains about the entry and
-   * successor being part of a cycle, stores the fact that a cycle was
-   * detected, and maintains a count of the total number of cycles
-   * (strongly connected components).  Returns 0 on success and -1 on
-   * an error (finding a cycle is not considered an error, at least as
-   * far as this method is concerned).
-   */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
+  // Checks reverse status of each successor.  For any that have not
+  // been previously visited, it complains about the entry and
+  // successor being part of a cycle, stores the fact that a cycle was
+  // detected, and maintains a count of the total number of cycles
+  // (strongly connected components).  Returns 0 on success and -1 on
+  // an error (finding a cycle is not considered an error, at least as
+  // far as this method is concerned).
 
-  /**
-   * Sets the entry's reverse finish time and marks it as finished in
-   * the reverse DFS traversal, after visiting all of its successors.
-   * Returns 0 on success and -1 on error.
-   */
   virtual int postfix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Sets the entry's reverse finish time and marks it as finished in
+  // the reverse DFS traversal, after visiting all of its successors.
+  // Returns 0 on success and -1 on error.
 
 private:
-  /// Keeps track of DFS start and finish times.
   int DFS_time_;
+  // Keeps track of DFS start and finish times.
 
-  /// Keeps track of DFS start and finish times.
   int number_of_cycles_;
+  // Keeps track of DFS start and finish times.
 
-  /// Indicates whether or not the recursion is
-  /// currently within a previously discovered cycle.
   int in_a_cycle_;
+  // Indicates whether or not the recursion is
+  // currently within a previously discovered cycle.
 };
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
@@ -262,21 +245,19 @@ class TAO_RSE_Reverse_Propagation_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_RSE_Reverse_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+  // Constructor.
 
 protected:
 
-  /**
-   * Propagates aggregate execution time from successor to calling
-   * entry.  Returns 1 on success (to prevent recursion on the
-   * successor), and -1 on error.
-   */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
+  // Propagates aggregate execution time from successor to calling
+  // entry.  Returns 1 on success (to prevent recursion on the
+  // successor), and -1 on error.
 
 };
 
@@ -295,58 +276,54 @@ class TAO_RSE_Forward_Propagation_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_RSE_Forward_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+  // Constructor.
 
-  /// Accessor for number of nodes with unresolved local dependencies.
   int unresolved_locals (void);
+  // Accessor for number of nodes with unresolved local dependencies.
 
-  /// Mutator for numberof nodes with unresolved local dependencies.
   void unresolved_locals (int);
+  // Mutator for numberof nodes with unresolved local dependencies.
 
-  /// Accessor for number of nodes with unresolved remote dependencies.
   int unresolved_remotes (void);
+  // Accessor for number of nodes with unresolved remote dependencies.
 
-  /// Mutator for number of nodes with unresolved remote dependencies.
   void unresolved_remotes (int);
+  // Mutator for number of nodes with unresolved remote dependencies.
 
-  /// Accessor for number of nodes with thread specification errors.
   int thread_specification_errors (void);
+  // Accessor for number of nodes with thread specification errors.
 
-  /// Mutator for number of nodes with thread specification errors.
   void thread_specification_errors (int);
+  // Mutator for number of nodes with thread specification errors.
 
 protected:
-  /**
-   * Tests the entry for possibly having unresolved remote or local
-   * dependencies prior to visiting any of its successors.  Returns 0
-   * on success and -1 on error (having unresolved remote or local
-   * dependencies is not considered an error, at least for this
-   * method).
-   */
   virtual int prefix_action (TAO_Reconfig_Scheduler_Entry &rse);
+  // Tests the entry for possibly having unresolved remote or local
+  // dependencies prior to visiting any of its successors.  Returns 0
+  // on success and -1 on error (having unresolved remote or local
+  // dependencies is not considered an error, at least for this
+  // method).
 
-  /**
-   * Propagates effective period and execution time multiplier from
-   * entry to successor prior to visiting successor.  Returns 1 on
-   * success (to prevent recursion on the successor), and -1 on error.
-   */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
+  // Propagates effective period and execution time multiplier from
+  // entry to successor prior to visiting successor.  Returns 1 on
+  // success (to prevent recursion on the successor), and -1 on error.
 
 private:
 
-  /// Number of nodes with unresolved local dependencies.
   int unresolved_locals_;
+  // Number of nodes with unresolved local dependencies.
 
-  /// Number of nodes with unresolved remote dependencies.
   int unresolved_remotes_;
+  // Number of nodes with unresolved remote dependencies.
 
-  /// Number of nodes with thread specification errors.
   int thread_specification_errors_;
+  // Number of nodes with thread specification errors.
 };
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
@@ -363,48 +340,44 @@ class TAO_RSE_Priority_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
                             TAO_Reconfig_Scheduler_Entry ** entry_ptr_array);
+  // Constructor.
 
-  /**
-   * Visit a RT_Info tuple.  This method assigns a priority and
-   * subpriority value to each tuple.  Priorities are assigned in
-   * increasing value order, with lower numbers corresponding to
-   * higher priorities.  Returns -1 on error, 1 if a new priority was
-   * assigned, or 0 otherwise.
-   */
     virtual int visit (TAO_Reconfig_Scheduler_Entry &);
+  // Visit a RT_Info tuple.  This method assigns a priority and
+  // subpriority value to each tuple.  Priorities are assigned in
+  // increasing value order, with lower numbers corresponding to
+  // higher priorities.  Returns -1 on error, 1 if a new priority was
+  // assigned, or 0 otherwise.
 
-  /**
-   * Finishes tuple priority assignment by iterating over the
-   * remaining tuples in the last subpriority level, and adjusting
-   * their subpriorities.
-   */
   int finish ();
+  // Finishes tuple priority assignment by iterating over the
+  // remaining tuples in the last subpriority level, and adjusting
+  // their subpriorities.
 
 private:
 
-  /// Pointer to previous tuple in the iteration.
   TAO_Reconfig_Scheduler_Entry *previous_entry_;
+  // Pointer to previous tuple in the iteration.
 
-  /// Pointer to first subpriority tuple in the priority level.
   TAO_Reconfig_Scheduler_Entry **first_subpriority_entry_;
+  // Pointer to first subpriority tuple in the priority level.
 
-  /// Current priority value.
   RtecScheduler::Preemption_Priority_t priority_;
+  // Current priority value.
 
-  /// Current subpriority value.
   RtecScheduler::Preemption_Subpriority_t subpriority_;
+  // Current subpriority value.
 
-  /// Current OS (thread) priority value.
   RtecScheduler::OS_Priority os_priority_;
+  // Current OS (thread) priority value.
 
-  /// Number of handles in the entry pointer array.
   RtecScheduler::handle_t handles_;
+  // Number of handles in the entry pointer array.
 
-  /// An array of pointers to entries we will be visiting.
   TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
+  // An array of pointers to entries we will be visiting.
 };
 
 template <class RECONFIG_SCHED_STRATEGY>
@@ -424,55 +397,53 @@ class TAO_Tuple_Admission_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_Tuple_Admission_Visitor (const CORBA::Double & critical_utilization_threshold,
                                const CORBA::Double & noncritical_utilization_threshold);
+  // Constructor.
 
-  /**
-   * Visit an RT_Info tuple.  This method determines the utilization by
-   * the tuple, and if it's admissible, updates its RT_Info and either
-   * the critical or non-critical utilization, depending on whether or
-   * not the strategy says the operation is critical.
-   */
     virtual int visit (TAO_RT_Info_Tuple &);
+  // Visit an RT_Info tuple.  This method determines the utilization by
+  // the tuple, and if it's admissible, updates its RT_Info and either
+  // the critical or non-critical utilization, depending on whether or
+  // not the strategy says the operation is critical.
 
-  /// Accessor for utilization by critical operations.
   CORBA::Double critical_utilization ();
+  // Accessor for utilization by critical operations.
 
-  /// Accessor for utilization by noncritical operations.
   CORBA::Double noncritical_utilization ();
+  // Accessor for utilization by noncritical operations.
 
-  /// Accessor for utilization by critical operations.
   CORBA::Double critical_utilization_threshold ();
+  // Accessor for utilization by critical operations.
 
-  /// Accessor for utilization by noncritical operations.
   CORBA::Double noncritical_utilization_threshold ();
+  // Accessor for utilization by noncritical operations.
 
-  /// Accessor for utilization by critical operations.
   CORBA::Double total_critical_utilization ();
+  // Accessor for utilization by critical operations.
 
-  /// Accessor for utilization by noncritical operations.
   CORBA::Double total_noncritical_utilization ();
+  // Accessor for utilization by noncritical operations.
 
 private:
 
-  /// Utilization by critical operations.
   CORBA::Double critical_utilization_;
+  // Utilization by critical operations.
 
-  /// Utilization by noncritical operations.
   CORBA::Double noncritical_utilization_;
+  // Utilization by noncritical operations.
 
-  /// Utilization by critical operations.
   CORBA::Double total_critical_utilization_;
+  // Utilization by critical operations.
 
-  /// Utilization by noncritical operations.
   CORBA::Double total_noncritical_utilization_;
+  // Utilization by noncritical operations.
 
-  /// Utilization by critical operations.
   CORBA::Double critical_utilization_threshold_;
+  // Utilization by critical operations.
 
-  /// Utilization by noncritical operations.
   CORBA::Double noncritical_utilization_threshold_;
+  // Utilization by noncritical operations.
 };
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
@@ -489,21 +460,19 @@ class TAO_RSE_Criticality_Propagation_Visitor :
 {
 public:
 
-  /// Constructor.
   TAO_RSE_Criticality_Propagation_Visitor
     (typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+  // Constructor.
 
 protected:
 
-  /**
-   * Propagates criticality from successor to calling
-   * entry.  Returns 1 on success (to prevent recursion on the
-   * successor), and -1 on error.
-   */
   virtual int pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                                   TAO_Reconfig_Scheduler_Entry &successor,
                                   const RtecScheduler::Dependency_Info &di);
+  // Propagates criticality from successor to calling
+  // entry.  Returns 1 on success (to prevent recursion on the
+  // successor), and -1 on error.
 
 };
 

@@ -22,6 +22,7 @@ namespace TAO
 
     CORBA::Policy_ptr
     ThreadPolicy::copy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ThreadPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -33,17 +34,20 @@ namespace TAO
 
     void
     ThreadPolicy::destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::ThreadPolicyValue
     ThreadPolicy::value (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
     ThreadPolicy::policy_type (void)
+      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::THREAD_POLICY_ID;
     }

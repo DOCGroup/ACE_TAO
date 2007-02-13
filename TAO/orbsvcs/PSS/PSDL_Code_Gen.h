@@ -50,21 +50,25 @@ class TAO_PSDL_Export TAO_PSDL_Code_Gen
   /// Method to save the name-stringified object reference pair
   /// to the database. Returns -1 on failure.
   int set_name_obj_ref (const char *name,
-                        const char *string_obj_ref);
+                        const char *string_obj_ref)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the stringified form of the object reference given the name
   /// of the object.
-  const char *get_obj_ref (const char *name);
+  const char *get_obj_ref (const char *name)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
 
   /// Helper method which serializes the data and saves it to the
   /// database.
-  CORBA::OctetSeq *encode (const char *string_obj_ref);
+  CORBA::OctetSeq *encode (const char *string_obj_ref)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   /// Helper method to get the octet sequence
-  const char *decode (const CORBA::OctetSeq &data);
+  const char *decode (const CORBA::OctetSeq &data)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// File where the persistent data is stored.
   const char *file_name_;

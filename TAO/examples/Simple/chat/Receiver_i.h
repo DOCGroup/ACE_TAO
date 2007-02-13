@@ -37,10 +37,16 @@ public:
   ~Receiver_i (void);
   // Destructor.
 
-  virtual void message (const char *msg);
+  virtual void message (const char *msg)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
   // Receives a message string.
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
   // Called when the chat server is going away.  The client
   // implementation should shutdown the chat client in response to
   // this.

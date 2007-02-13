@@ -9,12 +9,14 @@ ChildServant::ChildServant(CORBA::ORB_ptr orb)
 
 void
 ChildServant::childMethod ()
+ACE_THROW_SPEC ((CORBA::SystemException))
 {
    // No-op
 }
 
 void
 ChildServant::parentMethod ()
+ACE_THROW_SPEC((CORBA::SystemException))
 {
    // Just throw an exception
    throw CORBA::INTERNAL ();
@@ -22,6 +24,7 @@ ChildServant::parentMethod ()
 
 void
 ChildServant::shutdown ()
+ACE_THROW_SPEC((CORBA::SystemException))
 {
    this->orb_->shutdown(0);
 }

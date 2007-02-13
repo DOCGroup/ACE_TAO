@@ -13,6 +13,7 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 CORBA::Any *
 test_i::get_value (CORBA::Long offset)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_ptr retval_ptr = 0;
   ACE_NEW_THROW_EX (retval_ptr,
@@ -71,6 +72,7 @@ test_i::get_value (CORBA::Long offset)
 
 void
 test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

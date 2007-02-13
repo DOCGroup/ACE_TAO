@@ -25,7 +25,7 @@ ACE_RCSID (Strategies,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const ACE_INET_Addr &addr,
-                                        int use_dotted_decimal_addresses)
+                                      int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
@@ -249,7 +249,8 @@ TAO_SCIOP_Endpoint::object_addr (void) const
 void
 TAO_SCIOP_Endpoint::object_addr_i (void) const
 {
-  if (this->object_addr_.set (this->port_, this->host_.in ()) == -1)
+  if (this->object_addr_.set (this->port_,
+                              this->host_.in ()) == -1)
     {
       // If this call fails, it most likely due a hostname
       // lookup failure caused by a DNS misconfiguration.  If

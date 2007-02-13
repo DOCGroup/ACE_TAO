@@ -25,24 +25,30 @@ Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 
 char *
 Echo_Server_Request_Interceptor::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Echo_Server_Request_Interceptor::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -78,6 +84,7 @@ Echo_Server_Request_Interceptor::receive_request (
 void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -126,6 +133,8 @@ Echo_Server_Request_Interceptor::send_reply (
 void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
   CORBA::String_var op = ri->operation ();
@@ -151,6 +160,8 @@ Echo_Server_Request_Interceptor::send_exception (
 void
 Echo_Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }

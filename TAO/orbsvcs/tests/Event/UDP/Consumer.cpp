@@ -76,6 +76,7 @@ Consumer::disconnect (void)
 
 void
 Consumer::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -131,6 +132,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

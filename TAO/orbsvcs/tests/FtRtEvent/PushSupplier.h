@@ -30,7 +30,10 @@ public:
   int init(RtecEventChannelAdmin::EventChannel_ptr);
 
     virtual void  disconnect_push_supplier (
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 private:
 
   class ReactorTask : public ACE_Task_Base

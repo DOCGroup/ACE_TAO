@@ -59,11 +59,14 @@ public:
   void disconnect (void);
 
   /// The Consumer side methods.
-  void push (const RtecEventComm::EventSet& events);
-  void disconnect_push_consumer (void);
+  void push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Count the number of events sent
   CORBA::ULong event_count;

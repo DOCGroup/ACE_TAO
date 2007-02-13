@@ -41,6 +41,7 @@ Coffee_i::~Coffee_i (void)
 // get attribute
 Coffee::Desc *
 Coffee_i::description ( /*env*/)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Coffee::Desc *desc = new Coffee::Desc;
   desc->name = CORBA::string_dup (this->name_.in ());
@@ -51,6 +52,7 @@ Coffee_i::description ( /*env*/)
 void
 Coffee_i::description (const Coffee::Desc &description
  /*env*/)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->name_ = CORBA::string_dup (description.name);
 }
@@ -78,6 +80,7 @@ CORBA::Short
 Param_Test_i::test_short (CORBA::Short s1,
                           CORBA::Short &s2,
                           CORBA::Short_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   s2 = (CORBA::Short) (s1 * 2);
   s3 = (CORBA::Short) (s1 * 3);
@@ -95,6 +98,7 @@ CORBA::ULongLong
 Param_Test_i::test_ulonglong (CORBA::ULongLong s1,
                               CORBA::ULongLong &s2,
                               CORBA::ULongLong_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   s2 = s1 * 2;
   s3 = s1 * 3;
@@ -108,6 +112,7 @@ char *
 Param_Test_i::test_unbounded_string (const char *s1,
                                      char *&s2,
                                      CORBA::String_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
@@ -125,6 +130,7 @@ char *
 Param_Test_i::test_bounded_string (const char *s1,
                                    char *&s2,
                                    CORBA::String_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
@@ -142,6 +148,7 @@ CORBA::WChar *
 Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
                                       CORBA::WChar *&ws2,
                                       CORBA::WString_out ws3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
   ws3 = CORBA::wstring_dup (ws1);
@@ -163,6 +170,7 @@ CORBA::WChar *
 Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
                                     CORBA::WChar *&ws2,
                                     CORBA::WString_out ws3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
   ws3 = CORBA::wstring_dup (ws1);
@@ -182,6 +190,7 @@ Param_Test::Fixed_Struct
 Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
                                  Param_Test::Fixed_Struct &s2,
                                  Param_Test::Fixed_Struct_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   s2 = s1;
   s3 = s1;
@@ -194,6 +203,7 @@ CORBA::LongSeq *
 Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
                                   CORBA::LongSeq & s2,
                                   CORBA::LongSeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::LongSeq
     *ret = new CORBA::LongSeq,
@@ -210,6 +220,7 @@ CORBA::ShortSeq *
 Param_Test_i::test_short_sequence (const CORBA::ShortSeq & s1,
                                    CORBA::ShortSeq & s2,
                                    CORBA::ShortSeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ShortSeq
     *ret = new CORBA::ShortSeq,
@@ -226,6 +237,7 @@ Param_Test::Bounded_Short_Seq *
 Param_Test_i::test_bounded_short_sequence (const Param_Test::Bounded_Short_Seq & s1,
                                            Param_Test::Bounded_Short_Seq & s2,
                                            Param_Test::Bounded_Short_Seq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_Short_Seq
     *ret = new Param_Test::Bounded_Short_Seq,
@@ -242,6 +254,7 @@ Param_Test::Bounded_Long_Seq *
 Param_Test_i::test_bounded_long_sequence (const Param_Test::Bounded_Long_Seq & s1,
                                           Param_Test::Bounded_Long_Seq & s2,
                                           Param_Test::Bounded_Long_Seq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_Long_Seq
     *ret = new Param_Test::Bounded_Long_Seq,
@@ -258,6 +271,7 @@ CORBA::StringSeq *
 Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
                            CORBA::StringSeq &s2,
                            CORBA::StringSeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -292,6 +306,7 @@ Param_Test::Bounded_StrSeq *
 Param_Test_i::test_bounded_strseq (const Param_Test::Bounded_StrSeq & s1,
                                    Param_Test::Bounded_StrSeq & s2,
                                    Param_Test::Bounded_StrSeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -311,6 +326,7 @@ CORBA::WStringSeq *
 Param_Test_i::test_wstrseq (const CORBA::WStringSeq &ws1,
                             CORBA::WStringSeq &ws2,
                             CORBA::WStringSeq_out ws3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -330,6 +346,7 @@ Param_Test::Bounded_WStrSeq *
 Param_Test_i::test_bounded_wstrseq (const Param_Test::Bounded_WStrSeq & ws1,
                                     Param_Test::Bounded_WStrSeq & ws2,
                                     Param_Test::Bounded_WStrSeq_out ws3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -350,6 +367,7 @@ Param_Test::StructSeq *
 Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
                                     Param_Test::StructSeq &s2,
                                     Param_Test::StructSeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -371,6 +389,7 @@ Param_Test::Bounded_StructSeq *
 Param_Test_i::test_bounded_struct_sequence (const Param_Test::Bounded_StructSeq & s1,
                                             Param_Test::Bounded_StructSeq & s2,
                                             Param_Test::Bounded_StructSeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_StructSeq
     *ret = new Param_Test::Bounded_StructSeq,
@@ -388,6 +407,7 @@ Param_Test::PathSpec *
 Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
                                               Param_Test::PathSpec & s2,
                                               Param_Test::PathSpec_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::PathSpec
     *ret = new Param_Test::PathSpec,
@@ -419,6 +439,7 @@ Param_Test::ArraySeq *
 Param_Test_i::test_array_sequence (const Param_Test::ArraySeq &s1,
                                    Param_Test::ArraySeq &s2,
                                    Param_Test::ArraySeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -440,6 +461,7 @@ Param_Test::Bounded_ArraySeq *
 Param_Test_i::test_bounded_array_sequence (const Param_Test::Bounded_ArraySeq & s1,
                                            Param_Test::Bounded_ArraySeq & s2,
                                            Param_Test::Bounded_ArraySeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_ArraySeq
     *ret = new Param_Test::Bounded_ArraySeq,
@@ -456,6 +478,7 @@ Param_Test::Coffee_Mix *
 Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
                               Param_Test::Coffee_Mix & s2,
                               Param_Test::Coffee_Mix_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Coffee_Mix
     *ret = new Param_Test::Coffee_Mix,
@@ -497,6 +520,7 @@ Param_Test::Bounded_Coffee_Mix *
 Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
                                       Param_Test::Bounded_Coffee_Mix & s2,
                                       Param_Test::Bounded_Coffee_Mix_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_Coffee_Mix
     *ret = new Param_Test::Bounded_Coffee_Mix,
@@ -538,6 +562,7 @@ CORBA::AnySeq *
 Param_Test_i::test_anyseq (const CORBA::AnySeq &s1,
                            CORBA::AnySeq &s2,
                            CORBA::AnySeq_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -560,6 +585,7 @@ Param_Test::Var_Struct *
 Param_Test_i::test_var_struct (const Param_Test::Var_Struct &s1,
                                Param_Test::Var_Struct &s2,
                                Param_Test::Var_Struct_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -580,6 +606,7 @@ Param_Test::Nested_Struct *
 Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
                                   Param_Test::Nested_Struct &s2,
                                   Param_Test::Nested_Struct_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -600,6 +627,7 @@ Param_Test::Recursive_Struct *
 Param_Test_i::test_recursive_struct (const Param_Test::Recursive_Struct &s1,
                                      Param_Test::Recursive_Struct &s2,
                                      Param_Test::Recursive_Struct_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" structs into all the inout, out and return sequences.
 
@@ -619,6 +647,7 @@ Param_Test::Objref_Struct *
 Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
                                   Param_Test::Objref_Struct &s2,
                                   Param_Test::Objref_Struct_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -637,6 +666,7 @@ Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
 // make a Coffee object
 Coffee_ptr
 Param_Test_i::make_coffee (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->obj_._this ();
 }
@@ -646,6 +676,7 @@ Coffee_ptr
 Param_Test_i::test_objref (Coffee_ptr o1,
                            Coffee_ptr &o2,
                            Coffee_out o3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Coffee_ptr ret = Coffee::_nil ();
 
@@ -690,6 +721,7 @@ Param_Test_i::test_typecode (CORBA::TypeCode_ptr t1,
                              CORBA::TypeCode_ptr &t2,
                              CORBA::TypeCode_out t3
 /*env*/)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we simply assign t1 to the others
   CORBA::TypeCode_ptr retval = CORBA::TypeCode::_duplicate (t1);
@@ -703,6 +735,7 @@ CORBA::Any *
 Param_Test_i::test_any (const CORBA::Any &a1,
                         CORBA::Any &a2,
                         CORBA::Any_out a3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any *ret;
   CORBA::Short short_in;
@@ -867,6 +900,7 @@ Param_Test::Fixed_Array_slice *
 Param_Test_i::test_fixed_array (const Param_Test::Fixed_Array a1,
                                 Param_Test::Fixed_Array a2,
                                 Param_Test::Fixed_Array_out a3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Fixed_Array_slice *ret;
 
@@ -881,6 +915,7 @@ Param_Test::Var_Array_slice *
 Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
                               Param_Test::Var_Array a2,
                               Param_Test::Var_Array_out a3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Var_Array_slice *ret;
 
@@ -894,6 +929,8 @@ CORBA::ULong
 Param_Test_i::test_exception (CORBA::ULong s1,
                               CORBA::ULong& s2,
                               CORBA::ULong_out s3)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Param_Test::Ooops))
 {
   CORBA::ULong d = s1 % 4;
 
@@ -907,13 +944,13 @@ Param_Test_i::test_exception (CORBA::ULong s1,
   // Throw a known user exception type to test the user exception.
   else if (d == 1)
     {
-      throw Param_Test::Ooops (" % 4 == 1", d);
+      ACE_THROW_RETURN (Param_Test::Ooops (" % 4 == 1", d), 0);
     }
   // Throw a CORBA::SystemException type CORBA::NO_MEMORY to test
   // the system exception.
   else if (d == 2)
     {
-      throw CORBA::NO_MEMORY ();
+      ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
     }
 
   // This will avoid the compiler
@@ -929,6 +966,7 @@ Param_Test::Big_Union*
 Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
                               Param_Test::Big_Union& u2,
                               Param_Test::Big_Union_out u3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Big_Union_var ret (new Param_Test::Big_Union (u1));
   u2 = u1;
@@ -940,6 +978,7 @@ Param_Test::Small_Union
 Param_Test_i::test_small_union (const Param_Test::Small_Union& u1,
                                 Param_Test::Small_Union& u2,
                                 Param_Test::Small_Union_out u3)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u2 = u1;
   u3 = u1;
@@ -950,6 +989,7 @@ Param_Test::Recursive_Union*
 Param_Test_i::test_recursive_union (const Param_Test::Recursive_Union& ru1,
                                     Param_Test::Recursive_Union& ru2,
                                     Param_Test::Recursive_Union_out ru3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Recursive_Union_var ret (new Param_Test::Recursive_Union (ru1));
   ru2 = ru1;
@@ -961,6 +1001,7 @@ CORBA::Any*
 Param_Test_i::test_complex_any (const CORBA::Any &a1,
                                 CORBA::Any &a2,
                                 CORBA::Any_out a3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_var ret (new CORBA::Any (a1));
   a2 = a1;
@@ -972,6 +1013,7 @@ Param_Test::Multdim_Array_slice *
 Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
                                   Param_Test::Multdim_Array a2,
                                   Param_Test::Multdim_Array_out a3)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Multdim_Array_slice *ret;
 
@@ -983,6 +1025,7 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
 
 void
 Param_Test_i::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

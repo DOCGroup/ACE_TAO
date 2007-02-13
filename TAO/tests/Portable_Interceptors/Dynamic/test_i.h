@@ -22,18 +22,24 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
 
   virtual CORBA::Long calculate (CORBA::Long one,
-                                 CORBA::Long two);
+                                 CORBA::Long two)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void normal (CORBA::Long arg,
-               CORBA::String_out msg);
+               CORBA::String_out msg)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Test_Interceptors::Visual::VarLenStruct * the_structure ();
+  virtual Test_Interceptors::Visual::VarLenStruct * the_structure ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void user (void);
+  virtual void user (void)
+    ACE_THROW_SPEC ((CORBA::SystemException, Test_Interceptors::Silly));
 
-  virtual void system (void);
+  virtual void system (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 

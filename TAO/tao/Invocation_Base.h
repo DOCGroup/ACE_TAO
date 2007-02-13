@@ -198,20 +198,24 @@ namespace TAO
   protected:
     /// Helper method to invoke send_request interception call to all
     /// the registered interceptors.
-    Invocation_Status send_request_interception (void);
+    Invocation_Status send_request_interception (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Helper method to invoke receive_reply interception call to all
     /// the registered interceptors.
-    Invocation_Status receive_reply_interception (void);
+    Invocation_Status receive_reply_interception (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Helper method to invoke receive_other interception call to all
     /// the registered interceptors.
-    Invocation_Status receive_other_interception (void);
+    Invocation_Status receive_other_interception (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Helper methods to handle interception calls when exceptions
     /// are thrown by the PortableInterceptor.
     PortableInterceptor::ReplyStatus
-        handle_any_exception (CORBA::Exception * e);
+        handle_any_exception (CORBA::Exception *e
+                             );
 
     PortableInterceptor::ReplyStatus
         handle_all_exception (void);

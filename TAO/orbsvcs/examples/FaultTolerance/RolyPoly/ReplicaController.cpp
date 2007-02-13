@@ -216,7 +216,7 @@ namespace
 {
   FT::FTRequestServiceContext*
   extract_context (
-    PortableInterceptor::ServerRequestInfo_ptr ri);
+    PortableInterceptor::ServerRequestInfo_ptr ri) ACE_THROW_SPEC ((CORBA::SystemException));
 }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
@@ -224,6 +224,8 @@ void
 ReplicaController::tao_ft_interception_point (
   PortableInterceptor::ServerRequestInfo_ptr ri,
   CORBA::OctetSeq_out ocs)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   FT::FTRequestServiceContext_var ftr (
     extract_context (ri));
@@ -257,6 +259,7 @@ ReplicaController::tao_ft_interception_point (
 void
 ReplicaController::send_reply (
   PortableInterceptor::ServerRequestInfo_ptr ri)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FT::FTRequestServiceContext_var ftr (
     extract_context (ri));
@@ -421,6 +424,7 @@ namespace
 {
   FT::FTRequestServiceContext*
   extract_context (PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     IOP::ServiceContext_var svc =
       ri->get_request_service_context (IOP::FT_REQUEST);
@@ -471,6 +475,7 @@ namespace
 
 char*
 ReplicaController::name (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("ReplicaController");
 }
@@ -478,23 +483,30 @@ ReplicaController::name (void)
 void
 ReplicaController::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 ReplicaController::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 ReplicaController::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 ReplicaController::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 
 }
@@ -502,5 +514,7 @@ ReplicaController::receive_request_service_contexts (
 void
 ReplicaController::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
 }

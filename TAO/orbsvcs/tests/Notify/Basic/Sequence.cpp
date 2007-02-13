@@ -19,6 +19,8 @@ void
 SequencePushConsumer::push_structured_events (
     const CosNotification::EventBatch &batch
   )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosEventComm::Disconnected))
 {
   this->test_client_->events_received_ += batch.length ();
 

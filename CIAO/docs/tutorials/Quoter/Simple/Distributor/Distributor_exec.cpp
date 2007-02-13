@@ -143,6 +143,9 @@ namespace CIDL_StockDistributor_Impl
 
   ::Stock::StockInfo *
   StockQuoter_exec_i::get_stock_info (const char *stock_name)
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Stock::Invalid_Stock))
   {
     if (strcmp (stock_name, "MSFT") == 0)
     {
@@ -164,7 +167,7 @@ namespace CIDL_StockDistributor_Impl
     }
     else
     {
-      throw Stock::Invalid_Stock ();
+      ACE_THROW_RETURN (Stock::Invalid_Stock (), 0);
     }
   }
 
@@ -185,6 +188,7 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::start ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->rate_ == 0 || this->pulser_.active())
     {
@@ -196,6 +200,7 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::stop ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (! this->pulser_.active ())
     {
@@ -209,6 +214,7 @@ namespace CIDL_StockDistributor_Impl
 
   ::CORBA::Long
   StockDistributor_exec_i::rate ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->rate_;
   }
@@ -216,6 +222,7 @@ namespace CIDL_StockDistributor_Impl
   void
   StockDistributor_exec_i::rate (
   ::CORBA::Long rate)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->rate_ = rate;
   }
@@ -224,12 +231,14 @@ namespace CIDL_StockDistributor_Impl
 
   ::Stock::CCM_StockQuoter_ptr
   StockDistributor_exec_i::get_push_quoter ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return new StockQuoter_exec_i (*this);
   }
 
   void
   StockDistributor_exec_i::push_notify_out ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->msft_++;
     this->ibm_++;
@@ -248,6 +257,9 @@ namespace CIDL_StockDistributor_Impl
   void
   StockDistributor_exec_i::set_session_context (
   ::Components::SessionContext_ptr ctx)
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     this->context_ = StockDistributor_Context::_narrow (ctx);
 
@@ -259,16 +271,25 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::ciao_preactivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
   void
   StockDistributor_exec_i::ciao_postactivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
   void
   StockDistributor_exec_i::ccm_activate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Start the active object
     this->pulser_.open_h ();
@@ -276,6 +297,9 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::ccm_passivate ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     // Deactivate the active object
     this->pulser_.close_h ();
@@ -283,6 +307,9 @@ namespace CIDL_StockDistributor_Impl
 
   void
   StockDistributor_exec_i::ccm_remove ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
   }
 
@@ -300,6 +327,9 @@ namespace CIDL_StockDistributor_Impl
 
   ::Components::EnterpriseComponent_ptr
   StockDistributorHome_exec_i::create ()
+  ACE_THROW_SPEC ((
+  ::CORBA::SystemException,
+  ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

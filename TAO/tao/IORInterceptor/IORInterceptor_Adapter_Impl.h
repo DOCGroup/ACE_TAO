@@ -64,22 +64,26 @@ public:
 
   virtual void destroy_interceptors (void);
 
-  virtual void establish_components (TAO_Root_POA *poa );
+  virtual void establish_components (TAO_Root_POA *poa )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
   virtual void components_established (PortableInterceptor::IORInfo_ptr info
-                                       );
+                                       )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void adapter_manager_state_changed (
       const char * id,
       PortableInterceptor::AdapterState state
-      );
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// List of IOR interceptors maintained

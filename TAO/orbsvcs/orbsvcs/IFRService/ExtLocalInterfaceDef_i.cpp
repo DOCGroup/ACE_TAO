@@ -30,6 +30,7 @@ TAO_ExtLocalInterfaceDef_i::~TAO_ExtLocalInterfaceDef_i (void)
 // disambiguate multiple inheritance.
 void
 TAO_ExtLocalInterfaceDef_i::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 

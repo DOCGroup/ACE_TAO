@@ -22,14 +22,15 @@ namespace TAO
   // ===================================================================
 
   ACE_INLINE
-  NVList_Argument::NVList_Argument (CORBA::NVList_ptr x, bool lazy_eval)
+  NVList_Argument::NVList_Argument (CORBA::NVList_ptr x,
+                                    bool lazy_eval)
     : x_ (x)
       , lazy_evaluation_ (lazy_eval)
   {
   }
 
   ACE_INLINE
-  CORBA::NVList_ptr
+  CORBA::NVList_ptr 
   NVList_Argument::arg () const
   {
     return this->x_;

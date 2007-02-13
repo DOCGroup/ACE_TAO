@@ -16,12 +16,14 @@ TAO_DistributableThread::~TAO_DistributableThread (void)
 
 void
 TAO_DistributableThread::cancel (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->state_ = RTScheduling::DistributableThread::CANCELLED;
 }
 
 RTScheduling::DistributableThread::DT_State
 TAO_DistributableThread::state (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->state_;
 }

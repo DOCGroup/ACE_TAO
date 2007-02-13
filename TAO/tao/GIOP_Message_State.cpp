@@ -27,6 +27,7 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
 {
 }
 
+
 int
 TAO_GIOP_Message_State::parse_message_header (ACE_Message_Block &incoming)
 {
@@ -101,6 +102,9 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 
   return 0; // success
 }
+
+
+
 
 int
 TAO_GIOP_Message_State::parse_magic_bytes (char *buf)

@@ -13,12 +13,14 @@ ACE_RCSID (Dynamic, Echo_Client_ORBInitializer, "$Id$")
 void
 Echo_Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Echo_Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   PortableInterceptor::ClientRequestInterceptor_ptr interceptor =

@@ -6,7 +6,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
+
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Struct_TypeCode_Static.inl"
@@ -224,7 +224,8 @@ TAO::TypeCode::Struct<char const *,
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return
@@ -285,7 +286,7 @@ TAO::TypeCode::Struct<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
   return Traits<char const *>::get_string (this->fields_[index].name);
 }
@@ -300,7 +301,8 @@ TAO::TypeCode::Struct<char const *,
   ) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      CORBA::TypeCode::_nil ());
 
   return
     CORBA::TypeCode::_duplicate (

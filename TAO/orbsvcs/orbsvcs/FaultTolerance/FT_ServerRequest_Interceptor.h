@@ -69,31 +69,45 @@ namespace TAO
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void destroy (void);
+    virtual void destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+      PortableInterceptor::ServerRequestInfo_ptr ri)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
     virtual void receive_request (
-        PortableInterceptor::ServerRequestInfo_ptr ri);
+        PortableInterceptor::ServerRequestInfo_ptr ri)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
 
     virtual void send_reply (
-        PortableInterceptor::ServerRequestInfo_ptr ri);
+        PortableInterceptor::ServerRequestInfo_ptr ri)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void send_exception (
-        PortableInterceptor::ServerRequestInfo_ptr ri);
+        PortableInterceptor::ServerRequestInfo_ptr ri)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
 
     virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr ri);
+        PortableInterceptor::ServerRequestInfo_ptr ri)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableInterceptor::ForwardRequest));
     //@}
   private:
 
-    void check_iogr_version (const IOP::ServiceContext &svc);
+    void check_iogr_version (const IOP::ServiceContext &svc)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+           PortableInterceptor::ForwardRequest));
 
     void update_iogr (
-        PortableInterceptor::ServerRequestInfo_ptr ri);
+        PortableInterceptor::ServerRequestInfo_ptr ri)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
 

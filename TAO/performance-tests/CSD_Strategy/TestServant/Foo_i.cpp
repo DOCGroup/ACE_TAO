@@ -23,6 +23,7 @@ Foo_i::~Foo_i()
 
 void
 Foo_i::op1(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[0]++;
 }
@@ -30,6 +31,7 @@ Foo_i::op1(void)
 
 void
 Foo_i::op2(CORBA::Long value)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(value);
   this->op_count_[1]++;
@@ -38,6 +40,7 @@ Foo_i::op2(CORBA::Long value)
 
 CORBA::Long
 Foo_i::op3(CORBA::Long value)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[2]++;
   return value;
@@ -46,6 +49,7 @@ Foo_i::op3(CORBA::Long value)
 
 void
 Foo_i::op4(CORBA::Long value)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(value);
   this->op_count_[3]++;
@@ -54,6 +58,7 @@ Foo_i::op4(CORBA::Long value)
 
 void
 Foo_i::op5(void)
+  ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4]++;
   throw FooException();
@@ -62,6 +67,7 @@ Foo_i::op5(void)
 
 void
 Foo_i::done(void)
+  ACE_THROW_SPEC((CORBA::SystemException))
 {
   TheAppShutdown->client_done();
 }

@@ -94,7 +94,9 @@ TAO_COIOP_Transport::send (iovec *,
 }
 
 ssize_t
-TAO_COIOP_Transport::recv (char *, size_t , const ACE_Time_Value *)
+TAO_COIOP_Transport::recv (char *,
+                          size_t ,
+                          const ACE_Time_Value *)
 {
   return 0;
 }

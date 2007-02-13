@@ -27,17 +27,22 @@ public:
   Visual_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void normal (CORBA::Long arg);
+  void normal (CORBA::Long arg)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Long calculate (
                          CORBA::Long one,
-                         CORBA::Long two);
+                         CORBA::Long two)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void user (void);
+  void user (void)
+    ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly));
 
-  void system (void);
+  void system (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

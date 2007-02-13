@@ -18,14 +18,14 @@
 #define TAO_MARSHAL_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -149,7 +149,7 @@ public:
 };
 
 /**
- * @class TAO_Marshal_TypeCode
+ * @class TAO_Marshal_TypeCode:
  *
  * @brief TAO_Marshal_TypeCode
  *
@@ -162,16 +162,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Principal
+ * @class TAO_Marshal_Principal:
  *
  * @brief TAO_Marshal_Principal
  *
@@ -184,16 +186,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_ObjRef
+ * @class TAO_Marshal_ObjRef:
  *
  * @brief TAO_Marshal_ObjRef
  *
@@ -206,38 +210,42 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Struct
+ * @class TAO_Marshal_Struct:
  *
  * @brief TAO_Marshal_Struct
  *
  * marshal a struct
  */
-class TAO_AnyTypeCode_Export TAO_Marshal_Struct : public TAO_Marshal_Object
+class TAO_AnyTypeCode_Export TAO_Marshal_Struct: public TAO_Marshal_Object
 {
 public:
   TAO_Marshal_Struct (void);
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Union
+ * @class TAO_Marshal_Union:
  *
  * @brief TAO_Marshal_Union
  *
@@ -250,16 +258,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_String
+ * @class TAO_Marshal_String:
  *
  * @brief TAO_Marshal_String
  *
@@ -272,16 +282,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Sequence
+ * @class TAO_Marshal_Sequence:
  *
  * @brief TAO_Marshal_Sequence
  *
@@ -294,16 +306,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Array
+ * @class TAO_Marshal_Array:
  *
  * @brief TAO_Marshal_Array
  *
@@ -316,16 +330,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Alias
+ * @class TAO_Marshal_Alias:
  *
  * @brief TAO_Marshal_Alias
  *
@@ -338,16 +354,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Except
+ * @class TAO_Marshal_Except:
  *
  * @brief TAO_Marshal_Except
  *
@@ -360,12 +378,14 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
@@ -382,16 +402,18 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 };
 
 /**
- * @class TAO_Marshal_Value
+ * @class TAO_Marshal_Value:
  *
  * @brief TAO_Marshal_Value
  *
@@ -404,12 +426,14 @@ public:
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
-                                     TAO_InputCDR *context);
+                                     TAO_InputCDR *context
+                                    );
 
   /// append operation
   virtual TAO::traverse_status append (CORBA::TypeCode_ptr tc,
                                        TAO_InputCDR *src,
-                                       TAO_OutputCDR *dest);
+                                       TAO_OutputCDR *dest
+                                      );
 
 private:
   CORBA::Boolean nested_processing_;

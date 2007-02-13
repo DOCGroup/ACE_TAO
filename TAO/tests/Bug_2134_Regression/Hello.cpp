@@ -14,9 +14,8 @@ namespace Test
 class Hello_impl: virtual public POA_Test::Hello
 {
 public:
-  void say_hello()
-  {
-  };
+  void say_hello() ACE_THROW_SPEC ((CORBA::SystemException)) { };
+
 };
 }
 
@@ -28,7 +27,8 @@ int main(int argc, char* argv[])
   try
     {
       // Initialize the ORB
-      orb = CORBA::ORB_init (argc, argv);
+      orb =
+        CORBA::ORB_init (argc, argv, "");
 
       // create Hello object
       Test::Hello_impl hello_i;

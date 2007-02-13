@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/debug.h"
-#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
@@ -78,7 +77,9 @@ namespace TAO
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
       int const retval =
-        this->resolver_.stub ()->create_ior_info (ior_info, index);
+        this->resolver_.stub ()->create_ior_info (ior_info,
+                                                  index
+                                                 );
 
       if (retval == -1)
         {
@@ -94,14 +95,18 @@ namespace TAO
           return;
         }
 
-      target_spec.target_specifier (*ior_info, index);
+      target_spec.target_specifier (*ior_info,
+                                    index);
       break;
     }
+
+
   }
 
   void
   Remote_Invocation::write_header (TAO_Target_Specification &spec,
-                                   TAO_OutputCDR &out_stream)
+                                   TAO_OutputCDR &out_stream
+                                   )
   {
     this->resolver_.transport ()->clear_translators (0, &out_stream);
 
@@ -124,6 +129,8 @@ namespace TAO
       {
         throw ::CORBA::MARSHAL ();
       }
+
+    return;
   }
 
   Invocation_Status
@@ -134,7 +141,7 @@ namespace TAO
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
-    CORBA::Boolean const set_client_network_priority =
+    CORBA::Boolean set_client_network_priority =
       tph->set_client_network_priority (this->resolver_.transport ()->tag (),
                                         this->resolver_.stub ());
 
@@ -157,11 +164,16 @@ namespace TAO
           {
             // We sent a message already and we haven't gotten a
             // reply.  Just throw TIMEOUT with *COMPLETED_MAYBE*.
-            throw ::CORBA::TIMEOUT (
-              CORBA::SystemException::_tao_minor_code (
-                TAO_TIMEOUT_SEND_MINOR_CODE,
-                errno),
-              CORBA::COMPLETED_MAYBE);
+            ACE_THROW_RETURN (
+                CORBA::TIMEOUT (
+                    CORBA::SystemException::_tao_minor_code (
+                        TAO_TIMEOUT_SEND_MINOR_CODE,
+                        errno
+                        ),
+                    CORBA::COMPLETED_MAYBE
+                    ),
+                TAO_INVOKE_FAILURE
+                );
           }
 
         if (TAO_debug_level > 2)

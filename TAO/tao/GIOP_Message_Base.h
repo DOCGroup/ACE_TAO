@@ -77,12 +77,14 @@ public:
   virtual int generate_locate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &cdr);
+      TAO_OutputCDR &cdr
+    );
 
   /// Write the reply header
   virtual int generate_reply_header (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params_Base &params);
+      TAO_Pluggable_Reply_Params_Base &params
+    );
 
   virtual int generate_fragment_header (TAO_OutputCDR & cdr,
                                         CORBA::ULong request_id);
@@ -130,7 +132,8 @@ public:
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      const CORBA::Exception &x);
+      CORBA::Exception &x
+    );
 
   /// Header length
   virtual size_t header_length (void) const;
@@ -183,7 +186,9 @@ protected:
                   TAO_GIOP_Message_Generator_Parser *&) const;
 
   /// Print out a debug messages..
-  void dump_msg (const char *label, const u_char *ptr, size_t len);
+  void dump_msg (const char *label,
+                 const u_char *ptr,
+                 size_t len);
 
   /// Get the message type. The return value would be one of the
   /// following:

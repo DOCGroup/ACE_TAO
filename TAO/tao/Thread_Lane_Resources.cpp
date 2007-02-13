@@ -122,20 +122,30 @@ TAO_Thread_Lane_Resources::connector_registry (void)
 
           if (connector_registry == 0)
             {
-              throw ::CORBA::INITIALIZE (
-                CORBA::SystemException::_tao_minor_code (
-                  TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
-                  0),
-                CORBA::COMPLETED_NO);
+              ACE_THROW_RETURN (
+                  CORBA::INITIALIZE (
+                      CORBA::SystemException::_tao_minor_code (
+                          TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
+                          0
+                        ),
+                      CORBA::COMPLETED_NO
+                    ),
+                  0
+                );
             }
 
           if (connector_registry->open (&this->orb_core_) != 0)
             {
-              throw ::CORBA::INITIALIZE (
-                CORBA::SystemException::_tao_minor_code (
-                  TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
-                  0),
-                CORBA::COMPLETED_NO);
+              ACE_THROW_RETURN (
+                  CORBA::INITIALIZE (
+                      CORBA::SystemException::_tao_minor_code (
+                          TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE,
+                          0
+                        ),
+                      CORBA::COMPLETED_NO
+                    ),
+                  0
+                );
             }
 
           // Finally, everything is created and opened successfully:

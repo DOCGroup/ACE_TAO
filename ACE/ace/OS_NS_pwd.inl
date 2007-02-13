@@ -42,9 +42,10 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
                     char *buffer, int buflen)
 {
 #if defined (ACE_HAS_POSIX_GETPWNAM_R)
-  struct passwd *result = 0;
+  struct passwd *result;
+  int status;
 
-  int const status = ::getpwnam_r (name, pwent, buffer, buflen, &result);
+  status = ::getpwnam_r (name, pwent, buffer, buflen, &result);
 
   if (status != 0)
   {

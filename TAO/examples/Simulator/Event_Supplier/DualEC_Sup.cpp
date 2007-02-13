@@ -278,6 +278,7 @@ DualEC_Supplier::init ()
 
 void
 DualEC_Supplier::Terminator::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }

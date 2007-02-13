@@ -6,7 +6,6 @@
 #include "tao/AnyTypeCode/Value_TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 #include "tao/CDR.h"
-#include "tao/SystemException.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"
@@ -189,7 +188,9 @@ CORBA::Boolean
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) const
+                     RefCountPolicy>::equivalent_i (
+  CORBA::TypeCode_ptr tc
+  ) const
 {
   CORBA::ValueModifier const tc_type_modifier =
     tc->type_modifier ();
@@ -284,7 +285,8 @@ TAO::TypeCode::Value<StringType,
 
   if (adapter == 0)
     {
-      throw ::CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return
@@ -355,7 +357,7 @@ TAO::TypeCode::Value<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
   return Traits<StringType>::get_string (this->fields_[index].name);
 }
@@ -371,7 +373,8 @@ TAO::TypeCode::Value<StringType,
                      RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      CORBA::TypeCode::_nil ());
 
   return
     CORBA::TypeCode::_duplicate (
@@ -389,7 +392,8 @@ TAO::TypeCode::Value<StringType,
                      RefCountPolicy>::member_visibility_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                      CORBA::PRIVATE_MEMBER);
 
   return this->fields_[index].visibility;
 }

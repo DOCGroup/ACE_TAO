@@ -22,6 +22,9 @@ TAO_Notify_Tests_RT_Test_Filter::~TAO_Notify_Tests_RT_Test_Filter ()
 
 char*
 TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (void)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
 {
   return CORBA::string_dup ("ETCL");
 }
@@ -30,6 +33,10 @@ TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (void)
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list
                                 )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::InvalidConstraint
+                   ))
 {
   const char* PoolId_prefix = "PoolId = ";
   size_t poolId_index = ACE_OS::strlen (PoolId_prefix);
@@ -79,6 +86,11 @@ void
 TAO_Notify_Tests_RT_Test_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq & /*del_list*/,
                                    const CosNotifyFilter::ConstraintInfoSeq & /*modify_list*/
                                    )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyFilter::InvalidConstraint,
+                   CosNotifyFilter::ConstraintNotFound
+                   ))
 {
 
 }
@@ -86,24 +98,29 @@ TAO_Notify_Tests_RT_Test_Filter::modify_constraints (const CosNotifyFilter::Cons
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & /*id_list*/
                                 )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyFilter::ConstraintNotFound))
 {
   return 0;
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
 TAO_Notify_Tests_RT_Test_Filter::get_all_constraints (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
         return 0;
 }
 
 void
 TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
 
 void
 TAO_Notify_Tests_RT_Test_Filter::destroy (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -118,13 +135,18 @@ TAO_Notify_Tests_RT_Test_Filter::destroy (void)
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match (const CORBA::Any & /*filterable_data */
                            )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyFilter::UnsupportedFilterableData))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    0);
 }
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::StructuredEvent & notification
                                  )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyFilter::UnsupportedFilterableData))
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -220,28 +242,37 @@ CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match_typed (
                             const CosNotification::PropertySeq & /* filterable_data */
                             )
+  ACE_THROW_SPEC (( CORBA::SystemException,
+                    CosNotifyFilter::UnsupportedFilterableData))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    0);
 }
 
 CosNotifyFilter::CallbackID
 TAO_Notify_Tests_RT_Test_Filter::attach_callback (
                                 CosNotifyComm::NotifySubscribe_ptr /* callback */
                                 )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    0);
 }
 
 void
 TAO_Notify_Tests_RT_Test_Filter::detach_callback (
                                 CosNotifyFilter::CallbackID /* callback */
                                 )
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyFilter::CallbackNotFound))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyFilter::CallbackIDSeq *
 TAO_Notify_Tests_RT_Test_Filter::get_callbacks (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  throw CORBA::NO_IMPLEMENT ();
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    0);
 }

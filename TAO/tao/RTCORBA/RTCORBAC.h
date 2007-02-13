@@ -49,6 +49,7 @@
 #include "tao/ORB.h"
 #include "tao/TimeBaseC.h"
 #include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
@@ -304,7 +305,9 @@ namespace RTCORBA
     virtual ::RTCORBA::PriorityModel priority_model (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -312,7 +315,9 @@ namespace RTCORBA
     virtual RTCORBA::Priority server_priority (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -320,7 +325,9 @@ namespace RTCORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -328,7 +335,9 @@ namespace RTCORBA
     virtual void destroy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -430,7 +439,9 @@ namespace RTCORBA
     virtual RTCORBA::ThreadpoolId threadpool (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -438,7 +449,9 @@ namespace RTCORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -446,7 +459,9 @@ namespace RTCORBA
     virtual void destroy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -725,7 +740,9 @@ namespace RTCORBA
     virtual ::RTCORBA::ProtocolList * protocols (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -733,7 +750,9 @@ namespace RTCORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -741,7 +760,9 @@ namespace RTCORBA
     virtual void destroy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -843,7 +864,9 @@ namespace RTCORBA
     virtual ::RTCORBA::ProtocolList * protocols (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -851,7 +874,9 @@ namespace RTCORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -859,7 +884,9 @@ namespace RTCORBA
     virtual void destroy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -961,7 +988,9 @@ namespace RTCORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -969,7 +998,9 @@ namespace RTCORBA
     virtual void destroy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -1066,7 +1097,9 @@ namespace RTCORBA
     virtual CORBA::Long send_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1075,7 +1108,9 @@ namespace RTCORBA
         ::CORBA::Long send_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1083,7 +1118,9 @@ namespace RTCORBA
     virtual CORBA::Long recv_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1092,7 +1129,9 @@ namespace RTCORBA
         ::CORBA::Long recv_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1100,7 +1139,9 @@ namespace RTCORBA
     virtual CORBA::Boolean keep_alive (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1109,7 +1150,9 @@ namespace RTCORBA
         ::CORBA::Boolean keep_alive
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1117,7 +1160,9 @@ namespace RTCORBA
     virtual CORBA::Boolean dont_route (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1126,7 +1171,9 @@ namespace RTCORBA
         ::CORBA::Boolean dont_route
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1134,7 +1181,9 @@ namespace RTCORBA
     virtual CORBA::Boolean no_delay (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1143,7 +1192,9 @@ namespace RTCORBA
         ::CORBA::Boolean no_delay
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1151,7 +1202,9 @@ namespace RTCORBA
     virtual CORBA::Boolean enable_network_priority (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1160,7 +1213,9 @@ namespace RTCORBA
         ::CORBA::Boolean enable_network_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -1346,7 +1401,9 @@ namespace RTCORBA
     virtual CORBA::Long send_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1355,7 +1412,9 @@ namespace RTCORBA
         ::CORBA::Long send_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1363,7 +1422,9 @@ namespace RTCORBA
     virtual CORBA::Long recv_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1372,7 +1433,9 @@ namespace RTCORBA
         ::CORBA::Long recv_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -1469,7 +1532,9 @@ namespace RTCORBA
     virtual CORBA::Long send_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1478,7 +1543,9 @@ namespace RTCORBA
         ::CORBA::Long send_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1486,7 +1553,9 @@ namespace RTCORBA
     virtual CORBA::Long recv_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1495,7 +1564,9 @@ namespace RTCORBA
         ::CORBA::Long recv_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1503,7 +1574,9 @@ namespace RTCORBA
     virtual CORBA::Boolean keep_alive (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1512,7 +1585,9 @@ namespace RTCORBA
         ::CORBA::Boolean keep_alive
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1520,7 +1595,9 @@ namespace RTCORBA
     virtual CORBA::Boolean dont_route (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1529,7 +1606,9 @@ namespace RTCORBA
         ::CORBA::Boolean dont_route
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1537,7 +1616,9 @@ namespace RTCORBA
     virtual CORBA::Boolean no_delay (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1546,7 +1627,9 @@ namespace RTCORBA
         ::CORBA::Boolean no_delay
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1554,7 +1637,9 @@ namespace RTCORBA
     virtual CORBA::Long preallocate_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1563,7 +1648,9 @@ namespace RTCORBA
         ::CORBA::Long preallocate_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1571,7 +1658,9 @@ namespace RTCORBA
     virtual char * mmap_filename (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1580,7 +1669,9 @@ namespace RTCORBA
         const char * mmap_filename
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1588,7 +1679,9 @@ namespace RTCORBA
     virtual char * mmap_lockname (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1597,7 +1690,9 @@ namespace RTCORBA
         const char * mmap_lockname
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -1694,7 +1789,9 @@ namespace RTCORBA
     virtual CORBA::Boolean enable_network_priority (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1703,7 +1800,9 @@ namespace RTCORBA
         ::CORBA::Boolean enable_network_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -1800,7 +1899,9 @@ namespace RTCORBA
     virtual CORBA::Long send_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1809,7 +1910,9 @@ namespace RTCORBA
         ::CORBA::Long send_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1817,7 +1920,9 @@ namespace RTCORBA
     virtual CORBA::Long recv_buffer_size (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1826,7 +1931,9 @@ namespace RTCORBA
         ::CORBA::Long recv_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1834,7 +1941,9 @@ namespace RTCORBA
     virtual CORBA::Boolean keep_alive (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1843,7 +1952,9 @@ namespace RTCORBA
         ::CORBA::Boolean keep_alive
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1851,7 +1962,9 @@ namespace RTCORBA
     virtual CORBA::Boolean dont_route (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1860,7 +1973,9 @@ namespace RTCORBA
         ::CORBA::Boolean dont_route
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1868,7 +1983,9 @@ namespace RTCORBA
     virtual CORBA::Boolean no_delay (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1877,7 +1994,9 @@ namespace RTCORBA
         ::CORBA::Boolean no_delay
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1885,7 +2004,9 @@ namespace RTCORBA
     virtual CORBA::Boolean enable_network_priority (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -1894,7 +2015,9 @@ namespace RTCORBA
         ::CORBA::Boolean enable_network_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -2078,7 +2201,9 @@ namespace RTCORBA
     virtual ::RTCORBA::PriorityBands * priority_bands (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2086,7 +2211,9 @@ namespace RTCORBA
     virtual ::CORBA::Policy_ptr copy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2094,7 +2221,9 @@ namespace RTCORBA
     virtual void destroy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -2191,7 +2320,9 @@ namespace RTCORBA
     virtual RTCORBA::Priority the_priority (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2200,7 +2331,9 @@ namespace RTCORBA
         ::RTCORBA::Priority the_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -2297,7 +2430,9 @@ namespace RTCORBA
     virtual void lock (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2305,7 +2440,9 @@ namespace RTCORBA
     virtual void unlock (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2314,7 +2451,9 @@ namespace RTCORBA
         ::TimeBase::TimeT max_wait
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -2411,7 +2550,9 @@ namespace RTCORBA
     virtual ::RTCORBA::Mutex_ptr create_mutex (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2420,7 +2561,9 @@ namespace RTCORBA
         ::RTCORBA::Mutex_ptr the_mutex
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:53
@@ -2480,7 +2623,9 @@ namespace RTCORBA
         ::CORBA::Boolean_out created_flag
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2489,7 +2634,10 @@ namespace RTCORBA
         const char * name
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ::RTCORBA::RTORB::MutexNotFound
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2503,7 +2651,9 @@ namespace RTCORBA
         ::CORBA::Boolean enable_network_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2513,7 +2663,9 @@ namespace RTCORBA
         ::CORBA::Long recv_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2529,7 +2681,9 @@ namespace RTCORBA
         const char * mmap_lockname
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2538,7 +2692,9 @@ namespace RTCORBA
         ::CORBA::Boolean enable_network_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2552,7 +2708,9 @@ namespace RTCORBA
         ::CORBA::Boolean enable_network_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:53
@@ -2617,7 +2775,9 @@ namespace RTCORBA
         ::CORBA::ULong max_request_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2631,7 +2791,9 @@ namespace RTCORBA
         ::CORBA::ULong max_request_buffer_size
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2640,7 +2802,10 @@ namespace RTCORBA
         ::RTCORBA::ThreadpoolId threadpool
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ::RTCORBA::RTORB::InvalidThreadpool
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2650,7 +2815,9 @@ namespace RTCORBA
         ::RTCORBA::Priority server_priority
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2659,7 +2826,9 @@ namespace RTCORBA
         ::RTCORBA::ThreadpoolId threadpool
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2668,7 +2837,9 @@ namespace RTCORBA
         const ::RTCORBA::PriorityBands & priority_bands
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2677,7 +2848,9 @@ namespace RTCORBA
         const ::RTCORBA::ProtocolList & protocols
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2686,7 +2859,9 @@ namespace RTCORBA
         const ::RTCORBA::ProtocolList & protocols
 
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -2694,7 +2869,9 @@ namespace RTCORBA
     virtual ::RTCORBA::PrivateConnectionPolicy_ptr create_private_connection_policy (
         void
       )
-      = 0;
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210

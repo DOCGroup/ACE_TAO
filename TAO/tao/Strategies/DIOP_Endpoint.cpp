@@ -84,6 +84,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
 
 TAO_DIOP_Endpoint::~TAO_DIOP_Endpoint (void)
 {
+
 }
 
 int

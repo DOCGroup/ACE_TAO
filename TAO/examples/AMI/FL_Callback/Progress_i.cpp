@@ -16,6 +16,7 @@ Progress_i::Progress_i (Progress_Window *window)
 
 void
 Progress_i::sent_request (CORBA::Long id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //ACE_DEBUG ((LM_DEBUG, "Progress (%t) - sent request %d\n", id));
   this->window_->sent_request (id);
@@ -23,12 +24,14 @@ Progress_i::sent_request (CORBA::Long id)
 
 void
 Progress_i::recv_reply (CORBA::Long id)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->window_->recv_reply (id);
 }
 
 CORBA::Long
 Progress_i::bind (Peer_ptr a_peer)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Progress (%t) - peer bound\n"));
   return this->window_->bind (a_peer);

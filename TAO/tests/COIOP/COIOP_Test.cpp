@@ -5,7 +5,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
-#include "tao/Strategies/advanced_resource.h"
 
 const char *output = "test.ior";
 const char *input = "file://test.ior";

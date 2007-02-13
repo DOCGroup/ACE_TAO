@@ -1,19 +1,22 @@
 // -*- C++ -*-
 
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ComponentModuleDef_i.h
- *
- *  $Id$
- *
- *  ComponentModuleDef_i servant class.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/orbsvcs/IFRService
+//
+// = FILENAME
+//    ComponentModuleDef_i.h
+//
+// = DESCRIPTION
+//    ComponentModuleDef_i servant class.
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 #ifndef TAO_COMPONENTMODULEDEF_I_H
 #define TAO_COMPONENTMODULEDEF_I_H
@@ -43,11 +46,11 @@ class TAO_IFRService_Export TAO_ComponentModuleDef_i
   //    types.
   //
 public:
-  /// Constructor
   TAO_ComponentModuleDef_i (TAO_Repository_i *repo);
+  // Constructor
 
-  /// Destructor
   virtual ~TAO_ComponentModuleDef_i (void);
+  // Destructor
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

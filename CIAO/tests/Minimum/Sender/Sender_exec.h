@@ -45,7 +45,8 @@ namespace CIDL_Sender_Impl
     // Supported or inherited operations.
 
     virtual void
-    bar ();
+    bar ()
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Attribute operations.
 
@@ -55,22 +56,40 @@ namespace CIDL_Sender_Impl
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx);
+    ::Components::SessionContext_ptr ctx)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate ()
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate ()
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
 
     virtual void
-    ccm_activate ();
+    ccm_activate ()
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate ()
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
 
     virtual void
-    ccm_remove ();
+    ccm_remove ()
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
 
     protected:
     Sender_Context *context_;
@@ -95,7 +114,10 @@ namespace CIDL_Sender_Impl
     // Implicit operations.
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    create ()
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::CCMException));
   };
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr

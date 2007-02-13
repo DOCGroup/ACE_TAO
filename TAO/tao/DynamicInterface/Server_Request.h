@@ -1,20 +1,23 @@
 // -*- C++ -*-
+//
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Server_Request.h
- *
- *  $Id$
- *
- *  Header file for CORBA's Dynamic Server Skeleton Interface's
- *  "Server Request" type.
- *
- *
- *  @author  Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Chris Cleeland.  Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    Server_Request.h
+//
+// = DESCRIPTION
+//    Header file for CORBA's Dynamic Server Skeleton Interface's
+//    "Server Request" type.
+//
+// = AUTHOR
+//     Copyright 1994-1995 by Sun Microsystems, Inc. and Chris Cleeland.
+//     Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
+// ============================================================================
 
 #ifndef TAO_CORBA_SERVER_REQUEST_H
 #define TAO_CORBA_SERVER_REQUEST_H
@@ -74,21 +77,24 @@ namespace CORBA
     /// Implementation uses this to provide the ORB with the operation's
     /// parameter list ... on return, their values are available; the
     /// list fed in has typecodes and (perhap) memory assigned.
-    void arguments (CORBA::NVList_ptr &list);
+    void arguments (CORBA::NVList_ptr &list
+                    );
 
     /// Implementation uses this to provide the operation result
     /// ... illegal if exception() was called or params() was not called.
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_result (const CORBA::Any &value);
+    void set_result (const CORBA::Any &value
+                     );
 
     /// Implementation uses this to provide the exception value which is
     /// the only result of this particular invocation.
     ///
     /// XXX Implementation should be able to assume response has been
     /// sent when this returns, and reclaim memory it allocated.
-    void set_exception (const CORBA::Any &value);
+    void set_exception (const CORBA::Any &value
+                        );
 
     // = Get various universal call attributes.
 
@@ -166,7 +172,7 @@ namespace CORBA
     TAO_ServerRequest &orb_server_request_;
 
     /// Have we sent a user exception obtained from a gateway?
-    bool sent_gateway_exception_;
+    int sent_gateway_exception_;
   };
 } // End CORBA namespace
 

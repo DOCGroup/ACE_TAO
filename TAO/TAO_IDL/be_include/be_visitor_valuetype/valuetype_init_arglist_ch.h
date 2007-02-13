@@ -48,6 +48,9 @@ public:
 
   virtual int post_process (be_decl *);
   // stuff to o/p after each element of the scope is handled
+
+  virtual int gen_throw_spec (be_factory *);
+  // IDL3 extension.
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_INIT_ARGLIST_CH_H_ */

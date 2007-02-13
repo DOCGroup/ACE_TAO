@@ -6,8 +6,10 @@
 #include "tao/AnyTypeCode/Any_Special_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/Marshal.h"
-#include "tao/SystemException.h"
+#include "tao/Environment.h"
 #include "tao/AnyTypeCode/String_TypeCode_Traits.h"
+
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Special_Impl_T.inl"
@@ -158,7 +160,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch ( ::CORBA::Exception&)
     {
     }
 

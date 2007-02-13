@@ -10,14 +10,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   (Search for @todo in this script)
 
 use File::Copy;
-use FileHandle;
 use Getopt::Std;
 
 ##############################################################################
 # Parse the options
 
 if (!getopts ('dDhsu') || $opt_h) {
-    print "doxygen-convert-h.pl [-dDhsu] filenames or directories\n";
+    print "doxygen-convert-h.pl [-dDhsu] filename\n";
     print "\n";
     print "    -d         debug script\n";
     print "    -D         really verbose debug\n";
@@ -35,46 +34,12 @@ $opt_d = 1 if (defined $opt_D);
 
 @files = ();
 
-sub recursive_find {
-  my($file) = shift;
-  my(@rfiles) = ();
-  my($fh) = new FileHandle();
-
-  if (opendir($fh, $file)) {
-    foreach my $f (grep(!/^\.\.?$/, readdir($fh))) {
-      if ($f ne '.svn') {
-        my($full) = "$file/$f";
-        if (-d $full) {
-          push(@rfiles, recursive_find($full));
-        }
-        else {
-          push(@rfiles, $full)
-          if ($f =~ /\.(h|hxx|hpp|hh|inl|cpp|cxx|cc|c|C)$/)
-          ;
-        }
-      }
-    }
-    closedir($fh);
-  }
-
-  return @rfiles;
-}
-
 foreach $arg (@ARGV) {
     my @results = glob $arg;
     if ($#results < 0) {
         print STDERR "File not Found: $arg\n"
     }
-    else {
-        foreach my $result (@results) {
-            if (-d $result) {
-                push(@files, recursive_find($result));
-            }
-            else {
-                push(@files, $results);
-            }
-        }
-    }
+    push @files, @results;
 }
 
 ##############################################################################

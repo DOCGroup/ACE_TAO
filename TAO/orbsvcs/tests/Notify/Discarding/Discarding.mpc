@@ -13,9 +13,9 @@ project(*Ntf Struct Supp): notifytest {
 
   after += *idl
   Source_Files {
+    Structured_Supplier.cpp
     goS.cpp
     goC.cpp
-    Structured_Supplier.cpp
   }
   IDL_Files {
   }
@@ -39,9 +39,9 @@ project(*Ntf Seq Supp): notifytest {
 
   after += *idl
   Source_Files {
+    Sequence_Supplier.cpp
     goS.cpp
     goC.cpp
-    Sequence_Supplier.cpp
   }
   IDL_Files {
   }

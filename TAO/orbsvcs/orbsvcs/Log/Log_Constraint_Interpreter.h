@@ -51,7 +51,9 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  TAO_Log_Constraint_Interpreter (const char* constraints);
+  TAO_Log_Constraint_Interpreter (const char* constraints)
+    ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
+                     CORBA::NO_MEMORY));
 
   /// Destructor.
   ~TAO_Log_Constraint_Interpreter (void);

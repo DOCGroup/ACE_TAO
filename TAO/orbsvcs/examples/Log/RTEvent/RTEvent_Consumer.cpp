@@ -32,7 +32,7 @@ Consumer::run (int argc, char* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the run() method.
@@ -69,7 +69,7 @@ Consumer::run (int argc, char* argv[])
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        throw CORBA::UNKNOWN ();
+        ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
@@ -130,6 +130,7 @@ Consumer::run (int argc, char* argv[])
 
 void
 Consumer::push (const RtecEventComm::EventSet& events)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (events);
 
@@ -142,6 +143,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Consumer::disconnect_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have

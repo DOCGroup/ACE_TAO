@@ -679,6 +679,7 @@ TAO_Naming_Server::fini (void)
       // Ignore
     }
 
+
   if (this->ior_multicast_ != 0)
     {
       orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,

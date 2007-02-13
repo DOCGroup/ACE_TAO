@@ -85,7 +85,7 @@ catiiop (char* string)
 
   if (cp == 0)
     {
-      throw CORBA::DATA_CONVERSION ();
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   CORBA::String_var hostname = CORBA::string_alloc (1 + cp - string);
@@ -102,7 +102,7 @@ catiiop (char* string)
 
   if (cp == 0)
     {
-      throw CORBA::DATA_CONVERSION ();
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   port_number = (short) ACE_OS::atoi ((char *) string);
@@ -354,7 +354,7 @@ catpoop (char* string)
 
   if (cp == 0)
     {
-      throw CORBA::DATA_CONVERSION ();
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   // Read the hostname.

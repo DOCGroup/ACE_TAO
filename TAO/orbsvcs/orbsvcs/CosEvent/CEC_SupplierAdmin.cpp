@@ -82,12 +82,14 @@ TAO_CEC_SupplierAdmin::shutdown (void)
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_CEC_SupplierAdmin::obtain_push_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->push_admin_.obtain ();
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_SupplierAdmin::obtain_pull_consumer (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->pull_admin_.obtain ();
 }

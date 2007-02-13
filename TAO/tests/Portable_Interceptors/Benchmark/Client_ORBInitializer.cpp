@@ -17,12 +17,14 @@ Client_ORBInitializer::Client_ORBInitializer (int interceptor_type)
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   PortableInterceptor::ClientRequestInterceptor_ptr tmp =

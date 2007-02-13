@@ -23,9 +23,11 @@ public:
   Receiver (void);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Message &message);
+  virtual void receive_data (const Test::Message &message)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void done (void);
+  virtual void done (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// The timestamp for the first message

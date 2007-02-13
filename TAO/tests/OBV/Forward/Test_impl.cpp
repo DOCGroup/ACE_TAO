@@ -31,6 +31,7 @@ reflect_node (BaseNode* bn)
 
 TreeController *
 Test_impl::reflect (TreeController * tc)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (tc != 0)
   {
@@ -42,6 +43,7 @@ Test_impl::reflect (TreeController * tc)
 
 void
 Test_impl::shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

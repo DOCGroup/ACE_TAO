@@ -27,12 +27,14 @@ TAO_NativeDef_i::~TAO_NativeDef_i (void)
 
 CORBA::DefinitionKind
 TAO_NativeDef_i::def_kind (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Native;
 }
 
 CORBA::TypeCode_ptr
 TAO_NativeDef_i::type (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -43,6 +45,7 @@ TAO_NativeDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_NativeDef_i::type_i (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,

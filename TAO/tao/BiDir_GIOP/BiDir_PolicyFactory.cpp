@@ -5,8 +5,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
 
-#include "ace/CORBA_macros.h"
-
 ACE_RCSID (BiDir_GIOP,
            BiDir_PolicyFactory,
            "$Id$")
@@ -17,6 +15,8 @@ CORBA::Policy_ptr
 TAO_BiDir_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
@@ -27,7 +27,8 @@ TAO_BiDir_PolicyFactory::create_policy (
       // Extract the value from the any.
       if ((value >>= val) == 0)
         {
-          throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
+                            CORBA::Policy::_nil ());
         }
 
       ACE_NEW_THROW_EX (policy,
@@ -41,7 +42,8 @@ TAO_BiDir_PolicyFactory::create_policy (
       return policy;
     }
 
-  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                    CORBA::Policy::_nil ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -84,9 +84,10 @@ CORBA::Object_ptr
 TAO_LB_ObjectReferenceFactory::make_object (
     const char * repository_id,
     const PortableInterceptor::ObjectId & id)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (repository_id == 0)
-    throw CORBA::BAD_PARAM ();
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
 
   CORBA::Object_var obj =
     this->old_orf_->make_object (repository_id,
@@ -120,7 +121,8 @@ TAO_LB_ObjectReferenceFactory::make_object (
                 ex._tao_print_exception (
                   "TAO_LB_ObjectReferenceFactory::""make_object");
 
-              throw CORBA::BAD_PARAM ();
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                                CORBA::Object::_nil ());
             }
           catch (const PortableGroup::MemberAlreadyPresent& ex)
             {
@@ -128,7 +130,8 @@ TAO_LB_ObjectReferenceFactory::make_object (
                 ex._tao_print_exception (
                   "TAO_LB_ObjectReferenceFactory::""make_object");
 
-              throw CORBA::BAD_INV_ORDER ();
+              ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
+                                CORBA::Object::_nil ());
 
             }
           catch (const PortableGroup::ObjectNotAdded& ex)
@@ -137,7 +140,8 @@ TAO_LB_ObjectReferenceFactory::make_object (
                 ex._tao_print_exception (
                   "TAO_LB_ObjectReferenceFactory::""make_object");
 
-              throw CORBA::UNKNOWN ();
+              ACE_THROW_RETURN (CORBA::UNKNOWN (),
+                                CORBA::Object::_nil ());
             }
 
           this->registered_members_[index] = 1;
@@ -206,7 +210,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
                         "find_object_group - "
                         "Couldn't bind object group reference.\n"));
 
-          throw CORBA::INTERNAL ();
+          ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
         }
 
       object_group = group._retn ();

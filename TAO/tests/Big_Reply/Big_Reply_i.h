@@ -32,11 +32,14 @@ public:
   virtual ~Big_Reply_i (void);
 
   // = The skeleton methods
-  virtual Test::Octet_Seq *get_big_reply (void);
+  virtual Test::Octet_Seq *get_big_reply (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void ping (void);
+  virtual void ping (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Our local ORB ptr

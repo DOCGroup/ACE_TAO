@@ -16,7 +16,9 @@ public:
       CORBA::Long a,
       CORBA::Long b
     )
-    {
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) {
       return a + b;
     }
 };

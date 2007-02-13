@@ -89,6 +89,8 @@ int Quoter_Factory_i::init (void)
 
 Stock::Quoter_ptr
 Quoter_Factory_i::create_quoter (const char *)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Stock::Invalid_Quoter))
 {
   this->next_quoter_ = (this->next_quoter_ + 1) % this->quoter_num_;
 
@@ -124,6 +126,9 @@ Quoter_i::~Quoter_i (void)
 
 CORBA::Long
 Quoter_i::get_quote (char const *)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Stock::Invalid_Stock,
+                       Stock::Invalid_Quoter))
 {
   return 42;
 }
@@ -135,6 +140,11 @@ CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                 const CosLifeCycle::Criteria &/*the_criteria*/
                 )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::NotCopyable,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
   const char *exception_message = "Null message";
   CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
@@ -208,7 +218,8 @@ CosLifeCycle::LifeCycleObject::_nil ();
                   ACE_ERROR ((LM_ERROR,
                               "Quoter::copy: Last factory did not work. \n"
                               "No more factories are available. I give up.\n"));
-                  throw CosLifeCycle::NoFactory (factoryKey);
+                  ACE_THROW_RETURN (CosLifeCycle::NoFactory (factoryKey),
+                                    CosLifeCycle::LifeCycleObject::_nil());
                 }
               else
                 {
@@ -248,6 +259,11 @@ void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
                 const CosLifeCycle::Criteria & /* the_criteria */
                 )
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NoFactory,
+                       CosLifeCycle::NotMovable,
+                       CosLifeCycle::InvalidCriteria,
+                       CosLifeCycle::CannotMeetCriteria))
 {
   ACE_ERROR ((LM_ERROR,
               "Quoter_i::move: The Quoter object is not movable!"));
@@ -260,6 +276,8 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
 
 void
 Quoter_i::remove (void)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       CosLifeCycle::NotRemovable))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "I have been asked to shut down.\n"));

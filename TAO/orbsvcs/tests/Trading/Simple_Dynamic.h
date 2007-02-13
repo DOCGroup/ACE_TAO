@@ -33,7 +33,8 @@ public:
   virtual CORBA::Any* evalDP (const char* /* name */,
                               CORBA::TypeCode_ptr /* returned_type */,
                               const CORBA::Any& /* extra_info */
-                              );
+                              )
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
 private:
   T dp_;

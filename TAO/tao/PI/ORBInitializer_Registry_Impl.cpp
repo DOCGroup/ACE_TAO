@@ -8,11 +8,11 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
-#include "ace/CORBA_macros.h"
 
 ACE_RCSID (PI,
            ORBInitializer_Registry,
@@ -59,7 +59,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
       this->register_orb_initializer (orb_initializer.in ()
                                                     );
     }
-  catch (const ::CORBA::Exception& ex)
+  catch ( ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {

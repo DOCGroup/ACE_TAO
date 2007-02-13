@@ -43,7 +43,21 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args" << be_uidt_nl
-      << ");";
+      << ")";
+
+  if (this->gen_throw_spec (node) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_operation_proxy_impl_xh::"
+          "visit_operation - "
+          "throw spec generation failed\n"
+        ),
+        -1
+      );
+    }
+
+  *os << ";";
 
   return 0;
 }

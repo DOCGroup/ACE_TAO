@@ -34,7 +34,9 @@ public:
   /// Creates a PICurrent and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv []);
+                                           ACE_TCHAR *argv []
+                                           )
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

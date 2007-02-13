@@ -31,13 +31,17 @@ public:
   Test_impl (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual OBV_FactoryTest::BaseValue * get_base_value (void);
+  virtual OBV_FactoryTest::BaseValue * get_base_value (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual OBV_FactoryTest::Value1 * get_value1 (void);
+  virtual OBV_FactoryTest::Value1 * get_value1 (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual OBV_FactoryTest::Value2 * get_value2 (void);
+  virtual OBV_FactoryTest::Value2 * get_value2 (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (void);
+  virtual void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;

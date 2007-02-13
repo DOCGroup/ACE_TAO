@@ -18,9 +18,11 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Short priority);
+  void test_method (CORBA::Short priority)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
@@ -34,6 +36,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 void
 Test_i::test_method (CORBA::Short priority)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Use RTCurrent to find out the CORBA priority of the current
   // thread.
@@ -64,6 +67,7 @@ Test_i::test_method (CORBA::Short priority)
 
 void
 Test_i::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -230,7 +234,7 @@ main (int argc, char *argv[])
       // parse arguments and get all the references (ORB,
       // RootPOA, RTORB, RTCurrent, POAManager).
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (argc, argv, "");
 
       if (parse_args (argc, argv) != 0)
         return -1;

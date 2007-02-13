@@ -45,18 +45,23 @@ public:
   virtual ~Nestea_i (void);
 
   /// Add <cans> number of cans to the bookshelf.
-  virtual void drink (CORBA::Long cans);
+  virtual void drink (CORBA::Long cans)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Removes <cans> number of cans from the bookshelf.
-  virtual void crush (CORBA::Long cans);
+  virtual void crush (CORBA::Long cans)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns the number of cans in the bookshelf.
-  virtual CORBA::Long bookshelf_size (void);
+  virtual CORBA::Long bookshelf_size (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Returns comments about your collection.
-  virtual char *get_praise (void);
+  virtual char *get_praise (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown(void);
+  virtual void shutdown(void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 private:
   /// Saves bookshelf data to a file.
   int save_data (void);

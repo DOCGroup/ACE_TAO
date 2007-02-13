@@ -15,6 +15,7 @@
 // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
 // this must appear before its #include.
 #define ACE_HAS_STRING_CLASS
+#define ACE_LACKS_SIGVAL_T
 
 #include "ace/config-g++-common.h"
 #define ACE_HAS_GNU_CSTRING_H

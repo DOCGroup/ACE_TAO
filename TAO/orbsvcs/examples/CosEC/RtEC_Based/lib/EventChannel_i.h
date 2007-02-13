@@ -54,15 +54,18 @@ public:
   // Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
   // -1 on error, 0 on success.
 
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // The for_consumers method will return the same ConsumerAdmin_ptr
   // everytime its called.
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // The for_suppliers method will return the same SupplierAdmin_ptr
   // everytime its called.
 
-  virtual void destroy (void);
+  virtual void destroy (void)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys this Event Channel object.
 
   void shutdown (void);

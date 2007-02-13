@@ -55,25 +55,29 @@ TAO_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr,
 TAO::Invocation_Status
 TAO_Service_Callbacks::raise_comm_failure (
     IOP::ServiceContextList &,
-    TAO_Profile * /*profile*/)
+    TAO_Profile * /*profile*/
+    )
 {
-  throw ::CORBA::COMM_FAILURE (
-    CORBA::SystemException::_tao_minor_code (
-      TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-      -1),
-    CORBA::COMPLETED_MAYBE);
+  ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+      CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          -1),
+      CORBA::COMPLETED_MAYBE),
+      TAO::TAO_INVOKE_FAILURE);
 }
 
 TAO::Invocation_Status
 TAO_Service_Callbacks::raise_transient_failure (
     IOP::ServiceContextList &,
-    TAO_Profile * /*profile*/ )
+    TAO_Profile * /*profile*/
+    )
 {
-  throw ::CORBA::TRANSIENT (
-    CORBA::SystemException::_tao_minor_code (
-      TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-      -1),
-    CORBA::COMPLETED_MAYBE);
+  ACE_THROW_RETURN (CORBA::TRANSIENT (
+      CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          -1),
+      CORBA::COMPLETED_MAYBE),
+      TAO::TAO_INVOKE_FAILURE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -36,6 +36,9 @@ Test_Simple_Test_i::~Test_Simple_Test_i (void)
 void Test_Simple_Test_i::test_method (
     ::CORBA::ULong & error_count
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   error_count --;
 }
@@ -53,6 +56,9 @@ Hello::test_basic_arg (
     ::CORBA::Long basic,
     ::CORBA::Long_out x
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   if (basic != TEST_BASIC_VALUE)
     ERROR_COUNT ("Hello::test_basic_arg")
@@ -62,6 +68,7 @@ Hello::test_basic_arg (
 
 void
 Hello::test_unbounded_string_arg(const char* message)
+                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
@@ -76,6 +83,7 @@ Hello::test_unbounded_string_arg(const char* message)
 
 void
 Hello::test_bounded_string_arg(const char* message)
+                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_string_arg ")
@@ -90,6 +98,7 @@ Hello::test_bounded_string_arg(const char* message)
 
 void
 Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
+                            ACE_THROW_SPEC((CORBA::SystemException))
 {
   for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
   {
@@ -105,6 +114,7 @@ Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
 
 void
 Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message)
+                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_var_size_arg ")
@@ -116,6 +126,7 @@ Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message)
 
 void
 Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message)
+                          ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
@@ -127,6 +138,7 @@ Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
 
 void
 Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
+                           ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_size_arg ")
@@ -142,6 +154,7 @@ Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
 
 void
 Hello::test_var_array_arg(const Test::Var_Array messages)
+                          ACE_THROW_SPEC((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
   {
@@ -156,6 +169,7 @@ Hello::test_var_array_arg(const Test::Var_Array messages)
 
 void
 Hello::test_special_basic_arg(CORBA::Char value)
+                           ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_special_basic_arg ")
@@ -168,6 +182,9 @@ Hello::test_special_basic_arg(CORBA::Char value)
 void Hello::test_objref_arg (
     ::Test::Simple_Test_ptr test
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_objref_arg \n")));
@@ -191,6 +208,9 @@ void Hello::test_objref_arg (
 void Hello::test_object_arg (
     ::CORBA::Object_ptr o
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_object_arg \n")));
@@ -210,6 +230,9 @@ void Hello::test_args_1 (
     ::CORBA::Char arg2,
     ::Test::Simple_Test_ptr arg3
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_1 \n")));
@@ -235,6 +258,9 @@ void Hello::test_args_2 (
     const ::Test::Fixed_Array arg2,
     const ::Test::TimeOfDay & arg3
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2 \n")));
@@ -259,6 +285,9 @@ void Hello::test_args_3 (
     const ::Test::Unbounded_Var_Size_Arg & arg3,
     const ::Test::Var_Array arg4
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3 \n")));
@@ -277,6 +306,7 @@ void Hello::test_args_3 (
 
 char *
 Hello::get_string (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -319,6 +349,9 @@ Hello::test_unbounded_string (
     char *& s2,
     CORBA::String_out s3
   )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
@@ -331,6 +364,7 @@ Hello::test_unbounded_string (
 
 void
 Hello::shutdown (void)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

@@ -26,10 +26,12 @@ TAO::CSD::TP_Strategy::~TP_Strategy()
 
 
 TAO::CSD::TP_Strategy::CustomRequestOutcome
-TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
+TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op
+                                            )
 {
   TP_Servant_State::HandleType servant_state =
-                        this->get_servant_state(op->servant());
+                        this->get_servant_state(op->servant()
+                                               );
 
   TP_Custom_Synch_Request_Handle request = new
                           TP_Custom_Synch_Request(op, servant_state.in());
@@ -46,10 +48,12 @@ TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
 
 
 TAO::CSD::TP_Strategy::CustomRequestOutcome
-TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
+TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op
+                                             )
 {
   TP_Servant_State::HandleType servant_state =
-                        this->get_servant_state(op->servant());
+                        this->get_servant_state(op->servant()
+                                               );
 
   TP_Custom_Asynch_Request_Handle request = new
                           TP_Custom_Asynch_Request(op, servant_state.in());
@@ -85,10 +89,12 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant)
+                              PortableServer::Servant         servant
+                              )
 {
   TP_Servant_State::HandleType servant_state =
-                        this->get_servant_state(servant);
+                        this->get_servant_state(servant
+                                               );
 
   // Now we can create the TP_Remote_Request object, and then add it to our
   // task_'s "request queue".
@@ -123,10 +129,12 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
                               const char*                     operation,
-                              PortableServer::Servant         servant)
+                              PortableServer::Servant         servant
+                              )
 {
   TP_Servant_State::HandleType servant_state =
-                        this->get_servant_state(servant);
+                        this->get_servant_state(servant
+                                               );
 
   bool is_sync_with_server = server_request.sync_with_server();
   bool is_synchronous      = server_request.response_expected();
@@ -193,7 +201,7 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
       if (srw == false)
         {
           // Raise exception when request was cancelled.
-          throw ::CORBA::NO_IMPLEMENT();
+          ACE_THROW_RETURN(CORBA::NO_IMPLEMENT(), DISPATCH_REJECTED);
         }
     }
   else if (!synch_with_server_request.is_nil())
@@ -202,7 +210,7 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
       if (swsr == false)
         {
           // Raise exception when request was cancelled.
-          throw ::CORBA::NO_IMPLEMENT();
+          ACE_THROW_RETURN(CORBA::NO_IMPLEMENT(), DISPATCH_REJECTED);
         }
     }
 
@@ -213,8 +221,11 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
 void
 TAO::CSD::TP_Strategy::servant_activated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 const PortableServer::ObjectId& oid
+                                 )
 {
+  ACE_UNUSED_ARG(oid);
+
   if (this->serialize_servants_)
     {
       // Add the servant to the servant state map.
@@ -226,8 +237,11 @@ TAO::CSD::TP_Strategy::servant_activated_event_i
 void
 TAO::CSD::TP_Strategy::servant_deactivated_event_i
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+                                 const PortableServer::ObjectId& oid
+                                 )
 {
+  ACE_UNUSED_ARG(oid);
+
   // Cancel all requests stuck in the queue for the specified servant.
   this->task_.cancel_servant(servant);
 
@@ -240,7 +254,8 @@ TAO::CSD::TP_Strategy::servant_deactivated_event_i
 
 
 void
-TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant)
+TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant
+                                       )
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->task_.cancel_servant(servant);
@@ -248,13 +263,15 @@ TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant)
 
 
 TAO::CSD::TP_Servant_State::HandleType
-TAO::CSD::TP_Strategy::get_servant_state(PortableServer::Servant servant)
+TAO::CSD::TP_Strategy::get_servant_state(PortableServer::Servant servant
+                                         )
 {
   TP_Servant_State::HandleType servant_state;
 
   if (this->serialize_servants_)
     {
-      servant_state = this->servant_state_map_.find(servant);
+      servant_state = this->servant_state_map_.find(servant
+                                                   );
     }
 
   return servant_state;

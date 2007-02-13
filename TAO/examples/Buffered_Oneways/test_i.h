@@ -28,9 +28,11 @@ public:
   // ctor.
 
   // = The test interface methods.
-  void method (CORBA::ULong request_number);
+  void method (CORBA::ULong request_number)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (void);
+  void shutdown (void)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
