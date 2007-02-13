@@ -27,7 +27,6 @@ project(*Server): taoserver, utils, iortable, avoids_corba_e_micro {
 project(*Client): taoclient, anytypecode {
   exename = INS_test_client
   after += *idl
-  after += *Server
   Source_Files {
     INS_test_client.cpp
   }

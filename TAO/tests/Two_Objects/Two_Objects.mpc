@@ -25,7 +25,6 @@ project(*Server): taoserver {
 
 project(*Client): taoclient, anytypecode {
   after += *idl
-  after += *Server
   Source_Files {
     Two_ObjectsC.cpp
     client.cpp

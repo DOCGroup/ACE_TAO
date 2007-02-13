@@ -24,7 +24,6 @@ project(*Server): messaging, taoexe, portableserver {
 
 project(*Client): messaging, taoexe, portableserver {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
   }
