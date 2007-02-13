@@ -136,7 +136,8 @@ namespace TM_Tester
       CORBA::Long d = 20;
       resource_seq[0].property[0].value <<= d;
 
-      ::Deployment::ResourceCommitmentManager_ptr manager;
+      ::Deployment::ResourceCommitmentManager_ptr manager = 
+        ::Deployment::ResourceCommitmentManager::_nil ();
 
       try
       {
