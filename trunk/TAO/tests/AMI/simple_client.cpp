@@ -222,8 +222,7 @@ main (int argc, char *argv[])
       // Begin test of attributes
       ami_test_var->sendc_get_yadda (the_handler_var.in ());
 
-      ami_test_var->sendc_set_yadda (the_handler_var.in (),
-                                     4711);
+      ami_test_var->sendc_set_yadda (the_handler_var.in (), 4711);
 
       ami_test_var->sendc_get_yadda (the_handler_var.in ());
 

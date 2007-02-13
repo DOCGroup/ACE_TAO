@@ -19,10 +19,16 @@
 
 ACE_RCSID(AMI, ami_test_i, "$Id$")
 
-AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
+AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb,
+                        CORBA::Long in_l,
+                        const char * in_str,
+                        bool check_params)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      number_ ((CORBA::Long) 931232),
-     yadda_ ((CORBA::Long) 140474)
+     yadda_ ((CORBA::Long) 140474),
+     in_l_ (in_l),
+     in_str_(CORBA::string_dup(in_str)),
+     check_params_(check_params)
 {
 }
 
@@ -46,10 +52,19 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
       throw A::DidTheRightThing();
     }
 
+  if (check_params_)
+    {
+      if (in_l_ != in_l || ACE_OS::strcmp(in_str_, in_str) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Parameter corruption on in parameters: %d %d %s %s.\n",
+                      in_l_, in_l, in_str_, in_str));
+        }
+      return 0;
+    }
+
   return 931234;
 }
-
-
 
 void
 AMI_Test_i::shutdown (void)
