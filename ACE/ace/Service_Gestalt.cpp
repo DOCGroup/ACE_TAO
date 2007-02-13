@@ -105,9 +105,9 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 {
   ACE_ASSERT (this->name_ != 0); // No name?
 
-  // Heap-allocate the forward declaration because that's where the 
+  // Heap-allocate the forward declaration because that's where the
   // repository exects them to be ...
-  ACE_NEW_NORETURN (this->dummy_, 
+  ACE_NEW_NORETURN (this->dummy_,
                     ACE_Service_Type (this->name_,  // ... use the same name
                                       0,            // ... inactive
                                       this->dummy_dll_, // ... bogus ACE_DLL
@@ -120,13 +120,13 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
                 ACE_LIB_TEXT (":<ctor> - new fwd decl")
                 ACE_LIB_TEXT (", repo[%d]=%@, name=%s, type=%@")
                 ACE_LIB_TEXT (", impl=%@, object=%@, active=%d\n"),
-                this->repo_begin_, 
-                &this->repo_, 
-                this->name_, 
+                this->repo_begin_,
+                &this->repo_,
+                this->name_,
                 this->dummy_,
                 this->dummy_->type (),
-                (this->dummy_->type () != 0) 
-                  ? this->dummy_->type ()->object () 
+                (this->dummy_->type () != 0)
+                  ? this->dummy_->type ()->object ()
                   : 0,
                 this->dummy_->active ()));
 #endif /* ACE_NLOGGING */
@@ -165,8 +165,8 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
         ACE_ERROR ((LM_WARNING,
                     ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
                     ACE_LIB_TEXT (":<dtor> - find %s failed, returns %d/%d\n"),
-                    this->name_, 
-                    ret, 
+                    this->name_,
+                    ret,
                     errno));
 #endif /* ACE_NLOGGING */
 
@@ -191,22 +191,22 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
                       &this->repo_,
                       this->name_));
 #endif /* ACE_NLOGGING */
-        
+
         // Relocate any related static services. If any have been
         // registered in the context of this guard, those really
         // aren't static services because their code is in the DLL's
         // code segment
-        this->repo_.relocate_i (this->repo_begin_, 
-                                this->repo_.current_size (), 
+        this->repo_.relocate_i (this->repo_begin_,
+                                this->repo_.current_size (),
                                 tmp->dll());
-        
+
         // The ACE_Service_Gestalt::insert() modifies the memory for
         // the original ACE_Service_Type instance. It will delete our
         // dummy instance when replacing it with the actual
         // implementation. We are hereby simply giving up ownership of
         // something that no longer exists.
         this->dummy_ = 0;
-        
+
 #ifndef ACE_NLOGGING
         if(ACE::debug ())
           ACE_DEBUG ((LM_DEBUG,
@@ -214,10 +214,10 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
                       ACE_LIB_TEXT (":<dtor> - done loading of %s")
                       ACE_LIB_TEXT (", repo[%d]=%@, type=%@, impl=%@")
                       ACE_LIB_TEXT (", object=%@, active=%d\n"),
-                      this->name_, 
-                      this->repo_begin_, 
-                      &this->repo_, 
-                      tmp, 
+                      this->name_,
+                      this->repo_begin_,
+                      &this->repo_,
+                      tmp,
                       tmp->type (),
                       (tmp->type () != 0) ? tmp->type ()->object () : 0,
                       tmp->active ()));
@@ -232,22 +232,22 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
                       ACE_LIB_TEXT (":<dtor> - removing fwd decl for %s")
                       ACE_LIB_TEXT (", repo=%@, type=%@, impl=%@")
                       ACE_LIB_TEXT (", object=%@, active=%d\n"),
-                      this->name_, 
-                      &this->repo_, 
-                      this->dummy_, 
+                      this->name_,
+                      &this->repo_,
+                      this->dummy_,
                       this->dummy_->type (),
-                      (this->dummy_->type () != 0) 
-                        ? this->dummy_->type ()->object () 
+                      (this->dummy_->type () != 0)
+                        ? this->dummy_->type ()->object ()
                         : 0,
                       this->dummy_->active ()));
 #endif /* ACE_NLOGGING */
-        
+
         // The (dummy) forward declaration is still there and is the
         // same, which means that no actual declaration was provided
         // inside the guarded scope. Therefore, the forward
         // declaration is no longer necessary.
         if (this->repo_.remove_i (this->name_,
-                                  const_cast< ACE_Service_Type**> 
+                                  const_cast< ACE_Service_Type**>
                                     (&this->dummy_)) == 0)
           {
             // If it is a dummy then deleting it while holding the
@@ -263,20 +263,20 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
                         ACE_LIB_TEXT (":<dtor> - failed to remove fwd decl %s")
                         ACE_LIB_TEXT (", repo=%@, type=%@, impl=%@")
                         ACE_LIB_TEXT (", object=%@, active=%d: -1/%d\n"),
-                        this->name_, 
-                        &this->repo_, 
-                        this->dummy_, 
+                        this->name_,
+                        &this->repo_,
+                        this->dummy_,
                         this->dummy_->type (),
-                        (this->dummy_->type () != 0) 
-                          ? this->dummy_->type ()->object () 
+                        (this->dummy_->type () != 0)
+                          ? this->dummy_->type ()->object ()
                           : 0,
-                        this->dummy_->active (), 
+                        this->dummy_->active (),
                         errno));
 #endif /* ACE_NLOGGING */
           }
       }
   }
-  
+
   // Clean up and bail ...
   this->dummy_ = 0;
 }
