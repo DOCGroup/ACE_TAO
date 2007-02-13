@@ -1,3 +1,15 @@
+Tue Feb 13 12:58:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/common/Exception.h:
+        * ACEXML/common/Exception.cpp:
+        * ACEXML/common/SAXExceptions.h:
+        * ACEXML/common/SAXExceptions.inl:
+        * ACEXML/common/SAXExceptions.cpp:
+
+          Changed the print() and message() methods to const.  There was no
+          reason for thease to be non-const and it makes it possible to
+          catch const references of the ACEXML exception types.
+
 Mon Feb 12 20:24:04 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * examples/Logger/Acceptor-server/server_loggerd.cpp (handle_input):
