@@ -1,3 +1,9 @@
+Tue Feb 13 19:44:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+          Removing a stray ';'
+
 Tue Feb 13 14:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/simple/CodeSets_simple.mpc:
