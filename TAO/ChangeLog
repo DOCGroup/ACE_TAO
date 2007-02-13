@@ -1,3 +1,8 @@
+Tue Feb 13 19:49:59 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_global.cpp:
+          Added -Gdcps to the usage output
+
 Tue Feb 13 19:50:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/Test.idl:
