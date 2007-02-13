@@ -1,3 +1,9 @@
+Tue Feb 13 20:49:13 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+				  Changed in order to address couple of warnings in the TargetManager.
+
 Mon Feb 12 16:02:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
 
@@ -190,8 +196,8 @@ Mon Feb 12 16:02:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
         * RACE/descriptors/flattened_deploymentplan.cdp:
 
           Removed these files. Removed the RACE implementation from the HEAD,
-					since this is obsolete. This module is now in the process of
-					re-structuring and will be checked in by Nishanth Shankaran.
+                                        since this is obsolete. This module is now in the process of
+                                        re-structuring and will be checked in by Nishanth Shankaran.
 
 Mon Feb 12 12:53:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

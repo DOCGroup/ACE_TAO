@@ -660,4 +660,5 @@ CIAO::DomainDataManager::find_resource (
         throw ::Deployment::ResourceCommitmentFailure ().reason = CORBA::string_dup ("Resource Not Found\n");
       }
     }
+    throw ::Deployment::ResourceCommitmentFailure ().reason = CORBA::string_dup ("Resource Not Found\n");
 }
