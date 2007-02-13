@@ -1,3 +1,8 @@
+Tue Feb 13 14:08:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/ami_test_i.cpp:
+          Fixed warning in gcc builds
+
 Tue Feb 13 12:59:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Portable_Interceptors/AdvSlotExt/AdvSlotExt.mpc:
