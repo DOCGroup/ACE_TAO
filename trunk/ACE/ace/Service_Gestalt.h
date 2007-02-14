@@ -14,21 +14,14 @@
 #define ACE_SERVICE_GESTALT_H
 
 #include /**/ "ace/pre.h"
-
 #include /**/ "ace/config-all.h"
-#include "ace/Default_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Unbounded_Queue.h"
-#include "ace/Service_Repository.h"
-#include "ace/Singleton.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +35,8 @@ class ACE_DLL;
 
 class ACE_Static_Svc_Descriptor;
 class ACE_Svc_Conf_Param;
-class ACE_Service_Gestalt;
+class ACE_Service_Type;
+class ACE_Service_Repository;
 
 /**
  * @class ACE_Service_Gestalt
