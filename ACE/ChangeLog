@@ -1,3 +1,9 @@
+Wed Feb 14 11:03:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Manager_Test.cpp:
+          Added test code from bugzilla 2797, thanks to Yves Alloyer
+          <alloyer at ipanematech dot com> for reporting this.
+
 Wed Feb 14 10:06:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
