@@ -111,6 +111,7 @@ if ($server != 0) {
 }
 
 $NS1->Kill ();
+$CL->TerminateWaitKill (2);
 
 unlink $iorfile1;
 unlink $iorfile2;
