@@ -333,7 +333,7 @@ public:
   /// Constructor.
   ACE_Dev_Poll_Reactor_Handler_Repository (void);
 
-  /// Initialize a repository of the appropriate <size>.
+  /// Initialize a repository of the appropriate @a size.
   int open (size_t size);
 
   /// Close down the repository.

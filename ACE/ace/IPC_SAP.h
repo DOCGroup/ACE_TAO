@@ -41,14 +41,14 @@ public:
   /**
    * Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
    * non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-   * which is passed as the <value>.
+   * which is passed as the @a value.
    */
   int enable (int value) const;
 
   /**
    * Disable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
    * non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
-   * which is passed as the <value>.
+   * which is passed as the @a value.
    */
   int disable (int value) const;
 

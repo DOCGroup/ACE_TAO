@@ -72,8 +72,8 @@ public:
   int acquire (ACE_Time_Value &tv);
 
   /**
-   * If <tv> == 0 the call <acquire()> directly.  Otherwise, Block the
-   * thread until we acquire the mutex or until <tv> times out, in
+   * If @a tv == 0 the call <acquire()> directly.  Otherwise, Block the
+   * thread until we acquire the mutex or until @a tv times out, in
    * which case -1 is returned with <errno> == <ETIME>.  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
    * The value of <*tv> is updated upon return to show the actual

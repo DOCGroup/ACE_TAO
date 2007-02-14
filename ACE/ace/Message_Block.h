@@ -206,7 +206,7 @@ public:
    * Create a Message Block that assumes it has ownership of @a data,
    * but in reality it doesnt (i.e., cannot delete it since it didn't
    * malloc it!).  Note that the @c size of the Message_Block will
-   * be @a size, but the <length>  will be 0 until <wr_ptr> is set.
+   * be @a size, but the @a length  will be 0 until <wr_ptr> is set.
    */
   int init (const char *data,
             size_t size = 0);
@@ -220,8 +220,8 @@ public:
    * this object ceases to exist  (and don't delete it during
    * destruction).  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
-   * reference counting) from race conditions.  Note that the <size>
-   * of the <Message_Block> will be @a size, but the <length> will be 0
+   * reference counting) from race conditions.  Note that the @a size
+   * of the <Message_Block> will be @a size, but the @a length will be 0
    * until  <wr_ptr> is set. The @a data_block_allocator is use to
    * allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those.

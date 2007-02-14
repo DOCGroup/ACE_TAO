@@ -116,7 +116,7 @@ private:
   int set (const T &r,
            ACE_Future<T> &caller);
 
-  /// Wait up to <tv> time to get the <value>.  Note that <tv> must be
+  /// Wait up to @a tv time to get the @a value.  Note that @a tv must be
   /// specified in absolute time rather than relative time.
   int get (T &value,
            ACE_Time_Value *tv) const;

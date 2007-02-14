@@ -90,18 +90,18 @@ public:
 
   /**
    * Return local endpoint addresses in the referenced array of
-   * ACE_INET_Addr, which should have the specified <size>.  If the
-   * number of local endpoint addresses is less than <size>, then
-   * <size> will be set to this number.  If successful, the method
+   * ACE_INET_Addr, which should have the specified @a size.  If the
+   * number of local endpoint addresses is less than @a size, then
+   * @a size will be set to this number.  If successful, the method
    * returns 0, otherwise returns -1.
    */
   int get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const;
 
   /**
    * Return remote endpoint addresses in the referenced array of
-   * ACE_INET_Addr, which should have the specified <size>.  If the
-   * number of remote endpoint addresses is less than <size>, then
-   * <size> will be set to this number.  If successful, the method
+   * ACE_INET_Addr, which should have the specified @a size.  If the
+   * number of remote endpoint addresses is less than @a size, then
+   * @a size will be set to this number.  If successful, the method
    * returns 0, otherwise returns -1.
    */
   int get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const;
