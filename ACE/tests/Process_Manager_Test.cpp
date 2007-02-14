@@ -27,6 +27,7 @@
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Process_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread.h"
@@ -102,6 +103,28 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   return result;
 }
 
+static int
+command_line_test ()
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing for last character of command line\n")));
+  int result = 1;
+  const ACE_TCHAR *command = ACE_TEXT ("test Hello");
+  size_t command_len = ACE_OS::strlen (command);
+  ACE_Process_Options options (1, command_len + 1);
+  options.command_line (command);
+  ACE_TCHAR * const *procargv = options.command_line_argv ();
+  if (ACE_OS::strcmp (procargv [1], ACE_TEXT ("Hello")) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("command_line_test failed: expected \"%s\"; got \"%s\"\n"),
+                  ACE_TEXT ("Hello"),
+                  procargv [1]));
+      result = 1;
+    }
+  return result;
+}
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -142,9 +165,14 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
 
+  int result = 0;
+  int test_status = 0;
+
+  if ((result = command_line_test ()) != 0)
+    test_status = result;
+
   // Try the explicit <ACE_Process_Manager::wait> functions
 
-  int result = 0, test_status = 0;
   ACE_Process_Manager mgr;
 
   mgr.register_handler (new Exit_Handler ("default"));
