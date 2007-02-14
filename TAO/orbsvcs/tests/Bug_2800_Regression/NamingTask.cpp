@@ -76,7 +76,7 @@ int NamingTask::svc()
       ACE_ERROR ((LM_ERROR, "Unable to initialize the Naming Service.\n"));
     }
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
       ex._tao_print_exception ("NamingTask::svc() CORBA::Exception: ");
   }

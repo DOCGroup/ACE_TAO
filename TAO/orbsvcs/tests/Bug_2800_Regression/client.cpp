@@ -6,6 +6,8 @@
 
 ACE_RCSID(Hello, client, "$Id$")
 
+const char *ior = "file://shutdown.ior";
+
 int
 parse_args (int argc, char *argv[])
 {
@@ -32,8 +34,7 @@ main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -58,33 +59,41 @@ main (int argc, char *argv[])
       name[0].id = CORBA::string_dup("example");
       name[1].id = CORBA::string_dup("Hello");
 
-      tmp = root->resolve (name);
-
-      ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
-
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
-
-      if (CORBA::is_nil (hello.in ()))
+      try
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference\n"),
-                            1);
+          tmp = root->resolve (name);
+          ACE_DEBUG ((LM_INFO, "**** Resolved #example/Hello\n"));
+
+          Test::Hello_var hello =
+            Test::Hello::_narrow(tmp.in ());
+
+          if (CORBA::is_nil (hello.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_DEBUG,
+                                 "Nil Test::Hello reference\n"),
+                                1);
+            }
+
+          CORBA::String_var the_string = hello->get_string ();
+
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                      the_string.in ()));
+
+          hello->shutdown ();
+        }
+      catch (const CosNaming::NamingContext::CannotProceed&)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Catched correct exception\n"));
         }
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+      CORBA::Object_var shutdowntmp = orb->string_to_object(ior);
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
+      Test::NsShutdown_var shutdown = Test::NsShutdown::_narrow(shutdowntmp.in ());
 
-      hello->shutdown ();
+      ACE_DEBUG ((LM_DEBUG, "Shutdown nsmain\n"));
+      shutdown->shutdown ();
 
       orb->destroy ();
-    }
-  catch (const CosNaming::NamingContext::CannotProceed&)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Catched correct exception\n"));
     }
   catch (const CORBA::Exception& ex)
     {
