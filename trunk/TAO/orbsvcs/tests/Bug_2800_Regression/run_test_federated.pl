@@ -94,7 +94,7 @@ print STDERR "Killing second naming server\n";
 $NS2->Kill ();
 
 print STDERR "Starting client\n";
-$client = $CL->Spawn (10);
+$client = $CL->Spawn ();
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -103,11 +103,7 @@ if ($client != 0) {
 
 sleep (15);
 
-print STDERR "Starting NS2 again\n";
-
-$NS2->Spawn ();
-
-$server = $SV->WaitKill (10);
+$server = $SV->TerminateWaitKill (10);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
