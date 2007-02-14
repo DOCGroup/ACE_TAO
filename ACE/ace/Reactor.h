@@ -820,7 +820,7 @@ public:
 
   /**
    * Returns 0, if the size of the current message has been put in
-   * <size> returns -1, if not.  ACE_HANDLE allows the reactor to
+   * @a size returns -1, if not.  ACE_HANDLE allows the reactor to
    * check if the caller is valid.  Used for CLASSIX Reactor
    * implementation.
    */

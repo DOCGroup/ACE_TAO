@@ -66,7 +66,7 @@ public:
   virtual int remove (void);
 
   // = Allocation and deallocation methods.
-  /// Create a new chuck of memory containing <size> bytes.
+  /// Create a new chuck of memory containing @a size bytes.
   virtual void *malloc (size_t = 0);
 
   /// Free a chuck of memory allocated by <ACE_Shared_Memory_SV::malloc>.

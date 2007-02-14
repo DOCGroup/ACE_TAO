@@ -193,7 +193,7 @@ public:
     /// Empty constructor: keys will be NULL
     Naming_Context (void);
 
-    /// Constructor: key_ will be set to <key>
+    /// Constructor: key_ will be set to @a key
     Naming_Context (const HKEY &key);
 
     /// Destructor will call <Naming_Context::close>.

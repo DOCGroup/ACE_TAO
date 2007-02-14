@@ -94,8 +94,8 @@ public:
   friend class ACE_WChar_Codeset_Translator;
   friend class ACE_InputCDR;
 
-  /// Default constructor, allocates <size> bytes in the internal
-  /// buffer, if <size> == 0 it allocates the default size.
+  /// Default constructor, allocates @a size bytes in the internal
+  /// buffer, if @a size == 0 it allocates the default size.
   ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
@@ -394,8 +394,8 @@ public:
 
   /**
    * Returns (in <buf>) the next position in the buffer aligned to
-   * <size>, it advances the Message_Block wr_ptr past the data
-   * (i.e., <buf> + <size>). If necessary it grows the Message_Block
+   * @a size, it advances the Message_Block wr_ptr past the data
+   * (i.e., <buf> + @a size). If necessary it grows the Message_Block
    * buffer.  Sets the good_bit to false and returns a -1 on failure.
    */
   int adjust (size_t size,
@@ -446,7 +446,7 @@ private:
   ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
 
   /**
-   * write an array of <length> elements, each of <size> bytes and the
+   * write an array of @a length elements, each of @a size bytes and the
    * start aligned at a multiple of <align>. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
@@ -469,7 +469,7 @@ private:
 
   /**
    * Grow the CDR stream. When it returns <buf> contains a pointer to
-   * memory in the CDR stream, with at least <size> bytes ahead of it
+   * memory in the CDR stream, with at least @a size bytes ahead of it
    * and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
    * + size>.
    */
@@ -974,7 +974,7 @@ private:
   // operations using asignment.
 
   /**
-   * Read an array of <length> elements, each of <size> bytes and the
+   * Read an array of @a length elements, each of @a size bytes and the
    * start aligned at a multiple of <align>. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
@@ -1070,7 +1070,7 @@ protected:
   ACE_CDR::Boolean write_1 (ACE_OutputCDR& output,
                             const ACE_CDR::Octet *x);
 
-  /// Efficiently read <length> elements of size <size> each from
+  /// Efficiently read @a length elements of size @a size each from
   /// <input> into <x>; the data must be aligned to <align>.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
@@ -1079,7 +1079,7 @@ protected:
                                ACE_CDR::ULong length);
 
   /**
-   * Efficiently write <length> elements of size <size> from <x> into
+   * Efficiently write @a length elements of size @a size from <x> into
    * <output>. Before inserting the elements enough padding is added
    * to ensure that the elements will be aligned to <align> in the
    * stream.
@@ -1094,7 +1094,7 @@ protected:
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
    * On success <buf> will contain a contiguous area in the CDR stream
-   * that can hold <size> bytes aligned to <align>.
+   * that can hold @a size bytes aligned to <align>.
    * Results
    */
   int adjust (ACE_OutputCDR& out,
@@ -1163,7 +1163,7 @@ protected:
   ACE_CDR::Boolean write_4 (ACE_OutputCDR& output,
                             const ACE_CDR::ULong *x);
 
-  /// Efficiently read <length> elements of size <size> each from
+  /// Efficiently read @a length elements of size @a size each from
   /// <input> into <x>; the data must be aligned to <align>.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
@@ -1172,7 +1172,7 @@ protected:
                                ACE_CDR::ULong length);
 
   /**
-   * Efficiently write <length> elements of size <size> from <x> into
+   * Efficiently write @a length elements of size @a size from <x> into
    * <output>. Before inserting the elements enough padding is added
    * to ensure that the elements will be aligned to <align> in the
    * stream.
@@ -1187,7 +1187,7 @@ protected:
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
    * On success <buf> will contain a contiguous area in the CDR stream
-   * that can hold <size> bytes aligned to <align>.
+   * that can hold @a size bytes aligned to <align>.
    * Results
    */
   int adjust (ACE_OutputCDR& out,

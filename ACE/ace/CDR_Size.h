@@ -121,7 +121,7 @@ public:
                                            ACE_CDR::ULong length);
 
   ///
-  /// Adjust to <size> and count <size> octets.
+  /// Adjust to @a size and count <size> octets.
   void adjust (size_t size);
 
   /// As above, but now the size and alignment requirements may be
@@ -141,7 +141,7 @@ private:
   ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
 
   /**
-   * write an array of <length> elements, each of <size> bytes and the
+   * write an array of @a length elements, each of @a size bytes and the
    * start aligned at a multiple of <align>. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.

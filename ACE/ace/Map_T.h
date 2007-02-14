@@ -283,7 +283,7 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map (void);
 
-  /// Initialize a <Map> with size <length>.
+  /// Initialize a map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0) = 0;
 
@@ -291,16 +291,16 @@ public:
   virtual int close (void) = 0;
 
   /**
-   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * Add @a key / @a value pair to the map.  If @a key is already in the
    * map then no changes are made and 1 is returned.  Returns 0 on a
    * successful addition.  This function fails for maps that do not
-   * allow user specified keys. <key> is an "in" parameter.
+   * allow user specified keys. @a key is an "in" parameter.
    */
   virtual int bind (const KEY &key,
                     const VALUE &value) = 0;
 
   /**
-   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
    * information.  To recover original key, call the <recover_key>
    * method.
@@ -309,9 +309,9 @@ public:
                                KEY &key) = 0;
 
   /**
-   * Produce a key and return it through <key> which is an "out"
+   * Produce a key and return it through @a key which is an "out"
    * parameter.  For maps that do not naturally produce keys, the map
-   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * adapters will use the @c KEY_GENERATOR class to produce a key.
    * However, the users are responsible for not jeopardizing this key
    * production scheme by using user specified keys with keys produced
    * by the key generator.
@@ -319,10 +319,10 @@ public:
   virtual int create_key (KEY &key) = 0;
 
   /**
-   * Add <value> to the map, and the corresponding key produced by the
-   * Map is returned through <key> which is an "out" parameter.  For
+   * Add @a value to the map, and the corresponding key produced by the
+   * Map is returned through @a key which is an "out" parameter.  For
    * maps that do not naturally produce keys, the map adapters will
-   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * use the @c KEY_GENERATOR class to produce a key.  However, the
    * users are responsible for not jeopardizing this key production
    * scheme by using user specified keys with keys produced by the key
    * generator.
@@ -331,10 +331,10 @@ public:
                                KEY &key) = 0;
 
   /**
-   * Add <value> to the map.  The user does not care about the
+   * Add @a value to the map.  The user does not care about the
    * corresponding key produced by the Map. For maps that do not
    * naturally produce keys, the map adapters will use the
-   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * @c KEY_GENERATOR class to produce a key.  However, the users are
    * responsible for not jeopardizing this key production scheme by
    * using user specified keys with keys produced by the key
    * generator.
@@ -347,31 +347,31 @@ public:
                            KEY &original_key) = 0;
 
   /**
-   * Reassociate <key> with <value>. The function fails if <key> is
+   * Reassociate @a key with @a value. The function fails if @a key is
    * not in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value) = 0;
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value) = 0;
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the map for maps that do not
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the map for maps that do not
    * allow user specified keys.  However, for maps that allow user
-   * specified keys, if the key is not in the map, a new <key>/<value>
+   * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
   virtual int rebind (const KEY &key,
@@ -380,28 +380,28 @@ public:
                       VALUE &old_value) = 0;
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * map.  If <key> is already in the map, then the <value> parameter
+   * Associate @a key with @a value if and only if @a key is not in the
+   * map.  If @a key is already in the map, then the @a value parameter
    * is overwritten with the existing value in the map. Returns 0 if a
-   * new <key>/<value> association is created.  Returns 1 if an
+   * new @a key / @a value association is created.  Returns 1 if an
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
   virtual int trybind (const KEY &key,
                        VALUE &value) = 0;
 
-  /// Locate <value> associated with <key>.
+  /// Locate @a value associated with @a key.
   virtual int find (const KEY &key,
                     VALUE &value) = 0;
 
-  /// Is <key> in the map?
+  /// Is @a key in the map?
   virtual int find (const KEY &key) = 0;
 
-  /// Remove <key> from the map.
+  /// Remove @a key from the map.
   virtual int unbind (const KEY &key) = 0;
 
-  /// Remove <key> from the map, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the map, and return the @a value associated with
+  /// @a key.
   virtual int unbind (const KEY &key,
                       VALUE &value) = 0;
 
@@ -561,7 +561,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Map_Impl (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignored
+  /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Map_Impl (size_t size,
                 ACE_Allocator *alloc = 0);
@@ -569,7 +569,7 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Impl (void);
 
-  /// Initialize a <Map> with size <length>.
+  /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
@@ -577,16 +577,16 @@ public:
   virtual int close (void);
 
   /**
-   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * Add @a key / @a value pair to the map.  If @a key is already in the
    * map then no changes are made and 1 is returned.  Returns 0 on a
    * successful addition.  This function fails for maps that do not
-   * allow user specified keys. <key> is an "in" parameter.
+   * allow user specified keys. @a key is an "in" parameter.
    */
   virtual int bind (const KEY &key,
                     const VALUE &value);
 
   /**
-   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
    * information.  To recover original key, call the <recover_key>
    * method.
@@ -595,9 +595,9 @@ public:
                                KEY &key);
 
   /**
-   * Produce a key and return it through <key> which is an "out"
+   * Produce a key and return it through @a key which is an "out"
    * parameter.  For maps that do not naturally produce keys, the map
-   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * adapters will use the @c KEY_GENERATOR class to produce a key.
    * However, the users are responsible for not jeopardizing this key
    * production scheme by using user specified keys with keys produced
    * by the key generator.
@@ -605,10 +605,10 @@ public:
   virtual int create_key (KEY &key);
 
   /**
-   * Add <value> to the map, and the corresponding key produced by the
-   * Map is returned through <key> which is an "out" parameter.  For
+   * Add @a value to the map, and the corresponding key produced by the
+   * Map is returned through @a key which is an "out" parameter.  For
    * maps that do not naturally produce keys, the map adapters will
-   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * use the @c KEY_GENERATOR class to produce a key.  However, the
    * users are responsible for not jeopardizing this key production
    * scheme by using user specified keys with keys produced by the key
    * generator.
@@ -617,10 +617,10 @@ public:
                                KEY &key);
 
   /**
-   * Add <value> to the map.  The user does not care about the
+   * Add @a value to the map.  The user does not care about the
    * corresponding key produced by the Map. For maps that do not
    * naturally produce keys, the map adapters will use the
-   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * @c KEY_GENERATOR class to produce a key.  However, the users are
    * responsible for not jeopardizing this key production scheme by
    * using user specified keys with keys produced by the key
    * generator.
@@ -633,31 +633,31 @@ public:
                            KEY &original_key);
 
   /**
-   * Reassociate <key> with <value>. The function fails if <key> is
+   * Reassociate @a key with @a value. The function fails if @a key is
    * not in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the map for maps that do not
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the map for maps that do not
    * allow user specified keys.  However, for maps that allow user
-   * specified keys, if the key is not in the map, a new <key>/<value>
+   * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
   virtual int rebind (const KEY &key,
@@ -666,28 +666,28 @@ public:
                       VALUE &old_value);
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * map.  If <key> is already in the map, then the <value> parameter
+   * Associate @a key with @a value if and only if @a key is not in the
+   * map.  If @a key is already in the map, then the @a value parameter
    * is overwritten with the existing value in the map. Returns 0 if a
-   * new <key>/<value> association is created.  Returns 1 if an
+   * new @a key / @a value association is created.  Returns 1 if an
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
   virtual int trybind (const KEY &key,
                        VALUE &value);
 
-  /// Locate <value> associated with <key>.
+  /// Locate @a value associated with @a key.
   virtual int find (const KEY &key,
                     VALUE &value);
 
-  /// Is <key> in the map?
+  /// Is @a key in the map?
   virtual int find (const KEY &key);
 
-  /// Remove <key> from the map.
+  /// Remove @a key from the map.
   virtual int unbind (const KEY &key);
 
-  /// Remove <key> from the map, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the map, and return the @a value associated with
+  /// @a key.
   virtual int unbind (const KEY &key,
                       VALUE &value);
 
@@ -738,7 +738,7 @@ class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef typename ACE_Active_Map_Manager<VALUE>::iterator
+  typedef typename ACE_Active_Map_Manager@a value::iterator
           implementation;
 
   /// Constructor.
@@ -784,7 +784,7 @@ class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Itera
 public:
 
   // = Traits.
-  typedef typename ACE_Active_Map_Manager<VALUE>::reverse_iterator
+  typedef typename ACE_Active_Map_Manager@a value::reverse_iterator
           implementation;
 
   /// Constructor.
@@ -843,7 +843,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignored
+  /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Active_Map_Manager_Adapter (size_t size,
                                   ACE_Allocator *alloc = 0);
@@ -851,7 +851,7 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Active_Map_Manager_Adapter (void);
 
-  /// Initialize a <Map> with size <length>.
+  /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
@@ -859,16 +859,16 @@ public:
   virtual int close (void);
 
   /**
-   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * Add @a key / @a value pair to the map.  If @a key is already in the
    * map then no changes are made and 1 is returned.  Returns 0 on a
    * successful addition.  This function fails for maps that do not
-   * allow user specified keys. <key> is an "in" parameter.
+   * allow user specified keys. @a key is an "in" parameter.
    */
   virtual int bind (const KEY &key,
                     const VALUE &value);
 
   /**
-   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
    * information.  To recover original key, call the <recover_key>
    * method.
@@ -877,9 +877,9 @@ public:
                                KEY &key);
 
   /**
-   * Produce a key and return it through <key> which is an "out"
+   * Produce a key and return it through @a key which is an "out"
    * parameter.  For maps that do not naturally produce keys, the map
-   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * adapters will use the @c KEY_GENERATOR class to produce a key.
    * However, the users are responsible for not jeopardizing this key
    * production scheme by using user specified keys with keys produced
    * by the key generator.
@@ -887,10 +887,10 @@ public:
   virtual int create_key (KEY &key);
 
   /**
-   * Add <value> to the map, and the corresponding key produced by the
-   * Map is returned through <key> which is an "out" parameter.  For
+   * Add @a value to the map, and the corresponding key produced by the
+   * Map is returned through @a key which is an "out" parameter.  For
    * maps that do not naturally produce keys, the map adapters will
-   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * use the @c KEY_GENERATOR class to produce a key.  However, the
    * users are responsible for not jeopardizing this key production
    * scheme by using user specified keys with keys produced by the key
    * generator.
@@ -899,10 +899,10 @@ public:
                                KEY &key);
 
   /**
-   * Add <value> to the map.  The user does not care about the
+   * Add @a value to the map.  The user does not care about the
    * corresponding key produced by the Map. For maps that do not
    * naturally produce keys, the map adapters will use the
-   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * @c KEY_GENERATOR class to produce a key.  However, the users are
    * responsible for not jeopardizing this key production scheme by
    * using user specified keys with keys produced by the key
    * generator.
@@ -915,31 +915,31 @@ public:
                            KEY &original_key);
 
   /**
-   * Reassociate <key> with <value>. The function fails if <key> is
+   * Reassociate @a key with @a value. The function fails if @a key is
    * not in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the map for maps that do not
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the map for maps that do not
    * allow user specified keys.  However, for maps that allow user
-   * specified keys, if the key is not in the map, a new <key>/<value>
+   * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
   virtual int rebind (const KEY &key,
@@ -948,28 +948,28 @@ public:
                       VALUE &old_value);
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * map.  If <key> is already in the map, then the <value> parameter
+   * Associate @a key with @a value if and only if @a key is not in the
+   * map.  If @a key is already in the map, then the @a value parameter
    * is overwritten with the existing value in the map. Returns 0 if a
-   * new <key>/<value> association is created.  Returns 1 if an
+   * new @a key / @a value association is created.  Returns 1 if an
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
   virtual int trybind (const KEY &key,
                        VALUE &value);
 
-  /// Locate <value> associated with <key>.
+  /// Locate @a value associated with @a key.
   virtual int find (const KEY &key,
                     VALUE &value);
 
-  /// Is <key> in the map?
+  /// Is @a key in the map?
   virtual int find (const KEY &key);
 
-  /// Remove <key> from the map.
+  /// Remove @a key from the map.
   virtual int unbind (const KEY &key);
 
-  /// Remove <key> from the map, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the map, and return the @a value associated with
+  /// @a key.
   virtual int unbind (const KEY &key,
                       VALUE &value);
 
@@ -1137,7 +1137,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignored
+  /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Hash_Map_Manager_Ex_Adapter (size_t size,
                                    ACE_Allocator *alloc = 0);
@@ -1145,7 +1145,7 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Hash_Map_Manager_Ex_Adapter (void);
 
-  /// Initialize a <Map> with size <length>.
+  /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
@@ -1153,16 +1153,16 @@ public:
   virtual int close (void);
 
   /**
-   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * Add @a key / @a value pair to the map.  If @a key is already in the
    * map then no changes are made and 1 is returned.  Returns 0 on a
    * successful addition.  This function fails for maps that do not
-   * allow user specified keys. <key> is an "in" parameter.
+   * allow user specified keys. @a key is an "in" parameter.
    */
   virtual int bind (const KEY &key,
                     const VALUE &value);
 
   /**
-   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
    * information.  To recover original key, call the <recover_key>
    * method.
@@ -1171,9 +1171,9 @@ public:
                                KEY &key);
 
   /**
-   * Produce a key and return it through <key> which is an "out"
+   * Produce a key and return it through @a key which is an "out"
    * parameter.  For maps that do not naturally produce keys, the map
-   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * adapters will use the @c KEY_GENERATOR class to produce a key.
    * However, the users are responsible for not jeopardizing this key
    * production scheme by using user specified keys with keys produced
    * by the key generator.
@@ -1181,10 +1181,10 @@ public:
   virtual int create_key (KEY &key);
 
   /**
-   * Add <value> to the map, and the corresponding key produced by the
-   * Map is returned through <key> which is an "out" parameter.  For
+   * Add @a value to the map, and the corresponding key produced by the
+   * Map is returned through @a key which is an "out" parameter.  For
    * maps that do not naturally produce keys, the map adapters will
-   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * use the @c KEY_GENERATOR class to produce a key.  However, the
    * users are responsible for not jeopardizing this key production
    * scheme by using user specified keys with keys produced by the key
    * generator.
@@ -1193,10 +1193,10 @@ public:
                                KEY &key);
 
   /**
-   * Add <value> to the map.  The user does not care about the
+   * Add @a value to the map.  The user does not care about the
    * corresponding key produced by the Map. For maps that do not
    * naturally produce keys, the map adapters will use the
-   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * @c KEY_GENERATOR class to produce a key.  However, the users are
    * responsible for not jeopardizing this key production scheme by
    * using user specified keys with keys produced by the key
    * generator.
@@ -1209,31 +1209,31 @@ public:
                            KEY &original_key);
 
   /**
-   * Reassociate <key> with <value>. The function fails if <key> is
+   * Reassociate @a key with @a value. The function fails if @a key is
    * not in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the map for maps that do not
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the map for maps that do not
    * allow user specified keys.  However, for maps that allow user
-   * specified keys, if the key is not in the map, a new <key>/<value>
+   * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
   virtual int rebind (const KEY &key,
@@ -1242,28 +1242,28 @@ public:
                       VALUE &old_value);
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * map.  If <key> is already in the map, then the <value> parameter
+   * Associate @a key with @a value if and only if @a key is not in the
+   * map.  If @a key is already in the map, then the @a value parameter
    * is overwritten with the existing value in the map. Returns 0 if a
-   * new <key>/<value> association is created.  Returns 1 if an
+   * new @a key / @a value association is created.  Returns 1 if an
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
   virtual int trybind (const KEY &key,
                        VALUE &value);
 
-  /// Locate <value> associated with <key>.
+  /// Locate @a value associated with @a key.
   virtual int find (const KEY &key,
                     VALUE &value);
 
-  /// Is <key> in the map?
+  /// Is @a key in the map?
   virtual int find (const KEY &key);
 
-  /// Remove <key> from the map.
+  /// Remove @a key from the map.
   virtual int unbind (const KEY &key);
 
-  /// Remove <key> from the map, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the map, and return the @a value associated with
+  /// @a key.
   virtual int unbind (const KEY &key,
                       VALUE &value);
 
@@ -1423,7 +1423,7 @@ public:
   /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
 
-  /// Initialize with <size> entries.  The <size> parameter is ignored
+  /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
   ACE_Map_Manager_Adapter (size_t size,
                            ACE_Allocator *alloc = 0);
@@ -1431,7 +1431,7 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Manager_Adapter (void);
 
-  /// Initialize a <Map> with size <length>.
+  /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
@@ -1439,16 +1439,16 @@ public:
   virtual int close (void);
 
   /**
-   * Add <key>/<value> pair to the map.  If <key> is already in the
+   * Add @a key / @a value pair to the map.  If @a key is already in the
    * map then no changes are made and 1 is returned.  Returns 0 on a
    * successful addition.  This function fails for maps that do not
-   * allow user specified keys. <key> is an "in" parameter.
+   * allow user specified keys. @a key is an "in" parameter.
    */
   virtual int bind (const KEY &key,
                     const VALUE &value);
 
   /**
-   * Add <key>/<value> pair to the map.  <key> is an "inout" parameter
+   * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
    * information.  To recover original key, call the <recover_key>
    * method.
@@ -1457,9 +1457,9 @@ public:
                                KEY &key);
 
   /**
-   * Produce a key and return it through <key> which is an "out"
+   * Produce a key and return it through @a key which is an "out"
    * parameter.  For maps that do not naturally produce keys, the map
-   * adapters will use the <KEY_GENERATOR> class to produce a key.
+   * adapters will use the @c KEY_GENERATOR class to produce a key.
    * However, the users are responsible for not jeopardizing this key
    * production scheme by using user specified keys with keys produced
    * by the key generator.
@@ -1467,10 +1467,10 @@ public:
   virtual int create_key (KEY &key);
 
   /**
-   * Add <value> to the map, and the corresponding key produced by the
-   * Map is returned through <key> which is an "out" parameter.  For
+   * Add @a value to the map, and the corresponding key produced by the
+   * Map is returned through @a key which is an "out" parameter.  For
    * maps that do not naturally produce keys, the map adapters will
-   * use the <KEY_GENERATOR> class to produce a key.  However, the
+   * use the @c KEY_GENERATOR class to produce a key.  However, the
    * users are responsible for not jeopardizing this key production
    * scheme by using user specified keys with keys produced by the key
    * generator.
@@ -1479,10 +1479,10 @@ public:
                                KEY &key);
 
   /**
-   * Add <value> to the map.  The user does not care about the
+   * Add @a value to the map.  The user does not care about the
    * corresponding key produced by the Map. For maps that do not
    * naturally produce keys, the map adapters will use the
-   * <KEY_GENERATOR> class to produce a key.  However, the users are
+   * @c KEY_GENERATOR class to produce a key.  However, the users are
    * responsible for not jeopardizing this key production scheme by
    * using user specified keys with keys produced by the key
    * generator.
@@ -1495,31 +1495,31 @@ public:
                            KEY &original_key);
 
   /**
-   * Reassociate <key> with <value>. The function fails if <key> is
+   * Reassociate @a key with @a value. The function fails if @a key is
    * not in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map for maps that do not allow user specified keys.
    * However, for maps that allow user specified keys, if the key is
-   * not in the map, a new <key>/<value> association is created.
+   * not in the map, a new @a key / @a value association is created.
    */
   virtual int rebind (const KEY &key,
                       const VALUE &value,
                       VALUE &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the map for maps that do not
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the map for maps that do not
    * allow user specified keys.  However, for maps that allow user
-   * specified keys, if the key is not in the map, a new <key>/<value>
+   * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
   virtual int rebind (const KEY &key,
@@ -1528,28 +1528,28 @@ public:
                       VALUE &old_value);
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * map.  If <key> is already in the map, then the <value> parameter
+   * Associate @a key with @a value if and only if @a key is not in the
+   * map.  If @a key is already in the map, then the @a value parameter
    * is overwritten with the existing value in the map. Returns 0 if a
-   * new <key>/<value> association is created.  Returns 1 if an
+   * new @a key / @a value association is created.  Returns 1 if an
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
   virtual int trybind (const KEY &key,
                        VALUE &value);
 
-  /// Locate <value> associated with <key>.
+  /// Locate @a value associated with @a key.
   virtual int find (const KEY &key,
                     VALUE &value);
 
-  /// Is <key> in the map?
+  /// Is @a key in the map?
   virtual int find (const KEY &key);
 
-  /// Remove <key> from the map.
+  /// Remove @a key from the map.
   virtual int unbind (const KEY &key);
 
-  /// Remove <key> from the map, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the map, and return the @a value associated with
+  /// @a key.
   virtual int unbind (const KEY &key,
                       VALUE &value);
 
