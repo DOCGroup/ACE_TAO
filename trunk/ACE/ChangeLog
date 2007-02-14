@@ -29,9 +29,12 @@ Wed Feb 14 08:53:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/SOCK_SEQPACK_Association.h:
         * ace/Thread_Mutex.h:
         * ace/Timeprobe_T.h:
-        * ace/Truncate.h:
         * ace/WFMO_Reactor.h:
           Doxygen improvements
+
+        * ace/Truncate.h:
+          Fixed compile problems with Borland C++, thanks to Ossama for
+          giving a solution.
 
 Tue Feb 13 20:33:58 UTC 2007  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
