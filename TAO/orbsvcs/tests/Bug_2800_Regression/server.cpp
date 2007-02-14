@@ -80,12 +80,14 @@ int TestTask::svc()
     CosNaming::Name name;
     name.length(1);
     name[0].id = CORBA::string_dup("example");
-    try {
+    try
+    {
       obj = root->resolve(name);
       example_nc =
         CosNaming::NamingContext::_narrow(obj.in());
     }
-    catch (CosNaming::NamingContext::NotFound&) {
+    catch (const CosNaming::NamingContext::NotFound&)
+    {
       example_nc = root->bind_new_context(name);
     }
 

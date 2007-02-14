@@ -17,4 +17,10 @@ module Test
      */
     oneway void shutdown ();
   };
+
+  /// A very simple interface
+  interface NsShutdown
+  {
+    oneway void shutdown ();
+  };
 };
