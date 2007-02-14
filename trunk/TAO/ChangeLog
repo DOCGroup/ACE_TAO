@@ -1,3 +1,9 @@
+Wed Feb 14 10:04:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2800_Regression/*:
+          Extended this test so that it runs automatically and does a
+          clean shutdown
+
 Tue Feb 13 19:49:59 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/be/be_global.cpp:
