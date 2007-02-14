@@ -18,12 +18,12 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
 #include "ace/Service_Gestalt.h"
+#include "ace/TSS_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
 #include "ace/OS_NS_signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -209,22 +209,6 @@ protected:
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
-  /// = Static interfaces
-
-private:
-
-  /**
-   * @c ACE_Service_Config is supposed to be a Singleton. This is the
-   * only Configuration Gestalt available for access from static
-   * initializers at proces start-up time. Using Unmanaged Singleton
-   * makes it safe since OM may not yet be fully initialized in the
-   * context of a static initializer that uses SC, and also because we
-   * know that upon process exit, the SC will be explicitely closed
-   * (in the @c ACE_Object_Manager::fini()).
-   */
-  typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
-                                  ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
-
   /**
    * A Wrapper for the TSS-stored pointer to the "current"
    * configuration Gestalt. Static initializers from any DLL loaded
@@ -246,6 +230,8 @@ private:
 
   ACE_TSS_TYPE (TSS_Resources) tss_;
 
+  /// = Static interfaces
+
 public:
   /**
    * Mutator to set the (TSS) global instance. Intended for use by
@@ -263,7 +249,7 @@ public:
    * discouraged as it allows circumvention of the mechanism for
    * dynamically loading services. Use with extreme caution!
    */
-  static ACE_Service_Gestalt* global (void);
+  static ACE_Service_Config* global (void);
 
   /// Accessor for the "current" service gestalt
   static ACE_Service_Gestalt* current (void);
