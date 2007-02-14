@@ -141,7 +141,7 @@ public:
 
   /**
    * Returns 0, if the size of the current message has been put in
-   * <size> Returns -1, if not.  ACE_HANDLE allows the reactor to
+   * @a size Returns -1, if not.  ACE_HANDLE allows the reactor to
    * check if the caller is valid.
    */
   virtual int current_info (ACE_HANDLE, size_t & /* size */) = 0;

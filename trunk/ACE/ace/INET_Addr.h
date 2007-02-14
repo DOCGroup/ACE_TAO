@@ -204,7 +204,7 @@ public:
    * If <ipaddr_format> is non-0 this produces "ip-number:port-number"
    * (e.g., "128.252.166.57:1234"), whereas if <ipaddr_format> is 0
    * this produces "ip-name:port-number" (e.g.,
-   * "tango.cs.wustl.edu:1234").  Returns -1 if the <size> of the
+   * "tango.cs.wustl.edu:1234").  Returns -1 if the @a size of the
    * <buffer> is too small, else 0.
    */
   virtual int addr_to_string (ACE_TCHAR buffer[],

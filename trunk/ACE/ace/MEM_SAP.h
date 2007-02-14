@@ -117,7 +117,7 @@ public:
                             int flags,
                             const ACE_Time_Value *timeout) = 0;
 
-  /// request a buffer of size <size>.  Return 0 if the <shm_malloc_> is
+  /// request a buffer of size @a size.  Return 0 if the <shm_malloc_> is
   /// not initialized.
   ACE_MEM_SAP_Node *acquire_buffer (const ssize_t size);
 

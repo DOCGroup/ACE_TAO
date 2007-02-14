@@ -1,3 +1,38 @@
+Wed Feb 14 08:53:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Active_Map_Manager_T.h:
+        * ace/Cache_Map_Manager_T.h:
+        * ace/CDR_Size.h:
+        * ace/CDR_Stream.h:
+        * ace/Configuration.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Future.h:
+        * ace/Future_Set.h:
+        * ace/Hash_Cache_Map_Manager_T.h:
+        * ace/High_Res_Timer.h:
+        * ace/INET_Addr.h:
+        * ace/IO_SAP.h:
+        * ace/IPC_SAP.h:
+        * ace/Map_T.h:
+        * ace/MEM_SAP.h:
+        * ace/Message_Block.h:
+        * ace/Msg_WFMO_Reactor.h:
+        * ace/Multihomed_INET_Addr.h:
+        * ace/Priority_Reactor.h:
+        * ace/Reactor.h:
+        * ace/Reactor_Impl.h:
+        * ace/Recursive_Thread_Mutex.h:
+        * ace/Registry.h:
+        * ace/Semaphore.h:
+        * ace/Shared_Memory_MM.h:
+        * ace/Shared_Memory_SV.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/Thread_Mutex.h:
+        * ace/Timeprobe_T.h:
+        * ace/Truncate.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen improvements
+
 Tue Feb 13 20:33:58 UTC 2007  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
         * THANKS: Added gzeleniy@gmail.com to the THANKS list.

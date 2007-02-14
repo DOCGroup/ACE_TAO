@@ -52,7 +52,7 @@ public:
   /**
    * Constructs an <ACE_Multihomed_INET_Addr> from a <port_number>, a
    * <primary_host_name>, and an array of <secondary_host_names>.
-   * <size> is taken to be the length of the array.  If <encode> is
+   * @a size is taken to be the length of the array.  If <encode> is
    * non-zero, then <port_number> is converted into network byte
    * order; otherwise it is assumed to be in network byte order
    * already and is passed straight through.  <address_family> can be
@@ -114,7 +114,7 @@ public:
   /**
    * Initializes an <ACE_Multihomed_INET_Addr> from a <port_number>, a
    * <primary_host_name>, and an array of <secondary_host_names>.
-   * <size> is taken to be the length of the array.  If <encode> is
+   * @a size is taken to be the length of the array.  If <encode> is
    * non-zero, then <port_number> is converted into network byte
    * order; otherwise it is assumed to be in network byte order
    * already and is passed straight through.  <address_family> can be
@@ -163,14 +163,14 @@ public:
 
   /**
    * Initialize user-supplied array <secondary_addrs> with the current
-   * secondary addresses.  <size> is taken as the size of this array.
+   * secondary addresses.  @a size is taken as the size of this array.
    */
   int get_secondary_addresses(ACE_INET_Addr *secondary_addrs,
                               size_t size) const;
 
   /**
    * Initialize user-supplied array <addrs> with the the current
-   * primary and secondary addresses.  <size> is taken as the size of
+   * primary and secondary addresses.  @a size is taken as the size of
    * this array.
    */
   void get_addresses(sockaddr_in *addrs,

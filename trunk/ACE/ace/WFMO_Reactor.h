@@ -300,7 +300,7 @@ public:
   /// Destructor.
   virtual ~ACE_WFMO_Reactor_Handler_Repository (void);
 
-  /// Initialize the repository of the approriate <size>.
+  /// Initialize the repository of the approriate @a size.
   int open (size_t size);
 
   /// Close down the handler repository.
