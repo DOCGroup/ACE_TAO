@@ -1,3 +1,10 @@
+Wed Feb 14 17:33:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+          Fixing a compile problem with g++ and borland compiler, which
+          treat members of private nested classes as "hidden" even when
+          the enclosing type has been exported.
+
 Wed Feb 14 12:59:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.h:
