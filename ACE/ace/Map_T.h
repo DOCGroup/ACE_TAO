@@ -738,7 +738,7 @@ class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 public:
 
   // = Traits.
-  typedef typename ACE_Active_Map_Manager@a value::iterator
+  typedef typename ACE_Active_Map_Manager<VALUE>::iterator
           implementation;
 
   /// Constructor.
@@ -784,7 +784,7 @@ class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Itera
 public:
 
   // = Traits.
-  typedef typename ACE_Active_Map_Manager@a value::reverse_iterator
+  typedef typename ACE_Active_Map_Manager<VALUE>::reverse_iterator
           implementation;
 
   /// Constructor.
