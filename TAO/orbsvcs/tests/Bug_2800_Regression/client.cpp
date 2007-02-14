@@ -7,17 +7,20 @@
 ACE_RCSID(Hello, client, "$Id$")
 
 const char *ior = "file://shutdown.ior";
+bool shutdown_nsmain = false;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case '?':
+      case 'k':
+        shutdown_nsmain = true;
+        break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
@@ -86,12 +89,16 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG, "Catched correct exception\n"));
         }
 
-      CORBA::Object_var shutdowntmp = orb->string_to_object(ior);
+      if (shutdown_nsmain)
+        {
+          CORBA::Object_var shutdowntmp = orb->string_to_object(ior);
 
-      Test::NsShutdown_var shutdown = Test::NsShutdown::_narrow(shutdowntmp.in ());
+          Test::NsShutdown_var shutdown =
+            Test::NsShutdown::_narrow(shutdowntmp.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Shutdown nsmain\n"));
-      shutdown->shutdown ();
+          ACE_DEBUG ((LM_DEBUG, "Shutdown nsmain\n"));
+          shutdown->shutdown ();
+        }
 
       orb->destroy ();
     }

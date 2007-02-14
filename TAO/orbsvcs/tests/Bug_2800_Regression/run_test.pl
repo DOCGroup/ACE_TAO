@@ -18,10 +18,12 @@ foreach $i (@ARGV) {
 }
 
 $iorfile = PerlACE::LocalFile ("ns.ior");
+$shutdownior = PerlACE::LocalFile ("shutdown.ior");
 unlink $iorfile;
+unlink $shutdownior;
 
 $SV = new PerlACE::Process ("nsmain", "-s -ORBDebuglevel $debug_level");
-$CL = new PerlACE::Process ("client", "");
+$CL = new PerlACE::Process ("client", "-k");
 
 $server = $SV->Spawn ();
 
@@ -52,5 +54,6 @@ if ($server != 0) {
 }
 
 unlink $iorfile;
+unlink $shutdownior;
 
 exit $status;
