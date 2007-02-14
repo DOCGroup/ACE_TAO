@@ -100,6 +100,7 @@ main (int argc, char *argv[])
           shutdown->shutdown ();
         }
 
+      orb->shutdown ();
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
