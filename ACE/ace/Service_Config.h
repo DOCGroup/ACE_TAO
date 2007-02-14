@@ -234,7 +234,7 @@ private:
    * independent of which thread is actually using the SC at the time
    * to do so.
    */
-  class TAO_Export TSS_Resources
+  class ACE_Export TSS_Resources
   {
   public:
     TSS_Resources (void);
