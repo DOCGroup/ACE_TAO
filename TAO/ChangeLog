@@ -1,3 +1,12 @@
+Wed Feb 14 11:18:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_8_and_10/client.cpp:
+          Layout changes
+
+        * examples/Advanced/ch_8_and_10/server.cpp:
+          Removed workaround for bug 2611, with the recent changes to the
+          string sequences this is not needed anymore
+
 Wed Feb 14 10:04:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2800_Regression/*:
