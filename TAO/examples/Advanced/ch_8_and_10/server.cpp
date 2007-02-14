@@ -333,7 +333,7 @@ change (
             // to the errors sequence.
             CORBA::ULong len = ec.errors.length ();
             ec.errors.length (len + 1);
-            ec.errors[len].tmstat_ref = CCS::Thermostat::_duplicate (tlist[i]);
+            ec.errors[len].tmstat_ref = tlist[i];
             ec.errors[len].info = bt.details;
         }
     }
@@ -455,8 +455,8 @@ main (int argc, char * argv[])
         orb->run ();
     }
     catch (const CORBA::Exception & e) {
-        std::cerr << "Uncaught CORBA exception: " 
-                  //<< e 
+        std::cerr << "Uncaught CORBA exception: "
+                  //<< e
                   << std::endl;
         return 1;
     }
