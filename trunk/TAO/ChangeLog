@@ -1,3 +1,9 @@
+Wed Feb 14 19:20:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2809_Regression/*:
+          New regression test for bug 2809, thanks to Martin Corino
+          for creating the regression
+
 Wed Feb 14 15:19:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Bug_2137_Regression/client.cpp:
