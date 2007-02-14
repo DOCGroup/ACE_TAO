@@ -737,6 +737,16 @@ namespace ACE_Utils
   };
 
   template<>
+  struct Truncator<const signed long, unsigned int>
+  {
+    unsigned int operator() (const signed long val)
+    {
+      return static_cast<unsigned int> (val);
+    }
+  };
+
+
+  template<>
   struct Truncator<unsigned int, signed long>
   {
     signed long operator() (unsigned int val)

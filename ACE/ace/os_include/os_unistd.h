@@ -60,6 +60,37 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+#if defined (ACE_WIN32)
+// The following are #defines and #includes that are specific to
+// WIN32.
+#  if defined (ACE_HAS_WINCE)
+#    define ACE_STDIN  _fileno (stdin)
+#    define ACE_STDOUT _fileno (stdout)
+#    define ACE_STDERR _fileno (stderr)
+#  else
+#    define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
+#    define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
+#    define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
+#  endif  // ACE_HAS_WINCE
+// The following are #defines and #includes that are specific to UNIX.
+#else /* !ACE_WIN32 */
+#  if defined (STDIN_FILENO)
+#    define ACE_STDIN STDIN_FILENO
+#  else
+#    define ACE_STDIN 0
+#  endif
+#  if defined (STDOUT_FILENO)
+#    define ACE_STDOUT STDOUT_FILENO
+#  else
+#    define ACE_STDOUT 1
+#  endif
+#  if defined (STDERR_FILENO)
+#    define ACE_STDERR STDERR_FILENO
+#  else
+#    define ACE_STDERR 2
+#  endif
+#endif /* ACE_WIN32 */
+
 #if (!defined (_BSD_SOURCE) && \
     !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)) \
     || (defined (_XOPEN_SOURCE) && defined (__GNUC__))
