@@ -98,7 +98,7 @@ public:
    *                   OS allow reuse of the listen port.  The default is 1.
    */
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                ACE_Reactor * = ACE_Reactor::instance (),
+                ACE_Reactor *reactor = ACE_Reactor::instance (),
                 int flags = 0,
                 int use_select = 1,
                 int reuse_addr = 1);
