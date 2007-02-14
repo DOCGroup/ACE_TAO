@@ -1,3 +1,19 @@
+Wed Feb 14 15:19:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2137_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/client2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2615_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2709_Regression/client.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+
+          Include tao/PI/PI.h to ensure PI library is actually linked into
+          the executable when statically linking on MacOS X Panther.
+
 Wed Feb 14 11:18:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_8_and_10/client.cpp:
