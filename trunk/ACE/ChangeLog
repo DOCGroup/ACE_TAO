@@ -1,3 +1,17 @@
+Wed Feb 14 11:31:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/os_unistd.h:
+          Move ACE_STDIN, ACE_STDOUT and ACE_STDERR from stdio to unistd
+          file and use STDIN_FILENO, STDOUT_FILENO and STDERROR_FILENO if
+          these are defined yet, this way we use the same defines and header
+          files as in the posix specification. This fixes bugzilla bug 2731.
+          Thanks to Abdul Sowayan <abdullah dot sowayan at lmco dot com>
+          for reporting this.
+
+        * ace/Truncate.h:
+          Added another const specialization for Borland C++
+
 Wed Feb 14 11:03:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Manager_Test.cpp:
