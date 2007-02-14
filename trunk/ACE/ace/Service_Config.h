@@ -222,9 +222,9 @@ private:
    * know that upon process exit, the SC will be explicitely closed
    * (in the @c ACE_Object_Manager::fini()).
    */
-  typedef ACE_Unmanaged_Singleton<ACE_Service_Config, 
+  typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
                                   ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
-  
+
   /**
    * A Wrapper for the TSS-stored pointer to the "current"
    * configuration Gestalt. Static initializers from any DLL loaded
@@ -234,7 +234,7 @@ private:
    * independent of which thread is actually using the SC at the time
    * to do so.
    */
-  class TSS_Resources 
+  class TAO_Export TSS_Resources
   {
   public:
     TSS_Resources (void);
@@ -243,9 +243,9 @@ private:
   private:
     ACE_Service_Gestalt *ptr_;
   };
-  
+
   ACE_TSS_TYPE (TSS_Resources) tss_;
-  
+
 public:
   /**
    * Mutator to set the (TSS) global instance. Intended for use by
@@ -255,7 +255,7 @@ public:
    * DLLs, loaded at run-time).
    */
   static ACE_Service_Gestalt* current (ACE_Service_Gestalt*);
-  
+
   /**
    * Returns a process-wide global singleton instance in contrast with
    * current (), which may return a different instance at different
@@ -268,7 +268,7 @@ public:
   /// Accessor for the "current" service gestalt
   static ACE_Service_Gestalt* current (void);
 
-  /** 
+  /**
    * This is what the static service initializators are hard-wired to
    * use, so in order to avoid interface changes this method merely
    * forwards to @c ACE_Service_Config::current. This enables us to
