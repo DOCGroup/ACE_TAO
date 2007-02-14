@@ -2,6 +2,8 @@
 
 #include "TestS.h"
 #include "ace/Get_Opt.h"
+// Ensure that the PI library is linked in when building statically
+#include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
