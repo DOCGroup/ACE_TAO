@@ -2,9 +2,12 @@
 
 #include "NamingTask.h"
 #include "Hello.h"
+#include "NsShutdown.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
+
+const char *ior_output_file = "shutdown.ior";
 
 class TestTask : public ACE_Task_Base
 {
@@ -97,12 +100,13 @@ int TestTask::svc()
     CosNaming::Name name;
     name.length(1);
     name[0].id = CORBA::string_dup("example");
-    try {
+    try
+    {
       obj = root->resolve(name);
-      example_nc =
-        CosNaming::NamingContext::_narrow(obj.in());
+      example_nc = CosNaming::NamingContext::_narrow(obj.in());
     }
-    catch (CosNaming::NamingContext::NotFound&) {
+    catch (const CosNaming::NamingContext::NotFound&)
+    {
       example_nc = root->bind_new_context(name);
     }
 
@@ -132,6 +136,21 @@ int TestTask::svc()
       ACE_DEBUG ((LM_INFO, "Naming Service B shut down\n"));
     }
 
+    // Create shutdown server
+    NsShutdown shutdown_servant(orb_.in ());
+    PortableServer::ObjectId_var shutdown_oid = poa->activate_object(&shutdown_servant);
+    obj = poa->id_to_reference(shutdown_oid.in());
+    CORBA::String_var ior = orb_->object_to_string (obj.in ());
+
+    output_file= ACE_OS::fopen (ior_output_file, "w");
+    if (output_file == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          "Cannot open output file for writing IOR: %s\n",
+                          ior_output_file),
+                          1);
+    ACE_OS::fprintf (output_file, "%s", ior.in ());
+    ACE_OS::fclose (output_file);
+
     // Normally we run the orb and the orb is shutdown by
     // calling TestTask::end().
     // Accept requests
@@ -140,7 +159,10 @@ int TestTask::svc()
 
     // Shutdown the Naming Services.
     namingServiceA_.end();
-    namingServiceB_.end();
+    if (!shutdown_ns_)
+      {
+        namingServiceB_.end();
+      }
 
     return 0;
   }

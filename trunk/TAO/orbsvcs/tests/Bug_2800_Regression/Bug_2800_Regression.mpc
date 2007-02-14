@@ -15,6 +15,7 @@ project(*NsMain): namingexe, naming_serv {
     Hello.cpp
     NamingTask.cpp
     nsmain.cpp
+    NsShutdown.cpp
   }
   Source_Files {
     TestC.cpp
