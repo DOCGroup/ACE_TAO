@@ -12,8 +12,8 @@ project(*server): namingexe, iortable, utils, avoids_corba_e_micro {
   exename = server
   after += *IDL
   Source_Files {
-    BankS.cpp
     BankC.cpp
+    BankS.cpp
     Account_i.cpp
     AccountManager_i.cpp
     ../Simple_util.cpp

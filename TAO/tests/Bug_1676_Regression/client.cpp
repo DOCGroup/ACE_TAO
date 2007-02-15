@@ -126,7 +126,7 @@ void get_stringList2(Test::Hello_var hello)
     }
   catch (const CORBA::BAD_PARAM& )
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - catched expected exception BAD_PARAM\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected exception BAD_PARAM\n"));
     }
   catch (const CORBA::Exception& ex)
     {

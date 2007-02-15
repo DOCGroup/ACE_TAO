@@ -1,3 +1,32 @@
+Thu Feb 15 13:09:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/ior_corbaloc/ior_corbaloc.mpc:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+        * orbsvcs/tests/Bug_2615_Regression/Bug_2615_Regression.mpc:
+        * orbsvcs/tests/Bug_2709_Regression/Bug_2709_Regression.mpc:
+        * orbsvcs/tests/Notify/Discarding/Discarding.mpc:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Seq_Multi_ETCL_Filter.mpc:
+        * performance-tests/Callback/Callback.mpc:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * tests/ICMG_Any_Bug/Hello.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+
+          Re-arranged the generated source files so that they are at the
+          beginning (like MPC would do if it were automatically generating
+          the list of source files).  This is required for template
+          instantiation to work properly for Visual Age 6.0.
+
+        * tests/Bug_1676_Regression/client.cpp:
+        * tests/MT_BiDir/client.cpp:
+
+          Changed "catched" to "caught".
+
 Thu Feb 15 07:46:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2560_Regression/server.cpp:

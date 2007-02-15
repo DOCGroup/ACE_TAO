@@ -13,8 +13,8 @@ project(*server): namingexe, portableserver {
 
   after += *IDL
   Source_Files {
-    corbalocS.cpp
     corbalocC.cpp
+    corbalocS.cpp
     status_i.cpp
     server.cpp
   }

@@ -15,8 +15,8 @@ project(*Server): csd_threadpool, taoserver, avoids_minimum_corba, avoids_corba_
   after += *idl
 
   Source_Files {
-    FooS.cpp
     FooC.cpp
+    FooS.cpp
     Foo_i.cpp
     ServerApp.cpp
     server_main.cpp

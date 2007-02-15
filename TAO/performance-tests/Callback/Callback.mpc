@@ -12,10 +12,10 @@ project(*server): taoserver, messaging, strategies {
   after += *Perf_IDL
   avoids += ace_for_tao
   Source_Files {
+    callbackC.cpp
+    callbackS.cpp
     Server_i.cpp
     server.cpp
-    callbackS.cpp
-    callbackC.cpp
   }
   IDL_Files {
   }
@@ -25,10 +25,10 @@ project(*client): taoexe, messaging, portableserver, strategies {
   after += *Perf_IDL
   avoids += ace_for_tao
   Source_Files {
+    callbackC.cpp
+    callbackS.cpp
     Callback_i.cpp
     client.cpp
-    callbackS.cpp
-    callbackC.cpp
   }
   IDL_Files {
   }
