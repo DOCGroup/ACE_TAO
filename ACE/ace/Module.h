@@ -72,7 +72,7 @@ public:
  * which contains a pair of Tasks, one for handling upstream
  * processing, one for handling downstream processing.  In
  * general, you shouldn't subclass from this class, but instead
- * subclass from the <ACE_Task>.
+ * subclass from the ACE_Task.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Module : public ACE_Module_Base

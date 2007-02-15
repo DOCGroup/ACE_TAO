@@ -1,3 +1,46 @@
+Thu Feb 15 13:38:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Connector.h:
+        * ace/DEV_Connector.h:
+        * ace/DEV_IO.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/FILE_Connector.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/IOStream_T.h:
+        * ace/LOCK_SOCK_Acceptor.h:
+        * ace/Map_Manager.h:
+        * ace/MEM_IO.h:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.h:
+        * ace/Message_Block.h:
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.h:
+        * ace/Module.h:
+        * ace/Proactor.h:
+        * ace/Reactor.h:
+        * ace/Reactor_Impl.h:
+        * ace/Select_Reactor_T.h:
+        * ace/Sig_Handler.h:
+        * ace/Signal.h:
+        * ace/SOCK.h:
+        * ace/SOCK_Acceptor.h:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_IO.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SPIPE_Connector.h:
+        * ace/Stream.h:
+        * ace/Svc_Handler.h:
+        * ace/Task_Ex_T.h:
+        * ace/Task_T.h:
+        * ace/Thread_Manager.h:
+        * ace/TLI_Acceptor.h:
+        * ace/TLI_Connector.h:
+        * ace/Token.h:
+        * ace/WFMO_Reactor.h:
+        * ace/XTI_ATM_Mcast.h:
+          Doxygen improvements
+
 Thu Feb 15 13:12:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/OS/Process/imore.cpp:

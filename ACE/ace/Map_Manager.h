@@ -180,7 +180,7 @@ public:
   /**
    * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
    * map then behaves just like bind().  Otherwise, store the old
-   * values of <ext_id> and <int_id> into the "out" parameters and
+   * values of @a ext_id and @a int_id into the "out" parameters and
    * rebind the new parameters.  This is very useful if you need to
    * have an atomic way of updating <Map_Entries> and you also need
    * full control over memory allocation.
@@ -194,9 +194,9 @@ public:
               INT_ID &old_int_id);
 
   /**
-   * Reassociate @a ext_id with @a int_id.  If <ext_id> is not in the
+   * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
    * map then behaves just like <bind>.  Otherwise, store the old
-   * values of <int_id> into the "out" parameter and rebind the new
+   * values of @a int_id into the "out" parameter and rebind the new
    * parameters.
    * @retval 0 If a new entry is bound successfully.
    * @retval 1 If an existing entry was rebound.
@@ -212,8 +212,8 @@ public:
               const INT_ID &int_id);
 
   /**
-   * Associate <ext_id> with <int_id> if and only if <ext_id> is not
-   * in the map.  If <ext_id> is already in the map then the <int_id>
+   * Associate @a ext_id with @a int_id if and only if @a ext_id is not
+   * in the map.  If @a ext_id is already in the map then the @a int_id
    * parameter is overwritten with the existing value in the map
    * @retval 0 If a new entry is bound successfully.
    * @retval 1 If an attempt is made to bind an existing entry.
@@ -223,26 +223,26 @@ public:
                INT_ID &int_id);
 
   /**
-   * Locate <ext_id> and pass out parameter via <int_id>.
+   * Locate @a ext_id and pass out parameter via @a int_id.
    * @retval 0 If found.
    * @retval -1 If not found.
    */
   int find (const EXT_ID &ext_id,
             INT_ID &int_id) const;
 
-  /// Returns 0 if the <ext_id> is in the mapping, otherwise -1.
+  /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
   int find (const EXT_ID &ext_id) const;
 
   /**
-   * Unbind (remove) the <ext_id> from the map.  Don't return the
-   * <int_id> to the caller (this is useful for collections where the
-   * <int_id>s are *not* dynamically allocated...)  Returns 0 if
+   * Unbind (remove) the @a ext_id from the map.  Don't return the
+   * @a int_id to the caller (this is useful for collections where the
+   * @a int_ids are *not* dynamically allocated...)  Returns 0 if
    * successful, else -1.
    */
   int unbind (const EXT_ID &ext_id);
 
   /**
-   * Break any association of <ext_id>.  Returns the value of <int_id>
+   * Break any association of @a ext_id.  Returns the value of @a int_id
    * in case the caller needs to deallocate memory.  Returns 0 if
    * successful, else -1.
    */
@@ -293,7 +293,7 @@ protected:
   // These methods assume that the locks are held by the private
   // methods.
 
-  /// Performs the binding of <ext_id> to <int_id>.  Must be called
+  /// Performs the binding of @a ext_id to @a int_id.  Must be called
   /// with locks held.
   int bind_i (const EXT_ID &ext_id,
               const INT_ID &int_id);
@@ -303,49 +303,49 @@ protected:
   int shared_bind (const EXT_ID &ext_id,
                    const INT_ID &int_id);
 
-  /// Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
+  /// Performs a rebinding of <ext_it> to @a int_id.  Also, recovers old
   /// values.  Must be called with locks held.
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
                 EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
 
-  /// Performs a rebinding of <ext_it> to <int_id>.  Also, recovers old
+  /// Performs a rebinding of <ext_it> to @a int_id.  Also, recovers old
   /// values.  Must be called with locks held.
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id,
                 INT_ID &old_int_id);
 
-  /// Performs a rebinding of <ext_it> to <int_id>.  Must be called
+  /// Performs a rebinding of <ext_it> to @a int_id.  Must be called
   /// with locks held.
   int rebind_i (const EXT_ID &ext_id,
                 const INT_ID &int_id);
 
-  /// Performs a conditional bind of <int_id> using <ext_id> as the
+  /// Performs a conditional bind of @a int_id using @a ext_id as the
   /// key.  Must be called with locks held.
   int trybind_i (const EXT_ID &ext_id,
                  INT_ID &int_id);
 
-  /// Performs a find of <int_id> using <ext_id> as the key.  Must be
+  /// Performs a find of @a int_id using @a ext_id as the key.  Must be
   /// called with locks held.
   int find_i (const EXT_ID &ext_id,
               INT_ID &int_id);
 
-  /// Performs a find using <ext_id> as the key.  Must be called with
+  /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
   int find_and_return_index (const EXT_ID &ext_id,
                              ACE_UINT32 &slot);
 
-  /// Performs an unbind of <int_id> using <ext_id> as the key.  Must
+  /// Performs an unbind of @a int_id using @a ext_id as the key.  Must
   /// be called with locks held.
   int unbind_i (const EXT_ID &ext_id,
                 INT_ID &int_id);
 
-  /// Performs an unbind using <ext_id> as the key.  Must be called
+  /// Performs an unbind using @a ext_id as the key.  Must be called
   /// with locks held.
   int unbind_i (const EXT_ID &ext_id);
 
-  /// Performs an unbind using <ext_id> as the key.  Must be called
+  /// Performs an unbind using @a ext_id as the key.  Must be called
   /// with locks held.
   int unbind_and_return_index (const EXT_ID &ext_id,
                                ACE_UINT32 &slot);
