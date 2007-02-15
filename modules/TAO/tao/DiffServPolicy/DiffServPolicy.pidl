@@ -50,7 +50,7 @@ module TAO
 
   local interface NetworkPriorityPolicy : CORBA::Policy
     {
-      readonly attribute NetworkPriorityModel network_priority_model;
+      attribute NetworkPriorityModel network_priority_model;
       attribute DiffservCodepoint request_diffserv_codepoint;
       attribute DiffservCodepoint reply_diffserv_codepoint;
     };
