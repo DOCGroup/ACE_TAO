@@ -64,8 +64,7 @@ TAO_ClientRequestInfo::setup_picurrent (void)
 IOP::ServiceContext *
 TAO_ClientRequestInfo::get_service_context_i (
     TAO_Service_Context &service_context_list,
-    IOP::ServiceId id
-    )
+    IOP::ServiceId id)
 {
   IOP::ServiceContext_var service_context;
 
@@ -171,13 +170,11 @@ TAO_ClientRequestInfo::received_exception (void)
 }
 
 char *
-TAO_ClientRequestInfo::received_exception_id (
-    void)
+TAO_ClientRequestInfo::received_exception_id (void)
 {
   this->check_validity ();
 
-  CORBA::Exception *caught_exception =
-    invocation_->caught_exception ();
+  CORBA::Exception *caught_exception = invocation_->caught_exception ();
 
   if (caught_exception == 0)
     {
@@ -188,21 +185,17 @@ TAO_ClientRequestInfo::received_exception_id (
 }
 
 IOP::TaggedComponent *
-TAO_ClientRequestInfo::get_effective_component (
-    IOP::ComponentId id
-    )
+TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
 {
   this->check_validity ();
 
-  TAO_Stub *stub =
-    this->invocation_->effective_target ()->_stubobj ();
+  TAO_Stub *stub = this->invocation_->effective_target ()->_stubobj ();
 
-  TAO_Tagged_Components &ecs =
-    stub->profile_in_use ()->tagged_components ();
+  TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
-  const CORBA::ULong len = components.length ();
+  CORBA::ULong const len = components.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       if (components[i].tag == id)
@@ -234,17 +227,13 @@ TAO_ClientRequestInfo::get_effective_component (
 }
 
 IOP::TaggedComponentSeq *
-TAO_ClientRequestInfo::get_effective_components (
-    IOP::ComponentId id
-    )
+TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 {
   this->check_validity ();
 
-  TAO_Stub *stub =
-    this->invocation_->target ()->_stubobj ();
+  TAO_Stub *stub = this->invocation_->target ()->_stubobj ();
 
-  TAO_Tagged_Components &ecs =
-    stub->profile_in_use ()->tagged_components ();
+  TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
@@ -290,16 +279,14 @@ TAO_ClientRequestInfo::get_effective_components (
 }
 
 CORBA::Policy_ptr
-TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type
-                                           )
+TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type)
 {
   this->check_validity ();
 
   // @@ Do we need to look anywhere else for the request policies?
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-  return this->invocation_->target ()->_get_policy (type
-                                                   );
+  return this->invocation_->target ()->_get_policy (type);
 #else
   ACE_UNUSED_ARG (type);
 
@@ -314,8 +301,7 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type
 void
 TAO_ClientRequestInfo::add_request_service_context (
     const IOP::ServiceContext & service_context,
-    CORBA::Boolean replace
-    )
+    CORBA::Boolean replace)
 {
   this->check_validity ();
 
@@ -478,7 +464,6 @@ TAO_ClientRequestInfo::exceptions (void)
 bool
 TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
 {
-
   if (this->invocation_->operation_details ().ex_count ())
     {
       exception_list.length (this->invocation_->operation_details ().ex_count ());
@@ -590,19 +575,15 @@ TAO_ClientRequestInfo::forward_reference (void)
 }
 
 CORBA::Any *
-TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId id
-                                 )
+TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId id)
 {
   this->check_validity ();
 
-  return this->rs_pi_current_.get_slot (id
-                                       );
+  return this->rs_pi_current_.get_slot (id);
 }
 
 IOP::ServiceContext *
-TAO_ClientRequestInfo::get_request_service_context (
-    IOP::ServiceId id
-    )
+TAO_ClientRequestInfo::get_request_service_context (IOP::ServiceId id)
 {
   this->check_validity ();
 
@@ -610,15 +591,11 @@ TAO_ClientRequestInfo::get_request_service_context (
   TAO_Service_Context &service_context_list =
     this->invocation_->request_service_context ();
 
-  return this->get_service_context_i (service_context_list,
-                                      id
-                                     );
+  return this->get_service_context_i (service_context_list, id);
 }
 
 IOP::ServiceContext *
-TAO_ClientRequestInfo::get_reply_service_context (
-    IOP::ServiceId id
-    )
+TAO_ClientRequestInfo::get_reply_service_context (IOP::ServiceId id)
 {
   this->check_validity ();
 
@@ -626,9 +603,7 @@ TAO_ClientRequestInfo::get_reply_service_context (
   TAO_Service_Context &service_context_list =
     this->invocation_->reply_service_context ();
 
-  return this->get_service_context_i (service_context_list,
-                                      id
-                                     );
+  return this->get_service_context_i (service_context_list, id);
 }
 
 void

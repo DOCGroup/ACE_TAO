@@ -71,18 +71,14 @@ namespace TAO
     //@{
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
-    virtual CORBA::Any *get_slot (PortableInterceptor::SlotId id
-                                  );
+    virtual CORBA::Any *get_slot (PortableInterceptor::SlotId id);
 
     /// Set information in the slot table at the given SlotId.
     virtual void set_slot (PortableInterceptor::SlotId identifier,
-                           const CORBA::Any & data
-                           );
+                           const CORBA::Any & data);
     //@}
 
-    virtual CORBA::ORB_ptr _get_orb (
-        void
-      );
+    virtual CORBA::ORB_ptr _get_orb (void);
 
     /// Number of slots allocated in the slot table.
     PortableInterceptor::SlotId slot_count (void) const;
@@ -92,8 +88,7 @@ namespace TAO
     PICurrent_Impl * tsc (void);
 
     /// Verify the validity of the given SlotId.
-    void check_validity (const PortableInterceptor::SlotId &identifier
-                        );
+    void check_validity (const PortableInterceptor::SlotId &identifier);
 
     /// Initialize the PICurrent object.
     void initialize (PortableInterceptor::SlotId sc);

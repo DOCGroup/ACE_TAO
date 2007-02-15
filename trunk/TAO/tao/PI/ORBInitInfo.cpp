@@ -143,8 +143,7 @@ TAO_ORBInitInfo::codec_factory (void)
 void
 TAO_ORBInitInfo::register_initial_reference (
     const char * id,
-    CORBA::Object_ptr obj
-    )
+    CORBA::Object_ptr obj)
 {
   this->check_validity ();
 
@@ -161,9 +160,7 @@ TAO_ORBInitInfo::register_initial_reference (
 }
 
 CORBA::Object_ptr
-TAO_ORBInitInfo::resolve_initial_references (
-    const char * id
-    )
+TAO_ORBInitInfo::resolve_initial_references (const char * id)
 {
   this->check_validity ();
 
@@ -173,15 +170,12 @@ TAO_ORBInitInfo::resolve_initial_references (
   // The ORB is practically fully initialized by the time this point
   // is reached so just use the ORB's resolve_initial_references()
   // mechanism.
-  return
-    this->orb_core_->orb ()->resolve_initial_references (id
-                                                        );
+  return this->orb_core_->orb ()->resolve_initial_references (id);
 }
 
 void
 TAO_ORBInitInfo::add_client_request_interceptor (
-    PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-    )
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor)
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -199,8 +193,7 @@ TAO_ORBInitInfo::add_client_request_interceptor (
 
 void
 TAO_ORBInitInfo::add_server_request_interceptor (
-    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-    )
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -219,27 +212,22 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 
 void
 TAO_ORBInitInfo::add_ior_interceptor (
-    PortableInterceptor::IORInterceptor_ptr interceptor
-    )
+    PortableInterceptor::IORInterceptor_ptr interceptor)
 {
   this->check_validity ();
 
-  this->orb_core_->add_interceptor (interceptor
-                                    );
+  this->orb_core_->add_interceptor (interceptor);
 }
 
 void
 TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    )
+    const CORBA::PolicyList& policies)
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
 
-  this->orb_core_->add_interceptor (interceptor,
-                                    policies
-                                   );
+  this->orb_core_->add_interceptor (interceptor, policies);
 #else
   ACE_UNUSED_ARG (interceptor);
   ACE_UNUSED_ARG (policies);
@@ -254,15 +242,12 @@ TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
 void
 TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    )
+    const CORBA::PolicyList& policies)
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
 
-  this->orb_core_->add_interceptor (interceptor,
-                                    policies
-                                   );
+  this->orb_core_->add_interceptor (interceptor, policies);
 
 #else
   ACE_UNUSED_ARG (interceptor);
@@ -330,14 +315,11 @@ TAO_ORBInitInfo::register_policy_factory (
       throw ::CORBA::INTERNAL ();
     }
 
-  registry->register_policy_factory (type,
-                                     policy_factory
-                                     );
+  registry->register_policy_factory (type, policy_factory);
 }
 
 size_t
-TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
-                                       )
+TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 {
   this->check_validity ();
 
@@ -379,10 +361,7 @@ TAO_ORBInitInfo::_get_orb (void)
   return CORBA::ORB::_duplicate (this->orb_core_->orb ());
 }
 
-TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_narrow (
-    CORBA::Object_ptr _tao_objref
-
-  )
+TAO_ORBInitInfo_ptr TAO_ORBInitInfo::_narrow (CORBA::Object_ptr _tao_objref)
 {
   if (CORBA::is_nil (_tao_objref))
     {

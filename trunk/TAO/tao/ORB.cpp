@@ -1146,8 +1146,6 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
         CORBA::COMPLETED_NO);
     }
 
-
-
   if (orbid_string.length () == 0)
     {
       ACE_Arg_Shifter arg_shifter (command_line.get_argc (),

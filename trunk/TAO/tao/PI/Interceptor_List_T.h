@@ -64,20 +64,16 @@ namespace TAO
     /// Constructor.
     Interceptor_List (void);
 
-    void add_interceptor (
-      InterceptorType_ptr_type i
-     );
+    void add_interceptor (InterceptorType_ptr_type i);
 
     /// Register an interceptor with policies.
     void add_interceptor (InterceptorType_ptr_type i,
-                          const CORBA::PolicyList& policies
-                         );
+                          const CORBA::PolicyList& policies);
 
     void destroy_interceptors (void);
 
     /// Return the registered interceptor in sequence element @a index.
-    RegisteredInterceptor& registered_interceptor (
-      size_t index);
+    RegisteredInterceptor& registered_interceptor (size_t index);
 
     /// Return the interceptor in sequence element @a index.
     InterceptorType_ptr_type interceptor (size_t index);

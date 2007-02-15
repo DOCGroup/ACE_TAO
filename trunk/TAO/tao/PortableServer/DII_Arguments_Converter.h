@@ -43,9 +43,9 @@ public:
 
   virtual ~TAO_DII_Arguments_Converter (void);
 
-  virtual void convert ( TAO_ServerRequest & server_request,
-                         TAO::Argument * const args[],
-                         size_t nargs) = 0;
+  virtual void convert (TAO_ServerRequest & server_request,
+                        TAO::Argument * const args[],
+                        size_t nargs) = 0;
 };
 
 

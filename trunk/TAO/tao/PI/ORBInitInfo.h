@@ -77,17 +77,14 @@ public:
   //@{
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
-  virtual CORBA::StringSeq * arguments (
-      void);
+  virtual CORBA::StringSeq * arguments (void);
 
   /// Return the ORBid for the ORB currently being initialized.
-  virtual char * orb_id (
-      void);
+  virtual char * orb_id (void);
 
   /// Return the CodecFactory for the ORB currently being
   /// initialized.
-  virtual IOP::CodecFactory_ptr codec_factory (
-      void);
+  virtual IOP::CodecFactory_ptr codec_factory (void);
 
   /// Register a mapping between a string and a corresponding object
   /// reference with the ORB being initialized.
@@ -99,72 +96,57 @@ public:
    * resolve_initial_references() that may be called in the
    * ORBInitializer::post_init() call.
    */
-  virtual void register_initial_reference (
-      const char * id,
-      CORBA::Object_ptr obj
-      );
+  virtual void register_initial_reference (const char * id, CORBA::Object_ptr obj);
 
   /// Obtain a reference to an object that may not yet be available
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
-  virtual CORBA::Object_ptr resolve_initial_references (
-      const char * id
-      );
+  virtual CORBA::Object_ptr resolve_initial_references (const char * id);
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.
   virtual void add_client_request_interceptor (
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-      );
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized.
   virtual void add_server_request_interceptor (
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-      );
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized.
   virtual void add_ior_interceptor (
-      PortableInterceptor::IORInterceptor_ptr interceptor
-      );
+      PortableInterceptor::IORInterceptor_ptr interceptor);
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized, along with a list of policies.
   virtual void add_client_request_interceptor_with_policy (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-      );
+      const CORBA::PolicyList& policies);
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized, along with a list of policies.
   virtual void add_server_request_interceptor_with_policy (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-      );
+      const CORBA::PolicyList& policies);
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized, along with a list of policies.
   virtual void add_ior_interceptor_with_policy (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-      );
+      const CORBA::PolicyList& policies);
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
-  virtual PortableInterceptor::SlotId allocate_slot_id (
-      void);
+  virtual PortableInterceptor::SlotId allocate_slot_id (void);
 
   /// Register a policy factory of the given policy type with the ORB
   /// currently being initialized.
   virtual void register_policy_factory (
       CORBA::PolicyType type,
-      PortableInterceptor::PolicyFactory_ptr policy_factory
-      );
+      PortableInterceptor::PolicyFactory_ptr policy_factory);
 
-  virtual CORBA::ORB_ptr _get_orb (
-      void
-    );
+  virtual CORBA::ORB_ptr _get_orb (void);
   //@}
 
   /**
@@ -184,9 +166,7 @@ public:
    * An accompanying cleanup function (e.g. a TSS destructor) can also
    * be registered.
    */
-  size_t allocate_tss_slot_id (
-      ACE_CLEANUP_FUNC cleanup
-      );
+  size_t allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup);
 
   /// Return a pointer to the ORB Core associated with the ORB being
   /// initialized.
@@ -222,14 +202,10 @@ public:
 
   static TAO_ORBInitInfo_ptr _duplicate (TAO_ORBInitInfo_ptr obj);
 
-  static TAO_ORBInitInfo_ptr _narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_ORBInitInfo_ptr _narrow (CORBA::Object_ptr obj);
 
 
-  static TAO_ORBInitInfo_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_ORBInitInfo_ptr _unchecked_narrow (CORBA::Object_ptr obj);
 
 
   static TAO_ORBInitInfo_ptr _nil (void)
@@ -286,17 +262,10 @@ namespace TAO
   template<>
   struct TAO_PI_Export Objref_Traits<TAO_ORBInitInfo>
   {
-    static TAO_ORBInitInfo_ptr duplicate (
-        TAO_ORBInitInfo_ptr
-      );
-    static void release (
-        TAO_ORBInitInfo_ptr
-      );
+    static TAO_ORBInitInfo_ptr duplicate (TAO_ORBInitInfo_ptr);
+    static void release (TAO_ORBInitInfo_ptr);
     static TAO_ORBInitInfo_ptr nil (void);
-    static CORBA::Boolean marshal (
-        TAO_ORBInitInfo_ptr p,
-        TAO_OutputCDR & cdr
-      );
+    static CORBA::Boolean marshal (TAO_ORBInitInfo_ptr p, TAO_OutputCDR & cdr);
   };
 }
 

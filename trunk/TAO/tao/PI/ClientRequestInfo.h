@@ -78,43 +78,34 @@ public:
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
-  virtual CORBA::ULong request_id (
-      void);
+  virtual CORBA::ULong request_id (void);
 
   /// Return the operation name for the current request.
-  virtual char * operation (
-      void);
+  virtual char * operation (void);
 
   /// Return the list of arguments passed to the current operation.
-  virtual Dynamic::ParameterList * arguments (
-      void);
+  virtual Dynamic::ParameterList * arguments (void);
 
   /// Return the list of exceptions the current operation is capable
   /// of throwing.
-  virtual Dynamic::ExceptionList * exceptions (
-      void);
+  virtual Dynamic::ExceptionList * exceptions (void);
 
-  virtual Dynamic::ContextList * contexts (
-      void);
+  virtual Dynamic::ContextList * contexts (void);
 
-  virtual Dynamic::RequestContext * operation_context (
-      void);
+  virtual Dynamic::RequestContext * operation_context (void);
 
   /// Return the result of the current request.  If there is no return
   /// value then an Any with tk_void TypeCode is returned.  This is
   /// method is not valid for oneway operations.
-  virtual CORBA::Any * result (
-      void);
+  virtual CORBA::Any * result (void);
 
   /// Returns true for a two-way operation, and false otherwise.
-  virtual CORBA::Boolean response_expected (
-      void);
+  virtual CORBA::Boolean response_expected (void);
 
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
   /// CORBA::BAD_INV_ORDER exception is thrown.
-  virtual Messaging::SyncScope sync_scope (
-      void);
+  virtual Messaging::SyncScope sync_scope (void);
 
   /// Return the reply status for the current request.
   /**
@@ -122,81 +113,62 @@ public:
    * SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD,
    * TRANSPORT_RETRY, UNKNOWN.
    */
-  virtual PortableInterceptor::ReplyStatus reply_status (
-      void);
+  virtual PortableInterceptor::ReplyStatus reply_status (void);
 
   /// If the reply status is PortableInterceptor::LOCATION_FORWARD or
   /// return the object reference to which the request was forwarded.
-  virtual CORBA::Object_ptr forward_reference (
-      void);
+  virtual CORBA::Object_ptr forward_reference (void);
 
-  virtual CORBA::Any * get_slot (
-      PortableInterceptor::SlotId id
-      );
+  virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id);
 
   /// Return the IOP::ServiceContext with the given IOP::ServiceId
   /// from the request service context list.
   virtual IOP::ServiceContext * get_request_service_context (
-      IOP::ServiceId id
-      );
+      IOP::ServiceId id);
 
   /// Return the IOP::ServiceContext with the given IOP::ServiceId
   /// from the reply service context list.
-  virtual IOP::ServiceContext * get_reply_service_context (
-      IOP::ServiceId id
-      );
+  virtual IOP::ServiceContext * get_reply_service_context (IOP::ServiceId id);
 
   /// Return the (initial, non-forwarded, or permanently forwarded)
   /// object reference of the target.
-  virtual CORBA::Object_ptr target (
-      void);
+  virtual CORBA::Object_ptr target (void);
 
   /// Return the object reference for the current target.  The target
   /// may change in the even of a location forward.
-  virtual CORBA::Object_ptr effective_target (
-      void);
+  virtual CORBA::Object_ptr effective_target (void);
 
-  virtual IOP::TaggedProfile * effective_profile (
-      void);
+  virtual IOP::TaggedProfile * effective_profile (void);
 
   /// Return an Any containing the received exception, if any.
   /// Otherwise, throw a CORBA::BAD_INV_ORDER exception.
   /**
    * @note There is no trivial way to extract the exception from an Any.
    */
-  virtual CORBA::Any * received_exception (
-      void);
+  virtual CORBA::Any * received_exception (void);
 
   /// Return the repository ID for the received exception.
-  virtual char * received_exception_id (
-      void);
+  virtual char * received_exception_id (void);
 
   /// Return the first IOP::TaggedComponent that matches the given
   /// IOP::ComponentId in the object reference for the current
   /// target.
-  virtual IOP::TaggedComponent * get_effective_component (
-      IOP::ComponentId id
-      );
+  virtual IOP::TaggedComponent * get_effective_component (IOP::ComponentId id);
 
   /// Return all IOP::TaggedComponent(s) that match the given
   /// IOP::ComponentId in the object reference for the current
   /// target.
-  virtual IOP::TaggedComponentSeq * get_effective_components (
-      IOP::ComponentId id
-      );
+  virtual IOP::TaggedComponentSeq * get_effective_components (IOP::ComponentId id);
 
   /// Return the policy of the given type in effect for the current
   /// request.
-  virtual CORBA::Policy_ptr get_request_policy (
-      CORBA::PolicyType type
-      );
+  virtual CORBA::Policy_ptr get_request_policy (CORBA::PolicyType type);
 
   /// Add the IOP::ServiceContext to the request (outgoing)
   /// IOP::ServiceContextList.
   virtual void add_request_service_context (
       const IOP::ServiceContext & service_context,
-      CORBA::Boolean replace
-      );
+      CORBA::Boolean replace);
 
   /*
   * Proprietary accessor methods for the FT retention ID and
@@ -238,8 +210,7 @@ private:
   /// Helper method to get the request and response service contexts.
   IOP::ServiceContext *get_service_context_i (
       TAO_Service_Context &service_context_list,
-      IOP::ServiceId id
-      );
+      IOP::ServiceId id);
 
 private:
   /// Pointer to the invocation object.
