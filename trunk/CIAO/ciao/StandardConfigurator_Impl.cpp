@@ -28,9 +28,7 @@ namespace CIAO
   }
 
   void
-  StandardConfigurator_Impl::configure (
-    Components::CCMObject_ptr)
+  StandardConfigurator_Impl::configure (Components::CCMObject_ptr)
   {
-
   }
 }

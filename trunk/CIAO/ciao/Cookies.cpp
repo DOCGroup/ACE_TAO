@@ -68,5 +68,7 @@ namespace CIAO
     return ret_val;
   }
 
-
+  Map_Key_Cookie_init::~Map_Key_Cookie_init ()
+  {
+  }
 }
