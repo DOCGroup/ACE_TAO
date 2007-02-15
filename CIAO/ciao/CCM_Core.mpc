@@ -99,6 +99,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
   IDL_Files {
     idlflags += -SS -Sci
     CCM_Context.idl
+    CCM_ExtensionContext.idl
     CCM_CCMException.idl
     CCM_EntityComponent.idl
     CCM_EntityContext.idl
@@ -137,6 +138,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, valuetype, ifr_client
     CCM_SessionSynchronizationC.cpp
     CCM_CCMExceptionC.cpp
     CCM_ContextC.cpp
+    CCM_ExtensionContextC.cpp
     SecurityC.cpp
     CCM_Container_ExC.cpp
     CCM_StateIdFactoryC.cpp
@@ -306,6 +308,7 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_c
     Dynamic_Component_Servant_Base.cpp
     Port_Activator.cpp
     StandardConfigurator_Impl.cpp
+    ExtensionContext.cpp
   }
 
   Header_Files {
