@@ -52,7 +52,7 @@ TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (
 }
 
 CORBA::Policy_ptr
-TAO_Client_Network_Priority_Policy::create (const CORBA::Any &val)
+TAO_Client_Network_Priority_Policy::create (const CORBA::Any &)
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 
@@ -119,6 +119,14 @@ TAO_Client_Network_Priority_Policy::network_priority_model (void)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->network_priority_model_;
+}
+
+void
+TAO_Client_Network_Priority_Policy::network_priority_model (
+  TAO::NetworkPriorityModel npm)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->network_priority_model_ = npm;
 }
 
 CORBA::Policy_ptr
