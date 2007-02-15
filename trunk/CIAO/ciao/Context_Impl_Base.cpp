@@ -2,8 +2,6 @@
 
 #include "Context_Impl_Base.h"
 #include "Container_Base.h"
-#include "Session_Container.h"
-#include "tao/ORB.h"
 
 namespace CIAO
 {
@@ -62,20 +60,9 @@ namespace CIAO
   }
 
   CORBA::Object_ptr
-  Context_Impl_Base::resolve_service_reference(const char *service_id)
+  Context_Impl_Base::resolve_service_reference(const char *)
   {
-    CORBA::Object_ptr obj;
-    try
-      {
-        obj = this->container_->the_ORB ()->resolve_initial_references (service_id);
-      }
-    catch (const ::CORBA::ORB::InvalidName&)
-      {
-        throw ::Components::CCMException (
-          ::Components::OBJECT_NOT_FOUND);
-      }
-
-    return obj;
+    throw CORBA::NO_IMPLEMENT ();
   }
 
   // CIAO-specific.

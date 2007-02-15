@@ -1,3 +1,9 @@
+Thu Feb 14 12:51:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Context_Impl_Base.cpp:
+          Just let resolve_service_reference throw not implemented,
+          need some more work
+
 Thu Feb 14 12:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Container_Base.cpp:
