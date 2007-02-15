@@ -60,30 +60,26 @@ namespace CIAO
     /// the compilers want it, have to sort this out in detail.
     Context_Impl_Base (void);
 
-    Context_Impl_Base (Components::CCMHome_ptr home,
-                       Session_Container * c);
+    Context_Impl_Base (Components::CCMHome_ptr home, Session_Container * c);
 
     virtual ~Context_Impl_Base (void);
 
     // Operations from ::Components::CCMContext.
 
-    virtual Components::Principal_ptr
-    get_caller_principal ();
+    virtual Components::Principal_ptr get_caller_principal ();
 
-    virtual Components::CCMHome_ptr
-    get_CCM_home ();
+    virtual Components::CCMHome_ptr get_CCM_home ();
 
-    virtual CORBA::Boolean
-    get_rollback_only ();
+    virtual CORBA::Boolean get_rollback_only ();
 
     virtual Components::Transaction::UserTransaction_ptr
     get_user_transaction ();
 
-    virtual CORBA::Boolean
-    is_caller_in_role (const char *role);
+    virtual CORBA::Boolean is_caller_in_role (const char *role);
 
-    virtual void
-    set_rollback_only ();
+    virtual void set_rollback_only ();
+
+    virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 
     // CIAO-specific.
 

@@ -1,11 +1,62 @@
+Thu Feb 14 12:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.h:
+        * ciao/Session_Container.cpp:
+        * ciao/Session_Container.h:
+        * ciao/Session_Container.inl:
+          Moved Session_Container to its own file
+
+        * ciao/Container_Base.inl:
+          Removed, not needed anymore
+
+        * ciao/CCM_Context.idl:
+          Added resolve_service_reference
+
+        * ciao/CCM_Core.mpc:
+          Added new Session_Container
+
+        * ciao/Context_Impl_Base.cpp:
+        * ciao/Context_Impl_Base.h:
+          Layout changes and implemented resolve_service_reference
+
+        * ciao/Context_Impl_T.cpp:
+        * ciao/Context_Impl_T.h:
+        * ciao/Port_Activator.h:
+        * ciao/Port_Activator_T.h:
+        * ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplication/Container_Impl.h:
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/TargetManager/TargetManager_exec.h:
+          Layout changes
+
+        * ciao/Dynamic_Component_Activator.cpp:
+        * ciao/Dynamic_Component_Activator.h:
+        * ciao/Swapping_Container.cpp:
+        * ciao/Swapping_Container.h:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+          Renamed add_servant_map to add_servant_to_map and delete_servant_map
+          to delete_servant_from_map
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+          Include Session_Container.h instead of Container_Base.h
+
+        * DAnCE/ExecutionManager/DAM_Map.cpp:
+          No need to use intermediate variables
+
 Tue Feb 13 20:49:13 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:
         * DAnCE/TargetManager/DomainDataManager.cpp:
-				  Changed in order to address couple of warnings in the TargetManager.
+          Changed in order to address couple of warnings in the TargetManager.
 
 Mon Feb 12 16:02:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
-
 
         * RACE:
 
@@ -196,8 +247,8 @@ Mon Feb 12 16:02:14 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
         * RACE/descriptors/flattened_deploymentplan.cdp:
 
           Removed these files. Removed the RACE implementation from the HEAD,
-                                        since this is obsolete. This module is now in the process of
-                                        re-structuring and will be checked in by Nishanth Shankaran.
+          since this is obsolete. This module is now in the process of
+          re-structuring and will be checked in by Nishanth Shankaran.
 
 Mon Feb 12 12:53:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

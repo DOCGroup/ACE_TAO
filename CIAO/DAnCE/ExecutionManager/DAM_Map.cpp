@@ -61,9 +61,8 @@ namespace CIAO
       ::Deployment::DomainApplicationManager_ptr dam)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::bind_dam_reference");
-      int const retval = this->map_.rebind (str, dam);
 
-      if (retval != 0)
+      if (this->map_.rebind (str, dam) != 0)
         return false;
 
       return true;
@@ -104,9 +103,8 @@ namespace CIAO
     DAM_Map::unbind_dam (const ACE_CString &str)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::unbind_dam");
-      int const retval = this->map_.unbind (str);
 
-      if (retval != 0)
+      if (this->map_.unbind (str) != 0)
         return false;
 
       return true;

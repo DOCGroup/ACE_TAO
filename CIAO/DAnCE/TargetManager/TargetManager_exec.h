@@ -54,20 +54,15 @@ namespace CIDL_TargetManager_i
     set_session_context (
     ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_activate ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_remove ();
 
   protected:
     /// The service context pointer
@@ -103,8 +98,7 @@ namespace CIDL_TargetManager_i
     ::Deployment::DomainUpdateKind updateKind);
 
     virtual ::Deployment::ResourceCommitmentManager_ptr
-    createResourceCommitment (
-    const ::Deployment::ResourceAllocations& manager);
+    createResourceCommitment (const ::Deployment::ResourceAllocations& manager);
 
     virtual void
     destroyResourceCommitment (

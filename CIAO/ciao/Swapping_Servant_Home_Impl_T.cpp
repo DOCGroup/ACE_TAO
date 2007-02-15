@@ -42,7 +42,7 @@ namespace CIAO
 
     try
       {
-        this->container_->delete_servant_map (oid);
+        this->container_->delete_servant_from_map (oid);
       }
       catch (const CORBA::Exception& ex)
       {
@@ -151,7 +151,7 @@ namespace CIAO
                                                 this,
                                                 this->container_);
 
-    this->container_->add_servant_map (oid, svt);
+    this->container_->add_servant_to_map (oid, svt);
 
     this->dynamic_servant_map_.bind (oid.in (), svt);
 

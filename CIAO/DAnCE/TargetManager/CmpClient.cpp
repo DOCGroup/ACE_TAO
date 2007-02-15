@@ -28,7 +28,7 @@ namespace TM_Tester
    */
   void write_to_file (::Deployment::Domain domain);
 
-  /// variable contains IOR of the TM 
+  /// variable contains IOR of the TM
   const char * stringified_TM_IOR;
 
   /// if add or delete from domain
@@ -37,9 +37,9 @@ namespace TM_Tester
   /// whether to test update domain or not
   bool call_update = false;
 
-  /// contains the host name 
+  /// contains the host name
   const char * host_name;
-  
+
     /// parses the arguments and extracts the params
   bool parse_args (int argc, char *argv[])
   {
@@ -85,7 +85,7 @@ namespace TM_Tester
 
       if (!TM_Tester::parse_args (argc, argv))
         return -1;
-     
+
       // Use the first argument to create the factory object reference,
       // in real applications we use the naming service, but let's do
       // the easy part first!
@@ -162,14 +162,12 @@ namespace TM_Tester
               resource_seq[e.index].resourceName.in (),
               e.propertyName.in ()));
       }
-      catch(CORBA::Exception & ex)
+      catch(const CORBA::Exception & ex)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:commitResources Exception\n"));
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in TargetManager call"));
       }
-
-
 
       // Make a call to release resources , if resource < 0
       try
@@ -180,15 +178,15 @@ namespace TM_Tester
           manager->releaseResources (resource_seq);
         }
       }
-      catch(CORBA::NO_IMPLEMENT &)
+      catch(const CORBA::NO_IMPLEMENT &)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
-      catch (Deployment::ResourceCommitmentFailure&)
+      catch (const Deployment::ResourceCommitmentFailure&)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
       }
-      catch(CORBA::Exception & ex)
+      catch(const CORBA::Exception & ex)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:releaseResources Exception\n"));
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
@@ -264,7 +262,7 @@ namespace TM_Tester
       // Finally destroy the ORB
       orb->destroy ();
     }
-    catch (CORBA::Exception & ex) 
+    catch (CORBA::Exception & ex)
     {
       ACE_ERROR ((LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
     }

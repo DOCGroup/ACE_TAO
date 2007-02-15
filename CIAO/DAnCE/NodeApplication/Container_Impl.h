@@ -27,7 +27,8 @@
 
 #include "ciao/Deployment_ContainerS.h"
 #include "ciao/Deployment_NodeApplicationC.h"
-#include "ciao/Container_Base.h"
+#include "ciao/DeploymentC.h"
+#include "ciao/Session_Container.h"
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
@@ -69,15 +70,12 @@ namespace CIAO
       install (const ::Deployment::ContainerImplementationInfo & container_impl_info);
 
     /// Remove all homes and components
-    virtual void
-      remove ();
+    virtual void remove ();
 
     /// Deployment::Container interface defined attributes/operations.
-    virtual ::Deployment::Properties *
-      properties ();
+    virtual ::Deployment::Properties *properties ();
 
-    virtual ::Deployment::NodeApplication_ptr
-      get_node_application ();
+    virtual ::Deployment::NodeApplication_ptr get_node_application ();
 
     /*-------------------------------------------------------------*/
     /*-------------------  C++ help methods (c++) -----------------*/
@@ -85,7 +83,6 @@ namespace CIAO
     /// Get the containing POA.  This operation does *not*
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
-
 
     // Install the home of this particular component
     virtual ::Components::CCMHome_ptr
@@ -103,8 +100,7 @@ namespace CIAO
      * the real thinking for easiness.
      */
     // Remove the home of this particular component
-    virtual void
-      remove_home (const char * comp_ins_name);
+    virtual void remove_home (const char * comp_ins_name);
 
     bool
     register_with_ns (const char * obj_name,
@@ -112,9 +108,7 @@ namespace CIAO
                       Components::CCMObject_ptr obj);
 
     bool
-    unregister_with_ns (const char * obj_name,
-                        CORBA::ORB_ptr orb);
-
+    unregister_with_ns (const char * obj_name, CORBA::ORB_ptr orb);
 
     // ------------------- CIAO Internal Operations ------------------------
     // These below two are helper methods to clean up components
