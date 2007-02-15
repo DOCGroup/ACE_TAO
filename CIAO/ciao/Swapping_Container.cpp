@@ -71,10 +71,7 @@ namespace CIAO
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ());
 
-
-    this->create_servant_POA (name,
-                              more_policies,
-                              root_poa.in ());
+    this->create_servant_POA (name, more_policies, root_poa.in ());
 
     this->create_home_servant_POA ("home servant POA",
                                    more_policies,
@@ -82,8 +79,7 @@ namespace CIAO
 
     this->create_connections_POA (root_poa.in ());
 
-    PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager ();
+    PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
     poa_manager->activate ();
 
@@ -115,11 +111,9 @@ namespace CIAO
     if (p != 0)
       policies = *p;
 
-    PortableServer::POAManager_var poa_manager =
-      root->the_POAManager ();
+    PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
-    this->home_servant_poa_ =
-      root->create_POA (name,
+    this->home_servant_poa_ = root->create_POA (name,
                         poa_manager.in (),
                         policies);
   }
@@ -154,9 +148,7 @@ namespace CIAO
                       Servant_Activator (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
 
-    this->facet_cons_poa_->set_servant_manager (
-        this->sa_);
-
+    this->facet_cons_poa_->set_servant_manager (this->sa_);
   }
 
   void
@@ -191,18 +183,13 @@ namespace CIAO
     policies[policy_length] =
       root->create_servant_retention_policy (PortableServer::RETAIN);
 
-    this->component_poa_ =
-      root->create_POA (name,
-                        poa_manager.in (),
-                        policies);
+    this->component_poa_ = root->create_POA (name, poa_manager.in (), policies);
 
     ACE_NEW_THROW_EX (this->dsa_,
                       Dynamic_Component_Activator (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
 
-    this->component_poa_->set_servant_manager (
-        this->dsa_);
-
+    this->component_poa_->set_servant_manager (this->dsa_);
   }
 
   void

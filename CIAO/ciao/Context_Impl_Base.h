@@ -72,8 +72,7 @@ namespace CIAO
 
     virtual CORBA::Boolean get_rollback_only ();
 
-    virtual Components::Transaction::UserTransaction_ptr
-    get_user_transaction ();
+    virtual Components::Transaction::UserTransaction_ptr get_user_transaction ();
 
     virtual CORBA::Boolean is_caller_in_role (const char *role);
 
