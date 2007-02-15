@@ -1,3 +1,12 @@
+Thu Feb 15 05:41:11 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Moved find off-line because it requires a full declaration of
+          ACE_Service_Repository, which is unavailable when the inl file
+          is compiled (inlining on)
+
 Wed Feb 14 23:05:16 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:

@@ -400,6 +400,24 @@ ACE_Service_Gestalt::load_static_svcs (void)
 
 
 
+/// Searches for a service object declaration in the local repo, only
+
+int
+ACE_Service_Gestalt::find (const ACE_TCHAR name[],
+                           const ACE_Service_Type **srp,
+                           int ignore_suspended) const
+{
+  // Closing the gestalt will have disassociated it from the
+  // repository. If the repository used to be owned by the gestalt, it
+  // will also have been destroyed - so just check for repo_ before
+  // doing anything with it.
+  if (this->repo_ != 0)
+    return this->repo_->find (name, srp, ignore_suspended);
+
+  return 0;
+}
+
+
 /// Find a static service descriptor by name
 
 int
