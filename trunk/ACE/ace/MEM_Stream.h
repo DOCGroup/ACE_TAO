@@ -82,7 +82,7 @@ public:
 #if 0
   /**
    * Try to send exactly <len> bytes into <buf> from <handle> (uses
-   * the <send> call).  If <send> blocks for longer than <timeout> the
+   * the <send> call).  If <send> blocks for longer than @a timeout the
    * number of bytes actually sent is returned with <errno == ETIME>.
    * If a timeout does not occur, <send_n> return <len> (i.e., the
    * number of bytes requested to be sent).
@@ -94,11 +94,11 @@ public:
 
   /**
    * Try to recv exactly <len> bytes into <buf> from <handle> (uses
-   * the <ACE::recv_n> call).  The <ACE_Time_Value> indicates how long
-   * to blocking trying to receive.  If <timeout> == 0, the caller
+   * the <ACE::recv_n> call).  The ACE_Time_Value indicates how long
+   * to blocking trying to receive.  If @a timeout == 0, the caller
    * will block until action is possible, else will wait until the
-   * relative time specified in *<timeout> elapses).  If <recv> blocks
-   * for longer than <timeout> the number of bytes actually read is
+   * relative time specified in *@a timeout elapses).  If <recv> blocks
+   * for longer than @a timeout the number of bytes actually read is
    * returned with <errno == ETIME>.  If a timeout does not occur,
    * <recv_n> return <len> (i.e., the number of bytes requested to be
    * read).

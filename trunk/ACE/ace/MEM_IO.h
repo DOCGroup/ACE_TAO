@@ -59,7 +59,7 @@ public:
                             const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send <buf>.  If <send>
+   * Wait to to @a timeout amount of time to send <buf>.  If <send>
    * times out a -1 is returned with <errno == ETIME>.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
@@ -121,14 +121,14 @@ public:
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
-   * using ACE::recv, <timeout> only applies to ACE::recv.
+   * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
                             const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send <buf>.  If <send>
+   * Wait to to @a timeout amount of time to send <buf>.  If <send>
    * times out a -1 is returned with <errno == ETIME>.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
@@ -217,7 +217,7 @@ public:
                 size_t n) ;
 
   /**
-   * Wait to to <timeout> amount of time to send up to <n> bytes into
+   * Wait to to @a timeout amount of time to send up to <n> bytes into
    * <buf> from <handle> (uses the <send> call).  If <send> times out
    * a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes sent is returned.
@@ -227,7 +227,7 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send up to <n> bytes into
+   * Wait to to @a timeout amount of time to send up to <n> bytes into
    * <buf> from <handle> (uses the <send> call).  If <send> times out
    * a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes sent is returned.
@@ -238,7 +238,7 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to <timeout> amount of time to send the <message_block>.
+   * Wait to to @a timeout amount of time to send the <message_block>.
    * If <send> times out a -1 is returned with <errno == ETIME>.  If
    * it succeeds the number of bytes sent is returned.
    */
@@ -246,7 +246,7 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait up to <timeout> amount of time to receive up to <n> bytes
+   * Wait up to @a timeout amount of time to receive up to <n> bytes
    * into <buf> from <handle> (uses the <recv> call).  If <recv> times
    * out a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes received is returned.
@@ -256,7 +256,7 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait up to <timeout> amount of time to receive up to <n> bytes
+   * Wait up to @a timeout amount of time to receive up to <n> bytes
    * into <buf> from <handle> (uses the <recv> call).  If <recv> times
    * out a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes received is returned.

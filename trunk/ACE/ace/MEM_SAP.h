@@ -110,7 +110,7 @@ public:
                             const ACE_Time_Value *timeout) = 0;
 
   /**
-   * Wait to to <timeout> amount of time to send <buf>.  If <send>
+   * Wait to to @a timeout amount of time to send <buf>.  If <send>
    * times out a -1 is returned with <errno == ETIME>.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,

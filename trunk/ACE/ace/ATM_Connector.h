@@ -59,7 +59,7 @@ public:
    * Actively connect and produce a <new_stream> if things go well.
    * The <remote_sap> is the address that we are trying to connect
    * with.  The <params> are the parameters needed for either socket
-   * or XTI/ATM connections.  The <timeout> is the amount of time to
+   * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
    * mode.  In this case, if the connection can't be made immediately
@@ -89,7 +89,7 @@ public:
    * Actively connect and produce a <new_stream> if things go well.
    * The <remote_sap> is the address that we are trying to connect
    * with.  The <params> are the parameters needed for either socket
-   * or XTI/ATM connections.  The <timeout> is the amount of time to
+   * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
    * mode.  In this case, if the connection can't be made immediately

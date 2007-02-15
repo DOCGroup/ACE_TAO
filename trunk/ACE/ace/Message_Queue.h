@@ -38,9 +38,9 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
  * @brief Base class for ACE_Message_Queue, which is the central
  * queueing facility for messages in the ACE framework.
  *
- * For all the <ACE_Time_Value> pointer parameters the caller will
- * block until action is possible if <timeout> == 0.  Otherwise, it
- * will wait until the absolute time specified in *<timeout>
+ * For all the ACE_Time_Value pointer parameters the caller will
+ * block until action is possible if @a timeout == 0.  Otherwise, it
+ * will wait until the absolute time specified in *@a timeout
  * elapses.
  *
  * A queue is always in one of three states:
@@ -94,8 +94,8 @@ public:
 
   /**
    * Retrieve the first ACE_Message_Block without removing it.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
+   * time.  If the @a timeout elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
    * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
    * Otherwise, returns -1 on failure, else the number of items still

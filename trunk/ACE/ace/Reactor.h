@@ -122,7 +122,7 @@ public:
   /**
    * Run the event loop until the <ACE_Reactor::handle_events> or
    * <ACE_Reactor::alertable_handle_events> methods returns -1, the
-   * <end_event_loop> method is invoked, or the <ACE_Time_Value>
+   * <end_event_loop> method is invoked, or the ACE_Time_Value
    * expires.  Note that this method can only be used by the singleton
    * <ACE_Reactor::instance>.  Thus, to run another reactor use
    * <ACE_Reactor::run_reactor_event_loop>.
@@ -186,7 +186,7 @@ public:
   /**
    * Run the event loop until the <ACE_Reactor::handle_events> or
    * <ACE_Reactor::alertable_handle_events> methods returns -1, the
-   * <end_reactor_event_loop> method is invoked, or the <ACE_Time_Value>
+   * <end_reactor_event_loop> method is invoked, or the ACE_Time_Value
    * expires.
    */
   virtual int run_reactor_event_loop (ACE_Time_Value &tv,
