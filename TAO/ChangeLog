@@ -1,3 +1,16 @@
+Thu Feb 15 15:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTPortableServer/RT_Acceptor_Filters.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.inl:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.h:
+          Code layout changes and cleanup now we zapped the emulated exception
+          macros
+
 Thu Feb 15 13:23:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Base_Transport_Property.h:
