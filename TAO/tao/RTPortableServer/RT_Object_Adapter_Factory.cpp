@@ -23,8 +23,7 @@ TAO_RT_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
   if (!orb_core->orb_params ()->disable_rt_collocation_resolver ())
     {
       // Set the name of the collocation resolver to be RT_Collocation_Resolver.
-      TAO_ORB_Core::set_collocation_resolver (
-          "RT_Collocation_Resolver");
+      TAO_ORB_Core::set_collocation_resolver ("RT_Collocation_Resolver");
       ACE_Service_Config::process_directive (
           ace_svc_desc_TAO_RT_Collocation_Resolver);
     }

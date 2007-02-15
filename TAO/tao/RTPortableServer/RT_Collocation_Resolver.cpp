@@ -28,15 +28,13 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
     return false;
 
   // Get the orb core.
-  TAO_ORB_Core *orb_core =
-    object->_stubobj ()->servant_orb_var ()->orb_core ();
+  TAO_ORB_Core *orb_core = object->_stubobj ()->servant_orb_var ()->orb_core ();
 
   // Lookup the target POA.  Note that Object Adapter lock is held
   // until <servant_upcall> dies.
   TAO::Portable_Server::Servant_Upcall servant_upcall (orb_core);
   TAO_Root_POA *poa =
-    servant_upcall.lookup_POA (object->_stubobj ()->object_key ()
-                              );
+    servant_upcall.lookup_POA (object->_stubobj ()->object_key ());
 
   // Get the thread pool associated with this POA.
   TAO_Thread_Pool *target_thread_pool =
@@ -95,11 +93,10 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   CORBA::Short target_priority;
 
   if (-1 == poa->find_servant_priority (servant_upcall.system_id_,
-                                        target_priority
-                                       ))
+                                        target_priority))
   {
     return false;
-  };
+  }
 
   // If it matches the current thread's priority, then we are
   // collocated.  Otherwise we are not.
