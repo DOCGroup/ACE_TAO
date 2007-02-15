@@ -9,8 +9,8 @@ project(*idl): taoidldefaults {
 project(*Server): orbsvcsexe, fault_tolerance, tmcast, pi_server, interceptors {
   after += *idl
   Source_Files {
-    RolyPolyS.cpp
     RolyPolyC.cpp
+    RolyPolyS.cpp
     RolyPoly_i.cpp
     ORB_Initializer.cpp
     ReplicaController.cpp

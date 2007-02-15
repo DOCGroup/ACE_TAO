@@ -13,8 +13,8 @@ project(*sequence server): taoserver, strategies, avoids_minimum_corba, avoids_c
 
   exename = server
   Source_Files {
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
     Roundtrip.cpp
     server.cpp
   }

@@ -12,8 +12,8 @@ project(*Server): taoserver {
   avoids += ace_for_tao
   after += *idl
   Source_Files {
-    testS.cpp
     testC.cpp
+    testS.cpp
     test_i.cpp
     server.cpp
   }

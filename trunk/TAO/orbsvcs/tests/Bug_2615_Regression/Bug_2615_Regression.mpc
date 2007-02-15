@@ -25,8 +25,8 @@ project (*Server) : taoserver, ftclientorb, pi_server {
 
   exename = server
   Source_Files {
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
     server.cpp
     Hello.cpp
     ServerORBInitializer2.cpp

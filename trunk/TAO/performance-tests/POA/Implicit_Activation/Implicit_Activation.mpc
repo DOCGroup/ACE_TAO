@@ -15,8 +15,8 @@ project(*server): taoserver {
   after += *idl
 
   Source_Files {
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
     Factory.cpp
     Simple.cpp
     server.cpp
@@ -44,8 +44,8 @@ project(*collocated): taoserver {
   after  += *idl
   exename = collocated
   Source_Files {
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
     Simple.cpp
     collocated.cpp
   }
