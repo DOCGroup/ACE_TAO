@@ -9,6 +9,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
+#include "tao/Connection_Handler.h"
 
 ACE_RCSID(DiffServPolicy,
           DiffServ_Network_Priority_Hook,
@@ -60,7 +61,7 @@ TAO_DiffServ_Network_Priority_Hook::update_network_priority (
 }
 
 void
-TAO_DiffServ_Network_Priority_Hook::get_dscp_codepoint (
+TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   TAO_ServerRequest &req, TAO_Root_POA &poa)
 {
   CORBA::Long dscp_codepoint;

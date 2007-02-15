@@ -79,6 +79,9 @@ public:
   TAO::NetworkPriorityModel network_priority_model (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void network_priority_model (TAO::NetworkPriorityModel npm)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
   CORBA::PolicyType policy_type (void)

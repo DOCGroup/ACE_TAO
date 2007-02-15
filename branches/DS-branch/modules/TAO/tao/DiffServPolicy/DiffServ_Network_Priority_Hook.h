@@ -45,7 +45,7 @@ public:
   /// when it tries to assign DiffServ codepoints on the replies.
   ///
   void set_dscp_codepoint (TAO_ServerRequest &req,
-                                  TAO_Root_POA &poa);
+                           TAO_Root_POA &poa);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
