@@ -12,8 +12,8 @@ project(*idl): taoidldefaults {
 project(*server): taoserver {
   after += *idl
   Source_Files {
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
     Memory_Growth.cpp
     server.cpp
   }

@@ -13,8 +13,8 @@ project(ICMG_Any_Bug_Hello_IDL): taoidldefaults {
 project(ICMG_Any_Bug_Hello_Server): taoserver {
   after += ICMG_Any_Bug_Hello_IDL
   Source_Files {
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
     Hello.cpp
     HelloWorld.cpp
     server.cpp
