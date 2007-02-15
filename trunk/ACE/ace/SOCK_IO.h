@@ -58,18 +58,18 @@ public:
   /// Destructor.
   ~ACE_SOCK_IO (void);
 
-  /// Recv an <n> byte buffer from the connected socket.
+  /// Recv an @a n byte buffer from the connected socket.
   ssize_t recv (void *buf,
                 size_t n,
                 int flags,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Recv an <n> byte buffer from the connected socket.
+  /// Recv an @a n byte buffer from the connected socket.
   ssize_t recv (void *buf,
                 size_t n,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Recv an <iovec> of size <n> from the connected socket.
+  /// Recv an <iovec> of size @a n from the connected socket.
   ssize_t recvv (iovec iov[],
                  int n,
                  const ACE_Time_Value *timeout = 0) const;
@@ -85,36 +85,36 @@ public:
   ssize_t recvv (iovec *io_vec,
                  const ACE_Time_Value *timeout = 0) const;
 
-  /// Recv <n> varargs messages to the connected socket.
+  /// Recv @a n varargs messages to the connected socket.
   ssize_t recv (size_t n,
                 ...) const;
 
-  /// Recv <n> bytes via Win32 <ReadFile> using overlapped I/O.
+  /// Recv @a n bytes via Win32 <ReadFile> using overlapped I/O.
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <n> byte buffer to the connected socket.
+  /// Send an @a n byte buffer to the connected socket.
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Send an <n> byte buffer to the connected socket.
+  /// Send an @a n byte buffer to the connected socket.
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Send an <iovec> of size <n> to the connected socket.
+  /// Send an <iovec> of size @a n to the connected socket.
   ssize_t sendv (const iovec iov[],
                  int n,
                  const ACE_Time_Value *timeout = 0) const;
 
-  /// Send <n> varargs messages to the connected socket.
+  /// Send @a n varargs messages to the connected socket.
   ssize_t send (size_t n,
                 ...) const;
 
-  /// Send <n> bytes via Win32 <WriteFile> using overlapped I/O.
+  /// Send @a n bytes via Win32 <WriteFile> using overlapped I/O.
   ssize_t send (const void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;

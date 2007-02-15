@@ -312,13 +312,13 @@ public:
 
   // = Data transfer routines.
 
-  /// Send <n> bytes in <buf>, using the multicast address and network interface
+  /// Send @a n bytes in @a buf, using the multicast address and network interface
   /// defined by the first <open> or <subscribe>.
   ssize_t send (const void *buf,
                 size_t n,
                 int flags = 0) const;
 
-  /// Send <n> <iovecs>, using the multicast address and network interface
+  /// Send @a n <iovecs>, using the multicast address and network interface
   /// defined by the first <open> or <subscribe>.
   ssize_t send (const iovec iov[],
                 int n,

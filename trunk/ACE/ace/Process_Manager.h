@@ -202,7 +202,7 @@ public:
   /**
    * Create @a n new processes by passing @a options to
    * <ACE_Process::spawn>, which is called @a n times.  If <child_pids>
-   * is non-0 it is expected to be an array of <n> <pid_t>'s, which
+   * is non-0 it is expected to be an array of @a n <pid_t>'s, which
    * are filled in with the process ids of each newly created process.
    * Register @a event_handler to be called back when each process exits.
    * Returns 0 on success and -1 on failure.

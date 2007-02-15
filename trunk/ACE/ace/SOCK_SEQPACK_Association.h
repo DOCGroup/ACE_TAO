@@ -42,8 +42,8 @@ class ACE_Message_Block;
  * This adds additional wrapper methods atop the <ACE_SOCK_IO>
  * class.
  *
- * <buf> is the buffer to write from or receive into.
- * <len> is the number of bytes to transfer.
+ * @a buf is the buffer to write from or receive into.
+ * @a len is the number of bytes to transfer.
  * The @a timeout parameter in the following methods indicates how
  * long to blocking trying to transfer data.  If @a timeout == 0,
  * then the call behaves as a normal send/recv call, i.e., for
@@ -108,14 +108,14 @@ public:
 
   // = I/O functions.
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,
@@ -127,14 +127,14 @@ public:
                    const ACE_Time_Value *timeout = 0,
                    size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connection socket.
+  /// Try to send exactly @a len bytes from @a buf to the connection socket.
   ssize_t send_n (const void *buf,
                   size_t len,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Try to send exactly <len> bytes from <buf> to the connected socket.
+  /// Try to send exactly @a len bytes from @a buf to the connected socket.
   ssize_t send_n (const void *buf,
                   size_t len,
                   const ACE_Time_Value *timeout = 0,

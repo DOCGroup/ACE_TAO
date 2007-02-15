@@ -84,13 +84,13 @@ public:
   ~ACE_SOCK_Dgram (void);
 
   // = Data transfer routines.
-  /// Send an <n> byte <buf> to the datagram socket (uses <sendto(3)>).
+  /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 
-  /// Receive an <n> byte <buf> from the datagram socket (uses
+  /// Receive an @a n byte @a buf from the datagram socket (uses
   /// <recvfrom(3)>).
   ssize_t recv (void *buf,
                 size_t n,
@@ -110,14 +110,14 @@ public:
                 int flags = 0,
                 const ACE_Time_Value *timeout = 0) const;
 
-  /// Send an <iovec> of size <n> to the datagram socket (uses
+  /// Send an <iovec> of size @a n to the datagram socket (uses
   /// <sendmsg(3)>).
   ssize_t send (const iovec iov[],
                 int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 
-  /// Recv an <iovec> of size <n> to the datagram socket (uses
+  /// Recv an <iovec> of size @a n to the datagram socket (uses
   /// <recvmsg(3)>).
   ssize_t recv (iovec iov[],
                 int n,
@@ -126,7 +126,7 @@ public:
 
   /**
    * Wait up to @a timeout amount of time to receive a datagram into
-   * <buf>.  The ACE_Time_Value indicates how long to blocking
+   * @a buf.  The ACE_Time_Value indicates how long to blocking
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <recv> times out a -1 is
@@ -141,7 +141,7 @@ public:
 
   /**
    * Wait up to @a timeout amount of time to send a datagram to
-   * <buf>.  The ACE_Time_Value indicates how long to blocking
+   * @a buf.  The ACE_Time_Value indicates how long to blocking
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <send> times out a -1 is
@@ -174,7 +174,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an <n> byte <buf> to the datagram socket (uses <WSASendTo>).
+  /// Send an @a n byte @a buf to the datagram socket (uses <WSASendTo>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
@@ -182,7 +182,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Receive an <n> byte <buf> from the datagram socket (uses
+  /// Receive an @a n byte @a buf from the datagram socket (uses
   /// <WSARecvFrom>).
   ssize_t recv (void *buf,
                 size_t n,

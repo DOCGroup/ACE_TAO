@@ -393,9 +393,9 @@ public:
   size_t current_alignment (void) const;
 
   /**
-   * Returns (in <buf>) the next position in the buffer aligned to
+   * Returns (in @a buf) the next position in the buffer aligned to
    * @a size, it advances the Message_Block wr_ptr past the data
-   * (i.e., <buf> + @a size). If necessary it grows the Message_Block
+   * (i.e., @a buf + @a size). If necessary it grows the Message_Block
    * buffer.  Sets the good_bit to false and returns a -1 on failure.
    */
   int adjust (size_t size,
@@ -468,7 +468,7 @@ private:
 
 
   /**
-   * Grow the CDR stream. When it returns <buf> contains a pointer to
+   * Grow the CDR stream. When it returns @a buf contains a pointer to
    * memory in the CDR stream, with at least @a size bytes ahead of it
    * and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
    * + size>.
@@ -1093,7 +1093,7 @@ protected:
   /**
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
-   * On success <buf> will contain a contiguous area in the CDR stream
+   * On success @a buf will contain a contiguous area in the CDR stream
    * that can hold @a size bytes aligned to <align>.
    * Results
    */
@@ -1186,7 +1186,7 @@ protected:
   /**
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
-   * On success <buf> will contain a contiguous area in the CDR stream
+   * On success @a buf will contain a contiguous area in the CDR stream
    * that can hold @a size bytes aligned to <align>.
    * Results
    */
