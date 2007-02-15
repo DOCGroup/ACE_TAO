@@ -53,8 +53,7 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies)
                         CORBA::NO_MEMORY ());
     }
 
-  return this->container_->init (0,
-                                 policies);
+  return this->container_->init (0, policies);
 }
 
 
@@ -93,8 +92,7 @@ CIAO::Container_Impl::install (
            throw Deployment::InstallationFailure ();
 
          // Create component from home
-         Components::CCMObject_var comp =
-           kh->create_component ();
+         Components::CCMObject_var comp = kh->create_component ();
 
          if (CORBA::is_nil (comp.in ()))
            throw Deployment::InstallationFailure ();

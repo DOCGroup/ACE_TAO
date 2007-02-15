@@ -32,8 +32,7 @@ namespace CIAO
             typename SVNT,
             typename COMP>
   CORBA::Object_ptr
-  Context_Impl<BASE_CTX, SVNT, COMP>::get_CCM_object (
-    )
+  Context_Impl<BASE_CTX, SVNT, COMP>::get_CCM_object (void)
   {
     if (CORBA::is_nil (this->component_.in ()))
       {
@@ -41,15 +40,13 @@ namespace CIAO
 
         try
           {
-            obj =
-              this->container_->get_objref (this->servant_);
+            obj = this->container_->get_objref (this->servant_);
           }
         catch (const CORBA::Exception& ex)
           {
             ex._tao_print_exception ("Caught Exception \n");
             return CORBA::Object::_nil ();
           }
-
 
         this->component_ = COMP::_narrow (obj.in ());
 

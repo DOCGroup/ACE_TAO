@@ -1648,7 +1648,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   bool swapping = (swap_option == "upgradeable");
 
   os << "#include \"ciao/"
-     << (swapping ? "Swapping_Container.h" : "Container_Base.h")
+     << (swapping ? "Swapping_Container.h" : "Session_Container.h")
      << "\"" << endl
      << "#include \"ciao/"
      << (swapping ? "Upgradeable_Context_Impl_T.h"

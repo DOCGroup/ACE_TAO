@@ -2,7 +2,7 @@
 
 #include "Servant_Impl_Base.h"
 #include "StandardConfigurator_Impl.h"
-#include "Container_Base.h"
+#include "Session_Container.h"
 
 namespace CIAO
 {
@@ -22,35 +22,30 @@ namespace CIAO
   // Operations for CCMObject interface.
 
   ::Components::PrimaryKeyBase *
-  Servant_Impl_Base::get_primary_key (
-    )
+  Servant_Impl_Base::get_primary_key (void)
   {
     throw ::Components::NoKeyAvailable ();
   }
 
   CORBA::IRObject_ptr
-  Servant_Impl_Base::get_component_def (
-    )
+  Servant_Impl_Base::get_component_def (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   void
-  Servant_Impl_Base::configuration_complete (
-    )
+  Servant_Impl_Base::configuration_complete (void)
   {
     // CIAO to-do
   }
 
   void
-  Servant_Impl_Base::remove (
-    )
+  Servant_Impl_Base::remove (void)
   {
     try
     {
       // Removing Facets
-      Components::FacetDescriptions_var facets =
-        this->get_all_facets ();
+      Components::FacetDescriptions_var facets = this->get_all_facets ();
 
       CORBA::ULong const facet_len = facets->length ();
       for (CORBA::ULong i = 0; i < facet_len; ++i)
@@ -112,16 +107,13 @@ namespace CIAO
   }
 
   ::Components::ConnectionDescriptions *
-  Servant_Impl_Base::get_connections (
-      const char * /* name */
-    )
+  Servant_Impl_Base::get_connections (const char * /* name */)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   ::Components::ComponentPortDescription *
-  Servant_Impl_Base::get_all_ports (
-    )
+  Servant_Impl_Base::get_all_ports (void)
   {
     OBV_Components::ComponentPortDescription *cps = 0;
     ACE_NEW_RETURN (cps,
@@ -154,9 +146,7 @@ namespace CIAO
   }
 
   CORBA::Object_ptr
-  Servant_Impl_Base::provide_facet (
-      const char *name
-    )
+  Servant_Impl_Base::provide_facet (const char *name)
   {
     if (0 == name)
       {
@@ -175,8 +165,7 @@ namespace CIAO
 
   Components::FacetDescriptions *
   Servant_Impl_Base::get_named_facets (
-      const ::Components::NameList & names
-    )
+      const ::Components::NameList & names)
   {
     Components::FacetDescriptions *retval = 0;
     ACE_NEW_RETURN (retval,
@@ -203,8 +192,7 @@ namespace CIAO
   }
 
   ::Components::FacetDescriptions *
-  Servant_Impl_Base::get_all_facets (
-    )
+  Servant_Impl_Base::get_all_facets (void)
   {
     ::Components::FacetDescriptions *tmp = 0;
     ACE_NEW_RETURN (tmp,
@@ -229,8 +217,7 @@ namespace CIAO
 
 
   ::Components::ConsumerDescriptions *
-  Servant_Impl_Base::get_all_consumers (
-    )
+  Servant_Impl_Base::get_all_consumers (void)
   {
     ::Components::ConsumerDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
@@ -256,9 +243,7 @@ namespace CIAO
 
 
   ::Components::EventConsumerBase_ptr
-  Servant_Impl_Base::get_consumer (
-      const char *sink_name
-    )
+  Servant_Impl_Base::get_consumer (const char *sink_name)
   {
     if (0 == sink_name)
       {
@@ -278,8 +263,7 @@ namespace CIAO
 
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_named_consumers (
-      const ::Components::NameList & names
-    )
+      const ::Components::NameList & names)
   {
     Components::ConsumerDescriptions *retval = 0;
     ACE_NEW_RETURN (retval,
@@ -307,8 +291,7 @@ namespace CIAO
 
   ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_named_emitters (
-      const ::Components::NameList & /* names */
-    )
+      const ::Components::NameList & /* names */)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
@@ -348,16 +331,14 @@ namespace CIAO
 
   ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_named_receptacles (
-      const ::Components::NameList & /* names */
-    )
+      const ::Components::NameList & /* names */)
   {
     throw ::CORBA::NO_IMPLEMENT ();
   }
 
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
-      const ::Components::NameList & /* names */
-    )
+      const ::Components::NameList & /* names */)
   {
     throw ::CORBA::NO_IMPLEMENT ();
   }

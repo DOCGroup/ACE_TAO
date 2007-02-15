@@ -102,11 +102,9 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
     return this->get_default_node_manager_ior ();
 
   ACE_Hash_Map_Entry
-    <ACE_CString,
-    CIAO::Deployment_Configuration::Node_Manager_Info> *entry = 0;
+    <ACE_CString, CIAO::Deployment_Configuration::Node_Manager_Info> *entry = 0;
 
-  if (this->deployment_info_.find (ACE_CString (name),
-                                   entry) != 0)
+  if (this->deployment_info_.find (ACE_CString (name), entry) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "DAnCE (%P|%t) Deployment_Configuration, "

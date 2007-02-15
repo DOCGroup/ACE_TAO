@@ -219,7 +219,6 @@ namespace CIAO
         }
     }
 
-
     void
     Execution_Manager_Impl::shutdown ()
     {

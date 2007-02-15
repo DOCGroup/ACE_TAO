@@ -73,10 +73,10 @@ namespace CIAO
                       CORBA::Boolean cleanup_in_progress,
                       CORBA::Boolean remaining_activations);
 
-    void add_servant_map (PortableServer::ObjectId &oid,
+    void add_servant_to_map (PortableServer::ObjectId &oid,
                           Dynamic_Component_Servant_Base* servant);
 
-    void delete_servant_map (PortableServer::ObjectId &oid);
+    void delete_servant_from_map (PortableServer::ObjectId &oid);
 
   private:
     /// Pointer to our ORB

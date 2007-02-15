@@ -1,6 +1,9 @@
 // $Id$
 
 #include "Context_Impl_Base.h"
+#include "Container_Base.h"
+#include "Session_Container.h"
+#include "tao/ORB.h"
 
 namespace CIAO
 {
@@ -23,46 +26,56 @@ namespace CIAO
   // Operations from ::Components::CCMContext.
 
   Components::Principal_ptr
-  Context_Impl_Base::get_caller_principal (
-    )
+  Context_Impl_Base::get_caller_principal (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   Components::CCMHome_ptr
-  Context_Impl_Base::get_CCM_home (
-    )
+  Context_Impl_Base::get_CCM_home (void)
   {
     return Components::CCMHome::_duplicate (this->home_.in ());
   }
 
   CORBA::Boolean
-  Context_Impl_Base::get_rollback_only (
-    )
+  Context_Impl_Base::get_rollback_only (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   Components::Transaction::UserTransaction_ptr
-  Context_Impl_Base::get_user_transaction (
-    )
+  Context_Impl_Base::get_user_transaction (void)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   CORBA::Boolean
-  Context_Impl_Base::is_caller_in_role (
-      const char * /* role */
-    )
+  Context_Impl_Base::is_caller_in_role (const char * /* role */)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
 
   void
-  Context_Impl_Base::set_rollback_only (
-    )
+  Context_Impl_Base::set_rollback_only (void)
   {
     throw CORBA::NO_IMPLEMENT ();
+  }
+
+  CORBA::Object_ptr
+  Context_Impl_Base::resolve_service_reference(const char *service_id)
+  {
+    CORBA::Object_ptr obj;
+    try
+      {
+        obj = this->container_->the_ORB ()->resolve_initial_references (service_id);
+      }
+    catch (const ::CORBA::ORB::InvalidName&)
+      {
+        throw ::Components::CCMException (
+          ::Components::OBJECT_NOT_FOUND);
+      }
+
+    return obj;
   }
 
   // CIAO-specific.
