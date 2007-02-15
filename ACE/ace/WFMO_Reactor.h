@@ -510,10 +510,10 @@ public:
    * Special trick to unblock <WaitForMultipleObjects> when updates
    * occur.  All we do is enqueue <event_handler> and <mask> onto the
    * ACE_Message_Queue and wakeup the <WFMO_Reactor> by signaling
-   * its <ACE_Event> handle.  The <ACE_Time_Value> indicates how long
-   * to blocking trying to notify the <WFMO_Reactor>.  If <timeout> ==
+   * its <ACE_Event> handle.  The ACE_Time_Value indicates how long
+   * to blocking trying to notify the <WFMO_Reactor>.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
-   * until the relative time specified in <timeout> elapses).
+   * until the relative time specified in @a timeout elapses).
    */
   virtual int notify (ACE_Event_Handler *event_handler = 0,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -831,7 +831,7 @@ public:
                                 ACE_Reactor_Mask mask);
 
   /**
-   * Register <new_sh> to handle the signal <signum> using the
+   * Register <new_sh> to handle the signal @a signum using the
    * <new_disp>.  Returns the <old_sh> that was previously registered
    * (if any), along with the <old_disp> of the signal handler.
    */
@@ -883,11 +883,11 @@ public:
                               ACE_Reactor_Mask);
 
   /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * Remove the ACE_Event_Handler currently associated with @a signum.
    * <sigkey> is ignored in this implementation since there is only
    * one instance of a signal handler.  Install the new disposition
    * (if given) and return the previous disposition (if desired by the
-   * caller).  Returns 0 on success and -1 if <signum> is invalid.
+   * caller).  Returns 0 on success and -1 if @a signum is invalid.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
@@ -1029,10 +1029,10 @@ public:
 
   /**
    * Wakeup one <ACE_WFMO_Reactor> thread if it is currently blocked
-   * in <WaitForMultipleObjects>.  The <ACE_Time_Value> indicates how
+   * in <WaitForMultipleObjects>.  The ACE_Time_Value indicates how
    * long to blocking trying to notify the <WFMO_Reactor>.  If
-   * <timeout> == 0, the caller will block until action is possible,
-   * else will wait until the relative time specified in <timeout>
+   * @a timeout == 0, the caller will block until action is possible,
+   * else will wait until the relative time specified in @a timeout
    * elapses).
    */
   virtual int notify (ACE_Event_Handler * = 0,
@@ -1087,7 +1087,7 @@ public:
                        ACE_Event_Handler **event_handler = 0);
 
   /**
-   * Check to see if <signum> is associated with a valid Event_Handler
+   * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
    * this <handler> if <event_handler> != 0.
    */

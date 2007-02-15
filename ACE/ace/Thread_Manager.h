@@ -688,11 +688,11 @@ public:
 
   // = Send signals to one or more threads without blocking.
   /**
-   * Send <signum> to all stopped threads.  Not supported on platforms
+   * Send @a signum to all stopped threads.  Not supported on platforms
    * that do not have advanced signal support, such as Win32.
-   * Send the <signum> to a single thread.  Not supported on platforms
+   * Send the @a signum to a single thread.  Not supported on platforms
    * that do not have advanced signal support, such as Win32.
-   * Send <signum> to a group of threads, not supported on platforms
+   * Send @a signum to a group of threads, not supported on platforms
    * that do not have advanced signal support, such as Win32.
    */
   int kill_all (int signum);
@@ -771,13 +771,13 @@ public:
   int resume_task (ACE_Task_Base *task);
 
   /**
-   * Send a signal <signum> to all threads in an <ACE_Task>.
+   * Send a signal @a signum to all threads in an ACE_Task.
    */
   int kill_task (ACE_Task_Base *task,
                  int signum);
 
   /**
-   * Cancel all threads in an <ACE_Task>.  If <async_cancel> is non-0,
+   * Cancel all threads in an ACE_Task.  If <async_cancel> is non-0,
    * then asynchronously cancel these threads if the OS platform
    * supports cancellation.  Otherwise, perform a "cooperative"
    * cancellation.
@@ -1068,7 +1068,7 @@ protected:
   int suspend_thr (ACE_Thread_Descriptor *td,
                    int = 0);
 
-  /// Send signal <signum> to the thread described in <tda>.
+  /// Send signal @a signum to the thread described in <tda>.
   int kill_thr (ACE_Thread_Descriptor *td,
                 int signum);
 

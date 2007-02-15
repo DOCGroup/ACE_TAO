@@ -26,7 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_LOCK_SOCK_Acceptor
  *
- * @brief Specialize <ACE_SOCK_Acceptor> to lock around <accept>;
+ * @brief Specialize ACE_SOCK_Acceptor to lock around <accept>;
  *
  * This class is necessary since some OS platforms (e.g.,
  * Solaris 2.5) do not allow multiple threads/processes to

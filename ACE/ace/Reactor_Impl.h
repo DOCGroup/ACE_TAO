@@ -58,10 +58,10 @@ public:
    * This wakeups the <Reactor_Impl> if currently blocked.  Pass over
    * both the <Event_Handler> *and* the <mask> to allow the caller to
    * dictate which <Event_Handler> method the <Reactor_Impl> will
-   * invoke.  The <ACE_Time_Value> indicates how long to blocking
-   * trying to notify the <Reactor_Impl>.  If <timeout> == 0, the
+   * invoke.  The ACE_Time_Value indicates how long to blocking
+   * trying to notify the <Reactor_Impl>.  If @a timeout == 0, the
    * caller will block until action is possible, else will wait until
-   * the relative time specified in *<timeout> elapses).
+   * the relative time specified in *@a timeout elapses).
    */
   virtual int notify (ACE_Event_Handler *eh = 0,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -269,7 +269,7 @@ public:
                                 ACE_Reactor_Mask mask) = 0;
 
   /**
-   * Register <new_sh> to handle the signal <signum> using the
+   * Register <new_sh> to handle the signal @a signum using the
    * <new_disp>.  Returns the <old_sh> that was previously registered
    * (if any), along with the <old_disp> of the signal handler.
    */
@@ -311,10 +311,10 @@ public:
                               ACE_Reactor_Mask mask) = 0;
 
   /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * Remove the ACE_Event_Handler currently associated with @a signum.
    * Install the new disposition (if given) and return the previous
    * disposition (if desired by the caller).  Returns 0 on success and
-   * -1 if <signum> is invalid.
+   * -1 if @a signum is invalid.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
@@ -438,10 +438,10 @@ public:
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of <mask> event.  The <ACE_Time_Value>
-   * indicates how long to blocking trying to notify.  If <timeout> ==
+   * Notify <event_handler> of <mask> event.  The ACE_Time_Value
+   * indicates how long to blocking trying to notify.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
-   * until the relative time specified in <timeout> elapses).
+   * until the relative time specified in @a timeout elapses).
    */
   virtual int notify (ACE_Event_Handler *event_handler = 0,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -491,7 +491,7 @@ public:
                        ACE_Event_Handler **event_handler = 0) = 0;
 
   /**
-   * Check to see if <signum> is associated with a valid Event_Handler
+   * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
    * this <handler> if <event_handler> != 0.
    */

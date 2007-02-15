@@ -287,11 +287,11 @@ public:
                               ACE_Reactor_Mask);
 
   /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * Remove the ACE_Event_Handler currently associated with @a signum.
    * <sigkey> is ignored in this implementation since there is only
    * one instance of a signal handler.  Install the new disposition
    * (if given) and return the previous disposition (if desired by the
-   * caller).  Returns 0 on success and -1 if <signum> is invalid.
+   * caller).  Returns 0 on success and -1 if @a signum is invalid.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
@@ -418,11 +418,11 @@ public:
    * This wakeups the <ACE_Select_Reactor> if currently blocked in
    * <select>/<poll>.  Pass over both the <Event_Handler> *and* the
    * <mask> to allow the caller to dictate which <Event_Handler>
-   * method the <Select_Reactor> will invoke.  The <ACE_Time_Value>
+   * method the <Select_Reactor> will invoke.  The ACE_Time_Value
    * indicates how long to blocking trying to notify the
-   * <Select_Reactor>.  If <timeout> == 0, the caller will block until
+   * <Select_Reactor>.  If @a timeout == 0, the caller will block until
    * action is possible, else will wait until the relative time
-   * specified in *<timeout> elapses).
+   * specified in *@a timeout elapses).
    */
   virtual int notify (ACE_Event_Handler * = 0,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -515,7 +515,7 @@ public:
                        ACE_Event_Handler **eh = 0);
 
   /**
-   * Check to see if <signum> is associated with a valid Event_Handler
+   * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <eh> associated with this
    * <handler> if <eh> != 0.
    */

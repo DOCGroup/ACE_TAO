@@ -65,19 +65,19 @@ public:
    *
    * <len> is the number of bytes to transfer.
    *
-   * The <timeout> parameter in the following methods indicates how
-   * long to blocking trying to transfer data.  If <timeout> == 0,
+   * The @a timeout parameter in the following methods indicates how
+   * long to blocking trying to transfer data.  If @a timeout == 0,
    * then the call behaves as a normal send/recv call, i.e., for
    * blocking sockets, the call will block until action is possible;
    * for non-blocking sockets, EWOULDBLOCK will be returned if no
    * action is immediately possible.
    *
-   * If <timeout> != 0, the call will wait until the relative time
-   * specified in *<timeout> elapses.
+   * If @a timeout != 0, the call will wait until the relative time
+   * specified in *@a timeout elapses.
    *
    * The "_n()" I/O methods keep looping until all the data has been
    * transferred.  These methods also work for sockets in non-blocking
-   * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used
+   * mode i.e., they keep looping on EWOULDBLOCK.  @a timeout is used
    * to make sure we keep making progress, i.e., the same timeout
    * value is used for every I/O operation in the loop and the timeout
    * is not counted down.

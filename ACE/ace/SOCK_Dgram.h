@@ -125,11 +125,11 @@ public:
                 int flags = 0) const;
 
   /**
-   * Wait up to <timeout> amount of time to receive a datagram into
-   * <buf>.  The <ACE_Time_Value> indicates how long to blocking
-   * trying to receive.  If <timeout> == 0, the caller will block
+   * Wait up to @a timeout amount of time to receive a datagram into
+   * <buf>.  The ACE_Time_Value indicates how long to blocking
+   * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *<timeout> elapses).  If <recv> times out a -1 is
+   * specified in *@a timeout elapses).  If <recv> times out a -1 is
    * returned with <errno == ETIME>.  If it succeeds the number of
    * bytes received is returned.
    */
@@ -140,11 +140,11 @@ public:
                 const ACE_Time_Value *timeout) const;
 
   /**
-   * Wait up to <timeout> amount of time to send a datagram to
-   * <buf>.  The <ACE_Time_Value> indicates how long to blocking
-   * trying to receive.  If <timeout> == 0, the caller will block
+   * Wait up to @a timeout amount of time to send a datagram to
+   * <buf>.  The ACE_Time_Value indicates how long to blocking
+   * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *<timeout> elapses).  If <send> times out a -1 is
+   * specified in *@a timeout elapses).  If <send> times out a -1 is
    * returned with <errno == ETIME>.  If it succeeds the number of
    * bytes sent is returned.
    */

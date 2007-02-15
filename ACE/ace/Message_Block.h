@@ -195,7 +195,7 @@ public:
    * the heap and does a copy of the data from the incoming message
    * block. As a final note, the alignment information is used to
    * align the data block if it is created afresh. If the incoming
-   * <mb> has a data block has a data block allocated from the heap,
+   * @a mb has a data block has a data block allocated from the heap,
    * then this constructor just duplicates (ie. a shallow copy) the
    * data block of the incoming @a mb.
    */
@@ -320,7 +320,7 @@ public:
   /**
    * Return a "shallow" copy that increments our reference count by 1.
    * This is similar to CORBA's <_duplicate> method, which is useful
-   * if you want to eliminate lots of checks for NULL <mb> pointers
+   * if you want to eliminate lots of checks for NULL @a mb pointers
    * before calling <_duplicate> on them.
    */
   static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
@@ -356,9 +356,9 @@ public:
 
   /**
    * This behaves like the non-static method <release>, except that it
-   * checks if <mb> is 0.  This is similar to <CORBA::release>, which
+   * checks if @a mb is 0.  This is similar to <CORBA::release>, which
    * is useful if you want to eliminate lots of checks for NULL
-   * pointers before calling <release> on them.  Returns <mb>.
+   * pointers before calling <release> on them.  Returns @a mb.
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
 
@@ -756,7 +756,7 @@ public:
   /**
    * Decrease the shared reference count by 1.  If the reference count
    * is > 0 then return this; else if reference count == 0 then delete
-   * <this> and <mb> and return 0.  Behavior is undefined if reference
+   * <this> and @a mb and return 0.  Behavior is undefined if reference
    * count < 0.
    */
   ACE_Data_Block *release (ACE_Lock *lock = 0);

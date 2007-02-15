@@ -684,10 +684,10 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * Remove the ACE_Event_Handler currently associated with @a signum.
    * Install the new disposition (if given) and return the previous
    * disposition (if desired by the caller).  Returns 0 on success and
-   * -1 if <signum> is invalid.
+   * -1 if @a signum is invalid.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
@@ -811,10 +811,10 @@ public:
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of <mask> event.  The <ACE_Time_Value>
-   * indicates how long to blocking trying to notify.  If <timeout> ==
+   * Notify <event_handler> of <mask> event.  The ACE_Time_Value
+   * indicates how long to blocking trying to notify.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
-   * until the relative time specified in <timeout> elapses).
+   * until the relative time specified in @a timeout elapses).
    */
   virtual int notify (ACE_Event_Handler *event_handler = 0,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -864,7 +864,7 @@ public:
                        ACE_Event_Handler **event_handler = 0);
 
   /**
-   * Check to see if <signum> is associated with a valid Event_Handler
+   * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
    * this <handler> if <event_handler> != 0.
    */
