@@ -122,7 +122,7 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
 public:
   // = Initialization method.
-  ACE_Module_Type (void *m, // Really an <ACE_Module> *.
+  ACE_Module_Type (void *m, // Really an ACE_Module *.
                    const ACE_TCHAR *identifier,
                    u_int flags = 0);
 

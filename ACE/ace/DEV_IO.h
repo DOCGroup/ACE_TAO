@@ -46,10 +46,10 @@ public:
   ACE_DEV_IO (void);
 
   // = Various send operations.
-  /// send upto <n> bytes in <buf>.
+  /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
 
-  /// Recv upto <n> bytes in <buf>.
+  /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
@@ -61,9 +61,9 @@ public:
    *
    * Notes on common parameters:
    *
-   * <buf> is the buffer to write from or receive into.
+   * @a buf is the buffer to write from or receive into.
    *
-   * <len> is the number of bytes to transfer.
+   * @a len is the number of bytes to transfer.
    *
    * The @a timeout parameter in the following methods indicates how
    * long to blocking trying to transfer data.  If @a timeout == 0,
@@ -146,10 +146,10 @@ public:
    */
   ssize_t recv (size_t n, ...) const;
 
-  /// Send <n> bytes via Win32 WriteFile using overlapped I/O.
+  /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
   ssize_t send (const void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv <n> bytes via Win32 ReadFile using overlapped I/O.
+  /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
   /// Dump the state of an object.

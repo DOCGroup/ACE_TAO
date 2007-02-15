@@ -468,7 +468,7 @@ public:
   /// Set the write pointer to @a ptr.
   void wr_ptr (char *ptr);
 
-  /// Set the write pointer ahead <n> bytes.  This is used to compute
+  /// Set the write pointer ahead @a n bytes.  This is used to compute
   /// the <length> of a message.
   void wr_ptr (size_t n);
 

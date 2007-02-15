@@ -190,8 +190,8 @@ public:
   /// Current state of the thread.
   ACE_UINT32 state (void) const;
 
-  /// Return the pointer to an <ACE_Task_Base> or NULL if there's no
-  /// <ACE_Task_Base> associated with this thread.;
+  /// Return the pointer to an ACE_Task_Base or NULL if there's no
+  /// ACE_Task_Base associated with this thread.;
   ACE_Task_Base *task (void) const;
 
 protected:
@@ -210,8 +210,8 @@ protected:
   /// Current state of the thread.
   ACE_UINT32 thr_state_;
 
-  /// Pointer to an <ACE_Task_Base> or NULL if there's no
-  /// <ACE_Task_Base>.
+  /// Pointer to an ACE_Task_Base or NULL if there's no
+  /// ACE_Task_Base.
   ACE_Task_Base *task_;
 
   /// We need these pointers to maintain the double-linked list in a
@@ -494,12 +494,12 @@ public:
    * Spawn N new threads, which execute <func> with argument <arg>.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as <n>).  If <stack> != 0 it is assumed to be an
-   * array of <n> pointers to the base of the stacks to use for the
+   * be the same size as @a n).  If <stack> != 0 it is assumed to be an
+   * array of @a n pointers to the base of the stacks to use for the
    * threads being spawned.  If <stack_size> != 0 it is assumed to be
-   * an array of <n> values indicating how big each of the
+   * an array of @a n values indicating how big each of the
    * corresponding <stack>s are.  If <thread_handles> != 0 it is
-   * assumed to be an array of <n> thread_handles that will be
+   * assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.
    *
    * Threads in Thread_Manager can be manipulated in groups based on
@@ -507,7 +507,7 @@ public:
    * cancel_task().
    *
    * If <grp_id> is assigned, the newly spawned threads are added into
-   * the group.  Otherwise, the Thread_Manager assigns these <n>
+   * the group.  Otherwise, the Thread_Manager assigns these @a n
    * threads with a grp_id.  You should choose either assigning
    * <grp_id> everytime, or let the Thread_Manager handles it for
    * you consistently.
@@ -534,12 +534,12 @@ public:
    * Spawn N new threads, which execute <func> with argument <arg>.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as <n>).  If <stack> != 0 it is assumed to be an
-   * array of <n> pointers to the base of the stacks to use for the
+   * be the same size as @a n).  If <stack> != 0 it is assumed to be an
+   * array of @a n pointers to the base of the stacks to use for the
    * threads being spawned.  If <stack_size> != 0 it is assumed to be
-   * an array of <n> values indicating how big each of the
+   * an array of @a n values indicating how big each of the
    * corresponding <stack>s are.  If <thread_handles> != 0 it is
-   * assumed to be an array of <n> thread_handles that will be
+   * assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.
    *
    * Threads in Thread_Manager can be manipulated in groups based on
@@ -547,7 +547,7 @@ public:
    * cancel_task().
    *
    * If <grp_id> is assigned, the newly spawned threads are added into
-   * the group.  Otherwise, the Thread_Manager assigns these <n>
+   * the group.  Otherwise, the Thread_Manager assigns these @a n
    * threads with a grp_id.  You should choose either assigning
    * <grp_id> everytime, or let the Thread_Manager handles it for
    * you consistently.
@@ -648,8 +648,8 @@ public:
   ACE_thread_t thr_self (void);
 
   /**
-   * Returns a pointer to the current <ACE_Task_Base> we're executing
-   * in if this thread is indeed running in an <ACE_Task_Base>, else
+   * Returns a pointer to the current ACE_Task_Base we're executing
+   * in if this thread is indeed running in an ACE_Task_Base, else
    * return 0.
    */
   ACE_Task_Base *task (void);
@@ -791,10 +791,10 @@ public:
   int hthread_within (ACE_hthread_t handle);
   int thread_within (ACE_thread_t tid);
 
-  /// Returns the number of <ACE_Task_Base> in a group.
+  /// Returns the number of ACE_Task_Base in a group.
   int num_tasks_in_group (int grp_id);
 
-  /// Returns the number of threads in an <ACE_Task_Base>.
+  /// Returns the number of threads in an ACE_Task_Base.
   int num_threads_in_task (ACE_Task_Base *task);
 
   /**
@@ -825,9 +825,9 @@ public:
                      size_t n);
 
   /**
-   * Returns in <thread_list> a list of up to <n> thread ids in an
-   * <ACE_Task_Base>.  The caller must allocate the memory for
-   * <thread_list>.  In case of an error, -1 is returned. If no
+   * Returns in @a thread_list a list of up to @a n thread ids in an
+   * ACE_Task_Base.  The caller must allocate the memory for
+   * @a thread_list.  In case of an error, -1 is returned. If no
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
    */
@@ -836,8 +836,8 @@ public:
                        size_t n);
 
   /**
-   * Returns in <hthread_list> a list of up to <n> thread handles in
-   * an <ACE_Task_Base>.  The caller must allocate memory for
+   * Returns in <hthread_list> a list of up to @a n thread handles in
+   * an ACE_Task_Base.  The caller must allocate memory for
    * <hthread_list>.  In case of an error, -1 is returned. If no
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
@@ -847,9 +847,9 @@ public:
                         size_t n);
 
   /**
-   * Returns in <thread_list> a list of up to <n> thread ids in a
+   * Returns in @a thread_list a list of up to @a n thread ids in a
    * group <grp_id>.  The caller must allocate the memory for
-   * <thread_list>.  In case of an error, -1 is returned. If no
+   * @a thread_list.  In case of an error, -1 is returned. If no
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
    */
@@ -858,7 +858,7 @@ public:
                            size_t n);
 
   /**
-   * Returns in <hthread_list> a list of up to <n> thread handles in
+   * Returns in <hthread_list> a list of up to @a n thread handles in
    * a group <grp_id>.  The caller must allocate memory for
    * <hthread_list>.
    */
@@ -891,8 +891,8 @@ public:
                          size_t n);
 
   /**
-   * Returns in <thread_list> a list of up to <n> thread ids.  The
-   * caller must allocate the memory for <thread_list>.  In case of an
+   * Returns in @a thread_list a list of up to @a n thread ids.  The
+   * caller must allocate the memory for @a thread_list.  In case of an
    * error, -1 is returned. If no requested values are found, 0 is
    * returned, otherwise correct number of retrieved values are
    * returned.
