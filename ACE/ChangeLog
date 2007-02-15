@@ -1,3 +1,15 @@
+Thu Feb 15 20:04:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_stdlib.cpp (mkstemp_emulation):
+
+          Include process and thread ID in random number generator seed
+          value.  Addresses problems where the same seed value would end
+          up being used for different processes and/or threads, resulting
+          in identical filenames being generated.
+
+	  Addressed potential race condition on platforms that do not
+          inline the value of ACE_Numeric_Limits<>::max().
+
 Thu Feb 15 17:53:53 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * THANKS: Check-in rules 101: Check-in files that you have
