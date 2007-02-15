@@ -1,3 +1,15 @@
+Thu Feb 14 16:06:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment_Target_Data.idl:
+        * ciao/Deployment_PlanError.idl:
+          Renamed Target_Data to PlanError
+
+        * ciao/CCM_Core.mpc:
+        * ciao/Deployment.idl:
+        * ciao/Deployment_TargetManager.idl:
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+          Updated because of rename above
+
 Thu Feb 14 16:00:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_CCMException.idl:
