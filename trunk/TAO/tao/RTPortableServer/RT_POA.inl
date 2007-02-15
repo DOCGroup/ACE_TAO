@@ -10,8 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_priority (const char * intf,
-                                            RTCORBA::Priority priority
-                                            )
+                                            RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
@@ -21,16 +20,13 @@ TAO_RT_POA::create_reference_with_priority (const char * intf,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  return this->create_reference_i (intf,
-                                   priority
-                                  );
+  return this->create_reference_i (intf, priority);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
                                                    const char * intf,
-                                                   RTCORBA::Priority priority
-                                                   )
+                                                   RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
@@ -40,23 +36,19 @@ TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectI
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  return this->create_reference_with_id_i (oid,
-                                           intf,
-                                           priority
-                                          );
+  return this->create_reference_with_id_i (oid, intf, priority);
 }
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
-                                           RTCORBA::Priority priority
-                                           )
+                                           RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
 
   this->validate_priority (priority);
 
-  while (1)
+  while (true)
     {
       bool wait_occurred_restart_call = false;
 
@@ -64,10 +56,7 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
       TAO_POA_GUARD_RETURN (0);
 
       PortableServer::ObjectId *result =
-        this->activate_object_i (servant,
-                                 priority,
-                                 wait_occurred_restart_call
-                                );
+        this->activate_object_i (servant, priority, wait_occurred_restart_call);
 
       // If we ended up waiting on a condition variable, the POA state
       // may have changed while we are waiting.  Therefore, we need to
@@ -82,15 +71,14 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
 ACE_INLINE void
 TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
                                                   PortableServer::Servant servant,
-                                                  RTCORBA::Priority priority
-                                                  )
+                                                  RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
   this->validate_policies ();
 
   this->validate_priority (priority);
 
-  while (1)
+  while (true)
     {
       bool wait_occurred_restart_call = false;
 
@@ -100,8 +88,7 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
       this->activate_object_with_id_i (oid,
                                        servant,
                                        priority,
-                                       wait_occurred_restart_call
-                                      );
+                                       wait_occurred_restart_call);
 
       // If we ended up waiting on a condition variable, the POA state
       // may have changed while we are waiting.  Therefore, we need to

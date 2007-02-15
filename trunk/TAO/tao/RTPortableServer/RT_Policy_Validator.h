@@ -54,8 +54,7 @@ public:
                                                              TAO_ORB_Core &orb_core);
 
   static TAO_Thread_Pool *extract_thread_pool (TAO_ORB_Core &orb_core,
-                                               TAO_Policy_Set &policies
-                                              );
+                                               TAO_Policy_Set &policies);
 
 protected:
 
@@ -64,12 +63,10 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  void validate_impl (TAO_Policy_Set &policies
-                     );
+  void validate_impl (TAO_Policy_Set &policies);
 
   /// Add/merge policies.
-  void merge_policies_impl (TAO_Policy_Set &policies
-                           );
+  void merge_policies_impl (TAO_Policy_Set &policies);
 
   /**
    * Return whether the specified policy type is legal for the
@@ -80,17 +77,13 @@ protected:
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type);
 
 private:
-  void validate_server_protocol (TAO_Policy_Set &policies
-                                );
+  void validate_server_protocol (TAO_Policy_Set &policies);
 
-  void validate_priorities (TAO_Policy_Set &policies
-                           );
+  void validate_priorities (TAO_Policy_Set &policies);
 
-  void validate_thread_pool (TAO_Policy_Set &policies
-                            );
+  void validate_thread_pool (TAO_Policy_Set &policies);
 
   TAO_Thread_Pool *thread_pool_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

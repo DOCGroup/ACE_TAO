@@ -133,8 +133,7 @@ public:
    * parameters.
    */
   RTCORBA::TCPProtocolProperties_ptr
-  create_tcp_protocol_properties (
-                                  CORBA::Long send_buffer_size,
+  create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                   CORBA::Long recv_buffer_size,
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
@@ -142,36 +141,29 @@ public:
                                   CORBA::Boolean enable_network_priority);
 
   RTCORBA::UnixDomainProtocolProperties_ptr
-  create_unix_domain_protocol_properties (
-                                          CORBA::Long send_buffer_size,
-                                          CORBA::Long recv_buffer_size                                          );
+  create_unix_domain_protocol_properties (CORBA::Long send_buffer_size,
+                                          CORBA::Long recv_buffer_size);
 
   RTCORBA::SharedMemoryProtocolProperties_ptr
-  create_shared_memory_protocol_properties (
-                                            CORBA::Long send_buffer_size,
+  create_shared_memory_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Long recv_buffer_size,
                                             CORBA::Boolean keep_alive,
                                             CORBA::Boolean dont_route,
                                             CORBA::Boolean no_delay,
                                             CORBA::Long preallocate_buffer_size,
                                             const char *mmap_filename,
-                                            const char *mmap_lockname
-                                            );
+                                            const char *mmap_lockname);
 
   RTCORBA::UserDatagramProtocolProperties_ptr
-  create_user_datagram_protocol_properties (
-                                            CORBA::Boolean enable_network_priority
-                                            );
+  create_user_datagram_protocol_properties (CORBA::Boolean enable_network_priority);
 
   RTCORBA::StreamControlProtocolProperties_ptr
-  create_stream_control_protocol_properties (
-                                             CORBA::Long send_buffer_size,
+  create_stream_control_protocol_properties (CORBA::Long send_buffer_size,
                                              CORBA::Long recv_buffer_size,
                                              CORBA::Boolean keep_alive,
                                              CORBA::Boolean dont_route,
                                              CORBA::Boolean no_delay,
-                                             CORBA::Boolean enable_network_priority
-                                             );
+                                             CORBA::Boolean enable_network_priority);
 
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   virtual RTCORBA::ThreadpoolId
@@ -181,8 +173,7 @@ public:
                      RTCORBA::Priority default_priority,
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
-                     CORBA::ULong max_request_buffer_size
-                     );
+                     CORBA::ULong max_request_buffer_size);
 
   /**
    * Create a threadpool and separate it into subsets based on
@@ -194,19 +185,15 @@ public:
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
-                                CORBA::ULong max_request_buffer_size
-                                );
+                                CORBA::ULong max_request_buffer_size);
 
   /// Free the resources associated with the specified threadpool.
-  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                                   );
+  virtual void destroy_threadpool (RTCORBA::ThreadpoolId threadpool);
 
   /// Create a priority model policy for use when configuring a POA.
   virtual RTCORBA::PriorityModelPolicy_ptr
-  create_priority_model_policy (
-                                RTCORBA::PriorityModel priority_model,
-                                RTCORBA::Priority server_priority
-                                );
+  create_priority_model_policy (RTCORBA::PriorityModel priority_model,
+                                RTCORBA::Priority server_priority);
 
   /// Create a ThreadpoolPolicy instance for POA creation
   virtual RTCORBA::ThreadpoolPolicy_ptr
