@@ -9,19 +9,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Utils::Implicit_Deactivation_Functor::operator () (
-   PortableServer::ServantBase * servant)
+   PortableServer::ServantBase * servant) throw ()
 {
 
   try
     {
-      PortableServer::POA_var poa (servant->_default_POA (
-          ));
+      PortableServer::POA_var poa (servant->_default_POA ());
 
-      PortableServer::ObjectId_var id (poa->servant_to_id (servant
-                                                          ));
+      PortableServer::ObjectId_var id (poa->servant_to_id (servant));
 
-      poa->deactivate_object (id.in()
-                             );
+      poa->deactivate_object (id.in());
     }
   catch (...)
     {

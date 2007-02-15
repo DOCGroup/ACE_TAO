@@ -74,22 +74,11 @@ TAO::Utils::Servant_Var<T>::operator= (T * p)
 }
 
 template <class T> ACE_INLINE
-TAO::Utils::Servant_Var<T>::~Servant_Var (void)
+TAO::Utils::Servant_Var<T>::~Servant_Var (void) throw ()
 {
-  // Unfortunately, there is no throw spec on _remove_ref, so we
-  // can't assume that it will not throw.  If it does, then we are in
-  // trouble.  In any event, we can't let the exception escape our
-  // destructor.
-  try
+  if (ptr_ != 0)
     {
-      if (ptr_ != 0)
-        {
-          ptr_->_remove_ref ();
-        }
-    }
-  catch (...)
-    {
-      // Forget the exception..
+      ptr_->_remove_ref ();
     }
 }
 

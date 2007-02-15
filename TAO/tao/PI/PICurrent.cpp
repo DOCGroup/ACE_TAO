@@ -80,8 +80,7 @@ TAO::PICurrent::tsc (void)
 }
 
 void
-TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
-                                )
+TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
 {
   // If the slot_count is zero, no initialization has been done (if there are
   // no slots, then the PICurrent_impl object is not created as there is no
@@ -102,8 +101,7 @@ TAO::PICurrent::_get_orb (void)
 }
 
 void
-TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
-                            )
+TAO::PICurrent::initialize (PortableInterceptor::SlotId sc)
 {
   // Only allow a single initialization; sc is the number of
   // allocated PICurrent data slots the end user wants. If 0

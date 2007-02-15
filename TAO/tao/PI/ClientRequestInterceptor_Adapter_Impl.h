@@ -78,35 +78,29 @@ namespace TAO
     //@{
     /// This method implements one of the "starting" client side
     /// interception points.
-    virtual void send_request (Invocation_Base &invocation
-                              );
+    virtual void send_request (Invocation_Base &invocation);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_reply (Invocation_Base &invocation
-                               );
+    virtual void receive_reply (Invocation_Base &invocation);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_exception (Invocation_Base &invocation
-                                   );
+    virtual void receive_exception (Invocation_Base &invocation);
 
     /// This method implements one of the "ending" client side
     /// interception point.
-    virtual void receive_other (Invocation_Base &invocation
-                               );
+    virtual void receive_other (Invocation_Base &invocation);
     //@}
 
     /// Register an interceptor.
     virtual void add_interceptor (
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-     );
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
 
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-     );
+      const CORBA::PolicyList& policies);
 
     virtual void destroy_interceptors (void);
 
@@ -119,8 +113,7 @@ namespace TAO
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
-                                  PortableInterceptor::ForwardRequest &exc
-                                 );
+                                  PortableInterceptor::ForwardRequest &exc);
 
   private:
 

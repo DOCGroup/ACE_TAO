@@ -10,7 +10,7 @@ ACE_RCSID (Utils,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
+TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer() throw ()
 {
 
   for (CORBA::ULong i = 0; i != length(); ++i)

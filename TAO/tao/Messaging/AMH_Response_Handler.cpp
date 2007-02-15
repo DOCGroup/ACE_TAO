@@ -246,8 +246,7 @@ TAO_AMH_Response_Handler::_remove_ref (void)
 namespace TAO
 {
   void
-  ARH_Refcount_Functor::operator () (
-      TAO_AMH_Response_Handler *arh)
+  ARH_Refcount_Functor::operator () (TAO_AMH_Response_Handler *arh) throw ()
   {
     (void) arh->_remove_ref ();
   }

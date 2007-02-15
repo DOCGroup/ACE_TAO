@@ -46,8 +46,7 @@ public:
   /// Constructor.
   TAO_ProcessingModePolicy (PortableInterceptor::ProcessingMode mode);
 
-  virtual PortableInterceptor::ProcessingMode processing_mode
-                                        (void);
+  virtual PortableInterceptor::ProcessingMode processing_mode (void);
 
   virtual CORBA::PolicyType policy_type (void);
 

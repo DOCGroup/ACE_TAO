@@ -1,3 +1,46 @@
+Thu Feb 15 13:23:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Base_Transport_Property.h:
+        * tao/ORB.cpp:
+        * tao/PI/ClientRequestDetails.h:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInfo.h:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/Interceptor_List_T.h:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.h:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PI/ORBInitInfo.h:
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI/PI_PolicyFactory.h:
+        * tao/PI/PICurrent.cpp:
+        * tao/PI/PICurrent.h:
+        * tao/PI/PICurrent_Impl.h:
+        * tao/PI/PICurrent_Loader.cpp:
+        * tao/PI/PICurrent_Loader.h:
+        * tao/PI/PolicyFactory_Registry.cpp:
+        * tao/PI/PolicyFactory_Registry.h:
+        * tao/PI/ProcessingModePolicy.h:
+        * tao/PI/RequestInfo_Util.cpp:
+        * tao/PI/RequestInfo_Util.h:
+        * tao/PortableServer/DII_Arguments_Converter.h:
+          Layout changes
+
+        * tao/Asynch_Reply_Dispatcher_Base.h
+        * tao/Asynch_Reply_Dispatcher_Base.inl
+        * tao/Utils/Implicit_Deactivator.cpp:
+        * tao/Utils/Implicit_Deactivator.h:
+        * tao/Utils/ORB_Destroyer.cpp:
+        * tao/Utils/ORB_Destroyer.h:
+        * tao/Utils/PolicyList_Destroyer.cpp:
+        * tao/Utils/PolicyList_Destroyer.h:
+        * tao/Utils/Servant_Var.h:
+        * tao/Utils/Servant_Var.inl:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/AMH_Response_Handler.h:
+          Use empty throw()
+
 Thu Feb 15 13:09:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
