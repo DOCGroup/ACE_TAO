@@ -27,6 +27,7 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_ctype.h"
 # include "ace/OS_NS_sys_time.h"
+# include "ace/OS_NS_Thread.h"
 # include "ace/Numeric_Limits.h"
 #endif  /* ACE_LACKS_MKSTEMP */
 
@@ -686,7 +687,9 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
   ACE_RANDR_TYPE seed =
-    static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ());
+    static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ())
+    + static_cast<ACE_RANDR_TYPE> (ACE_OS::getpid ())
+    + static_cast<ACE_RANDR_TYPE> (ACE_OS::thr_self ());
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -694,7 +697,12 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // greatly slowing down this mkstemp() implementation.  It is more
   // practical to limit the search space to UTF-8 / ASCII characters
   // (i.e. 127 characters).
-  static float const MAX_VAL =
+  //
+  // Note that we can't make this constant static since the compiler
+  // may not inline the return value of ACE_Numeric_Limits::max(),
+  // meaning multiple threads could potentially initialize this value
+  // in parallel.
+  float const MAX_VAL =
     static_cast<float> (ACE_Numeric_Limits<char>::max ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
@@ -706,7 +714,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
 
   // Factor out the constant coefficient.
-  static float const coefficient =
+  float const coefficient =
     static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
 
   // @@ These nested loops may be ineffecient.  Improvements are
