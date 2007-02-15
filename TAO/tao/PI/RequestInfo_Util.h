@@ -63,20 +63,15 @@ public:
    * class.
    */
   //@{
-  static Dynamic::ParameterList * make_parameter_list (
-    void);
+  static Dynamic::ParameterList * make_parameter_list (void);
 
-  static Dynamic::ExceptionList * make_exception_list (
-    void);
+  static Dynamic::ExceptionList * make_exception_list (void);
 
-  static Dynamic::ContextList * make_context_list (
-    void);
+  static Dynamic::ContextList * make_context_list (void);
 
-  static Dynamic::RequestContext * make_request_context (
-    void);
+  static Dynamic::RequestContext * make_request_context (void);
 
-  static CORBA::Any * make_any (CORBA::Boolean tk_void_any
-                               );
+  static CORBA::Any * make_any (CORBA::Boolean tk_void_any);
   //@}
 };
 

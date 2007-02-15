@@ -64,27 +64,22 @@ namespace TAO
     /// Register an ORBInitializer with the underlying ORBInitializer
     /// array.
     virtual void register_orb_initializer (
-                   PortableInterceptor::ORBInitializer_ptr init
-                  );
+                   PortableInterceptor::ORBInitializer_ptr init);
 
     /// Begin initialization of all registered ORBInitializers before
     /// the ORB itself is initialized.
-    virtual size_t pre_init (
-                             TAO_ORB_Core *orb_core,
+    virtual size_t pre_init (TAO_ORB_Core *orb_core,
                              int argc,
                              char *argv[],
-                             PortableInterceptor::SlotId &slotid
-                            );
+                             PortableInterceptor::SlotId &slotid);
 
     /// Complete initialization of all registered ORBInitializers after
     /// the ORB has been initialized.
-    virtual void post_init (
-                            size_t pre_init_count,
+    virtual void post_init (size_t pre_init_count,
                             TAO_ORB_Core *orb_core,
                             int argc,
                             char *argv[],
-                            PortableInterceptor::SlotId slotid
-                           );
+                            PortableInterceptor::SlotId slotid);
 
   private:
     // Prevent copying

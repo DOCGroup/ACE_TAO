@@ -43,8 +43,7 @@ namespace TAO
   template <typename InterceptorType, typename DetailsType>
   void
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
-    InterceptorType_ptr_type interceptor
-    )
+    InterceptorType_ptr_type interceptor)
   {
     if (!CORBA::is_nil (interceptor))
       {

@@ -64,9 +64,7 @@ public:
   virtual void reply_timed_out (void) = 0;
 
   /// Install the timeout handler
-  virtual long schedule_timer (CORBA::ULong ,
-                               const ACE_Time_Value &
-                               ) = 0;
+  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
 
   /// @name Mutators for refcount
   //@{
@@ -155,7 +153,7 @@ namespace TAO
   class TAO_Export ARDB_Refcount_Functor
   {
   public:
-    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb);
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) throw ();
   };
 
 }

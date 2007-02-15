@@ -83,28 +83,23 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
       throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
     }
 
-  return policy_factory->create_policy (type,
-                                        value
-                                       );
+  return policy_factory->create_policy (type, value);
 }
 
 CORBA::Policy_ptr
-TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
-                                            )
+TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type)
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
 
-  if (this->factories_.find (type,
-                             policy_factory) == -1)
+  if (this->factories_.find (type, policy_factory) == -1)
     {
       // Policy factory corresponding to given policy type does not
       // exist in policy factory map.
       throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
     }
 
-  return policy_factory->_create_policy (type
-                                        );
+  return policy_factory->_create_policy (type);
 }
 
 bool

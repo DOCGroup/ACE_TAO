@@ -38,7 +38,7 @@ namespace TAO
       typedef CORBA::ORB_ptr argument;
 
       /// Destroy the ORB
-      void operator() (CORBA::ORB_ptr orb);
+      void operator() (CORBA::ORB_ptr orb) throw ();
     };
 
     /**
