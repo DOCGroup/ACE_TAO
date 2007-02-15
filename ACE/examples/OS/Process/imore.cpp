@@ -215,24 +215,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Process new_process;
 
-  // Notice that we must enclose ACE_Process_Options in the block
-  // so the file handlers it keeps can be close elegantly.
+  // The ACE_Process_Options does not need to be enclosed in a block
+  // because it does not close the file handles, the ACE_Process closes
+  // them upon destruction.
 #if !defined (ACE_WIN32)
-  {
-    ACE_Process_Options options;
+  ACE_Process_Options options;
 
-    if ((use_named_pipe ? ::setup_named_pipes :
-         ::setup_unnamed_pipe) (options) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+  if ((use_named_pipe ? ::setup_named_pipes :
+       ::setup_unnamed_pipe) (options) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
 
-    options.command_line (executable);
-    if (new_process.spawn (options) == -1)
-      {
-        int error = ACE_OS::last_error ();
-        ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
-                           "test_more", error), -1);
-      }
-  }
+  options.command_line (executable);
+  if (new_process.spawn (options) == -1)
+    {
+      int error = ACE_OS::last_error ();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
+                         "test_more", error), -1);
+    }
 
   // write file to ACE_STDOUT.
   if (::print_file (infile) == -1)
