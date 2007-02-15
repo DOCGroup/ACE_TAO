@@ -1,3 +1,14 @@
+Thu Feb 15 13:12:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/OS/Process/imore.cpp:
+
+          Removed an enclosing block around code that caused issue with
+          SunCC 5.8.  There was a comment claiming that the block was needed
+          so that the ACE_Process_Options could elegantly close the file
+          handlers that it kept, however the ACE_Process_Options object does
+          not close the file handlers.  The ACE_Process does the handle
+          closing.
+
 Thu Feb 15 05:41:11 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.inl:
