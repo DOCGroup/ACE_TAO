@@ -74,8 +74,7 @@ namespace CIAO
      *
      * @retval actual number of objrefs copied into @c buffer.
      */
-    CORBA::ULong copy (CORBA::ULong size,
-                       T **buffer);
+    CORBA::ULong copy (CORBA::ULong size, T **buffer);
 
     /**
      * Check if an object is in the set.  Return 0 if false.

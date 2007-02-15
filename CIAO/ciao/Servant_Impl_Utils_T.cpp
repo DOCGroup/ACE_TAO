@@ -15,8 +15,7 @@ namespace CIAO
       const char *port_type_repo_id,
       T_var &connection,
       ::Components::ReceptacleDescriptions_var &descriptions,
-      CORBA::ULong slot
-    )
+      CORBA::ULong slot)
   {
     ::Components::ReceptacleDescription *elem = 0;
     ACE_NEW (elem,
@@ -63,8 +62,7 @@ namespace CIAO
     ::Components::ConnectionDescription *conn = 0;
 
     for (typename ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (
-             objrefs
-           );
+             objrefs);
          0 == iter.done ();
          iter.advance (), ++map_slot)
       {
@@ -111,8 +109,7 @@ namespace CIAO
     ::Components::SubscriberDescription *sub = 0;
 
     for (typename ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (
-             consumers
-           );
+             consumers);
          0 == iter.done ();
          iter.advance (), ++map_slot)
       {

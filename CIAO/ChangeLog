@@ -1,3 +1,28 @@
+Thu Feb 14 13:05:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Context_Impl_Base.h:
+        * ciao/Dynamic_Component_Activator.cpp:
+        * ciao/Dynamic_Component_Activator.h:
+        * ciao/Dynamic_Component_Servant_T.h:
+        * ciao/Home_Servant_Impl_Base.cpp
+        * ciao/Home_Servant_Impl_Base.h:
+        * ciao/ome_Servant_Impl_T.cpp:
+        * ciao/Home_Servant_Impl_T.h:
+        * ciao/Object_Set_T.h:
+        * ciao/Port_Activator_T.cpp
+        * ciao/Port_Activator_T.h:
+        * ciao/Servant_Impl_Utils_T.cpp:
+        * ciao/StandardConfigurator_Impl.cpp:
+        * ciao/StandardConfigurator_Impl.h:
+        * ciao/Swapping_Container.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+        * ciao/Upgradeable_Context_Impl_T.h:
+          Layout changes
+
+        * ciao/Cookies.cpp:
+        * ciao/Cookies.inl:
+          Don't inline virtual destructors
+
 Thu Feb 14 12:51:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Context_Impl_Base.cpp:

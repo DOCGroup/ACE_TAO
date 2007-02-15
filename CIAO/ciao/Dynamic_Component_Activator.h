@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ciao/CCM_ContainerC.h"
-#include "ciao/Deployment_CoreC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -74,7 +73,7 @@ namespace CIAO
                       CORBA::Boolean remaining_activations);
 
     void add_servant_to_map (PortableServer::ObjectId &oid,
-                          Dynamic_Component_Servant_Base* servant);
+                             Dynamic_Component_Servant_Base* servant);
 
     void delete_servant_from_map (PortableServer::ObjectId &oid);
 

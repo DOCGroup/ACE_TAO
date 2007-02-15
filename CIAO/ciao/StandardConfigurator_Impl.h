@@ -29,8 +29,6 @@
 
 namespace CIAO
 {
-
-
   /**
    * @class StandardConfigurator_Impl
    *
@@ -54,11 +52,9 @@ namespace CIAO
     /// This method will call set_attributes on the component that is
     /// being configured, i.e, the template method from
     /// StandardConfigurator interface.
-    virtual void set_configuration (
-        const Components::ConfigValues & descr);
+    virtual void set_configuration (const Components::ConfigValues & descr);
 
-    void configure (
-        Components::CCMObject_ptr comp);
+    void configure (Components::CCMObject_ptr comp);
 
   private:
     /// The component whose attributes are going to be configured via

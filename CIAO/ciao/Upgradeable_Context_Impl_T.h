@@ -54,8 +54,7 @@ namespace CIAO
     remove_facet (CORBA::Object_ptr reference);
 
     virtual ::Components::ConsumerDescriptions *
-    get_registered_consumers (const char *publisher_name)
-      = 0;
+    get_registered_consumers (const char *publisher_name) = 0;
 
   private:
     /// Not to be used

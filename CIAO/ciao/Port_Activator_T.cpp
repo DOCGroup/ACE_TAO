@@ -54,11 +54,9 @@ namespace CIAO
 
     // An additional check, may not be necessary. Being on the safe
     // side.
-    if (ACE_OS::strcmp (this->oid_.in (),
-                        str.in ()) == 0)
+    if (ACE_OS::strcmp (this->oid_.in (), str.in ()) == 0)
       {
-        if (this->executor_ == 0 &&
-            this->t_ == Port_Activator::Facet)
+        if (this->executor_ == 0 && this->t_ == Port_Activator::Facet)
           {
             CORBA::Object_var tmp =
               this->comp_serv_->get_facet_executor (this->name_.in ());
