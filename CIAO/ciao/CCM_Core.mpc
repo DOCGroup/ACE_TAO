@@ -191,7 +191,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
   IDL_Files {
     idlflags += -SS -Sci
     Deployment_Packaging_Data.idl
-    Deployment_Target_Data.idl
+    Deployment_PlanError.idl
   }
 
   IDL_Files {
@@ -233,7 +233,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_ApplicationC.cpp
     Deployment_ContainerC.cpp
     Deployment_Packaging_DataC.cpp
-    Deployment_Target_DataC.cpp
+    Deployment_PlanErrorC.cpp
     DeploymentC.cpp
     Deployment_TargetManagerC.cpp
     Deployment_NodeManagerC.cpp

@@ -3,7 +3,7 @@
 #ifndef TARGETMANAGER_IDL
 #define TARGETMANAGER_IDL
 
-#include "ciao/Deployment_Target_Data.idl"
+#include "ciao/Deployment_PlanError.idl"
 #include "ciao/Deployment_TargetData.idl"
 #include "ciao/Deployment_DeploymentPlan.idl"
 #include "ciao/Deployment_ResourceCommitmentManager.idl"
