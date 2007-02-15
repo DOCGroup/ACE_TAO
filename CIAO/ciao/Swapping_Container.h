@@ -23,9 +23,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "ciao/CCM_ContainerC.h"
-#include "ciao/Container_Base.h"
-#include "ciao/Deployment_CoreC.h"
+#include "ciao/Session_Container.h"
 #include "ciao/Dynamic_Component_Activator.h"
 #include "ciao/CIAO_Server_Export.h"
 #include "ciao/Servant_Activator.h"
@@ -59,10 +57,10 @@ namespace CIAO
 
     virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p);
 
-    virtual void add_servant_map (PortableServer::ObjectId &oid,
+    virtual void add_servant_to_map (PortableServer::ObjectId &oid,
                                   Dynamic_Component_Servant_Base* servant);
 
-    virtual void delete_servant_map (PortableServer::ObjectId &oid);
+    virtual void delete_servant_from_map (PortableServer::ObjectId &oid);
 
     virtual void deactivate_facet (const PortableServer::ObjectId &oid);
 

@@ -64,16 +64,14 @@ namespace CIAO
 
       // Below method is CIAO specific extension, please see the IDL
       // definition for more details.
-      virtual void
-      destroyManagerByPlan (const char * plan_uuid);
+      virtual void destroyManagerByPlan (const char * plan_uuid);
 
       virtual void shutdown ();
 
       // The input parameter is a *new_plan* which has the
       // same UUID of the existing running plan.
       virtual void
-      perform_redeployment (
-          const Deployment::DeploymentPlan & plan);
+      perform_redeployment (const Deployment::DeploymentPlan & plan);
 
       virtual Deployment::DeploymentPlan * getPlan (const char * plan_uuid);
 

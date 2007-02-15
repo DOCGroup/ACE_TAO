@@ -61,11 +61,9 @@ namespace CIAO
     }
 
     bool
-    write_ior_file (CORBA::ORB_ptr orb,
-                    CIAO::ExecutionManagerDaemon_ptr obj)
+    write_ior_file (CORBA::ORB_ptr orb, CIAO::ExecutionManagerDaemon_ptr obj)
     {
-      CORBA::String_var ior =
-        orb->object_to_string (obj);
+      CORBA::String_var ior = orb->object_to_string (obj);
 
       FILE* ior_output_file_ = ACE_OS::fopen (ior_file_name_, "w");
 
@@ -137,8 +135,7 @@ namespace CIAO
 
       try
         {
-          CORBA::ORB_var orb =
-            CORBA::ORB_init (argc, argv);
+          CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
           if (!parse_args (argc, argv))
             return -1;
@@ -146,8 +143,7 @@ namespace CIAO
           // Get reference to Root POA.
           CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-          PortableServer::POA_var poa =
-            PortableServer::POA::_narrow (obj.in ());
+          PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
 
           if (CORBA::is_nil (poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,

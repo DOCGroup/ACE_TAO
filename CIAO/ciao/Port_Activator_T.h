@@ -55,8 +55,7 @@ namespace CIAO
     PortableServer::Servant activate (
         const PortableServer::ObjectId &oid);
 
-    void deactivate (
-        const PortableServer::Servant servant);
+    void deactivate (const PortableServer::Servant servant);
 
   private:
     /// The executor

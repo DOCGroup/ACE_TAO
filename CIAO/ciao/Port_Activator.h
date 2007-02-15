@@ -45,9 +45,7 @@ namespace CIAO
         Sink
       };
 
-    Port_Activator (const char *oid,
-                    const char *name,
-                    Type t);
+    Port_Activator (const char *oid, const char *name, Type t);
 
     virtual ~Port_Activator (void);
 
@@ -69,8 +67,7 @@ namespace CIAO
     virtual PortableServer::Servant activate (
         const PortableServer::ObjectId &oid) = 0;
 
-    virtual void deactivate (
-        const PortableServer::Servant servant) = 0;
+    virtual void deactivate (const PortableServer::Servant servant) = 0;
 
   protected:
     /// The object ID that is used to activate the servant within the

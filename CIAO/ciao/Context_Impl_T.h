@@ -80,8 +80,7 @@ namespace CIAO
 
     // Operations from ::Components::SessionContext.
 
-    virtual CORBA::Object_ptr
-    get_CCM_object ();
+    virtual CORBA::Object_ptr get_CCM_object ();
 
   protected:
     SVNT *servant_;

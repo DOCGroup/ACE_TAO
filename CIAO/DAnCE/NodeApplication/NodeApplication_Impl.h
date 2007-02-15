@@ -34,7 +34,7 @@
 #include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventsS.h"
 
 #include "NodeApp_Configurator.h"
-#include "Container_Base.h"
+#include "Session_Container.h"
 
 using CIAO::Utility::write_IOR;
 
@@ -100,21 +100,17 @@ namespace CIAO
                   CORBA::Boolean start,
                   CORBA::Boolean add_connection);
 
-    virtual void
-    start ();
+    virtual void start ();
 
     /*-------------  CIAO specific IDL operations (idl)----------
      *
      *-----------------------------------------------------------*/
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ciao_passivate ();
+    virtual void ciao_passivate ();
 
     /// Initialize the NodeApplication
     virtual CORBA::Long init ();
@@ -129,12 +125,10 @@ namespace CIAO
 
     /// Get the object reference of the NodeApplicationManager.
     /// This might come in handy later.
-    virtual ::CORBA::Object_ptr
-    get_node_application_manager ();
+    virtual ::CORBA::Object_ptr get_node_application_manager ();
 
     /// Access the readonly attribute.
-    virtual ::Deployment::Properties *
-    properties ();
+    virtual ::Deployment::Properties * properties ();
 
     /// Remove a component instance from the NodeApplication
     virtual void remove_component (const char * inst_name);
