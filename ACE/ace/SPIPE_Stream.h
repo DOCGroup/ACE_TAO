@@ -31,8 +31,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Defines the methods in the <ACE_SPIPE_Stream> abstraction.
  *
- * <buf> is the buffer to write from or receive into.
- * <len> is the number of bytes to transfer.
+ * @a buf is the buffer to write from or receive into.
+ * @a len is the number of bytes to transfer.
  *
  * The "_n()" I/O methods keep looping until all the data has been
  * transferred.  These methods also work for sockets in non-blocking
@@ -72,10 +72,10 @@ public:
   /// Recv an open FD from another process.
   int recv_handle (strrecvfd &recvfd) const;
 
-  /// Send <len> bytes, keep trying until <len> are sent.
+  /// Send @a len bytes, keep trying until @a len are sent.
   ssize_t send_n (const void *buf, size_t len) const;
 
-  /// Recv <len> bytes, keep trying until <len> are received.
+  /// Recv @a len bytes, keep trying until @a len are received.
   ssize_t recv_n (void *buf, size_t len) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
@@ -129,22 +129,22 @@ public:
    */
   ssize_t recv (size_t len, ...) const;
 
-  /// Send <len> bytes via Win32 <WriteFile> using overlapped I/O.
+  /// Send @a len bytes via Win32 <WriteFile> using overlapped I/O.
   ssize_t send (const void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv <len> bytes via Win32 <ReadFile> using overlapped I/O.
+  /// Recv @a len bytes via Win32 <ReadFile> using overlapped I/O.
   ssize_t recv (void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size <len> to the stream.
+  /// Send an <iovec> of size @a len to the stream.
   ssize_t sendv (const iovec iov[],
                  int len) const;
 
-  /// Send an <iovec> of size <len> to the stream.  Will block until all
+  /// Send an <iovec> of size @a len to the stream.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int len) const;
 
-  /// Receive an <iovec> of size <len> to the stream.
+  /// Receive an <iovec> of size @a len to the stream.
   ssize_t recvv_n (iovec iov[],
                    int len) const;
 

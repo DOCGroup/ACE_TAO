@@ -81,10 +81,10 @@ public:
 
 #if 0
   /**
-   * Try to send exactly <len> bytes into <buf> from <handle> (uses
+   * Try to send exactly @a len bytes into @a buf from <handle> (uses
    * the <send> call).  If <send> blocks for longer than @a timeout the
    * number of bytes actually sent is returned with <errno == ETIME>.
-   * If a timeout does not occur, <send_n> return <len> (i.e., the
+   * If a timeout does not occur, <send_n> return @a len (i.e., the
    * number of bytes requested to be sent).
    */
   ssize_t send_n (const void *buf,
@@ -93,14 +93,14 @@ public:
                   const ACE_Time_Value *timeout);
 
   /**
-   * Try to recv exactly <len> bytes into <buf> from <handle> (uses
+   * Try to recv exactly @a len bytes into @a buf from <handle> (uses
    * the <ACE::recv_n> call).  The ACE_Time_Value indicates how long
    * to blocking trying to receive.  If @a timeout == 0, the caller
    * will block until action is possible, else will wait until the
    * relative time specified in *@a timeout elapses).  If <recv> blocks
    * for longer than @a timeout the number of bytes actually read is
    * returned with <errno == ETIME>.  If a timeout does not occur,
-   * <recv_n> return <len> (i.e., the number of bytes requested to be
+   * <recv_n> return @a len (i.e., the number of bytes requested to be
    * read).
    */
   ssize_t recv_n (void *buf,
@@ -109,14 +109,14 @@ public:
                   const ACE_Time_Value *timeout);
 
   /**
-   * Send an <iovec> of size <n> to the connected socket (uses
+   * Send an <iovec> of size @a n to the connected socket (uses
    * <ACE::sendv_n>).  Will block until all bytes are sent or an error
    * occurs.
    */
   ssize_t sendv_n (const iovec iov[],
                    size_t n) const;
 
-  /// Receive an <iovec> of size <n> to the connected socket.
+  /// Receive an <iovec> of size @a n to the connected socket.
   ssize_t recvv_n (iovec iov[],
                    size_t n) const;
 #endif /* 0 */

@@ -59,7 +59,7 @@ public:
                             const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to @a timeout amount of time to send <buf>.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If <send>
    * times out a -1 is returned with <errno == ETIME>.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
@@ -67,8 +67,8 @@ public:
                             const ACE_Time_Value *timeout);
 
   /**
-   * Convert the buffer offset <off> to absolute address to <buf>.
-   * Return the size of valid information containing in the <buf>,
+   * Convert the buffer offset <off> to absolute address to @a buf.
+   * Return the size of valid information containing in the @a buf,
    * -1 if <shm_malloc_> is not initialized.
    */
   ssize_t get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf);
@@ -128,7 +128,7 @@ public:
                             const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to @a timeout amount of time to send <buf>.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If <send>
    * times out a -1 is returned with <errno == ETIME>.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
@@ -196,29 +196,29 @@ public:
    */
   int fini (void);
 
-  /// Send an <n> byte buffer to the other process using shm_malloc_
+  /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
   ssize_t send (const void *buf,
                 size_t n,
                 int flags) ;
 
-  /// Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
+  /// Recv an @a n byte buffer from the shm_malloc_ thru connected socket.
   ssize_t recv (void *buf,
                 size_t n,
                 int flags) ;
 
-  /// Send an <n> byte buffer to the other process using shm_malloc_
+  /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
   ssize_t send (const void *buf,
                 size_t n) ;
 
-  /// Recv an <n> byte buffer from the shm_malloc_ thru connected socket.
+  /// Recv an @a n byte buffer from the shm_malloc_ thru connected socket.
   ssize_t recv (void *buf,
                 size_t n) ;
 
   /**
-   * Wait to to @a timeout amount of time to send up to <n> bytes into
-   * <buf> from <handle> (uses the <send> call).  If <send> times out
+   * Wait to to @a timeout amount of time to send up to @a n bytes into
+   * @a buf from <handle> (uses the <send> call).  If <send> times out
    * a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes sent is returned.
    */
@@ -227,8 +227,8 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to @a timeout amount of time to send up to <n> bytes into
-   * <buf> from <handle> (uses the <send> call).  If <send> times out
+   * Wait to to @a timeout amount of time to send up to @a n bytes into
+   * @a buf from <handle> (uses the <send> call).  If <send> times out
    * a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes sent is returned.
    */
@@ -246,8 +246,8 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait up to @a timeout amount of time to receive up to <n> bytes
-   * into <buf> from <handle> (uses the <recv> call).  If <recv> times
+   * Wait up to @a timeout amount of time to receive up to @a n bytes
+   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
    * out a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes received is returned.
    */
@@ -256,8 +256,8 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait up to @a timeout amount of time to receive up to <n> bytes
-   * into <buf> from <handle> (uses the <recv> call).  If <recv> times
+   * Wait up to @a timeout amount of time to receive up to @a n bytes
+   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
    * out a -1 is returned with <errno == ETIME>.  If it succeeds the
    * number of bytes received is returned.
    */

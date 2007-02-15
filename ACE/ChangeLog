@@ -1,3 +1,39 @@
+Thu Feb 15 13:50:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.h:
+        * ace/Connector.h:
+        * ace/DEV_IO.h:
+        * ace/FIFO_Recv.h:
+        * ace/FIFO_Send.h:
+        * ace/FIFO_Send_Msg.h:
+        * ace/FILE_IO.h:
+        * ace/INET_Addr.h:
+        * ace/Local_Memory_Pool.h:
+        * ace/Malloc_Base.h:
+        * ace/MEM_IO.h:
+        * ace/Mem_Map.h:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.h:
+        * ace/Message_Block.h:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/OS_NS_unistd.h:
+        * ace/Pipe.h:
+        * ace/Process_Manager.h:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.h:
+        * ace/Service_Types.h:
+        * ace/Shared_Memory_Pool.h:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_IO.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SPIPE_Stream.h:
+        * ace/Stream.h:
+        * ace/Task.h:
+        * ace/Thread.h:
+        * ace/Thread_Manager.h:
+        * ace/UPIPE_Stream.h:
+          Doxygen improvements
+
 Thu Feb 15 13:38:58 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Connector.h:

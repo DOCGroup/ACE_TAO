@@ -50,10 +50,10 @@ public:
   /// Default constructor.
   ACE_FILE_IO (void);
 
-  /// send upto <n> bytes in <buf>.
+  /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
 
-  /// Recv upto <n> bytes in <buf>.
+  /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
@@ -117,17 +117,17 @@ public:
    */
   ssize_t recv (size_t n, ...) const;
 
-  /// Send <n> bytes via Win32 WriteFile using overlapped I/O.
+  /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
   ssize_t send (const void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv <n> bytes via Win32 ReadFile using overlapped I/O.
+  /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size <n> to the file.
+  /// Send an <iovec> of size @a n to the file.
   ssize_t sendv (const iovec iov[],
                  int n) const;
 
@@ -141,12 +141,12 @@ public:
    */
   ssize_t recvv (iovec *io_vec);
 
-  /// Send an <iovec> of size <n> to the file.  Will block until all
+  /// Send an <iovec> of size @a n to the file.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int n) const;
 
-  /// Receive an <iovec> of size <n> to the file.
+  /// Receive an <iovec> of size @a n to the file.
   ssize_t recvv_n (iovec iov[],
                    int n) const;
 

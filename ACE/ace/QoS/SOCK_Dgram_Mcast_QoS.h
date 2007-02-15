@@ -91,7 +91,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
+  /// Send an @a n byte @a buf to the datagram socket (uses <WSASentTo>).
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
