@@ -4,7 +4,7 @@
 #define DEPLOYMENT_IDL
 
 #include "ciao/Deployment_Packaging_Data.idl"
-#include "ciao/Deployment_Target_Data.idl"
+#include "ciao/Deployment_PlanError.idl"
 
 module Deployment {
 
