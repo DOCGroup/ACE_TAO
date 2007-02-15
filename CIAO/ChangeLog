@@ -1,3 +1,15 @@
+Thu Feb 14 16:00:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_CCMException.idl:
+          Enabled the QoS4CCM enums
+
+        * ciao/CCM_Core.mpc:
+          Added ExtensionContext.cpp
+
+        * ciao/ExtensionContext.{h,cpp}:
+          New file, just throw no implement in all the new methods, just
+          creating first the empty classes and infrastructure
+
 Thu Feb 14 13:05:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Context_Impl_Base.h:
