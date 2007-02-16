@@ -1,3 +1,13 @@
+Fri Feb 16 16:50:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/tao.mpc:
+        
+          Added the new type of protocols hooks files for compilation.
+        
+        * tao/DiffServPolicy.mpc:
+        
+          Added a mpc file for compiling the DiffServ library.
+
 Fri Feb 16 16:45:30 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
