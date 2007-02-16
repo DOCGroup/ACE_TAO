@@ -74,6 +74,7 @@ class TAO_Acceptor_Filter_Factory;
 class TAO_POAManager_Factory;
 #endif
 
+class TAO_Network_Priority_Hook;
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
 class TAO_Regular_POA;
@@ -337,6 +338,12 @@ public:
 
   /// ORB Core for POA.
   TAO_ORB_Core &orb_core (void) const;
+
+  /// obtain a reference to the cached_profiles
+  TAO::Portable_Server::Cached_Policies& cached_policies (void);
+
+  /// obtain a handle to the network priority hooks
+  TAO_Network_Priority_Hook* network_priority_hook (void);
 
   TAO::Portable_Server::Cached_Policies::PriorityModel priority_model (void) const;
 
@@ -800,6 +807,8 @@ protected:
   PortableInterceptor::AdapterState adapter_state_;
 
   TAO::Portable_Server::Cached_Policies cached_policies_;
+
+  TAO_Network_Priority_Hook *network_priority_hook_;
 
   TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 
