@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Container_Base.h"
+#include "Session_Container.h"
 #include "NodeManager/NodeManager_Impl.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"

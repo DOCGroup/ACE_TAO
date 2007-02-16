@@ -72,20 +72,16 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   virtual void
   set_raises_none (SemanticGraph::ReadWriteAttribute&)
   {
-    os << STRS[EXCP_SNGL];
   }
 
   virtual void
   set_raises_pre (SemanticGraph::ReadWriteAttribute&)
   {
-    os << STRS[EXCP_START] << " "
-       << STRS[EXCP_SYS] << "," << endl;
   }
 
   virtual void
   set_raises_post (SemanticGraph::ReadWriteAttribute&)
   {
-    os << "))" << endl;
   }
 
   virtual void
@@ -195,20 +191,16 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   virtual void
   get_raises_none (SemanticGraph::ReadWriteAttribute&)
   {
-    os << STRS[EXCP_SNGL] << endl;
   }
 
   virtual void
   get_raises_pre (SemanticGraph::ReadWriteAttribute&)
   {
-    os << STRS[EXCP_START] << " "
-       << STRS[EXCP_SYS] << "," << endl;
   }
 
   virtual void
   get_raises_post (SemanticGraph::ReadWriteAttribute&)
   {
-    os << "))" << endl;
   }
 
   virtual void
@@ -287,20 +279,16 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   virtual void
   get_raises_none (SemanticGraph::ReadAttribute&)
   {
-    os << STRS[EXCP_SNGL] << endl;
   }
 
   virtual void
   get_raises_pre (SemanticGraph::ReadAttribute&)
   {
-    os << STRS[EXCP_START] << " "
-       << STRS[EXCP_SYS] << "," << endl;
   }
 
   virtual void
   get_raises_post (SemanticGraph::ReadAttribute&)
   {
-    os << "))" << endl;
   }
 
   virtual void

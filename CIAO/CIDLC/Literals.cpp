@@ -31,8 +31,6 @@ namespace StringLiterals
   char const* const STRS[LIT_SIZE] =
   {
     // Common CORBA and all Components exceptions.
-    "ACE_THROW_SPEC (( ::CORBA::SystemException))",       // EXCP_SNGL
-    "ACE_THROW_SPEC ((",                                  // EXCP_START
     "::CORBA::SystemException",                           // EXCP_SYS
     "::CORBA::BAD_PARAM",                                 // EXCP_BP
     "::Components::IllegalState",                         // EXCP_IS
