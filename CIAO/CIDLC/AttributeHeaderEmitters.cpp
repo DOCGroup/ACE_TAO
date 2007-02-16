@@ -42,20 +42,16 @@ WriteAttributeHeaderEmitter::get_raises (SemanticGraph::ReadWriteAttribute&)
 void
 WriteAttributeHeaderEmitter::set_raises_none (SemanticGraph::ReadWriteAttribute&)
 {
-  os << STRS[EXCP_SNGL];
 }
 
 void
 WriteAttributeHeaderEmitter::set_raises_pre (SemanticGraph::ReadWriteAttribute&)
 {
-  os << STRS[EXCP_START] << " "
-     << STRS[EXCP_SYS] << "," << endl;
 }
 
 void
 WriteAttributeHeaderEmitter::set_raises_post (SemanticGraph::ReadWriteAttribute&)
 {
-  os << "))";
 }
 
 void
@@ -104,20 +100,16 @@ AttributeHeaderEmitter::name (SemanticGraph::ReadWriteAttribute& a)
 void
 AttributeHeaderEmitter::get_raises_none (SemanticGraph::ReadWriteAttribute&)
 {
-  os << STRS[EXCP_SNGL];
 }
 
 void
 AttributeHeaderEmitter::get_raises_pre (SemanticGraph::ReadWriteAttribute&)
 {
-  os << STRS[EXCP_START] << " "
-     << STRS[EXCP_SYS] << "," << endl;
 }
 
 void
 AttributeHeaderEmitter::get_raises_post (SemanticGraph::ReadWriteAttribute&)
 {
-  os << "))";
 }
 
 void
@@ -161,20 +153,16 @@ AttributeHeaderEmitter::name (SemanticGraph::ReadAttribute& a)
 void
 AttributeHeaderEmitter::get_raises_none (SemanticGraph::ReadAttribute&)
 {
-  os << STRS[EXCP_SNGL];
 }
 
 void
 AttributeHeaderEmitter::get_raises_pre (SemanticGraph::ReadAttribute&)
 {
-  os << STRS[EXCP_START] << " "
-     << STRS[EXCP_SYS] << "," << endl;
 }
 
 void
 AttributeHeaderEmitter::get_raises_post (SemanticGraph::ReadAttribute&)
 {
-  os << "))";
 }
 
 void

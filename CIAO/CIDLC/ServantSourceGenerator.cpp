@@ -218,20 +218,16 @@ namespace
     virtual void
     raises_pre (Type&)
     {
-      os << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl;
     }
 
     virtual void
     raises_none (Type&)
     {
-      os << STRS[EXCP_SNGL];
     }
 
     virtual void
     raises_post (Type&)
     {
-      os << "))";
     }
 
     virtual void
@@ -461,10 +457,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -476,7 +470,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -496,9 +489,7 @@ namespace
 
       os << "template <typename T>" << endl
          << "::CORBA::Object_ptr" << endl
-         << i.name () << "_Servant_T<T>::_get_component (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << i.name () << "_Servant_T<T>::_get_component ()" << endl
          << "{"
          << STRS[COMP_SC] << "_var sc =" << endl
          << "  " << STRS[COMP_SC] << "::_narrow (" << endl
@@ -563,9 +554,7 @@ namespace
 
         os << "_ptr" << endl
            << scope_.name () << "_Context::get_connection_"
-           << u.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << u.name () << " ()" << endl
            << "{"
            << "return ";
 
@@ -583,10 +572,6 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "if (! ::CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
@@ -610,9 +595,6 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
@@ -632,9 +614,7 @@ namespace
       {
         os << u.scoped_name () << "Connections *" << endl
            << scope_.name () << "_Context::get_connections_"
-           << u.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << u.name () << " ()" << endl
            << "{"
            << u.scoped_name () << "Connections *tmp_retv = 0;"
            << "ACE_NEW_THROW_EX ("
@@ -692,10 +672,6 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
@@ -737,9 +713,6 @@ namespace
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
            << STRS[COMP_CK] << " * ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{";
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -778,9 +751,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << " *ev" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+        os << " *ev)" << endl
            << "{"
            << "for (ACE_Active_Map_Manager< " << endl
            << "  ";
@@ -841,9 +812,6 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
@@ -874,9 +842,6 @@ namespace
            << scope_.name () << "_Context::subscribe_"
            << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
@@ -903,9 +868,6 @@ namespace
            << scope_.name () << "_Context::unsubscribe_"
            << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "ACE_Active_Map_Manager_Key key;" << endl
            << "if (ck == 0 || ::CIAO::Map_Key_Cookie::"
@@ -953,9 +915,7 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << " *ev" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+        os << " *ev)" << endl
            << "{"
            << "if (! ::CORBA::is_nil (this->ciao_emits_"
            << e.name () << "_consumer_.in ()))" << endl
@@ -976,9 +936,6 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
@@ -1002,9 +959,6 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << e.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (this->ciao_emits_" << e.name ()
            << "_consumer_.in ()))" << endl
@@ -1161,9 +1115,9 @@ namespace
          << "{"
          << "}";
 
-      os << "// Operations for " << t.name () << " receptacles"
+      os << "/// Operations for " << t.name () << " receptacles"
          << " and event sources," << endl
-         << "// defined in " << t.scoped_name ().scope_name () << "::CCM_"
+         << "/// defined in " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context."
          << endl << endl;
 
@@ -1187,18 +1141,14 @@ namespace
       // Extra *_Context methods for swapping container.
       if (swapping)
       {
-        os << "// Operations defined in " << t.scoped_name ().scope_name ()
+        os << "/// Operations defined in " << t.scoped_name ().scope_name ()
            << "::CCM_" << t.name () << "_Context" << endl
-           << "// that enable component swapping in the container"
+           << "/// that enable component swapping in the container"
            << endl << endl;
 
         os << STRS[COMP_CD] << " *" << endl
            << t.name () << "_Context::get_registered_consumers (" << endl
            << "const char *publisher_name)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IN] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "if (publisher_name == 0)" << endl
            << "{"
@@ -1234,7 +1184,7 @@ namespace
            << "}";
       }
 
-      os << "// CIAO-specific." << endl << endl;
+      os << "/// CIAO-specific." << endl << endl;
 
       os << t.name () << "_Context *" << endl
          << t.name () << "_Context::_narrow (" << endl
@@ -1362,9 +1312,6 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{";
 
         string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -1386,9 +1333,6 @@ namespace
            << scope_.name ()
            << "_Servant::subscribe_" << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{";
 
         if (swapping)
@@ -1409,9 +1353,6 @@ namespace
            << scope_.name ()
            << "_Servant::unsubscribe_" << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{";
 
         if (swapping)
@@ -1466,7 +1407,7 @@ namespace
            << "throw " << STRS[EXCP_IC] << " ();"
            << endl
            << "}"
-           << "// Simplex connect." << endl
+           << "/// Simplex connect." << endl
            << "this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
            << ");"
@@ -1497,7 +1438,7 @@ namespace
            << "throw " << STRS[EXCP_IC] << " ();"
            << endl
            << "}"
-           << "// Multiplex connect." << endl
+           << "/// Multiplex connect." << endl
            << "return this->connect_" << u.name () << " (" << endl
            << "_ciao_conn.in ()" << endl
            << ");"
@@ -1524,7 +1465,7 @@ namespace
         os << "if (ACE_OS::strcmp (name, \""
            << u.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
-           << "// Simplex disconnect." << endl
+           << "/// Simplex disconnect." << endl
            << "return this->disconnect_" << u.name ()
            << " ();" << endl
            << "}";
@@ -1571,10 +1512,6 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "this->context_->connect_" << u.name () << " ("
            << endl
@@ -1589,9 +1526,6 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_" << u.name ()
            << " (" << endl
@@ -1603,9 +1537,7 @@ namespace
         os << "_ptr" << endl
            << scope_.name ()
            << "_Servant::get_connection_" << u.name ()
-           << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << " ()" << endl
            << "{"
            << "return this->context_->get_connection_"
            << u.name () << " (" << endl
@@ -1623,10 +1555,6 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "::Components::Cookie * cookie = "
           "this->context_->connect_" << u.name () << " ("
@@ -1644,9 +1572,6 @@ namespace
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " (" << endl
            << STRS[COMP_CK] << " * ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_" << u.name ()
            << " (" << endl
@@ -1657,9 +1582,7 @@ namespace
         os << u.scoped_name () << "Connections *" << endl
            << scope_.name ()
            << "_Servant::get_connections_" << u.name ()
-           << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << " ()" << endl
            << "{"
            << "return this->context_->get_connections_"
            << u.name () << " (" << endl
@@ -1781,9 +1704,6 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "))" << endl
            << "{"
            << "this->context_->connect_" << e.name ()
            << " (" << endl
@@ -1796,9 +1716,6 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << e.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_"
            << e.name () << " (" << endl
@@ -1858,9 +1775,7 @@ namespace
 
         os << "_ptr" << endl
            << scope_.name ()
-           << "_Servant::provide_" << p.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::provide_" << p.name () << " ()" << endl
            << "{";
 
         string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -1915,9 +1830,7 @@ namespace
 
         os << "::CORBA::Object_ptr" << endl
            << scope_.name ()
-           << "_Servant::provide_" << p.name () << "_i (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::provide_" << p.name () << "_i ()" << endl
            << "{"
            << "::CORBA::Object_ptr ret =" << endl
            << "  this->lookup_facet (\""
@@ -2101,9 +2014,7 @@ namespace
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << "Consumer_" << c.name ()
-           << "_Servant::_get_component (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::_get_component ()" << endl
            << "{"
            << "return this->ctx_->get_CCM_object "
            << "();" << endl
@@ -2123,9 +2034,7 @@ namespace
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << " *evt" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+        os << " *evt)" << endl
            << "{"
            << "this->executor_->push_" << c.name ()
            << " (" << endl
@@ -2133,7 +2042,7 @@ namespace
            << ");" << endl
            << "}";
 
-        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+        os << "/// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "void" << endl
            << scope_.name  () << "_Servant::";
 
@@ -2142,9 +2051,6 @@ namespace
         os << "Consumer_" << c.name ()
            << "_Servant::push_event (" << endl
            << "::Components::EventBase *ev)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "))" << endl
            << "{";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2172,7 +2078,7 @@ namespace
         // GD Added below code
         // Begin
 
-        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+        os << "/// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "void" << endl
            << scope_.name  () << "_Servant::";
 
@@ -2183,9 +2089,6 @@ namespace
            << "::Components::EventBase *ev," << endl
            << "const char * /* source_id */," << endl
            << "::CORBA::TypeCode_ptr /* tc */)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "))" << endl
            << "{"
            << "this->push_event (ev);" << endl
            << "}";
@@ -2199,9 +2102,7 @@ namespace
 
         os << "Consumer_" << c.name ()
            << "_Servant::ciao_is_substitutable (" << endl
-           << "const char * event_repo_id" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "const char * event_repo_id)" << endl
            << "{"
            << "if (event_repo_id == 0)" << endl
            << "{"
@@ -2248,9 +2149,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << scope_.name  () << "_Servant::"
-           << "get_consumer_" << c.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "get_consumer_" << c.name () << " ()" << endl
            << "{"
            << "if (! ::CORBA::is_nil (this->consumes_" << c.name ()
            << "_.in ()))" << endl
@@ -2292,9 +2191,7 @@ namespace
 
         os << "::Components::EventConsumerBase_ptr" << endl
            << scope_.name  () << "_Servant::"
-           << "get_consumer_" << c.name () << "_i (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "get_consumer_" << c.name () << "_i ()" << endl
            << "{"
            << "::Components::EventConsumerBase_ptr ret =" << endl
            << "  this->lookup_consumer (\""
@@ -2899,7 +2796,7 @@ namespace
          << "this->context_," << endl
          << t.name () << "_Context (h, c, this));" << endl;
 
-      os << "// Set the instance id of the component on the context" << endl
+      os << "/// Set the instance id of the component on the context" << endl
          << endl
          << "this->context_->_ciao_instance_id (this->ins_name_);" << endl;
 
@@ -3051,12 +2948,6 @@ namespace
          << "const char *name," << endl
          << "::CORBA::Object_ptr connection" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_ECL] << "))" << endl
          << "{";
 
       if (swapping)
@@ -3065,7 +2956,7 @@ namespace
              << endl;
         }
 
-      os << "// If the component has no receptacles, this will be unused."
+      os << "/// If the component has no receptacles, this will be unused."
          << endl
          << STRS[ACE_UA] << " (connection);" << endl
          << "if (name == 0)" << endl
@@ -3098,12 +2989,6 @@ namespace
          << "const char *name," << endl
          << STRS[COMP_CK] << " * ck" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_CR] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
          << "{"
          << STRS[ACE_UA] << " (ck);" << endl;
 
@@ -3141,9 +3026,7 @@ namespace
          << "}";
 
       os << STRS[COMP_RD] << " *" << endl
-         << t.name () << "_Servant::get_all_receptacles (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::get_all_receptacles ()" << endl
          << "{"
          << STRS[COMP_RD] << " *retval = 0;"
          << "ACE_NEW_RETURN (retval," << endl
@@ -3215,11 +3098,6 @@ namespace
          << "const char * emitter_name," << endl
          << STRS[COMP_ECB] << "_ptr consumer" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
          << "{";
 
       if (swapping)
@@ -3259,10 +3137,6 @@ namespace
          << t.name () << "_Servant::disconnect_consumer (" << endl
          << "const char *source_name" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
          << "{";
 
       if (swapping)
@@ -3298,9 +3172,7 @@ namespace
          << "}";
 
       os << STRS[COMP_PD] << " *" << endl
-         << t.name () << "_Servant::get_all_publishers (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::get_all_publishers ()" << endl
          << "{"
          << STRS[COMP_PD] << " *retval = 0;"
          << "ACE_NEW_RETURN (retval," << endl
@@ -3348,9 +3220,7 @@ namespace
          << "}";
 
       os << STRS[COMP_ED] << " *" << endl
-         << t.name () << "_Servant::get_all_emitters (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::get_all_emitters ()" << endl
          << "{"
          << STRS[COMP_ED] << " *retval = 0;"
          << "ACE_NEW_RETURN (retval," << endl
@@ -3402,11 +3272,6 @@ namespace
          << "const char *publisher_name," << endl
          << STRS[COMP_ECB] << "_ptr subscribe" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_ECL] << "))" << endl
          << "{";
 
       if (swapping)
@@ -3415,7 +3280,7 @@ namespace
              << endl;
         }
 
-      os << "// Just in case there are no if blocks" << endl
+      os << "/// Just in case there are no if blocks" << endl
          << STRS[ACE_UA] << " (subscribe);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
@@ -3449,10 +3314,6 @@ namespace
          << "const char *publisher_name," << endl
          << STRS[COMP_CK] << " *ck" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
          << "{";
 
       if (swapping)
@@ -3461,7 +3322,7 @@ namespace
            << endl;
       }
 
-      os << "// Just in case there are no if blocks" << endl
+      os << "/// Just in case there are no if blocks" << endl
          << STRS[ACE_UA] << " (ck);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
@@ -3512,8 +3373,6 @@ namespace
          << "_Servant::get_facet_executor (" << endl
          << "const char *name" << endl
          << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "))" << endl
          << "{";
 
       if (swapping)
@@ -3548,7 +3407,7 @@ namespace
       os << "return ::CORBA::Object::_nil ();"
          << "}";
 
-      os << "// Supported operations." << endl << endl;
+      os << "/// Supported operations." << endl << endl;
 
       // Generate operations for all supported interfaces.
       {
@@ -3578,10 +3437,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -3593,7 +3450,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -3611,7 +3467,7 @@ namespace
       }
 
       // Generate operations for component attributes.
-      os << "// Component attribute operations." << endl << endl;
+      os << "/// Component attribute operations." << endl << endl;
 
       {
         Traversal::Component component_emitter;
@@ -3629,13 +3485,11 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "// Private method to populate the port tables."
+      os << "/// Private method to populate the port tables."
          << endl;
 
       os << "void" << endl
-         << t.name () << "_Servant::populate_port_tables (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::populate_port_tables ()" << endl
          << "{"
          << ";"
          << "::CORBA::Object_var obj_var;"
@@ -3781,20 +3635,16 @@ namespace
       virtual void
       raises_none (SemanticGraph::HomeFactory&)
       {
-        os << STRS[EXCP_SNGL];
       }
 
       virtual void
       raises_pre (SemanticGraph::HomeFactory&)
       {
-        os << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl;
       }
 
       virtual void
       raises_post (SemanticGraph::HomeFactory&)
       {
-        os << "))";
       }
 
       virtual void
@@ -3920,20 +3770,16 @@ namespace
       virtual void
       raises_none (SemanticGraph::HomeFinder&)
       {
-        os << STRS[EXCP_SNGL];
       }
 
       virtual void
       raises_pre (SemanticGraph::HomeFinder&)
       {
-        os << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl;
       }
 
       virtual void
       raises_post (SemanticGraph::HomeFinder&)
       {
-        os << "))";
       }
 
       virtual void
@@ -4012,7 +3858,7 @@ namespace
          << "{"
          << "}";
 
-      os << "// Home operations." << endl << endl;
+      os << "/// Home operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4029,10 +3875,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         home_operation_emitter.edge_traverser (receives);
         home_operation_emitter.edge_traverser (returns);
-        home_operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -4044,7 +3888,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -4061,7 +3904,7 @@ namespace
         home_emitter.traverse (t);
       }
 
-      os << "// Home supported interface operations." << endl << endl;
+      os << "/// Home supported interface operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4090,10 +3933,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -4105,7 +3946,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -4122,7 +3962,7 @@ namespace
         home_emitter.traverse (t);
       }
 
-      os << "// Home factory and finder operations." << endl << endl;
+      os << "/// Home factory and finder operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4141,13 +3981,10 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         factory_operation_emitter.edge_traverser (receives);
         factory_operation_emitter.edge_traverser (returns);
-        factory_operation_emitter.edge_traverser (raises);
         finder_operation_emitter.edge_traverser (receives);
         finder_operation_emitter.edge_traverser (returns);
-        finder_operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -4159,7 +3996,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -4177,7 +4013,7 @@ namespace
       }
 
       // Generate operations for component attributes.
-      os << "// Home attribute operations." << endl << endl;
+      os << "/// Home attribute operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;

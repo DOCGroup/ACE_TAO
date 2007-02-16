@@ -59,20 +59,16 @@ namespace
     virtual void
     raises_pre (Type&)
     {
-      os << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl;
     }
 
     virtual void
     raises_none (Type&)
     {
-      os << STRS[EXCP_SNGL];
     }
 
     virtual void
     raises_post (Type&)
     {
-      os << "))";
     }
 
     virtual void
@@ -229,7 +225,6 @@ namespace
       os << "_ptr" << endl
          << scope_.name () << "_exec_i::get_"
          << p.name () << " ()" << endl
-         << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl
          << "return ";
@@ -255,7 +250,6 @@ namespace
 
       os << " * /* ev */" << endl
          << ")" << endl
-         << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl
          << "}";
@@ -440,11 +434,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::set_session_context (" << endl
-         << STRS[COMP_SC] << "_ptr ctx" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
+         << STRS[COMP_SC] << "_ptr ctx)" << endl
          << "{"
          << "this->context_ =" << endl
          << "  " << t.name () << "_Context::_narrow (" << endl
@@ -460,45 +450,30 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_preactivate ()" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
          << "{"
          << STRS[YCH]
          << "}";
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_postactivate ()" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
          << "{"
          << STRS[YCH]
          << "}";
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_activate ()" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
          << "{"
          << STRS[YCH]
          << "}";
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_passivate ()" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
          << "{"
          << STRS[YCH]
          << "}";
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_remove ()" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
          << "{"
          << STRS[YCH]
          << "}";
@@ -582,20 +557,16 @@ namespace
     virtual void
     raises_none (SemanticGraph::HomeFactory&)
     {
-      os << STRS[EXCP_SNGL];
     }
 
     virtual void
     raises_pre (SemanticGraph::HomeFactory&)
     {
-      os << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl;
     }
 
     virtual void
     raises_post (SemanticGraph::HomeFactory&)
     {
-      os << "))";
     }
 
     virtual void
@@ -675,20 +646,16 @@ namespace
     virtual void
     raises_none (SemanticGraph::HomeFinder&)
     {
-      os << STRS[EXCP_SNGL];
     }
 
     virtual void
     raises_pre (SemanticGraph::HomeFinder&)
     {
-      os << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl;
     }
 
     virtual void
     raises_post (SemanticGraph::HomeFinder&)
     {
-      os << "))";
     }
 
     virtual void
@@ -974,9 +941,6 @@ namespace
       os << "// Implicit operations." << endl << endl
          << STRS[COMP_EC] << "_ptr" << endl
          << t.name () << "_exec_i::create ()" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "))" << endl
          << "{"
          << STRS[COMP_EC] << "_ptr retval =" << endl
          << "  " << STRS[COMP_EC] << "::_nil ();" << endl
