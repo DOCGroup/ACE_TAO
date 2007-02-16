@@ -54,7 +54,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
 
   if (check_params_)
     {
-      if (in_l_ != in_l || ACE_OS::strcmp(in_str_, in_str) != 0)
+      if (in_l_ != in_l || ACE_OS::strcmp(in_str_.in (), in_str) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Parameter corruption on in parameters: %d %d %s %s.\n",
