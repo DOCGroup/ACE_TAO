@@ -1,3 +1,21 @@
+Fri Feb 16 16:51:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.inl:
+        
+          Since a new type of protocols hooks was added as part of the
+          TAO DiffServ policy support, the ORB core files are modified to
+          instantiate the new type of protocols hooks, if the application
+          uses the DiffServ library.
+        
+          Get and set methods are added to return the new type of protocols
+          hooks.
+        
+          Modified the service_context_list () to add DiffServ policy specific
+          service context entry, just like how the method adds RTCORBA policy
+          specific service context entry.
+
 Fri Feb 16 16:50:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/tao.mpc:
