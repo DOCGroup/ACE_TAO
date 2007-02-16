@@ -1,3 +1,13 @@
+Fri Feb 16 00:00:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * orbsvcs/orbsvcs/AsynchProxyTools:
+        * orbsvcs/orbsvcs/AsynchProxyTools/OperationTable.h:
+        * orbsvcs/orbsvcs/AsynchProxyTools/OperationTable.cpp:
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyReplyHandler.h:
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyServant.h:
+
+          Intial code for this new library.
+
 Fri Jan 26 16:15:57 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMH/DSI_AMH.mpc:
