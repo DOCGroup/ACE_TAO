@@ -23,6 +23,7 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/TSS_Resources.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/IORInterceptor_Adapter_Factory.h"
 #include "tao/debug.h"
@@ -148,6 +149,8 @@ TAO_ORB_Core_Static_Resources::instance (void)
 TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
   : sync_scope_hook_ (0),
     protocols_hooks_name_ ("Protocols_Hooks"),
+    network_priority_protocols_hooks_name_ (
+      "Network_Priority_Protocols_Hooks"),
     timeout_hook_ (0),
     connection_timeout_hook_ (0),
     endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory"),
@@ -178,6 +181,8 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 {
   this->sync_scope_hook_ = other.sync_scope_hook_;
   this->protocols_hooks_name_ = other.protocols_hooks_name_;
+  this->network_priority_protocols_hooks_name_ =
+    other.network_priority_protocols_hooks_name_;
   this->timeout_hook_ = other.timeout_hook_;
   this->connection_timeout_hook_ = other.connection_timeout_hook_;
   this->endpoint_selector_factory_name_ =
@@ -204,6 +209,7 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
+    network_priority_protocols_hooks_ (0),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
     use_local_memory_pool_ (true),
 #else
@@ -1327,6 +1333,28 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // Initialize the protocols hooks instance.
   this->protocols_hooks_->init_hooks (this);
 
+  // Look in the service repository for an instance of the
+  // Network Priority Protocol Hooks.
+  const ACE_CString &network_priority_protocols_hooks_name =
+     TAO_ORB_Core_Static_Resources::instance ()->
+       network_priority_protocols_hooks_name_;
+
+  this->network_priority_protocols_hooks_ =
+    ACE_Dynamic_Service<TAO_Network_Priority_Protocols_Hooks>::instance
+    (this->configuration (),
+     ACE_TEXT_CHAR_TO_TCHAR (network_priority_protocols_hooks_name.c_str()));
+
+  // Must have valid protocol hooks.
+  if (this->network_priority_protocols_hooks_ == 0)
+    throw ::CORBA::INITIALIZE (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                          0),
+                        CORBA::COMPLETED_NO);
+
+  // Initialize the protocols hooks instance.
+  this->network_priority_protocols_hooks_->init_hooks (this);
+
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
 
@@ -1708,6 +1736,16 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
 }
 
 void
+TAO_ORB_Core::set_network_priority_protocols_hooks (
+  const char *network_priority_protocols_hooks_name)
+{
+  // Is synchronization necessary?
+  TAO_ORB_Core_Static_Resources::instance ()->
+    network_priority_protocols_hooks_name_ =
+      network_priority_protocols_hooks_name;
+}
+
+void
 TAO_ORB_Core::services_callbacks_init (void)
 {
   // We (should) know what are the services that would need
@@ -1760,6 +1798,12 @@ TAO_ORB_Core::service_context_list (
 {
   // @NOTE: Can use Interceptors instead..
   this->protocols_hooks_->rt_service_context (stub, service_context, restart);
+
+  // call the network priority protocols hooks that has been
+  // registered.
+  this->network_priority_protocols_hooks_->np_service_context (stub,
+                                              service_context,
+                                              restart);
 }
 
 TAO_Client_Strategy_Factory *
