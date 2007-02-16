@@ -1,4 +1,4 @@
-Fri Feb 16 12:47:03 UTC 2007  Steve Huston  <shuston@localhost.localdomain>
+Fri Feb 16 12:47:03 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.cpp (global): Removed the ACE_INLINE qualifier
           from global() - if it's in the .cpp file, it shouldn't be marked
