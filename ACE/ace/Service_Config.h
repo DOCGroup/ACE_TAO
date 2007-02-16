@@ -144,7 +144,7 @@ public:
  *
  * Another facet of ACE_Service_Config is that for a given thread,
  * it provides access to its current, process-global
- * ACE_Service_Gestalt instance through its current() method.
+ * ACE_Service_Gestalt instance through its curent() method.
  *
  * @note The signal_handler_ static member is allocated by the
  * ACE_Object_Manager.  The ACE_Service_Config constructor

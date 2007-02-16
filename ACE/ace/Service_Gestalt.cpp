@@ -1,19 +1,33 @@
 // $Id$
 
-#include "ace/OS_NS_sys_stat.h"
 #include "ace/Svc_Conf.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/Malloc.h"
 #include "ace/Service_Manager.h"
 #include "ace/Service_Types.h"
-#include "ace/Service_Repository.h"
+#include "ace/Containers.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Reactor.h"
+#include "ace/Thread_Manager.h"
+#include "ace/DLL.h"
 #include "ace/XML_Svc_Conf.h"
+#include "ace/SString.h"
 
 #ifndef ACE_LACKS_UNIX_SIGNALS
 # include "ace/Signal.h"
 #endif  /* !ACE_LACKS_UNIX_SIGNALS */
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_stat.h"
+
+#include "ace/TSS_T.h"
 #include "ace/Service_Gestalt.h"
+
+#include "ace/Svc_Conf_Param.h"
 
 ACE_RCSID (ace,
            Service_Gestalt,
@@ -90,180 +104,118 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 #endif
 {
   ACE_ASSERT (this->name_ != 0); // No name?
-
-  // Heap-allocate the forward declaration because that's where the
-  // repository exects them to be ...
-  ACE_NEW_NORETURN (this->dummy_,
+  ACE_NEW_NORETURN (this->dummy_, // Allocate the forward declaration ...
                     ACE_Service_Type (this->name_,  // ... use the same name
                                       0,            // ... inactive
                                       this->dummy_dll_, // ... bogus ACE_DLL
                                       0));              // ... no type_impl
 
-#ifndef ACE_NLOGGING
+  ACE_ASSERT (this->dummy_ != 0); // No memory?
+
   if(ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
-                ACE_LIB_TEXT (":<ctor> - new fwd decl")
-                ACE_LIB_TEXT (", repo[%d]=%@, name=%s, type=%@")
-                ACE_LIB_TEXT (", impl=%@, object=%@, active=%d\n"),
-                this->repo_begin_,
-                &this->repo_,
-                this->name_,
-                this->dummy_,
+                ACE_LIB_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@ [%d], ")
+                ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - inserting dummy forward\n"),
+                &this->repo_, this->repo_begin_, this->name_, this->dummy_,
                 this->dummy_->type (),
-                (this->dummy_->type () != 0)
-                  ? this->dummy_->type ()->object ()
-                  : 0,
+                (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
                 this->dummy_->active ()));
-#endif /* ACE_NLOGGING */
-
-  // No memory ...
-  if (this->dummy_ == 0)
-    return;
 
   // Note that the dummy_'s memory may be deallocated between invoking
-  // the ctor and dtor. For example, if the real dynamic service is
+  // the ctor and dtor, if the expected ("real") dynamic service is
   // inserted in the repository. See how this affects the destructor's
   // behavior, below.
-  if (this->repo_.insert (this->dummy_) != 0)
-    {
-      delete this->dummy_;
-      this->dummy_ = 0;
-    };
+  this->repo_.insert (this->dummy_);
 }
 
 
 /// Destructor
+
 ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
 {
-  // Lookup without ignoring suspended services. Making sure not to
-  // ignore any inactive services, since those may be forward
+  const ACE_Service_Type *tmp = 0;
+
+  // Lookup without ignoring suspended services. Making sure
+  // not to ignore any inactive services, since those may be forward
   // declarations
   size_t slot = 0;
-  const ACE_Service_Type *tmp = 0;
   int const ret = this->repo_.find_i (this->name_, slot, &tmp, false);
 
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
     {
-#ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_ERROR ((LM_WARNING,
-                    ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
-                    ACE_LIB_TEXT (":<dtor> - find %s failed, returns %d/%d\n"),
+                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s\n"),
+                    ret, this->name_));
+      return;
+    }
+
+  if (tmp != 0 && tmp->type () != 0)
+    {
+      // Something has registered a proper (non-forward-decl) service with
+      // the same name as our dummy.
+
+      if(ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s - updating [%d - %d]\n"),
+                    &this->repo_,
                     this->name_,
-                    ret,
-                    errno));
-#endif /* ACE_NLOGGING */
+                    this->repo_begin_,
+                    this->repo_.current_size ()));
 
-      delete this->dummy_;
-  }
+      // Relocate any static services. If any have been registered in
+      // the context of this guard, those really aren't static
+      // services because their code is in the DLL's code segment
+      this->repo_.relocate_i (this->repo_begin_, this->repo_.current_size (), tmp->dll());
+
+      // The ACE_Service_Gestalt::insert() modifies the memory for the
+      // original ACE_Service_Type instance. It deletes our dummy
+      // instance when replacing it with the actual implementation, so
+      // we are hereby simply giving up ownership.
+      this->dummy_ = 0;
+
+      if(ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
+                    ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - loaded\n"),
+                    &this->repo_, this->repo_begin_, this->name_, tmp, tmp->type (),
+                    (tmp->type () != 0) ? tmp->type ()->object () : 0,
+                    tmp->active ()));
+    }
   else
-  {
-    // So we found a service with the same name
-    if (tmp != 0 && tmp->type () != 0)
-      {
-        // If something did register a proper (non-forward-decl)
-        // service with the same name as our dummy, then it has
-        // acquired the ownership of the instance dummy_ points to.
-#ifndef ACE_NLOGGING
-        if(ACE::debug ())
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
-                      ACE_LIB_TEXT (":<dtor> - relocating [%d-%d]")
-                      ACE_LIB_TEXT (", repo=%@, name=%s\n"),
-                      this->repo_begin_,
-                      this->repo_.current_size (),
-                      &this->repo_,
-                      this->name_));
-#endif /* ACE_NLOGGING */
+    {
+      if(ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, ")
+                    ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - removing dummy forward\n"),
+                    &this->repo_, this->name_, this->dummy_, this->dummy_->type (),
+                    (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
+                    this->dummy_->active ()));
 
-        // Relocate any related static services. If any have been
-        // registered in the context of this guard, those really
-        // aren't static services because their code is in the DLL's
-        // code segment
-        this->repo_.relocate_i (this->repo_begin_,
-                                this->repo_.current_size (),
-                                tmp->dll());
-
-        // The ACE_Service_Gestalt::insert() modifies the memory for
-        // the original ACE_Service_Type instance. It will delete our
-        // dummy instance when replacing it with the actual
-        // implementation. We are hereby simply giving up ownership of
-        // something that no longer exists.
-        this->dummy_ = 0;
-
-#ifndef ACE_NLOGGING
-        if(ACE::debug ())
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
-                      ACE_LIB_TEXT (":<dtor> - done loading of %s")
-                      ACE_LIB_TEXT (", repo[%d]=%@, type=%@, impl=%@")
-                      ACE_LIB_TEXT (", object=%@, active=%d\n"),
-                      this->name_,
-                      this->repo_begin_,
-                      &this->repo_,
-                      tmp,
-                      tmp->type (),
-                      (tmp->type () != 0) ? tmp->type ()->object () : 0,
-                      tmp->active ()));
-#endif /* ACE_NLOGGING */
-      }
-    else
-      {
-#ifndef ACE_NLOGGING
-        if(ACE::debug ())
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
-                      ACE_LIB_TEXT (":<dtor> - removing fwd decl for %s")
-                      ACE_LIB_TEXT (", repo=%@, type=%@, impl=%@")
-                      ACE_LIB_TEXT (", object=%@, active=%d\n"),
-                      this->name_,
-                      &this->repo_,
-                      this->dummy_,
-                      this->dummy_->type (),
-                      (this->dummy_->type () != 0)
-                        ? this->dummy_->type ()->object ()
-                        : 0,
+      // The (dummy) forward declaration is still there and is
+      // the same, which means that no actual declaration was
+      // provided inside the guarded scope. Therefore, the forward
+      // declaration is no longer necessary.
+      if (this->repo_.remove_i (this->name_,
+                                const_cast< ACE_Service_Type**> (&this->dummy_)) == 0)
+        {
+          // If it is a dummy then deleting it while holding the repo lock is okay. There will be no
+          // call to service object's fini() and no possibility for deadlocks.
+          delete this->dummy_;
+        }
+      else
+        {
+          ACE_ERROR ((LM_WARNING,
+                      ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s, ")
+                      ACE_LIB_TEXT ("type=%@, impl=%@, object=%@, active=%d - dummy remove failed\n"),
+                      &this->repo_, this->name_, this->dummy_, this->dummy_->type (),
+                      (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
                       this->dummy_->active ()));
-#endif /* ACE_NLOGGING */
+        }
+    }
 
-        // The (dummy) forward declaration is still there and is the
-        // same, which means that no actual declaration was provided
-        // inside the guarded scope. Therefore, the forward
-        // declaration is no longer necessary.
-        if (this->repo_.remove_i (this->name_,
-                                  const_cast< ACE_Service_Type**>
-                                    (&this->dummy_)) == 0)
-          {
-            // If it is a dummy then deleting it while holding the
-            // repo lock is okay. There will be no call to service
-            // object's fini() and no possibility for deadlocks.
-            delete this->dummy_;
-          }
-        else
-          {
-#ifndef ACE_NLOGGING
-            ACE_ERROR ((LM_WARNING,
-                        ACE_LIB_TEXT ("ACE (%P|%t) Service_Type_Dynamic_Guard")
-                        ACE_LIB_TEXT (":<dtor> - failed to remove fwd decl %s")
-                        ACE_LIB_TEXT (", repo=%@, type=%@, impl=%@")
-                        ACE_LIB_TEXT (", object=%@, active=%d: -1/%d\n"),
-                        this->name_,
-                        &this->repo_,
-                        this->dummy_,
-                        this->dummy_->type (),
-                        (this->dummy_->type () != 0)
-                          ? this->dummy_->type ()->object ()
-                          : 0,
-                        this->dummy_->active (),
-                        errno));
-#endif /* ACE_NLOGGING */
-          }
-      }
-  }
-
-  // Clean up and bail ...
+  // Clean up
   this->dummy_ = 0;
 }
 
@@ -304,7 +256,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::dtor - this=%@, pss = %@\n"),
                 this, this->processed_static_svcs_));
-#endif /* ACE_NLOGGING */
+#endif
 
   if (this->processed_static_svcs_ &&
       !this->processed_static_svcs_->is_empty())
@@ -398,24 +350,6 @@ ACE_Service_Gestalt::load_static_svcs (void)
 
 } /* load_static_svcs () */
 
-
-
-/// Searches for a service object declaration in the local repo, only
-
-int
-ACE_Service_Gestalt::find (const ACE_TCHAR name[],
-                           const ACE_Service_Type **srp,
-                           int ignore_suspended) const
-{
-  // Closing the gestalt will have disassociated it from the
-  // repository. If the repository used to be owned by the gestalt, it
-  // will also have been destroyed - so just check for repo_ before
-  // doing anything with it.
-  if (this->repo_ != 0)
-    return this->repo_->find (name, srp, ignore_suspended);
-
-  return 0;
-}
 
 
 /// Find a static service descriptor by name
@@ -598,6 +532,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 
   const ACE_Service_Type *srp = 0;
   for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; i++)
+    //  if (this->repo_->find (svc_name, &srp) == -1)
     {
       const ACE_Static_Svc_Descriptor *assd =
         ACE_Service_Config::global()->find_processed_static_svc(svc_name);

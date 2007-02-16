@@ -1,3 +1,18 @@
+Fri Feb 16 13:38:04 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Reverting my changes since "Tue Feb 13 15:35:54 UTC 2007" as it
+          has been causing problems, in particular with borland and
+          no-threads builds.
+          
 Fri Feb 16 12:47:03 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.cpp (global): Removed the ACE_INLINE qualifier
