@@ -1,3 +1,21 @@
+Fri Feb 16 16:45:30 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/Network_Priority_Protocols_Hooks.h:
+        * tao/Network_Priority_Protocols_Hooks.cpp:
+        
+          Added a new type of protocols hook, that is used by the ORB core
+          to add in code to do DiffServ policy specific processing. If an
+          application uses the DiffServ library, then the library provides
+          the specialized hook that needs to be used for adding DiffServ
+          codepoints to requests/replies.
+        
+        * tao/Default_Network_Priority_Protocols_Hooks.h:
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
+        
+          The default implementations of the above mentioned new type
+          of protocols hooks. This implementation is used, in case the 
+          application does not use the DiffServ library.
+
 Fri Feb 16 16:43:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/orbconf.h:
