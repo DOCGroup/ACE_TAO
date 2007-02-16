@@ -1,3 +1,11 @@
+Fri Feb 16 12:47:03 UTC 2007  Steve Huston  <shuston@localhost.localdomain>
+
+        * ace/Service_Config.cpp (global): Removed the ACE_INLINE qualifier
+          from global() - if it's in the .cpp file, it shouldn't be marked
+          as inline, and isn't marked thusly in the .h file. Fixes unsats.
+        
+        * ace/Service_Config.h: Fixed spelling error.
+
 Thu Feb 15 20:04:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_NS_stdlib.cpp (mkstemp_emulation):
