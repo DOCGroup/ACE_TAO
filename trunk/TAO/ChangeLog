@@ -1,3 +1,17 @@
+Fri Feb 16 16:35:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy:
+        
+          Checked in TAO support to specify client-side and server-side
+          policies to add DiffServ codepoints to requests and replies. This
+          support is different from the current RTCORBA support for adding
+          DiffServ codepoints, where there is a one-to-one mapping between
+          the RTCORBA thread priorities and the DiffServ codepoints that
+          are added to the IP packets. This support defines policies on the
+          client as well as the server side, to specify the DiffServ codepoints
+          that need to be added to the requests/replies. And the policy
+          can be overridden at the ORB, THREAD, and the OBJECT levels.
+
 Thu Feb 15 15:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ORB.h:
