@@ -135,8 +135,7 @@ namespace
 
       os << "_ptr" << endl
          << "get_" << p.name () << " (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << ");" << endl;
     }
 
     virtual void
@@ -148,8 +147,7 @@ namespace
       Traversal::ConsumerData::belongs (c, belongs_);
 
       os << " *ev" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << ");" << endl;
    }
 
   private:
@@ -306,46 +304,17 @@ namespace
 
       os << "virtual void" << endl
          << "set_session_context (" << endl
-         << STRS[COMP_SC] << "_ptr ctx" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+         << STRS[COMP_SC] << "_ptr ctx);" << endl;
 
-      os << "virtual void" << endl
-         << "ciao_preactivate (" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+      os << "virtual void ciao_preactivate ();" << endl;
 
-      os << "virtual void" << endl
-         << "ciao_postactivate (" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+      os << "virtual void ciao_postactivate ();" << endl;
 
-      os << "virtual void" << endl
-         << "ccm_activate (" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+      os << "virtual void ccm_activate ();" << endl;
 
-      os << "virtual void" << endl
-         << "ccm_passivate (" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+      os << "virtual void ccm_passivate ();" << endl;
 
-      os << "virtual void" << endl
-         << "ccm_remove (" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+      os << "virtual void ccm_remove ();" << endl;
     }
 
     virtual void
@@ -590,11 +559,7 @@ namespace
 
       os << "// Implicit operations." << endl << endl
          << "virtual " << STRS[COMP_EC] << "_ptr" << endl
-         << "create (" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_CE] << "));" << endl;
+         << "create ();" << endl;
     }
 
     virtual void

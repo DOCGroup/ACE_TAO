@@ -1,3 +1,23 @@
+Fri Feb 15 19:41:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIDLC/AttributeHeaderEmitters.cpp:
+        * CIDLC/AttributeSourceEmitters_T.hpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/OperationHeaderEmitters.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+          Removed generation of ACE_THROW_SPEC, maybe some raise methods can be
+          removed internally but that is for the next cleanup round
+
+        * examples/Null_Component/Null_Component_exec.h:
+          Layout change
+
+        * examples/Null_Component/StaticDAnCEApp.cpp:
+          Updated include
+
 Fri Feb 15 09:34:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Core.mpc:

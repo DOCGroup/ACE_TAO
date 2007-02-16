@@ -87,10 +87,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -102,7 +100,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -122,8 +119,7 @@ namespace
 
       os << "// Get component implementation." << endl
          << "virtual CORBA::Object_ptr" << endl
-         << "_get_component ()" << endl
-         << STRS[EXCP_SNGL] << ";" << endl
+         << "_get_component ();" << endl
          << "protected:" << endl
          << "// Facet executor." << endl
          << i.scoped_name ().scope_name ()<< "::CCM_" << i.name ()
@@ -173,8 +169,7 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << "ev)" << endl
-            << STRS[EXCP_SNGL] << ";" << endl;
+        os << "ev);" << endl;
       }
 
       virtual void
@@ -186,8 +181,7 @@ namespace
 
         os << endl
             << "get_connection_" << u.name ()
-            << " ()" << endl
-            << STRS[EXCP_SNGL] << ";" << endl;
+            << " ();" << endl;
       }
 
       virtual void
@@ -195,8 +189,7 @@ namespace
       {
         os << "virtual " << u.scoped_name () << "Connections *" << endl
            << "get_connections_" << u.name ()
-           << " ()" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << " ();" << endl;
       }
 
       virtual void
@@ -208,8 +201,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "ev)" << endl
-            << STRS[EXCP_SNGL] << ";" << endl;
+        os << "ev);" << endl;
       }
 
     private:
@@ -238,20 +230,14 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "));" << endl;
+        os << "Consumer_ptr c);" << endl;
 
         os << "virtual ";
 
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr" << endl
-           << "disconnect_" << e.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl;
+           << "disconnect_" << e.name () << " ();" << endl;
       }
 
       virtual void
@@ -262,21 +248,14 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "_ptr)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+        os << "_ptr);" << endl;
 
         os << "virtual ";
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
-           << "disconnect_" << u.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl;
+           << "disconnect_" << u.name () << " ();" << endl;
       }
 
       virtual void
@@ -287,11 +266,7 @@ namespace
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
-        os << "_ptr)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+        os << "_ptr);" << endl;
 
         os << "virtual ";
 
@@ -299,10 +274,7 @@ namespace
 
         os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
-           << "::Components::Cookie * ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+           << "::Components::Cookie * ck);" << endl;
       }
 
       virtual void
@@ -313,18 +285,12 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl;
+        os << "Consumer_ptr c);" << endl;
 
         os << "// CIAO-specific." << endl
            << STRS[COMP_CK] << " *" << endl
            << "subscribe_" << p.name () << "_generic (" << endl
-           << STRS[COMP_ECB] << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl;
+           << STRS[COMP_ECB] << "_ptr c);" << endl;
 
         os << "virtual ";
 
@@ -332,10 +298,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << "unsubscribe_" << p.name () << " (" << endl
-           << STRS[COMP_CK] << " *ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+           << STRS[COMP_CK] << " *ck);" << endl;
       }
 
     private:
@@ -475,12 +438,8 @@ namespace
            << endl << endl;
 
         os << "virtual " << STRS[COMP_CD] << " *" << endl
-           << "get_registered_consumers (" << endl
-           << "const char *publisher_name)" << endl
-           << STRS[EXCP_START] << endl
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IN] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+           << "get_registered_consumers (const char *publisher_name);"
+           << endl;
       }
 
       os << "// CIAO-specific." << endl << endl;
@@ -575,8 +534,7 @@ namespace
 
         os << "_ptr" << endl
            << "provide_" << p.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
       }
 
       virtual void
@@ -587,21 +545,14 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+        os << "_ptr c);" << endl;
 
         os << "virtual ";
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr" << endl
-           << "disconnect_" << u.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl;
+           << "disconnect_" << u.name () << " ();" << endl;
 
         os << "virtual ";
 
@@ -609,8 +560,7 @@ namespace
 
         os << "_ptr" << endl
            << "get_connection_" << u.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
       }
 
       virtual void
@@ -621,11 +571,7 @@ namespace
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
-        os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+        os << "_ptr c);" << endl;
 
         os << "virtual ";
 
@@ -633,15 +579,11 @@ namespace
 
         os << "_ptr" << endl
            << "disconnect_" << u.name () << " (" << endl
-           << "::Components::Cookie * ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+           << "::Components::Cookie * ck);" << endl;
 
         os << "virtual " << u.scoped_name () << "Connections *" << endl
            << "get_connections_" << u.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
       }
 
       virtual void
@@ -690,15 +632,11 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << " *evt" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
 
         os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "virtual void" << endl
-           << "push_event ( ::Components::EventBase *ev)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "));" << endl;
+           << "push_event ( ::Components::EventBase *ev);" << endl;
 
         // @@ GD added below code.
 
@@ -706,23 +644,18 @@ namespace
            << "virtual void" << endl
            << "ciao_push_event ( ::Components::EventBase *ev," << endl
            << "const char * source_id," << endl
-           << "::CORBA::TypeCode_ptr tc)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "));" << endl;
+           << "::CORBA::TypeCode_ptr tc);" << endl;
 
         os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
            << "virtual CORBA::Boolean" << endl
            << "ciao_is_substitutable (" << endl
            << "const char *event_repo_id" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
 
         os << "// Get component implementation." << endl
            << "virtual CORBA::Object_ptr" << endl
            << "_get_component (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
 
         os << "protected:" << endl
            << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
@@ -743,8 +676,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << "get_consumer_" << c.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
       }
 
       virtual void
@@ -755,20 +687,14 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "));" << endl;
+        os << "Consumer_ptr c);" << endl;
 
         os << "virtual ";
 
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr" << endl
-           << "disconnect_" << e.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "));" << endl;
+           << "disconnect_" << e.name () << " ();" << endl;
       }
 
       virtual void
@@ -779,18 +705,12 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl;
+        os << "Consumer_ptr c);" << endl;
 
         os << "// CIAO-specific." << endl
            << STRS[COMP_CK] << " *" << endl
            << "subscribe_" << p.name () << "_generic (" << endl
-           << STRS[COMP_ECB] << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "));" << endl;
+           << STRS[COMP_ECB] << "_ptr c);" << endl;
 
         os << "virtual ";
 
@@ -798,10 +718,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << "unsubscribe_" << p.name () << " (" << endl
-           << STRS[COMP_CK] << " *ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "));" << endl;
+           << STRS[COMP_CK] << " *ck);" << endl;
       }
 
     private:
@@ -871,8 +788,7 @@ namespace
       {
         os << "::CORBA::Object_ptr" << endl
            << "provide_" << p.name () << "_i (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
       }
 
       virtual void
@@ -890,8 +806,7 @@ namespace
       {
         os << "::Components::EventConsumerBase_ptr" << endl
            << "get_consumer_" << c.name () << "_i (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << ";" << endl;
+           << ");" << endl;
       }
 
       virtual void
@@ -1056,85 +971,45 @@ namespace
       os << "virtual " << STRS[COMP_CK] << " *" << endl
          << "connect (" << endl
          << "const char *name," << endl
-         << "CORBA::Object_ptr connection)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl;
+         << "CORBA::Object_ptr connection);" << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
          << "disconnect (" << endl
          << "const char *name," << endl
-         << STRS[COMP_CK] << " *ck)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_CR] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl;
+         << STRS[COMP_CK] << " *ck);" << endl;
 
       os << "virtual " << STRS[COMP_RD] << " *" << endl
-         << "get_all_receptacles (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << "get_all_receptacles ();" << endl;
 
       os << "// Operations for Events interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
          << "subscribe (" << endl
          << "const char *publisher_name," << endl
-         << STRS[COMP_ECB] << "_ptr subscriber)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_ECL] << "));" << endl;
+         << STRS[COMP_ECB] << "_ptr subscriber);" << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
          << "unsubscribe (" << endl
          << "const char *publisher_name," << endl
-         << STRS[COMP_CK] << " *ck)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl;
+         << STRS[COMP_CK] << " *ck);" << endl;
 
       os << "virtual void" << endl
          << "connect_consumer (" << endl
          << "const char *emitter_name," << endl
-         << STRS[COMP_ECB] << "_ptr consumer)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "));" << endl;
+         << STRS[COMP_ECB] << "_ptr consumer);" << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-         << "disconnect_consumer (" << endl
-         << "const char *source_name)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_NC] << "));" << endl;
+         << "disconnect_consumer (const char *source_name);" << endl;
 
       os << "virtual " << STRS[COMP_PD] << " *" << endl
-         << "get_all_publishers (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << "get_all_publishers ();" << endl;
 
       os << "virtual " << STRS[COMP_ED] << " *" << endl
-         << "get_all_emitters (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << "get_all_emitters ();" << endl;
 
       os << "// CIAO specific operations on the servant. " << endl
          << "CORBA::Object_ptr" << endl
-         << "get_facet_executor (" << endl
-         << "const char *name)" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS]<< "));" << endl;
+         << "get_facet_executor (const char *name);" << endl;
 
       os << "private:" << endl << endl;
 
@@ -1159,9 +1034,7 @@ namespace
 
       os << "private:" << endl << endl
          << "void" << endl
-         << "populate_port_tables (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl;
+         << "populate_port_tables ();" << endl;
 
       // Generate private operations for ports.
       {
