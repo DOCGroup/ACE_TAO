@@ -102,6 +102,7 @@ module IOP
   const ComponentId TAG_FT_HEARTBEAT_ENABLED = 29;
   const ServiceId FT_GROUP_VERSION = 12;
   const ServiceId FT_REQUEST = 13;
+  const ServiceId REP_NWPRIORITY = 14;
 
   // The following are defined in 03-01-11
   const ProfileId TAG_UIPMC = 3;
