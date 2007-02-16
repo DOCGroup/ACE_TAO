@@ -1,3 +1,15 @@
+Fri Feb 16 16:43:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/orbconf.h:
+        
+          Added new TAO_Cached_Policy_Type definitions for the 
+          newly added DiffServ policies.
+        
+        * tao/IOP_IOR.pidl:
+        
+          Added a new service context ServiceId for the DiffServ policy
+          support.
+
 Fri Feb 16 16:35:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy:
