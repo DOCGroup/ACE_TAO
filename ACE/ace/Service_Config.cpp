@@ -338,7 +338,7 @@ ACE_Service_Config::static_svcs (void)
 
 /// Return the global configuration instance. Allways returns the same
 /// instance
-ACE_INLINE ACE_Service_Config *
+ACE_Service_Config *
 ACE_Service_Config::global (void)
 {
   return ACE_SERVICE_CONFIG_SINGLETON::instance ();
