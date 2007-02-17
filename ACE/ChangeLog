@@ -1,3 +1,9 @@
+Fri Feb 16 23:48:55 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+
+          ACE_INLINE makes sense in .inl files (thanks Steve)
+
 Fri Feb 16 13:38:04 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service_Base.cpp:
@@ -12,13 +18,13 @@ Fri Feb 16 13:38:04 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
           Reverting my changes since "Tue Feb 13 15:35:54 UTC 2007" as it
           has been causing problems, in particular with borland and
           no-threads builds.
-          
+
 Fri Feb 16 12:47:03 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.cpp (global): Removed the ACE_INLINE qualifier
           from global() - if it's in the .cpp file, it shouldn't be marked
           as inline, and isn't marked thusly in the .h file. Fixes unsats.
-        
+
         * ace/Service_Config.h: Fixed spelling error.
 
 Thu Feb 15 20:04:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
@@ -30,7 +36,7 @@ Thu Feb 15 20:04:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           up being used for different processes and/or threads, resulting
           in identical filenames being generated.
 
-	  Addressed potential race condition on platforms that do not
+          Addressed potential race condition on platforms that do not
           inline the value of ACE_Numeric_Limits<>::max().
 
 Thu Feb 15 17:53:53 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
