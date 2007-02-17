@@ -1,3 +1,10 @@
+Sat Feb 17 03:45:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
+
+          Updated template file to match the recent enhancements to StaticDAnCEApp.cpp
+          found in examples/Null_Component/StaticDAnCEApp.cpp
+ 
 Fri Feb 15 19:41:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/AttributeHeaderEmitters.cpp:
