@@ -1,4 +1,0 @@
-//$Id$
-project(*Timeout): orbsvcsexe, naming, event, event_skel, messaging, threads {
-  exename = TimeoutTest
-}
