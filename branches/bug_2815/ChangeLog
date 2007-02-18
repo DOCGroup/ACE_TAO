@@ -1,3 +1,11 @@
+Sun Feb 18 21:13:41 UTC 2007  coryan  <coryan@atdesk.com>
+
+        * tests/tests.mpc: 
+        * tests/Bug_2815_Regression_Test.cpp:
+          Add new regression test for bug 2815.  I have not added the test
+          to the automated test suite because (1) it fails, and (2) it is
+          a test to reproduce performance 
+
 Fri Feb 16 23:48:55 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp:
