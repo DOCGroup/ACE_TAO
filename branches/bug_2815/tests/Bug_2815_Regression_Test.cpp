@@ -486,11 +486,14 @@ handle_exception(ACE_HANDLE)
   if (r >= 0)
     {
       master_handler_->notifications_skipped(r);
+      delete this;
       return 0;
     }
 	
   ACE_ERROR((LM_ERROR,
 	     ACE_TEXT ("Cannot remove handler %d in %C test\n"),
 	     id_, test_name_));
-  return -1;
+
+  delete this;
+  return 0;
 }
