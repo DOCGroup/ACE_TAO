@@ -1,3 +1,10 @@
+Mon Feb 19 16:37:26 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+        
+          Fixed the RTEMS_NO_NETWORK build errors. The errors were in
+          throwing exceptions in lines 96 and 102.
+
 Mon Feb 19 14:42:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
