@@ -10,7 +10,7 @@
 #ifndef DOMAIN_CHANGE_IDL
 #define DOMAIN_CHANGE_IDL
 
-#include "ciao/Deployment_TargetManager.idl"
+#include "DAnCE/Deployment/Deployment_TargetManager.idl"
 #include "ciao/CCM_Events.idl"
 
 module CIAO
