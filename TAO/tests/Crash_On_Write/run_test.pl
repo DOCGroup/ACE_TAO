@@ -35,7 +35,7 @@ if ($client != 0) {
 # but a status of -1 would be a serious error.
 $server = $SV->WaitKill (60);
 
-if ($server == -10) {
+if ($server == -1) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
