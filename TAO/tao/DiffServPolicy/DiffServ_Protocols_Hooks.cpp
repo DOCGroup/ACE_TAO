@@ -76,7 +76,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::add_rep_np_service_context_hook (
   service_context.set_context (IOP::REP_NWPRIORITY, cdr);
 }
 
-const CORBA::Long
+CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Service_Context &sc)
 {
@@ -106,7 +106,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   return dscp_codepoint;
 }
 
-const CORBA::Long
+CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Stub *stub, CORBA::Object *object)
 {
