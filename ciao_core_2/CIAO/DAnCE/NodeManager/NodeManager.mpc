@@ -18,7 +18,7 @@ project(NodeManager_svnt): ciao_component_dnc, ciao_deployment_svnt, iortable, i
   }
 }
 
-project(NodeManager): ciao_server_dnc, iortable, ifr_client, dance_extension_stub, ciao_nodeapplicationmanager, ciao_targetmanager_stub, ciao_nodemanager_stub {
+project(NodeManager): ciao_server_dnc, iortable, ifr_client, dance_extension_stub, ciao_nodeapplicationmanager, ciao_targetmanager_stub, ciao_nodemanager_stub, ciaoexe {
   after += NodeManager_svnt
   libs += NodeManager
   exename = NodeManager
