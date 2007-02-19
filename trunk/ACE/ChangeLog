@@ -1,3 +1,10 @@
+Mon Feb 19 12:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added Secure_Invocation test, this tests basic functionality but
+          seems to fail at this moment because of some broken support in
+          TAO
+
 Fri Feb 16 23:48:55 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp:
