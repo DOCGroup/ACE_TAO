@@ -38,8 +38,9 @@ ACE_SSL_Context::check_context (void)
   if (this->context_ == 0)
     {
       this->set_mode ();
-      ::SSL_CTX_set_verify (this->context_, this->default_verify_mode (), 0);
     }
+
+  ::SSL_CTX_set_verify (this->context_, this->default_verify_mode (), 0);
 }
 
 ACE_INLINE SSL_CTX *

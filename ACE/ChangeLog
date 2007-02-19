@@ -1,3 +1,11 @@
+Mon Feb 19 18:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.h:
+          Layout change
+
+        * ace/SSL/SSL_Context.inl (check_context):
+          Set the verify mode correctly, fixes bugzilla bug 2819
+
 Mon Feb 19 12:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
