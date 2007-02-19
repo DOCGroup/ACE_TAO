@@ -1,3 +1,9 @@
+Mon Feb 19 18:41:22 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tao/Default_Network_Priority_Protocols_Hooks.cpp:
+          Fixed return types in two versions of get_dscp_codepoint().  The
+          return type did not match the header file types.
+
 Mon Feb 19 16:37:26 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
