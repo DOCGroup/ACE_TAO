@@ -83,13 +83,10 @@ namespace TAO
     ACE_Countdown_Time countdown (max_time_val);
 
     TAO_Invocation_Endpoint_Selector *es =
-      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector (
-          );
+      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector ();
 
     // Select the endpoint
-    es->select_endpoint (this,
-                         max_time_val
-                        );
+    es->select_endpoint (this, max_time_val);
 
     if (this->transport_.get () == 0)
       {
