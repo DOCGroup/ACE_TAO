@@ -669,18 +669,20 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
      ? new_file_pointer.QuadPart
      : static_cast<ACE_LOFF_T> (-1));
 #  else
-  LONG low_offset = ACE_LOW_PART(offset);
-  LONG high_offset = ACE_HIGH_PART(offset);
+  LARGE_INTEGER l_offset;
+  l_offset.QuadPart = offset;
+  LONG low_offset = l_offset.LowPart;
+  LONG high_offset = l_offset.HighPart;
 
-  ACE_OFF_T const result = ::SetFilePointer (handle,
-                                             low_offset,
-                                             &high_offset,
-                                             whence);
-
-  return
-    ((result != INVALID_SET_FILE_POINTER || GetLastError () == NO_ERROR)
-     ? result
-     : static_cast<ACE_LOFF_T> (-1));
+  l_offset.LowPart = ::SetFilePointer (handle,
+                                       low_offset,
+                                       &high_offset,
+                                       whence);
+  if (l_offset.LowPart == INVALID_SET_FILE_POINTER &&
+      GetLastError () != NO_ERROR)
+    return static_cast<ACE_LOFF_T> (-1);
+  l_offset.HighPart = high_offset;
+  return l_offset.QuadPart;
 #  endif  /* ACE_LACKS_SETFILEPOINTEREX */
 # else
     ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);

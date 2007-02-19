@@ -1,3 +1,10 @@
+Mon Feb 19 21:02:55 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Atomic_Op.inl:
+        * ace/OS_NS_unistd.inl: Adjust code for less-than-modern Win32 systems
+          such as Pharlap ETS to work with 64 bit file offsets and the lack
+          of interlocked exchange-add.
+
 Mon Feb 19 18:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Context.h:
