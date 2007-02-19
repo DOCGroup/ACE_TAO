@@ -1,3 +1,30 @@
+Mon Feb 19 21:29:32 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.cpp:
+          Modified the purging algorithm.  The algorithm used a temporary
+          list to store the elements not purged, so basically all nodes
+          were either moved to the free list or to the temporary list.
+          The new algorithm only removes the nodes that needs purging.
+          In the vast majority of the cases this is more efficient because
+          most nodes are not purged.
+          This resulted in a factor of 2 improvement for
+          tests/Bug_2815_Regression_Test, keep in mind that in this
+          program 1/16th of the nodes are purged.  So in practice I would
+          expect even better results.
+          I also changed the order in which the free nodes are re-used, I
+          think LIFO order has a better chance of re-using the cache, but
+          I have no evidence or experiments to prove this.
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.cpp:
+          Renamed the remove_i() function to unsafe_remove() and promoted
+          its access to "public".  The function is not safe to use in
+          general, thus the name, but it resulted in a factor of 2
+          performance improvement for ACE_Notification_Queue.
+
+        * tests/Bug_2815_Regression_Test.cpp:
+          Fixed memory leaks (in the test not the library)
+
 Mon Feb 19 20:32:34 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Notification_Queue.h:

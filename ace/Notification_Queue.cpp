@@ -96,35 +96,45 @@ purge_pending_notifications(ACE_Event_Handler * eh,
   if (this->notify_queue_.is_empty ())
     return 0;
 
-  Buffer_List local_queue;
-
   int number_purged = 0;
-  while(!notify_queue_.is_empty())
+  ACE_Notification_Queue_Node * node = notify_queue_.head();
+  while(node != 0)
     {
-      ACE_Notification_Queue_Node * node = notify_queue_.pop_front();
-
       if (!node->matches_for_purging(eh))
 	{
-	  // Easy case, save the node and continue;
-	  local_queue.push_back(node);
+	  // Easy case, skip to the next node
+          node = node->next();
 	  continue;
 	}
 
       if (!node->mask_disables_all_notifications(mask))
 	{
+          // ... another easy case, skip this node too, but clear the
+          // mask first ...
 	  node->clear_mask(mask);
-	  local_queue.push_back(node);
+          node = node->next();
 	  continue;
 	}
 
-      free_queue_.push_back(node);
+      // ... this is the more complicated case, we want to remove the
+      // node from the notify_queue_ list.  First save the next node
+      // on the list:
+      ACE_Notification_Queue_Node * next = node->next();
+
+      // ... then remove it ...
+      notify_queue_.unsafe_remove(node);
+      ++number_purged;
+
+      // ... release resources ...
       ACE_Event_Handler *event_handler = node->get().eh_;
       event_handler->remove_reference ();
-      ++number_purged;
-    }
+      
+      // ... now this is a free node ...
+      free_queue_.push_front(node);
 
-  // now put it back in the notify queue
-  local_queue.swap(notify_queue_);
+      // ... go to the next node, if there is one ...
+      node = next;
+    }
 
   return number_purged;
 }
@@ -188,7 +198,7 @@ ACE_Notification_Queue::pop_next_notification(
     notify_queue_.pop_front();
 
   current = node->get();
-  free_queue_.push_back(node);
+  free_queue_.push_front(node);
 
   if(!this->notify_queue_.is_empty())
     {
