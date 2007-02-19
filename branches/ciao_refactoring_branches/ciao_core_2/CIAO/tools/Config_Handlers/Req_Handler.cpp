@@ -2,7 +2,7 @@
 
 #include "Req_Handler.h"
 #include "Property_Handler.h"
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
 #include "ciao/CIAO_common.h"
 namespace CIAO
 {

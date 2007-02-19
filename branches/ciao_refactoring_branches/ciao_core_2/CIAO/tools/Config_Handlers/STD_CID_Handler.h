@@ -16,7 +16,7 @@
 #include "Utils/XML_Helper.h"
 #include "IDREF_Base.h"
 #include "Config_Handlers_Export.h"
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
