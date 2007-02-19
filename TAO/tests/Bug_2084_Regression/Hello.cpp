@@ -24,7 +24,7 @@ Hello::get_string (::CORBA::Long caller_threadid)
   ACE_Thread_ID this_ID;
   this_ID.id(this->thr_id_);
 
-  if ((::CORBA::Long)ACE_Thread::self () != caller_threadid) // this means a remote call was made
+  if (static_cast<CORBA::Long> ((size_t)ACE_Thread::self ()) != caller_threadid) // this means a remote call was made
     {
       if (this->orb_->orb_core ()->optimize_collocation_objects () &&
           this->orb_->orb_core ()->use_global_collocation ())

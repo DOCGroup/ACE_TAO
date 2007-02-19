@@ -1,8 +1,18 @@
+Mon Feb 19 19:44:59 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1495_Regression/Client_Task.cpp:
+        * tests/Bug_1495_Regression/test_i.cpp:
+        * tests/Bug_2084_Regression/EventNode.cpp:
+        * tests/Bug_2084_Regression/Hello.cpp:
+
+          Use a combination of C-style cast and static_cast<> to avoid
+          warnings from gcc in 64-bit mode.
+
 Mon Feb 19 19:00:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Crash_On_Write/run_test.pl:
 
-          Extend the client timeout so that very slow machines can complete 
+          Extend the client timeout so that very slow machines can complete
           the test.
 
 Mon Feb 19 18:59:01 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
