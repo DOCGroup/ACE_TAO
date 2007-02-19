@@ -1,3 +1,17 @@
+Mon Feb 19 20:32:34 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.h:
+        * ace/Notification_Queue.inl:
+	* ace/Notification_Queue.cpp:
+          Re-factored to use ACE_Intrusive_List in the implementation.
+          This eliminates memory allocations during additions and removal
+          of elements.  Also, many of the operations cannot fail, so the
+          code became smaller.
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+          Add a swap() member function.
+
 Mon Feb 19 04:49:35 UTC 2007  coryan  <coryan@atdesk.com>
 
         * ace/Notification_Queue.h:

@@ -99,6 +99,9 @@ public:
    */
   void remove (T *node);
 
+  /// Swap two lists
+  void swap(ACE_Intrusive_List<T> & rhs);
+
 private:
   /// Remove a element from the list
   /**

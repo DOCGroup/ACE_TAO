@@ -3,8 +3,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Event_Handler.h"
-
 /**
  *  @file Notification_Queue.h
  *
@@ -13,7 +11,56 @@
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #include "ace/Copy_Disabled.h"
+#include "ace/Event_Handler.h"
+#include "ace/Intrusive_List.h"
+#include "ace/Intrusive_List_Node.h"
 #include "ace/Unbounded_Queue.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+ * @class ACE_Notification_Queue_Node
+ *
+ * @brief Helper class
+ */
+class ACE_Export ACE_Notification_Queue_Node
+  : public ACE_Intrusive_List_Node<ACE_Notification_Queue_Node>
+{
+public:
+  /**
+   * @brief Constructor
+   */
+  ACE_Notification_Queue_Node();
+
+  /**
+   * @brief Modifier change the contained buffer
+   */
+  void set(ACE_Notification_Buffer const & rhs);
+
+  /**
+   * @brief Accessor, fetch the contained buffer
+   */
+  ACE_Notification_Buffer const & get() const;
+
+  /**
+   * @brief Checks if the event handler matches the purge condition
+   */
+  bool matches_for_purging(ACE_Event_Handler * eh) const;
+
+  /**
+   * @brief Return true if clearing the mask would leave no
+   * notifications to deliver.
+   */
+  bool mask_disables_all_notifications(ACE_Reactor_Mask mask);
+
+  /**
+   * @brief Clear the notifications specified by @c mask
+   */
+  void clear_mask(ACE_Reactor_Mask mask);
+
+private:
+  ACE_Notification_Buffer contents_;
+};
 
 /**
  * @class ACE_Notification_Queue
@@ -30,7 +77,7 @@
  *
  * This code was refactored from Select_Reactor_Base.
  */
-class ACE_Notification_Queue : private ACE_Copy_Disabled
+class ACE_Export ACE_Notification_Queue : private ACE_Copy_Disabled
 {
 public:
   ACE_Notification_Queue();
@@ -84,17 +131,25 @@ private:
   /// ACE_Notification_Buffer.  The idea is to amortize allocation
   /// costs by allocating multiple ACE_Notification_Buffer objects at
   /// a time.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
+  ACE_Unbounded_Queue <ACE_Notification_Queue_Node*> alloc_queue_;
+
+  typedef ACE_Intrusive_List<ACE_Notification_Queue_Node> Buffer_List;
 
   /// Keeps track of all pending notifications.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
+  Buffer_List notify_queue_;
 
   /// Keeps track of all free buffers.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
+  Buffer_List free_queue_;
 
   /// Synchronization for handling of queues.
   ACE_SYNCH_MUTEX notify_queue_lock_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/Notification_Queue.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
