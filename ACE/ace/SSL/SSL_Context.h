@@ -131,8 +131,7 @@ public:
    *       been set since key verification is performed against the
    *       certificate, among other things.
    */
-  int private_key (const char *file_name,
-                   int type = SSL_FILETYPE_PEM);
+  int private_key (const char *file_name, int type = SSL_FILETYPE_PEM);
 
   /// Verify that the private key is valid.
   /**
@@ -170,11 +169,11 @@ public:
    *  copy of the file and path name of the most recently added
    *  @a ca_file or @a ca_path.
    *
-   *  @param[in] ca_file           CA file pathname. Passed to 
+   *  @param[in] ca_file           CA file pathname. Passed to
    *                               @c SSL_CTX_load_verify_locations() if not
    *                               0. If 0, behavior depends on the value of
    *                               @a use_env_defaults.
-   *  @param[in] ca_dir            CA directory pathname. Passed to 
+   *  @param[in] ca_dir            CA directory pathname. Passed to
    *                               @c SSL_CTX_load_verify_locations() if not
    *                               0. If 0, behavior depends on the value of
    *                               @a use_env_defaults.
@@ -263,9 +262,7 @@ public:
    *  Note that this method overrides the use of the
    *  default_verify_mode() method.
    */
-  void set_verify_peer (int strict = 0,
-                        int once = 1,
-                        int depth = 0);
+  void set_verify_peer (int strict = 0, int once = 1, int depth = 0);
 
 
   /// TODO: a implementation that will lookup the CTX table for the list
@@ -274,8 +271,6 @@ public:
   /// certificates.
   // const char* ca_file_name(void) const;
   // const char* ca_dir_name(void) const;
-
-
 
   /**
    * Set and query the default verify mode for this context, it is
