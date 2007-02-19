@@ -33,7 +33,8 @@ module Components
 
     void set_rollback_only()
       raises (IllegalState);
-
+    
+    // QoS4CCM
     Object resolve_service_reference(in string service_id);
     
   };
