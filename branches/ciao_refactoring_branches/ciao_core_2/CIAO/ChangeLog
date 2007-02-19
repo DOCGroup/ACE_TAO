@@ -1,3 +1,13 @@
+Mon Feb 19 19:40:19 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciaoexe.mpb
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        
+          Modified to install exes to CIAO_ROOT/bin.
+
 Mon Feb 19 19:33:32 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorCB.cpp
