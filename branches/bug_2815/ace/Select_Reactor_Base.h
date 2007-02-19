@@ -27,7 +27,7 @@
 #include "ace/Reactor_Impl.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-# include "ace/Unbounded_Queue.h"
+# include "ace/Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 #ifdef ACE_WIN32
@@ -253,24 +253,18 @@ protected:
   int max_notify_iterations_;
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  // = This configuration queues up notifications in separate buffers that
-  //   are in user-space, rather than stored in a pipe in the OS
-  //   kernel.  The kernel-level notifications are used only to trigger
-  //   the Reactor to check its notification queue.  This enables many
-  //   more notifications to be stored than would otherwise be the case.
-
-  /// Keeps track of allocated arrays of type
-  /// ACE_Notification_Buffer.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
-
-  /// Keeps track of all pending notifications.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
-
-  /// Keeps track of all free buffers.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
-
-  /// Synchronization for handling of queues.
-  ACE_SYNCH_MUTEX notify_queue_lock_;
+  /**
+   * @brief A user-space queue to store the notifications.
+   *
+   * The notification pipe has OS-specific size restrictions.  That
+   * is, no more than a certain number of bytes may be stored in the
+   * pipe without blocking.  This limit may be too small for certain
+   * applications.  In this case, ACE can be configured to store all
+   * the events in user-space.  The pipe is still needed to wake up
+   * the reactor thread, but only one event is sent through the pipe
+   * at a time.
+   */
+  ACE_Notification_Queue notification_queue_;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 

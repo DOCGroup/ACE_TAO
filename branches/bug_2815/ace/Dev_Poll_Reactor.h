@@ -53,7 +53,7 @@
 #include "ace/Token.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-# include "ace/Unbounded_Queue.h"
+# include "ace/Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 #if defined (ACE_HAS_DEV_POLL)
@@ -283,30 +283,17 @@ protected:
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   /**
-   * @name Reactor Notification Attributes
+   * @brief A user-space queue to store the notifications.
    *
-   * This configuration queues up notifications in separate buffers
-   * that are in user-space, rather than stored in a pipe in the OS
-   * kernel.  The kernel-level notifications are used only to trigger
-   * the Reactor to check its notification queue.  This enables many
-   * more notifications to be stored than would otherwise be the
-   * case.
+   * The notification pipe has OS-specific size restrictions.  That
+   * is, no more than a certain number of bytes may be stored in the
+   * pipe without blocking.  This limit may be too small for certain
+   * applications.  In this case, ACE can be configured to store all
+   * the events in user-space.  The pipe is still needed to wake up
+   * the reactor thread, but only one event is sent through the pipe
+   * at a time.
    */
-  //@{
-
-  /// ACE_Notification_Buffers are allocated in chunks. Each time a chunk is
-  /// allocated, the chunk is added to alloc_queue_ so it can be freed later.
-  /// Each individual ACE_Notification_Buffer is added to the free_queue_
-  /// when it's free. Those in use for queued notifications are placed on the
-  /// notify_queue_.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
-
-  /// Synchronization for handling of queues.
-  ACE_SYNCH_MUTEX notify_queue_lock_;
-
-  //@}
+  ACE_Notification_Queue notification_queue_;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 };

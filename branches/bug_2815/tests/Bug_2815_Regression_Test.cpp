@@ -105,6 +105,19 @@ private:
   void notify_handlers(
     int nhandlers, One_Shot_Handler ** handlers);
 
+  /**
+   * @brief Helpful for debugging
+   *
+   * The number of notifications received, skipped and sent are
+   * subject to simple invariants.  During debugging any violation of
+   * those invariants indicates a problem in the application or the
+   * Reactor.
+   */
+  void check_notification_invariants();
+
+  /// A good place to set break points.
+  void invariant_failed();
+
 private:
   /**
    * @brief The reactor used in this test
@@ -266,12 +279,14 @@ void
 Driver::notification_received ()
 {
   ++notifications_recv_;
+  check_notification_invariants();
 }
 
 void
 Driver::notifications_skipped (int skip_count)
 {
   notifications_skipped_ += skip_count;
+  check_notification_invariants();
 }
 
 ACE_Reactor *
@@ -375,6 +390,71 @@ Driver::notify_handlers(
 
     ++notifications_sent_;
   }
+}
+
+void Driver::
+check_notification_invariants()
+{
+  if (notifications_sent_ < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT("The number of notifications sent (%d)")
+		  ACE_TEXT(" should be positive\n"),
+		  notifications_sent_));
+      invariant_failed();
+    }
+
+  if (notifications_recv_ < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT("The number of notifications received (%d)")
+		  ACE_TEXT(" should be positive\n"),
+		  notifications_recv_));
+      invariant_failed();
+    }
+
+  if (notifications_skipped_ < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT("The number of notifications skipped (%d)")
+		  ACE_TEXT(" should be positive\n"),
+		  notifications_skipped_));
+      invariant_failed();
+    }
+  
+  if (notifications_sent_ < notifications_recv_)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT("Too many notifications received (%d)")
+		  ACE_TEXT(" vs sent (%d)\n"),
+		  notifications_recv_, notifications_sent_));
+      invariant_failed();
+    }
+
+  if (notifications_sent_ < notifications_skipped_)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT("Too many notifications skipped (%d)")
+		  ACE_TEXT(" vs sent (%d)\n"),
+		  notifications_skipped_, notifications_sent_));
+      invariant_failed();
+    }
+
+  if (notifications_skipped_ + notifications_recv_ > notifications_sent_)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_TEXT("Too many notifications skipped (%d)")
+		  ACE_TEXT(" and received (%d) vs sent (%d)\n"),
+		  notifications_skipped_, notifications_recv_,
+		  notifications_sent_));
+      invariant_failed();
+    }
+}
+
+void Driver::
+invariant_failed()
+{
+  // Just a good place to set a breakpoint
 }
 
 // ============================================

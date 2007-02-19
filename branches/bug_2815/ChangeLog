@@ -1,3 +1,38 @@
+Mon Feb 19 04:49:35 UTC 2007  coryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.h:
+        * ace/Notification_Queue.cpp:
+        * ace/ace.mpc:
+          New class to encapsulate the implementation of a user-space
+          based notification queue.  The code was duplicated in both
+          Select_Reactor.{h,cpp} and Dev_Poll_Reactor.{h,cpp}
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Notification_Queue_Unit_Test.cpp:
+          New unit test for the notification queue class.
+        
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.cpp:
+          Refactored notification queue code to a new class
+          (ACE_Notification_Queue)
+
+        * tests/Bug_2815_Regression_Test.cpp:
+          Add code to help with debugging.  Basically my refactoring above
+          had at least one bug, and this test uncovered it.  But it was
+          hard to debug because there was no single breakpoint to detect
+          when the failure condition was triggered.
+
+        * tests:
+          Add new files to svn:ignore property.  Also added some old
+          files.
+
+        * tests/SSL:
+        * include/makeinclude:
+          Add missing files to svn:ignore
+
 Sun Feb 18 21:13:41 UTC 2007  coryan  <coryan@atdesk.com>
 
         * tests/tests.mpc: 
