@@ -19,7 +19,7 @@
 #define RM_HELPER_H_
 
 
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "tao/CDR.h"
 #include "ace/Message_Block.h"
 

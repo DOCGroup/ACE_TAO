@@ -24,7 +24,7 @@
 
 #include "DAM_Map.h"
 #include "ace/SString.h"
-#include "ciao/Deployment_common.h"
+#include "DAnCE/Deployment/Deployment_common.h"
 
 namespace CIAO
 {
@@ -48,7 +48,7 @@ namespace CIAO
                               const char * init_file);
 
       /// Template methods from ExecutionManagerDaemon, please see
-      /// $CIAO_ROOT/ciao/Deployment.idl for documentation
+      /// $CIAO_ROOT/DAnCE/Deployment/Deployment.idl for documentation
       virtual Deployment::DomainApplicationManager_ptr
       preparePlan (const Deployment::DeploymentPlan & plan,
                    CORBA::Boolean commitResources)

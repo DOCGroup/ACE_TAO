@@ -13,7 +13,7 @@
 #ifndef MONITOR_BASEH
 #define MONITOR_BASEH
 #include "tao/ORB.h"
-#include "ciao/Deployment_TargetManagerC.h"
+#include "DAnCE/Deployment/Deployment_TargetManagerC.h"
 
 namespace CIAO
 {

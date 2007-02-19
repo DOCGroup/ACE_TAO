@@ -25,8 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_ContainerS.h"
-#include "ciao/Deployment_NodeApplicationC.h"
+#include "DAnCE/Deployment/Deployment_ContainerS.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "ciao/Container_Base.h"
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility

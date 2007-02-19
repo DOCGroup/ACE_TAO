@@ -19,7 +19,7 @@
 #define PC_UPDATER_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
 #include "ace/SString.h"             //for the ACE_CString
 
 #include "ZIP_Wrapper.h"             //Wrapper around zzip

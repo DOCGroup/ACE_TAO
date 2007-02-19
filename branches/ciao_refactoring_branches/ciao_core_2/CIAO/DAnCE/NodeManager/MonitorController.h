@@ -16,9 +16,9 @@
 #define MONITOR_CONTROLLER_H
 
 #include "NodeManager_svnt_export.h"
-#include "Deployment_BaseC.h"
+#include "DAnCE/Deployment/Deployment_BaseC.h"
 
-#include "TargetManager/TargetManagerImplC.h"
+#include "DAnCE/TargetManager/TargetManagerImplC.h"
 #include "ace/Task.h"
 #include "ace/Auto_Ptr.h"
 

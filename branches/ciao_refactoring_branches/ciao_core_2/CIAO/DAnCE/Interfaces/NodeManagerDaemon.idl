@@ -6,8 +6,8 @@
  * @brief Controling interface for managing and controling CIAO daemon.
  */
 
-#include "ciao/Deployment_NodeManager.idl"
-#include "ciao/Deployment_NodeApplicationManager.idl"
+#include "DAnCE/Deployment/Deployment_NodeManager.idl"
+#include "DAnCE/Deployment/Deployment_NodeApplicationManager.idl"
 
 module CIAO
 {
