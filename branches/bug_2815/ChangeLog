@@ -1,3 +1,9 @@
+Mon Feb 19 21:53:58 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Intrusive_List.inl:
+          I learned a minute ago that std::swap() was kosher.  Use it in
+          favor of ACE_Swap<>.
+
 Mon Feb 19 21:47:48 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/run_test.lst:

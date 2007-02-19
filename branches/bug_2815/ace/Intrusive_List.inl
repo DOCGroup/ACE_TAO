@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "ace/Swap.h"
+#include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,8 +33,8 @@ ACE_Intrusive_List<T>::tail (void) const
 template<class T> ACE_INLINE void
 ACE_Intrusive_List<T>::swap(ACE_Intrusive_List<T> & rhs)
 {
-  ACE_Swap<T*>::swap(head_, rhs.head_);
-  ACE_Swap<T*>::swap(tail_, rhs.tail_);
+  std::swap(head_, rhs.head_);
+  std::swap(tail_, rhs.tail_);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
